@@ -2,6 +2,163 @@
   "schema_version": "1.0.0",
   "sources": [
     {
+      "source_id": "src_aps_cn_forces_motion_diagnostic_2026",
+      "title": "Dual-diagnostic approach for jointly estimating students' conceptual understanding and misconceptions in forces and motion",
+      "publisher": "American Physical Society",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "CN-MAINLAND",
+      "languages": [
+        "en",
+        "zh"
+      ],
+      "resource_type": "education_research",
+      "landing_page_url": "https://doi.org/10.1103/hrx4-gpd2",
+      "document_url": "https://api.crossref.org/works/10.1103/hrx4-gpd2",
+      "document_version": "Phys. Rev. Phys. Educ. Res. 22, 010133; Crossref metadata snapshot 2026-07-20",
+      "issued_at": "2026-04-09",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-20",
+      "sha256": "06fefb07b8f5bf191a50948b235899cf48383d0cb1706de448f6717803887389",
+      "license_expression": "CC-BY-4.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": true,
+        "excerpts": true,
+        "derivatives": true,
+        "redistribution": true,
+        "commercial_use": true
+      },
+      "storage_policy": "licensed_fulltext",
+      "notes_zh": "已核验 DOI、APS 出版信息、CC BY 4.0、山东/贵州/新疆多所中学 496 人参加（摘要称总体分析 492 人）、33 题诊断工具及结果段；SHA-256 对应本次保存于临时目录的 Crossref 元数据快照，研究全文不提交到仓库。M14 概率只限定于 194 名 A2 未掌握子样本。"
+    },
+    {
+      "source_id": "src_cambridge_9709_examiner_report_june_2024",
+      "title": "Cambridge International AS & A Level Mathematics 9709 June 2024 Principal Examiner Report for Teachers",
+      "publisher": "Cambridge University Press & Assessment",
+      "authority_tier": "A",
+      "verification_status": "verified",
+      "jurisdiction": "international",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "examiner_report",
+      "landing_page_url": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-mathematics-9709/",
+      "document_url": "https://www.cambridgeinternational.org/Images/567737-june-2024-examiner-report.pdf",
+      "document_version": "9709 Mathematics June 2024 examiner report; 60 pages",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-20",
+      "sha256": "4c2d9912b610511cf7755c49f7d2c0df2463aa73d6e288b1ebee197ce2a57f8c",
+      "license_expression": "LicenseRef-Cambridge-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "官方阅卷报告逐页核验；只登记元数据、哈希和页码，不保存正文。报告描述 Cambridge 9709 当次考生作答，不能外推为新加坡学生发生率。"
+    },
+    {
+      "source_id": "src_nie_sg_logarithm_misconceptions_2005",
+      "title": "Working with Logarithms: Students' Misconceptions and Errors",
+      "publisher": "Association of Mathematics Educators; National Institute of Education, Nanyang Technological University",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "SG",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "education_research",
+      "landing_page_url": "https://repository.nie.edu.sg/handle/10497/69",
+      "document_url": "https://repository.nie.edu.sg/server/api/core/bitstreams/8efe2924-628c-4058-9460-e2e4d8fde45f/content",
+      "document_version": "The Mathematics Educator 8(2), 53-70 (2005); NIE repository copy",
+      "issued_at": "2005-01-01",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-20",
+      "sha256": "ce6bb15b55c29fa81e789951997d1beebf6d108cdf274d3b919977d244e6a6cd",
+      "license_expression": "LicenseRef-NIE-Repository-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "已核验 NIE 机构仓储 PDF、两所新加坡学校 81 名中三学生参加、79 份有效答卷进入分析、47 题 ToSUL 工具及期刊 pp.64-66 错误分析。仅保存元数据、哈希与页码定位。"
+    },
+    {
+      "source_id": "src_plos_virus_knowledge_2017",
+      "title": "The evil virus cell: Students' knowledge and beliefs about viruses",
+      "publisher": "PLOS ONE",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "AT",
+      "languages": [
+        "en",
+        "de"
+      ],
+      "resource_type": "education_research",
+      "landing_page_url": "https://doi.org/10.1371/journal.pone.0174402",
+      "document_url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0174402&type=printable",
+      "document_version": "PLOS ONE 12(3): e0174402; version of record",
+      "issued_at": "2017-03-28",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-20",
+      "sha256": "30f298320402c0800c4860db0805f5eaa1191c61730f300b05185c3c04236c3e",
+      "license_expression": "CC-BY-4.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": true,
+        "excerpts": true,
+        "derivatives": true,
+        "redistribution": true,
+        "commercial_use": true
+      },
+      "storage_policy": "licensed_fulltext",
+      "notes_zh": "已核验开放许可、样本构成、问卷与绘图方法及 PDF p.10 的细胞化病毒表征。研究对象为奥地利七年级、十年级及大学一年级学生，不外推为新加坡发生率。"
+    },
+    {
+      "source_id": "src_rsc_sg_acid_base_conceptions_2016",
+      "title": "On the prevalence of alternative conceptions on acid-base chemistry among secondary students: insights from cognitive and confidence measures",
+      "publisher": "Royal Society of Chemistry",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "SG",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "education_research",
+      "landing_page_url": "https://pubs.rsc.org/en/content/articlehtml/2016/rp/c5rp00146c",
+      "document_url": "https://api.crossref.org/works/10.1039/C5RP00146C",
+      "document_version": "Chemistry Education Research and Practice 17, 263-282 (2016); Crossref metadata snapshot 2026-07-20",
+      "issued_at": "2015-12-11",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-20",
+      "sha256": "e9c0b161bb7ace3df2809e19d139cf100729e7ecf0eb430160105c31c992bc44",
+      "license_expression": "LicenseRef-RSC-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "已在 RSC 正文页核验主研究招募 141 名新加坡九年级学生、以 92 份完整答卷分析、四层诊断工具、酸碱错误模型及结果段；SHA-256 对应 Crossref 元数据快照。Cloudflare 阻止命令行下载全文，故不保存正文，只登记 DOI、定位与校验快照。"
+    },
+    {
       "source_id": "src_berkeley_cs188_textbook_2026",
       "title": "UC Berkeley CS188 Introduction to Artificial Intelligence textbook",
       "publisher": "University of California, Berkeley",
@@ -343,6 +500,192 @@
       "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
     },
     {
+      "source_id": "src_cn_moe_senior_high_biology_2020",
+      "title": "普通高中生物学课程标准（2017年版2020年修订）",
+      "publisher": "中华人民共和国教育部",
+      "authority_tier": "A",
+      "verification_status": "verified",
+      "jurisdiction": "CN-MAINLAND",
+      "languages": [
+        "zh-CN"
+      ],
+      "resource_type": "curriculum_standard",
+      "landing_page_url": "http://www.moe.gov.cn/srcsite/A26/s8001/202006/t20200603_462199.html",
+      "document_url": "http://www.moe.gov.cn/srcsite/A26/s8001/202006/W020200603315372317586.zip",
+      "document_version": "2017年版2020年修订；教材〔2020〕3号附件中的生物学课程标准PDF",
+      "issued_at": "2020-05-11",
+      "valid_from": "2020-05-11",
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "30204dfd2357c6d6f3bd66e55538f1fbb62a952459aff9c0293e3e2d608d004f",
+      "license_expression": "LicenseRef-China-MOE-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "教育部官方通知与附件包已核验。sha256对应附件ZIP；生物学标准PDF单文件sha256为8408986334a8826e6c7e1486c1ef1430cf47ad9e10174fd08f65d590f4d302a4。只保存元数据、页码定位和释义。"
+    },
+    {
+      "source_id": "src_cn_moe_senior_high_chemistry_2020",
+      "title": "普通高中化学课程标准（2017年版2020年修订）",
+      "publisher": "中华人民共和国教育部",
+      "authority_tier": "A",
+      "verification_status": "verified",
+      "jurisdiction": "CN-MAINLAND",
+      "languages": [
+        "zh-CN"
+      ],
+      "resource_type": "curriculum_standard",
+      "landing_page_url": "http://www.moe.gov.cn/srcsite/A26/s8001/202006/t20200603_462199.html",
+      "document_url": "http://www.moe.gov.cn/srcsite/A26/s8001/202006/W020200603315372317586.zip",
+      "document_version": "2017年版2020年修订；教材〔2020〕3号附件中的化学课程标准PDF",
+      "issued_at": "2020-05-11",
+      "valid_from": "2020-05-11",
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "30204dfd2357c6d6f3bd66e55538f1fbb62a952459aff9c0293e3e2d608d004f",
+      "license_expression": "LicenseRef-China-MOE-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "教育部官方通知与附件包已核验。sha256对应附件ZIP；化学标准PDF单文件sha256为589b296ef47fb3b221a08e616dcb8f19546ed9cf770bd5b5b991ba1d2008274f。只保存元数据、页码定位和释义。"
+    },
+    {
+      "source_id": "src_cn_moe_senior_high_math_2020",
+      "title": "普通高中数学课程标准（2017年版2020年修订）",
+      "publisher": "中华人民共和国教育部",
+      "authority_tier": "A",
+      "verification_status": "verified",
+      "jurisdiction": "CN-MAINLAND",
+      "languages": [
+        "zh-CN"
+      ],
+      "resource_type": "curriculum_standard",
+      "landing_page_url": "http://www.moe.gov.cn/srcsite/A26/s8001/202006/t20200603_462199.html",
+      "document_url": "http://www.moe.gov.cn/srcsite/A26/s8001/202006/W020200603315372317586.zip",
+      "document_version": "2017年版2020年修订；教材〔2020〕3号附件中的数学课程标准PDF",
+      "issued_at": "2020-05-11",
+      "valid_from": "2020-05-11",
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "30204dfd2357c6d6f3bd66e55538f1fbb62a952459aff9c0293e3e2d608d004f",
+      "license_expression": "LicenseRef-China-MOE-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "教育部官方通知与附件包已核验。sha256 对应36.8MB附件ZIP；其中数学标准PDF单文件sha256为cc4d3a20daa09f5185037e93fbacd58f7df1147392e3dae4bf261c3700ba4195。仓库只保存元数据、页码定位和释义，不保存附件正文。"
+    },
+    {
+      "source_id": "src_cn_moe_senior_high_physics_2020",
+      "title": "普通高中物理课程标准（2017年版2020年修订）",
+      "publisher": "中华人民共和国教育部",
+      "authority_tier": "A",
+      "verification_status": "verified",
+      "jurisdiction": "CN-MAINLAND",
+      "languages": [
+        "zh-CN"
+      ],
+      "resource_type": "curriculum_standard",
+      "landing_page_url": "http://www.moe.gov.cn/srcsite/A26/s8001/202006/t20200603_462199.html",
+      "document_url": "http://www.moe.gov.cn/srcsite/A26/s8001/202006/W020200603315372317586.zip",
+      "document_version": "2017年版2020年修订；教材〔2020〕3号附件中的物理课程标准PDF",
+      "issued_at": "2020-05-11",
+      "valid_from": "2020-05-11",
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "30204dfd2357c6d6f3bd66e55538f1fbb62a952459aff9c0293e3e2d608d004f",
+      "license_expression": "LicenseRef-China-MOE-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "教育部官方通知与附件包已核验。sha256对应附件ZIP；物理标准PDF单文件sha256为a64204bc3b5532b44fbc82b560945d3df3c0bb081aa1d69df028a7591bb983f5。只保存元数据、页码定位和释义。"
+    },
+    {
+      "source_id": "src_cn_nhc_assisted_reproduction_ethics_2003",
+      "title": "卫生部关于修订人类辅助生殖技术与人类精子库相关技术规范、基本标准和伦理原则的通知",
+      "publisher": "中华人民共和国卫生部（现国家卫生健康委员会）",
+      "authority_tier": "A",
+      "verification_status": "verified",
+      "jurisdiction": "CN-MAINLAND",
+      "languages": [
+        "zh-CN"
+      ],
+      "resource_type": "reference",
+      "landing_page_url": "https://www.nhc.gov.cn/bgt/pw10303/200708/6b69144557ff4d9c8e9c775332623018.shtml",
+      "document_url": "https://www.nhc.gov.cn/bgt/pw10303/200708/6b69144557ff4d9c8e9c775332623018.shtml",
+      "document_version": "卫科教发〔2003〕176号；2003年10月1日起执行",
+      "issued_at": "2003-06-27",
+      "valid_from": "2003-10-01",
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "f686debe622f41746f8cddf6770e6cf2e5362e8e9826b169835d7d2e87b26af9",
+      "license_expression": "LicenseRef-China-NHC-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "国家卫生健康委员会官网核验；附件1行为准则第十五项规定禁止克隆人，附件3社会公益原则第3项规定不得实施生殖性克隆技术。sha256对应2026-07-19从官方URL取得的浏览器规范化文本快照；仓库只保存哈希、官方URL和条款定位。"
+    },
+    {
+      "source_id": "src_cn_state_council_hazardous_chemicals_2013",
+      "title": "危险化学品安全管理条例",
+      "publisher": "中华人民共和国国务院；国家行政法规库",
+      "authority_tier": "A",
+      "verification_status": "verified",
+      "jurisdiction": "CN-MAINLAND",
+      "languages": [
+        "zh-CN"
+      ],
+      "resource_type": "reference",
+      "landing_page_url": "https://xzfg.moj.gov.cn/front/law/detail?LawID=586&Query=",
+      "document_url": null,
+      "document_version": "2011年修订、2013年修订；国家行政法规库页面快照 2026-07-19",
+      "issued_at": "2011-03-02",
+      "valid_from": "2011-12-01",
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "467ba0af44e62e4c0f9854ecfc7b75b3e193b771cd53644bcb783b730df49b4f",
+      "license_expression": "LicenseRef-PRC-Regulation-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "用于化学应用法律法规与规则意识的第二类权威证据。依据国家行政法规库核验现行修订沿革及危险化学品生产、经营、储存、运输、使用和处置的法定安全管理范围；只保存元数据、页面快照校验值和条款定位。"
+    },
+    {
       "source_id": "src_d2l_1_0_3",
       "title": "Dive into Deep Learning",
       "publisher": "D2L.ai / Cambridge University Press",
@@ -403,6 +746,37 @@
       },
       "storage_policy": "metadata_only",
       "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
+    },
+    {
+      "source_id": "src_fao_cattle_embryo_transfer_manual_1991",
+      "title": "Training Manual for Embryo Transfer in Cattle",
+      "publisher": "Food and Agriculture Organization of the United Nations",
+      "authority_tier": "A",
+      "verification_status": "verified",
+      "jurisdiction": "international",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "reference",
+      "landing_page_url": "https://www.fao.org/4/T0117E/T0117E00.htm",
+      "document_url": "https://www.fao.org/4/T0117E/T0117E10.htm",
+      "document_version": "FAO Animal Production and Health Paper 77; ISBN 92-5-102804-4",
+      "issued_at": "1991-01-01",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "7c7f45e98659a402a82471c32901d4864517a65975859bf9084d1097b3a6234d",
+      "license_expression": "LicenseRef-FAO-All-Rights-Reserved-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "FAO 官方培训手册。第10章直接说明胚胎分割、对称二等分和分割胚移植；版权页明确保留全部权利，因此仅保存元数据、快照校验值和章节定位。"
     },
     {
       "source_id": "src_harvard_cs50x_2026",
@@ -653,6 +1027,37 @@
       "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
     },
     {
+      "source_id": "src_mit_ocw_strang_calculus_ch9_2023",
+      "title": "MIT OpenCourseWare Calculus by Gilbert Strang, Chapter 9",
+      "publisher": "Massachusetts Institute of Technology OpenCourseWare",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "textbook",
+      "landing_page_url": "https://ocw.mit.edu/courses/res-18-001-calculus-fall-2023/resources/mitres_18_001_f17_ch09_pdf/",
+      "document_url": "https://ocw.mit.edu/courses/res-18-001-calculus-fall-2023/mitres_18_001_f17_ch09.pdf",
+      "document_version": "Fall 2023 OCW resource; PDF modified 2023-10-07",
+      "issued_at": "2023-10-07",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "48ce4331688fb283ce6f51e08546f9dc83b9a55d4ba1197f4af82bcee916cfb0",
+      "license_expression": "CC-BY-NC-SA-4.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": true,
+        "excerpts": true,
+        "derivatives": true,
+        "redistribution": true,
+        "commercial_use": false
+      },
+      "storage_policy": "licensed_fulltext",
+      "notes_zh": "MIT OCW 官方开放教材；Chapter 9 §9.4 直接说明复数除法中的共轭因子、复平面表示及复数加法的向量解释。"
+    },
+    {
       "source_id": "src_mongodb_manual_2026",
       "title": "MongoDB Manual",
       "publisher": "MongoDB, Inc.",
@@ -682,6 +1087,68 @@
       },
       "storage_policy": "metadata_only",
       "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
+    },
+    {
+      "source_id": "src_ncbi_genomes_2e_protein_engineering_2002",
+      "title": "Genomes, 2nd edition, Chapter 7: Understanding a Genome Sequence",
+      "publisher": "Wiley-Liss; archived by NCBI Bookshelf",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "international",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "textbook",
+      "landing_page_url": "https://www.ncbi.nlm.nih.gov/books/NBK21136/",
+      "document_url": "https://www.ncbi.nlm.nih.gov/books/NBK21136/",
+      "document_version": "Genomes, 2nd edition; Chapter 7; ISBN edition published 2002",
+      "issued_at": "2002-01-01",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "dfb60505cb2e5245a03741798d55efbc2d2e5465b4df21dfb1a2ee412b5d262f",
+      "license_expression": "LicenseRef-Wiley-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "NCBI Bookshelf 可核验的教材章节；7.2.3 明确将定点诱变、蛋白质结构/活性改变与面向工业或临床目标的蛋白质工程相连。仅保存元数据、快照校验值和章节定位。"
+    },
+    {
+      "source_id": "src_ncbi_neuroscience_2e_2001",
+      "title": "Neuroscience, 2nd edition",
+      "publisher": "Sinauer Associates; archived by NCBI Bookshelf",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "international",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "textbook",
+      "landing_page_url": "https://www.ncbi.nlm.nih.gov/books/NBK10799/",
+      "document_url": "https://www.ncbi.nlm.nih.gov/books/NBK10799/",
+      "document_version": "2nd edition; ISBN-10 0-87893-742-0",
+      "issued_at": "2001-01-01",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "c3686055bbae410d1e92c4c3d50272ad0b94cd4adc11f0e15abb5c0ebdf50a61",
+      "license_expression": "LicenseRef-Sinauer-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "NCBI Bookshelf 可核验的本科/医学神经科学教材。第27章覆盖大脑皮层语言功能，第31章覆盖学习与记忆的神经基础；版权受限，仅保存元数据、快照校验值和章节定位。"
     },
     {
       "source_id": "src_node_learn_2026",
@@ -715,6 +1182,378 @@
       "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
     },
     {
+      "source_id": "src_openstax_anatomy_physiology_2e_2022",
+      "title": "OpenStax Anatomy and Physiology 2e",
+      "publisher": "OpenStax, Rice University",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "textbook",
+      "landing_page_url": "https://openstax.org/details/books/anatomy-and-physiology-2e/",
+      "document_url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/preface",
+      "document_version": "2e official web edition snapshot 2026-07-19",
+      "issued_at": "2022-04-20",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "a0b98418dc04b0290c09879f203f32954e170f1b20601e4dec7f3fea53da1dd3",
+      "license_expression": "CC-BY-NC-SA-4.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "官方出版日期和 CC BY-NC-SA 4.0 已核验；3.6 节精确覆盖全能、多能、多潜能干细胞及造血干细胞分化。因当前页面另有大模型摄入限制，只保存元数据、校验值和章节定位。"
+    },
+    {
+      "source_id": "src_openstax_biology_2e_2018",
+      "title": "OpenStax Biology 2e",
+      "publisher": "OpenStax, Rice University",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "textbook",
+      "landing_page_url": "https://openstax.org/details/books/biology-2e",
+      "document_url": "https://openstax.org/books/biology-2e/pages/preface",
+      "document_version": "official web edition snapshot 2026-07-19",
+      "issued_at": "2018-03-28",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "af2faf7cd380b87d39cb107f9d173c781c415e5bd85860873484cbe723c64b79",
+      "license_expression": "CC-BY-NC-SA-4.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "用于中国高中生物学核心概念的第二类权威证据。已核验官方出版日期、目录、同行审查说明与 CC BY-NC-SA 4.0；当前官方页面另行限制未经许可将本书用于大模型训练或摄入，因此只保存元数据、页面快照校验值和章节定位，不保存或摄入正文。"
+    },
+    {
+      "source_id": "src_openstax_chemistry_2e_2019",
+      "title": "OpenStax Chemistry 2e",
+      "publisher": "OpenStax, Rice University",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "textbook",
+      "landing_page_url": "https://openstax.org/details/books/chemistry-2e",
+      "document_url": "https://openstax.org/books/chemistry-2e/pages/preface",
+      "document_version": "official web edition snapshot 2026-07-19",
+      "issued_at": "2019-02-14",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "4f6be52d094501ca6c77b46df4e6a19f68100439f62cd9b1fe4ef31210a5325e",
+      "license_expression": "CC-BY-NC-SA-4.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "用于中国高中化学概念的第二类权威证据。已核验官方出版日期、目录与 CC BY-NC-SA 4.0；当前官方页面另行限制未经许可将本书用于大模型训练或摄入，因此只保存元数据、页面快照校验值和章节定位，不保存或摄入正文。"
+    },
+    {
+      "source_id": "src_openstax_college_physics_2e_2022",
+      "title": "OpenStax College Physics 2e",
+      "publisher": "OpenStax, Rice University",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "textbook",
+      "landing_page_url": "https://openstax.org/details/books/college-physics-2e",
+      "document_url": "https://openstax.org/books/college-physics-2e/pages/preface",
+      "document_version": "official web edition snapshot 2026-07-19",
+      "issued_at": "2022-07-13",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "22be201067a78610dc16a79e0243dfc9d1a532f43285f71224e6b677eef7860e",
+      "license_expression": "CC-BY-4.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "用于补充表面张力、能源资源、环境影响和高中层次应用证据。已核验官方出版信息与 CC BY 4.0；当前官方页面另行限制未经许可将本书用于大模型训练或摄入，因此只保存元数据、页面快照校验值和章节定位。"
+    },
+    {
+      "source_id": "src_openstax_contemporary_mathematics_2026",
+      "title": "OpenStax Contemporary Mathematics",
+      "publisher": "OpenStax, Rice University",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "textbook",
+      "landing_page_url": "https://openstax.org/details/books/contemporary-mathematics",
+      "document_url": "https://assets.openstax.org/oscms-prodcms/media/documents/contemporary-mathematics_-_WEB.pdf",
+      "document_version": "web/PDF updated 2026-04-23",
+      "issued_at": "2023-03-22",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "300726c9820a8d0822c56e33582a44dffa47111147d64e9cb936b316c448ab38",
+      "license_expression": "CC-BY-NC-SA-4.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": true,
+        "excerpts": true,
+        "derivatives": true,
+        "redistribution": true,
+        "commercial_use": false
+      },
+      "storage_policy": "licensed_fulltext",
+      "notes_zh": "Browser 核验出版日期、2026-04-23 Web 版本更新时间与 CC BY-NC-SA 4.0；SHA-256 为官方 PDF 下载文件。"
+    },
+    {
+      "source_id": "src_openstax_introductory_statistics_2e_2026",
+      "title": "OpenStax Introductory Statistics 2e",
+      "publisher": "OpenStax, Rice University",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "textbook",
+      "landing_page_url": "https://openstax.org/details/books/introductory-statistics-2e",
+      "document_url": "https://assets.openstax.org/oscms-prodcms/media/documents/introductory-statistics-2e_-_WEB.pdf",
+      "document_version": "web/PDF updated 2026-04-23",
+      "issued_at": "2023-12-13",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "a79a953b75e570030c74ea6f700b8bd70f41dc8c01bf4e9618e6a0adba3a382a",
+      "license_expression": "CC-BY-NC-SA-4.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": true,
+        "excerpts": true,
+        "derivatives": true,
+        "redistribution": true,
+        "commercial_use": false
+      },
+      "storage_policy": "licensed_fulltext",
+      "notes_zh": "Browser 核验出版日期、2026-04-23 Web 版本更新时间与 CC BY-NC-SA 4.0；SHA-256 为官方 PDF 下载文件。"
+    },
+    {
+      "source_id": "src_openstax_microbiology_2016",
+      "title": "OpenStax Microbiology",
+      "publisher": "OpenStax, Rice University and American Society for Microbiology Press",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "textbook",
+      "landing_page_url": "https://openstax.org/details/books/microbiology",
+      "document_url": "https://openstax.org/books/microbiology/pages/preface",
+      "document_version": "official web edition snapshot 2026-07-19",
+      "issued_at": "2016-11-01",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "63a9053ddcad28524c1be283871b39338c5ee3ca39f0e64bf6eb98741025eda4",
+      "license_expression": "CC-BY-NC-SA-4.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "用于微生物培养、控制、计数、发酵和单克隆抗体等生物技术概念的第二类权威证据；教材由 OpenStax 与美国微生物学会出版社合作开发。当前官方页面另行限制未经许可将本书用于大模型训练或摄入，因此只保存元数据、页面快照校验值和章节定位。"
+    },
+    {
+      "source_id": "src_openstax_organic_chemistry_2023",
+      "title": "OpenStax Organic Chemistry",
+      "publisher": "OpenStax, Rice University",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "textbook",
+      "landing_page_url": "https://openstax.org/details/books/organic-chemistry",
+      "document_url": "https://openstax.org/books/organic-chemistry/pages/dedication-and-preface",
+      "document_version": "official web edition snapshot 2026-07-19",
+      "issued_at": "2023-09-20",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "575571de42c84589fa08b95d6195d305e8934fde8f5609ed71bba02984c01de4",
+      "license_expression": "CC-BY-NC-SA-4.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "用于中国高中有机化学、生命大分子与聚合物概念的第二类权威证据。已核验官方出版日期、目录与 CC BY-NC-SA 4.0；当前官方页面另行限制未经许可将本书用于大模型训练或摄入，因此只保存元数据、页面快照校验值和章节定位，不保存或摄入正文。"
+    },
+    {
+      "source_id": "src_openstax_precalculus_2e_2026",
+      "title": "OpenStax Precalculus 2e",
+      "publisher": "OpenStax, Rice University",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "textbook",
+      "landing_page_url": "https://openstax.org/details/books/precalculus-2e",
+      "document_url": "https://assets.openstax.org/oscms-prodcms/media/documents/precalculus-2e_-_WEB.pdf",
+      "document_version": "web/PDF updated 2026-04-23",
+      "issued_at": "2021-12-21",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "4b7018778433d2c125229a35315cf70e0813cbaacb04118b7265baae625372b5",
+      "license_expression": "CC-BY-NC-SA-4.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": true,
+        "excerpts": true,
+        "derivatives": true,
+        "redistribution": true,
+        "commercial_use": false
+      },
+      "storage_policy": "licensed_fulltext",
+      "notes_zh": "Browser 核验出版日期、2026-04-23 Web 版本更新时间与 CC BY-NC-SA 4.0；SHA-256 为官方 PDF 下载文件。"
+    },
+    {
+      "source_id": "src_openstax_university_physics_v1_2016",
+      "title": "OpenStax University Physics Volume 1",
+      "publisher": "OpenStax, Rice University",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "textbook",
+      "landing_page_url": "https://openstax.org/details/books/university-physics-volume-1",
+      "document_url": "https://openstax.org/books/university-physics-volume-1/pages/preface",
+      "document_version": "official web edition snapshot 2026-07-19",
+      "issued_at": "2016-09-19",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "6208bdc9e1dcf7587c518440684e5536dc0045de6eadaee845a99025c36802ac",
+      "license_expression": "CC-BY-NC-SA-4.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "已核验官方出版信息、章节目录与 CC BY-NC-SA 4.0；当前官方页面另行限制未经许可将本书用于大模型训练或摄入，因此本仓库只保存元数据、页面快照校验值和章节定位，不保存或摄入正文。第一卷 PDF CDN 对命令行客户端返回 403，SHA-256 对应官方 Preface Web 页面快照。"
+    },
+    {
+      "source_id": "src_openstax_university_physics_v2_2016",
+      "title": "OpenStax University Physics Volume 2",
+      "publisher": "OpenStax, Rice University",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "textbook",
+      "landing_page_url": "https://openstax.org/details/books/university-physics-volume-2",
+      "document_url": "https://assets.openstax.org/oscms-prodcms/media/documents/university-physics-volume-2_-_WEB.pdf",
+      "document_version": "official PDF retrieved 2026-07-19",
+      "issued_at": "2016-10-06",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "3f5d8d0e38ba663c84a036b54cf6087bc2836adca553cb7849f2c0e85e97a445",
+      "license_expression": "CC-BY-NC-SA-4.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "已核验官方出版信息、章节目录与 CC BY-NC-SA 4.0；当前官方页面另行限制未经许可将本书用于大模型训练或摄入，因此本仓库只保存元数据、PDF 校验值和章节定位，不保存或摄入正文。"
+    },
+    {
+      "source_id": "src_openstax_university_physics_v3_2016",
+      "title": "OpenStax University Physics Volume 3",
+      "publisher": "OpenStax, Rice University",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "textbook",
+      "landing_page_url": "https://openstax.org/details/books/university-physics-volume-3",
+      "document_url": "https://assets.openstax.org/oscms-prodcms/media/documents/university-physics-volume-3_-_WEB.pdf",
+      "document_version": "official PDF retrieved 2026-07-19",
+      "issued_at": "2016-09-29",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "311c6beb70bb9cc6073d40a6085d290a82afde2b38e9aaf672ccb6de0542541b",
+      "license_expression": "CC-BY-NC-SA-4.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "已核验官方出版信息、章节目录与 CC BY-NC-SA 4.0；当前官方页面另行限制未经许可将本书用于大模型训练或摄入，因此本仓库只保存元数据、PDF 校验值和章节定位，不保存或摄入正文。"
+    },
+    {
       "source_id": "src_owasp_wstg_2026",
       "title": "OWASP Web Security Testing Guide",
       "publisher": "OWASP Foundation",
@@ -744,6 +1583,192 @@
       },
       "storage_policy": "metadata_only",
       "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
+    },
+    {
+      "source_id": "src_pep_high_school_math_2a_2015",
+      "title": "普通高中课程标准实验教科书 数学2（必修）A版",
+      "publisher": "People's Education Press",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "CN",
+      "languages": [
+        "zh-CN"
+      ],
+      "resource_type": "textbook",
+      "landing_page_url": "https://www.pep.com.cn/products/jc/gzjks/201510/t20151026_1250736.shtml",
+      "document_url": null,
+      "document_version": "2015年5月版；ISBN 9787107177064",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "4bcaeca4a69d82b4b9c5e5807c82d63a08809aa554223f07f7107d92ddaf4976",
+      "license_expression": "LicenseRef-PEP-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "用于核对稳定的立体几何、直线与圆知识；课程边界仍以2020年教育部课程标准为准。SHA-256 对应2026-07-19抓取的官方教材介绍页，不保存教材正文。"
+    },
+    {
+      "source_id": "src_pep_high_school_math_5a_2007",
+      "title": "普通高中课程标准实验教科书 数学5（必修）A版",
+      "publisher": "People's Education Press",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "CN",
+      "languages": [
+        "zh-CN"
+      ],
+      "resource_type": "textbook",
+      "landing_page_url": "https://www.pep.com.cn/products/jc/gzjks/201510/t20151026_1250733.shtml",
+      "document_url": null,
+      "document_version": "2007年1月版；ISBN 9787107177095",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "aad3c51475cd8bf51e1af67ff0aa5492f0d9299c71c0adf156a7cb1c8a7ca676",
+      "license_expression": "LicenseRef-PEP-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "用于核对不等式性质、基本不等式及其简单应用；课程边界仍以2020年教育部课程标准为准。SHA-256 对应2026-07-19抓取的官方教材介绍页，不保存教材正文。"
+    },
+    {
+      "source_id": "src_pep_math_oblique_drawing_2023",
+      "title": "人民教育出版社教学设计：7.2 空间几何体的三视图与直观图",
+      "publisher": "People's Education Press",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "CN",
+      "languages": [
+        "zh-CN"
+      ],
+      "resource_type": "course_material",
+      "landing_page_url": "https://www.pep.com.cn/zzggjc/sx2023/jcmkx/jxsj/202307/t20230725_1984520.shtml",
+      "document_url": "https://www.pep.com.cn/zzggjc/sx2023/jcmkx/jxsj/202307/P020230725378170724595.pdf",
+      "document_version": "2023-07-25 official teaching design",
+      "issued_at": "2023-07-25",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "cb136e1616a22861a76960bbdadbe4ef3bf627a471c54c052081eaeaa1154d7f",
+      "license_expression": "LicenseRef-PEP-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "官方页面与10页教学设计明确覆盖斜二测画法。SHA-256 对应官方PDF；版权受限，仅提交元数据与精确页码。"
+    },
+    {
+      "source_id": "src_pep_math_sufficient_necessary_conditions_2023",
+      "title": "人民教育出版社教学设计：1.2.1 充要条件",
+      "publisher": "People's Education Press",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "CN",
+      "languages": [
+        "zh-CN"
+      ],
+      "resource_type": "course_material",
+      "landing_page_url": "https://www.pep.com.cn/zzggjc/sx2023/jcmks/jxsj/202303/P020230302365867302908.pdf",
+      "document_url": "https://www.pep.com.cn/zzggjc/sx2023/jcmks/jxsj/202303/P020230302365867302908.pdf",
+      "document_version": "2023-03 official teaching design",
+      "issued_at": "2023-03-02",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "778ea6f56738a6a272e772dd54f43bf38043f9d03e93a913b3cfa2862c5661ad",
+      "license_expression": "LicenseRef-PEP-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "官方教学设计明确覆盖充分条件、必要条件和充要条件。SHA-256 对应官方PDF；版权受限，仅提交元数据与精确页码。"
+    },
+    {
+      "source_id": "src_pmc_apiaceae_protoplast_somatic_hybridisation_2023",
+      "title": "Protoplast Technology and Somatic Hybridisation in the Family Apiaceae",
+      "publisher": "Plants (MDPI); archived by PubMed Central",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "international",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "reference",
+      "landing_page_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10005591/",
+      "document_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10005591/",
+      "document_version": "Plants 12(5):1060; DOI 10.3390/plants12051060",
+      "issued_at": "2023-02-27",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "69a9eb64fd2887e93d263b293f0b7f0f03037c0b649722bdac9162a8b2539fb1",
+      "license_expression": "CC-BY-4.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": true,
+        "excerpts": true,
+        "derivatives": true,
+        "redistribution": true,
+        "commercial_use": true
+      },
+      "storage_policy": "licensed_fulltext",
+      "notes_zh": "同行评议综述，专门用于核验原生质体分离、化学或电融合、体细胞杂交、再生及育种应用。当前只登记元数据、快照校验值和章节定位。"
+    },
+    {
+      "source_id": "src_pmc_plant_tissue_culture_applications_2023",
+      "title": "Production of Secondary Metabolites Using Tissue Culture-Based Biotechnological Applications",
+      "publisher": "Frontiers in Plant Science; archived by PubMed Central",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "international",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "reference",
+      "landing_page_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10339834/",
+      "document_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10339834/",
+      "document_version": "Frontiers in Plant Science 14:1132555; DOI 10.3389/fpls.2023.1132555",
+      "issued_at": "2023-06-29",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "9a57b879176638cd361f18f50e9661bb24352745880770e3df0d92dfdae1182c",
+      "license_expression": "CC-BY-4.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": true,
+        "excerpts": true,
+        "derivatives": true,
+        "redistribution": true,
+        "commercial_use": true
+      },
+      "storage_policy": "licensed_fulltext",
+      "notes_zh": "同行评议综述，直接覆盖植物组织培养的快速繁殖、脱毒、遗传改良和次生代谢产物生产。当前只登记元数据、快照校验值和章节定位。"
     },
     {
       "source_id": "src_python_docs_3_14",
@@ -806,6 +1831,192 @@
       },
       "storage_policy": "metadata_only",
       "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
+    },
+    {
+      "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+      "title": "G2/G3 Lower Secondary Science Syllabuses",
+      "publisher": "Singapore Ministry of Education, Curriculum Planning and Development Division",
+      "authority_tier": "A",
+      "verification_status": "verified",
+      "jurisdiction": "SG",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "curriculum_standard",
+      "landing_page_url": "https://www.moe.gov.sg/secondary/schools-offering-full-sbb/syllabus",
+      "document_url": "https://www.moe.gov.sg/media/files/secondary/syllabuses/science/b6d63789-2ad0-4630-b847-42fd380ec404.pdf",
+      "document_version": "2021 G2/G3 Lower Secondary Science Syllabuses; implementation from 2021 Secondary One cohort; PDF © 2024",
+      "issued_at": null,
+      "valid_from": "2021-01-01",
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "dfaf177b1407371002a3b00633c04f09d873376f8b20170b437008cc70871106",
+      "license_expression": "LicenseRef-SG-MOE-NonCommercial-Educational-WholeDocument",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "MOE 官方 PDF 已复核：Implementation starting with 2021 Secondary One Cohort，封面 ©2024；带星号成果仅对 G2 可选。仓库只保存元数据、校验值、页码定位和中文释义。"
+    },
+    {
+      "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+      "title": "G3 and G2 Mathematics Syllabuses, Secondary One to Four",
+      "publisher": "Singapore Ministry of Education, Curriculum Planning and Development Division",
+      "authority_tier": "A",
+      "verification_status": "verified",
+      "jurisdiction": "SG",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "curriculum_standard",
+      "landing_page_url": "https://www.moe.gov.sg/secondary/schools-offering-full-sbb/syllabus",
+      "document_url": "https://www.moe.gov.sg/media/files/secondary/fsbb/syllabus/d415c25d-cf29-4b05-83da-9713f38edd14.pdf",
+      "document_version": "2020 syllabuses; implementation from 2020 Secondary One cohort; current official PDF © 2024",
+      "issued_at": null,
+      "valid_from": "2020-01-01",
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "38a5069a9b33b28a4a1bfcb1552e7f811e3609d7a15cb31975ecb1eaa80bc13f",
+      "license_expression": "LicenseRef-SG-MOE-NonCommercial-Educational-WholeDocument",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "官方PDF允许为个人或非商业教育用途完整复制，但未授权改编或商业再发布；Primoria按更严格的metadata_only策略，只保存元数据、页码定位和中文释义。"
+    },
+    {
+      "source_id": "src_sg_seab_h2_biology_9477_2026",
+      "title": "Singapore-Cambridge GCE Advanced Level H2 Biology (Syllabus 9477), examination in 2026",
+      "publisher": "Singapore Examinations and Assessment Board; Singapore Ministry of Education; Cambridge University Press & Assessment",
+      "authority_tier": "A",
+      "verification_status": "verified",
+      "jurisdiction": "SG",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "curriculum_standard",
+      "landing_page_url": "https://www.seab.gov.sg/gce-a-level/a-level-syllabuses-examined-for-school-candidates-2026/",
+      "document_url": "https://isomer-user-content.by.gov.sg/334/e3653fcb-bd44-4c59-bed1-48fc3cb47a34/9477_y26_sy.pdf",
+      "document_version": "Syllabus 9477; first examination in 2026; document © 2024",
+      "issued_at": null,
+      "valid_from": "2026-01-01",
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "3dd2aa5d410754830e85bd0bdea64a7cdcb2ff351294b6c9958545144fa5cb6f",
+      "license_expression": "LicenseRef-SG-MOE-Cambridge-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "采用 2026 首次考试的新 Syllabus 9477；已逐项复核 101 项内容 outcome 和 Practical Assessment。只保存元数据、校验值、页码定位和中文释义。"
+    },
+    {
+      "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+      "title": "Singapore-Cambridge GCE Advanced Level H2 Chemistry (Syllabus 9476), examination in 2026",
+      "publisher": "Singapore Examinations and Assessment Board; Singapore Ministry of Education; Cambridge University Press & Assessment",
+      "authority_tier": "A",
+      "verification_status": "verified",
+      "jurisdiction": "SG",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "curriculum_standard",
+      "landing_page_url": "https://www.seab.gov.sg/gce-a-level/a-level-syllabuses-examined-for-school-candidates-2026/",
+      "document_url": "https://isomer-user-content.by.gov.sg/334/4dd1835f-d26b-4967-a4c5-657c92a60767/9476_y26_sy.pdf",
+      "document_version": "Syllabus 9476; first examination in 2026; document © 2024",
+      "issued_at": null,
+      "valid_from": "2026-01-01",
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "14dc57b6504a9121911eeff53d98a3dca6fb19e7a01a1de9801c0a5a44da2145",
+      "license_expression": "LicenseRef-SG-MOE-Cambridge-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "2026 首次考试的新版 9476 官方 PDF 已通过 SEAB 页面、官方 Isomer 内容地址和 46 页正文逐项复核；仅保存元数据、校验值、页码定位和中文释义，不保存正文。"
+    },
+    {
+      "source_id": "src_sg_seab_h2_math_9758_2026",
+      "title": "Singapore-Cambridge GCE Advanced Level H2 Mathematics (Syllabus 9758), examination in 2026",
+      "publisher": "Singapore Examinations and Assessment Board; Singapore Ministry of Education; Cambridge University Press & Assessment",
+      "authority_tier": "A",
+      "verification_status": "verified",
+      "jurisdiction": "SG",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "curriculum_standard",
+      "landing_page_url": "https://www.seab.gov.sg/gce-a-level/a-level-syllabuses-examined-for-school-candidates-2026/",
+      "document_url": "https://www.seab.gov.sg/files/A%20Level%20Syllabus%20Sch%20Cddts/2026/9758_y26_sy.pdf",
+      "document_version": "Syllabus 9758; examination year 2026; document © 2024",
+      "issued_at": null,
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-12-31",
+      "retrieved_at": "2026-07-19",
+      "sha256": "2f43bb5cc5cd857b8509713d7e9ef59920f0fa963b5ac3192baa2254dd966db1",
+      "license_expression": "LicenseRef-SG-MOE-Cambridge-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "2026 学校考生官方页面与 SEAB /files PDF 已由内置浏览器复核；isomer-user-content 旧地址现对终端请求返回 403。仓库只保存元数据、页码定位和释义。"
+    },
+    {
+      "source_id": "src_sg_seab_h2_physics_9478_2026",
+      "title": "Singapore-Cambridge GCE Advanced Level H2 Physics (Syllabus 9478), examination in 2026",
+      "publisher": "Singapore Examinations and Assessment Board; Singapore Ministry of Education; Cambridge University Press & Assessment",
+      "authority_tier": "A",
+      "verification_status": "verified",
+      "jurisdiction": "SG",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "curriculum_standard",
+      "landing_page_url": "https://www.seab.gov.sg/gce-a-level/a-level-syllabuses-examined-for-school-candidates-2026/",
+      "document_url": "https://www.seab.gov.sg/files/A%20Level%20Syllabus%20Sch%20Cddts/2026/9478_y26_sy.pdf",
+      "document_version": "Syllabus 9478; first examination in 2026; document © 2024",
+      "issued_at": null,
+      "valid_from": "2026-01-01",
+      "valid_to": null,
+      "retrieved_at": "2026-07-19",
+      "sha256": "3357dbd709a3abae624f01d3089951b6809cf672c5a590995a5514d6c30db628",
+      "license_expression": "LicenseRef-SG-MOE-Cambridge-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "2026 学校考生官方 PDF 已通过内置浏览器及 isomer 内容地址复核；仓库仅保存元数据、校验值、页码定位和中文释义。"
     },
     {
       "source_id": "src_stanford_cs144_2026",

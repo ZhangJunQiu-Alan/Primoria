@@ -293,7 +293,7 @@ const approvedAddedConceptKeys = new Set([
 ]);
 
 describe("KG governance baseline", () => {
-  it("keeps all 21 graphs and 944 legacy aliases while adding 59 approved A-Level concepts", () => {
+  it("keeps 944 legacy aliases and 59 approved A-Level additions while adding pending China and Singapore graphs", () => {
     const conceptNodes = graphs.flatMap((graph) =>
       graph.nodes
         .filter((node) => node.kind === "concept")
@@ -303,12 +303,76 @@ describe("KG governance baseline", () => {
       concept.aliases.map((alias) => ({ ...alias, canonical_id: concept.canonical_id })),
     );
 
-    expect(graphs).toHaveLength(21);
-    expect(conceptNodes).toHaveLength(1003);
-    expect(aliases).toHaveLength(1003);
-    expect(conceptNodes.filter((node) => !approvedAddedConceptKeys.has(`${node.graph_id}:${node.node_id}`))).toHaveLength(944);
-    expect(new Set(conceptNodes.map((node) => `${node.graph_id}:${node.node_id}`)).size).toBe(1003);
-    expect(new Set(aliases.map((alias) => `${alias.graph_id}:${alias.node_id}`)).size).toBe(1003);
+    const chinaMathGraph = graphs.find((graph) => graph.graph_id === "senior_secondary_mathematics");
+    const chinaMathConcepts = chinaMathGraph?.nodes.filter((node) => node.kind === "concept") ?? [];
+    const singaporeH2MathGraph = graphs.find((graph) => graph.graph_id === "singapore_h2_mathematics");
+    const singaporeH2MathConcepts = singaporeH2MathGraph?.nodes.filter((node) => node.kind === "concept") ?? [];
+    const singaporeH2ChemistryGraph = graphs.find((graph) => graph.graph_id === "singapore_h2_chemistry");
+    const singaporeH2ChemistryConcepts =
+      singaporeH2ChemistryGraph?.nodes.filter((node) => node.kind === "concept") ?? [];
+    const singaporeH2PhysicsGraph = graphs.find((graph) => graph.graph_id === "singapore_h2_physics");
+    const singaporeH2PhysicsConcepts =
+      singaporeH2PhysicsGraph?.nodes.filter((node) => node.kind === "concept") ?? [];
+    const singaporeH2BiologyGraph = graphs.find((graph) => graph.graph_id === "singapore_h2_biology");
+    const singaporeH2BiologyConcepts =
+      singaporeH2BiologyGraph?.nodes.filter((node) => node.kind === "concept") ?? [];
+    const singaporeSecondaryMathGraph = graphs.find(
+      (graph) => graph.graph_id === "singapore_secondary_mathematics",
+    );
+    const singaporeSecondaryMathConcepts =
+      singaporeSecondaryMathGraph?.nodes.filter((node) => node.kind === "concept") ?? [];
+    const singaporeLowerScienceGraph = graphs.find(
+      (graph) => graph.graph_id === "singapore_lower_secondary_science",
+    );
+    const singaporeLowerScienceConcepts =
+      singaporeLowerScienceGraph?.nodes.filter((node) => node.kind === "concept") ?? [];
+    const chinaPhysicsGraph = graphs.find((graph) => graph.graph_id === "senior_secondary_physics");
+    const chinaPhysicsConcepts = chinaPhysicsGraph?.nodes.filter((node) => node.kind === "concept") ?? [];
+    const chinaChemistryGraph = graphs.find((graph) => graph.graph_id === "senior_secondary_chemistry");
+    const chinaChemistryConcepts = chinaChemistryGraph?.nodes.filter((node) => node.kind === "concept") ?? [];
+    const chinaBiologyGraph = graphs.find((graph) => graph.graph_id === "senior_secondary_biology");
+    const chinaBiologyConcepts = chinaBiologyGraph?.nodes.filter((node) => node.kind === "concept") ?? [];
+    const legacyConcepts = conceptNodes.filter(
+      (node) =>
+        node.graph_id !== "senior_secondary_mathematics" &&
+        node.graph_id !== "senior_secondary_biology" &&
+        node.graph_id !== "senior_secondary_chemistry" &&
+        node.graph_id !== "senior_secondary_physics" &&
+        node.graph_id !== "singapore_h2_mathematics" &&
+        node.graph_id !== "singapore_h2_chemistry" &&
+        node.graph_id !== "singapore_h2_physics" &&
+        node.graph_id !== "singapore_h2_biology" &&
+        node.graph_id !== "singapore_secondary_mathematics" &&
+        node.graph_id !== "singapore_lower_secondary_science" &&
+        !approvedAddedConceptKeys.has(`${node.graph_id}:${node.node_id}`),
+    );
+
+    expect(graphs).toHaveLength(31);
+    expect(chinaMathConcepts).toHaveLength(70);
+    expect(chinaMathConcepts.every((node) => node.review_status === "needs_review")).toBe(true);
+    expect(singaporeH2MathConcepts).toHaveLength(33);
+    expect(singaporeH2MathConcepts.every((node) => node.review_status === "needs_review")).toBe(true);
+    expect(singaporeH2ChemistryConcepts).toHaveLength(18);
+    expect(singaporeH2ChemistryConcepts.every((node) => node.review_status === "needs_review")).toBe(true);
+    expect(singaporeH2PhysicsConcepts).toHaveLength(8);
+    expect(singaporeH2PhysicsConcepts.every((node) => node.review_status === "needs_review")).toBe(true);
+    expect(singaporeH2BiologyConcepts).toHaveLength(42);
+    expect(singaporeH2BiologyConcepts.every((node) => node.review_status === "needs_review")).toBe(true);
+    expect(singaporeSecondaryMathConcepts).toHaveLength(53);
+    expect(singaporeSecondaryMathConcepts.every((node) => node.review_status === "needs_review")).toBe(true);
+    expect(singaporeLowerScienceConcepts).toHaveLength(32);
+    expect(singaporeLowerScienceConcepts.every((node) => node.review_status === "needs_review")).toBe(true);
+    expect(chinaPhysicsConcepts).toHaveLength(73);
+    expect(chinaPhysicsConcepts.every((node) => node.review_status === "needs_review")).toBe(true);
+    expect(chinaChemistryConcepts).toHaveLength(49);
+    expect(chinaChemistryConcepts.every((node) => node.review_status === "needs_review")).toBe(true);
+    expect(chinaBiologyConcepts).toHaveLength(75);
+    expect(chinaBiologyConcepts.every((node) => node.review_status === "needs_review")).toBe(true);
+    expect(legacyConcepts).toHaveLength(944);
+    expect(conceptNodes).toHaveLength(1456);
+    expect(aliases).toHaveLength(1456);
+    expect(new Set(conceptNodes.map((node) => `${node.graph_id}:${node.node_id}`)).size).toBe(1456);
+    expect(new Set(aliases.map((alias) => `${alias.graph_id}:${alias.node_id}`)).size).toBe(1456);
     expect(
       aliases
         .map((alias) => `${alias.graph_id}:${alias.node_id}:${alias.canonical_id}`)

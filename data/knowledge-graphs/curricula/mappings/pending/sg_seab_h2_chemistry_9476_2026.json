@@ -1,0 +1,3910 @@
+{
+  "schema_version": "3.0.0",
+  "content_version": "0.4.0",
+  "mapping_set_id": "cms_sg_seab_h2_chemistry_9476_2026_outcomes",
+  "framework_id": "cfw_sg_seab_h2_chemistry_9476_2026_outcomes",
+  "curriculum_id": "cur_sg_seab_h2_chemistry_9476_2026",
+  "subject": "Chemistry",
+  "source_ids": [
+    "src_sg_seab_h2_chemistry_9476_2026"
+  ],
+  "mapping_scope": "outcome_coverage",
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.3.0",
+      "date": "2026-07-19",
+      "summary_zh": "逐项映射 194 项学科成果，分流 8 项实验或跨主题实践，并保守登记 21 项概念覆盖缺口。"
+    },
+    {
+      "version": "0.4.0",
+      "date": "2026-07-19",
+      "summary_zh": "将 21 项 H2 化学缺口解析为 18 个概念；193 项非实践成果全部达到 full，8 项实践继续保持 excluded。"
+    }
+  ],
+  "mappings": [
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_1_a",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_1_a",
+      "canonical_ids": [
+        "pc_d3750ab7dae24f534aee9f39f91e5f71"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.13, topic 1 Atomic Structure, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_1_b",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_1_b",
+      "canonical_ids": [
+        "pc_d3750ab7dae24f534aee9f39f91e5f71"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.13, topic 1 Atomic Structure, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_1_c",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_1_c",
+      "canonical_ids": [
+        "pc_d3750ab7dae24f534aee9f39f91e5f71"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.13, topic 1 Atomic Structure, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_1_d",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_1_d",
+      "canonical_ids": [
+        "pc_d3750ab7dae24f534aee9f39f91e5f71"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.13, topic 1 Atomic Structure, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_1_e",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_1_e",
+      "canonical_ids": [
+        "pc_d3750ab7dae24f534aee9f39f91e5f71",
+        "pc_6a27f090d384dbc6be61017193c58dae"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.13, topic 1 Atomic Structure, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_1_f",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_1_f",
+      "canonical_ids": [
+        "pc_4ee1addaa1bb88db1bc738c8909840bb"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.13, topic 1 Atomic Structure, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_1_g",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_1_g",
+      "canonical_ids": [
+        "pc_c68d18c005adce683dffeb83cd4cb895"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.13, topic 1 Atomic Structure, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_1_h",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_1_h",
+      "canonical_ids": [
+        "pc_4ee1addaa1bb88db1bc738c8909840bb"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.13, topic 1 Atomic Structure, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_1_i",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_1_i",
+      "canonical_ids": [
+        "pc_4e357bba20ab4ba89207b97a6dc2e610"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.13, topic 1 Atomic Structure, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_1_j",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_1_j",
+      "canonical_ids": [
+        "pc_4e357bba20ab4ba89207b97a6dc2e610",
+        "pc_4ee1addaa1bb88db1bc738c8909840bb"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.13, topic 1 Atomic Structure, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_1_k",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_1_k",
+      "canonical_ids": [
+        "pc_4e357bba20ab4ba89207b97a6dc2e610",
+        "pc_d8222e150de1d5b8d93389c00a07fabe"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.13, topic 1 Atomic Structure, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_a",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_a",
+      "canonical_ids": [
+        "pc_4b92b05bd4662531b6bc415778fee240",
+        "pc_76c78ee2b35eca2b943816eb56dbac2a",
+        "pc_f2a9c19ab3c922280139d1ca1fda33ba"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_b",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_b",
+      "canonical_ids": [
+        "pc_4b92b05bd4662531b6bc415778fee240",
+        "pc_76c78ee2b35eca2b943816eb56dbac2a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_c",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_c",
+      "canonical_ids": [
+        "pc_76c78ee2b35eca2b943816eb56dbac2a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_d",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_d",
+      "canonical_ids": [
+        "pc_efe51eb9f4ef6303c37411a09a459344"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_e",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_e",
+      "canonical_ids": [
+        "pc_efe51eb9f4ef6303c37411a09a459344"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_f",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_f",
+      "canonical_ids": [
+        "pc_eed2c090eb2027bca1d0484dc93fee0f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_g",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_g",
+      "canonical_ids": [
+        "pc_eed2c090eb2027bca1d0484dc93fee0f",
+        "pc_efe51eb9f4ef6303c37411a09a459344"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_h",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_h",
+      "canonical_ids": [
+        "pc_614f3b0e205dabe62760af3243c960e1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_i",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_i",
+      "canonical_ids": [
+        "pc_614f3b0e205dabe62760af3243c960e1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_j",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_j",
+      "canonical_ids": [
+        "pc_b35d6548b40342a4e7e95af4650c7349"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.15, topic 2 Chemical Bonding, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_k",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_k",
+      "canonical_ids": [
+        "pc_b35d6548b40342a4e7e95af4650c7349",
+        "pc_eed2c090eb2027bca1d0484dc93fee0f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.15, topic 2 Chemical Bonding, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_l",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_l",
+      "canonical_ids": [
+        "pc_a4b86c05308a1e5a1bda8192168cddbc"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.15, topic 2 Chemical Bonding, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_m",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_m",
+      "canonical_ids": [
+        "pc_a4b86c05308a1e5a1bda8192168cddbc"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.15, topic 2 Chemical Bonding, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_n",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_n",
+      "canonical_ids": [
+        "pc_a4b86c05308a1e5a1bda8192168cddbc"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.15, topic 2 Chemical Bonding, outcome (n)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_3_a",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_3_a",
+      "canonical_ids": [
+        "pc_18388a54522ee3202a5121faa939f897"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.15, topic 3 The Gaseous State, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_3_b",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_3_b",
+      "canonical_ids": [
+        "pc_18388a54522ee3202a5121faa939f897"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.15, topic 3 The Gaseous State, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_3_c",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_3_c",
+      "canonical_ids": [
+        "pc_18388a54522ee3202a5121faa939f897"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.15, topic 3 The Gaseous State, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_3_d",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_3_d",
+      "canonical_ids": [
+        "pc_7d39e3cc0d5dad70557185c466c60fdd"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_7d39e3cc0d5dad70557185c466c60fdd 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.15, topic 3 The Gaseous State, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_4_a",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_4_a",
+      "canonical_ids": [
+        "pc_e349920621ebd3ae42cabdebf4f12b67"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_e349920621ebd3ae42cabdebf4f12b67 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.15, topic 4 Theories of Acids and Bases, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_4_b",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_4_b",
+      "canonical_ids": [
+        "pc_e0e23323fa5580b7eaff3277d809f5b1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.16, topic 4 Theories of Acids and Bases, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_4_c",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_4_c",
+      "canonical_ids": [
+        "pc_e349920621ebd3ae42cabdebf4f12b67"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_e349920621ebd3ae42cabdebf4f12b67 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.16, topic 4 Theories of Acids and Bases, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_5_a",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_5_a",
+      "canonical_ids": [
+        "pc_4ee1addaa1bb88db1bc738c8909840bb",
+        "pc_d8222e150de1d5b8d93389c00a07fabe"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.16, topic 5 The Periodic Table, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_5_b",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_5_b",
+      "canonical_ids": [
+        "pc_d8222e150de1d5b8d93389c00a07fabe",
+        "pc_4e357bba20ab4ba89207b97a6dc2e610"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.16, topic 5 The Periodic Table, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_5_c",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_5_c",
+      "canonical_ids": [
+        "pc_d8222e150de1d5b8d93389c00a07fabe",
+        "pc_a4b86c05308a1e5a1bda8192168cddbc"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.16, topic 5 The Periodic Table, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_5_d",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_5_d",
+      "canonical_ids": [
+        "pc_89785b3e05b48942229592971697422a",
+        "pc_614f3b0e205dabe62760af3243c960e1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.16, topic 5 The Periodic Table, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_5_e",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_5_e",
+      "canonical_ids": [
+        "pc_c4ce91b9f4d4bfaccf0f26f7514f8896"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.16, topic 5 The Periodic Table, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_5_f",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_5_f",
+      "canonical_ids": [
+        "pc_a6e7944a78479506d087a525f81e2e58",
+        "pc_89785b3e05b48942229592971697422a",
+        "pc_bfa955bbd69e70b920c7ee7eb712d904"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.17, topic 5 The Periodic Table, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_5_g",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_5_g",
+      "canonical_ids": [
+        "pc_a6e7944a78479506d087a525f81e2e58",
+        "pc_89785b3e05b48942229592971697422a",
+        "pc_b35d6548b40342a4e7e95af4650c7349"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.17, topic 5 The Periodic Table, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_5_h",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_5_h",
+      "canonical_ids": [
+        "pc_d8222e150de1d5b8d93389c00a07fabe"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.17, topic 5 The Periodic Table, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_5_i",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_5_i",
+      "canonical_ids": [
+        "pc_d8222e150de1d5b8d93389c00a07fabe"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.17, topic 5 The Periodic Table, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_6_a",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_6_a",
+      "canonical_ids": [
+        "pc_7dba846520d7d616e9cf39e1d16905b3"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.18, topic 6 The Mole Concept and Stoichiometry, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_6_b",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_6_b",
+      "canonical_ids": [
+        "pc_df12800116ac8b3b4f1232118ed6a5e6"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.18, topic 6 The Mole Concept and Stoichiometry, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_6_c",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_6_c",
+      "canonical_ids": [
+        "pc_7dba846520d7d616e9cf39e1d16905b3",
+        "pc_6a27f090d384dbc6be61017193c58dae"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.18, topic 6 The Mole Concept and Stoichiometry, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_6_d",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_6_d",
+      "canonical_ids": [
+        "pc_f143886b125448b751d8adcc1cc7aaa9"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.18, topic 6 The Mole Concept and Stoichiometry, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_6_e",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_6_e",
+      "canonical_ids": [
+        "pc_f143886b125448b751d8adcc1cc7aaa9"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.18, topic 6 The Mole Concept and Stoichiometry, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_6_f",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_6_f",
+      "canonical_ids": [
+        "pc_f143886b125448b751d8adcc1cc7aaa9",
+        "pc_ebe03cb9fd9f38885b0b5f72e57af97f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.18, topic 6 The Mole Concept and Stoichiometry, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_6_g",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_6_g",
+      "canonical_ids": [
+        "pc_ebe03cb9fd9f38885b0b5f72e57af97f",
+        "pc_40e84973ce28c8bfbe369bab4f213754"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.18, topic 6 The Mole Concept and Stoichiometry, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_6_h",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_6_h",
+      "canonical_ids": [
+        "pc_ebe03cb9fd9f38885b0b5f72e57af97f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.18, topic 6 The Mole Concept and Stoichiometry, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_a",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_a",
+      "canonical_ids": [
+        "pc_e69d28c59b3a7c85a8366e77b73f49d0",
+        "pc_b35d6548b40342a4e7e95af4650c7349"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.18, topic 7 Chemical Energetics, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_b",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_b",
+      "canonical_ids": [
+        "pc_e69d28c59b3a7c85a8366e77b73f49d0"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_c",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_c",
+      "canonical_ids": [
+        "pc_e69d28c59b3a7c85a8366e77b73f49d0",
+        "pc_b35d6548b40342a4e7e95af4650c7349",
+        "pc_b07a0adc94a1badb983bbfc538a4e611"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_d",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_d",
+      "canonical_ids": [
+        "pc_15992a7e0497388298726130f75cad83"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_e",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_e",
+      "canonical_ids": [
+        "pc_57a133d096ce11555111fb8bc61b0ffb"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_57a133d096ce11555111fb8bc61b0ffb 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_f",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_f",
+      "canonical_ids": [
+        "pc_5228fc493b409be3407c6661aed3da92",
+        "pc_b07a0adc94a1badb983bbfc538a4e611"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_g",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_g",
+      "canonical_ids": [
+        "pc_796efe527a46546cb476af1d40c1c1f5"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_h",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_h",
+      "canonical_ids": [
+        "pc_796efe527a46546cb476af1d40c1c1f5"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_i",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_i",
+      "canonical_ids": [
+        "pc_796efe527a46546cb476af1d40c1c1f5"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_j",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_j",
+      "canonical_ids": [
+        "pc_c912d7aa7e95cc5c77a18f6f5aae0a0c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_k",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_k",
+      "canonical_ids": [
+        "pc_c912d7aa7e95cc5c77a18f6f5aae0a0c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_l",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_l",
+      "canonical_ids": [
+        "pc_07b55d0cfd5599dbd5c011cf702082bf"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_07b55d0cfd5599dbd5c011cf702082bf 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_m",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_m",
+      "canonical_ids": [
+        "pc_c912d7aa7e95cc5c77a18f6f5aae0a0c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_8_a",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_8_a",
+      "canonical_ids": [
+        "pc_9149d04521bbf394cffde8a4040d28ed",
+        "pc_291961cf58135ba94c28bbda239d23ec",
+        "pc_cb40576691a93cdc979f318c9e746398",
+        "pc_3acf09a2d45e4a4379136a369085e5f8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_8_b",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_8_b",
+      "canonical_ids": [
+        "pc_291961cf58135ba94c28bbda239d23ec",
+        "pc_cb40576691a93cdc979f318c9e746398"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_8_c",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_8_c",
+      "canonical_ids": [
+        "pc_291961cf58135ba94c28bbda239d23ec"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_8_d",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_8_d",
+      "canonical_ids": [
+        "pc_291961cf58135ba94c28bbda239d23ec"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_8_e",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_8_e",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是可观察的实验设计实践，应进入教学与评测知识层，而不是独立概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_8_f",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_8_f",
+      "canonical_ids": [
+        "pc_2a4571ab0da3a12f57b0c311f63f1bee"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_8_g",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_8_g",
+      "canonical_ids": [
+        "pc_04253132571da061a274475a1620d120"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_8_h",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_8_h",
+      "canonical_ids": [
+        "pc_04253132571da061a274475a1620d120",
+        "pc_2a4571ab0da3a12f57b0c311f63f1bee"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_8_i",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_8_i",
+      "canonical_ids": [
+        "pc_3acf09a2d45e4a4379136a369085e5f8",
+        "pc_04253132571da061a274475a1620d120"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_8_j",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_8_j",
+      "canonical_ids": [
+        "pc_3acf09a2d45e4a4379136a369085e5f8",
+        "pc_c48d9a41a4f7fd5a7ddc4ca53ba4a7ac"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_8_k",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_8_k",
+      "canonical_ids": [
+        "pc_87c55b2fc3a957385772212c65ab3929"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_87c55b2fc3a957385772212c65ab3929 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.21, topic 8 Reaction Kinetics, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_9_a",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_9_a",
+      "canonical_ids": [
+        "pc_f2db072d9b9ecf3925965c5aec1b340e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.21, topic 9 Chemical Equilibria, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_9_b",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_9_b",
+      "canonical_ids": [
+        "pc_11136627f33775e0a74e8d42c8e86361"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.21, topic 9 Chemical Equilibria, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_9_c",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_9_c",
+      "canonical_ids": [
+        "pc_11136627f33775e0a74e8d42c8e86361",
+        "pc_4386477346f4fa3dfe6f31ec2435e3b2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.21, topic 9 Chemical Equilibria, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_9_d",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_9_d",
+      "canonical_ids": [
+        "pc_4386477346f4fa3dfe6f31ec2435e3b2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.21, topic 9 Chemical Equilibria, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_9_e",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_9_e",
+      "canonical_ids": [
+        "pc_4386477346f4fa3dfe6f31ec2435e3b2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.21, topic 9 Chemical Equilibria, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_9_f",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_9_f",
+      "canonical_ids": [
+        "pc_4386477346f4fa3dfe6f31ec2435e3b2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.21, topic 9 Chemical Equilibria, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_9_g",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_9_g",
+      "canonical_ids": [
+        "pc_11136627f33775e0a74e8d42c8e86361",
+        "pc_3acf09a2d45e4a4379136a369085e5f8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.21, topic 9 Chemical Equilibria, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_10_1_a",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_10_1_a",
+      "canonical_ids": [
+        "pc_f6b7711a788cbc8c837f448c591f0fa4"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_10_1_b",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_10_1_b",
+      "canonical_ids": [
+        "pc_25a151cded112622c6511c38293ea36f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_25a151cded112622c6511c38293ea36f 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_10_1_c",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_10_1_c",
+      "canonical_ids": [
+        "pc_77fa4fcddfbfac708e8026c8cc77b391",
+        "pc_f6b7711a788cbc8c837f448c591f0fa4"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_10_1_d",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_10_1_d",
+      "canonical_ids": [
+        "pc_8d1c44cf2a5bd1f8942eddce18c0704b"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_8d1c44cf2a5bd1f8942eddce18c0704b 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_10_1_e",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_10_1_e",
+      "canonical_ids": [
+        "pc_8d1c44cf2a5bd1f8942eddce18c0704b"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_8d1c44cf2a5bd1f8942eddce18c0704b 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_10_1_f",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_10_1_f",
+      "canonical_ids": [
+        "pc_9b34bdf046e84b83e6eb72fb0ba9718b"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_9b34bdf046e84b83e6eb72fb0ba9718b 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_10_1_g",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_10_1_g",
+      "canonical_ids": [
+        "pc_82c006666402fb0151977a37993a8809",
+        "pc_77fa4fcddfbfac708e8026c8cc77b391"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_10_2_a",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_10_2_a",
+      "canonical_ids": [
+        "pc_a4e09c1b07331a56753ee7884854992a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_2 Solubility Equilibria, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_10_2_b",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_10_2_b",
+      "canonical_ids": [
+        "pc_a4e09c1b07331a56753ee7884854992a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_2 Solubility Equilibria, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_10_2_c",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_10_2_c",
+      "canonical_ids": [
+        "pc_67e0b7f2de055a585de0d8a32c508d20"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_67e0b7f2de055a585de0d8a32c508d20 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.23, topic 10_2 Solubility Equilibria, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_1_a",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_1_a",
+      "canonical_ids": [
+        "pc_b7cf8d670e2f37db41a760a401141534",
+        "pc_0b65c6a9710a1310be1f9b285ed88e74"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.25, topic 11_1 Organic Chemistry Introduction, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_1_b",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_1_b",
+      "canonical_ids": [
+        "pc_76c78ee2b35eca2b943816eb56dbac2a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.25, topic 11_1 Organic Chemistry Introduction, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_1_c",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_1_c",
+      "canonical_ids": [
+        "pc_76c78ee2b35eca2b943816eb56dbac2a",
+        "pc_efe51eb9f4ef6303c37411a09a459344"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.25, topic 11_1 Organic Chemistry Introduction, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_1_d",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_1_d",
+      "canonical_ids": [
+        "pc_76c78ee2b35eca2b943816eb56dbac2a",
+        "pc_efe51eb9f4ef6303c37411a09a459344"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.25, topic 11_1 Organic Chemistry Introduction, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_2_a",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_2_a",
+      "canonical_ids": [
+        "pc_e3ad1e8ae27f757ccf5d59c333f04d7a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_2_b",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_2_b",
+      "canonical_ids": [
+        "pc_e3ad1e8ae27f757ccf5d59c333f04d7a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_2_c",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_2_c",
+      "canonical_ids": [
+        "pc_e3ad1e8ae27f757ccf5d59c333f04d7a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_2_d",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_2_d",
+      "canonical_ids": [
+        "pc_e3ad1e8ae27f757ccf5d59c333f04d7a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_2_e",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_2_e",
+      "canonical_ids": [
+        "pc_e3ad1e8ae27f757ccf5d59c333f04d7a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_2_f",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_2_f",
+      "canonical_ids": [
+        "pc_e3ad1e8ae27f757ccf5d59c333f04d7a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_2_g",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_2_g",
+      "canonical_ids": [
+        "pc_e3ad1e8ae27f757ccf5d59c333f04d7a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_2_h",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_2_h",
+      "canonical_ids": [
+        "pc_e3ad1e8ae27f757ccf5d59c333f04d7a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_2_i",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_2_i",
+      "canonical_ids": [
+        "pc_e3ad1e8ae27f757ccf5d59c333f04d7a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_2_j",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_2_j",
+      "canonical_ids": [
+        "pc_e3ad1e8ae27f757ccf5d59c333f04d7a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_a",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_a",
+      "canonical_ids": [
+        "pc_f04539036aca6084074f399276e5f01d",
+        "pc_9826358783352bf325f9299146a78a37"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_b",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_b",
+      "canonical_ids": [
+        "pc_0cc9920d6c67e98c3dd9404cd91f8510"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_0cc9920d6c67e98c3dd9404cd91f8510 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_c",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_c",
+      "canonical_ids": [
+        "pc_25af0b0d2ddbcd075e92f8f6d504dc1a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_d",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_d",
+      "canonical_ids": [
+        "pc_ae2a8392fd9b93c33bc41d65e28fa8dc"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_e",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_e",
+      "canonical_ids": [
+        "pc_d67a8e73f965a59d3be0c55d71b80819"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_f",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_f",
+      "canonical_ids": [
+        "pc_0d3043e5274fde266129817ca29a57f7"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_g",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_g",
+      "canonical_ids": [
+        "pc_0d3043e5274fde266129817ca29a57f7",
+        "pc_d67a8e73f965a59d3be0c55d71b80819"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_h",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_h",
+      "canonical_ids": [
+        "pc_0c458f45bd014438bcb506f21ad5e902",
+        "pc_823cebac5cc9eb243690a3fd84a6fda0"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_i",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_i",
+      "canonical_ids": [
+        "pc_9826358783352bf325f9299146a78a37",
+        "pc_f04539036aca6084074f399276e5f01d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_j",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_j",
+      "canonical_ids": [
+        "pc_9826358783352bf325f9299146a78a37"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_k",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_k",
+      "canonical_ids": [
+        "pc_f04539036aca6084074f399276e5f01d",
+        "pc_25af0b0d2ddbcd075e92f8f6d504dc1a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.27, topic 11_3 Organic Reactions and Mechanisms, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_l",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_l",
+      "canonical_ids": [
+        "pc_ae2a8392fd9b93c33bc41d65e28fa8dc",
+        "pc_9826358783352bf325f9299146a78a37"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.27, topic 11_3 Organic Reactions and Mechanisms, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_m",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_m",
+      "canonical_ids": [
+        "pc_5994fcd6bac7f4fb2932ed47bb531cac",
+        "pc_d67a8e73f965a59d3be0c55d71b80819"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.27, topic 11_3 Organic Reactions and Mechanisms, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_n",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_n",
+      "canonical_ids": [
+        "pc_0d3043e5274fde266129817ca29a57f7"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.27, topic 11_3 Organic Reactions and Mechanisms, outcome (n)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_o",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_o",
+      "canonical_ids": [
+        "pc_823cebac5cc9eb243690a3fd84a6fda0",
+        "pc_0c458f45bd014438bcb506f21ad5e902"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.27, topic 11_3 Organic Reactions and Mechanisms, outcome (o)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_4_a",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_4_a",
+      "canonical_ids": [
+        "pc_25af0b0d2ddbcd075e92f8f6d504dc1a",
+        "pc_f04539036aca6084074f399276e5f01d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.28, topic 11_4 Hydrocarbons, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_4_b",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_4_b",
+      "canonical_ids": [
+        "pc_ae2a8392fd9b93c33bc41d65e28fa8dc"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.28, topic 11_4 Hydrocarbons, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_4_c",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_4_c",
+      "canonical_ids": [
+        "pc_ae2a8392fd9b93c33bc41d65e28fa8dc"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_4 Hydrocarbons, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_4_d",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_4_d",
+      "canonical_ids": [
+        "pc_5994fcd6bac7f4fb2932ed47bb531cac",
+        "pc_d67a8e73f965a59d3be0c55d71b80819"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_4 Hydrocarbons, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_4_e",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_4_e",
+      "canonical_ids": [
+        "pc_25af0b0d2ddbcd075e92f8f6d504dc1a",
+        "pc_d67a8e73f965a59d3be0c55d71b80819"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_4 Hydrocarbons, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_4_f",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_4_f",
+      "canonical_ids": [
+        "pc_d67a8e73f965a59d3be0c55d71b80819",
+        "pc_5994fcd6bac7f4fb2932ed47bb531cac"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_4 Hydrocarbons, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_4_g",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_4_g",
+      "canonical_ids": [
+        "pc_5994fcd6bac7f4fb2932ed47bb531cac"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_4 Hydrocarbons, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_4_h",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_4_h",
+      "canonical_ids": [
+        "pc_bd4d1bfb66e3b10472e49fdc81a72eef"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_bd4d1bfb66e3b10472e49fdc81a72eef 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_4 Hydrocarbons, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_5_a",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_5_a",
+      "canonical_ids": [
+        "pc_0d3043e5274fde266129817ca29a57f7",
+        "pc_aa4bce8524adca25c22fe40ce6e9f542",
+        "pc_823cebac5cc9eb243690a3fd84a6fda0",
+        "pc_1472e2980e7244beb53eecfa3bcd4051"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_5 Halogen Derivatives, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_5_b",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_5_b",
+      "canonical_ids": [
+        "pc_146233f82cd4fdbdf0addf3541ab2779"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_146233f82cd4fdbdf0addf3541ab2779 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_5 Halogen Derivatives, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_5_c",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_5_c",
+      "canonical_ids": [
+        "pc_0d3043e5274fde266129817ca29a57f7",
+        "pc_89785b3e05b48942229592971697422a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_5 Halogen Derivatives, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_5_d",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_5_d",
+      "canonical_ids": [
+        "pc_0d3043e5274fde266129817ca29a57f7"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_5 Halogen Derivatives, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_5_e",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_5_e",
+      "canonical_ids": [
+        "pc_3fac0ca9aef16809a14f9562a720c6f1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_3fac0ca9aef16809a14f9562a720c6f1 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_5 Halogen Derivatives, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_6_a",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_6_a",
+      "canonical_ids": [
+        "pc_42ea5b997cbab553b5f29d052a9d06aa",
+        "pc_3ebd79c190b474a0044f5c7d9e8cd92f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_6 Hydroxy Compounds, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_6_b",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_6_b",
+      "canonical_ids": [
+        "pc_42ea5b997cbab553b5f29d052a9d06aa",
+        "pc_3ebd79c190b474a0044f5c7d9e8cd92f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_6 Hydroxy Compounds, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_6_c",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_6_c",
+      "canonical_ids": [
+        "pc_e98424171f151c698ea7358b432dc4e2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_6 Hydroxy Compounds, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_6_d",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_6_d",
+      "canonical_ids": [
+        "pc_306df7f024993644203ea5a1f13ff904",
+        "pc_1a0fc6f9c22a749712e97711b0fdd625"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.30, topic 11_6 Hydroxy Compounds, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_6_e",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_6_e",
+      "canonical_ids": [
+        "pc_306df7f024993644203ea5a1f13ff904",
+        "pc_e0e23323fa5580b7eaff3277d809f5b1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.30, topic 11_6 Hydroxy Compounds, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_7_a",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_7_a",
+      "canonical_ids": [
+        "pc_0c458f45bd014438bcb506f21ad5e902",
+        "pc_3ebd79c190b474a0044f5c7d9e8cd92f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_7 Carbonyl Compounds, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_7_b",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_7_b",
+      "canonical_ids": [
+        "pc_0c458f45bd014438bcb506f21ad5e902",
+        "pc_823cebac5cc9eb243690a3fd84a6fda0"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_7 Carbonyl Compounds, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_7_c",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_7_c",
+      "canonical_ids": [
+        "pc_0c458f45bd014438bcb506f21ad5e902"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_7 Carbonyl Compounds, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_7_d",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_7_d",
+      "canonical_ids": [
+        "pc_0c458f45bd014438bcb506f21ad5e902"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_7 Carbonyl Compounds, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_7_e",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_7_e",
+      "canonical_ids": [
+        "pc_e98424171f151c698ea7358b432dc4e2",
+        "pc_0c458f45bd014438bcb506f21ad5e902"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_7 Carbonyl Compounds, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_8_a",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_8_a",
+      "canonical_ids": [
+        "pc_3f37112bc196b1765029aad7952026ca",
+        "pc_823cebac5cc9eb243690a3fd84a6fda0"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_8 Carboxylic Acids and Derivatives, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_8_b",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_8_b",
+      "canonical_ids": [
+        "pc_3f37112bc196b1765029aad7952026ca",
+        "pc_c9da2c88a8c94e76a31e705076b2a010"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_8 Carboxylic Acids and Derivatives, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_8_c",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_8_c",
+      "canonical_ids": [
+        "pc_3f37112bc196b1765029aad7952026ca"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_8 Carboxylic Acids and Derivatives, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_8_d",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_8_d",
+      "canonical_ids": [
+        "pc_c9da2c88a8c94e76a31e705076b2a010"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_8 Carboxylic Acids and Derivatives, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_8_e",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_8_e",
+      "canonical_ids": [
+        "pc_c9da2c88a8c94e76a31e705076b2a010",
+        "pc_54969456882eab85ca38b2957992a4aa"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_8 Carboxylic Acids and Derivatives, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_8_f",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_8_f",
+      "canonical_ids": [
+        "pc_c9da2c88a8c94e76a31e705076b2a010",
+        "pc_0d3043e5274fde266129817ca29a57f7"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_8 Carboxylic Acids and Derivatives, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_8_g",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_8_g",
+      "canonical_ids": [
+        "pc_c9da2c88a8c94e76a31e705076b2a010"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_8 Carboxylic Acids and Derivatives, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_8_h",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_8_h",
+      "canonical_ids": [
+        "pc_c9da2c88a8c94e76a31e705076b2a010"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_8 Carboxylic Acids and Derivatives, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_9_a",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_9_a",
+      "canonical_ids": [
+        "pc_1472e2980e7244beb53eecfa3bcd4051",
+        "pc_54969456882eab85ca38b2957992a4aa",
+        "pc_823cebac5cc9eb243690a3fd84a6fda0"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_9 Nitrogen Compounds, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_9_b",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_9_b",
+      "canonical_ids": [
+        "pc_1472e2980e7244beb53eecfa3bcd4051"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_9 Nitrogen Compounds, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_9_c",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_9_c",
+      "canonical_ids": [
+        "pc_1472e2980e7244beb53eecfa3bcd4051"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_9 Nitrogen Compounds, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_9_d",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_9_d",
+      "canonical_ids": [
+        "pc_1472e2980e7244beb53eecfa3bcd4051"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.32, topic 11_9 Nitrogen Compounds, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_9_e",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_9_e",
+      "canonical_ids": [
+        "pc_1472e2980e7244beb53eecfa3bcd4051"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.32, topic 11_9 Nitrogen Compounds, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_9_f",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_9_f",
+      "canonical_ids": [
+        "pc_54969456882eab85ca38b2957992a4aa"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.32, topic 11_9 Nitrogen Compounds, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_9_g",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_9_g",
+      "canonical_ids": [
+        "pc_54969456882eab85ca38b2957992a4aa"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.32, topic 11_9 Nitrogen Compounds, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_9_h",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_9_h",
+      "canonical_ids": [
+        "pc_54969456882eab85ca38b2957992a4aa"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.32, topic 11_9 Nitrogen Compounds, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_9_i",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_9_i",
+      "canonical_ids": [
+        "pc_ae3e202342d0768f17e63d904381b461"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.32, topic 11_9 Nitrogen Compounds, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_10_a",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_10_a",
+      "canonical_ids": [
+        "pc_cd9220ccd4a94d9511b50e51680a585c",
+        "pc_4fa4bd24c7e8cdf839921a3fb5f37bde"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.32, topic 11_10 Polymers, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_10_b",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_10_b",
+      "canonical_ids": [
+        "pc_cd9220ccd4a94d9511b50e51680a585c",
+        "pc_4fa4bd24c7e8cdf839921a3fb5f37bde"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.32, topic 11_10 Polymers, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_10_c",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_10_c",
+      "canonical_ids": [
+        "pc_ae3e202342d0768f17e63d904381b461",
+        "pc_4fa4bd24c7e8cdf839921a3fb5f37bde"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.32, topic 11_10 Polymers, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_10_d",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_10_d",
+      "canonical_ids": [
+        "pc_ae3e202342d0768f17e63d904381b461"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.32, topic 11_10 Polymers, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_10_e",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_10_e",
+      "canonical_ids": [
+        "pc_cd9220ccd4a94d9511b50e51680a585c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.32, topic 11_10 Polymers, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_10_f",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_10_f",
+      "canonical_ids": [
+        "pc_4fa4bd24c7e8cdf839921a3fb5f37bde"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.32, topic 11_10 Polymers, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_10_g",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_10_g",
+      "canonical_ids": [
+        "pc_96b9e7054c566e5de380ab0cd98a508b"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_96b9e7054c566e5de380ab0cd98a508b 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 11_10 Polymers, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_a",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_a",
+      "canonical_ids": [
+        "pc_042f315c4fd69794846195086e9611ec",
+        "pc_4b8778a639899b2be00ad35d38df1699"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_b",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_b",
+      "canonical_ids": [
+        "pc_bfa955bbd69e70b920c7ee7eb712d904",
+        "pc_ddaa179ab823ea748d4ad05e53ee9187"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_c",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_c",
+      "canonical_ids": [
+        "pc_bfa955bbd69e70b920c7ee7eb712d904"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_d",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_d",
+      "canonical_ids": [
+        "pc_bfa955bbd69e70b920c7ee7eb712d904"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_e",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_e",
+      "canonical_ids": [
+        "pc_ddaa179ab823ea748d4ad05e53ee9187",
+        "pc_bfa955bbd69e70b920c7ee7eb712d904"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_f",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_f",
+      "canonical_ids": [
+        "pc_ddaa179ab823ea748d4ad05e53ee9187"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_g",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_g",
+      "canonical_ids": [
+        "pc_07b55d0cfd5599dbd5c011cf702082bf"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_07b55d0cfd5599dbd5c011cf702082bf 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_h",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_h",
+      "canonical_ids": [
+        "pc_4b8778a639899b2be00ad35d38df1699"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_i",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_i",
+      "canonical_ids": [
+        "pc_c912d7aa7e95cc5c77a18f6f5aae0a0c",
+        "pc_ddaa179ab823ea748d4ad05e53ee9187"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_j",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_j",
+      "canonical_ids": [
+        "pc_8464330d881b25624fdd2e71b0ffb90e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_8464330d881b25624fdd2e71b0ffb90e 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_k",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_k",
+      "canonical_ids": [
+        "pc_ddaa179ab823ea748d4ad05e53ee9187"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_l",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_l",
+      "canonical_ids": [
+        "pc_4375fb1d523a4b08df3b42fab0c0642e",
+        "pc_df12800116ac8b3b4f1232118ed6a5e6"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_m",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_m",
+      "canonical_ids": [
+        "pc_4375fb1d523a4b08df3b42fab0c0642e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_n",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_n",
+      "canonical_ids": [
+        "pc_4375fb1d523a4b08df3b42fab0c0642e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 12 Electrochemistry, outcome (n)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_o",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_o",
+      "canonical_ids": [
+        "pc_666ec83467e2fd50bdae1ffb00690078"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_666ec83467e2fd50bdae1ffb00690078 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 12 Electrochemistry, outcome (o)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_a",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_a",
+      "canonical_ids": [
+        "pc_db9856c274d202c3b699aa0300f025f9"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_b",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_b",
+      "canonical_ids": [
+        "pc_db9856c274d202c3b699aa0300f025f9",
+        "pc_4ee1addaa1bb88db1bc738c8909840bb"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_c",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_c",
+      "canonical_ids": [
+        "pc_93d9babd0894b9a85da3874f2c9e6228"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_93d9babd0894b9a85da3874f2c9e6228 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_d",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_d",
+      "canonical_ids": [
+        "pc_db9856c274d202c3b699aa0300f025f9"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_e",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_e",
+      "canonical_ids": [
+        "pc_db9856c274d202c3b699aa0300f025f9"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_f",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_f",
+      "canonical_ids": [
+        "pc_db9856c274d202c3b699aa0300f025f9",
+        "pc_4ee1addaa1bb88db1bc738c8909840bb"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_g",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_g",
+      "canonical_ids": [
+        "pc_db9856c274d202c3b699aa0300f025f9",
+        "pc_4b8778a639899b2be00ad35d38df1699"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_h",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_h",
+      "canonical_ids": [
+        "pc_db9856c274d202c3b699aa0300f025f9",
+        "pc_bfa955bbd69e70b920c7ee7eb712d904"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_i",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_i",
+      "canonical_ids": [
+        "pc_1701653e84db7e3257e7e55c4b77abdc"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_j",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_j",
+      "canonical_ids": [
+        "pc_3e5fd22316ea97b5c19b13761d4d624b"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_3e5fd22316ea97b5c19b13761d4d624b 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_k",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_k",
+      "canonical_ids": [
+        "pc_7a5e53969c10be449d1bf85837722d5a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_l",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_l",
+      "canonical_ids": [
+        "pc_7a5e53969c10be449d1bf85837722d5a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_m",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_m",
+      "canonical_ids": [
+        "pc_7a5e53969c10be449d1bf85837722d5a",
+        "pc_3acf09a2d45e4a4379136a369085e5f8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_practice_pos_wotd",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_practice_pos_wotd",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是跨主题科学实践或实验能力，进入教学与评测知识层，不作为化学概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.4, Practices of Science, component 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_practice_pos_nos",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_practice_pos_nos",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是跨主题科学实践或实验能力，进入教学与评测知识层，不作为化学概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.4, Practices of Science, component 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_practice_pos_stse",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_practice_pos_stse",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是跨主题科学实践或实验能力，进入教学与评测知识层，不作为化学概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.4, Practices of Science, component 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_practice_practical_planning",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_practice_practical_planning",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是跨主题科学实践或实验能力，进入教学与评测知识层，不作为化学概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.36, Practical Assessment, Planning; assessment summary on p.9"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_practice_practical_mmo",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_practice_practical_mmo",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是跨主题科学实践或实验能力，进入教学与评测知识层，不作为化学概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.36, Practical Assessment, MMO; assessment summary on p.9"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_practice_practical_pdo",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_practice_practical_pdo",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是跨主题科学实践或实验能力，进入教学与评测知识层，不作为化学概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.37, Practical Assessment, PDO; assessment summary on p.9"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_chemistry_9476_2026_o_practice_practical_ace",
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_practice_practical_ace",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是跨主题科学实践或实验能力，进入教学与评测知识层，不作为化学概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.37, Practical Assessment, ACE; assessment summary on p.9"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

@@ -1,0 +1,2492 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "gap_set_id": "cgs_sg_moe_secondary_g2_g3_math_2020_outcomes",
+  "framework_id": "cfw_sg_moe_secondary_g2_g3_math_2020_outcomes",
+  "curriculum_id": "cur_sg_moe_secondary_g2_g3_math_2020",
+  "subject": "Mathematics",
+  "source_ids": [
+    "src_sg_moe_secondary_g2_g3_math_2020"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "逐项反向查重后记录 partial 与 unmapped 候选；不同层级的同一知识边界在后续 resolution 中合并。"
+    }
+  ],
+  "candidates": [
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_secondary_all_personal_finance",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_secondary_all_personal_finance"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Personal and household finance",
+      "proposed_name_zh": "个人与家庭金融数学",
+      "scope_zh": "在简单及复利、税费、分期付款、公用事业账单和货币兑换情境中选择并运用数学关系。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.13, g3 secondary all, Personal and household finance"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_secondary_all_motion_data_graphs",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_secondary_all_motion_data_graphs"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Distance-time and speed-time graphs",
+      "proposed_name_zh": "路程—时间与速度—时间图像",
+      "scope_zh": "解释表格、路程—时间图和速度—时间图中的变化关系，并把结论放回交通或运动情境。",
+      "existing_canonical_ids": [
+        "pc_2fd09e919b7e73069c83ce49007f17d2",
+        "pc_9b449c02257babd62cc775a79704c117"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.14, g3 secondary all, Distance-time and speed-time graphs"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_prime_factorisation",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec1_prime_factorisation"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Prime factorisation, HCF, LCM and roots",
+      "proposed_name_zh": "质因数分解、HCF、LCM 与方根",
+      "scope_zh": "用质因数分解求最高公因数、最低公倍数、平方根与立方根。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Prime factorisation, HCF, LCM and roots"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_real_number_operations",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec1_real_number_operations"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Real-number operations and order",
+      "proposed_name_zh": "实数运算、数轴与大小关系",
+      "scope_zh": "对负数、整数、有理数和实数进行四则运算，在数轴上表示排序并使用不等号。",
+      "existing_canonical_ids": [
+        "pc_441e0e33915669e8b3319f4cd0d57068"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Real-number operations and order"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_approximation_estimation",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec1_approximation_estimation"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Approximation and estimation",
+      "proposed_name_zh": "近似、取整与估算",
+      "scope_zh": "按小数位或有效数字取整，并估算运算结果。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Approximation and estimation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_ratio",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec1_ratio"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Ratios with rational quantities",
+      "proposed_name_zh": "有理数量的比",
+      "scope_zh": "化简含有理数的比并解决比例分配问题。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Ratios with rational quantities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_percentage",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec1_percentage"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Percentage comparison and change",
+      "proposed_name_zh": "百分数比较与增减",
+      "scope_zh": "处理百分数比较、百分比点、反向百分数及超过 100% 的百分数问题。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Percentage comparison and change"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_rate_speed",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec1_rate_speed"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Rate and speed",
+      "proposed_name_zh": "率、速度与单位换算",
+      "scope_zh": "区分平均率、速度、匀速和平均速度，换算单位并解决实际问题。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Rate and speed"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_algebra_notation_evaluation",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec1_algebra_notation_evaluation"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Algebraic notation and evaluation",
+      "proposed_name_zh": "代数记号与代入求值",
+      "scope_zh": "用字母表示数，解释代数记号并对代数式和公式代入求值。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Algebraic notation and evaluation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_algebra_translation",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec1_algebra_translation"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Translating situations into algebra",
+      "proposed_name_zh": "把简单情境表示为代数式",
+      "scope_zh": "把简单现实关系翻译为代数式，并说明各量的意义。",
+      "existing_canonical_ids": [
+        "pc_2c7c77c12eaf42efced7f2a956e1bb16"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Translating situations into algebra"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_nth_term_patterns",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec1_nth_term_patterns"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Algebraic nth-term patterns",
+      "proposed_name_zh": "用通项表示规律",
+      "scope_zh": "识别数值或图形规律并写出第 n 项代数式。",
+      "existing_canonical_ids": [
+        "pc_14f1e53bf48e972800525aa7db57c70e"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Algebraic nth-term patterns"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_linear_expressions",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec1_linear_expressions"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Operations on linear expressions",
+      "proposed_name_zh": "一次式的运算与因式提取",
+      "scope_zh": "加减、化简含括号的一次式并提取公因式。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Operations on linear expressions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_coordinate_relationships",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec1_coordinate_relationships"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Coordinates and variable relationships",
+      "proposed_name_zh": "坐标与变量关系表示",
+      "scope_zh": "用二维笛卡尔坐标和有序数对图表示两个变量的关系。",
+      "existing_canonical_ids": [
+        "pc_2fd09e919b7e73069c83ce49007f17d2"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Coordinates and variable relationships"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_linear_fractional_equations",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec1_linear_fractional_equations"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Linear and reducible fractional equations",
+      "proposed_name_zh": "一次方程与可化为一次的分式方程",
+      "scope_zh": "解一元一次方程和可约为一次方程的简单分式方程。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Linear and reducible fractional equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_angle_relationships",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec1_angle_relationships"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Angle relationships",
+      "proposed_name_zh": "基本角与平行线角关系",
+      "scope_zh": "识别各类角，并运用对顶角、周角、直线角和平行线截角关系。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Angle relationships"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_triangle_properties",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec1_triangle_properties"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Triangle properties",
+      "proposed_name_zh": "三角形性质",
+      "scope_zh": "使用三角形的边角关系和基本分类性质。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Triangle properties"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_polygon_properties",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec1_polygon_properties"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Quadrilaterals and regular polygons",
+      "proposed_name_zh": "特殊四边形与正多边形",
+      "scope_zh": "分类特殊四边形，使用正多边形的性质、对称性及内外角和。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Quadrilaterals and regular polygons"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_geometric_construction",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec1_geometric_construction"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Geometric construction",
+      "proposed_name_zh": "尺规与量角作图",
+      "scope_zh": "按给定数据选择圆规、直尺、三角尺和量角器作简单几何图形。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Geometric construction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_plane_mensuration",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec1_plane_mensuration"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Area and composite plane figures",
+      "proposed_name_zh": "平面图形面积与组合图形",
+      "scope_zh": "计算平行四边形、梯形及组合平面图形的周长与面积。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Area and composite plane figures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_solid_mensuration",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec1_solid_mensuration"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Prisms, cylinders and composite solids",
+      "proposed_name_zh": "棱柱、圆柱与组合体的度量",
+      "scope_zh": "计算棱柱、圆柱和组合立体的体积、表面积并换算平方与立方单位。",
+      "existing_canonical_ids": [
+        "pc_75a504416c16571e44cc269b50bb6db3"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Prisms, cylinders and composite solids"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_data_collection",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec1_data_collection"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Collecting, classifying and tabulating data",
+      "proposed_name_zh": "数据收集、分类与制表",
+      "scope_zh": "理解简单数据收集、分类和制表过程。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Collecting, classifying and tabulating data"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_statistical_representations",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec1_statistical_representations"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Reading and choosing statistical representations",
+      "proposed_name_zh": "读取和选择统计图表",
+      "scope_zh": "分析表格、条形图、象形图、折线图和饼图，并比较各表示的用途与局限。",
+      "existing_canonical_ids": [
+        "pc_9b449c02257babd62cc775a79704c117"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Reading and choosing statistical representations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_misleading_diagrams",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec1_misleading_diagrams"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Misleading statistical diagrams",
+      "proposed_name_zh": "误导性统计图",
+      "scope_zh": "解释统计图为何可能造成数据误读。",
+      "existing_canonical_ids": [
+        "pc_9b449c02257babd62cc775a79704c117"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Misleading statistical diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_scale_proportion",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec2_scale_proportion"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Map scales and proportion",
+      "proposed_name_zh": "地图比例尺与正反比例",
+      "scope_zh": "处理距离或面积比例尺，以及正比例与反比例关系。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Map scales and proportion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_algebra_expansion_identities",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec2_algebra_expansion_identities"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Expansion and algebraic identities",
+      "proposed_name_zh": "代数展开与恒等式",
+      "scope_zh": "展开代数式并使用平方和、平方差等基本恒等式。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Expansion and algebraic identities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_formula_rearrangement",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec2_formula_rearrangement"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Changing the subject of a formula",
+      "proposed_name_zh": "公式变形与未知量求值",
+      "scope_zh": "改变公式主项并求给定公式中的未知量。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Changing the subject of a formula"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_factorisation",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec2_factorisation"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Linear and quadratic factorisation",
+      "proposed_name_zh": "一次式与二次式因式分解",
+      "scope_zh": "按分组或二次式结构完成因式分解。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Linear and quadratic factorisation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_algebraic_fractions_multiply_divide",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec2_algebraic_fractions_multiply_divide"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Multiplying and dividing algebraic fractions",
+      "proposed_name_zh": "代数分式乘除",
+      "scope_zh": "对简单代数分式进行乘法和除法。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Multiplying and dividing algebraic fractions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_algebraic_fractions_add_subtract",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec2_algebraic_fractions_add_subtract"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Adding and subtracting algebraic fractions",
+      "proposed_name_zh": "代数分式加减",
+      "scope_zh": "对含一次或二次分母的代数分式通分并加减。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Adding and subtracting algebraic fractions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_simple_linear_inequalities",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec2_simple_linear_inequalities"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Simple linear inequalities",
+      "proposed_name_zh": "简单一元一次不等式",
+      "scope_zh": "解简单一元一次不等式并在数轴上表示解集。",
+      "existing_canonical_ids": [
+        "pc_4307437065fb6fce9aa3b4c05e7ed82d",
+        "pc_aae485f1637bdc81f7067c35dde3bef6"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Simple linear inequalities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_quadratic_factorisation_solve",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec2_quadratic_factorisation_solve"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Solving quadratics by factorisation",
+      "proposed_name_zh": "因式分解法解二次方程",
+      "scope_zh": "用因式分解法解一元二次方程。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Solving quadratics by factorisation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_congruence_similarity_foundations",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec2_congruence_similarity_foundations"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Congruence and similarity foundations",
+      "proposed_name_zh": "全等与相似基础",
+      "scope_zh": "识别全等和相似图形，使用相似三角形及多边形的对应角边关系。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Congruence and similarity foundations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_congruence_similarity_enlargement",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec2_congruence_similarity_enlargement"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Enlargement and reduction",
+      "proposed_name_zh": "平面图形放大与缩小",
+      "scope_zh": "按比例因子放大或缩小平面图形，并解决简单全等相似问题。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Enlargement and reduction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_pythagoras",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec2_pythagoras"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Pythagoras theorem and converse",
+      "proposed_name_zh": "勾股定理及逆定理",
+      "scope_zh": "用勾股定理求长度，并由三边判断直角三角形。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Pythagoras theorem and converse"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_right_triangle_trig",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec2_right_triangle_trig"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Trigonometry in right triangles",
+      "proposed_name_zh": "直角三角形三角比",
+      "scope_zh": "用锐角正弦、余弦和正切求直角三角形的边与角。",
+      "existing_canonical_ids": [
+        "pc_c756deb603e99d7fbb680d46214248e8"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Trigonometry in right triangles"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_distribution_diagrams",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec2_distribution_diagrams"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Dot plots, histograms and stem-and-leaf diagrams",
+      "proposed_name_zh": "点图、直方图与茎叶图",
+      "scope_zh": "分析解释三种分布图，判断表示方法的用途与局限，并说明图表可能造成的误读。",
+      "existing_canonical_ids": [
+        "pc_9b449c02257babd62cc775a79704c117"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Dot plots, histograms and stem-and-leaf diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_central_tendency",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec2_central_tendency"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Measures of central tendency",
+      "proposed_name_zh": "集中趋势与分组数据均值",
+      "scope_zh": "计算和选择平均数、众数、中位数，并计算分组数据平均数。",
+      "existing_canonical_ids": [
+        "pc_35cb6bdf58ea092953596fd77759caf6"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Measures of central tendency"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_standard_form",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec3_4_standard_form"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Standard form",
+      "proposed_name_zh": "标准式",
+      "scope_zh": "用 A×10^n 表示和处理数，其中 n 为整数且 1≤A<10。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Standard form"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_indices",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec3_4_indices"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Indices and their laws",
+      "proposed_name_zh": "整数与分数指数及指数律",
+      "scope_zh": "使用正、负、零和分数指数及指数律。",
+      "existing_canonical_ids": [
+        "pc_0d9df5ce33dc2574f492f6528f380ffa"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Indices and their laws"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_tangent_gradient",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec3_4_tangent_gradient"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Estimating curve gradient with a tangent",
+      "proposed_name_zh": "用切线估计曲线斜率",
+      "scope_zh": "在曲线上作切线并估计指定点的梯度。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Estimating curve gradient with a tangent"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_quadratic_formula_complete_graph",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec3_4_quadratic_formula_complete_graph"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Solving quadratic equations by standard methods",
+      "proposed_name_zh": "用标准方法解二次方程",
+      "scope_zh": "用公式、配方法或图像法解一元二次方程；因式分解法已在 G3 中二单独记录。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Solving quadratic equations by standard methods"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_fractional_quadratic_equations",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec3_4_fractional_quadratic_equations"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Fractional equations reducible to quadratics",
+      "proposed_name_zh": "可化为二次方程的分式方程",
+      "scope_zh": "解可约为二次方程的简单分式方程，并检查分母限制。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Fractional equations reducible to quadratics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_congruence_similarity_enlargement",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec3_4_congruence_similarity_enlargement"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Scale drawings, enlargement and reduction",
+      "proposed_name_zh": "比例作图与平面放缩",
+      "scope_zh": "完成比例作图，并按比例因子放大或缩小平面图形。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Scale drawings, enlargement and reduction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_bisector_construction",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec3_4_bisector_construction"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Perpendicular and angle bisectors",
+      "proposed_name_zh": "垂直平分线与角平分线",
+      "scope_zh": "使用垂直平分线和角平分线的性质并完成相应作图。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Perpendicular and angle bisectors"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_circle_chord_tangent",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec3_4_circle_chord_tangent"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Chord and tangent properties",
+      "proposed_name_zh": "圆的弦与切线性质",
+      "scope_zh": "使用等弦、弦的垂直平分线及同一点引切线的对称性质。",
+      "existing_canonical_ids": [
+        "pc_3d12d114d1630b545655de686dae4630"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Chord and tangent properties"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_circle_angles",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec3_4_circle_angles"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Circle angle properties",
+      "proposed_name_zh": "圆的角性质",
+      "scope_zh": "使用半圆角、圆心角、圆周角、同弓形角和对弓形角关系。",
+      "existing_canonical_ids": [
+        "pc_3d12d114d1630b545655de686dae4630"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Circle angle properties"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_triangle_trigonometry",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec3_4_triangle_trigonometry"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Trigonometry for general triangles",
+      "proposed_name_zh": "任意三角形的三角计算",
+      "scope_zh": "使用钝角正余弦、三角形面积公式、正弦定理和余弦定理。",
+      "existing_canonical_ids": [
+        "pc_c756deb603e99d7fbb680d46214248e8"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Trigonometry for general triangles"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_spatial_trigonometry",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec3_4_spatial_trigonometry"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Two- and three-dimensional trigonometric problems",
+      "proposed_name_zh": "二维与三维三角问题",
+      "scope_zh": "解决含仰角、俯角和方位角的二维或三维问题。",
+      "existing_canonical_ids": [
+        "pc_c756deb603e99d7fbb680d46214248e8"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Two- and three-dimensional trigonometric problems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_circle_mensuration",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec3_4_circle_mensuration"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Arc, sector and segment measures",
+      "proposed_name_zh": "弧长、扇形与弓形度量",
+      "scope_zh": "计算弧长、扇形面积和弓形面积。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Arc, sector and segment measures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_quartiles_spread",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec3_4_quartiles_spread"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Quartiles, percentiles and spread",
+      "proposed_name_zh": "四分位数、百分位数与离散程度",
+      "scope_zh": "使用极差、四分位距、标准差、四分位数和百分位数描述分布。",
+      "existing_canonical_ids": [
+        "pc_35cb6bdf58ea092953596fd77759caf6",
+        "pc_91a531ff72a480f49160c7fc26db307a"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Quartiles, percentiles and spread"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_cumulative_box",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec3_4_cumulative_box"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Cumulative-frequency and box plots",
+      "proposed_name_zh": "累积频数图与箱线图",
+      "scope_zh": "分析解释累积频数图和箱线图并比较表示方式。",
+      "existing_canonical_ids": [
+        "pc_9b449c02257babd62cc775a79704c117",
+        "pc_91a531ff72a480f49160c7fc26db307a"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Cumulative-frequency and box plots"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_standard_deviation_compare",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec3_4_standard_deviation_compare"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Calculating and comparing standard deviation",
+      "proposed_name_zh": "计算标准差并比较数据集",
+      "scope_zh": "计算分组或未分组数据标准差，用平均数和标准差比较两个数据集。",
+      "existing_canonical_ids": [
+        "pc_35cb6bdf58ea092953596fd77759caf6"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Calculating and comparing standard deviation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_combined_probability",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec3_4_combined_probability"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Combined-event probability representations",
+      "proposed_name_zh": "复合事件概率表示",
+      "scope_zh": "用可能性图或树状图表示并计算简单复合事件概率。",
+      "existing_canonical_ids": [
+        "pc_d087f482be941779c1774129f95c83cb",
+        "pc_0c7c408f2fb208ecfb0b6758b1cd4a0a"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Combined-event probability representations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_compound_linear_inequalities",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec3_4_compound_linear_inequalities"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Compound linear inequalities",
+      "proposed_name_zh": "联立一元一次不等式",
+      "scope_zh": "解含联立约束的一元一次不等式并在数轴上表示解集。",
+      "existing_canonical_ids": [
+        "pc_4307437065fb6fce9aa3b4c05e7ed82d",
+        "pc_aae485f1637bdc81f7067c35dde3bef6"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Compound linear inequalities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_elementary_matrices",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec3_4_elementary_matrices"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Elementary matrix representation and operations",
+      "proposed_name_zh": "初等矩阵表示与运算",
+      "scope_zh": "用任意阶矩阵表示和解释信息，并完成数乘、加减和矩阵乘法。",
+      "existing_canonical_ids": [
+        "pc_2611e45b4d477c48a6d90293fa4f2784"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Elementary matrix representation and operations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_congruence_similarity_tests",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec3_4_congruence_similarity_tests"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Triangle congruence, similarity and scale ratios",
+      "proposed_name_zh": "三角形全等相似判定与面积体积比",
+      "scope_zh": "判定三角形全等或相似，并使用相似图形面积比和相似立体体积比。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Triangle congruence, similarity and scale ratios"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_vector_representation",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec3_4_vector_representation"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Plane-vector representation",
+      "proposed_name_zh": "平面向量表示",
+      "scope_zh": "使用列向量、有向线段、位置向量和模表示平面向量与位移。",
+      "existing_canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Plane-vector representation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_vector_operations",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec3_4_vector_operations"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Plane-vector operations",
+      "proposed_name_zh": "平面向量运算",
+      "scope_zh": "用向量表示平移，并完成平面向量的和、差与数乘。",
+      "existing_canonical_ids": [
+        "pc_d4b7e2b6e2c8459d849405a8f6fc0b79"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Plane-vector operations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_secondary_all_personal_finance",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_secondary_all_personal_finance"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Personal and household finance",
+      "proposed_name_zh": "个人与家庭金融数学",
+      "scope_zh": "在简单及复利、税费、分期付款、公用事业账单和货币兑换情境中选择并运用数学关系。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.23, g2 secondary all, Personal and household finance"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_secondary_all_motion_data_graphs",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_secondary_all_motion_data_graphs"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Distance-time and speed-time graphs",
+      "proposed_name_zh": "路程—时间与速度—时间图像",
+      "scope_zh": "解释表格、路程—时间图和速度—时间图中的变化关系，并把结论放回交通或运动情境。",
+      "existing_canonical_ids": [
+        "pc_2fd09e919b7e73069c83ce49007f17d2",
+        "pc_9b449c02257babd62cc775a79704c117"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.24, g2 secondary all, Distance-time and speed-time graphs"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_prime_factorisation",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec1_prime_factorisation"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Prime factorisation, HCF, LCM and roots",
+      "proposed_name_zh": "质因数分解、HCF、LCM 与方根",
+      "scope_zh": "用质因数分解求最高公因数、最低公倍数、平方根与立方根。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Prime factorisation, HCF, LCM and roots"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_real_number_operations",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec1_real_number_operations"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Real-number operations and order",
+      "proposed_name_zh": "实数运算、数轴与大小关系",
+      "scope_zh": "对负数、整数、有理数和实数进行四则运算，在数轴上表示排序并使用不等号。",
+      "existing_canonical_ids": [
+        "pc_441e0e33915669e8b3319f4cd0d57068"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Real-number operations and order"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_approximation_estimation",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec1_approximation_estimation"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Approximation and estimation",
+      "proposed_name_zh": "近似、取整与估算",
+      "scope_zh": "按小数位或有效数字取整，并估算运算结果。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Approximation and estimation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_ratio",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec1_ratio"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Ratio, fractions and division",
+      "proposed_name_zh": "比、分数关系与按比分配",
+      "scope_zh": "比较数量，联系比与分数，使用等价比、最简比并按比分配。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Ratio, fractions and division"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_percentage",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec1_percentage"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Percentage forms and change",
+      "proposed_name_zh": "百分数表示、比较与增减",
+      "scope_zh": "在分数、小数和百分数之间转换，处理百分比变化、百分比点和反向百分数。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Percentage forms and change"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_rate_speed",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec1_rate_speed"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Distance, time, rate and speed",
+      "proposed_name_zh": "路程、时间、率与速度",
+      "scope_zh": "联系路程、时间和速度，换算速度单位并解决平均率与速度问题。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Distance, time, rate and speed"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_algebra_notation_evaluation",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec1_algebra_notation_evaluation"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Algebraic notation and evaluation",
+      "proposed_name_zh": "代数记号与代入求值",
+      "scope_zh": "用字母表示数，解释代数记号并对代数式和公式代入求值。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Algebraic notation and evaluation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_algebra_translation",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec1_algebra_translation"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Translating situations into algebra",
+      "proposed_name_zh": "把简单情境表示为代数式",
+      "scope_zh": "把简单现实关系翻译为代数式，并说明各量的意义。",
+      "existing_canonical_ids": [
+        "pc_2c7c77c12eaf42efced7f2a956e1bb16"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Translating situations into algebra"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_nth_term_patterns",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec1_nth_term_patterns"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Algebraic nth-term patterns",
+      "proposed_name_zh": "用通项表示规律",
+      "scope_zh": "识别数值或图形规律并写出第 n 项代数式。",
+      "existing_canonical_ids": [
+        "pc_14f1e53bf48e972800525aa7db57c70e"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Algebraic nth-term patterns"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_linear_expressions",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec1_linear_expressions"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Operations on linear expressions",
+      "proposed_name_zh": "一次式的运算与化简",
+      "scope_zh": "对整数系数一次式进行加减、去括号和化简。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Operations on linear expressions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_linear_integer_equations",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec1_linear_integer_equations"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Linear equations with integer coefficients",
+      "proposed_name_zh": "整数系数一元一次方程",
+      "scope_zh": "解整数系数一元一次方程。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Linear equations with integer coefficients"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_angle_relationships",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec1_angle_relationships"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Angle relationships",
+      "proposed_name_zh": "基本角与平行线角关系",
+      "scope_zh": "识别各类角，并使用对顶角、直线角、周角和平行线截角关系。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Angle relationships"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_triangle_properties",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec1_triangle_properties"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Triangle properties",
+      "proposed_name_zh": "三角形性质",
+      "scope_zh": "使用三角形的边角关系和基本分类性质。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Triangle properties"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_plane_mensuration",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec1_plane_mensuration"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Area and composite plane figures",
+      "proposed_name_zh": "平面图形面积与组合图形",
+      "scope_zh": "计算平行四边形、梯形及组合平面图形的周长与面积。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Area and composite plane figures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_solid_mensuration",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec1_solid_mensuration"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Prisms, cylinders and composite solids",
+      "proposed_name_zh": "棱柱、圆柱与组合体的度量",
+      "scope_zh": "计算棱柱、圆柱和组合立体的体积、表面积并换算平方与立方单位。",
+      "existing_canonical_ids": [
+        "pc_75a504416c16571e44cc269b50bb6db3"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Prisms, cylinders and composite solids"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_data_collection",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec1_data_collection"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Collecting, classifying and tabulating data",
+      "proposed_name_zh": "数据收集、分类与制表",
+      "scope_zh": "理解简单数据收集、分类和制表过程。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Collecting, classifying and tabulating data"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_statistical_representations",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec1_statistical_representations"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Reading and choosing statistical representations",
+      "proposed_name_zh": "读取和选择统计图表",
+      "scope_zh": "分析表格、条形图、象形图、折线图和饼图，并比较不同表示的用途与局限。",
+      "existing_canonical_ids": [
+        "pc_9b449c02257babd62cc775a79704c117"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Reading and choosing statistical representations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_misleading_diagrams",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec1_misleading_diagrams"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Misleading statistical diagrams",
+      "proposed_name_zh": "误导性统计图",
+      "scope_zh": "解释统计图为何可能造成数据误读。",
+      "existing_canonical_ids": [
+        "pc_9b449c02257babd62cc775a79704c117"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Misleading statistical diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_scale_proportion",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec2_scale_proportion"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Map scales and proportion",
+      "proposed_name_zh": "地图比例尺与正反比例",
+      "scope_zh": "处理距离或面积比例尺，以及正比例与反比例关系。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Map scales and proportion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_linear_fractional_coefficients",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec2_linear_fractional_coefficients"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Linear expressions with fractional coefficients",
+      "proposed_name_zh": "分数系数一次式",
+      "scope_zh": "化简含分数系数的一次式。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Linear expressions with fractional coefficients"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_algebra_expansion_identities",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec2_algebra_expansion_identities"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Expansion and algebraic identities",
+      "proposed_name_zh": "代数展开与恒等式",
+      "scope_zh": "展开两个一次式，并使用平方和、平方差等基本恒等式。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Expansion and algebraic identities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_factorisation",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec2_factorisation"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Common-factor and quadratic factorisation",
+      "proposed_name_zh": "公因式与二次式因式分解",
+      "scope_zh": "提取公因式并因式分解 ax²+bx+c 型二次式。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Common-factor and quadratic factorisation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_algebraic_fractions_multiply_divide",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec2_algebraic_fractions_multiply_divide"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Multiplying and dividing algebraic fractions",
+      "proposed_name_zh": "代数分式乘除",
+      "scope_zh": "对简单代数分式进行乘法和除法。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Multiplying and dividing algebraic fractions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_linear_fractional_equations",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec2_linear_fractional_equations"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Linear and reducible fractional equations",
+      "proposed_name_zh": "一次方程与可化为一次的分式方程",
+      "scope_zh": "解含分数系数的一元一次方程和可约为一次方程的简单分式方程。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Linear and reducible fractional equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_simple_linear_inequalities",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec2_simple_linear_inequalities"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Simple linear inequalities",
+      "proposed_name_zh": "简单一元一次不等式",
+      "scope_zh": "解简单一元一次不等式并在数轴上表示解集。",
+      "existing_canonical_ids": [
+        "pc_4307437065fb6fce9aa3b4c05e7ed82d",
+        "pc_aae485f1637bdc81f7067c35dde3bef6"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Simple linear inequalities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_polygon_properties",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec2_polygon_properties"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Quadrilaterals and regular polygons",
+      "proposed_name_zh": "特殊四边形与正多边形",
+      "scope_zh": "分类特殊四边形，使用正多边形的性质、对称性及内外角和。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Quadrilaterals and regular polygons"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_geometric_construction",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec2_geometric_construction"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Geometric construction",
+      "proposed_name_zh": "尺规与量角作图",
+      "scope_zh": "按给定数据选择圆规、直尺、三角尺和量角器作简单几何图形。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Geometric construction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_congruence_similarity_foundations",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec2_congruence_similarity_foundations"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Congruence and similarity foundations",
+      "proposed_name_zh": "全等与相似基础",
+      "scope_zh": "识别全等和相似图形，使用相似三角形及多边形的对应角边关系。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Congruence and similarity foundations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_pythagoras",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec2_pythagoras"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Pythagoras theorem and converse",
+      "proposed_name_zh": "勾股定理及逆定理",
+      "scope_zh": "用勾股定理求长度，并由三边判断直角三角形。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Pythagoras theorem and converse"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_distribution_diagrams",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec2_distribution_diagrams"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Dot plots, histograms and stem-and-leaf diagrams",
+      "proposed_name_zh": "点图、直方图与茎叶图",
+      "scope_zh": "分析解释三种分布图并判断表示方法的用途、局限和潜在误导。",
+      "existing_canonical_ids": [
+        "pc_9b449c02257babd62cc775a79704c117"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Dot plots, histograms and stem-and-leaf diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_central_tendency",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec2_central_tendency"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Measures of central tendency",
+      "proposed_name_zh": "集中趋势与分组数据均值",
+      "scope_zh": "计算和选择平均数、众数、中位数，并计算分组数据平均数。",
+      "existing_canonical_ids": [
+        "pc_35cb6bdf58ea092953596fd77759caf6"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Measures of central tendency"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_standard_form",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec3_4_standard_form"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Standard form",
+      "proposed_name_zh": "标准式",
+      "scope_zh": "用 A×10^n 表示和处理数，其中 n 为整数且 1≤A<10。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Standard form"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_indices",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec3_4_indices"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Indices and their laws",
+      "proposed_name_zh": "整数与分数指数及指数律",
+      "scope_zh": "使用正、负、零和分数指数及指数律。",
+      "existing_canonical_ids": [
+        "pc_0d9df5ce33dc2574f492f6528f380ffa"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Indices and their laws"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_tangent_gradient",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec3_4_tangent_gradient"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Estimating curve gradient with a tangent",
+      "proposed_name_zh": "用切线估计曲线斜率",
+      "scope_zh": "在曲线上作切线并估计指定点的梯度。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Estimating curve gradient with a tangent"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_quadratic_methods",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec3_4_quadratic_methods"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Solving quadratic equations by standard methods",
+      "proposed_name_zh": "用标准方法解二次方程",
+      "scope_zh": "用因式分解、公式、配方法或图像法解一元二次方程。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Solving quadratic equations by standard methods"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_fractional_quadratic_equations",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec3_4_fractional_quadratic_equations"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Fractional equations reducible to quadratics",
+      "proposed_name_zh": "可化为二次方程的分式方程",
+      "scope_zh": "解可约为二次方程的简单分式方程，并检查分母限制。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Fractional equations reducible to quadratics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_grouped_linear_factorisation",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec3_4_grouped_linear_factorisation"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Factorising grouped linear expressions",
+      "proposed_name_zh": "分组法分解一次式",
+      "scope_zh": "用分组和提取公因式分解 ax+bx+kay+kby 型一次式。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Factorising grouped linear expressions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_algebra_expansion_identities",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec3_4_algebra_expansion_identities"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Expansion of algebraic expressions",
+      "proposed_name_zh": "代数式展开",
+      "scope_zh": "展开代数式并使用已有恒等式检查结果。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Expansion of algebraic expressions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_formula_rearrangement",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec3_4_formula_rearrangement"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Changing the subject and evaluating formulae",
+      "proposed_name_zh": "公式变形与未知量求值",
+      "scope_zh": "改变公式主项并求给定公式中的未知量。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Changing the subject and evaluating formulae"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_algebraic_fractions_add_subtract",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec3_4_algebraic_fractions_add_subtract"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Adding and subtracting algebraic fractions",
+      "proposed_name_zh": "代数分式加减",
+      "scope_zh": "对含一次或二次分母的代数分式通分并加减。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Adding and subtracting algebraic fractions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_congruence_similarity_enlargement",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec3_4_congruence_similarity_enlargement"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Scale drawings, enlargement and reduction",
+      "proposed_name_zh": "比例作图与平面放缩",
+      "scope_zh": "完成比例作图，并按比例因子放大或缩小平面图形。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Scale drawings, enlargement and reduction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_bisector_construction",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec3_4_bisector_construction"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Perpendicular and angle bisectors",
+      "proposed_name_zh": "垂直平分线与角平分线",
+      "scope_zh": "使用垂直平分线和角平分线的性质并完成相应作图。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Perpendicular and angle bisectors"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_circle_chord_tangent",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec3_4_circle_chord_tangent"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Chord and tangent properties",
+      "proposed_name_zh": "圆的弦与切线性质",
+      "scope_zh": "使用等弦、弦的垂直平分线及同一点引切线的对称性质。",
+      "existing_canonical_ids": [
+        "pc_3d12d114d1630b545655de686dae4630"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Chord and tangent properties"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_circle_angles",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec3_4_circle_angles"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Circle angle properties",
+      "proposed_name_zh": "圆的角性质",
+      "scope_zh": "使用半圆角、圆心角、圆周角、同弓形角和对弓形角关系。",
+      "existing_canonical_ids": [
+        "pc_3d12d114d1630b545655de686dae4630"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Circle angle properties"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_triangle_trigonometry",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec3_4_triangle_trigonometry"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Trigonometry for general triangles",
+      "proposed_name_zh": "任意三角形的三角计算",
+      "scope_zh": "使用钝角正余弦、三角形面积公式、正弦定理和余弦定理。",
+      "existing_canonical_ids": [
+        "pc_c756deb603e99d7fbb680d46214248e8"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Trigonometry for general triangles"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_spatial_trigonometry",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec3_4_spatial_trigonometry"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Two- and three-dimensional trigonometric problems",
+      "proposed_name_zh": "二维与三维三角问题",
+      "scope_zh": "解决含仰角、俯角和方位角的二维或三维问题。",
+      "existing_canonical_ids": [
+        "pc_c756deb603e99d7fbb680d46214248e8"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Two- and three-dimensional trigonometric problems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_circle_mensuration",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec3_4_circle_mensuration"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Arc, sector and segment measures",
+      "proposed_name_zh": "弧长、扇形与弓形度量",
+      "scope_zh": "计算弧长、扇形面积和弓形面积。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Arc, sector and segment measures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_quartiles_spread",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec3_4_quartiles_spread"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Quartiles, percentiles and spread",
+      "proposed_name_zh": "四分位数、百分位数与离散程度",
+      "scope_zh": "使用极差、四分位距、标准差、四分位数和百分位数描述分布。",
+      "existing_canonical_ids": [
+        "pc_35cb6bdf58ea092953596fd77759caf6",
+        "pc_91a531ff72a480f49160c7fc26db307a"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.31, g2 sec3 4, Quartiles, percentiles and spread"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_cumulative_box",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec3_4_cumulative_box"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Cumulative-frequency and box plots",
+      "proposed_name_zh": "累积频数图与箱线图",
+      "scope_zh": "分析解释累积频数图和箱线图并比较表示方式。",
+      "existing_canonical_ids": [
+        "pc_9b449c02257babd62cc775a79704c117",
+        "pc_91a531ff72a480f49160c7fc26db307a"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.31, g2 sec3 4, Cumulative-frequency and box plots"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_standard_deviation_compare",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec3_4_standard_deviation_compare"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Calculating and comparing standard deviation",
+      "proposed_name_zh": "计算标准差并比较数据集",
+      "scope_zh": "计算分组或未分组数据标准差，用平均数和标准差比较两个数据集。",
+      "existing_canonical_ids": [
+        "pc_35cb6bdf58ea092953596fd77759caf6"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.31, g2 sec3 4, Calculating and comparing standard deviation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_combined_probability",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec3_4_combined_probability"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Combined-event probability representations",
+      "proposed_name_zh": "复合事件概率表示",
+      "scope_zh": "用可能性图或树状图表示并计算简单复合事件概率。",
+      "existing_canonical_ids": [
+        "pc_d087f482be941779c1774129f95c83cb",
+        "pc_0c7c408f2fb208ecfb0b6758b1cd4a0a"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.31, g2 sec3 4, Combined-event probability representations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_congruence_similarity_problems",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec3_4_congruence_similarity_problems"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Congruence and similarity problems",
+      "proposed_name_zh": "全等与相似问题",
+      "scope_zh": "解决使用全等和相似关系的简单问题。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Congruence and similarity problems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_right_triangle_trig",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec3_4_right_triangle_trig"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Trigonometry in right triangles",
+      "proposed_name_zh": "直角三角形三角比",
+      "scope_zh": "用锐角正弦、余弦和正切求直角三角形的边与角。",
+      "existing_canonical_ids": [
+        "pc_c756deb603e99d7fbb680d46214248e8"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Trigonometry in right triangles"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec5_bridge_compound_linear_inequalities",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec5_bridge_compound_linear_inequalities"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Compound linear inequalities",
+      "proposed_name_zh": "联立一元一次不等式",
+      "scope_zh": "解含联立约束的一元一次不等式并在数轴上表示解集。",
+      "existing_canonical_ids": [
+        "pc_4307437065fb6fce9aa3b4c05e7ed82d",
+        "pc_aae485f1637bdc81f7067c35dde3bef6"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.32, g2 sec5 bridge, Compound linear inequalities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec5_bridge_elementary_matrices",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec5_bridge_elementary_matrices"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Elementary matrix representation and operations",
+      "proposed_name_zh": "初等矩阵表示与运算",
+      "scope_zh": "用矩阵表示和解释信息，并完成数乘、加减和矩阵乘法。",
+      "existing_canonical_ids": [
+        "pc_2611e45b4d477c48a6d90293fa4f2784"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.32, g2 sec5 bridge, Elementary matrix representation and operations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec5_bridge_congruence_similarity_tests",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec5_bridge_congruence_similarity_tests"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Triangle congruence, similarity and scale ratios",
+      "proposed_name_zh": "三角形全等相似判定与面积体积比",
+      "scope_zh": "判定三角形全等或相似，并使用相似图形面积比和相似立体体积比。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议跨 G2/G3 重复要求去重后新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.33, g2 sec5 bridge, Triangle congruence, similarity and scale ratios"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec5_bridge_vector_representation",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec5_bridge_vector_representation"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Plane-vector representation",
+      "proposed_name_zh": "平面向量表示",
+      "scope_zh": "使用列向量、有向线段、位置向量和模表示平面向量与位移。",
+      "existing_canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.33, g2 sec5 bridge, Plane-vector representation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec5_bridge_vector_operations",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec5_bridge_vector_operations"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Plane-vector operations",
+      "proposed_name_zh": "平面向量运算",
+      "scope_zh": "用向量表示平移，并完成平面向量的和、差与数乘。",
+      "existing_canonical_ids": [
+        "pc_d4b7e2b6e2c8459d849405a8f6fc0b79"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或边界过宽，需复用更窄 alias 或建立精确的中学层级概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.33, g2 sec5 bridge, Plane-vector operations"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

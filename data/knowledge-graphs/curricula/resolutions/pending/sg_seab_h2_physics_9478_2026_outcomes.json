@@ -1,0 +1,338 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "resolution_set_id": "cgr_sg_seab_h2_physics_9478_2026_outcomes",
+  "gap_set_id": "cgs_sg_seab_h2_physics_9478_2026_outcomes",
+  "framework_id": "cfw_sg_seab_h2_physics_9478_2026_outcomes",
+  "curriculum_id": "cur_sg_seab_h2_physics_9478_2026",
+  "subject": "Physics",
+  "source_ids": [
+    "src_sg_seab_h2_physics_9478_2026",
+    "src_openstax_university_physics_v2_2016",
+    "src_openstax_college_physics_2e_2022",
+    "src_openstax_university_physics_v3_2016"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "完成 12 项 H2 物理知识缺口的反向查重、概念归并、稳定 ID 和双类证据登记。"
+    }
+  ],
+  "resolutions": [
+    {
+      "gap_id": "gap_sg_h2_physics_9478_2026_o_4_field_lines_equipotentials",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_2b7eda0a0df626958a966c48865d9809"
+      ],
+      "created_node_ids": [
+        "sg_h2_physics_field_lines_equipotential_geometry"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "将相近官方成果归并到 1 个可独立诊断、但不过度切碎的 H2 物理概念；不以名称近似自动复用范围不足的既有 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.14, topic 4 Energy and Fields, outcome (h)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "OpenStax University Physics Volume 2 §§5.6 and 7.5, Electric Field Lines; Equipotential Surfaces and Conductors"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e §19.4, Equipotential Lines"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_physics_9478_2026_o_17_crossed_field_velocity_selector",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ba46501edd6d23c79fe9c1e26a62f939"
+      ],
+      "created_node_ids": [
+        "sg_h2_physics_crossed_field_velocity_selector"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "将相近官方成果归并到 1 个可独立诊断、但不过度切碎的 H2 物理概念；不以名称近似自动复用范围不足的既有 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (m)"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e §22.5, Force on a Moving Charge in a Magnetic Field: Examples and Applications"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_physics_9478_2026_o_19_wavefunction_probability_density",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_a5f5680781febed7b189645c53ceb0f6"
+      ],
+      "created_node_ids": [
+        "sg_h2_physics_wavefunction_probability_superposition"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "将相近官方成果归并到 1 个可独立诊断、但不过度切碎的 H2 物理概念；不以名称近似自动复用范围不足的既有 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (f)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "OpenStax University Physics Volume 3 §7.1, Wave Functions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_physics_9478_2026_o_19_wavefunction_superposition",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_a5f5680781febed7b189645c53ceb0f6"
+      ],
+      "created_node_ids": [
+        "sg_h2_physics_wavefunction_probability_superposition"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "将相近官方成果归并到 1 个可独立诊断、但不过度切碎的 H2 物理概念；不以名称近似自动复用范围不足的既有 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (f)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "OpenStax University Physics Volume 3 §7.1, Wave Functions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_physics_9478_2026_o_19_heisenberg_uncertainty",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_71a8c4a7750a98f29a83a217310abff5"
+      ],
+      "created_node_ids": [
+        "sg_h2_physics_heisenberg_position_momentum_uncertainty"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "将相近官方成果归并到 1 个可独立诊断、但不过度切碎的 H2 物理概念；不以名称近似自动复用范围不足的既有 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (h)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "OpenStax University Physics Volume 3 §7.2, The Heisenberg Uncertainty Principle"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_physics_9478_2026_o_19_infinite_well_wavefunctions",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_c597719cddd0d41276acc705aa3972e6"
+      ],
+      "created_node_ids": [
+        "sg_h2_physics_infinite_square_well_states"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "将相近官方成果归并到 1 个可独立诊断、但不过度切碎的 H2 物理概念；不以名称近似自动复用范围不足的既有 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (i)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (j)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "OpenStax University Physics Volume 3 §7.4, The Quantum Particle in a Box"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_physics_9478_2026_o_19_infinite_well_energy_levels",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_c597719cddd0d41276acc705aa3972e6"
+      ],
+      "created_node_ids": [
+        "sg_h2_physics_infinite_square_well_states"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "将相近官方成果归并到 1 个可独立诊断、但不过度切碎的 H2 物理概念；不以名称近似自动复用范围不足的既有 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (i)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (j)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "OpenStax University Physics Volume 3 §7.4, The Quantum Particle in a Box"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_physics_9478_2026_o_20_background_radiation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_4c5131244b59bb92fb05a5572e3c7e8b"
+      ],
+      "created_node_ids": [
+        "sg_h2_physics_background_radiation_properties"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "将相近官方成果归并到 1 个可独立诊断、但不过度切碎的 H2 物理概念；不以名称近似自动复用范围不足的既有 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (f)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "OpenStax University Physics Volume 3 §§10.3-10.4, Radioactive Decay; Nuclear Reactions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_physics_9478_2026_o_20_alpha_beta_gamma_properties",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_4c5131244b59bb92fb05a5572e3c7e8b"
+      ],
+      "created_node_ids": [
+        "sg_h2_physics_background_radiation_properties"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "将相近官方成果归并到 1 个可独立诊断、但不过度切碎的 H2 物理概念；不以名称近似自动复用范围不足的既有 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (f)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "OpenStax University Physics Volume 3 §§10.3-10.4, Radioactive Decay; Nuclear Reactions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_physics_9478_2026_o_20_nuclear_equations",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d9555e3a7d3e59cf71dbf540aed1d020"
+      ],
+      "created_node_ids": [
+        "sg_h2_physics_nuclear_equations_conservation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "将相近官方成果归并到 1 个可独立诊断、但不过度切碎的 H2 物理概念；不以名称近似自动复用范围不足的既有 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (m)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (n)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "OpenStax University Physics Volume 3 §10.4, Nuclear Reactions; §11.2, Particle Conservation Laws"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_physics_9478_2026_o_20_nuclear_conservation_laws",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d9555e3a7d3e59cf71dbf540aed1d020"
+      ],
+      "created_node_ids": [
+        "sg_h2_physics_nuclear_equations_conservation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "将相近官方成果归并到 1 个可独立诊断、但不过度切碎的 H2 物理概念；不以名称近似自动复用范围不足的既有 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (m)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (n)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "OpenStax University Physics Volume 3 §10.4, Nuclear Reactions; §11.2, Particle Conservation Laws"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_physics_9478_2026_o_20_neutrino_prediction",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_eebf0fe57f217f74bfdd33901f77c63c"
+      ],
+      "created_node_ids": [
+        "sg_h2_physics_beta_decay_neutrino_inference"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "将相近官方成果归并到 1 个可独立诊断、但不过度切碎的 H2 物理概念；不以名称近似自动复用范围不足的既有 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (o)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "OpenStax University Physics Volume 3 §10.4, Nuclear Reactions; §11.2, Particle Conservation Laws"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

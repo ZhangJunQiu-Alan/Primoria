@@ -1,0 +1,1857 @@
+{
+  "schema_version": "2.0.0",
+  "content_version": "0.3.1",
+  "framework_id": "cfw_sg_seab_h2_math_9758_2026_outcomes",
+  "curriculum_id": "cur_sg_seab_h2_math_9758_2026",
+  "curriculum_kind": "examination_syllabus",
+  "title": "Singapore-Cambridge GCE Advanced Level H2 Mathematics 9758 outcome coverage",
+  "title_zh": "新加坡剑桥 GCE A-Level H2 数学 9758（2026）学习成果级覆盖",
+  "subject": "Mathematics",
+  "jurisdiction": "SG",
+  "education_stage": "pre_university",
+  "requirement_granularity": "outcome",
+  "levels": [
+    {
+      "level_id": "h2_9758",
+      "label": "H2 Mathematics 9758",
+      "label_zh": "H2 数学 9758"
+    }
+  ],
+  "languages": [
+    "en",
+    "zh-CN"
+  ],
+  "source_ids": [
+    "src_sg_seab_h2_math_9758_2026"
+  ],
+  "valid_from": "2026-01-01",
+  "valid_to": "2026-12-31",
+  "review_status": "needs_review",
+  "scope_exclusions": [
+    {
+      "scope": "inverse-composition identities and restricting a domain to obtain a composite function",
+      "rationale_zh": "官方 1.1 明确排除复合函数逆运算恒等式及为获得复合函数而限制定义域。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.1 Functions, Exclude"
+        }
+      ]
+    },
+    {
+      "scope": "triple scalar and vector products",
+      "rationale_zh": "官方 3.2 明确排除三重标量积与三重向量积。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 3.2 Scalar and vector products, Exclude"
+        }
+      ]
+    },
+    {
+      "scope": "shortest distance and common perpendicular between two skew lines",
+      "rationale_zh": "官方 3.3 明确排除两异面直线最短距离与公垂线。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 3.3 Three-dimensional vector geometry, Exclude"
+        }
+      ]
+    },
+    {
+      "scope": "complex numbers in polar, modulus-argument or exponential form",
+      "rationale_zh": "官方 4.1 只要求笛卡尔形式，明确排除极形式、模辐角形式与指数形式。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 4.1 Complex numbers, Exclude"
+        }
+      ]
+    },
+    {
+      "scope": "non-stationary points of inflexion and second derivatives of parametric functions",
+      "rationale_zh": "官方 5.1 明确排除非驻点拐点和参数函数二阶导数。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.1 Differentiation, Exclude"
+        }
+      ]
+    },
+    {
+      "scope": "deriving the general term of a Maclaurin series",
+      "rationale_zh": "官方 5.2 只要求前若干项和规定展开，明确排除通项推导。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.2 Maclaurin series, Exclude"
+        }
+      ]
+    },
+    {
+      "scope": "reduction formulae for integration",
+      "rationale_zh": "官方 5.3 明确排除积分递推公式。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.3 Integration techniques, Exclude"
+        }
+      ]
+    },
+    {
+      "scope": "areas and volumes of revolution for parametrically defined curves",
+      "rationale_zh": "官方 5.4 明确排除参数曲线围成面积及其绕坐标轴旋转体体积。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.4 Definite integrals, Exclude"
+        }
+      ]
+    },
+    {
+      "scope": "cumulative distribution functions of discrete random variables",
+      "rationale_zh": "官方 6.2 明确排除离散随机变量累积分布函数。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.11, sub-topic 6.2 Discrete random variables, Exclude"
+        }
+      ]
+    },
+    {
+      "scope": "normal approximation to the binomial distribution",
+      "rationale_zh": "官方 6.3 明确排除二项分布的正态近似。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.3 Normal distribution, Exclude"
+        }
+      ]
+    },
+    {
+      "scope": "Type I and Type II error terminology and tests for differences between two population means",
+      "rationale_zh": "官方 6.5 明确排除第一类/第二类错误术语与两个总体均值差的检验。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing, Exclude"
+        }
+      ]
+    },
+    {
+      "scope": "derivation of regression formulae, the r-squared regression-coefficient identity, and regression hypothesis tests",
+      "rationale_zh": "官方 6.6 明确排除回归公式推导、指定回归系数恒等式及回归假设检验。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression, Exclude"
+        }
+      ]
+    }
+  ],
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "建立官方 2026 syllabus 的小节级基线。"
+    },
+    {
+      "version": "0.2.1",
+      "date": "2026-07-18",
+      "summary_zh": "复核官方 PDF 页码和小节边界。"
+    },
+    {
+      "version": "0.3.0",
+      "date": "2026-07-19",
+      "summary_zh": "按可独立出题诊断粒度拆分 80 项学习成果，并把工具使用要求从知识概念中分离。"
+    },
+    {
+      "version": "0.3.1",
+      "date": "2026-07-19",
+      "summary_zh": "第二轮人工复核：把官方 12 组 Exclude 边界结构化写入框架，防止后续课程生成引入超纲内容。"
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_gc_evidence_limitations",
+      "parent_requirement_id": null,
+      "code": "GC.01",
+      "title": "Graphing-calculator evidence and limitations",
+      "title_zh": "图形计算器证据与局限",
+      "summary_zh": "正确使用获准图形计算器，识别精度和显示限制，并在题目要求时提交数学步骤或图像草图。",
+      "requirement_type": "practice",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.4, Use of a Graphing Calculator"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_function_domain_range",
+      "parent_requirement_id": null,
+      "code": "1.1.01",
+      "title": "Function, domain and range",
+      "title_zh": "函数、定义域与值域",
+      "summary_zh": "理解函数、定义域和值域，并能在给定表示中确定它们。",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.1 Functions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_inverse_existence_restriction",
+      "parent_requirement_id": null,
+      "code": "1.1.02",
+      "title": "Inverse existence and domain restriction",
+      "title_zh": "反函数存在条件与定义域限制",
+      "summary_zh": "判断反函数是否存在，必要时限制定义域，并联系一一函数与反函数图像。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "analyze",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.1 Functions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_composite_conditions",
+      "parent_requirement_id": null,
+      "code": "1.1.03",
+      "title": "Composite functions and existence conditions",
+      "title_zh": "复合函数及存在条件",
+      "summary_zh": "构造复合函数并依据定义域和值域判断复合是否有定义。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.1 Functions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_standard_graph_characteristics",
+      "parent_requirement_id": null,
+      "code": "1.2.01",
+      "title": "Characteristics of standard graphs",
+      "title_zh": "常见函数图像特征",
+      "summary_zh": "识别指定函数及圆锥曲线图像的对称性、截距、转折点和渐近线。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "analyze",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.2 Graphs and transformations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_graphing_function_technology",
+      "parent_requirement_id": null,
+      "code": "1.2.02",
+      "title": "Graphing functions with technology",
+      "title_zh": "使用图形技术绘制函数",
+      "summary_zh": "使用图形计算器或绘图软件绘制给定函数，并保留能支持结论的图像信息。",
+      "requirement_type": "practice",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.2 Graphs and transformations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_graph_transformations",
+      "parent_requirement_id": null,
+      "code": "1.2.03",
+      "title": "Graph transformations",
+      "title_zh": "函数图像变换",
+      "summary_zh": "对 y=f(x) 应用平移、伸缩、反射及其组合，并解释参数影响。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "analyze"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.2 Graphs and transformations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_related_function_graphs",
+      "parent_requirement_id": null,
+      "code": "1.2.04",
+      "title": "Related graphs and inverse relation",
+      "title_zh": "相关函数图像与反函数关系",
+      "summary_zh": "由 y=f(x) 推出 y=|f(x)|、y=f(|x|) 及反函数关系图像。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "analyze"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.2 Graphs and transformations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_parametric_graphs",
+      "parent_requirement_id": null,
+      "code": "1.2.05",
+      "title": "Simple parametric equations and graphs",
+      "title_zh": "简单参数方程与图像",
+      "summary_zh": "解释简单参数方程并画出或识别其平面曲线图像。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.2 Graphs and transformations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_formulate_equations",
+      "parent_requirement_id": null,
+      "code": "1.3.01",
+      "title": "Formulating equations and inequalities",
+      "title_zh": "从情境建立方程与不等式",
+      "summary_zh": "从问题情境建立方程、线性方程组或不等式并解释变量约束。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "model",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 1.3 Equations and inequalities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_gc_equation_solving",
+      "parent_requirement_id": null,
+      "code": "1.3.02",
+      "title": "Equation solving with graphing technology",
+      "title_zh": "使用图形技术求解方程与方程组",
+      "summary_zh": "用图形计算器或软件精确或近似求解方程与线性方程组，并保留必要数学依据。",
+      "requirement_type": "practice",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 1.3 Equations and inequalities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_rational_quadratic_inequalities",
+      "parent_requirement_id": null,
+      "code": "1.3.03",
+      "title": "Rational and quadratic inequalities",
+      "title_zh": "分式与二次不等式",
+      "summary_zh": "用代数或图像方法求解由一次式或二次式组成的分式不等式。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 1.3 Equations and inequalities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_modulus_inequalities",
+      "parent_requirement_id": null,
+      "code": "1.3.04",
+      "title": "Modulus equations and inequalities",
+      "title_zh": "绝对值方程与不等式",
+      "summary_zh": "理解绝对值并使用等价关系求解绝对值方程和不等式。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 1.3 Equations and inequalities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_sequence_series_representation",
+      "parent_requirement_id": null,
+      "code": "2.1.01",
+      "title": "Sequence and series representation",
+      "title_zh": "数列、级数与表示",
+      "summary_zh": "理解有限和无限数列与级数，把数列表示为正整数定义域上的函数，并联系通项与部分和。",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "understand",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 2.1 Sequences and series"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_recurrence_sequences",
+      "parent_requirement_id": null,
+      "code": "2.1.02",
+      "title": "Recurrence-generated sequences",
+      "title_zh": "递推数列",
+      "summary_zh": "由递推关系生成数列，计算后继项并分析数列行为。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 2.1 Sequences and series"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_recurrence_technology",
+      "parent_requirement_id": null,
+      "code": "2.1.03",
+      "title": "Generating recurrence sequences with technology",
+      "title_zh": "使用技术生成递推数列",
+      "summary_zh": "使用图形计算器或程序按递推关系生成数列并检查项值。",
+      "requirement_type": "practice",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 2.1 Sequences and series"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_series_operations_convergence",
+      "parent_requirement_id": null,
+      "code": "2.1.04",
+      "title": "Series operations and convergence",
+      "title_zh": "级数运算与收敛",
+      "summary_zh": "完成两个级数的和差，判断收敛并解释无穷和。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 2.1 Sequences and series"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_arithmetic_series",
+      "parent_requirement_id": null,
+      "code": "2.1.05",
+      "title": "Arithmetic sequences and series",
+      "title_zh": "等差数列与级数",
+      "summary_zh": "使用等差数列通项和有限项和公式解决问题。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "model"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 2.1 Sequences and series"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_geometric_series",
+      "parent_requirement_id": null,
+      "code": "2.1.06",
+      "title": "Geometric sequences and infinite series",
+      "title_zh": "等比数列与无穷级数",
+      "summary_zh": "使用等比数列通项、有限和、收敛条件与无穷和公式。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 2.1 Sequences and series"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_vector_operations_geometry",
+      "parent_requirement_id": null,
+      "code": "3.1.01",
+      "title": "Vector operations and geometry",
+      "title_zh": "向量运算及几何解释",
+      "summary_zh": "在二维和三维中完成向量加减与数乘，并解释其几何意义。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 3.1 Basic properties of vectors"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_vector_types_magnitude",
+      "parent_requirement_id": null,
+      "code": "3.1.02",
+      "title": "Position, displacement and direction vectors",
+      "title_zh": "位置、位移、方向与单位向量",
+      "summary_zh": "区分位置、位移和方向向量，计算向量大小、单位向量及两点距离。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 3.1 Basic properties of vectors"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_collinearity_ratio",
+      "parent_requirement_id": null,
+      "code": "3.1.03",
+      "title": "Collinearity and ratio theorem",
+      "title_zh": "共线与向量比例定理",
+      "summary_zh": "用向量判断共线，并使用比例定理解决几何分点问题。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, collinearity; PDF p.8, ratio theorem, sub-topic 3.1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_scalar_cross_products",
+      "parent_requirement_id": null,
+      "code": "3.2.01",
+      "title": "Scalar and cross products",
+      "title_zh": "标量积与向量积",
+      "summary_zh": "理解标量积、向量积及其性质，并计算夹角和垂直关系。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 3.2 Scalar and vector products"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_product_geometric_meaning",
+      "parent_requirement_id": null,
+      "code": "3.2.02",
+      "title": "Geometric meanings of vector products",
+      "title_zh": "向量积的几何意义",
+      "summary_zh": "解释向量在单位方向上的投影及叉积在法向方向和面积上的意义。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "understand",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 3.2 Scalar and vector products"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_line_plane_equations",
+      "parent_requirement_id": null,
+      "code": "3.3.01",
+      "title": "Equations of lines and planes",
+      "title_zh": "直线与平面方程",
+      "summary_zh": "写出三维直线和平面的向量式与直角坐标式。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 3.3 Three-dimensional vector geometry"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_point_line_plane_distance",
+      "parent_requirement_id": null,
+      "code": "3.3.02",
+      "title": "Perpendicular foot and distance",
+      "title_zh": "垂足及点到直线或平面的距离",
+      "summary_zh": "求点到直线或平面的垂足和距离。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 3.3 Three-dimensional vector geometry"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_line_plane_angles",
+      "parent_requirement_id": null,
+      "code": "3.3.03",
+      "title": "Angles between lines and planes",
+      "title_zh": "直线与平面夹角",
+      "summary_zh": "求两直线、线面及两平面之间的夹角。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 3.3 Three-dimensional vector geometry"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_relative_positions_3d",
+      "parent_requirement_id": null,
+      "code": "3.3.04",
+      "title": "Relative positions in three dimensions",
+      "title_zh": "三维线面位置关系",
+      "summary_zh": "判断两直线、线面或两平面的平行、相交、重合及异面关系。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "analyze",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 3.3 Three-dimensional vector geometry"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_complex_extension_roots",
+      "parent_requirement_id": null,
+      "code": "4.1.01",
+      "title": "Number-system extension and complex roots",
+      "title_zh": "数系扩充与复二次根",
+      "summary_zh": "从实数扩充到复数并求实系数二次方程的复根。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_complex_mod_arg_conjugate",
+      "parent_requirement_id": null,
+      "code": "4.1.02",
+      "title": "Modulus, argument and conjugate in cartesian form",
+      "title_zh": "笛卡尔形式的模、辐角与共轭",
+      "summary_zh": "在不使用极形式的前提下求复数的模、主辐角和共轭。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_complex_operations_equality",
+      "parent_requirement_id": null,
+      "code": "4.1.03",
+      "title": "Complex operations and equality",
+      "title_zh": "复数四则运算与相等",
+      "summary_zh": "在 a+bi 形式完成四则运算，并依据实部和虚部分别相等判断复数相等。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_conjugate_polynomial_roots",
+      "parent_requirement_id": null,
+      "code": "4.1.04",
+      "title": "Conjugate roots of real polynomials",
+      "title_zh": "实系数多项式的共轭根",
+      "summary_zh": "使用实系数多项式的非实根成共轭对性质。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_argand_representation",
+      "parent_requirement_id": null,
+      "code": "4.1.05",
+      "title": "Argand representation",
+      "title_zh": "阿根图表示",
+      "summary_zh": "把复数表示为阿根图中的点或向量。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_complex_geometric_effects",
+      "parent_requirement_id": null,
+      "code": "4.1.06",
+      "title": "Geometric effects of complex operations",
+      "title_zh": "复数运算的几何效果",
+      "summary_zh": "在阿根图解释共轭、取负、加减及乘以 i 的几何效果。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "analyze",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_derivative_graph_relations",
+      "parent_requirement_id": null,
+      "code": "5.1.01",
+      "title": "Derivative signs and graph relations",
+      "title_zh": "导数符号与函数图像关系",
+      "summary_zh": "由一阶、二阶导数符号解释函数图像，并联系 f 与 f' 的图像。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "analyze",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.1 Differentiation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_implicit_parametric_differentiation",
+      "parent_requirement_id": null,
+      "code": "5.1.02",
+      "title": "Implicit and parametric differentiation",
+      "title_zh": "隐函数与参数函数求导",
+      "summary_zh": "对简单隐函数和参数函数求导。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.1 Differentiation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_stationary_point_classification",
+      "parent_requirement_id": null,
+      "code": "5.1.03",
+      "title": "Stationary-point classification",
+      "title_zh": "驻点分类",
+      "summary_zh": "使用一阶或二阶导数检验分类局部极大、极小和驻点拐点。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "analyze"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.1 Differentiation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_gc_derivative_extrema",
+      "parent_requirement_id": null,
+      "code": "5.1.04",
+      "title": "Numerical derivatives and extrema with graphing technology",
+      "title_zh": "用图形技术估计导数与极值",
+      "summary_zh": "用图形计算器或软件估计指定点导数并定位极值。",
+      "requirement_type": "practice",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.1 Differentiation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_tangents_normals",
+      "parent_requirement_id": null,
+      "code": "5.1.05",
+      "title": "Tangents and normals",
+      "title_zh": "切线与法线",
+      "summary_zh": "求显式、隐式或参数曲线的切线与法线。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.1 Differentiation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_local_optimisation",
+      "parent_requirement_id": null,
+      "code": "5.1.06",
+      "title": "Local optimisation",
+      "title_zh": "局部最优化",
+      "summary_zh": "建立一元函数并用导数解决局部最大最小实际问题。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "model",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.1 Differentiation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_connected_rates",
+      "parent_requirement_id": null,
+      "code": "5.1.07",
+      "title": "Connected rates of change",
+      "title_zh": "相关变化率",
+      "summary_zh": "由变量关系建立导数联系并求未知变化率。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "model",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.1 Differentiation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_standard_maclaurin_series",
+      "parent_requirement_id": null,
+      "code": "5.2.01",
+      "title": "Standard Maclaurin series",
+      "title_zh": "标准麦克劳林展开",
+      "summary_zh": "使用规定函数的标准麦克劳林展开到所需阶数。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "remember",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.2 Maclaurin series"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_derive_maclaurin_terms",
+      "parent_requirement_id": null,
+      "code": "5.2.02",
+      "title": "Deriving Maclaurin terms",
+      "title_zh": "推导麦克劳林前若干项",
+      "summary_zh": "通过重复求导、隐式求导或已知级数推导新展开的前若干项。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.2 Maclaurin series"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_series_convergence_range",
+      "parent_requirement_id": null,
+      "code": "5.2.03",
+      "title": "Convergence range of series",
+      "title_zh": "级数收敛范围",
+      "summary_zh": "确定标准幂级数适用的 x 范围。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.2 Maclaurin series"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_series_approximations",
+      "parent_requirement_id": null,
+      "code": "5.2.04",
+      "title": "Series and small-angle approximations",
+      "title_zh": "级数近似与小角近似",
+      "summary_zh": "把麦克劳林级数作为函数近似，并使用规定的小角近似。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.2 Maclaurin series"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_standard_integration_forms",
+      "parent_requirement_id": null,
+      "code": "5.3.01",
+      "title": "Standard integration forms",
+      "title_zh": "标准积分形式",
+      "summary_zh": "识别并积分规定的幂、指数、三角和有理标准形式。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "remember",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.3 Integration techniques"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_given_substitution",
+      "parent_requirement_id": null,
+      "code": "5.3.02",
+      "title": "Integration by a given substitution",
+      "title_zh": "给定换元积分",
+      "summary_zh": "按给定换元完成不定积分。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.3 Integration techniques"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_integration_by_parts",
+      "parent_requirement_id": null,
+      "code": "5.3.03",
+      "title": "Integration by parts",
+      "title_zh": "分部积分",
+      "summary_zh": "使用分部积分处理函数乘积。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.3 Integration techniques"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_riemann_sum_area",
+      "parent_requirement_id": null,
+      "code": "5.4.01",
+      "title": "Definite integral as limit and area",
+      "title_zh": "定积分作为和式极限与面积",
+      "summary_zh": "理解定积分是和式极限和有向面积。",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "understand",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.4 Definite integrals"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_definite_integral_evaluation",
+      "parent_requirement_id": null,
+      "code": "5.4.02",
+      "title": "Evaluation of definite integrals",
+      "title_zh": "定积分计算",
+      "summary_zh": "使用原函数和积分上下限解析计算定积分。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.4 Definite integrals"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_definite_integral_technology",
+      "parent_requirement_id": null,
+      "code": "5.4.03",
+      "title": "Approximating definite integrals with technology",
+      "title_zh": "使用图形技术近似定积分",
+      "summary_zh": "使用图形计算器或绘图软件获得定积分近似值并检查合理性。",
+      "requirement_type": "practice",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.4 Definite integrals"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_bounded_areas",
+      "parent_requirement_id": null,
+      "code": "5.4.04",
+      "title": "Areas bounded by curves",
+      "title_zh": "曲线围成面积",
+      "summary_zh": "求曲线与坐标轴平行线、直线或另一曲线围成的面积，包括 x 轴下方情形。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.4 Definite integrals"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_volumes_of_revolution",
+      "parent_requirement_id": null,
+      "code": "5.4.05",
+      "title": "Volumes of revolution",
+      "title_zh": "旋转体体积",
+      "summary_zh": "求绕 x 轴或 y 轴旋转所得立体体积。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "model"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.4 Definite integrals"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_separable_ode_solutions",
+      "parent_requirement_id": null,
+      "code": "5.5.01",
+      "title": "Separable differential-equation solutions",
+      "title_zh": "可分离微分方程通解与特解",
+      "summary_zh": "求可分离一阶微分方程的通解和满足初值的特解，包括按给定换元化为可分离形式。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.5 Differential equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_form_differential_equation",
+      "parent_requirement_id": null,
+      "code": "5.5.02",
+      "title": "Forming differential equations",
+      "title_zh": "从情境建立微分方程",
+      "summary_zh": "把问题情境中的变化率关系表示为微分方程。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "model",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.5 Differential equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_interpret_ode_solution",
+      "parent_requirement_id": null,
+      "code": "5.5.03",
+      "title": "Interpreting differential-equation solutions",
+      "title_zh": "解释微分方程及其解",
+      "summary_zh": "在问题情境中解释微分方程、初值和解的含义及限制。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "understand",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.5 Differential equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_counting_arrangements",
+      "parent_requirement_id": null,
+      "code": "6.1.01",
+      "title": "Counting principles and arrangements",
+      "title_zh": "计数原理与排列组合",
+      "summary_zh": "使用加法、乘法原理及排列组合处理直线或圆周排列、重复和限制。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.11, sub-topic 6.1 Probability"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_probability_laws_independence",
+      "parent_requirement_id": null,
+      "code": "6.1.02",
+      "title": "Probability laws and event relations",
+      "title_zh": "概率法则与事件关系",
+      "summary_zh": "使用概率加法、乘法规则并辨析互斥与独立事件。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.11, sub-topic 6.1 Probability"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_probability_representations",
+      "parent_requirement_id": null,
+      "code": "6.1.03",
+      "title": "Probability representations",
+      "title_zh": "概率表格、Venn 图与树图",
+      "summary_zh": "使用结果表、Venn 图、树图及排列组合方法组织样本空间并计算概率。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.11, sub-topic 6.1 Probability"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_conditional_probability",
+      "parent_requirement_id": null,
+      "code": "6.1.04",
+      "title": "Conditional probability",
+      "title_zh": "条件概率",
+      "summary_zh": "在简单情形计算条件概率并使用标准公式。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.11, sub-topic 6.1 Probability"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_discrete_distribution_moments",
+      "parent_requirement_id": null,
+      "code": "6.2.01",
+      "title": "Discrete distributions, expectation and variance",
+      "title_zh": "离散分布、期望与方差",
+      "summary_zh": "构造离散随机变量概率分布并计算期望和方差。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.11, sub-topic 6.2 Discrete random variables"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_binomial_model_conditions",
+      "parent_requirement_id": null,
+      "code": "6.2.02",
+      "title": "Binomial model and suitability",
+      "title_zh": "二项分布模型及适用条件",
+      "summary_zh": "识别二项分布并判断固定试验次数、独立性和恒定成功概率等适用条件。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "understand",
+        "analyze"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.11, sub-topic 6.2 Discrete random variables"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_binomial_mean_variance",
+      "parent_requirement_id": null,
+      "code": "6.2.03",
+      "title": "Binomial mean and variance",
+      "title_zh": "二项分布均值与方差",
+      "summary_zh": "使用二项分布均值和方差公式解决问题。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "remember",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.11, sub-topic 6.2 Discrete random variables"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_continuous_normal_model",
+      "parent_requirement_id": null,
+      "code": "6.3.01",
+      "title": "Continuous variables and normal model",
+      "title_zh": "连续随机变量与正态模型",
+      "summary_zh": "理解连续随机变量，并使用均值和方差定义的正态分布作为概率模型。",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.3 Normal distribution"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_normal_probabilities_parameters",
+      "parent_requirement_id": null,
+      "code": "6.3.02",
+      "title": "Normal probabilities and inverse problems",
+      "title_zh": "正态概率与参数反求",
+      "summary_zh": "标准化正态变量，利用对称性求概率或由概率反求阈值和参数关系。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.3 Normal distribution"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_linear_transform_moments",
+      "parent_requirement_id": null,
+      "code": "6.3.03",
+      "title": "Moments of a linear transform",
+      "title_zh": "线性变换的期望与方差",
+      "summary_zh": "计算 E(aX+b) 与 Var(aX+b)。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.3 Normal distribution"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_independent_sum_moments",
+      "parent_requirement_id": null,
+      "code": "6.3.04",
+      "title": "Moments of independent linear combinations",
+      "title_zh": "独立随机变量线性组合的期望与方差",
+      "summary_zh": "对独立 X、Y 计算 E(aX+bY) 与 Var(aX+bY)。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.3 Normal distribution"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_population_random_sample",
+      "parent_requirement_id": null,
+      "code": "6.4.01",
+      "title": "Population and simple random sample",
+      "title_zh": "总体与简单随机样本",
+      "summary_zh": "理解总体、简单随机样本及抽样中的随机性。",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "understand",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.4 Sampling"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_sample_mean_distribution",
+      "parent_requirement_id": null,
+      "code": "6.4.02",
+      "title": "Distribution of the sample mean",
+      "title_zh": "样本均值的分布",
+      "summary_zh": "把样本均值视为随机变量，使用其期望与方差，并处理正态总体下的精确分布。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.4 Sampling"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_central_limit_sample_mean",
+      "parent_requirement_id": null,
+      "code": "6.4.03",
+      "title": "Central limit theorem for the sample mean",
+      "title_zh": "样本均值的中心极限定理",
+      "summary_zh": "在样本量足够大时用中心极限定理近似样本均值分布。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.4 Sampling"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_unbiased_sample_estimates",
+      "parent_requirement_id": null,
+      "code": "6.4.04",
+      "title": "Unbiased estimates from samples",
+      "title_zh": "样本无偏估计",
+      "summary_zh": "由原始或汇总数据计算总体均值和方差的无偏估计。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.4 Sampling"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_hypothesis_test_concepts",
+      "parent_requirement_id": null,
+      "code": "6.5.01",
+      "title": "Hypothesis-test concepts",
+      "title_zh": "假设检验基本概念",
+      "summary_zh": "理解原假设、备择假设、检验统计量、临界域、显著性水平和 p 值。",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "understand",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_one_mean_hypothesis_test",
+      "parent_requirement_id": null,
+      "code": "6.5.02",
+      "title": "One-mean hypothesis tests",
+      "title_zh": "总体均值假设检验",
+      "summary_zh": "针对已知方差正态总体样本或任意总体大样本建立并执行总体均值检验。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_one_two_tailed_tests",
+      "parent_requirement_id": null,
+      "code": "6.5.03",
+      "title": "One- and two-tailed tests",
+      "title_zh": "单尾与双尾检验",
+      "summary_zh": "根据备择假设选择单尾或双尾检验及相应临界域。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "analyze",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_interpret_hypothesis_result",
+      "parent_requirement_id": null,
+      "code": "6.5.04",
+      "title": "Interpreting test results",
+      "title_zh": "解释假设检验结论",
+      "summary_zh": "在问题语境中解释拒绝或不拒绝原假设的含义，不扩展到大纲排除的错误类型。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "evaluate",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_scatter_linear_plausibility",
+      "parent_requirement_id": null,
+      "code": "6.6.01",
+      "title": "Scatter diagrams and linear plausibility",
+      "title_zh": "散点图与线性关系判断",
+      "summary_zh": "由散点图判断变量间是否存在可信的线性关系。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_pmcc_interpretation",
+      "parent_requirement_id": null,
+      "code": "6.6.02",
+      "title": "Product-moment correlation coefficient",
+      "title_zh": "积矩相关系数解释",
+      "summary_zh": "把积矩相关系数解释为线性模型拟合程度，特别解释接近 -1、0、1 的情形。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "understand",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_least_squares_regression",
+      "parent_requirement_id": null,
+      "code": "6.6.03",
+      "title": "Least-squares linear regression",
+      "title_zh": "最小二乘线性回归",
+      "summary_zh": "使用最小二乘法求二元数据的线性回归方程。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_regression_prediction_limits",
+      "parent_requirement_id": null,
+      "code": "6.6.04",
+      "title": "Regression prediction and limitations",
+      "title_zh": "回归预测、内插外推与限制",
+      "summary_zh": "选择适当回归线进行内插或外推，预测并评价线性模型和相关非因果等限制。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_math_9758_2026_o_transform_to_linearity",
+      "parent_requirement_id": null,
+      "code": "6.6.05",
+      "title": "Transforming data to linearity",
+      "title_zh": "变量变换实现线性化",
+      "summary_zh": "使用平方、倒数或对数变换把关系转化为线性形式。",
+      "requirement_type": "skill",
+      "level_id": "h2_9758",
+      "cognitive_processes": [
+        "apply",
+        "analyze"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

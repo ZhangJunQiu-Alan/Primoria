@@ -1,0 +1,1899 @@
+{
+  "schema_version": "2.0.0",
+  "content_version": "0.1.0",
+  "graph_id": "singapore_h2_biology",
+  "subject": "Biology",
+  "jurisdictions": [
+    "SG"
+  ],
+  "source_ids": [
+    "src_sg_seab_h2_biology_9477_2026",
+    "src_openstax_biology_2e_2018",
+    "src_openstax_microbiology_2016",
+    "src_openstax_anatomy_physiology_2e_2022"
+  ],
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "根据 SEAB 101 项内容成果的逐项覆盖审查，建立 42 个机制级缺口概念；每个概念同时登记官方课程和开放教材证据。"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "sg_h2_biology_topic_cell_life_boundaries",
+      "kind": "topic",
+      "name": "Cellular life and genome boundaries",
+      "name_zh": "细胞生命与基因组边界",
+      "topic": null,
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (a)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §4.1, Studying Cells, cell theory"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (f)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §6.1, Viruses, noncellular infectious agents and host dependence"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (d)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§14.1 and 17.3, DNA structure; whole-genome sequencing and genome organisation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_topic_stem_replication",
+      "kind": "topic",
+      "name": "Stem-cell potency and chromosome ends",
+      "name_zh": "干细胞潜能与染色体末端",
+      "topic": null,
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (t)"
+        },
+        {
+          "source_id": "src_openstax_anatomy_physiology_2e_2022",
+          "locator": "OpenStax Anatomy and Physiology 2e §3.6, Cellular Differentiation, stem-cell potency hierarchy"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (u)"
+        },
+        {
+          "source_id": "src_openstax_anatomy_physiology_2e_2022",
+          "locator": "OpenStax Anatomy and Physiology 2e §§3.6 and 18.2, Cellular Differentiation; Production of the Formed Elements"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (b)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §14.3, DNA Replication in Eukaryotes, telomeres and telomerase"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_topic_microbial_genome_change",
+      "kind": "topic",
+      "name": "Microbial genome inheritance and change",
+      "name_zh": "微生物基因组继承与变异",
+      "topic": null,
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (e)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §§6.2-6.3, Viral Life Cycle; Isolation, Culture, and Identification of Viruses"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (f)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §6.2, The Viral Life Cycle, influenza antigenic drift and shift"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §11.6, How Asexual Prokaryotes Achieve Genetic Diversity"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_topic_genome_regulation_analysis",
+      "kind": "topic",
+      "name": "Genome regulation and analysis",
+      "name_zh": "基因组调控与分析",
+      "topic": null,
+      "default_order": 4,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (h)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§14.3 and 16.3, telomeres; eukaryotic transcriptional regulation"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (i)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§16.2-16.5, Eukaryotic Epigenetic, Transcriptional, Post-transcriptional and Translational Regulation"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (j)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §17.1, Biotechnology, nucleic-acid probes, hybridisation and DNA analysis"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_topic_screening_cancer_control",
+      "kind": "topic",
+      "name": "Screening and cancer control",
+      "name_zh": "遗传筛查与癌症控制",
+      "topic": null,
+      "default_order": 5,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (m)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §17.4, Applying Genomics, genetic testing and ethical implications"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (o)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (p)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §10.4, Cancer and the Cell Cycle"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (q)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §10.4, Proto-oncogenes and Tumor-Suppressor Genes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_topic_cancer_complex_inheritance",
+      "kind": "topic",
+      "name": "Cancer progression and complex inheritance",
+      "name_zh": "癌症进展与复杂遗传",
+      "topic": null,
+      "default_order": 6,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (r)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §10.4, Cancer and the Cell Cycle, tumour progression and metastasis"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (aa)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §12.3, Laws of Inheritance, gene interactions and epistasis"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (bb)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §12.3, Laws of Inheritance, environmental effects on phenotype"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_topic_signal_transduction",
+      "kind": "topic",
+      "name": "Cell signal transduction",
+      "name_zh": "细胞信号转导",
+      "topic": null,
+      "default_order": 7,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (m)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§9.1-9.3, Signaling Molecules and Cellular Receptors; Propagation of the Signal; Response to the Signal"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (n)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §9.2, Propagation of the Signal, second messengers and cyclic AMP"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (o)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §9.2, Propagation of the Signal, phosphorylation cascades"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_topic_receptor_population_evolution",
+      "kind": "topic",
+      "name": "Receptor pathways and population evolution",
+      "name_zh": "受体通路与种群进化",
+      "topic": null,
+      "default_order": 8,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (p)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§9.1 and 37.3, receptor signalling; regulation of body processes by insulin and glucagon"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (e)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §19.1, Population Evolution, selection and maintenance of variation"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (f)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§18.1 and 19.1, Understanding Evolution; Population Evolution"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_topic_evolutionary_relationships",
+      "kind": "topic",
+      "name": "Evidence, species and phylogeny",
+      "name_zh": "进化证据、物种与系统发育",
+      "topic": null,
+      "default_order": 9,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §18.1, Understanding Evolution, evidence from fossils, anatomy, biogeography and molecules"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (h)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §18.2, Formation of New Species, biological species concept"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (k)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (l)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§20.1-20.2, Organizing Life on Earth; Determining Evolutionary Relationships"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_topic_adaptive_immunity",
+      "kind": "topic",
+      "name": "Adaptive immunity and vaccination",
+      "name_zh": "适应性免疫与疫苗",
+      "topic": null,
+      "default_order": 10,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (b)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §§18.3 and 18.5, T Lymphocytes and Cellular Immunity; Vaccines"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (d)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §18.4, B Lymphocytes and Humoral Immunity, antibody diversity"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (e)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (f)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §18.5, Vaccines, herd immunity, benefits and adverse effects"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_topic_infection_epidemiology",
+      "kind": "topic",
+      "name": "Viral pathogenesis and epidemiology",
+      "name_zh": "病毒致病与流行病学",
+      "topic": null,
+      "default_order": 11,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §§22.3 and 25.3, Viral Infections of the Respiratory Tract; Viral Infections of the Circulatory and Lymphatic Systems"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (j)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §16.1, Characteristics of Infectious Disease, disease transmission and epidemiological measures"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (k)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §16.1, Characteristics of Infectious Disease, epidemiological patterns"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_topic_climate_forcing",
+      "kind": "topic",
+      "name": "Climate forcing and footprint",
+      "name_zh": "气候强迫与碳足迹",
+      "topic": null,
+      "default_order": 12,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (a)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §44.5, Climate and the Effects of Global Climate Change"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (b)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (d)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §44.5, Climate and the Effects of Global Climate Change, anthropogenic emissions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_topic_climate_mitigation_resources",
+      "kind": "topic",
+      "name": "Climate mitigation, food and biodiversity",
+      "name_zh": "气候缓解、粮食与生物多样性",
+      "topic": null,
+      "default_order": 13,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (c)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§44.3 and 47.1, Aquatic Biomes; The Biodiversity Crisis, coastal ecosystems and carbon storage context"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (e)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §44.5, Climate and the Effects of Global Climate Change, agriculture and food security"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §47.2, The Importance of Biodiversity to Human Life"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_topic_climate_vectors",
+      "kind": "topic",
+      "name": "Ecological redistribution and disease vectors",
+      "name_zh": "生态重新分布与疾病媒介",
+      "topic": null,
+      "default_order": 14,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (f)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§44.1 and 44.5, The Scope of Ecology; Climate and the Effects of Global Climate Change"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (h)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§28.6 and 44.5, Superphylum Ecdysozoa; climate effects on organisms"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (i)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §§16.3 and 25.3, Modes of Disease Transmission; vector-borne infections"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_cell_theory",
+      "canonical_id": "pc_fbf734590d69356e6620de58900890b7",
+      "kind": "concept",
+      "name": "Cell theory",
+      "name_zh": "细胞学说",
+      "topic": "sg_h2_biology_topic_cell_life_boundaries",
+      "description": "Using the three core claims of cell theory to classify cells as the smallest living units, explain cellular continuity from pre-existing cells and relate organismal organisation to cells.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (a)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §4.1, Studying Cells, cell theory"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_virus_living_boundary",
+      "canonical_id": "pc_6dc6738077c8e4b6d5ce05c88301b7f1",
+      "kind": "concept",
+      "name": "Viruses and the boundary of life",
+      "name_zh": "病毒与生命边界",
+      "topic": "sg_h2_biology_topic_cell_life_boundaries",
+      "description": "Evaluating viruses against cellular organisation, independent metabolism, homeostasis and reproduction to explain why they challenge rather than simply satisfy or refute cell theory.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (f)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §6.1, Viruses, noncellular infectious agents and host dependence"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_stem_cell_potency",
+      "canonical_id": "pc_135065621595f495cc5dbad83d71a736",
+      "kind": "concept",
+      "name": "Stem-cell potency",
+      "name_zh": "干细胞潜能层级",
+      "topic": "sg_h2_biology_topic_stem_replication",
+      "description": "Distinguishing totipotent, pluripotent and multipotent stem cells by the range of cell fates they can generate, using zygotic, embryonic and blood lineages as examples.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (t)"
+        },
+        {
+          "source_id": "src_openstax_anatomy_physiology_2e_2022",
+          "locator": "OpenStax Anatomy and Physiology 2e §3.6, Cellular Differentiation, stem-cell potency hierarchy"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_stem_cell_normal_functions",
+      "canonical_id": "pc_221d25cb3f73143fcd2b69d321f352b0",
+      "kind": "concept",
+      "name": "Normal functions of stem cells",
+      "name_zh": "干细胞的正常生理功能",
+      "topic": "sg_h2_biology_topic_stem_replication",
+      "description": "Explaining how embryonic stem cells support development and how lymphoid and myeloid blood stem-cell lineages maintain and replace differentiated blood and immune cells.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (u)"
+        },
+        {
+          "source_id": "src_openstax_anatomy_physiology_2e_2022",
+          "locator": "OpenStax Anatomy and Physiology 2e §§3.6 and 18.2, Cellular Differentiation; Production of the Formed Elements"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_dna_end_replication_problem",
+      "canonical_id": "pc_592815451c087a8d756c14e831e52d9c",
+      "kind": "concept",
+      "name": "The DNA end-replication problem",
+      "name_zh": "DNA 末端复制问题",
+      "topic": "sg_h2_biology_topic_stem_replication",
+      "description": "Explaining why removal of the terminal RNA primer leaves a gap on linear chromosome ends and how telomere shortening and telomerase relate to repeated replication.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (b)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §14.3, DNA Replication in Eukaryotes, telomeres and telomerase"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_comparative_genome_architecture",
+      "canonical_id": "pc_537aba421c041ae37f65cd32932fec27",
+      "kind": "concept",
+      "name": "Comparative genome architecture",
+      "name_zh": "病毒、原核与真核基因组结构比较",
+      "topic": "sg_h2_biology_topic_cell_life_boundaries",
+      "description": "Comparing viral, prokaryotic and eukaryotic genomes by nucleic-acid type and strandedness, molecule number and size, linearity, packaging and intron organisation.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (d)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§14.1 and 17.3, DNA structure; whole-genome sequencing and genome organisation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_viral_reproductive_cycles",
+      "canonical_id": "pc_ae6cc43dff9fb9761d5d4726b4a09b99",
+      "kind": "concept",
+      "name": "Viral reproductive cycles and genome inheritance",
+      "name_zh": "病毒繁殖周期与基因组继承",
+      "topic": "sg_h2_biology_topic_microbial_genome_change",
+      "description": "Tracing how bacteriophage lytic and lysogenic cycles, influenza replication and retroviral reverse transcription transmit viral genomes through host-dependent reproductive cycles.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (e)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §§6.2-6.3, Viral Life Cycle; Isolation, Culture, and Identification of Viruses"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_viral_genome_variation",
+      "canonical_id": "pc_83b60c915b393962bc20085ab5ed558a",
+      "kind": "concept",
+      "name": "Antigenic drift and antigenic shift",
+      "name_zh": "抗原漂移与抗原转变",
+      "topic": "sg_h2_biology_topic_microbial_genome_change",
+      "description": "Distinguishing gradual mutation-driven antigenic drift from reassortment-driven antigenic shift and relating each process to variation in viral genomes.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (f)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §6.2, The Viral Life Cycle, influenza antigenic drift and shift"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_prokaryotic_horizontal_gene_transfer",
+      "canonical_id": "pc_ca343b4bd2c01e20b01d5e64c3cecaec",
+      "kind": "concept",
+      "name": "Prokaryotic horizontal gene transfer",
+      "name_zh": "原核生物水平基因转移",
+      "topic": "sg_h2_biology_topic_microbial_genome_change",
+      "description": "Comparing transformation, bacteriophage-mediated transduction and F-plasmid conjugation as routes that create bacterial genome variation alongside binary fission.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §11.6, How Asexual Prokaryotes Achieve Genetic Diversity"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_noncoding_genome_elements",
+      "canonical_id": "pc_db3e62fe08b80340a769dc3839070f1e",
+      "kind": "concept",
+      "name": "Functional non-coding genome elements",
+      "name_zh": "功能性非编码基因组元件",
+      "topic": "sg_h2_biology_topic_genome_regulation_analysis",
+      "description": "Distinguishing introns, centromeres, telomeres, promoters, enhancers and silencers by their structural or regulatory roles without extending to excluded repeat and transposon classes.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (h)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§14.3 and 16.3, telomeres; eukaryotic transcriptional regulation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_multilevel_eukaryotic_gene_regulation",
+      "canonical_id": "pc_7e223bfc05f6ec9124d8aee5193decc1",
+      "kind": "concept",
+      "name": "Multilevel regulation of eukaryotic gene expression",
+      "name_zh": "真核基因表达的多层调控",
+      "topic": "sg_h2_biology_topic_genome_regulation_analysis",
+      "description": "Explaining how chromatin modification, transcription factors, RNA processing and stability, translation initiation and protein modification or degradation produce spatial and temporal differential expression.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (i)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§16.2-16.5, Eukaryotic Epigenetic, Transcriptional, Post-transcriptional and Translational Regulation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_southern_blot_hybridisation",
+      "canonical_id": "pc_c83a8b007ebf17728bb76b2ece193f67",
+      "kind": "concept",
+      "name": "Southern blotting and nucleic-acid hybridisation",
+      "name_zh": "Southern 印迹与核酸杂交",
+      "topic": "sg_h2_biology_topic_genome_regulation_analysis",
+      "description": "Tracing DNA separation, transfer, probe hybridisation and signal detection in Southern blotting and distinguishing the method from PCR amplification and gel separation alone.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (j)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §17.1, Biotechnology, nucleic-acid probes, hybridisation and DNA analysis"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_maternal_genetic_screening_ethics",
+      "canonical_id": "pc_5ee270f8ca4283376f94e53152f85c08",
+      "kind": "concept",
+      "name": "Ethics of maternal genetic screening",
+      "name_zh": "母体遗传筛查伦理",
+      "topic": "sg_h2_biology_topic_screening_cancer_control",
+      "description": "Evaluating maternal genetic screening for conditions such as trisomy 21 through informed consent, uncertainty, privacy, autonomy, access and consequences of acting on results.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (m)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §17.4, Applying Genomics, genetic testing and ethical implications"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_cell_cycle_dysregulation_cancer_risk",
+      "canonical_id": "pc_499991bf33c64eba5ad5578e4807fcc1",
+      "kind": "concept",
+      "name": "Cell-cycle dysregulation and cancer risk",
+      "name_zh": "细胞周期失调与癌变风险",
+      "topic": "sg_h2_biology_topic_screening_cancer_control",
+      "description": "Connecting checkpoint failure with uncontrolled division and distinguishing inherited changes, chemical carcinogens, ionising radiation and immune loss as factors that alter cancer risk.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (o)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (p)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §10.4, Cancer and the Cell Cycle"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_oncogene_tumour_suppressor_control",
+      "canonical_id": "pc_bd589da3ada63146c5f5b029f0064d07",
+      "kind": "concept",
+      "name": "Oncogenes and tumour-suppressor genes",
+      "name_zh": "原癌基因与抑癌基因",
+      "topic": "sg_h2_biology_topic_screening_cancer_control",
+      "description": "Explaining how gain-of-function changes in proto-oncogenes and loss-of-function changes in tumour-suppressor genes remove complementary controls on cell division.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (q)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §10.4, Proto-oncogenes and Tumor-Suppressor Genes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_multistep_cancer_progression",
+      "canonical_id": "pc_9763501544d8bfe2340c69f5168122ef",
+      "kind": "concept",
+      "name": "Multistep cancer progression",
+      "name_zh": "癌症的多步骤进展",
+      "topic": "sg_h2_biology_topic_cancer_complex_inheritance",
+      "description": "Explaining cancer progression as an accumulation of changes that supports uncontrolled growth, angiogenesis, invasion and metastatic spread rather than as a single mutation event.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (r)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §10.4, Cancer and the Cell Cycle, tumour progression and metastasis"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_epistasis_problem_solving",
+      "canonical_id": "pc_8e4f9fe204596ba3cffe0a866b752acc",
+      "kind": "concept",
+      "name": "Epistasis problem solving",
+      "name_zh": "上位性遗传问题求解",
+      "topic": "sg_h2_biology_topic_cancer_complex_inheritance",
+      "description": "Inferring how an allele at one locus modifies or masks expression at another locus and deriving phenotypic classes from a stated pathway or cross without memorising fixed ratios.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (aa)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §12.3, Laws of Inheritance, gene interactions and epistasis"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_genotype_environment_phenotype",
+      "canonical_id": "pc_26342a7db434bca7f388ae17a9185c9f",
+      "kind": "concept",
+      "name": "Genotype-environment effects on phenotype",
+      "name_zh": "基因型、环境与表型",
+      "topic": "sg_h2_biology_topic_cancer_complex_inheritance",
+      "description": "Explaining phenotype as an outcome of genotype interacting with environmental conditions, including nutrition-dependent developmental differentiation in honeybees.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (bb)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §12.3, Laws of Inheritance, environmental effects on phenotype"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_cell_signalling_stages",
+      "canonical_id": "pc_3ac937bdebb4ad7797e85cc8b7d9f724",
+      "kind": "concept",
+      "name": "Stages of cell signalling",
+      "name_zh": "细胞信号传导阶段",
+      "topic": "sg_h2_biology_topic_signal_transduction",
+      "description": "Tracing a signal from ligand-receptor binding through intracellular transduction and amplification to a cellular response such as altered gene expression.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (m)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§9.1-9.3, Signaling Molecules and Cellular Receptors; Propagation of the Signal; Response to the Signal"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_second_messengers",
+      "canonical_id": "pc_89fe9703885466be0c72a2bd8ff474d1",
+      "kind": "concept",
+      "name": "Second messengers",
+      "name_zh": "第二信使",
+      "topic": "sg_h2_biology_topic_signal_transduction",
+      "description": "Explaining how small intracellular mediators such as cyclic AMP relay an activated receptor signal, diffuse or change concentration rapidly and amplify downstream responses.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (n)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §9.2, Propagation of the Signal, second messengers and cyclic AMP"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_kinase_phosphatase_signalling",
+      "canonical_id": "pc_4e374f5b44ab4f7b3b4f0fe61343d1a7",
+      "kind": "concept",
+      "name": "Kinases and phosphatases in signalling",
+      "name_zh": "信号传导中的激酶与磷酸酶",
+      "topic": "sg_h2_biology_topic_signal_transduction",
+      "description": "Explaining how kinases propagate and amplify signals by phosphorylation while phosphatases remove phosphate groups to regulate or terminate pathway activity.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (o)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §9.2, Propagation of the Signal, phosphorylation cascades"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_insulin_glucagon_receptor_pathways",
+      "canonical_id": "pc_de08a6e55637e2602e66ed4106e226c5",
+      "kind": "concept",
+      "name": "Insulin and glucagon receptor pathways",
+      "name_zh": "胰岛素与胰高血糖素受体通路",
+      "topic": "sg_h2_biology_topic_receptor_population_evolution",
+      "description": "Contrasting insulin signalling through a receptor tyrosine kinase with glucagon signalling through a G-protein-coupled receptor and linking each pathway to physiological blood-glucose change.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (p)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§9.1 and 37.3, receptor signalling; regulation of body processes by insulin and glucagon"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_recessive_allele_persistence",
+      "canonical_id": "pc_24f7468eb16b3deb8939b301b540fa6d",
+      "kind": "concept",
+      "name": "Persistence of harmful recessive alleles",
+      "name_zh": "有害隐性等位基因的保留",
+      "topic": "sg_h2_biology_topic_receptor_population_evolution",
+      "description": "Explaining how harmful recessive alleles can remain hidden from selection in heterozygotes and persist under mutation, drift, migration or heterozygote-advantage conditions.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (e)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §19.1, Population Evolution, selection and maintenance of variation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_microevolution_macroevolution_link",
+      "canonical_id": "pc_bd1067e6725705e4fdfa03eea740a3ca",
+      "kind": "concept",
+      "name": "Microevolution and macroevolution",
+      "name_zh": "微观进化与宏观进化的联系",
+      "topic": "sg_h2_biology_topic_receptor_population_evolution",
+      "description": "Relating changes in population allele frequencies to descent with modification and explaining how accumulated divergence and speciation connect microevolutionary processes to macroevolutionary patterns.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (f)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§18.1 and 19.1, Understanding Evolution; Population Evolution"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_integrated_evolution_evidence",
+      "canonical_id": "pc_bc4e3b704ae858690db84875134dd94a",
+      "kind": "concept",
+      "name": "Integrated evidence for evolution",
+      "name_zh": "进化的综合证据",
+      "topic": "sg_h2_biology_topic_evolutionary_relationships",
+      "description": "Combining molecular homology, fossil and anatomical homology and biogeographic patterns including Wallace's observations as independent, converging evidence for descent with modification.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §18.1, Understanding Evolution, evidence from fossils, anatomy, biogeography and molecules"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_biological_species_concept_limits",
+      "canonical_id": "pc_4e68c5823f659e70812a25fdd648eb6e",
+      "kind": "concept",
+      "name": "Biological species concept and its limits",
+      "name_zh": "生物学物种概念及局限",
+      "topic": "sg_h2_biology_topic_evolutionary_relationships",
+      "description": "Using reproductive compatibility and isolation to apply the biological species concept while recognising limits for fossils, asexual organisms and geographically separated populations.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (h)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §18.2, Formation of New Species, biological species concept"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_phylogeny_and_molecular_classification",
+      "canonical_id": "pc_39ea2f145fd0890bf614289d08b77ce3",
+      "kind": "concept",
+      "name": "Phylogeny and molecular classification",
+      "name_zh": "系统发育与分子分类",
+      "topic": "sg_h2_biology_topic_evolutionary_relationships",
+      "description": "Reconstructing evolutionary relationships using genome sequences and nucleotide or amino-acid multiple sequence alignment and explaining advantages over classification from superficial similarity alone.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (k)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (l)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§20.1-20.2, Organizing Life on Earth; Determining Evolutionary Relationships"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_adaptive_immune_cell_coordination",
+      "canonical_id": "pc_d936b5538a6e6efea0a86a5c61d4e7f8",
+      "kind": "concept",
+      "name": "Coordination of adaptive immune cells",
+      "name_zh": "适应性免疫细胞协同",
+      "topic": "sg_h2_biology_topic_adaptive_immunity",
+      "description": "Tracing antigen presentation and the coordinated roles of helper and cytotoxic T cells, B cells and memory cells in primary and faster secondary specific responses.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (b)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §§18.3 and 18.5, T Lymphocytes and Cellular Immunity; Vaccines"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_antibody_diversity_mechanisms",
+      "canonical_id": "pc_ba9ef4894326b03822a9ce369153bdf1",
+      "kind": "concept",
+      "name": "Mechanisms of antibody diversity",
+      "name_zh": "抗体多样性的形成机制",
+      "topic": "sg_h2_biology_topic_adaptive_immunity",
+      "description": "Explaining how somatic recombination generates variable-region combinations and how somatic hypermutation and class switching diversify affinity or effector class after activation.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (d)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §18.4, B Lymphocytes and Humoral Immunity, antibody diversity"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_vaccination_population_control_tradeoffs",
+      "canonical_id": "pc_2a1d5be94da2719c6b406a95faba674e",
+      "kind": "concept",
+      "name": "Vaccination, population control and trade-offs",
+      "name_zh": "疫苗的群体控制与权衡",
+      "topic": "sg_h2_biology_topic_adaptive_immunity",
+      "description": "Explaining how vaccination creates immune memory and sufficient population coverage interrupts transmission, then evaluating benefits, adverse risks and uncertainty without treating all vaccines as identical.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (e)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (f)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §18.5, Vaccines, herd immunity, benefits and adverse effects"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_viral_tissue_pathogenesis",
+      "canonical_id": "pc_2764b729ab7775f74e2d91a89df45cb7",
+      "kind": "concept",
+      "name": "Viral tissue pathogenesis",
+      "name_zh": "病毒对宿主组织的致病机制",
+      "topic": "sg_h2_biology_topic_infection_epidemiology",
+      "description": "Explaining how influenza damages respiratory epithelium and HIV targets helper T cells, linking viral replication and host-cell disruption to tissue and immune dysfunction.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §§22.3 and 25.3, Viral Infections of the Respiratory Tract; Viral Infections of the Circulatory and Lymphatic Systems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_basic_reproduction_number",
+      "canonical_id": "pc_ce2b49c3c95511238c3d7aab749233e1",
+      "kind": "concept",
+      "name": "Basic reproduction number",
+      "name_zh": "基本再生数 R0",
+      "topic": "sg_h2_biology_topic_infection_epidemiology",
+      "description": "Interpreting R0 as the expected secondary cases generated by a typical infectious case in a susceptible population and using its relation to one to reason about outbreak growth or decline.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (j)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §16.1, Characteristics of Infectious Disease, disease transmission and epidemiological measures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_outbreak_epidemic_pandemic",
+      "canonical_id": "pc_82bbf3cc11d075387a78803f6848b7d2",
+      "kind": "concept",
+      "name": "Outbreak, epidemic and pandemic",
+      "name_zh": "暴发、流行与大流行",
+      "topic": "sg_h2_biology_topic_infection_epidemiology",
+      "description": "Distinguishing a localised outbreak, an incidence above expectation across a community or region, and an epidemic spreading across countries or continents as a pandemic.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (k)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §16.1, Characteristics of Infectious Disease, epidemiological patterns"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_greenhouse_gas_human_drivers",
+      "canonical_id": "pc_319573f1dca6e679a2190e2a0cb2fa47",
+      "kind": "concept",
+      "name": "Human drivers of carbon dioxide and methane accumulation",
+      "name_zh": "二氧化碳与甲烷累积的人为驱动",
+      "topic": "sg_h2_biology_topic_climate_forcing",
+      "description": "Connecting fossil-fuel energy use, deforestation and increased ruminant-meat production to atmospheric carbon dioxide or methane accumulation and climate forcing.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (a)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §44.5, Climate and the Effects of Global Climate Change"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_climate_system_ecological_impacts",
+      "canonical_id": "pc_2749a18428b999a138d50408dbe6ade0",
+      "kind": "concept",
+      "name": "Climate-system and ecological impacts",
+      "name_zh": "气候系统与生态影响",
+      "topic": "sg_h2_biology_topic_climate_forcing",
+      "description": "Tracing greenhouse-gas forcing to warming, ice loss, sea-level rise, extreme events, freshwater stress, species movement and stress on coral, seagrass and mangrove ecosystems.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (b)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §44.5, Climate and the Effects of Global Climate Change"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_mangrove_climate_mitigation",
+      "canonical_id": "pc_a0e33d77e9874ae332cc68f48f6afcad",
+      "kind": "concept",
+      "name": "Mangrove climate mitigation",
+      "name_zh": "红树林的气候缓解作用",
+      "topic": "sg_h2_biology_topic_climate_mitigation_resources",
+      "description": "Explaining how mangroves store coastal blue carbon, trap sediments and reduce wave energy, distinguishing mitigation through carbon sequestration from adaptation through coastal protection.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (c)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§44.3 and 47.1, Aquatic Biomes; The Biodiversity Crisis, coastal ecosystems and carbon storage context"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_anthropogenic_carbon_footprints",
+      "canonical_id": "pc_4f4af16b906ef8ca4809dbec4bbe1cae",
+      "kind": "concept",
+      "name": "Comparing anthropogenic carbon footprints",
+      "name_zh": "人为活动碳足迹比较",
+      "topic": "sg_h2_biology_topic_climate_forcing",
+      "description": "Comparing life-cycle greenhouse-gas contributions from deforestation, fossil, hydroelectric, nuclear, solar, wind and bioethanol energy and from animal- and plant-based foods without reducing the comparison to operational emissions alone.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (d)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §44.5, Climate and the Effects of Global Climate Change, anthropogenic emissions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_climate_stress_food_supply",
+      "canonical_id": "pc_ac5535dab2f267fa369064b9b6c18143",
+      "kind": "concept",
+      "name": "Climate stress and sustainable food supply",
+      "name_zh": "气候压力与可持续食物供应",
+      "topic": "sg_h2_biology_topic_climate_mitigation_resources",
+      "description": "Explaining how increased temperature and extreme weather alter crop and livestock productivity, water availability and supply stability, and evaluating adaptation limits in sustainable food systems.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (e)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §44.5, Climate and the Effects of Global Climate Change, agriculture and food security"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_climate_ecological_redistribution",
+      "canonical_id": "pc_6ecac9d7cebd37963fde0acddff3be22",
+      "kind": "concept",
+      "name": "Climate-driven ecological redistribution",
+      "name_zh": "气候驱动的生态重新分布",
+      "topic": "sg_h2_biology_topic_climate_vectors",
+      "description": "Explaining how warming and extreme events alter habitat suitability, organism ranges, food-chain interactions and realised niche occupation across connected ecosystems.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (f)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§44.1 and 44.5, The Scope of Ecology; Climate and the Effects of Global Climate Change"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_tropical_biodiversity_resources",
+      "canonical_id": "pc_8c1f65f463454e88852c30db0397bf45",
+      "kind": "concept",
+      "name": "Tropical biodiversity as a biomedical and food resource",
+      "name_zh": "热带生物多样性的医药与粮食资源价值",
+      "topic": "sg_h2_biology_topic_climate_mitigation_resources",
+      "description": "Explaining how climate-driven tropical biodiversity loss can remove potential biomedical compounds and genetic diversity used for crop resilience, while distinguishing potential value from proven use.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §47.2, The Importance of Biodiversity to Human Life"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_temperature_insect_vector_lifecycle",
+      "canonical_id": "pc_e15b0826aa2278c39f7c816e8ec8dddb",
+      "kind": "concept",
+      "name": "Temperature effects on insect-vector life cycles",
+      "name_zh": "温度对昆虫媒介生命周期的影响",
+      "topic": "sg_h2_biology_topic_climate_vectors",
+      "description": "Relating ectothermic insect metabolism and narrow thermal tolerance to development, survival and mosquito-vector life-cycle timing without assuming that warmer conditions always increase transmission.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (h)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§28.6 and 44.5, Superphylum Ecdysozoa; climate effects on organisms"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_biology_warming_vector_borne_range_shift",
+      "canonical_id": "pc_6b8c57b0c399f1e72abda5b9a54c7c2e",
+      "kind": "concept",
+      "name": "Warming-driven shifts in vector-borne disease range",
+      "name_zh": "变暖驱动的蚊媒疾病范围变化",
+      "topic": "sg_h2_biology_topic_climate_vectors",
+      "description": "Explaining how temperature changes mosquito survival, development and pathogen incubation and can shift malaria or dengue suitability beyond the tropics, subject to rainfall, habitat and public-health controls.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (i)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §§16.3 and 25.3, Modes of Disease Transmission; vector-borne infections"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ],
+  "edges": [
+    {
+      "from": "sg_h2_biology_cell_theory",
+      "to": "sg_h2_biology_virus_living_boundary",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "判断病毒为何挑战生命定义，需要先明确细胞学说的核心断言。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (a)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §4.1, Studying Cells, cell theory"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (f)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §6.1, Viruses, noncellular infectious agents and host dependence"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_comparative_genome_architecture",
+      "to": "sg_h2_biology_viral_reproductive_cycles",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "追踪病毒基因组继承前，需要先区分不同基因组的结构组织。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (d)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§14.1 and 17.3, DNA structure; whole-genome sequencing and genome organisation"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (e)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §§6.2-6.3, Viral Life Cycle; Isolation, Culture, and Identification of Viruses"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_viral_reproductive_cycles",
+      "to": "sg_h2_biology_viral_genome_variation",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "比较抗原漂移与转变前，需要理解病毒复制和基因组传递路径。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (e)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §§6.2-6.3, Viral Life Cycle; Isolation, Culture, and Identification of Viruses"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (f)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §6.2, The Viral Life Cycle, influenza antigenic drift and shift"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_noncoding_genome_elements",
+      "to": "sg_h2_biology_multilevel_eukaryotic_gene_regulation",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "分析多层基因调控前，需要识别启动子、增强子、沉默子和内含子等功能元件。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (h)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§14.3 and 16.3, telomeres; eukaryotic transcriptional regulation"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (i)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§16.2-16.5, Eukaryotic Epigenetic, Transcriptional, Post-transcriptional and Translational Regulation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_cell_cycle_dysregulation_cancer_risk",
+      "to": "sg_h2_biology_oncogene_tumour_suppressor_control",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "解释特定癌基因改变前，需要理解细胞周期控制失调与癌变的联系。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (o)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (p)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §10.4, Cancer and the Cell Cycle"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (q)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §10.4, Proto-oncogenes and Tumor-Suppressor Genes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_oncogene_tumour_suppressor_control",
+      "to": "sg_h2_biology_multistep_cancer_progression",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "理解癌症多步骤进展，需要先掌握促进和抑制增殖的基因控制。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (q)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §10.4, Proto-oncogenes and Tumor-Suppressor Genes"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (r)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §10.4, Cancer and the Cell Cycle, tumour progression and metastasis"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_cell_signalling_stages",
+      "to": "sg_h2_biology_second_messengers",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "解释第二信使时，需要先定位其在受体激活后的信号转导阶段。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (m)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§9.1-9.3, Signaling Molecules and Cellular Receptors; Propagation of the Signal; Response to the Signal"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (n)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §9.2, Propagation of the Signal, second messengers and cyclic AMP"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_second_messengers",
+      "to": "sg_h2_biology_kinase_phosphatase_signalling",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "解释磷酸化级联的放大与终止，需要先理解第二信使如何启动下游通路。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (n)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §9.2, Propagation of the Signal, second messengers and cyclic AMP"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (o)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §9.2, Propagation of the Signal, phosphorylation cascades"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_kinase_phosphatase_signalling",
+      "to": "sg_h2_biology_insulin_glucagon_receptor_pathways",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "比较两类血糖受体通路前，需要理解激酶与磷酸酶的通用调控作用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (o)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §9.2, Propagation of the Signal, phosphorylation cascades"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (p)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§9.1 and 37.3, receptor signalling; regulation of body processes by insulin and glucagon"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_recessive_allele_persistence",
+      "to": "sg_h2_biology_microevolution_macroevolution_link",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "联系微观和宏观进化前，需要理解选择如何改变或保留种群等位基因。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (e)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §19.1, Population Evolution, selection and maintenance of variation"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (f)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§18.1 and 19.1, Understanding Evolution; Population Evolution"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_integrated_evolution_evidence",
+      "to": "sg_h2_biology_phylogeny_and_molecular_classification",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "使用分子数据重建系统发育前，需要理解多类进化证据为何能够相互印证。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §18.1, Understanding Evolution, evidence from fossils, anatomy, biogeography and molecules"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (k)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (l)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§20.1-20.2, Organizing Life on Earth; Determining Evolutionary Relationships"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_biological_species_concept_limits",
+      "to": "sg_h2_biology_phylogeny_and_molecular_classification",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "解释系统发育分类的价值时，需要先认识单一物种概念的适用边界。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (h)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §18.2, Formation of New Species, biological species concept"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (k)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (l)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§20.1-20.2, Organizing Life on Earth; Determining Evolutionary Relationships"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_adaptive_immune_cell_coordination",
+      "to": "sg_h2_biology_antibody_diversity_mechanisms",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "解释抗体多样性如何用于应答前，需要先理解 B、T 和抗原呈递细胞的协同。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (b)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §§18.3 and 18.5, T Lymphocytes and Cellular Immunity; Vaccines"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (d)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §18.4, B Lymphocytes and Humoral Immunity, antibody diversity"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_adaptive_immune_cell_coordination",
+      "to": "sg_h2_biology_vaccination_population_control_tradeoffs",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "评价疫苗群体效果前，需要先理解免疫记忆和初次、二次应答。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (b)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §§18.3 and 18.5, T Lymphocytes and Cellular Immunity; Vaccines"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (e)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (f)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §18.5, Vaccines, herd immunity, benefits and adverse effects"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_basic_reproduction_number",
+      "to": "sg_h2_biology_outbreak_epidemic_pandemic",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "区分疾病传播规模时，需要先理解传染性指标与病例增长趋势。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (j)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §16.1, Characteristics of Infectious Disease, disease transmission and epidemiological measures"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (k)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §16.1, Characteristics of Infectious Disease, epidemiological patterns"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_greenhouse_gas_human_drivers",
+      "to": "sg_h2_biology_climate_system_ecological_impacts",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "解释气候系统和生态后果前，需要先建立人为温室气体来源的因果链。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (a)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §44.5, Climate and the Effects of Global Climate Change"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_climate_system_ecological_impacts",
+      "to": "sg_h2_biology_climate_ecological_redistribution",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "分析物种和生态位重新分布，需要先理解升温与极端事件对环境的影响。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (b)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §44.5, Climate and the Effects of Global Climate Change"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (f)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§44.1 and 44.5, The Scope of Ecology; Climate and the Effects of Global Climate Change"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_temperature_insect_vector_lifecycle",
+      "to": "sg_h2_biology_warming_vector_borne_range_shift",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "解释疾病地理范围移动前，需要先理解温度对蚊媒存活和发育的作用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (h)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§28.6 and 44.5, Superphylum Ecdysozoa; climate effects on organisms"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (i)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §§16.3 and 25.3, Modes of Disease Transmission; vector-borne infections"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

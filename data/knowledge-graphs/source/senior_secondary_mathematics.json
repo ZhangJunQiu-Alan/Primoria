@@ -1,0 +1,3194 @@
+{
+  "schema_version": "2.0.0",
+  "content_version": "0.1.0",
+  "graph_id": "senior_secondary_mathematics",
+  "subject": "Mathematics",
+  "jurisdictions": [
+    "CN"
+  ],
+  "source_ids": [
+    "src_cn_moe_senior_high_math_2020",
+    "src_openstax_contemporary_mathematics_2026",
+    "src_pep_math_sufficient_necessary_conditions_2023",
+    "src_pep_high_school_math_5a_2007",
+    "src_openstax_precalculus_2e_2026",
+    "src_mit_ocw_18_02sc_fall_2010",
+    "src_mit_ocw_strang_calculus_ch9_2023",
+    "src_pep_high_school_math_2a_2015",
+    "src_pep_math_oblique_drawing_2023",
+    "src_openstax_introductory_statistics_2e_2026",
+    "src_mit_ocw_18_01sc_fall_2010",
+    "src_berkeley_cs70_summer_2026"
+  ],
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "根据中国普通高中数学成果级覆盖审查，新增最小可诊断概念、复用 canonical alias，并补齐双类权威证据。"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "cn_sh_math_topic_set_foundations",
+      "kind": "topic",
+      "name": "Set foundations",
+      "name_zh": "集合基础",
+      "topic": null,
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23（正文p.15），必修主题一·1‘集合’"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §1.1 Basic Set Concepts, pp.6-13"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §1.2 Subsets, pp.14-19"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§1.4-1.5 Set Operations, pp.29-59"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_sets_and_logic",
+      "kind": "topic",
+      "name": "Sets and logic",
+      "name_zh": "集合表达与逻辑",
+      "topic": null,
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23（正文p.15），必修主题一·1‘集合’"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §1.3 Understanding Venn Diagrams, pp.20-28"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23-24（正文p.15-16），必修主题一·2‘常用逻辑用语’"
+        },
+        {
+          "source_id": "src_pep_math_sufficient_necessary_conditions_2023",
+          "locator": "PDF pp.1-3, ‘教学目标’及‘命题与推出/充要条件’"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §2.1 Statements and Quantifiers, pp.60-69"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_inequalities_and_optimisation",
+      "kind": "topic",
+      "name": "Inequalities and optimisation",
+      "name_zh": "不等式与最值",
+      "topic": null,
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.24（正文p.16），必修主题一·3‘相等关系与不等关系’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_5a_2007",
+          "locator": "官方教材目录及内容说明：第三章 §3.1 不等关系与不等式"
+        },
+        {
+          "source_id": "src_pep_high_school_math_5a_2007",
+          "locator": "官方教材目录及内容说明：第三章 §3.4 基本不等式及简单应用"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_function_representations",
+      "kind": "topic",
+      "name": "Function representations",
+      "name_zh": "函数表示",
+      "topic": null,
+      "default_order": 4,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.1 Functions and Function Notation, pp.7-32"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.2 Domain and Range, pp.33-53; piecewise-defined functions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_function_qualitative_properties",
+      "kind": "topic",
+      "name": "Qualitative properties of functions",
+      "name_zh": "函数定性性质",
+      "topic": null,
+      "default_order": 5,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.3 Rates of Change and Behavior of Graphs, pp.54-69"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.5 Transformation of Functions, pp.86-116; even and odd functions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_elementary_function_behaviour",
+      "kind": "topic",
+      "name": "Elementary function behaviour",
+      "name_zh": "基本初等函数性质",
+      "topic": null,
+      "default_order": 6,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF Chapter 6 introduction and §6.1, pp.615-633; periodic functions"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27-28（正文p.19-20），必修主题二·2‘幂函数、指数函数、对数函数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.3 Power Functions and Polynomial Functions, pp.275-294"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §4.1 Exponential Functions, pp.398-415"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_logarithmic_growth",
+      "kind": "topic",
+      "name": "Logarithmic behaviour and growth",
+      "name_zh": "对数函数与增长比较",
+      "topic": null,
+      "default_order": 7,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28（正文p.20），必修主题二·2‘对数函数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§4.3-4.5 Logarithmic Functions and Properties, pp.429-471"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.30-31（正文p.22-23），必修主题二·4‘函数应用’·函数与数学模型"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§3.3, 4.1 and 4.3, pp.275-294 and 398-438; end behavior and exponential/logarithmic growth"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_trigonometric_transformations",
+      "kind": "topic",
+      "name": "Trigonometric transformations",
+      "name_zh": "三角函数变换",
+      "topic": null,
+      "default_order": 8,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §7.3 Double-Angle, Half-Angle, and Reduction Formulas, pp.700-711"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§7.2-7.4 Trigonometric Identities and Transformations, pp.685-718"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §7.6 Modeling with Trigonometric Functions, pp.734-764"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_function_modelling",
+      "kind": "topic",
+      "name": "Function modelling",
+      "name_zh": "函数建模",
+      "topic": null,
+      "default_order": 9,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.30-31（正文p.22-23），必修主题二·4‘函数应用’·函数与数学模型"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§2.3 and 4.7 Modeling with Linear, Exponential and Logarithmic Functions, pp.206-219 and 484-502"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§2.3 and 4.7 Modeling, pp.206-219 and 484-502"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_plane_vector_foundations",
+      "kind": "topic",
+      "name": "Plane vector foundations",
+      "name_zh": "平面向量基础",
+      "topic": null,
+      "default_order": 10,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4: Vectors, Dot Products, Lengths/Angles and Vector Components"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 2-4: Dot Products, Lengths/Angles and Vector Components"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_vector_triangle_applications",
+      "kind": "topic",
+      "name": "Vector and triangle applications",
+      "name_zh": "向量与三角形应用",
+      "topic": null,
+      "default_order": 11,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4 and worked examples ‘Force is a Vector’ and ‘Proofs Using Vectors’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§8.1-8.2 Laws of Sines and Cosines, pp.765-795"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_complex_foundations",
+      "kind": "topic",
+      "name": "Complex number foundations",
+      "name_zh": "复数表示基础",
+      "topic": null,
+      "default_order": 12,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.1 Complex Numbers, pp.245-254"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.1 Complex Numbers, pp.245-254: complex plane"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_complex_operations",
+      "kind": "topic",
+      "name": "Complex number operations",
+      "name_zh": "复数运算",
+      "topic": null,
+      "default_order": 13,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+        },
+        {
+          "source_id": "src_mit_ocw_strang_calculus_ch9_2023",
+          "locator": "Chapter 9 §9.4, printed pp.425-426 (PDF pp.14-15): four operations and conjugate factor for division"
+        },
+        {
+          "source_id": "src_mit_ocw_strang_calculus_ch9_2023",
+          "locator": "Chapter 9 §9.4, printed pp.425-426 (PDF pp.14-15): complex addition as vector addition"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_solid_structures",
+      "kind": "topic",
+      "name": "Solid structures and representation",
+      "name_zh": "立体结构与表示",
+      "topic": null,
+      "default_order": 14,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第一章 §1.1 空间几何体的结构"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第一章 §1.3 空间几何体的表面积与体积"
+        },
+        {
+          "source_id": "src_pep_math_oblique_drawing_2023",
+          "locator": "官方页面‘教学目标’第2项；附件PDF pp.1-7 斜二测画法教学过程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_spatial_relations",
+      "kind": "topic",
+      "name": "Spatial relations",
+      "name_zh": "空间位置关系性质",
+      "topic": null,
+      "default_order": 15,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §2.1 空间点、直线、平面之间的位置关系"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §2.2 直线、平面平行的判定及其性质"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §2.3 直线、平面垂直的判定及其性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_spatial_criteria_and_proof",
+      "kind": "topic",
+      "name": "Spatial criteria and proof",
+      "name_zh": "空间判定与证明",
+      "topic": null,
+      "default_order": 16,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §2.2 直线、平面平行的判定及其性质"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §2.3 直线、平面垂直的判定及其性质"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §§2.1-2.3 空间位置关系、判定及性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_probability_models",
+      "kind": "topic",
+      "name": "Probability models",
+      "name_zh": "概率模型",
+      "topic": null,
+      "default_order": 17,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39（正文p.31），必修主题四·1‘概率’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §3.1 Terminology, pp.168-171"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §3.1 Terminology, pp.168-171; long-run relative frequency and theoretical probability"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 Note 14 §3-§3.2, PDF pp.4-6; Total Probability Rule and Eq. (4)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_sampling_methods",
+      "kind": "topic",
+      "name": "Sampling methods",
+      "name_zh": "抽样方法",
+      "topic": null,
+      "default_order": 18,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§1.1-1.2 Definitions, Data and Sampling, pp.5-25"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_sampling_and_inference",
+      "kind": "topic",
+      "name": "Sampling and inference",
+      "name_zh": "抽样设计与推断",
+      "topic": null,
+      "default_order": 19,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§1.1-1.2 Definitions, Data and Sampling, pp.5-25"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §2.3 Measures of the Location of the Data, pp.86-93"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.41（正文p.33），必修主题四‘概率与统计’学业要求"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§1.1-1.2, pp.5-25, and Chapter 8 Confidence Intervals, pp.407-461"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_arithmetic_sequences",
+      "kind": "topic",
+      "name": "Arithmetic sequences",
+      "name_zh": "等差数列",
+      "topic": null,
+      "default_order": 20,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.1 Sequences and Their Notations, pp.1089-1103"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.2 Arithmetic Sequences, pp.1104-1114"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_geometric_sequences",
+      "kind": "topic",
+      "name": "Geometric sequences",
+      "name_zh": "等比数列",
+      "topic": null,
+      "default_order": 21,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.3 Geometric Sequences, pp.1115-1123"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_derivative_applications",
+      "kind": "topic",
+      "name": "Derivative applications",
+      "name_zh": "导数应用",
+      "topic": null,
+      "default_order": 22,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Unit 1 Part A, Session 11: Chain Rule; local concept is intentionally restricted to f(ax+b)"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Unit 2 Part B, Sessions 29-30: Optimization Problems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_spatial_vectors",
+      "kind": "topic",
+      "name": "Spatial vectors",
+      "name_zh": "空间向量",
+      "topic": null,
+      "default_order": 23,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4: Vectors, Dot Products, Lengths/Angles and Vector Components"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-8 and worked example ‘Proofs Using Vectors’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_analytic_geometry_methods",
+      "kind": "topic",
+      "name": "Analytic geometry methods",
+      "name_zh": "解析几何方法",
+      "topic": null,
+      "default_order": 24,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.51-52（正文p.43-44），选择性必修主题二·2‘平面解析几何’·直线与方程"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第三章 §3.3 直线的交点坐标与距离公式"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.51-54（正文p.43-46），选择性必修主题二·2‘平面解析几何’内容要求与学业要求"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF Chapter 10 Conic Sections, pp.1009-1088; geometric constraints translated into equations"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.52-53（正文p.44-45），选择性必修主题二·2‘平面解析几何’·圆锥曲线与方程"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF Chapter 10 introduction and §§10.1-10.3, pp.1009-1055"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_conic_sections",
+      "kind": "topic",
+      "name": "Conic sections",
+      "name_zh": "圆锥曲线",
+      "topic": null,
+      "default_order": 25,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.52-53（正文p.44-45），选择性必修主题二·2‘平面解析几何’·圆锥曲线与方程"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §10.1 The Ellipse, pp.1010-1025"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §10.3 The Parabola, pp.1042-1055"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §10.2 The Hyperbola, pp.1026-1041"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_quantitative_association",
+      "kind": "topic",
+      "name": "Quantitative association",
+      "name_zh": "定量关联分析",
+      "topic": null,
+      "default_order": 26,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§12.2-12.4 Scatter Plots, Regression and Correlation, pp.620-634"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§12.3 and 12.5-12.6, pp.623-643; regression, prediction and outliers"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_topic_categorical_association",
+      "kind": "topic",
+      "name": "Categorical association",
+      "name_zh": "分类变量关联",
+      "topic": null,
+      "default_order": 27,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §3.4 Contingency Tables, pp.183-188"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §11.3 Test of Independence, pp.574-577"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_set_membership_representation",
+      "canonical_id": "pc_f9729a6d15dc682f677a3ab91f6b39d4",
+      "kind": "concept",
+      "name": "Set membership and representation",
+      "name_zh": "集合、元素与表示",
+      "topic": "cn_sh_math_topic_set_foundations",
+      "description": "理解集合、元素与属于关系，并能用自然语言、图形和符号表示集合。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23（正文p.15），必修主题一·1‘集合’"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §1.1 Basic Set Concepts, pp.6-13"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_set_relations_special_sets",
+      "canonical_id": "pc_63e1c41b5a34e8ad98170b678d0a1387",
+      "kind": "concept",
+      "name": "Set relations and special sets",
+      "name_zh": "集合关系、全集与空集",
+      "topic": "cn_sh_math_topic_set_foundations",
+      "description": "理解全集、空集、子集、包含和集合相等，并能识别给定集合的关系。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23（正文p.15），必修主题一·1‘集合’"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §1.2 Subsets, pp.14-19"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_set_operations",
+      "canonical_id": "pc_a28a2c466a40fba9dbb862c5b26631d7",
+      "kind": "concept",
+      "name": "Set operations",
+      "name_zh": "集合基本运算",
+      "topic": "cn_sh_math_topic_set_foundations",
+      "description": "理解并集、交集和补集并能完成基本集合运算。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23（正文p.15），必修主题一·1‘集合’"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§1.4-1.5 Set Operations, pp.29-59"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_venn_diagrams",
+      "canonical_id": "pc_c1ed59c17771ca7dfcca90c7c55fadc1",
+      "kind": "concept",
+      "name": "Venn diagrams",
+      "name_zh": "Venn 图表达",
+      "topic": "cn_sh_math_topic_sets_and_logic",
+      "description": "使用 Venn 图表达集合关系和集合运算，并在图形与符号表达之间转换。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23（正文p.15），必修主题一·1‘集合’"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §1.3 Understanding Venn Diagrams, pp.20-28"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_logical_conditions",
+      "canonical_id": "pc_19a11c9b22457a598968483fe980764b",
+      "kind": "concept",
+      "name": "Necessary and sufficient conditions",
+      "name_zh": "必要、充分与充要条件",
+      "topic": "cn_sh_math_topic_sets_and_logic",
+      "description": "辨析必要条件、充分条件和充要条件，并联系性质定理、判定定理和数学定义。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23-24（正文p.15-16），必修主题一·2‘常用逻辑用语’"
+        },
+        {
+          "source_id": "src_pep_math_sufficient_necessary_conditions_2023",
+          "locator": "PDF pp.1-3, ‘教学目标’及‘命题与推出/充要条件’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_quantifiers_negation",
+      "canonical_id": "pc_8962bef26df2340d5287b935038f2558",
+      "kind": "concept",
+      "name": "Quantifiers and negation",
+      "name_zh": "量词命题及其否定",
+      "topic": "cn_sh_math_topic_sets_and_logic",
+      "description": "理解全称量词和存在量词，并能正确否定相应量词命题。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23-24（正文p.15-16），必修主题一·2‘常用逻辑用语’"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §2.1 Statements and Quantifiers, pp.60-69"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_inequality_properties",
+      "canonical_id": "pc_aae485f1637bdc81f7067c35dde3bef6",
+      "kind": "concept",
+      "name": "Properties of inequalities",
+      "name_zh": "不等式概念与性质",
+      "topic": "cn_sh_math_topic_inequalities_and_optimisation",
+      "description": "理解不等式并掌握不等式的基本性质，能在等式与不等式之间进行比较。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.24（正文p.16），必修主题一·3‘相等关系与不等关系’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_5a_2007",
+          "locator": "官方教材目录及内容说明：第三章 §3.1 不等关系与不等式"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_basic_inequality_optimization",
+      "canonical_id": "pc_184e9cd37fc2cb53ccf90c19cab834d8",
+      "kind": "concept",
+      "name": "Basic inequality and optimisation",
+      "name_zh": "基本不等式与最值",
+      "topic": "cn_sh_math_topic_inequalities_and_optimisation",
+      "description": "掌握基本不等式，并用它解决简单最大值或最小值问题。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.24（正文p.16），必修主题一·3‘相等关系与不等关系’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_5a_2007",
+          "locator": "官方教材目录及内容说明：第三章 §3.4 基本不等式及简单应用"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_function_representations",
+      "canonical_id": "pc_1abd7d45eab051de2e62001ebd63bd29",
+      "kind": "concept",
+      "name": "Representations of functions",
+      "name_zh": "函数的表示方法",
+      "topic": "cn_sh_math_topic_function_representations",
+      "description": "根据情境在图像法、列表法和解析法之间选择并解释函数表示。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.1 Functions and Function Notation, pp.7-32"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_piecewise_functions",
+      "canonical_id": "pc_0ddde34f5a5afbdc4685665038267156",
+      "kind": "concept",
+      "name": "Piecewise functions",
+      "name_zh": "分段函数",
+      "topic": "cn_sh_math_topic_function_representations",
+      "description": "识别简单分段函数，解释其表示并完成基础应用。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.2 Domain and Range, pp.33-53; piecewise-defined functions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_function_monotonicity",
+      "canonical_id": "pc_9abfc4bcaa6851c3fc5391a79ee13004",
+      "kind": "concept",
+      "name": "Function monotonicity",
+      "name_zh": "函数单调性",
+      "topic": "cn_sh_math_topic_function_qualitative_properties",
+      "description": "根据图像或符号条件判断并表达函数在区间上的递增与递减。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.3 Rates of Change and Behavior of Graphs, pp.54-69"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_function_extrema",
+      "canonical_id": "pc_074dbbcc90f3e6e537ee800002487ba7",
+      "kind": "concept",
+      "name": "Function maxima and minima",
+      "name_zh": "函数最大值与最小值",
+      "topic": "cn_sh_math_topic_function_qualitative_properties",
+      "description": "从图像、解析式或情境识别并求简单函数的最大值和最小值。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.3 Rates of Change and Behavior of Graphs, pp.54-69"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_function_parity",
+      "canonical_id": "pc_9b78e9d12272cec7c1b044cf8764b84a",
+      "kind": "concept",
+      "name": "Parity of functions",
+      "name_zh": "函数奇偶性",
+      "topic": "cn_sh_math_topic_function_qualitative_properties",
+      "description": "理解函数奇偶性的概念及其几何意义。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.5 Transformation of Functions, pp.86-116; even and odd functions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_function_periodicity",
+      "canonical_id": "pc_72496adc94c0a591f57930a8a062338c",
+      "kind": "concept",
+      "name": "Periodicity of functions",
+      "name_zh": "函数周期性",
+      "topic": "cn_sh_math_topic_elementary_function_behaviour",
+      "description": "理解函数周期性的概念及其几何意义。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF Chapter 6 introduction and §6.1, pp.615-633; periodic functions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_power_functions",
+      "canonical_id": "pc_a36a0e32990824d34dc04d553ec0dc45",
+      "kind": "concept",
+      "name": "Power functions",
+      "name_zh": "幂函数",
+      "topic": "cn_sh_math_topic_elementary_function_behaviour",
+      "description": "通过典型图像识别幂函数并描述其变化规律。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27-28（正文p.19-20），必修主题二·2‘幂函数、指数函数、对数函数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.3 Power Functions and Polynomial Functions, pp.275-294"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_real_exponents_laws",
+      "canonical_id": "pc_0d9df5ce33dc2574f492f6528f380ffa",
+      "kind": "concept",
+      "name": "Real exponents and laws",
+      "name_zh": "实数指数幂及运算性质",
+      "topic": "cn_sh_math_topic_elementary_function_behaviour",
+      "description": "理解指数从有理数到实数的拓展并掌握指数幂运算性质。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27-28（正文p.19-20），必修主题二·2‘幂函数、指数函数、对数函数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §4.1 Exponential Functions, pp.398-415"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_logarithmic_function_behavior",
+      "canonical_id": "pc_e1d320d8e044c96c4d56792624b1e685",
+      "kind": "concept",
+      "name": "Logarithmic function behaviour",
+      "name_zh": "对数函数图像与单调性",
+      "topic": "cn_sh_math_topic_logarithmic_growth",
+      "description": "分析对数函数的定义域、图像和单调性，并把这些性质与底数联系起来。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28（正文p.20），必修主题二·2‘对数函数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§4.3-4.5 Logarithmic Functions and Properties, pp.429-471"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_trig_reduction_formulas",
+      "canonical_id": "pc_8adf13a8bdba5b3bf91f59d23e0bfd43",
+      "kind": "concept",
+      "name": "Trigonometric reduction formulas",
+      "name_zh": "三角函数诱导公式",
+      "topic": "cn_sh_math_topic_trigonometric_transformations",
+      "description": "利用单位圆和角的对称关系推导并使用基本诱导公式。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §7.3 Double-Angle, Half-Angle, and Reduction Formulas, pp.700-711"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_trig_product_sum_half_angle",
+      "canonical_id": "pc_2a9323cc28f9abfbb2171fbf1866c1d7",
+      "kind": "concept",
+      "name": "Product-sum and half-angle transformations",
+      "name_zh": "积化和差、和差化积与半角变换",
+      "topic": "cn_sh_math_topic_trigonometric_transformations",
+      "description": "按需要由和差角与倍角关系推出并使用积化和差、和差化积和半角公式。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§7.2-7.4 Trigonometric Identities and Transformations, pp.685-718"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_trig_modelling",
+      "canonical_id": "pc_432f6e31350cbefe8de68398ab907582",
+      "kind": "concept",
+      "name": "Trigonometric modelling",
+      "name_zh": "三角函数建模",
+      "topic": "cn_sh_math_topic_trigonometric_transformations",
+      "description": "用三角函数建立周期变化模型并解决简单实际问题。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §7.6 Modeling with Trigonometric Functions, pp.734-764"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_choose_function_models",
+      "canonical_id": "pc_f6592e5f1b68ea3b26ca39779c0b28d9",
+      "kind": "concept",
+      "name": "Choosing function models",
+      "name_zh": "选择函数模型",
+      "topic": "cn_sh_math_topic_function_modelling",
+      "description": "根据现实变化规律选择合适函数类型并说明选择依据。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.30-31（正文p.22-23），必修主题二·4‘函数应用’·函数与数学模型"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§2.3 and 4.7 Modeling with Linear, Exponential and Logarithmic Functions, pp.206-219 and 484-502"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_compare_growth_rates",
+      "canonical_id": "pc_121d75d21e3d60388c331b791cb51454",
+      "kind": "concept",
+      "name": "Comparing growth rates",
+      "name_zh": "比较函数增长速度",
+      "topic": "cn_sh_math_topic_logarithmic_growth",
+      "description": "比较对数、线性和指数函数的增长速度并解释现实含义。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.30-31（正文p.22-23），必修主题二·4‘函数应用’·函数与数学模型"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§3.3, 4.1 and 4.3, pp.275-294 and 398-438; end behavior and exponential/logarithmic growth"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_interpret_model_parameters",
+      "canonical_id": "pc_cf2cd50926224dd7b501720474116d45",
+      "kind": "concept",
+      "name": "Interpreting model parameters",
+      "name_zh": "函数模型参数解释",
+      "topic": "cn_sh_math_topic_function_modelling",
+      "description": "从现实问题解释函数模型及其参数的意义。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.30-31（正文p.22-23），必修主题二·4‘函数应用’·函数与数学模型"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§2.3 and 4.7 Modeling, pp.206-219 and 484-502"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_vector_projection",
+      "canonical_id": "pc_b70bbfb827c2b527f128f02bf360675e",
+      "kind": "concept",
+      "name": "Vector projection",
+      "name_zh": "向量投影",
+      "topic": "cn_sh_math_topic_plane_vector_foundations",
+      "description": "解释投影向量与数量投影，并用数量积计算投影和判断垂直。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 2-4: Dot Products, Lengths/Angles and Vector Components"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_plane_vector_basis_coordinates",
+      "canonical_id": "pc_b6cdf73ef35e6e93376d1e6a2bd60b8f",
+      "kind": "concept",
+      "name": "Plane vector basis and coordinates",
+      "name_zh": "平面向量基本定理与坐标",
+      "topic": "cn_sh_math_topic_plane_vector_foundations",
+      "description": "理解平面向量基本定理、正交分解和坐标表示。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4: Vectors, Dot Products, Lengths/Angles and Vector Components"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_vector_applications",
+      "canonical_id": "pc_08974dd9a6e44fc3fbcacdb999e75f58",
+      "kind": "concept",
+      "name": "Applications of plane vectors",
+      "name_zh": "平面向量应用",
+      "topic": "cn_sh_math_topic_vector_triangle_applications",
+      "description": "用向量方法解决简单平面几何、力学和现实问题。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4 and worked examples ‘Force is a Vector’ and ‘Proofs Using Vectors’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_sine_cosine_laws",
+      "canonical_id": "pc_e62097020611844e72491ccab9cc29d4",
+      "kind": "concept",
+      "name": "Sine and cosine laws",
+      "name_zh": "正弦定理与余弦定理",
+      "topic": "cn_sh_math_topic_vector_triangle_applications",
+      "description": "推导并使用正弦定理和余弦定理解三角形及简单实际问题。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§8.1-8.2 Laws of Sines and Cosines, pp.765-795"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_complex_introduction",
+      "canonical_id": "pc_a2d1c2c86661b6706ceb2919619b89e5",
+      "kind": "concept",
+      "name": "Introduction to complex numbers",
+      "name_zh": "复数与数系扩充",
+      "topic": "cn_sh_math_topic_complex_foundations",
+      "description": "通过方程求解认识复数并解释引入复数的必要性。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.1 Complex Numbers, pp.245-254"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_complex_algebraic_representation",
+      "canonical_id": "pc_4fd2ad2b9b71d4427e9ebeb4d81159ec",
+      "kind": "concept",
+      "name": "Complex algebraic representation and equality",
+      "name_zh": "复数代数表示与相等",
+      "topic": "cn_sh_math_topic_complex_foundations",
+      "description": "使用 a+bi 表示复数，依据实部和虚部分别相等判断两个复数相等。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.1 Complex Numbers, pp.245-254"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_complex_argand_representation",
+      "canonical_id": "pc_8b0b34fcb52404046ccbf41b402895fd",
+      "kind": "concept",
+      "name": "Argand diagram",
+      "name_zh": "复平面表示",
+      "topic": "cn_sh_math_topic_complex_foundations",
+      "description": "把复数表示为复平面上的点或向量，并解释代数表示与几何表示的对应关系。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.1 Complex Numbers, pp.245-254: complex plane"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_complex_arithmetic",
+      "canonical_id": "pc_84fa9a959816d2fd778aec459c7e0020",
+      "kind": "concept",
+      "name": "Complex arithmetic in algebraic form",
+      "name_zh": "复数代数形式四则运算",
+      "topic": "cn_sh_math_topic_complex_operations",
+      "description": "完成复数代数形式的加、减、乘、除；除法可使用共轭因子，但不把共轭复数扩为独立课程结果。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+        },
+        {
+          "source_id": "src_mit_ocw_strang_calculus_ch9_2023",
+          "locator": "Chapter 9 §9.4, printed pp.425-426 (PDF pp.14-15): four operations and conjugate factor for division"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_complex_addition_geometry",
+      "canonical_id": "pc_c04ce0aed24384aaa5b223f59282d31c",
+      "kind": "concept",
+      "name": "Geometric meaning of complex addition and subtraction",
+      "name_zh": "复数加减的几何意义",
+      "topic": "cn_sh_math_topic_complex_operations",
+      "description": "在复平面中用向量的平行四边形法则解释复数加法和减法。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+        },
+        {
+          "source_id": "src_mit_ocw_strang_calculus_ch9_2023",
+          "locator": "Chapter 9 §9.4, printed pp.425-426 (PDF pp.14-15): complex addition as vector addition"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_solid_structures",
+      "canonical_id": "pc_fabec640e7079cf5c178b549320b08bc",
+      "kind": "concept",
+      "name": "Structures of solids",
+      "name_zh": "基本立体图形结构",
+      "topic": "cn_sh_math_topic_solid_structures",
+      "description": "识别柱、锥、台、球和简单组合体，并描述现实物体结构。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第一章 §1.1 空间几何体的结构"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_solid_surface_volume",
+      "canonical_id": "pc_75a504416c16571e44cc269b50bb6db3",
+      "kind": "concept",
+      "name": "Surface area and volume",
+      "name_zh": "几何体表面积与体积",
+      "topic": "cn_sh_math_topic_solid_structures",
+      "description": "使用球、棱柱、棱锥和棱台表面积或体积公式解决简单问题。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第一章 §1.3 空间几何体的表面积与体积"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_oblique_drawings",
+      "canonical_id": "pc_7628ed564e93f03488bf5d3935266f24",
+      "kind": "concept",
+      "name": "Oblique drawings of solids",
+      "name_zh": "空间图形直观图",
+      "topic": "cn_sh_math_topic_solid_structures",
+      "description": "用斜二测法画简单空间图形及组合体的直观图。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_math_oblique_drawing_2023",
+          "locator": "官方页面‘教学目标’第2项；附件PDF pp.1-7 斜二测画法教学过程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_spatial_axioms",
+      "canonical_id": "pc_50eba6efb1284a4956afe205751471f0",
+      "kind": "concept",
+      "name": "Spatial incidence axioms",
+      "name_zh": "空间点线面基本事实",
+      "topic": "cn_sh_math_topic_spatial_relations",
+      "description": "理解空间点、直线和平面的位置关系以及课标列出的基本事实。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §2.1 空间点、直线、平面之间的位置关系"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_spatial_parallel_properties",
+      "canonical_id": "pc_9e7b9db8c8e0380cbd642ce8338f1d2e",
+      "kind": "concept",
+      "name": "Spatial parallelism properties",
+      "name_zh": "空间平行性质",
+      "topic": "cn_sh_math_topic_spatial_relations",
+      "description": "理解并证明直线与平面、平面与平面平行的课程规定性质。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §2.2 直线、平面平行的判定及其性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_spatial_perpendicular_properties",
+      "canonical_id": "pc_7030797af1bb287d3f65cef7cf757802",
+      "kind": "concept",
+      "name": "Spatial perpendicularity properties",
+      "name_zh": "空间垂直属性",
+      "topic": "cn_sh_math_topic_spatial_relations",
+      "description": "理解并证明直线与平面、平面与平面垂直的课程规定性质。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §2.3 直线、平面垂直的判定及其性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_spatial_parallel_criteria",
+      "canonical_id": "pc_0f342f34179aaa62e710d24849918e27",
+      "kind": "concept",
+      "name": "Spatial parallelism criteria",
+      "name_zh": "空间平行判定",
+      "topic": "cn_sh_math_topic_spatial_criteria_and_proof",
+      "description": "使用课程规定的线面与面面平行判定条件判断空间位置关系。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §2.2 直线、平面平行的判定及其性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_spatial_perpendicular_criteria",
+      "canonical_id": "pc_9e7320a9eb8d1d0efedb9aba3c644a7e",
+      "kind": "concept",
+      "name": "Spatial perpendicularity criteria",
+      "name_zh": "空间垂直判定",
+      "topic": "cn_sh_math_topic_spatial_criteria_and_proof",
+      "description": "使用课程规定的线面与面面垂直判定条件判断空间位置关系。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §2.3 直线、平面垂直的判定及其性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_solid_geometry_proofs",
+      "canonical_id": "pc_8e4564aac6db3fc263d20845b8ec5c13",
+      "kind": "concept",
+      "name": "Elementary solid geometry proofs",
+      "name_zh": "立体几何简单证明",
+      "topic": "cn_sh_math_topic_spatial_criteria_and_proof",
+      "description": "使用已学定义、事实和定理证明空间基本图形位置关系的简单命题。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §§2.1-2.3 空间位置关系、判定及性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_classical_probability",
+      "canonical_id": "pc_724ec6e8c8af72823a404e9fdafd5dbe",
+      "kind": "concept",
+      "name": "Classical probability",
+      "name_zh": "古典概型",
+      "topic": "cn_sh_math_topic_probability_models",
+      "description": "识别古典概型并计算简单随机事件概率。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39（正文p.31），必修主题四·1‘概率’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §3.1 Terminology, pp.168-171"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_frequency_probability",
+      "canonical_id": "pc_fe3e74b4da89b7d64d5b398cbdeef154",
+      "kind": "concept",
+      "name": "Estimating probability by frequency",
+      "name_zh": "用频率估计概率",
+      "topic": "cn_sh_math_topic_probability_models",
+      "description": "通过重复试验或模拟使用频率估计概率并解释随机波动。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39（正文p.31），必修主题四·1‘概率’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §3.1 Terminology, pp.168-171; long-run relative frequency and theoretical probability"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_data_sources_population",
+      "canonical_id": "pc_2d318e7e89bb828e43ea5fd2364aa316",
+      "kind": "concept",
+      "name": "Data sources, populations and samples",
+      "name_zh": "数据来源、总体与样本",
+      "topic": "cn_sh_math_topic_sampling_methods",
+      "description": "识别数据获取途径，理解总体、样本、样本量及数据随机性。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§1.1-1.2 Definitions, Data and Sampling, pp.5-25"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_simple_random_sampling",
+      "canonical_id": "pc_e4bc1b9803eeefd0aa1f24a68121dee8",
+      "kind": "concept",
+      "name": "Simple random sampling",
+      "name_zh": "简单随机抽样",
+      "topic": "cn_sh_math_topic_sampling_methods",
+      "description": "实施抽签法或随机数法的简单随机抽样，并计算样本均值和方差。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§1.1-1.2 Definitions, Data and Sampling, pp.5-25"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_stratified_sampling",
+      "canonical_id": "pc_4804c70e1e2965acbc7c3cfe09e11a3d",
+      "kind": "concept",
+      "name": "Stratified random sampling",
+      "name_zh": "分层随机抽样",
+      "topic": "cn_sh_math_topic_sampling_methods",
+      "description": "判断分层抽样适用性，按比例分配样本量并计算样本均值和方差。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§1.1-1.2 Definitions, Data and Sampling, pp.5-25"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_sampling_design",
+      "canonical_id": "pc_28e40edd140ccc548060052b3b445e5a",
+      "kind": "concept",
+      "name": "Sampling design",
+      "name_zh": "抽样方案选择",
+      "topic": "cn_sh_math_topic_sampling_and_inference",
+      "description": "根据实际问题设计并说明合适的抽样方案。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§1.1-1.2 Definitions, Data and Sampling, pp.5-25"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_distribution_percentiles",
+      "canonical_id": "pc_91a531ff72a480f49160c7fc26db307a",
+      "kind": "concept",
+      "name": "Distribution patterns and percentiles",
+      "name_zh": "取值规律与百分位数",
+      "topic": "cn_sh_math_topic_sampling_and_inference",
+      "description": "用样本估计总体取值规律和百分位数并解释百分位数含义。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §2.3 Measures of the Location of the Data, pp.86-93"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_statistical_inference_uncertainty",
+      "canonical_id": "pc_92b380d1c47e89f15ddb38bffe3675bc",
+      "kind": "concept",
+      "name": "Uncertainty in statistical inference",
+      "name_zh": "统计推断的或然性",
+      "topic": "cn_sh_math_topic_sampling_and_inference",
+      "description": "区分统计与确定性思维、归纳与演绎，并在实际问题中解释统计推断的不确定性。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.41（正文p.33），必修主题四‘概率与统计’学业要求"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§1.1-1.2, pp.5-25, and Chapter 8 Confidence Intervals, pp.407-461"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_sequence_concept_representation",
+      "canonical_id": "pc_d628dbf58410331e403a76b3b121c7fd",
+      "kind": "concept",
+      "name": "Sequence concept and representation",
+      "name_zh": "数列概念与表示",
+      "topic": "cn_sh_math_topic_arithmetic_sequences",
+      "description": "理解数列是一类特殊函数，并用列表、图像和通项公式表示数列。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.1 Sequences and Their Notations, pp.1089-1103"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_arithmetic_sequence_modelling",
+      "canonical_id": "pc_268309b2a09956425be392cca04f360c",
+      "kind": "concept",
+      "name": "Arithmetic sequence modelling",
+      "name_zh": "等差数列建模",
+      "topic": "cn_sh_math_topic_arithmetic_sequences",
+      "description": "从情境识别等差关系并用等差数列解决问题。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.2 Arithmetic Sequences, pp.1104-1114"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_arithmetic_linear_relation",
+      "canonical_id": "pc_14f1e53bf48e972800525aa7db57c70e",
+      "kind": "concept",
+      "name": "Arithmetic sequences and linear functions",
+      "name_zh": "等差数列与一次函数",
+      "topic": "cn_sh_math_topic_arithmetic_sequences",
+      "description": "比较等差数列与一元一次函数的对应关系和差异。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.2 Arithmetic Sequences, pp.1104-1114"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_geometric_sequence_modelling",
+      "canonical_id": "pc_b635d15e8f965d7215734c93032e303f",
+      "kind": "concept",
+      "name": "Geometric sequence modelling",
+      "name_zh": "等比数列建模",
+      "topic": "cn_sh_math_topic_geometric_sequences",
+      "description": "从情境识别等比关系并用等比数列解决问题。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.3 Geometric Sequences, pp.1115-1123"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_geometric_exponential_relation",
+      "canonical_id": "pc_cf08704d6dec3fc5cf1314e2f26f655d",
+      "kind": "concept",
+      "name": "Geometric sequences and exponential functions",
+      "name_zh": "等比数列与指数函数",
+      "topic": "cn_sh_math_topic_geometric_sequences",
+      "description": "比较等比数列与指数函数的对应关系和差异。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.3 Geometric Sequences, pp.1115-1123"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_simple_linear_composites",
+      "canonical_id": "pc_592fd805a5b6dadfe8e0826c7d467419",
+      "kind": "concept",
+      "name": "Derivatives of simple linear composites",
+      "name_zh": "简单线性复合函数求导",
+      "topic": "cn_sh_math_topic_derivative_applications",
+      "description": "求形如 f(ax+b) 的简单复合函数导数，不扩展到一般链式法则。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Unit 1 Part A, Session 11: Chain Rule; local concept is intentionally restricted to f(ax+b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_derivative_optimisation",
+      "canonical_id": "pc_7f364bd0df6065095b932f11a00d4941",
+      "kind": "concept",
+      "name": "Optimisation with derivatives",
+      "name_zh": "导数解决实际优化",
+      "topic": "cn_sh_math_topic_derivative_applications",
+      "description": "把简单实际问题转化为一元函数并用导数完成优化和结果解释。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Unit 2 Part B, Sessions 29-30: Optimization Problems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_spatial_coordinates_distance",
+      "canonical_id": "pc_fbe862fa74f322ae90465e6dfb1def7a",
+      "kind": "concept",
+      "name": "Spatial coordinates and distance",
+      "name_zh": "空间直角坐标系与两点距离",
+      "topic": "cn_sh_math_topic_spatial_vectors",
+      "description": "建立空间直角坐标系表示点，并推导和使用空间两点距离公式。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4: Vectors, Dot Products, Lengths/Angles and Vector Components"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_spatial_vector_basis",
+      "canonical_id": "pc_83dcad323dc19ea3b6357b3155211a10",
+      "kind": "concept",
+      "name": "Spatial vector basis and coordinates",
+      "name_zh": "空间向量基本定理与坐标",
+      "topic": "cn_sh_math_topic_spatial_vectors",
+      "description": "理解空间向量基本定理，完成正交分解和坐标表示。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4: Vectors, Dot Products, Lengths/Angles and Vector Components"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_vector_geometry_proofs",
+      "canonical_id": "pc_c91bb66b227d5404c87e08b45f62d18c",
+      "kind": "concept",
+      "name": "Vector proofs in solid geometry",
+      "name_zh": "向量法证明立体几何定理",
+      "topic": "cn_sh_math_topic_spatial_vectors",
+      "description": "用向量方法证明必修阶段的线面位置关系判定定理。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-8 and worked example ‘Proofs Using Vectors’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_line_intersections_distances",
+      "canonical_id": "pc_bea43d1a52b8d8840817983b273c7dda",
+      "kind": "concept",
+      "name": "Line intersections and distances",
+      "name_zh": "直线交点与距离",
+      "topic": "cn_sh_math_topic_analytic_geometry_methods",
+      "description": "求两直线交点、平面两点距离、点到直线距离和平行线距离。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.51-52（正文p.43-44），选择性必修主题二·2‘平面解析几何’·直线与方程"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第三章 §3.3 直线的交点坐标与距离公式"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_conic_context",
+      "canonical_id": "pc_2c7728a895c147c0e2c232582c1e6b64",
+      "kind": "concept",
+      "name": "Conic contexts",
+      "name_zh": "圆锥曲线背景与作用",
+      "topic": "cn_sh_math_topic_analytic_geometry_methods",
+      "description": "识别圆锥曲线的现实背景并说明它们在刻画和解决问题中的作用。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.52-53（正文p.44-45），选择性必修主题二·2‘平面解析几何’·圆锥曲线与方程"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF Chapter 10 introduction and §§10.1-10.3, pp.1009-1055"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_ellipse",
+      "canonical_id": "pc_58591fb3c8294a83a9405568a100991e",
+      "kind": "concept",
+      "name": "Ellipse definition and equation",
+      "name_zh": "椭圆定义、方程与性质",
+      "topic": "cn_sh_math_topic_conic_sections",
+      "description": "从情境抽象椭圆，掌握定义、标准方程和简单几何性质。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.52-53（正文p.44-45），选择性必修主题二·2‘平面解析几何’·圆锥曲线与方程"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §10.1 The Ellipse, pp.1010-1025"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_parabola",
+      "canonical_id": "pc_76707a52fc4d807bbdfb0e56f509c17e",
+      "kind": "concept",
+      "name": "Parabola",
+      "name_zh": "抛物线",
+      "topic": "cn_sh_math_topic_conic_sections",
+      "description": "理解抛物线的定义、图形、标准方程与简单几何性质。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.52-53（正文p.44-45），选择性必修主题二·2‘平面解析几何’·圆锥曲线与方程"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §10.3 The Parabola, pp.1042-1055"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_hyperbola",
+      "canonical_id": "pc_d236c68eb711f9a26eb4250a7843b517",
+      "kind": "concept",
+      "name": "Hyperbola",
+      "name_zh": "双曲线",
+      "topic": "cn_sh_math_topic_conic_sections",
+      "description": "理解双曲线的定义、图形、标准方程与简单几何性质。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.52-53（正文p.44-45），选择性必修主题二·2‘平面解析几何’·圆锥曲线与方程"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §10.2 The Hyperbola, pp.1026-1041"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_analytic_geometry_method",
+      "canonical_id": "pc_5a15abbfb73000d73e62d0f659cc8df2",
+      "kind": "concept",
+      "name": "Analytic geometry method",
+      "name_zh": "解析几何数形结合",
+      "topic": "cn_sh_math_topic_analytic_geometry_methods",
+      "description": "在坐标系中把几何问题转化为代数问题，求解后给出几何解释并处理简单应用。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.51-54（正文p.43-46），选择性必修主题二·2‘平面解析几何’内容要求与学业要求"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF Chapter 10 Conic Sections, pp.1009-1088; geometric constraints translated into equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_total_probability_formula",
+      "canonical_id": "pc_b51add1da3c3312a95ec3d5f88c2558c",
+      "kind": "concept",
+      "name": "Total probability formula",
+      "name_zh": "全概率公式",
+      "topic": "cn_sh_math_topic_probability_models",
+      "description": "识别完备划分并使用全概率公式计算概率。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 Note 14 §3-§3.2, PDF pp.4-6; Total Probability Rule and Eq. (4)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_sample_correlation",
+      "canonical_id": "pc_629b0c54807299e247ddd77ea5076dd6",
+      "kind": "concept",
+      "name": "Sample correlation coefficient",
+      "name_zh": "样本相关系数",
+      "topic": "cn_sh_math_topic_quantitative_association",
+      "description": "解释样本相关系数及其与标准化数据向量夹角的关系。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§12.2-12.4 Scatter Plots, Regression and Correlation, pp.620-634"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_regression_prediction_limits",
+      "canonical_id": "pc_85acd13e8f4afec2979a3288f911c926",
+      "kind": "concept",
+      "name": "Regression prediction and limitations",
+      "name_zh": "回归预测及其限制",
+      "topic": "cn_sh_math_topic_quantitative_association",
+      "description": "使用一元线性回归进行预测，检查适用范围并解释外推和相关不等于因果等限制。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§12.3 and 12.5-12.6, pp.623-643; regression, prediction and outliers"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_contingency_table",
+      "canonical_id": "pc_223557a1ed16ebd3dac3d0f499d14268",
+      "kind": "concept",
+      "name": "Two-by-two contingency tables",
+      "name_zh": "2×2 列联表",
+      "topic": "cn_sh_math_topic_categorical_association",
+      "description": "理解 2×2 列联表的统计意义并整理分类数据。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §3.4 Contingency Tables, pp.183-188"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_math_contingency_independence_test",
+      "canonical_id": "pc_029c971a0c9f5d5bb93bba1d0a12f4bf",
+      "kind": "concept",
+      "name": "Independence test with contingency tables",
+      "name_zh": "列联表独立性检验",
+      "topic": "cn_sh_math_topic_categorical_association",
+      "description": "使用 2×2 列联表完成独立性检验并解释结论。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §11.3 Test of Independence, pp.574-577"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ],
+  "edges": [
+    {
+      "from": "cn_sh_math_set_membership_representation",
+      "to": "cn_sh_math_set_relations_special_sets",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "集合关系以集合、元素和属于关系为基础。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23（正文p.15），必修主题一·1‘集合’"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §1.1 Basic Set Concepts, pp.6-13"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §1.2 Subsets, pp.14-19"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_set_relations_special_sets",
+      "to": "cn_sh_math_set_operations",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "并、交、补运算需要先识别集合包含关系以及全集和空集。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23（正文p.15），必修主题一·1‘集合’"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §1.2 Subsets, pp.14-19"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§1.4-1.5 Set Operations, pp.29-59"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_set_operations",
+      "to": "cn_sh_math_venn_diagrams",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "Venn 图表达集合运算需要先掌握并、交、补。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23（正文p.15），必修主题一·1‘集合’"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§1.4-1.5 Set Operations, pp.29-59"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §1.3 Understanding Venn Diagrams, pp.20-28"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_inequality_properties",
+      "to": "cn_sh_math_basic_inequality_optimization",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "基本不等式的变形和最值应用依赖不等式基本性质。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.24（正文p.16），必修主题一·3‘相等关系与不等关系’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_5a_2007",
+          "locator": "官方教材目录及内容说明：第三章 §3.1 不等关系与不等式"
+        },
+        {
+          "source_id": "src_pep_high_school_math_5a_2007",
+          "locator": "官方教材目录及内容说明：第三章 §3.4 基本不等式及简单应用"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_function_representations",
+      "to": "cn_sh_math_piecewise_functions",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "理解分段函数需要能在解析式、图像和列表表示之间转换。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.1 Functions and Function Notation, pp.7-32"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.2 Domain and Range, pp.33-53; piecewise-defined functions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_function_representations",
+      "to": "cn_sh_math_function_monotonicity",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "判断函数在区间上的变化需要先能读取函数图像、解析式或列表表示。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.1 Functions and Function Notation, pp.7-32"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.3 Rates of Change and Behavior of Graphs, pp.54-69"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_function_representations",
+      "to": "cn_sh_math_function_parity",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "判断奇偶性及其几何意义需要先能在解析式与图像表示之间转换。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.1 Functions and Function Notation, pp.7-32"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.5 Transformation of Functions, pp.86-116; even and odd functions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_function_representations",
+      "to": "cn_sh_math_function_periodicity",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "识别周期性及其几何意义需要先能读取函数图像和解析表示。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.1 Functions and Function Notation, pp.7-32"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF Chapter 6 introduction and §6.1, pp.615-633; periodic functions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_function_representations",
+      "to": "cn_sh_math_power_functions",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "识别幂函数典型图像及变化规律需要先掌握函数的基本表示。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.1 Functions and Function Notation, pp.7-32"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27-28（正文p.19-20），必修主题二·2‘幂函数、指数函数、对数函数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.3 Power Functions and Polynomial Functions, pp.275-294"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_function_monotonicity",
+      "to": "cn_sh_math_function_extrema",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "由函数变化趋势识别区间或全局最大值和最小值。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.3 Rates of Change and Behavior of Graphs, pp.54-69"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_logarithmic_function_behavior",
+      "to": "cn_sh_math_compare_growth_rates",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "比较对数与其他函数增长速度需要先理解对数函数图像和单调性。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28（正文p.20），必修主题二·2‘对数函数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§4.3-4.5 Logarithmic Functions and Properties, pp.429-471"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.30-31（正文p.22-23），必修主题二·4‘函数应用’·函数与数学模型"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§3.3, 4.1 and 4.3, pp.275-294 and 398-438; end behavior and exponential/logarithmic growth"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_compare_growth_rates",
+      "to": "cn_sh_math_choose_function_models",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "选择函数模型需要先能区分常见模型的增长规律。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.30-31（正文p.22-23），必修主题二·4‘函数应用’·函数与数学模型"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§3.3, 4.1 and 4.3, pp.275-294 and 398-438; end behavior and exponential/logarithmic growth"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§2.3 and 4.7 Modeling with Linear, Exponential and Logarithmic Functions, pp.206-219 and 484-502"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_choose_function_models",
+      "to": "cn_sh_math_interpret_model_parameters",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "解释参数前需要先明确模型类型和变量关系。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.30-31（正文p.22-23），必修主题二·4‘函数应用’·函数与数学模型"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§2.3 and 4.7 Modeling with Linear, Exponential and Logarithmic Functions, pp.206-219 and 484-502"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§2.3 and 4.7 Modeling, pp.206-219 and 484-502"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_trig_reduction_formulas",
+      "to": "cn_sh_math_trig_product_sum_half_angle",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "积和与半角变换建立在基本诱导及和差、倍角关系之上。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §7.3 Double-Angle, Half-Angle, and Reduction Formulas, pp.700-711"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§7.2-7.4 Trigonometric Identities and Transformations, pp.685-718"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_plane_vector_basis_coordinates",
+      "to": "cn_sh_math_vector_applications",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "向量解决平面问题需要先能建立基底和坐标表示。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4: Vectors, Dot Products, Lengths/Angles and Vector Components"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4 and worked examples ‘Force is a Vector’ and ‘Proofs Using Vectors’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_vector_projection",
+      "to": "cn_sh_math_vector_applications",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "力学和几何中的分解应用依赖向量投影。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 2-4: Dot Products, Lengths/Angles and Vector Components"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4 and worked examples ‘Force is a Vector’ and ‘Proofs Using Vectors’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_complex_introduction",
+      "to": "cn_sh_math_complex_algebraic_representation",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "复数的代数表示和相等关系建立在数系扩充与复数定义之上。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.1 Complex Numbers, pp.245-254"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_complex_algebraic_representation",
+      "to": "cn_sh_math_complex_argand_representation",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "复平面表示需要先能把复数写为 a+bi 并识别实部和虚部。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.1 Complex Numbers, pp.245-254"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.1 Complex Numbers, pp.245-254: complex plane"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_complex_algebraic_representation",
+      "to": "cn_sh_math_complex_arithmetic",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "复数四则运算需要先掌握 a+bi 形式及复数相等。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.1 Complex Numbers, pp.245-254"
+        },
+        {
+          "source_id": "src_mit_ocw_strang_calculus_ch9_2023",
+          "locator": "Chapter 9 §9.4, printed pp.425-426 (PDF pp.14-15): four operations and conjugate factor for division"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_complex_argand_representation",
+      "to": "cn_sh_math_complex_addition_geometry",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "解释复数加减的几何意义需要先掌握复平面的点和向量表示。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.1 Complex Numbers, pp.245-254: complex plane"
+        },
+        {
+          "source_id": "src_mit_ocw_strang_calculus_ch9_2023",
+          "locator": "Chapter 9 §9.4, printed pp.425-426 (PDF pp.14-15): complex addition as vector addition"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_complex_arithmetic",
+      "to": "cn_sh_math_complex_addition_geometry",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "把加减运算解释为向量运算需要先能完成复数加减。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+        },
+        {
+          "source_id": "src_mit_ocw_strang_calculus_ch9_2023",
+          "locator": "Chapter 9 §9.4, printed pp.425-426 (PDF pp.14-15): four operations and conjugate factor for division"
+        },
+        {
+          "source_id": "src_mit_ocw_strang_calculus_ch9_2023",
+          "locator": "Chapter 9 §9.4, printed pp.425-426 (PDF pp.14-15): complex addition as vector addition"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_solid_structures",
+      "to": "cn_sh_math_solid_surface_volume",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "表面积和体积计算需要先识别几何体结构及组成。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第一章 §1.1 空间几何体的结构"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第一章 §1.3 空间几何体的表面积与体积"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_solid_structures",
+      "to": "cn_sh_math_oblique_drawings",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "绘制空间直观图需要先识别基本立体及其组合关系。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第一章 §1.1 空间几何体的结构"
+        },
+        {
+          "source_id": "src_pep_math_oblique_drawing_2023",
+          "locator": "官方页面‘教学目标’第2项；附件PDF pp.1-7 斜二测画法教学过程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_spatial_axioms",
+      "to": "cn_sh_math_spatial_parallel_criteria",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "空间平行判定建立在点、线、面基本事实和位置关系上。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §2.1 空间点、直线、平面之间的位置关系"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §2.2 直线、平面平行的判定及其性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_spatial_axioms",
+      "to": "cn_sh_math_spatial_perpendicular_criteria",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "空间垂直判定建立在点、线、面基本事实和位置关系上。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §2.1 空间点、直线、平面之间的位置关系"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §2.3 直线、平面垂直的判定及其性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_spatial_parallel_criteria",
+      "to": "cn_sh_math_solid_geometry_proofs",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "证明空间平行命题需要能正确选用平行判定。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §2.2 直线、平面平行的判定及其性质"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §§2.1-2.3 空间位置关系、判定及性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_spatial_perpendicular_criteria",
+      "to": "cn_sh_math_solid_geometry_proofs",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "证明空间垂直命题需要能正确选用垂直判定。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §2.3 直线、平面垂直的判定及其性质"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §§2.1-2.3 空间位置关系、判定及性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_spatial_parallel_properties",
+      "to": "cn_sh_math_solid_geometry_proofs",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "证明空间位置关系命题还需要能正确使用平行性质定理。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §2.2 直线、平面平行的判定及其性质"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §§2.1-2.3 空间位置关系、判定及性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_spatial_perpendicular_properties",
+      "to": "cn_sh_math_solid_geometry_proofs",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "证明空间位置关系命题还需要能正确使用垂直性质定理。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §2.3 直线、平面垂直的判定及其性质"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §§2.1-2.3 空间位置关系、判定及性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_classical_probability",
+      "to": "cn_sh_math_total_probability_formula",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "全概率计算需要先能在有限样本模型中计算分支事件概率。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39（正文p.31），必修主题四·1‘概率’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §3.1 Terminology, pp.168-171"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 Note 14 §3-§3.2, PDF pp.4-6; Total Probability Rule and Eq. (4)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_data_sources_population",
+      "to": "cn_sh_math_simple_random_sampling",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "实施简单随机抽样前必须明确总体、样本和数据来源。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§1.1-1.2 Definitions, Data and Sampling, pp.5-25"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_data_sources_population",
+      "to": "cn_sh_math_stratified_sampling",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "实施分层抽样前必须明确总体结构、样本和数据来源。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§1.1-1.2 Definitions, Data and Sampling, pp.5-25"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_simple_random_sampling",
+      "to": "cn_sh_math_sampling_design",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "选择抽样方案需要理解简单随机抽样的适用条件和限制。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§1.1-1.2 Definitions, Data and Sampling, pp.5-25"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_stratified_sampling",
+      "to": "cn_sh_math_sampling_design",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "选择抽样方案需要理解分层抽样的适用条件和限制。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§1.1-1.2 Definitions, Data and Sampling, pp.5-25"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_sequence_concept_representation",
+      "to": "cn_sh_math_arithmetic_sequence_modelling",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "识别和建立等差模型需要先理解数列及其表示。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.1 Sequences and Their Notations, pp.1089-1103"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.2 Arithmetic Sequences, pp.1104-1114"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_sequence_concept_representation",
+      "to": "cn_sh_math_geometric_sequence_modelling",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "识别和建立等比模型需要先理解数列及其表示。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.1 Sequences and Their Notations, pp.1089-1103"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.3 Geometric Sequences, pp.1115-1123"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_arithmetic_sequence_modelling",
+      "to": "cn_sh_math_arithmetic_linear_relation",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "比较等差数列与一次函数需要先理解等差模型。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.2 Arithmetic Sequences, pp.1104-1114"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_geometric_sequence_modelling",
+      "to": "cn_sh_math_geometric_exponential_relation",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "比较等比数列与指数函数需要先理解等比模型。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.3 Geometric Sequences, pp.1115-1123"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_spatial_coordinates_distance",
+      "to": "cn_sh_math_spatial_vector_basis",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "空间向量坐标分解需要先建立空间直角坐标系。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4: Vectors, Dot Products, Lengths/Angles and Vector Components"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_spatial_vector_basis",
+      "to": "cn_sh_math_vector_geometry_proofs",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "使用向量证明空间命题需要先掌握空间向量基底与坐标表示。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4: Vectors, Dot Products, Lengths/Angles and Vector Components"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-8 and worked example ‘Proofs Using Vectors’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_line_intersections_distances",
+      "to": "cn_sh_math_analytic_geometry_method",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "解析几何方法需要能把直线交点和距离条件转写为方程。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.51-52（正文p.43-44），选择性必修主题二·2‘平面解析几何’·直线与方程"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第三章 §3.3 直线的交点坐标与距离公式"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.51-54（正文p.43-46），选择性必修主题二·2‘平面解析几何’内容要求与学业要求"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF Chapter 10 Conic Sections, pp.1009-1088; geometric constraints translated into equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_analytic_geometry_method",
+      "to": "cn_sh_math_ellipse",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "建立椭圆方程需要先能把几何约束转化为代数关系。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.51-54（正文p.43-46），选择性必修主题二·2‘平面解析几何’内容要求与学业要求"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF Chapter 10 Conic Sections, pp.1009-1088; geometric constraints translated into equations"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.52-53（正文p.44-45），选择性必修主题二·2‘平面解析几何’·圆锥曲线与方程"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §10.1 The Ellipse, pp.1010-1025"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_analytic_geometry_method",
+      "to": "cn_sh_math_parabola",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "建立抛物线方程需要先能把几何约束转化为代数关系。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.51-54（正文p.43-46），选择性必修主题二·2‘平面解析几何’内容要求与学业要求"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF Chapter 10 Conic Sections, pp.1009-1088; geometric constraints translated into equations"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.52-53（正文p.44-45），选择性必修主题二·2‘平面解析几何’·圆锥曲线与方程"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §10.3 The Parabola, pp.1042-1055"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_analytic_geometry_method",
+      "to": "cn_sh_math_hyperbola",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "建立双曲线方程需要先能把几何约束转化为代数关系。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.51-54（正文p.43-46），选择性必修主题二·2‘平面解析几何’内容要求与学业要求"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF Chapter 10 Conic Sections, pp.1009-1088; geometric constraints translated into equations"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.52-53（正文p.44-45），选择性必修主题二·2‘平面解析几何’·圆锥曲线与方程"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §10.2 The Hyperbola, pp.1026-1041"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_sample_correlation",
+      "to": "cn_sh_math_regression_prediction_limits",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "解释线性回归预测需要先理解样本相关性的强弱和方向。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§12.2-12.4 Scatter Plots, Regression and Correlation, pp.620-634"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§12.3 and 12.5-12.6, pp.623-643; regression, prediction and outliers"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_contingency_table",
+      "to": "cn_sh_math_contingency_independence_test",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "独立性检验需要先能正确整理和解释列联表。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §3.4 Contingency Tables, pp.183-188"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §11.3 Test of Independence, pp.574-577"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

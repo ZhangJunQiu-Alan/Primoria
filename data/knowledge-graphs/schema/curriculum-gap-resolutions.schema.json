@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://primoria.local/schemas/curriculum-gap-resolutions.schema.json",
+  "title": "Primoria Curriculum KG Gap Resolutions",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "content_version",
+    "resolution_set_id",
+    "gap_set_id",
+    "framework_id",
+    "curriculum_id",
+    "subject",
+    "source_ids",
+    "generated_at",
+    "review_status",
+    "changelog",
+    "resolutions"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "content_version": { "$ref": "#/$defs/semver" },
+    "resolution_set_id": { "type": "string", "pattern": "^cgr_[a-z0-9_]+$" },
+    "gap_set_id": { "type": "string", "pattern": "^cgs_[a-z0-9_]+$" },
+    "framework_id": { "type": "string", "pattern": "^cfw_[a-z0-9_]+$" },
+    "curriculum_id": { "type": "string", "pattern": "^cur_[a-z0-9_]+$" },
+    "subject": { "type": "string", "minLength": 1 },
+    "source_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/sourceId" }
+    },
+    "generated_at": { "type": "string", "format": "date" },
+    "review_status": { "$ref": "#/$defs/reviewStatus" },
+    "changelog": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/changelogEntry" }
+    },
+    "resolutions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/resolution" }
+    }
+  },
+  "$defs": {
+    "semver": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+    },
+    "sourceId": { "type": "string", "pattern": "^src_[a-z0-9_]+$" },
+    "canonicalId": { "type": "string", "pattern": "^pc_[a-f0-9]{32}$" },
+    "reviewStatus": {
+      "enum": ["unreviewed", "needs_review", "approved", "rejected", "superseded"]
+    },
+    "evidenceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "locator"],
+      "properties": {
+        "source_id": { "$ref": "#/$defs/sourceId" },
+        "locator": { "type": "string", "minLength": 1 },
+        "note_zh": { "type": "string", "minLength": 1 }
+      }
+    },
+    "changelogEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "date", "summary_zh"],
+      "properties": {
+        "version": { "$ref": "#/$defs/semver" },
+        "date": { "type": "string", "format": "date" },
+        "summary_zh": { "type": "string", "minLength": 1 }
+      }
+    },
+    "resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "gap_id",
+        "resolution_action",
+        "canonical_ids",
+        "created_node_ids",
+        "practice_ids",
+        "rationale_zh",
+        "evidence_refs",
+        "review_status"
+      ],
+      "properties": {
+        "gap_id": { "type": "string", "pattern": "^gap_[a-z0-9_]+$" },
+        "resolution_action": {
+          "enum": ["reuse_existing", "add_or_alias_concepts", "route_practice"]
+        },
+        "canonical_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/canonicalId" }
+        },
+        "created_node_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" }
+        },
+        "practice_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^practice_[a-z0-9_]+$" }
+        },
+        "rationale_zh": { "type": "string", "minLength": 1 },
+        "evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/evidenceRef" }
+        },
+        "review_status": { "$ref": "#/$defs/reviewStatus" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "resolution_action": { "const": "reuse_existing" } },
+            "required": ["resolution_action"]
+          },
+          "then": {
+            "properties": {
+              "canonical_ids": { "type": "array", "minItems": 1 },
+              "created_node_ids": { "type": "array", "maxItems": 0 },
+              "practice_ids": { "type": "array", "maxItems": 0 }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": { "resolution_action": { "const": "add_or_alias_concepts" } },
+            "required": ["resolution_action"]
+          },
+          "then": {
+            "properties": {
+              "canonical_ids": { "type": "array", "minItems": 1 },
+              "created_node_ids": { "type": "array", "minItems": 1 },
+              "practice_ids": { "type": "array", "maxItems": 0 }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": { "resolution_action": { "const": "route_practice" } },
+            "required": ["resolution_action"]
+          },
+          "then": {
+            "properties": {
+              "canonical_ids": { "type": "array", "maxItems": 0 },
+              "created_node_ids": { "type": "array", "maxItems": 0 },
+              "practice_ids": { "type": "array", "minItems": 1 }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

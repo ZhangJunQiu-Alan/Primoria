@@ -1,0 +1,388 @@
+{
+  "schema_version": "2.0.0",
+  "content_version": "0.1.0",
+  "graph_id": "singapore_h2_physics",
+  "subject": "Physics",
+  "jurisdictions": [
+    "SG"
+  ],
+  "source_ids": [
+    "src_sg_seab_h2_physics_9478_2026",
+    "src_openstax_university_physics_v2_2016",
+    "src_openstax_college_physics_2e_2022",
+    "src_openstax_university_physics_v3_2016"
+  ],
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "根据 SEAB 205 条物理内容要求的逐项覆盖审查，建立 8 个缺口概念；每个概念同时登记官方课程和开放教材证据。"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "sg_h2_physics_topic_field_applications",
+      "kind": "topic",
+      "name": "Field representations and applications",
+      "name_zh": "场的表示与应用",
+      "topic": null,
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.14, topic 4 Energy and Fields, outcome (h)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "OpenStax University Physics Volume 2 §§5.6 and 7.5, Electric Field Lines; Equipotential Surfaces and Conductors"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e §19.4, Equipotential Lines"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (m)"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e §22.5, Force on a Moving Charge in a Magnetic Field: Examples and Applications"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_physics_topic_quantum_foundations",
+      "kind": "topic",
+      "name": "Quantum foundations",
+      "name_zh": "量子物理基础",
+      "topic": null,
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (f)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "OpenStax University Physics Volume 3 §7.1, Wave Functions"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (h)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "OpenStax University Physics Volume 3 §7.2, The Heisenberg Uncertainty Principle"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (i)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (j)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "OpenStax University Physics Volume 3 §7.4, The Quantum Particle in a Box"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_physics_topic_nuclear_reasoning",
+      "kind": "topic",
+      "name": "Nuclear radiation and conservation",
+      "name_zh": "核辐射与守恒推理",
+      "topic": null,
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (f)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "OpenStax University Physics Volume 3 §§10.3-10.4, Radioactive Decay; Nuclear Reactions"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (m)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (n)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "OpenStax University Physics Volume 3 §10.4, Nuclear Reactions; §11.2, Particle Conservation Laws"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (o)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_physics_field_lines_equipotential_geometry",
+      "canonical_id": "pc_2b7eda0a0df626958a966c48865d9809",
+      "kind": "concept",
+      "name": "Field-line and equipotential geometry",
+      "name_zh": "场线与等势面的几何关系",
+      "topic": "sg_h2_physics_topic_field_applications",
+      "description": "Representing uniform and radial gravitational or electric fields with directed field lines and relating equipotential surfaces to field direction, zero tangential work and perpendicular intersection.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.14, topic 4 Energy and Fields, outcome (h)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "OpenStax University Physics Volume 2 §§5.6 and 7.5, Electric Field Lines; Equipotential Surfaces and Conductors"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e §19.4, Equipotential Lines"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_physics_crossed_field_velocity_selector",
+      "canonical_id": "pc_ba46501edd6d23c79fe9c1e26a62f939",
+      "kind": "concept",
+      "name": "Crossed-field velocity selector",
+      "name_zh": "交叉电磁场速度选择器",
+      "topic": "sg_h2_physics_topic_field_applications",
+      "description": "Deriving the selected speed of a charged particle by balancing electric and magnetic forces in perpendicular fields, with directions checked from charge sign and vector force laws.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (m)"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e §22.5, Force on a Moving Charge in a Magnetic Field: Examples and Applications"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_physics_wavefunction_probability_superposition",
+      "canonical_id": "pc_a5f5680781febed7b189645c53ceb0f6",
+      "kind": "concept",
+      "name": "Wavefunction probability and superposition",
+      "name_zh": "波函数概率解释与量子叠加",
+      "topic": "sg_h2_physics_topic_quantum_foundations",
+      "description": "Interpreting |ψ|² as probability density, normalising a one-dimensional wavefunction and applying linear superposition to admissible quantum states without treating ψ itself as a classical material wave.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (f)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "OpenStax University Physics Volume 3 §7.1, Wave Functions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_physics_heisenberg_position_momentum_uncertainty",
+      "canonical_id": "pc_71a8c4a7750a98f29a83a217310abff5",
+      "kind": "concept",
+      "name": "Heisenberg position-momentum uncertainty",
+      "name_zh": "海森堡位置—动量不确定性",
+      "topic": "sg_h2_physics_topic_quantum_foundations",
+      "description": "Using ΔxΔp ≥ ℏ/2 to reason about limits on simultaneous position and momentum precision while distinguishing intrinsic quantum uncertainty from measurement error or poor apparatus.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (h)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "OpenStax University Physics Volume 3 §7.2, The Heisenberg Uncertainty Principle"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_physics_infinite_square_well_states",
+      "canonical_id": "pc_c597719cddd0d41276acc705aa3972e6",
+      "kind": "concept",
+      "name": "Infinite square-well wavefunctions and energy levels",
+      "name_zh": "无限深方势阱波函数与能级",
+      "topic": "sg_h2_physics_topic_quantum_foundations",
+      "description": "Applying boundary conditions to one-dimensional stationary wavefunctions and deriving the discrete particle-in-a-box energies, including their dependence on quantum number, mass and well width.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (i)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (j)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "OpenStax University Physics Volume 3 §7.4, The Quantum Particle in a Box"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_physics_background_radiation_properties",
+      "canonical_id": "pc_4c5131244b59bb92fb05a5572e3c7e8b",
+      "kind": "concept",
+      "name": "Background radiation and alpha-beta-gamma properties",
+      "name_zh": "本底辐射与 α、β、γ 辐射性质",
+      "topic": "sg_h2_physics_topic_nuclear_reasoning",
+      "description": "Distinguishing common background sources and comparing alpha, beta and gamma radiation by composition, charge, ionising power, penetration and deflection, including subtraction of background count from measurements.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (f)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "OpenStax University Physics Volume 3 §§10.3-10.4, Radioactive Decay; Nuclear Reactions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_physics_nuclear_equations_conservation",
+      "canonical_id": "pc_d9555e3a7d3e59cf71dbf540aed1d020",
+      "kind": "concept",
+      "name": "Nuclear equations and conservation laws",
+      "name_zh": "核方程与守恒定律",
+      "topic": "sg_h2_physics_topic_nuclear_reasoning",
+      "description": "Completing and interpreting nuclear equations by conserving charge and nucleon number and checking energy-momentum conservation, without extending the syllabus to a general particle zoo.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (m)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (n)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "OpenStax University Physics Volume 3 §10.4, Nuclear Reactions; §11.2, Particle Conservation Laws"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_physics_beta_decay_neutrino_inference",
+      "canonical_id": "pc_eebf0fe57f217f74bfdd33901f77c63c",
+      "kind": "concept",
+      "name": "Neutrino inference from beta decay",
+      "name_zh": "由 β 衰变守恒缺口推断中微子",
+      "topic": "sg_h2_physics_topic_nuclear_reasoning",
+      "description": "Explaining why beta-decay energy and momentum observations motivated a neutral, weakly interacting particle and using the neutrino only to close the prescribed conservation argument; antineutrino detail remains outside scope.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (o)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "OpenStax University Physics Volume 3 §10.4, Nuclear Reactions; §11.2, Particle Conservation Laws"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ],
+  "edges": [
+    {
+      "from": "sg_h2_physics_wavefunction_probability_superposition",
+      "to": "sg_h2_physics_infinite_square_well_states",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "求解无限深方势阱并解释定态概率前，需要先掌握波函数、归一化与概率密度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (f)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "OpenStax University Physics Volume 3 §7.1, Wave Functions"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (i)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (j)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "OpenStax University Physics Volume 3 §7.4, The Quantum Particle in a Box"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_physics_nuclear_equations_conservation",
+      "to": "sg_h2_physics_beta_decay_neutrino_inference",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "从 β 衰变观测缺口推断中微子，需要先能对核方程逐项检查电荷、核子数、能量和动量守恒。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (m)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (n)"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "OpenStax University Physics Volume 3 §10.4, Nuclear Reactions; §11.2, Particle Conservation Laws"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (o)"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

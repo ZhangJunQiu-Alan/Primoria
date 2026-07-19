@@ -44,7 +44,31 @@
       ],
       "properties": {
         "decision_id": { "type": "string", "pattern": "^review_[a-z0-9_]+$" },
-        "target_type": { "enum": ["graph", "node", "edge", "cross_graph", "cross_edge", "canonical_concept"] },
+        "target_type": {
+          "enum": [
+            "graph",
+            "node",
+            "edge",
+            "cross_graph",
+            "cross_edge",
+            "canonical_concept",
+            "curriculum_framework",
+            "curriculum_requirement",
+            "curriculum_mapping_set",
+            "curriculum_mapping",
+            "curriculum_gap_set",
+            "curriculum_gap_candidate",
+            "curriculum_gap_resolution_set",
+            "curriculum_gap_resolution",
+            "curriculum_practice_set",
+            "curriculum_practice_item",
+            "pedagogy_profile_set",
+            "pedagogy_profile",
+            "pedagogy_misconception",
+            "pedagogy_instructional_strategy",
+            "pedagogy_assessment_probe"
+          ]
+        },
         "target_id": { "type": "string", "minLength": 3 },
         "from_status": { "$ref": "#/$defs/reviewStatus" },
         "to_status": { "enum": ["approved", "rejected", "superseded"] },

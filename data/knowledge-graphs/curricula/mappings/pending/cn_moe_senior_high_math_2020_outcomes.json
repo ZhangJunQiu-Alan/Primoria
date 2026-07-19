@@ -1,0 +1,2503 @@
+{
+  "schema_version": "3.0.0",
+  "content_version": "0.3.0",
+  "mapping_set_id": "cms_cn_moe_senior_high_math_2020_outcomes",
+  "framework_id": "cfw_cn_moe_senior_high_math_2020_outcomes",
+  "curriculum_id": "cur_cn_moe_senior_high_math_2020",
+  "subject": "Mathematics",
+  "mapping_scope": "outcome_coverage",
+  "source_ids": [
+    "src_cn_moe_senior_high_math_2020"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "依据官方内容要求建立逐成果映射，并以独立可出题诊断为粒度完成首轮人工式复核。"
+    },
+    {
+      "version": "0.2.0",
+      "date": "2026-07-19",
+      "summary_zh": "第二轮逐项人工式复核：下调边界过宽的完整覆盖，区分 required 与 supporting，并禁止用一般链式法则或贝叶斯公式替代课标限定成果。"
+    },
+    {
+      "version": "0.3.0",
+      "date": "2026-07-19",
+      "summary_zh": "应用全库反向查重和缺口解析：学科成果闭合为 full，8 项实践成果分流为 excluded。"
+    }
+  ],
+  "mappings": [
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_set_membership_representation",
+      "requirement_id": "req_cn_sh_math_2020_o_set_membership_representation",
+      "canonical_ids": [
+        "pc_f9729a6d15dc682f677a3ab91f6b39d4"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_f9729a6d15dc682f677a3ab91f6b39d4 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23（正文p.15），必修主题一·1‘集合’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_set_relations_special_sets",
+      "requirement_id": "req_cn_sh_math_2020_o_set_relations_special_sets",
+      "canonical_ids": [
+        "pc_63e1c41b5a34e8ad98170b678d0a1387"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_63e1c41b5a34e8ad98170b678d0a1387 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23（正文p.15），必修主题一·1‘集合’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_set_operations",
+      "requirement_id": "req_cn_sh_math_2020_o_set_operations",
+      "canonical_ids": [
+        "pc_a28a2c466a40fba9dbb862c5b26631d7"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_a28a2c466a40fba9dbb862c5b26631d7 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23（正文p.15），必修主题一·1‘集合’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_venn_diagrams",
+      "requirement_id": "req_cn_sh_math_2020_o_venn_diagrams",
+      "canonical_ids": [
+        "pc_c1ed59c17771ca7dfcca90c7c55fadc1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_c1ed59c17771ca7dfcca90c7c55fadc1 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23（正文p.15），必修主题一·1‘集合’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_logical_conditions",
+      "requirement_id": "req_cn_sh_math_2020_o_logical_conditions",
+      "canonical_ids": [
+        "pc_19a11c9b22457a598968483fe980764b"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_19a11c9b22457a598968483fe980764b 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23-24（正文p.15-16），必修主题一·2‘常用逻辑用语’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_quantifiers_negation",
+      "requirement_id": "req_cn_sh_math_2020_o_quantifiers_negation",
+      "canonical_ids": [
+        "pc_8962bef26df2340d5287b935038f2558"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_8962bef26df2340d5287b935038f2558 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23-24（正文p.15-16），必修主题一·2‘常用逻辑用语’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_inequality_properties",
+      "requirement_id": "req_cn_sh_math_2020_o_inequality_properties",
+      "canonical_ids": [
+        "pc_aae485f1637bdc81f7067c35dde3bef6"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_aae485f1637bdc81f7067c35dde3bef6 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.24（正文p.16），必修主题一·3‘相等关系与不等关系’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_basic_inequality_optimization",
+      "requirement_id": "req_cn_sh_math_2020_o_basic_inequality_optimization",
+      "canonical_ids": [
+        "pc_184e9cd37fc2cb53ccf90c19cab834d8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_184e9cd37fc2cb53ccf90c19cab834d8 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.24（正文p.16），必修主题一·3‘相等关系与不等关系’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_quadratic_roots_graph",
+      "requirement_id": "req_cn_sh_math_2020_o_quadratic_roots_graph",
+      "canonical_ids": [
+        "pc_133d40fa0e72c29c5eb6ec7a9852c80c",
+        "pc_2d2287436b31a462805b82876a1bc513",
+        "pc_e1ed93beb5e81e2b78ce90172be70927"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_133d40fa0e72c29c5eb6ec7a9852c80c、pc_2d2287436b31a462805b82876a1bc513、pc_e1ed93beb5e81e2b78ce90172be70927 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.24-25（正文p.16-17），必修主题一·4‘从函数观点看一元二次方程和一元二次不等式’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_quadratic_inequalities",
+      "requirement_id": "req_cn_sh_math_2020_o_quadratic_inequalities",
+      "canonical_ids": [
+        "pc_133d40fa0e72c29c5eb6ec7a9852c80c",
+        "pc_4307437065fb6fce9aa3b4c05e7ed82d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_133d40fa0e72c29c5eb6ec7a9852c80c、pc_4307437065fb6fce9aa3b4c05e7ed82d 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.24-25（正文p.16-17），必修主题一·4‘从函数观点看一元二次方程和一元二次不等式’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_function_equation_inequality_link",
+      "requirement_id": "req_cn_sh_math_2020_o_function_equation_inequality_link",
+      "canonical_ids": [
+        "pc_133d40fa0e72c29c5eb6ec7a9852c80c",
+        "pc_2d2287436b31a462805b82876a1bc513",
+        "pc_4307437065fb6fce9aa3b4c05e7ed82d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_133d40fa0e72c29c5eb6ec7a9852c80c、pc_2d2287436b31a462805b82876a1bc513、pc_4307437065fb6fce9aa3b4c05e7ed82d 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.24-25（正文p.16-17），必修主题一·4‘从函数观点看一元二次方程和一元二次不等式’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_function_definition_domain",
+      "requirement_id": "req_cn_sh_math_2020_o_function_definition_domain",
+      "canonical_ids": [
+        "pc_d547d8eb03df4b28cc0357c7cae1d164"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_d547d8eb03df4b28cc0357c7cae1d164 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_function_representations",
+      "requirement_id": "req_cn_sh_math_2020_o_function_representations",
+      "canonical_ids": [
+        "pc_1abd7d45eab051de2e62001ebd63bd29"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_1abd7d45eab051de2e62001ebd63bd29 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_piecewise_functions",
+      "requirement_id": "req_cn_sh_math_2020_o_piecewise_functions",
+      "canonical_ids": [
+        "pc_0ddde34f5a5afbdc4685665038267156"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_0ddde34f5a5afbdc4685665038267156 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_function_monotonicity_extrema",
+      "requirement_id": "req_cn_sh_math_2020_o_function_monotonicity_extrema",
+      "canonical_ids": [
+        "pc_9abfc4bcaa6851c3fc5391a79ee13004",
+        "pc_074dbbcc90f3e6e537ee800002487ba7"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_9abfc4bcaa6851c3fc5391a79ee13004、pc_074dbbcc90f3e6e537ee800002487ba7 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_function_parity",
+      "requirement_id": "req_cn_sh_math_2020_o_function_parity",
+      "canonical_ids": [
+        "pc_9b78e9d12272cec7c1b044cf8764b84a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_9b78e9d12272cec7c1b044cf8764b84a 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_function_periodicity",
+      "requirement_id": "req_cn_sh_math_2020_o_function_periodicity",
+      "canonical_ids": [
+        "pc_72496adc94c0a591f57930a8a062338c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_72496adc94c0a591f57930a8a062338c 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_power_functions",
+      "requirement_id": "req_cn_sh_math_2020_o_power_functions",
+      "canonical_ids": [
+        "pc_a36a0e32990824d34dc04d553ec0dc45"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_a36a0e32990824d34dc04d553ec0dc45 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27-28（正文p.19-20），必修主题二·2‘幂函数、指数函数、对数函数’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_real_exponents_laws",
+      "requirement_id": "req_cn_sh_math_2020_o_real_exponents_laws",
+      "canonical_ids": [
+        "pc_0d9df5ce33dc2574f492f6528f380ffa"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_0d9df5ce33dc2574f492f6528f380ffa 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27-28（正文p.19-20），必修主题二·2‘幂函数、指数函数、对数函数’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_exponential_functions",
+      "requirement_id": "req_cn_sh_math_2020_o_exponential_functions",
+      "canonical_ids": [
+        "pc_81e5444941a3e64858bae20e97e58cf8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27-28（正文p.19-20），必修主题二·2‘幂函数、指数函数、对数函数’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_logarithms",
+      "requirement_id": "req_cn_sh_math_2020_o_logarithms",
+      "canonical_ids": [
+        "pc_3845a20537e66fc1506222d98752aa3d",
+        "pc_e1d320d8e044c96c4d56792624b1e685"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_3845a20537e66fc1506222d98752aa3d、pc_e1d320d8e044c96c4d56792624b1e685 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28（正文p.20），必修主题二·2‘对数函数’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_exp_log_inverse",
+      "requirement_id": "req_cn_sh_math_2020_o_exp_log_inverse",
+      "canonical_ids": [
+        "pc_d547d8eb03df4b28cc0357c7cae1d164",
+        "pc_3845a20537e66fc1506222d98752aa3d",
+        "pc_81e5444941a3e64858bae20e97e58cf8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_d547d8eb03df4b28cc0357c7cae1d164、pc_3845a20537e66fc1506222d98752aa3d、pc_81e5444941a3e64858bae20e97e58cf8 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28（正文p.20），必修主题二·2‘对数函数’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_radian_measure",
+      "requirement_id": "req_cn_sh_math_2020_o_radian_measure",
+      "canonical_ids": [
+        "pc_249bb1a239e11b22bde8356cc52a08a0"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_249bb1a239e11b22bde8356cc52a08a0 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_trig_definition_graphs",
+      "requirement_id": "req_cn_sh_math_2020_o_trig_definition_graphs",
+      "canonical_ids": [
+        "pc_c756deb603e99d7fbb680d46214248e8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_trig_properties_reduction",
+      "requirement_id": "req_cn_sh_math_2020_o_trig_properties_reduction",
+      "canonical_ids": [
+        "pc_c756deb603e99d7fbb680d46214248e8",
+        "pc_8adf13a8bdba5b3bf91f59d23e0bfd43"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_c756deb603e99d7fbb680d46214248e8、pc_8adf13a8bdba5b3bf91f59d23e0bfd43 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_sine_parameter_effects",
+      "requirement_id": "req_cn_sh_math_2020_o_sine_parameter_effects",
+      "canonical_ids": [
+        "pc_c756deb603e99d7fbb680d46214248e8",
+        "pc_1aaf98f8144a2f3b3fae833eb1370db8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_c756deb603e99d7fbb680d46214248e8、pc_1aaf98f8144a2f3b3fae833eb1370db8 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_trig_basic_identities",
+      "requirement_id": "req_cn_sh_math_2020_o_trig_basic_identities",
+      "canonical_ids": [
+        "pc_deafae3a3962b29dc66b867691e8957e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_compound_double_angles",
+      "requirement_id": "req_cn_sh_math_2020_o_compound_double_angles",
+      "canonical_ids": [
+        "pc_abd2410d819fd0126e356cacadbbe4ac"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_trig_transformations",
+      "requirement_id": "req_cn_sh_math_2020_o_trig_transformations",
+      "canonical_ids": [
+        "pc_deafae3a3962b29dc66b867691e8957e",
+        "pc_abd2410d819fd0126e356cacadbbe4ac",
+        "pc_2a9323cc28f9abfbb2171fbf1866c1d7"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_deafae3a3962b29dc66b867691e8957e、pc_abd2410d819fd0126e356cacadbbe4ac、pc_2a9323cc28f9abfbb2171fbf1866c1d7 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_trig_modelling",
+      "requirement_id": "req_cn_sh_math_2020_o_trig_modelling",
+      "canonical_ids": [
+        "pc_c756deb603e99d7fbb680d46214248e8",
+        "pc_432f6e31350cbefe8de68398ab907582"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_c756deb603e99d7fbb680d46214248e8、pc_432f6e31350cbefe8de68398ab907582 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_function_zeros_equations",
+      "requirement_id": "req_cn_sh_math_2020_o_function_zeros_equations",
+      "canonical_ids": [
+        "pc_e1ed93beb5e81e2b78ce90172be70927"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_e1ed93beb5e81e2b78ce90172be70927 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.29-30（正文p.21-22），必修主题二·4‘函数应用’·二分法"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_bisection_method",
+      "requirement_id": "req_cn_sh_math_2020_o_bisection_method",
+      "canonical_ids": [
+        "pc_e1ed93beb5e81e2b78ce90172be70927",
+        "pc_d14f06a56976778d0616245d88284721"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_e1ed93beb5e81e2b78ce90172be70927、pc_d14f06a56976778d0616245d88284721 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.29-30（正文p.21-22），必修主题二·4‘函数应用’·二分法"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_choose_function_models",
+      "requirement_id": "req_cn_sh_math_2020_o_choose_function_models",
+      "canonical_ids": [
+        "pc_f6592e5f1b68ea3b26ca39779c0b28d9"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_f6592e5f1b68ea3b26ca39779c0b28d9 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.30-31（正文p.22-23），必修主题二·4‘函数应用’·函数与数学模型"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_compare_growth_rates",
+      "requirement_id": "req_cn_sh_math_2020_o_compare_growth_rates",
+      "canonical_ids": [
+        "pc_81e5444941a3e64858bae20e97e58cf8",
+        "pc_3845a20537e66fc1506222d98752aa3d",
+        "pc_121d75d21e3d60388c331b791cb51454"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_81e5444941a3e64858bae20e97e58cf8、pc_3845a20537e66fc1506222d98752aa3d、pc_121d75d21e3d60388c331b791cb51454 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.30-31（正文p.22-23），必修主题二·4‘函数应用’·函数与数学模型"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_interpret_model_parameters",
+      "requirement_id": "req_cn_sh_math_2020_o_interpret_model_parameters",
+      "canonical_ids": [
+        "pc_cf2cd50926224dd7b501720474116d45"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_cf2cd50926224dd7b501720474116d45 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.30-31（正文p.22-23），必修主题二·4‘函数应用’·函数与数学模型"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_plane_vector_concept",
+      "requirement_id": "req_cn_sh_math_2020_o_plane_vector_concept",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2",
+        "pc_64e61e1cee5471619fa54db48800b916"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_9ae5f17312ee21050edf3e4bd9b005a2、pc_64e61e1cee5471619fa54db48800b916 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_plane_vector_linear_operations",
+      "requirement_id": "req_cn_sh_math_2020_o_plane_vector_linear_operations",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_9ae5f17312ee21050edf3e4bd9b005a2 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_plane_dot_projection",
+      "requirement_id": "req_cn_sh_math_2020_o_plane_dot_projection",
+      "canonical_ids": [
+        "pc_3e68cc383e695a3ae1773f286b5221f3",
+        "pc_b70bbfb827c2b527f128f02bf360675e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_3e68cc383e695a3ae1773f286b5221f3、pc_b70bbfb827c2b527f128f02bf360675e 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_plane_vector_basis_coordinates",
+      "requirement_id": "req_cn_sh_math_2020_o_plane_vector_basis_coordinates",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2",
+        "pc_b6cdf73ef35e6e93376d1e6a2bd60b8f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_9ae5f17312ee21050edf3e4bd9b005a2、pc_b6cdf73ef35e6e93376d1e6a2bd60b8f 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_plane_vector_coordinate_operations",
+      "requirement_id": "req_cn_sh_math_2020_o_plane_vector_coordinate_operations",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2",
+        "pc_3e68cc383e695a3ae1773f286b5221f3"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_9ae5f17312ee21050edf3e4bd9b005a2、pc_3e68cc383e695a3ae1773f286b5221f3 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_vector_applications",
+      "requirement_id": "req_cn_sh_math_2020_o_vector_applications",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2",
+        "pc_3e68cc383e695a3ae1773f286b5221f3",
+        "pc_08974dd9a6e44fc3fbcacdb999e75f58"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_9ae5f17312ee21050edf3e4bd9b005a2、pc_3e68cc383e695a3ae1773f286b5221f3、pc_08974dd9a6e44fc3fbcacdb999e75f58 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_sine_cosine_laws",
+      "requirement_id": "req_cn_sh_math_2020_o_sine_cosine_laws",
+      "canonical_ids": [
+        "pc_e62097020611844e72491ccab9cc29d4"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_e62097020611844e72491ccab9cc29d4 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_complex_introduction",
+      "requirement_id": "req_cn_sh_math_2020_o_complex_introduction",
+      "canonical_ids": [
+        "pc_a2d1c2c86661b6706ceb2919619b89e5"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_a2d1c2c86661b6706ceb2919619b89e5 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_complex_representation",
+      "requirement_id": "req_cn_sh_math_2020_o_complex_representation",
+      "canonical_ids": [
+        "pc_4fd2ad2b9b71d4427e9ebeb4d81159ec",
+        "pc_8b0b34fcb52404046ccbf41b402895fd"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_4fd2ad2b9b71d4427e9ebeb4d81159ec、pc_8b0b34fcb52404046ccbf41b402895fd 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_complex_arithmetic",
+      "requirement_id": "req_cn_sh_math_2020_o_complex_arithmetic",
+      "canonical_ids": [
+        "pc_84fa9a959816d2fd778aec459c7e0020",
+        "pc_c04ce0aed24384aaa5b223f59282d31c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_84fa9a959816d2fd778aec459c7e0020、pc_c04ce0aed24384aaa5b223f59282d31c 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_solid_structures",
+      "requirement_id": "req_cn_sh_math_2020_o_solid_structures",
+      "canonical_ids": [
+        "pc_fabec640e7079cf5c178b549320b08bc"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_fabec640e7079cf5c178b549320b08bc 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_solid_surface_volume",
+      "requirement_id": "req_cn_sh_math_2020_o_solid_surface_volume",
+      "canonical_ids": [
+        "pc_75a504416c16571e44cc269b50bb6db3"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_75a504416c16571e44cc269b50bb6db3 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_oblique_drawings",
+      "requirement_id": "req_cn_sh_math_2020_o_oblique_drawings",
+      "canonical_ids": [
+        "pc_7628ed564e93f03488bf5d3935266f24"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_7628ed564e93f03488bf5d3935266f24 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_spatial_axioms",
+      "requirement_id": "req_cn_sh_math_2020_o_spatial_axioms",
+      "canonical_ids": [
+        "pc_50eba6efb1284a4956afe205751471f0"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_50eba6efb1284a4956afe205751471f0 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_spatial_parallel_perpendicular_properties",
+      "requirement_id": "req_cn_sh_math_2020_o_spatial_parallel_perpendicular_properties",
+      "canonical_ids": [
+        "pc_9e7b9db8c8e0380cbd642ce8338f1d2e",
+        "pc_7030797af1bb287d3f65cef7cf757802"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_9e7b9db8c8e0380cbd642ce8338f1d2e、pc_7030797af1bb287d3f65cef7cf757802 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_spatial_parallel_perpendicular_criteria",
+      "requirement_id": "req_cn_sh_math_2020_o_spatial_parallel_perpendicular_criteria",
+      "canonical_ids": [
+        "pc_0f342f34179aaa62e710d24849918e27",
+        "pc_9e7320a9eb8d1d0efedb9aba3c644a7e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_0f342f34179aaa62e710d24849918e27、pc_9e7320a9eb8d1d0efedb9aba3c644a7e 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_solid_geometry_proofs",
+      "requirement_id": "req_cn_sh_math_2020_o_solid_geometry_proofs",
+      "canonical_ids": [
+        "pc_8e4564aac6db3fc263d20845b8ec5c13"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_8e4564aac6db3fc263d20845b8ec5c13 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_finite_sample_spaces_events",
+      "requirement_id": "req_cn_sh_math_2020_o_finite_sample_spaces_events",
+      "canonical_ids": [
+        "pc_4dc6f43a3fef8af04213c7aa936a2031",
+        "pc_0c7c408f2fb208ecfb0b6758b1cd4a0a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_4dc6f43a3fef8af04213c7aa936a2031、pc_0c7c408f2fb208ecfb0b6758b1cd4a0a 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39（正文p.31），必修主题四·1‘概率’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_classical_probability",
+      "requirement_id": "req_cn_sh_math_2020_o_classical_probability",
+      "canonical_ids": [
+        "pc_0c7c408f2fb208ecfb0b6758b1cd4a0a",
+        "pc_724ec6e8c8af72823a404e9fdafd5dbe"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_0c7c408f2fb208ecfb0b6758b1cd4a0a、pc_724ec6e8c8af72823a404e9fdafd5dbe 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39（正文p.31），必修主题四·1‘概率’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_probability_properties",
+      "requirement_id": "req_cn_sh_math_2020_o_probability_properties",
+      "canonical_ids": [
+        "pc_0c7c408f2fb208ecfb0b6758b1cd4a0a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39（正文p.31），必修主题四·1‘概率’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_frequency_probability",
+      "requirement_id": "req_cn_sh_math_2020_o_frequency_probability",
+      "canonical_ids": [
+        "pc_fe3e74b4da89b7d64d5b398cbdeef154"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_fe3e74b4da89b7d64d5b398cbdeef154 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39（正文p.31），必修主题四·1‘概率’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_event_independence_required",
+      "requirement_id": "req_cn_sh_math_2020_o_event_independence_required",
+      "canonical_ids": [
+        "pc_e49409332f2ff6e17899d2b7d3e6d7fe"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39（正文p.31），必修主题四·1‘概率’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_data_sources_population",
+      "requirement_id": "req_cn_sh_math_2020_o_data_sources_population",
+      "canonical_ids": [
+        "pc_14be091db45947021ec317ac23ac5401",
+        "pc_2d318e7e89bb828e43ea5fd2364aa316"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_14be091db45947021ec317ac23ac5401、pc_2d318e7e89bb828e43ea5fd2364aa316 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_simple_random_sampling",
+      "requirement_id": "req_cn_sh_math_2020_o_simple_random_sampling",
+      "canonical_ids": [
+        "pc_14be091db45947021ec317ac23ac5401",
+        "pc_35cb6bdf58ea092953596fd77759caf6",
+        "pc_e4bc1b9803eeefd0aa1f24a68121dee8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_14be091db45947021ec317ac23ac5401、pc_35cb6bdf58ea092953596fd77759caf6、pc_e4bc1b9803eeefd0aa1f24a68121dee8 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_stratified_sampling",
+      "requirement_id": "req_cn_sh_math_2020_o_stratified_sampling",
+      "canonical_ids": [
+        "pc_14be091db45947021ec317ac23ac5401",
+        "pc_35cb6bdf58ea092953596fd77759caf6",
+        "pc_4804c70e1e2965acbc7c3cfe09e11a3d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_14be091db45947021ec317ac23ac5401、pc_35cb6bdf58ea092953596fd77759caf6、pc_4804c70e1e2965acbc7c3cfe09e11a3d 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_sampling_design",
+      "requirement_id": "req_cn_sh_math_2020_o_sampling_design",
+      "canonical_ids": [
+        "pc_28e40edd140ccc548060052b3b445e5a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_28e40edd140ccc548060052b3b445e5a 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_statistical_charts",
+      "requirement_id": "req_cn_sh_math_2020_o_statistical_charts",
+      "canonical_ids": [
+        "pc_9b449c02257babd62cc775a79704c117"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_9b449c02257babd62cc775a79704c117 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_central_tendency_estimation",
+      "requirement_id": "req_cn_sh_math_2020_o_central_tendency_estimation",
+      "canonical_ids": [
+        "pc_35cb6bdf58ea092953596fd77759caf6"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_dispersion_estimation",
+      "requirement_id": "req_cn_sh_math_2020_o_dispersion_estimation",
+      "canonical_ids": [
+        "pc_35cb6bdf58ea092953596fd77759caf6"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_distribution_percentiles",
+      "requirement_id": "req_cn_sh_math_2020_o_distribution_percentiles",
+      "canonical_ids": [
+        "pc_9b449c02257babd62cc775a79704c117",
+        "pc_35cb6bdf58ea092953596fd77759caf6",
+        "pc_91a531ff72a480f49160c7fc26db307a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_9b449c02257babd62cc775a79704c117、pc_35cb6bdf58ea092953596fd77759caf6、pc_91a531ff72a480f49160c7fc26db307a 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_statistical_inference_uncertainty",
+      "requirement_id": "req_cn_sh_math_2020_o_statistical_inference_uncertainty",
+      "canonical_ids": [
+        "pc_92b380d1c47e89f15ddb38bffe3675bc"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_92b380d1c47e89f15ddb38bffe3675bc 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.41（正文p.33），必修主题四‘概率与统计’学业要求"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_modelling_formulate",
+      "requirement_id": "req_cn_sh_math_2020_o_modelling_formulate",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "已分流到教学与评测知识：practice_cn_sh_math_2020_modelling_formulate；不写入学科概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.42-44（正文p.34-36），必修主题五‘数学建模活动与数学探究活动’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_modelling_solve",
+      "requirement_id": "req_cn_sh_math_2020_o_modelling_solve",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "已分流到教学与评测知识：practice_cn_sh_math_2020_modelling_solve；不写入学科概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.42-44（正文p.34-36），必修主题五‘数学建模活动与数学探究活动’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_modelling_validate",
+      "requirement_id": "req_cn_sh_math_2020_o_modelling_validate",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "已分流到教学与评测知识：practice_cn_sh_math_2020_modelling_validate；不写入学科概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.42-44（正文p.34-36），必修主题五‘数学建模活动与数学探究活动’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_inquiry_pose_conjecture",
+      "requirement_id": "req_cn_sh_math_2020_o_inquiry_pose_conjecture",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "已分流到教学与评测知识：practice_cn_sh_math_2020_inquiry_pose_conjecture；不写入学科概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.42-44（正文p.34-36），必修主题五‘数学建模活动与数学探究活动’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_inquiry_plan_prove",
+      "requirement_id": "req_cn_sh_math_2020_o_inquiry_plan_prove",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "已分流到教学与评测知识：practice_cn_sh_math_2020_inquiry_plan_prove；不写入学科概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.42-44（正文p.34-36），必修主题五‘数学建模活动与数学探究活动’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_research_report_integrity",
+      "requirement_id": "req_cn_sh_math_2020_o_research_report_integrity",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "已分流到教学与评测知识：practice_cn_sh_math_2020_research_report_integrity；不写入学科概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.42-44（正文p.34-36），必修主题五‘数学建模活动与数学探究活动’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_sequence_concept_representation",
+      "requirement_id": "req_cn_sh_math_2020_o_sequence_concept_representation",
+      "canonical_ids": [
+        "pc_d628dbf58410331e403a76b3b121c7fd"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_d628dbf58410331e403a76b3b121c7fd 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_arithmetic_sequence_formulae",
+      "requirement_id": "req_cn_sh_math_2020_o_arithmetic_sequence_formulae",
+      "canonical_ids": [
+        "pc_9e401fe846a8c086510b3ea2102be253"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_arithmetic_sequence_modelling",
+      "requirement_id": "req_cn_sh_math_2020_o_arithmetic_sequence_modelling",
+      "canonical_ids": [
+        "pc_9e401fe846a8c086510b3ea2102be253",
+        "pc_268309b2a09956425be392cca04f360c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_9e401fe846a8c086510b3ea2102be253、pc_268309b2a09956425be392cca04f360c 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_arithmetic_linear_relation",
+      "requirement_id": "req_cn_sh_math_2020_o_arithmetic_linear_relation",
+      "canonical_ids": [
+        "pc_9e401fe846a8c086510b3ea2102be253",
+        "pc_14f1e53bf48e972800525aa7db57c70e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_9e401fe846a8c086510b3ea2102be253、pc_14f1e53bf48e972800525aa7db57c70e 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_geometric_sequence_formulae",
+      "requirement_id": "req_cn_sh_math_2020_o_geometric_sequence_formulae",
+      "canonical_ids": [
+        "pc_ced3271242c9a0d6fe67d9a446214543"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_ced3271242c9a0d6fe67d9a446214543 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_geometric_sequence_modelling",
+      "requirement_id": "req_cn_sh_math_2020_o_geometric_sequence_modelling",
+      "canonical_ids": [
+        "pc_ced3271242c9a0d6fe67d9a446214543",
+        "pc_b635d15e8f965d7215734c93032e303f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_ced3271242c9a0d6fe67d9a446214543、pc_b635d15e8f965d7215734c93032e303f 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_geometric_exponential_relation",
+      "requirement_id": "req_cn_sh_math_2020_o_geometric_exponential_relation",
+      "canonical_ids": [
+        "pc_ced3271242c9a0d6fe67d9a446214543",
+        "pc_81e5444941a3e64858bae20e97e58cf8",
+        "pc_cf08704d6dec3fc5cf1314e2f26f655d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_ced3271242c9a0d6fe67d9a446214543、pc_81e5444941a3e64858bae20e97e58cf8、pc_cf08704d6dec3fc5cf1314e2f26f655d 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_derivative_rate_meaning",
+      "requirement_id": "req_cn_sh_math_2020_o_derivative_rate_meaning",
+      "canonical_ids": [
+        "pc_10673fbc68b0db5d92e2eccb2616c7a6",
+        "pc_30962a9bea6ad49ace59c1ad3e902c12"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_10673fbc68b0db5d92e2eccb2616c7a6、pc_30962a9bea6ad49ace59c1ad3e902c12 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_derivative_limit_geometry",
+      "requirement_id": "req_cn_sh_math_2020_o_derivative_limit_geometry",
+      "canonical_ids": [
+        "pc_10673fbc68b0db5d92e2eccb2616c7a6"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_differentiate_from_definition",
+      "requirement_id": "req_cn_sh_math_2020_o_differentiate_from_definition",
+      "canonical_ids": [
+        "pc_10673fbc68b0db5d92e2eccb2616c7a6",
+        "pc_d35baa6e4598b25c22ba867ed2a4f82f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_basic_derivative_rules",
+      "requirement_id": "req_cn_sh_math_2020_o_basic_derivative_rules",
+      "canonical_ids": [
+        "pc_d35baa6e4598b25c22ba867ed2a4f82f",
+        "pc_4536621b5e542d2b820ea7b67abd0bb3",
+        "pc_31bfe71fa0fb4cdd31cba73b08b409b8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_d35baa6e4598b25c22ba867ed2a4f82f、pc_4536621b5e542d2b820ea7b67abd0bb3、pc_31bfe71fa0fb4cdd31cba73b08b409b8 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_simple_linear_composites",
+      "requirement_id": "req_cn_sh_math_2020_o_simple_linear_composites",
+      "canonical_ids": [
+        "pc_592fd805a5b6dadfe8e0826c7d467419"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_592fd805a5b6dadfe8e0826c7d467419 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_derivative_monotonicity",
+      "requirement_id": "req_cn_sh_math_2020_o_derivative_monotonicity",
+      "canonical_ids": [
+        "pc_61dadf3e646d2fed3a3b5b81630b2563",
+        "pc_f9249fb783344fbbcfe32c05267ebcb8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_61dadf3e646d2fed3a3b5b81630b2563、pc_f9249fb783344fbbcfe32c05267ebcb8 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_derivative_extrema",
+      "requirement_id": "req_cn_sh_math_2020_o_derivative_extrema",
+      "canonical_ids": [
+        "pc_61dadf3e646d2fed3a3b5b81630b2563",
+        "pc_f9249fb783344fbbcfe32c05267ebcb8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_61dadf3e646d2fed3a3b5b81630b2563、pc_f9249fb783344fbbcfe32c05267ebcb8 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_derivative_optimisation",
+      "requirement_id": "req_cn_sh_math_2020_o_derivative_optimisation",
+      "canonical_ids": [
+        "pc_61dadf3e646d2fed3a3b5b81630b2563",
+        "pc_7f364bd0df6065095b932f11a00d4941"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_61dadf3e646d2fed3a3b5b81630b2563、pc_7f364bd0df6065095b932f11a00d4941 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_spatial_coordinates_distance",
+      "requirement_id": "req_cn_sh_math_2020_o_spatial_coordinates_distance",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2",
+        "pc_64e61e1cee5471619fa54db48800b916",
+        "pc_fbe862fa74f322ae90465e6dfb1def7a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_9ae5f17312ee21050edf3e4bd9b005a2、pc_64e61e1cee5471619fa54db48800b916、pc_fbe862fa74f322ae90465e6dfb1def7a 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_spatial_vectors_operations",
+      "requirement_id": "req_cn_sh_math_2020_o_spatial_vectors_operations",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_9ae5f17312ee21050edf3e4bd9b005a2 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_spatial_vector_basis",
+      "requirement_id": "req_cn_sh_math_2020_o_spatial_vector_basis",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2",
+        "pc_83dcad323dc19ea3b6357b3155211a10"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_9ae5f17312ee21050edf3e4bd9b005a2、pc_83dcad323dc19ea3b6357b3155211a10 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_spatial_coordinate_operations",
+      "requirement_id": "req_cn_sh_math_2020_o_spatial_coordinate_operations",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2",
+        "pc_3e68cc383e695a3ae1773f286b5221f3"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_spatial_projection",
+      "requirement_id": "req_cn_sh_math_2020_o_spatial_projection",
+      "canonical_ids": [
+        "pc_3e68cc383e695a3ae1773f286b5221f3",
+        "pc_b70bbfb827c2b527f128f02bf360675e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_3e68cc383e695a3ae1773f286b5221f3、pc_b70bbfb827c2b527f128f02bf360675e 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_line_plane_vectors",
+      "requirement_id": "req_cn_sh_math_2020_o_line_plane_vectors",
+      "canonical_ids": [
+        "pc_0c3c2f35769f38762a59705783e03824",
+        "pc_8386363188df11ab28ae08ef72342a47"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_0c3c2f35769f38762a59705783e03824、pc_8386363188df11ab28ae08ef72342a47 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_spatial_angles_relations",
+      "requirement_id": "req_cn_sh_math_2020_o_spatial_angles_relations",
+      "canonical_ids": [
+        "pc_3e68cc383e695a3ae1773f286b5221f3",
+        "pc_0c3c2f35769f38762a59705783e03824",
+        "pc_8386363188df11ab28ae08ef72342a47"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_3e68cc383e695a3ae1773f286b5221f3、pc_0c3c2f35769f38762a59705783e03824、pc_8386363188df11ab28ae08ef72342a47 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_vector_geometry_proofs",
+      "requirement_id": "req_cn_sh_math_2020_o_vector_geometry_proofs",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2",
+        "pc_3e68cc383e695a3ae1773f286b5221f3",
+        "pc_c91bb66b227d5404c87e08b45f62d18c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_9ae5f17312ee21050edf3e4bd9b005a2、pc_3e68cc383e695a3ae1773f286b5221f3、pc_c91bb66b227d5404c87e08b45f62d18c 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_spatial_distance_angle_problems",
+      "requirement_id": "req_cn_sh_math_2020_o_spatial_distance_angle_problems",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2",
+        "pc_3e68cc383e695a3ae1773f286b5221f3",
+        "pc_8386363188df11ab28ae08ef72342a47"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_9ae5f17312ee21050edf3e4bd9b005a2、pc_3e68cc383e695a3ae1773f286b5221f3、pc_8386363188df11ab28ae08ef72342a47 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_line_gradient",
+      "requirement_id": "req_cn_sh_math_2020_o_line_gradient",
+      "canonical_ids": [
+        "pc_2fd09e919b7e73069c83ce49007f17d2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.51-52（正文p.43-44），选择性必修主题二·2‘平面解析几何’·直线与方程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_parallel_perpendicular_lines",
+      "requirement_id": "req_cn_sh_math_2020_o_parallel_perpendicular_lines",
+      "canonical_ids": [
+        "pc_2a20781f550c684afa2cda1e4dde847d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.51-52（正文p.43-44），选择性必修主题二·2‘平面解析几何’·直线与方程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_line_equations",
+      "requirement_id": "req_cn_sh_math_2020_o_line_equations",
+      "canonical_ids": [
+        "pc_2fd09e919b7e73069c83ce49007f17d2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.51-52（正文p.43-44），选择性必修主题二·2‘平面解析几何’·直线与方程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_line_intersections_distances",
+      "requirement_id": "req_cn_sh_math_2020_o_line_intersections_distances",
+      "canonical_ids": [
+        "pc_2fd09e919b7e73069c83ce49007f17d2",
+        "pc_bea43d1a52b8d8840817983b273c7dda"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_2fd09e919b7e73069c83ce49007f17d2、pc_bea43d1a52b8d8840817983b273c7dda 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.51-52（正文p.43-44），选择性必修主题二·2‘平面解析几何’·直线与方程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_circle_equations",
+      "requirement_id": "req_cn_sh_math_2020_o_circle_equations",
+      "canonical_ids": [
+        "pc_3d12d114d1630b545655de686dae4630"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_3d12d114d1630b545655de686dae4630 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.52（正文p.44），选择性必修主题二·2‘平面解析几何’·圆与方程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_circle_positional_relations",
+      "requirement_id": "req_cn_sh_math_2020_o_circle_positional_relations",
+      "canonical_ids": [
+        "pc_3d12d114d1630b545655de686dae4630",
+        "pc_2fd09e919b7e73069c83ce49007f17d2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_3d12d114d1630b545655de686dae4630、pc_2fd09e919b7e73069c83ce49007f17d2 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.52（正文p.44），选择性必修主题二·2‘平面解析几何’·圆与方程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_conic_context",
+      "requirement_id": "req_cn_sh_math_2020_o_conic_context",
+      "canonical_ids": [
+        "pc_2c7728a895c147c0e2c232582c1e6b64"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_2c7728a895c147c0e2c232582c1e6b64 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.52-53（正文p.44-45），选择性必修主题二·2‘平面解析几何’·圆锥曲线与方程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_ellipse",
+      "requirement_id": "req_cn_sh_math_2020_o_ellipse",
+      "canonical_ids": [
+        "pc_58591fb3c8294a83a9405568a100991e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_58591fb3c8294a83a9405568a100991e 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.52-53（正文p.44-45），选择性必修主题二·2‘平面解析几何’·圆锥曲线与方程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_parabola_hyperbola",
+      "requirement_id": "req_cn_sh_math_2020_o_parabola_hyperbola",
+      "canonical_ids": [
+        "pc_76707a52fc4d807bbdfb0e56f509c17e",
+        "pc_d236c68eb711f9a26eb4250a7843b517"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_76707a52fc4d807bbdfb0e56f509c17e、pc_d236c68eb711f9a26eb4250a7843b517 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.52-53（正文p.44-45），选择性必修主题二·2‘平面解析几何’·圆锥曲线与方程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_analytic_geometry_method",
+      "requirement_id": "req_cn_sh_math_2020_o_analytic_geometry_method",
+      "canonical_ids": [
+        "pc_2fd09e919b7e73069c83ce49007f17d2",
+        "pc_3d12d114d1630b545655de686dae4630",
+        "pc_5a15abbfb73000d73e62d0f659cc8df2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_2fd09e919b7e73069c83ce49007f17d2、pc_3d12d114d1630b545655de686dae4630、pc_5a15abbfb73000d73e62d0f659cc8df2 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.51-54（正文p.43-46），选择性必修主题二·2‘平面解析几何’内容要求与学业要求"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_counting_principles",
+      "requirement_id": "req_cn_sh_math_2020_o_counting_principles",
+      "canonical_ids": [
+        "pc_ed1975437bea9857b07a63df257a2fab"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.54-55（正文p.46-47），选择性必修主题三·1‘计数原理’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_permutations_combinations",
+      "requirement_id": "req_cn_sh_math_2020_o_permutations_combinations",
+      "canonical_ids": [
+        "pc_72b8e1a7b680bd575ff6d93a1e2c592b"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.54-55（正文p.46-47），选择性必修主题三·1‘计数原理’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_binomial_theorem",
+      "requirement_id": "req_cn_sh_math_2020_o_binomial_theorem",
+      "canonical_ids": [
+        "pc_57ca5674eaf8c8ddc02a9fd067f2bc9d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.54-55（正文p.46-47），选择性必修主题三·1‘计数原理’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_conditional_probability",
+      "requirement_id": "req_cn_sh_math_2020_o_conditional_probability",
+      "canonical_ids": [
+        "pc_cf8dbc5bcf596f0c4db74ea9886540a1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_conditional_independence_relation",
+      "requirement_id": "req_cn_sh_math_2020_o_conditional_independence_relation",
+      "canonical_ids": [
+        "pc_cf8dbc5bcf596f0c4db74ea9886540a1",
+        "pc_e49409332f2ff6e17899d2b7d3e6d7fe"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_probability_multiplication_formula",
+      "requirement_id": "req_cn_sh_math_2020_o_probability_multiplication_formula",
+      "canonical_ids": [
+        "pc_0c7c408f2fb208ecfb0b6758b1cd4a0a",
+        "pc_cf8dbc5bcf596f0c4db74ea9886540a1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_total_probability_formula",
+      "requirement_id": "req_cn_sh_math_2020_o_total_probability_formula",
+      "canonical_ids": [
+        "pc_b51add1da3c3312a95ec3d5f88c2558c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_b51add1da3c3312a95ec3d5f88c2558c 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_discrete_random_variable_distribution",
+      "requirement_id": "req_cn_sh_math_2020_o_discrete_random_variable_distribution",
+      "canonical_ids": [
+        "pc_bd3e94ad62025e9a58ab6e2016182924"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_bernoulli_binomial",
+      "requirement_id": "req_cn_sh_math_2020_o_bernoulli_binomial",
+      "canonical_ids": [
+        "pc_dab02572a5e34659342ea1fb544803f8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_hypergeometric_distribution",
+      "requirement_id": "req_cn_sh_math_2020_o_hypergeometric_distribution",
+      "canonical_ids": [
+        "pc_4239b99f594044841a693275213720b9"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_normal_distribution_features",
+      "requirement_id": "req_cn_sh_math_2020_o_normal_distribution_features",
+      "canonical_ids": [
+        "pc_23858effd2dd68284bd0c6b645607386"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_normal_mean_variance",
+      "requirement_id": "req_cn_sh_math_2020_o_normal_mean_variance",
+      "canonical_ids": [
+        "pc_23858effd2dd68284bd0c6b645607386"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "explicit_term",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 概念与本成果的对象、操作和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_continuous_random_variable_context",
+      "requirement_id": "req_cn_sh_math_2020_o_continuous_random_variable_context",
+      "canonical_ids": [
+        "pc_5f55e60931935e299996e34826f1a0e9",
+        "pc_23858effd2dd68284bd0c6b645607386",
+        "pc_bd3e94ad62025e9a58ab6e2016182924"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_5f55e60931935e299996e34826f1a0e9、pc_23858effd2dd68284bd0c6b645607386、pc_bd3e94ad62025e9a58ab6e2016182924 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_sample_correlation",
+      "requirement_id": "req_cn_sh_math_2020_o_sample_correlation",
+      "canonical_ids": [
+        "pc_8d0a38a8e8f86cd83ae1f091a62f2cad",
+        "pc_629b0c54807299e247ddd77ea5076dd6"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_8d0a38a8e8f86cd83ae1f091a62f2cad、pc_629b0c54807299e247ddd77ea5076dd6 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_compare_correlations",
+      "requirement_id": "req_cn_sh_math_2020_o_compare_correlations",
+      "canonical_ids": [
+        "pc_8d0a38a8e8f86cd83ae1f091a62f2cad",
+        "pc_629b0c54807299e247ddd77ea5076dd6"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_8d0a38a8e8f86cd83ae1f091a62f2cad、pc_629b0c54807299e247ddd77ea5076dd6 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_linear_regression",
+      "requirement_id": "req_cn_sh_math_2020_o_linear_regression",
+      "canonical_ids": [
+        "pc_ed18cde6c3d7e08e9e371061418a7424"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_ed18cde6c3d7e08e9e371061418a7424 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_regression_prediction",
+      "requirement_id": "req_cn_sh_math_2020_o_regression_prediction",
+      "canonical_ids": [
+        "pc_ed18cde6c3d7e08e9e371061418a7424",
+        "pc_85acd13e8f4afec2979a3288f911c926"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_ed18cde6c3d7e08e9e371061418a7424、pc_85acd13e8f4afec2979a3288f911c926 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_contingency_table",
+      "requirement_id": "req_cn_sh_math_2020_o_contingency_table",
+      "canonical_ids": [
+        "pc_223557a1ed16ebd3dac3d0f499d14268"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_223557a1ed16ebd3dac3d0f499d14268 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_contingency_independence_test",
+      "requirement_id": "req_cn_sh_math_2020_o_contingency_independence_test",
+      "canonical_ids": [
+        "pc_5e8204fe2f43100f3de7f78a5824d321",
+        "pc_029c971a0c9f5d5bb93bba1d0a12f4bf"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库查重和最小诊断粒度复核，现由 canonical 概念 pc_5e8204fe2f43100f3de7f78a5824d321、pc_029c971a0c9f5d5bb93bba1d0a12f4bf 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_extended_research_project",
+      "requirement_id": "req_cn_sh_math_2020_o_extended_research_project",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "已分流到教学与评测知识：practice_cn_sh_math_2020_extended_research_project；不写入学科概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.58（正文p.50），选择性必修主题四‘数学建模活动与数学探究活动’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_math_2020_o_extended_project_report",
+      "requirement_id": "req_cn_sh_math_2020_o_extended_project_report",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "已分流到教学与评测知识：practice_cn_sh_math_2020_extended_project_report；不写入学科概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.58（正文p.50），选择性必修主题四‘数学建模活动与数学探究活动’"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

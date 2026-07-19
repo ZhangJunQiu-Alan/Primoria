@@ -1,0 +1,2347 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "resolution_set_id": "cgr_cn_moe_senior_high_math_2020_outcomes",
+  "gap_set_id": "cgs_cn_moe_senior_high_math_2020_outcomes",
+  "framework_id": "cfw_cn_moe_senior_high_math_2020_outcomes",
+  "curriculum_id": "cur_cn_moe_senior_high_math_2020",
+  "subject": "Mathematics",
+  "source_ids": [
+    "src_cn_moe_senior_high_math_2020",
+    "src_openstax_contemporary_mathematics_2026",
+    "src_pep_math_sufficient_necessary_conditions_2023",
+    "src_pep_high_school_math_5a_2007",
+    "src_openstax_precalculus_2e_2026",
+    "src_mit_ocw_18_330_spring_2012",
+    "src_mit_ocw_18_02sc_fall_2010",
+    "src_mit_ocw_strang_calculus_ch9_2023",
+    "src_pep_high_school_math_2a_2015",
+    "src_pep_math_oblique_drawing_2023",
+    "src_openstax_introductory_statistics_2e_2026",
+    "src_mit_ocw_18_01sc_fall_2010",
+    "src_berkeley_cs70_summer_2026"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "完成 101 项缺口逐项解析、全库反向查重、概念新增或 alias 复用及实践知识分流。"
+    }
+  ],
+  "resolutions": [
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_set_membership_representation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_f9729a6d15dc682f677a3ab91f6b39d4"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_set_membership_representation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23（正文p.15），必修主题一·1‘集合’"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §1.1 Basic Set Concepts, pp.6-13"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_set_relations_special_sets",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_63e1c41b5a34e8ad98170b678d0a1387"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_set_relations_special_sets"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23（正文p.15），必修主题一·1‘集合’"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §1.2 Subsets, pp.14-19"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_set_operations",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_a28a2c466a40fba9dbb862c5b26631d7"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_set_operations"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23（正文p.15），必修主题一·1‘集合’"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§1.4-1.5 Set Operations, pp.29-59"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_venn_diagrams",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_c1ed59c17771ca7dfcca90c7c55fadc1"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_venn_diagrams"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23（正文p.15），必修主题一·1‘集合’"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §1.3 Understanding Venn Diagrams, pp.20-28"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_logical_conditions",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_19a11c9b22457a598968483fe980764b"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_logical_conditions"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23-24（正文p.15-16），必修主题一·2‘常用逻辑用语’"
+        },
+        {
+          "source_id": "src_pep_math_sufficient_necessary_conditions_2023",
+          "locator": "PDF pp.1-3, ‘教学目标’及‘命题与推出/充要条件’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_quantifiers_negation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_8962bef26df2340d5287b935038f2558"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_quantifiers_negation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23-24（正文p.15-16），必修主题一·2‘常用逻辑用语’"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §2.1 Statements and Quantifiers, pp.60-69"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_inequality_properties",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_aae485f1637bdc81f7067c35dde3bef6"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_inequality_properties"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.24（正文p.16），必修主题一·3‘相等关系与不等关系’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_5a_2007",
+          "locator": "官方教材目录及内容说明：第三章 §3.1 不等关系与不等式"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_basic_inequality_optimization",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_184e9cd37fc2cb53ccf90c19cab834d8"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_basic_inequality_optimization"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.24（正文p.16），必修主题一·3‘相等关系与不等关系’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_5a_2007",
+          "locator": "官方教材目录及内容说明：第三章 §3.4 基本不等式及简单应用"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_quadratic_roots_graph",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_133d40fa0e72c29c5eb6ec7a9852c80c",
+        "pc_2d2287436b31a462805b82876a1bc513",
+        "pc_e1ed93beb5e81e2b78ce90172be70927"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.24-25（正文p.16-17），必修主题一·4‘从函数观点看一元二次方程和一元二次不等式’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§3.2, 3.6 and 9.3, pp.255-274, 326-339 and 925-936"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_quadratic_inequalities",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_133d40fa0e72c29c5eb6ec7a9852c80c",
+        "pc_4307437065fb6fce9aa3b4c05e7ed82d"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.24-25（正文p.16-17），必修主题一·4‘从函数观点看一元二次方程和一元二次不等式’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §9.3 Systems of Nonlinear Equations and Inequalities, pp.925-936"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_function_equation_inequality_link",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_133d40fa0e72c29c5eb6ec7a9852c80c",
+        "pc_2d2287436b31a462805b82876a1bc513",
+        "pc_4307437065fb6fce9aa3b4c05e7ed82d"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.24-25（正文p.16-17），必修主题一·4‘从函数观点看一元二次方程和一元二次不等式’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§3.2, 3.6 and 9.3, pp.255-274, 326-339 and 925-936"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_function_definition_domain",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_d547d8eb03df4b28cc0357c7cae1d164"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§1.1-1.2 Functions, Domain and Range, pp.7-53"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_function_representations",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_1abd7d45eab051de2e62001ebd63bd29"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_function_representations"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.1 Functions and Function Notation, pp.7-32"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_piecewise_functions",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_0ddde34f5a5afbdc4685665038267156"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_piecewise_functions"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.2 Domain and Range, pp.33-53; piecewise-defined functions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_function_monotonicity_extrema",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_9abfc4bcaa6851c3fc5391a79ee13004",
+        "pc_074dbbcc90f3e6e537ee800002487ba7"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_function_monotonicity",
+        "cn_sh_math_function_extrema"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "原课程成果包含多个可独立出题诊断的知识点，已按最小诊断粒度拆分并保留同一成果映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.3 Rates of Change and Behavior of Graphs, pp.54-69"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_function_parity",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_9b78e9d12272cec7c1b044cf8764b84a"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_function_parity"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.5 Transformation of Functions, pp.86-116; even and odd functions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_function_periodicity",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_72496adc94c0a591f57930a8a062338c"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_function_periodicity"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF Chapter 6 introduction and §6.1, pp.615-633; periodic functions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_power_functions",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_a36a0e32990824d34dc04d553ec0dc45"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_power_functions"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27-28（正文p.19-20），必修主题二·2‘幂函数、指数函数、对数函数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.3 Power Functions and Polynomial Functions, pp.275-294"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_real_exponents_laws",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_0d9df5ce33dc2574f492f6528f380ffa"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_real_exponents_laws"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27-28（正文p.19-20），必修主题二·2‘幂函数、指数函数、对数函数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §4.1 Exponential Functions, pp.398-415"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_logarithms",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_3845a20537e66fc1506222d98752aa3d",
+        "pc_e1d320d8e044c96c4d56792624b1e685"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_logarithmic_function_behavior"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28（正文p.20），必修主题二·2‘对数函数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§4.3-4.5 Logarithmic Functions and Properties, pp.429-471"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_exp_log_inverse",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_d547d8eb03df4b28cc0357c7cae1d164",
+        "pc_3845a20537e66fc1506222d98752aa3d",
+        "pc_81e5444941a3e64858bae20e97e58cf8"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28（正文p.20），必修主题二·2‘对数函数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§1.7 and 4.3, pp.130-158 and 429-438"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_radian_measure",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_249bb1a239e11b22bde8356cc52a08a0"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §5.1 Angles, pp.536-558"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_trig_properties_reduction",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_c756deb603e99d7fbb680d46214248e8",
+        "pc_8adf13a8bdba5b3bf91f59d23e0bfd43"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_trig_reduction_formulas"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §7.3 Double-Angle, Half-Angle, and Reduction Formulas, pp.700-711"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_sine_parameter_effects",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_c756deb603e99d7fbb680d46214248e8",
+        "pc_1aaf98f8144a2f3b3fae833eb1370db8"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §6.1 Graphs of the Sine and Cosine Functions, pp.615-633"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_trig_transformations",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_deafae3a3962b29dc66b867691e8957e",
+        "pc_abd2410d819fd0126e356cacadbbe4ac",
+        "pc_2a9323cc28f9abfbb2171fbf1866c1d7"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_trig_product_sum_half_angle"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§7.2-7.4 Trigonometric Identities and Transformations, pp.685-718"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_trig_modelling",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_c756deb603e99d7fbb680d46214248e8",
+        "pc_432f6e31350cbefe8de68398ab907582"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_trig_modelling"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §7.6 Modeling with Trigonometric Functions, pp.734-764"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_function_zeros_equations",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_e1ed93beb5e81e2b78ce90172be70927"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.29-30（正文p.21-22），必修主题二·4‘函数应用’·二分法"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.6 Zeros of Polynomial Functions, pp.326-339"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_bisection_method",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_e1ed93beb5e81e2b78ce90172be70927",
+        "pc_d14f06a56976778d0616245d88284721"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "全库反向查重确认 MIT 数值分析图已有二分法 canonical 概念；原候选为漏检，不再重复建点。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.29-30（正文p.21-22），必修主题二·4‘函数应用’·二分法"
+        },
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Lecture-notes unit ‘Root Finding’: bisection method"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_choose_function_models",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_f6592e5f1b68ea3b26ca39779c0b28d9"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_choose_function_models"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.30-31（正文p.22-23），必修主题二·4‘函数应用’·函数与数学模型"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§2.3 and 4.7 Modeling with Linear, Exponential and Logarithmic Functions, pp.206-219 and 484-502"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_compare_growth_rates",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_81e5444941a3e64858bae20e97e58cf8",
+        "pc_3845a20537e66fc1506222d98752aa3d",
+        "pc_121d75d21e3d60388c331b791cb51454"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_compare_growth_rates"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.30-31（正文p.22-23），必修主题二·4‘函数应用’·函数与数学模型"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§3.3, 4.1 and 4.3, pp.275-294 and 398-438; end behavior and exponential/logarithmic growth"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_interpret_model_parameters",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_cf2cd50926224dd7b501720474116d45"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_interpret_model_parameters"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.30-31（正文p.22-23），必修主题二·4‘函数应用’·函数与数学模型"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§2.3 and 4.7 Modeling, pp.206-219 and 484-502"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_plane_vector_concept",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2",
+        "pc_64e61e1cee5471619fa54db48800b916"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4: Vectors, Dot Products, Lengths/Angles and Vector Components"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_plane_vector_linear_operations",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4: Vectors, Dot Products, Lengths/Angles and Vector Components"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_plane_dot_projection",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_3e68cc383e695a3ae1773f286b5221f3",
+        "pc_b70bbfb827c2b527f128f02bf360675e"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_vector_projection"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 2-4: Dot Products, Lengths/Angles and Vector Components"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_plane_vector_basis_coordinates",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2",
+        "pc_b6cdf73ef35e6e93376d1e6a2bd60b8f"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_plane_vector_basis_coordinates"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4: Vectors, Dot Products, Lengths/Angles and Vector Components"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_plane_vector_coordinate_operations",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2",
+        "pc_3e68cc383e695a3ae1773f286b5221f3"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4: Vectors, Dot Products, Lengths/Angles and Vector Components"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_vector_applications",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2",
+        "pc_3e68cc383e695a3ae1773f286b5221f3",
+        "pc_08974dd9a6e44fc3fbcacdb999e75f58"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_vector_applications"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4 and worked examples ‘Force is a Vector’ and ‘Proofs Using Vectors’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_sine_cosine_laws",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e62097020611844e72491ccab9cc29d4"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_sine_cosine_laws"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§8.1-8.2 Laws of Sines and Cosines, pp.765-795"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_complex_introduction",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_a2d1c2c86661b6706ceb2919619b89e5"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_complex_introduction"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.1 Complex Numbers, pp.245-254"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_complex_representation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_4fd2ad2b9b71d4427e9ebeb4d81159ec",
+        "pc_8b0b34fcb52404046ccbf41b402895fd"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_complex_algebraic_representation",
+        "cn_sh_math_complex_argand_representation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "原课程成果包含多个可独立出题诊断的知识点，已按最小诊断粒度拆分并保留同一成果映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.1 Complex Numbers, pp.245-254"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.1 Complex Numbers, pp.245-254: complex plane"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_complex_arithmetic",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_84fa9a959816d2fd778aec459c7e0020",
+        "pc_c04ce0aed24384aaa5b223f59282d31c"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_complex_arithmetic",
+        "cn_sh_math_complex_addition_geometry"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "原课程成果包含多个可独立出题诊断的知识点，已按最小诊断粒度拆分并保留同一成果映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+        },
+        {
+          "source_id": "src_mit_ocw_strang_calculus_ch9_2023",
+          "locator": "Chapter 9 §9.4, printed pp.425-426 (PDF pp.14-15): four operations and conjugate factor for division"
+        },
+        {
+          "source_id": "src_mit_ocw_strang_calculus_ch9_2023",
+          "locator": "Chapter 9 §9.4, printed pp.425-426 (PDF pp.14-15): complex addition as vector addition"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_solid_structures",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_fabec640e7079cf5c178b549320b08bc"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_solid_structures"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第一章 §1.1 空间几何体的结构"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_solid_surface_volume",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_75a504416c16571e44cc269b50bb6db3"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_solid_surface_volume"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第一章 §1.3 空间几何体的表面积与体积"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_oblique_drawings",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_7628ed564e93f03488bf5d3935266f24"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_oblique_drawings"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_math_oblique_drawing_2023",
+          "locator": "官方页面‘教学目标’第2项；附件PDF pp.1-7 斜二测画法教学过程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_spatial_axioms",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_50eba6efb1284a4956afe205751471f0"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_spatial_axioms"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §2.1 空间点、直线、平面之间的位置关系"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_spatial_parallel_perpendicular_properties",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_9e7b9db8c8e0380cbd642ce8338f1d2e",
+        "pc_7030797af1bb287d3f65cef7cf757802"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_spatial_parallel_properties",
+        "cn_sh_math_spatial_perpendicular_properties"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "原课程成果包含多个可独立出题诊断的知识点，已按最小诊断粒度拆分并保留同一成果映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §2.2 直线、平面平行的判定及其性质"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §2.3 直线、平面垂直的判定及其性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_spatial_parallel_perpendicular_criteria",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_0f342f34179aaa62e710d24849918e27",
+        "pc_9e7320a9eb8d1d0efedb9aba3c644a7e"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_spatial_parallel_criteria",
+        "cn_sh_math_spatial_perpendicular_criteria"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "原课程成果包含多个可独立出题诊断的知识点，已按最小诊断粒度拆分并保留同一成果映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §2.2 直线、平面平行的判定及其性质"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §2.3 直线、平面垂直的判定及其性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_solid_geometry_proofs",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_8e4564aac6db3fc263d20845b8ec5c13"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_solid_geometry_proofs"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第二章 §§2.1-2.3 空间位置关系、判定及性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_finite_sample_spaces_events",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_4dc6f43a3fef8af04213c7aa936a2031",
+        "pc_0c7c408f2fb208ecfb0b6758b1cd4a0a"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39（正文p.31），必修主题四·1‘概率’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §3.1 Terminology, pp.168-171"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_classical_probability",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_0c7c408f2fb208ecfb0b6758b1cd4a0a",
+        "pc_724ec6e8c8af72823a404e9fdafd5dbe"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_classical_probability"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39（正文p.31），必修主题四·1‘概率’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §3.1 Terminology, pp.168-171"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_frequency_probability",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_fe3e74b4da89b7d64d5b398cbdeef154"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_frequency_probability"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39（正文p.31），必修主题四·1‘概率’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §3.1 Terminology, pp.168-171; long-run relative frequency and theoretical probability"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_data_sources_population",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_14be091db45947021ec317ac23ac5401",
+        "pc_2d318e7e89bb828e43ea5fd2364aa316"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_data_sources_population"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§1.1-1.2 Definitions, Data and Sampling, pp.5-25"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_simple_random_sampling",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_14be091db45947021ec317ac23ac5401",
+        "pc_35cb6bdf58ea092953596fd77759caf6",
+        "pc_e4bc1b9803eeefd0aa1f24a68121dee8"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_simple_random_sampling"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§1.1-1.2 Definitions, Data and Sampling, pp.5-25"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_stratified_sampling",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_14be091db45947021ec317ac23ac5401",
+        "pc_35cb6bdf58ea092953596fd77759caf6",
+        "pc_4804c70e1e2965acbc7c3cfe09e11a3d"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_stratified_sampling"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§1.1-1.2 Definitions, Data and Sampling, pp.5-25"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_sampling_design",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_28e40edd140ccc548060052b3b445e5a"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_sampling_design"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§1.1-1.2 Definitions, Data and Sampling, pp.5-25"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_statistical_charts",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_9b449c02257babd62cc775a79704c117"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§2.1-2.2 Statistical Graphs, pp.66-85"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_distribution_percentiles",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_9b449c02257babd62cc775a79704c117",
+        "pc_35cb6bdf58ea092953596fd77759caf6",
+        "pc_91a531ff72a480f49160c7fc26db307a"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_distribution_percentiles"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §2.3 Measures of the Location of the Data, pp.86-93"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_statistical_inference_uncertainty",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_92b380d1c47e89f15ddb38bffe3675bc"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_statistical_inference_uncertainty"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.41（正文p.33），必修主题四‘概率与统计’学业要求"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§1.1-1.2, pp.5-25, and Chapter 8 Confidence Intervals, pp.407-461"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_modelling_formulate",
+      "resolution_action": "route_practice",
+      "canonical_ids": [],
+      "created_node_ids": [],
+      "practice_ids": [
+        "practice_cn_sh_math_2020_modelling_formulate"
+      ],
+      "rationale_zh": "该要求评价建模、探究或成果表达过程，不写入学科概念掌握度；已分流到教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.42-44（正文p.34-36），必修主题五‘数学建模活动与数学探究活动’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_modelling_solve",
+      "resolution_action": "route_practice",
+      "canonical_ids": [],
+      "created_node_ids": [],
+      "practice_ids": [
+        "practice_cn_sh_math_2020_modelling_solve"
+      ],
+      "rationale_zh": "该要求评价建模、探究或成果表达过程，不写入学科概念掌握度；已分流到教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.42-44（正文p.34-36），必修主题五‘数学建模活动与数学探究活动’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_modelling_validate",
+      "resolution_action": "route_practice",
+      "canonical_ids": [],
+      "created_node_ids": [],
+      "practice_ids": [
+        "practice_cn_sh_math_2020_modelling_validate"
+      ],
+      "rationale_zh": "该要求评价建模、探究或成果表达过程，不写入学科概念掌握度；已分流到教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.42-44（正文p.34-36），必修主题五‘数学建模活动与数学探究活动’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_inquiry_pose_conjecture",
+      "resolution_action": "route_practice",
+      "canonical_ids": [],
+      "created_node_ids": [],
+      "practice_ids": [
+        "practice_cn_sh_math_2020_inquiry_pose_conjecture"
+      ],
+      "rationale_zh": "该要求评价建模、探究或成果表达过程，不写入学科概念掌握度；已分流到教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.42-44（正文p.34-36），必修主题五‘数学建模活动与数学探究活动’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_inquiry_plan_prove",
+      "resolution_action": "route_practice",
+      "canonical_ids": [],
+      "created_node_ids": [],
+      "practice_ids": [
+        "practice_cn_sh_math_2020_inquiry_plan_prove"
+      ],
+      "rationale_zh": "该要求评价建模、探究或成果表达过程，不写入学科概念掌握度；已分流到教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.42-44（正文p.34-36），必修主题五‘数学建模活动与数学探究活动’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_research_report_integrity",
+      "resolution_action": "route_practice",
+      "canonical_ids": [],
+      "created_node_ids": [],
+      "practice_ids": [
+        "practice_cn_sh_math_2020_research_report_integrity"
+      ],
+      "rationale_zh": "该要求评价建模、探究或成果表达过程，不写入学科概念掌握度；已分流到教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.42-44（正文p.34-36），必修主题五‘数学建模活动与数学探究活动’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_sequence_concept_representation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d628dbf58410331e403a76b3b121c7fd"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_sequence_concept_representation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.1 Sequences and Their Notations, pp.1089-1103"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_arithmetic_sequence_modelling",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_9e401fe846a8c086510b3ea2102be253",
+        "pc_268309b2a09956425be392cca04f360c"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_arithmetic_sequence_modelling"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.2 Arithmetic Sequences, pp.1104-1114"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_arithmetic_linear_relation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_9e401fe846a8c086510b3ea2102be253",
+        "pc_14f1e53bf48e972800525aa7db57c70e"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_arithmetic_linear_relation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.2 Arithmetic Sequences, pp.1104-1114"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_geometric_sequence_formulae",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_ced3271242c9a0d6fe67d9a446214543"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.3 Geometric Sequences, pp.1115-1123"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_geometric_sequence_modelling",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ced3271242c9a0d6fe67d9a446214543",
+        "pc_b635d15e8f965d7215734c93032e303f"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_geometric_sequence_modelling"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.3 Geometric Sequences, pp.1115-1123"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_geometric_exponential_relation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ced3271242c9a0d6fe67d9a446214543",
+        "pc_81e5444941a3e64858bae20e97e58cf8",
+        "pc_cf08704d6dec3fc5cf1314e2f26f655d"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_geometric_exponential_relation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.3 Geometric Sequences, pp.1115-1123"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_derivative_rate_meaning",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_10673fbc68b0db5d92e2eccb2616c7a6",
+        "pc_30962a9bea6ad49ace59c1ad3e902c12"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-3: derivative definition, examples and rate of change"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_basic_derivative_rules",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_d35baa6e4598b25c22ba867ed2a4f82f",
+        "pc_4536621b5e542d2b820ea7b67abd0bb3",
+        "pc_31bfe71fa0fb4cdd31cba73b08b409b8"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 6-11: calculation, trigonometric, product, quotient and chain rules"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_simple_linear_composites",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_592fd805a5b6dadfe8e0826c7d467419"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_simple_linear_composites"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Unit 1 Part A, Session 11: Chain Rule; local concept is intentionally restricted to f(ax+b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_derivative_monotonicity",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_61dadf3e646d2fed3a3b5b81630b2563",
+        "pc_f9249fb783344fbbcfe32c05267ebcb8"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Unit 2 Part A, Sessions 27-28: curve sketching from first and second derivatives"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_derivative_extrema",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_61dadf3e646d2fed3a3b5b81630b2563",
+        "pc_f9249fb783344fbbcfe32c05267ebcb8"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Unit 2 Part A, Sessions 27-28: curve sketching from first and second derivatives"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_derivative_optimisation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_61dadf3e646d2fed3a3b5b81630b2563",
+        "pc_7f364bd0df6065095b932f11a00d4941"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_derivative_optimisation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Unit 2 Part B, Sessions 29-30: Optimization Problems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_spatial_coordinates_distance",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2",
+        "pc_64e61e1cee5471619fa54db48800b916",
+        "pc_fbe862fa74f322ae90465e6dfb1def7a"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_spatial_coordinates_distance"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4: Vectors, Dot Products, Lengths/Angles and Vector Components"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_spatial_vectors_operations",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4: Vectors, Dot Products, Lengths/Angles and Vector Components"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_spatial_vector_basis",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2",
+        "pc_83dcad323dc19ea3b6357b3155211a10"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_spatial_vector_basis"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4: Vectors, Dot Products, Lengths/Angles and Vector Components"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_spatial_projection",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_3e68cc383e695a3ae1773f286b5221f3",
+        "pc_b70bbfb827c2b527f128f02bf360675e"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "平面与空间中的向量投影共享同一数学定义，复用本轮建立的向量投影 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 2-4: Dot Products, Lengths/Angles and Vector Components"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_line_plane_vectors",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_0c3c2f35769f38762a59705783e03824",
+        "pc_8386363188df11ab28ae08ef72342a47"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Sessions 3, 8, 12, 15 and 16: lengths/angles, equations of planes, lines and line-plane intersections"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_spatial_angles_relations",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_3e68cc383e695a3ae1773f286b5221f3",
+        "pc_0c3c2f35769f38762a59705783e03824",
+        "pc_8386363188df11ab28ae08ef72342a47"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Sessions 3, 8, 12, 15 and 16: lengths/angles, equations of planes, lines and line-plane intersections"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_vector_geometry_proofs",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2",
+        "pc_3e68cc383e695a3ae1773f286b5221f3",
+        "pc_c91bb66b227d5404c87e08b45f62d18c"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_vector_geometry_proofs"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-8 and worked example ‘Proofs Using Vectors’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_spatial_distance_angle_problems",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2",
+        "pc_3e68cc383e695a3ae1773f286b5221f3",
+        "pc_8386363188df11ab28ae08ef72342a47"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Sessions 3, 8, 12, 15 and 16: lengths/angles, equations of planes, lines and line-plane intersections"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_line_intersections_distances",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_2fd09e919b7e73069c83ce49007f17d2",
+        "pc_bea43d1a52b8d8840817983b273c7dda"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_line_intersections_distances"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.51-52（正文p.43-44），选择性必修主题二·2‘平面解析几何’·直线与方程"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第三章 §3.3 直线的交点坐标与距离公式"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_circle_equations",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_3d12d114d1630b545655de686dae4630"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.52（正文p.44），选择性必修主题二·2‘平面解析几何’·圆与方程"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第四章 §4.1 圆的方程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_circle_positional_relations",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_3d12d114d1630b545655de686dae4630",
+        "pc_2fd09e919b7e73069c83ce49007f17d2"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.52（正文p.44），选择性必修主题二·2‘平面解析几何’·圆与方程"
+        },
+        {
+          "source_id": "src_pep_high_school_math_2a_2015",
+          "locator": "官方教材目录及内容说明：第四章 §4.2 直线、圆的位置关系"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_conic_context",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_2c7728a895c147c0e2c232582c1e6b64"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_conic_context"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.52-53（正文p.44-45），选择性必修主题二·2‘平面解析几何’·圆锥曲线与方程"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF Chapter 10 introduction and §§10.1-10.3, pp.1009-1055"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_ellipse",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_58591fb3c8294a83a9405568a100991e"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_ellipse"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.52-53（正文p.44-45），选择性必修主题二·2‘平面解析几何’·圆锥曲线与方程"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §10.1 The Ellipse, pp.1010-1025"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_parabola_hyperbola",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_76707a52fc4d807bbdfb0e56f509c17e",
+        "pc_d236c68eb711f9a26eb4250a7843b517"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_parabola",
+        "cn_sh_math_hyperbola"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "原课程成果包含多个可独立出题诊断的知识点，已按最小诊断粒度拆分并保留同一成果映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.52-53（正文p.44-45），选择性必修主题二·2‘平面解析几何’·圆锥曲线与方程"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §10.3 The Parabola, pp.1042-1055"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §10.2 The Hyperbola, pp.1026-1041"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_analytic_geometry_method",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_2fd09e919b7e73069c83ce49007f17d2",
+        "pc_3d12d114d1630b545655de686dae4630",
+        "pc_5a15abbfb73000d73e62d0f659cc8df2"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_analytic_geometry_method"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.51-54（正文p.43-46），选择性必修主题二·2‘平面解析几何’内容要求与学业要求"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF Chapter 10 Conic Sections, pp.1009-1088; geometric constraints translated into equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_total_probability_formula",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_b51add1da3c3312a95ec3d5f88c2558c"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_total_probability_formula"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 Note 14 §3-§3.2, PDF pp.4-6; Total Probability Rule and Eq. (4)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_continuous_random_variable_context",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_5f55e60931935e299996e34826f1a0e9",
+        "pc_23858effd2dd68284bd0c6b645607386",
+        "pc_bd3e94ad62025e9a58ab6e2016182924"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项复核确认现有 canonical 概念组合已覆盖该成果，无需为课程表述重复创建概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §5.1 Continuous Probability Functions, pp.292-294"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_sample_correlation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_8d0a38a8e8f86cd83ae1f091a62f2cad",
+        "pc_629b0c54807299e247ddd77ea5076dd6"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_sample_correlation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§12.2-12.4 Scatter Plots, Regression and Correlation, pp.620-634"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_compare_correlations",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_8d0a38a8e8f86cd83ae1f091a62f2cad",
+        "pc_629b0c54807299e247ddd77ea5076dd6"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "比较相关程度是样本相关系数的直接应用，复用本轮建立的样本相关系数 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§12.2-12.4 Scatter Plots, Regression and Correlation, pp.620-634"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_linear_regression",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_ed18cde6c3d7e08e9e371061418a7424"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "全库反向查重确认机器学习图已有线性回归 canonical 概念，且定义覆盖预测与平方误差拟合；复用稳定 ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §12.3 The Regression Equation, pp.623-630"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_regression_prediction",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ed18cde6c3d7e08e9e371061418a7424",
+        "pc_85acd13e8f4afec2979a3288f911c926"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_regression_prediction_limits"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§12.3 and 12.5-12.6, pp.623-643; regression, prediction and outliers"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_contingency_table",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_223557a1ed16ebd3dac3d0f499d14268"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_contingency_table"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §3.4 Contingency Tables, pp.183-188"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_contingency_independence_test",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_5e8204fe2f43100f3de7f78a5824d321",
+        "pc_029c971a0c9f5d5bb93bba1d0a12f4bf"
+      ],
+      "created_node_ids": [
+        "cn_sh_math_contingency_independence_test"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 无法完整覆盖该可独立诊断成果；已新增稳定 canonical 概念并保留原有相关概念映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §11.3 Test of Independence, pp.574-577"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_extended_research_project",
+      "resolution_action": "route_practice",
+      "canonical_ids": [],
+      "created_node_ids": [],
+      "practice_ids": [
+        "practice_cn_sh_math_2020_extended_research_project"
+      ],
+      "rationale_zh": "该要求评价建模、探究或成果表达过程，不写入学科概念掌握度；已分流到教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.58（正文p.50），选择性必修主题四‘数学建模活动与数学探究活动’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_math_2020_o_extended_project_report",
+      "resolution_action": "route_practice",
+      "canonical_ids": [],
+      "created_node_ids": [],
+      "practice_ids": [
+        "practice_cn_sh_math_2020_extended_project_report"
+      ],
+      "rationale_zh": "该要求评价建模、探究或成果表达过程，不写入学科概念掌握度；已分流到教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.58（正文p.50），选择性必修主题四‘数学建模活动与数学探究活动’"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

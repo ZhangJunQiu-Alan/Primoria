@@ -1,0 +1,1611 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "gap_set_id": "cgs_cn_moe_senior_high_biology_2020_outcomes",
+  "framework_id": "cfw_cn_moe_senior_high_biology_2020_outcomes",
+  "curriculum_id": "cur_cn_moe_senior_high_biology_2020",
+  "subject": "Biology",
+  "source_ids": [
+    "src_cn_moe_senior_high_biology_2020"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "逐成果反向查重并记录 partial 与 unmapped 缺口；纯价值立场不进入概念缺口。"
+    }
+  ],
+  "candidates": [
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rc_1_1_1_cellular_elements_carbon_skeletons",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_rc_1_1_1_cellular_elements_carbon_skeletons"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Cellular elements and carbon skeletons",
+      "proposed_name_zh": "细胞元素与碳链骨架",
+      "scope_zh": "说明细胞主要元素如何以碳链为骨架形成复杂生物大分子。",
+      "existing_canonical_ids": [
+        "pc_fa5e5c389a8f790944f2e6049357654b"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 1.1.1），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rc_1_1_3_cellular_inorganic_salts",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_rc_1_1_3_cellular_inorganic_salts"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Inorganic salts in cells",
+      "proposed_name_zh": "细胞中的无机盐",
+      "scope_zh": "举例说明少量无机盐对细胞生命活动的重要作用。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 1.1.3），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rc_1_2_1_plasma_membrane_functions",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_rc_1_2_1_plasma_membrane_functions"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Plasma-membrane functions",
+      "proposed_name_zh": "质膜的边界、运输与交流功能",
+      "scope_zh": "说明质膜分隔环境、控制物质进出并参与细胞间信息交流。",
+      "existing_canonical_ids": [
+        "pc_5ff2cda97c05cbe449e6d6bcff0c0834"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.1），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rc_1_2_3_nucleus_genetic_information",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_rc_1_2_3_nucleus_genetic_information"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Nucleus and genetic information",
+      "proposed_name_zh": "细胞核与遗传信息",
+      "scope_zh": "说明真核细胞遗传信息主要储存在细胞核中。",
+      "existing_canonical_ids": [
+        "pc_6a00c0df14c5b18459964bd5ccb5c243",
+        "pc_cb341a51c60bb212ac55750a84630c03"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.3），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rc_1_2_4_organelle_coordination",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_rc_1_2_4_organelle_coordination"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Coordination among cell structures",
+      "proposed_name_zh": "细胞结构的协调合作",
+      "scope_zh": "说明细胞各部分相互联系、协调执行生命活动。",
+      "existing_canonical_ids": [
+        "pc_cb341a51c60bb212ac55750a84630c03"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.4），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rc_1_3_1_cellular_unity_diversity",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_rc_1_3_1_cellular_unity_diversity"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Cellular unity and diversity",
+      "proposed_name_zh": "细胞结构统一性与形态功能多样性",
+      "scope_zh": "比较单细胞和多细胞生物的细胞结构共性及形态功能差异。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.3.1），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rc_2_1_1_selective_permeability",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_rc_2_1_1_selective_permeability"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Selective permeability",
+      "proposed_name_zh": "质膜的选择透过性",
+      "scope_zh": "说明质膜选择性控制不同物质通过。",
+      "existing_canonical_ids": [
+        "pc_5ff2cda97c05cbe449e6d6bcff0c0834",
+        "pc_c2e6fec2c47cd86ee9b8726b908a7a8b"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 2.1.1），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rc_2_1_3_endocytosis_exocytosis",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_rc_2_1_3_endocytosis_exocytosis"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Endocytosis and exocytosis",
+      "proposed_name_zh": "胞吞与胞吐",
+      "scope_zh": "说明大分子通过胞吞和胞吐进出细胞。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 2.1.3），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rc_2_3_2_cell_differentiation",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_rc_2_3_2_cell_differentiation"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Cell differentiation",
+      "proposed_name_zh": "细胞分化",
+      "scope_zh": "说明细胞形态、结构和功能的特异性分化如何形成多细胞生物体。",
+      "existing_canonical_ids": [
+        "pc_56602e952c30d81d754e3900e34590cf"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.23（正文对应内容要求 2.3.2），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rc_2_3_3_cell_senescence_death",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_rc_2_3_3_cell_senescence_death"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Cellular senescence and death",
+      "proposed_name_zh": "细胞衰老与死亡",
+      "scope_zh": "说明正常细胞衰老和死亡是自然生理过程。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.23（正文对应内容要求 2.3.3），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rg_3_1_1_gene_nucleic_acid_segment",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_rg_3_1_1_gene_nucleic_acid_segment"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Genes as nucleic-acid segments",
+      "proposed_name_zh": "基因是核酸功能片段",
+      "scope_zh": "说明多数生物基因位于 DNA，部分病毒基因位于 RNA。",
+      "existing_canonical_ids": [
+        "pc_6a00c0df14c5b18459964bd5ccb5c243",
+        "pc_7c8644ecf9e964364af575d584241cf8",
+        "pc_a5f0cc3dc0636e18a4fef67d49bec23e"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.1），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rg_3_1_5_epigenetic_phenomena",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_rg_3_1_5_epigenetic_phenomena"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Epigenetic phenomena",
+      "proposed_name_zh": "表观遗传现象",
+      "scope_zh": "说明碱基序列不变而表型改变的表观遗传现象。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.5），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rg_3_2_2_gametic_inheritance",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_rg_3_2_2_gametic_inheritance"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Inheritance through gametes",
+      "proposed_name_zh": "遗传信息经配子传递",
+      "scope_zh": "说明有性生殖中遗传信息通过配子传给子代。",
+      "existing_canonical_ids": [
+        "pc_9a64e0d9f35ef30bda722f5b7364e0c4"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.2.2），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rg_3_2_4_sex_linked_inheritance",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_rg_3_2_4_sex_linked_inheritance"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Sex-linked inheritance",
+      "proposed_name_zh": "伴性遗传",
+      "scope_zh": "说明性染色体基因的传递与性别相关联。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.2.4），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rg_3_3_3_mutagens_cancer",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_rg_3_3_3_mutagens_cancer"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Mutagens and cancer",
+      "proposed_name_zh": "诱变因素与癌变",
+      "scope_zh": "说明化学物质、射线和病毒可能提高突变概率，部分突变导致分裂失控。",
+      "existing_canonical_ids": [
+        "pc_aa917911c35a5a84a131d3c4b99b89af"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.3），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rg_3_3_5_chromosomal_variation",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_rg_3_3_5_chromosomal_variation"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Chromosomal variation",
+      "proposed_name_zh": "染色体结构与数量变异",
+      "scope_zh": "说明染色体结构和数量变异可能改变性状甚至导致死亡。",
+      "existing_canonical_ids": [
+        "pc_41f9701a3bd0fb4527df662b596620b5",
+        "pc_592a494ab52d102d4cb731b24a77b320"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.5），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rg_3_3_6_genetic_disease_screening",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_rg_3_3_6_genetic_disease_screening"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Genetic-disease screening and prevention",
+      "proposed_name_zh": "人类遗传病检测与预防",
+      "scope_zh": "举例说明人类遗传病的检测和预防。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.6），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rg_4_1_1_common_ancestry_fossil_anatomy",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_rg_4_1_1_common_ancestry_fossil_anatomy"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Evidence from fossils and comparative anatomy",
+      "proposed_name_zh": "化石、比较解剖与胚胎学的共同祖先证据",
+      "scope_zh": "使用化石、比较解剖和胚胎学事实说明共同祖先。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 4.1.1），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rg_4_1_2_common_ancestry_cell_molecular",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_rg_4_1_2_common_ancestry_cell_molecular"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Cellular and molecular evidence of common ancestry",
+      "proposed_name_zh": "细胞与分子层面的共同祖先证据",
+      "scope_zh": "使用代谢和 DNA 结构功能共性说明共同祖先。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 4.1.2），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_1_1_internal_environment_fluids",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sh_1_1_1_internal_environment_fluids"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Internal-environment fluids",
+      "proposed_name_zh": "内环境的细胞外液组成",
+      "scope_zh": "说明血浆、组织液和淋巴等细胞外液共同构成内环境。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.1），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_1_2_internal_external_exchange",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sh_1_1_2_internal_external_exchange"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Exchange through the internal environment",
+      "proposed_name_zh": "细胞经内环境与外界交换",
+      "scope_zh": "说明细胞通过内环境与外界交换并参与内环境维持。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.2），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_1_3_organ_system_exchange",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sh_1_1_3_organ_system_exchange"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Organ systems in material exchange",
+      "proposed_name_zh": "器官系统参与内外环境物质交换",
+      "scope_zh": "说明呼吸、消化、循环和泌尿系统如何参与内外环境交换。",
+      "existing_canonical_ids": [
+        "pc_023dd94962e430b671d1014972b54342",
+        "pc_ff5a585bec0e26749bef92e5b2ec6c2c",
+        "pc_dc1ea419f7f0124901b64a622aee0648"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.3），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_3_1_reflex_arc",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sh_1_3_1_reflex_arc"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Reflexes and the reflex arc",
+      "proposed_name_zh": "反射与反射弧",
+      "scope_zh": "说明条件和非条件反射及反射弧结构。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.1），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_3_4_central_nervous_hierarchy",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sh_1_3_4_central_nervous_hierarchy"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Coordination of spinal and brain centres",
+      "proposed_name_zh": "脊髓与脑高级中枢协调",
+      "scope_zh": "说明低级和高级神经中枢协调调控器官和系统。",
+      "existing_canonical_ids": [
+        "pc_944f33c2a947e2a2f5d42856cb825a4a"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.4），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_3_5_autonomic_nervous_regulation",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sh_1_3_5_autonomic_nervous_regulation"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Autonomic nervous regulation",
+      "proposed_name_zh": "自主神经调节内脏",
+      "scope_zh": "说明中枢神经系统通过自主神经调节内脏活动。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.5），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_3_6_cortical_higher_activity",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sh_1_3_6_cortical_higher_activity"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Cortical higher nervous activity",
+      "proposed_name_zh": "大脑皮层高级神经活动",
+      "scope_zh": "说明语言活动和条件反射由大脑皮层控制。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.6），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_4_1_endocrine_system",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sh_1_4_1_endocrine_system"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Endocrine-system organisation",
+      "proposed_name_zh": "内分泌系统组成",
+      "scope_zh": "识别主要内分泌腺及其激素调节作用。",
+      "existing_canonical_ids": [
+        "pc_c7f7ea6f7ce0f78324c900821216e75c"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.1），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_4_3_neuroendocrine_coordination",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sh_1_4_3_neuroendocrine_coordination"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Neuroendocrine coordination",
+      "proposed_name_zh": "神经与体液调节协调",
+      "scope_zh": "说明神经和体液调节共同维持体温与水盐平衡。",
+      "existing_canonical_ids": [
+        "pc_944f33c2a947e2a2f5d42856cb825a4a",
+        "pc_c7f7ea6f7ce0f78324c900821216e75c",
+        "pc_dc1ea419f7f0124901b64a622aee0648"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.3），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_4_4_humoral_respiratory_regulation",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sh_1_4_4_humoral_respiratory_regulation"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Humoral regulation of breathing",
+      "proposed_name_zh": "体液成分调节呼吸",
+      "scope_zh": "说明二氧化碳等体液成分参与呼吸运动调节。",
+      "existing_canonical_ids": [
+        "pc_c9fd444d9acfb11faef011f5755c1418",
+        "pc_023dd94962e430b671d1014972b54342"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.4），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_5_2_innate_adaptive_immunity",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sh_1_5_2_innate_adaptive_immunity"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Innate and adaptive immunity",
+      "proposed_name_zh": "非特异性与特异性免疫",
+      "scope_zh": "比较先天非特异性免疫和后天特异性免疫。",
+      "existing_canonical_ids": [
+        "pc_b396f7788c77baeecc089eeec83538e5"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.5.2），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_5_4_immune_disorders",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sh_1_5_4_immune_disorders"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Immune disorders",
+      "proposed_name_zh": "免疫功能异常与疾病",
+      "scope_zh": "比较过敏、自身免疫病、艾滋病和先天免疫缺陷。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.5.4），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_6_1_auxin_dual_effects",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sh_1_6_1_auxin_dual_effects"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Auxin discovery and dual effects",
+      "proposed_name_zh": "生长素发现与两重性",
+      "scope_zh": "说明生长素的发现及其促进或抑制生长的两重性。",
+      "existing_canonical_ids": [
+        "pc_ec9ed2577284952c142079dc7a389627"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.6.1），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_6_3_plant_growth_regulator_applications",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sh_1_6_3_plant_growth_regulator_applications"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Applications of plant growth regulators",
+      "proposed_name_zh": "植物激素及类似物的生产应用",
+      "scope_zh": "说明主要植物激素及类似物在生产中的应用。",
+      "existing_canonical_ids": [
+        "pc_ec9ed2577284952c142079dc7a389627",
+        "pc_e8352e234d2f8fb344dafcdbd894f99e"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.31（正文对应内容要求 1.6.3），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_1_1_population_characteristics",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_se_2_1_1_population_characteristics"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Population characteristics",
+      "proposed_name_zh": "种群特征",
+      "scope_zh": "说明种群密度、出生死亡率、迁入迁出率、年龄结构和性别比例。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.1），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_1_2_population_growth_models",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_se_2_1_2_population_growth_models"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Population-growth models",
+      "proposed_name_zh": "种群数量变化模型",
+      "scope_zh": "建立数学模型解释种群数量变动。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.2），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_1_3_population_limiting_factors",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_se_2_1_3_population_limiting_factors"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Factors affecting populations",
+      "proposed_name_zh": "种群特征的生物与非生物影响因素",
+      "scope_zh": "说明非生物因素和种间作用如何影响种群特征。",
+      "existing_canonical_ids": [
+        "pc_ecfaff613c7086e0cece6014f44b68ba"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.3），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_1_4_community_structure",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_se_2_1_4_community_structure"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Community structure",
+      "proposed_name_zh": "群落垂直、水平结构及时间变化",
+      "scope_zh": "描述群落的垂直和水平结构及其时间变化。",
+      "existing_canonical_ids": [
+        "pc_ecfaff613c7086e0cece6014f44b68ba"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.4），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_1_5_ecological_succession",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_se_2_1_5_ecological_succession"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Ecological succession",
+      "proposed_name_zh": "初生演替与次生演替",
+      "scope_zh": "说明群落演替及初生、次生演替的区别。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.5），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_2_2_food_chains_webs",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_se_2_2_2_food_chains_webs"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Food chains and food webs",
+      "proposed_name_zh": "食物链与食物网",
+      "scope_zh": "说明生产者和消费者通过食物链、食物网形成营养结构。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.2），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_2_3_matter_cycles_energy_flow",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_se_2_2_3_matter_cycles_energy_flow"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Matter cycling and energy flow",
+      "proposed_name_zh": "物质循环与能量流动",
+      "scope_zh": "说明物质循环、能量单向流动和逐级递减规律。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.3），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_2_4_ecological_resource_use",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_se_2_2_4_ecological_resource_use"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Ecological resource use",
+      "proposed_name_zh": "生态规律与资源利用",
+      "scope_zh": "应用物质循环和能量流动规律提高生态资源利用效率。",
+      "existing_canonical_ids": [
+        "pc_ecfaff613c7086e0cece6014f44b68ba",
+        "pc_aa24b4324d962f7ab29f0ddeb0f63405"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.4），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_2_5_ecological_pyramids",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_se_2_2_5_ecological_pyramids"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Ecological pyramids",
+      "proposed_name_zh": "数量、生物量和能量金字塔",
+      "scope_zh": "说明生态金字塔如何表征营养级数量、生物量和能量关系。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.5），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_2_6_biomagnification",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_se_2_2_6_biomagnification"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Biomagnification",
+      "proposed_name_zh": "食物链中的有害物质富集",
+      "scope_zh": "说明有害物质沿食物链不断富集。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.6），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_2_7_ecosystem_information_transfer",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_se_2_2_7_ecosystem_information_transfer"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Information transfer in ecosystems",
+      "proposed_name_zh": "生态系统信息传递",
+      "scope_zh": "说明物理、化学和行为信息对生命活动、繁衍和种间关系的作用。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.7），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_2_8_trophic_structure_factors",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_se_2_2_8_trophic_structure_factors"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Determinants of trophic structure",
+      "proposed_name_zh": "营养结构的生物与非生物决定因素",
+      "scope_zh": "分析特定生态系统的生物和非生物因素如何决定营养结构。",
+      "existing_canonical_ids": [
+        "pc_ecfaff613c7086e0cece6014f44b68ba"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.8），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_3_1_ecosystem_stability",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_se_2_3_1_ecosystem_stability"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Ecosystem stability",
+      "proposed_name_zh": "生态系统稳定性",
+      "scope_zh": "说明生态系统保持或恢复结构功能和动态平衡的能力。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.1），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_3_2_ecosystem_disturbances",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_se_2_3_2_ecosystem_disturbances"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Ecosystem disturbances",
+      "proposed_name_zh": "生态系统干扰因素",
+      "scope_zh": "说明气候、自然事件、人类活动和外来物种对稳定性的影响。",
+      "existing_canonical_ids": [
+        "pc_ecfaff613c7086e0cece6014f44b68ba"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.2），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_3_3_ecosystem_self_regulation",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_se_2_3_3_ecosystem_self_regulation"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Ecosystem self-regulation",
+      "proposed_name_zh": "生态系统自我调节",
+      "scope_zh": "说明生态系统在一定干扰限度内通过自我调节维持稳定。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.3），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_4_1_population_environment_pressure",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_se_2_4_1_population_environment_pressure"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Population pressure on the environment",
+      "proposed_name_zh": "人口增长的环境压力",
+      "scope_zh": "说明人口增长如何对环境造成压力。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.1），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_4_2_global_environmental_change",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_se_2_4_2_global_environmental_change"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Global environmental change",
+      "proposed_name_zh": "全球环境问题与生物圈稳态",
+      "scope_zh": "说明气候、水资源、臭氧、酸雨、荒漠化和污染对生物圈与人的影响。",
+      "existing_canonical_ids": [
+        "pc_aa24b4324d962f7ab29f0ddeb0f63405"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.2），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_4_4_ecological_engineering_circularity",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_se_2_4_4_ecological_engineering_circularity"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Ecological engineering and circularity",
+      "proposed_name_zh": "生态工程与资源循环利用",
+      "scope_zh": "说明依据生态学原理和系统工程实现资源多层次循环利用。",
+      "existing_canonical_ids": [
+        "pc_ecfaff613c7086e0cece6014f44b68ba",
+        "pc_aa24b4324d962f7ab29f0ddeb0f63405"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.4），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_3_1_1_sterilisation_microbe_culture",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_3_1_1_sterilisation_microbe_culture"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Sterilisation for pure culture",
+      "proposed_name_zh": "纯培养中的灭菌",
+      "scope_zh": "说明灭菌是获得纯净微生物培养物的前提。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_3_1_2_aseptic_technique",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_3_1_2_aseptic_technique"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Aseptic technique",
+      "proposed_name_zh": "无菌技术",
+      "scope_zh": "说明操作中保持无菌物品和区域不被污染的技术。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_3_1_3_selective_culture_media",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_3_1_3_selective_culture_media"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Selective culture media",
+      "proposed_name_zh": "培养基配方与目的培养",
+      "scope_zh": "说明调整培养基配方可有目的地培养微生物。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.3），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_3_1_4_microbial_isolation_methods",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_3_1_4_microbial_isolation_methods"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Microbial isolation methods",
+      "proposed_name_zh": "平板划线与稀释涂布分离",
+      "scope_zh": "比较平板划线法和稀释涂布平板法的分离纯化用途。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.4），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_3_1_5_microbial_counting_methods",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_3_1_5_microbial_counting_methods"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Microbial counting methods",
+      "proposed_name_zh": "稀释涂布与显微镜计数",
+      "scope_zh": "比较稀释涂布平板法和显微镜计数法测定微生物数量。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.5），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_3_2_1_traditional_fermentation",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_3_2_1_traditional_fermentation"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Traditional fermentation",
+      "proposed_name_zh": "传统发酵食品",
+      "scope_zh": "说明微生物在传统发酵食品生产中的作用。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_3_2_2_industrial_fermentation",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_3_2_2_industrial_fermentation"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Industrial fermentation",
+      "proposed_name_zh": "现代发酵工程",
+      "scope_zh": "说明现代工程技术利用微生物功能工业化生产产品。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_3_2_3_fermentation_applications",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_3_2_3_fermentation_applications"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Applications of fermentation engineering",
+      "proposed_name_zh": "发酵工程应用",
+      "scope_zh": "说明发酵工程在医药、食品和工农业中的应用价值。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.3），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_4_1_1_plant_tissue_culture",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_4_1_1_plant_tissue_culture"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Plant tissue culture",
+      "proposed_name_zh": "植物组织培养",
+      "scope_zh": "说明离体材料形成愈伤组织、再分化并形成完整植株的过程。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_4_1_2_plant_somatic_hybridisation",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_4_1_2_plant_somatic_hybridisation"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Plant somatic hybridisation",
+      "proposed_name_zh": "植物体细胞杂交",
+      "scope_zh": "说明不同植物体细胞融合并培育新植物体的技术。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_4_1_3_plant_cell_engineering_applications",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_4_1_3_plant_cell_engineering_applications"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Applications of plant-cell engineering",
+      "proposed_name_zh": "植物细胞工程应用",
+      "scope_zh": "说明快速繁殖、脱毒、次生代谢产物生产和育种应用。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.3），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_4_2_1_animal_cell_culture",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_4_2_1_animal_cell_culture"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Animal cell culture",
+      "proposed_name_zh": "动物细胞培养",
+      "scope_zh": "说明动物组织分散成细胞并在适宜条件下培养增殖的过程。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.2.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_4_2_2_somatic_cell_nuclear_transfer",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_4_2_2_somatic_cell_nuclear_transfer"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Somatic-cell nuclear transfer",
+      "proposed_name_zh": "动物体细胞核移植",
+      "scope_zh": "说明体细胞核移入去核卵母细胞并发育为新个体的过程。",
+      "existing_canonical_ids": [
+        "pc_0185ccac3ad47cd14f266d12099ab528"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_4_2_3_animal_cell_fusion",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_4_2_3_animal_cell_fusion"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Animal cell fusion",
+      "proposed_name_zh": "动物细胞融合",
+      "scope_zh": "说明物理、化学或生物手段使动物细胞融合。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.3），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_4_2_4_monoclonal_antibody_production",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_4_2_4_monoclonal_antibody_production"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Monoclonal-antibody production",
+      "proposed_name_zh": "单克隆抗体制备",
+      "scope_zh": "说明细胞融合技术在单克隆抗体制备中的作用。",
+      "existing_canonical_ids": [
+        "pc_4e3f76f101debb1e241b0bab776e4cf1"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.4），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_4_2_5_stem_cell_applications",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_4_2_5_stem_cell_applications"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Stem-cell applications",
+      "proposed_name_zh": "干细胞的生物医学应用",
+      "scope_zh": "说明干细胞在生物医学工程中的应用价值。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.5），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_4_3_1_fertilisation_early_embryo",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_4_3_1_fertilisation_early_embryo"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Fertilisation and early embryonic development",
+      "proposed_name_zh": "受精与早期胚胎发育",
+      "scope_zh": "说明胚胎形成经历受精和早期发育。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.3.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_4_3_2_embryo_engineering",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_4_3_2_embryo_engineering"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Embryo engineering",
+      "proposed_name_zh": "体外受精、胚胎移植与分割",
+      "scope_zh": "说明体外受精、胚胎移植和胚胎分割等胚胎工程技术。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.3.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_5_1_2_gene_engineering_tools",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_5_1_2_gene_engineering_tools"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Tools of genetic engineering",
+      "proposed_name_zh": "限制酶、连接酶与载体",
+      "scope_zh": "说明限制性内切核酸酶、DNA 连接酶和载体的作用。",
+      "existing_canonical_ids": [
+        "pc_0185ccac3ad47cd14f266d12099ab528"
+      ],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.1.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_5_2_1_protein_engineering_design",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_5_2_1_protein_engineering_design"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Protein-engineering design",
+      "proposed_name_zh": "蛋白质工程设计与改造",
+      "scope_zh": "说明依据基因工程原理设计、改造蛋白质以满足需求。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.2.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_5_2_2_protein_engineering_process",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_5_2_2_protein_engineering_process"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Protein-engineering process",
+      "proposed_name_zh": "蛋白质工程实现过程",
+      "scope_zh": "说明通过基因改造生产目标蛋白的过程。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.2.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_6_1_2_gmo_impacts",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_6_1_2_gmo_impacts"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Impacts of genetically modified technology",
+      "proposed_name_zh": "转基因技术影响",
+      "scope_zh": "比较转基因技术应用可能带来的收益、风险和社会影响。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.1.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_6_2_1_reproductive_cloning_ethics",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_6_2_1_reproductive_cloning_ethics"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Ethics of human reproductive cloning",
+      "proposed_name_zh": "生殖性克隆人的伦理问题",
+      "scope_zh": "说明生殖性克隆人面临的伦理问题。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.2.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_6_2_2_reproductive_cloning_china_policy",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_6_2_2_reproductive_cloning_china_policy"
+      ],
+      "action": "add_concept",
+      "proposed_name": "China policy on reproductive cloning",
+      "proposed_name_zh": "中国禁止生殖性克隆人",
+      "scope_zh": "说明中国不赞成、不允许、不支持、不接受生殖性克隆人实验的理由。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.2.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_6_3_1_biological_weapons_harms",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_6_3_1_biological_weapons_harms"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Harms of biological weapons",
+      "proposed_name_zh": "生物武器的威胁与伤害",
+      "scope_zh": "说明生物武器对人类造成的严重威胁和伤害。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_biology",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.3.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

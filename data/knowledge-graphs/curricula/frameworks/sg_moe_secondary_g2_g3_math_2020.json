@@ -1,0 +1,3519 @@
+{
+  "schema_version": "2.0.0",
+  "content_version": "0.3.0",
+  "framework_id": "cfw_sg_moe_secondary_g2_g3_math_2020_outcomes",
+  "curriculum_id": "cur_sg_moe_secondary_g2_g3_math_2020",
+  "curriculum_kind": "national_syllabus",
+  "title": "Singapore MOE G2 and G3 Secondary Mathematics outcome coverage",
+  "title_zh": "新加坡教育部 G2/G3 中学数学（2020 中一批次）学习成果级覆盖",
+  "subject": "Mathematics",
+  "jurisdiction": "SG",
+  "education_stage": "secondary",
+  "requirement_granularity": "outcome",
+  "levels": [
+    {
+      "level_id": "g3_secondary_all",
+      "label": "G3 Secondary 1-4",
+      "label_zh": "G3 中一至中四贯穿实践"
+    },
+    {
+      "level_id": "g3_sec1",
+      "label": "G3 Secondary 1",
+      "label_zh": "G3 中一"
+    },
+    {
+      "level_id": "g3_sec2",
+      "label": "G3 Secondary 2",
+      "label_zh": "G3 中二"
+    },
+    {
+      "level_id": "g3_sec3_4",
+      "label": "G3 Secondary 3-4",
+      "label_zh": "G3 中三至中四"
+    },
+    {
+      "level_id": "g2_secondary_all",
+      "label": "G2 Secondary 1-4",
+      "label_zh": "G2 中一至中四贯穿实践"
+    },
+    {
+      "level_id": "g2_sec1",
+      "label": "G2 Secondary 1",
+      "label_zh": "G2 中一"
+    },
+    {
+      "level_id": "g2_sec2",
+      "label": "G2 Secondary 2",
+      "label_zh": "G2 中二"
+    },
+    {
+      "level_id": "g2_sec3_4",
+      "label": "G2 Secondary 3-4",
+      "label_zh": "G2 中三至中四"
+    },
+    {
+      "level_id": "g2_sec5_bridge",
+      "label": "G3 content for Secondary 5 students taking G2 Mathematics",
+      "label_zh": "修读 G2 数学的中五学生所需 G3 衔接内容"
+    }
+  ],
+  "languages": [
+    "en",
+    "zh-CN"
+  ],
+  "source_ids": [
+    "src_sg_moe_secondary_g2_g3_math_2020"
+  ],
+  "valid_from": "2020-01-01",
+  "valid_to": null,
+  "review_status": "needs_review",
+  "scope_exclusions": [],
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "建立 G2/G3 年级段与内容领域基线。"
+    },
+    {
+      "version": "0.2.1",
+      "date": "2026-07-18",
+      "summary_zh": "第二轮复核主题边界并撤销未经证明的完整覆盖声明。"
+    },
+    {
+      "version": "0.3.0",
+      "date": "2026-07-19",
+      "summary_zh": "按可独立出题诊断粒度拆分官方学习成果，补入中五 G3 衔接内容，并分离计算器和数学建模实践。"
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_secondary_all_personal_finance",
+      "parent_requirement_id": null,
+      "code": "G3·SECONDARY·ALL·01",
+      "title": "Personal and household finance",
+      "title_zh": "个人与家庭金融数学",
+      "summary_zh": "在简单及复利、税费、分期付款、公用事业账单和货币兑换情境中选择并运用数学关系。",
+      "requirement_type": "skill",
+      "level_id": "g3_secondary_all",
+      "cognitive_processes": [
+        "apply",
+        "model"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.13, g3 secondary all, Personal and household finance"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_secondary_all_motion_data_graphs",
+      "parent_requirement_id": null,
+      "code": "G3·SECONDARY·ALL·02",
+      "title": "Distance-time and speed-time graphs",
+      "title_zh": "路程—时间与速度—时间图像",
+      "summary_zh": "解释表格、路程—时间图和速度—时间图中的变化关系，并把结论放回交通或运动情境。",
+      "requirement_type": "skill",
+      "level_id": "g3_secondary_all",
+      "cognitive_processes": [
+        "analyze",
+        "model",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.14, g3 secondary all, Distance-time and speed-time graphs"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_secondary_all_model_formulate",
+      "parent_requirement_id": null,
+      "code": "G3·SECONDARY·ALL·03",
+      "title": "Formulating a real-world problem",
+      "title_zh": "建立现实问题的数学模型",
+      "summary_zh": "在G3 四年问题中理解条件、作出适当假设与简化，并把现实问题表示为数学模型。",
+      "requirement_type": "practice",
+      "level_id": "g3_secondary_all",
+      "cognitive_processes": [
+        "model",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.14, g3 secondary all, Formulating a real-world problem"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_secondary_all_model_data",
+      "parent_requirement_id": null,
+      "code": "G3·SECONDARY·ALL·04",
+      "title": "Making sense of real data",
+      "title_zh": "理解并讨论真实数据",
+      "summary_zh": "在G3 四年情境中读取、质疑并讨论图表中的真实数据。",
+      "requirement_type": "practice",
+      "level_id": "g3_secondary_all",
+      "cognitive_processes": [
+        "analyze",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.14, g3 secondary all, Making sense of real data"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_secondary_all_model_solve",
+      "parent_requirement_id": null,
+      "code": "G3·SECONDARY·ALL·05",
+      "title": "Selecting methods and solving a model",
+      "title_zh": "选择方法并求解模型",
+      "summary_zh": "为G3 四年模型选择适当概念、技能和工具，完成求解并清楚呈现。",
+      "requirement_type": "practice",
+      "level_id": "g3_secondary_all",
+      "cognitive_processes": [
+        "apply",
+        "model",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.14, g3 secondary all, Selecting methods and solving a model"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_secondary_all_model_interpret",
+      "parent_requirement_id": null,
+      "code": "G3·SECONDARY·ALL·06",
+      "title": "Interpreting a mathematical solution",
+      "title_zh": "解释和评价模型解",
+      "summary_zh": "把数学解放回G3 四年现实情境，检查合理性、局限和可改进之处。",
+      "requirement_type": "practice",
+      "level_id": "g3_secondary_all",
+      "cognitive_processes": [
+        "analyze",
+        "evaluate",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.14, g3 secondary all, Interpreting a mathematical solution"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_prime_factorisation",
+      "parent_requirement_id": null,
+      "code": "G3·SEC1·01",
+      "title": "Prime factorisation, HCF, LCM and roots",
+      "title_zh": "质因数分解、HCF、LCM 与方根",
+      "summary_zh": "用质因数分解求最高公因数、最低公倍数、平方根与立方根。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Prime factorisation, HCF, LCM and roots"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_real_number_operations",
+      "parent_requirement_id": null,
+      "code": "G3·SEC1·02",
+      "title": "Real-number operations and order",
+      "title_zh": "实数运算、数轴与大小关系",
+      "summary_zh": "对负数、整数、有理数和实数进行四则运算，在数轴上表示排序并使用不等号。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Real-number operations and order"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_calculator_computation",
+      "parent_requirement_id": null,
+      "code": "G3·SEC1·03",
+      "title": "Calculator computation",
+      "title_zh": "计算器数值计算",
+      "summary_zh": "正确输入和检查计算器计算，包括显示精度和结果合理性。",
+      "requirement_type": "practice",
+      "level_id": "g3_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Calculator computation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_approximation_estimation",
+      "parent_requirement_id": null,
+      "code": "G3·SEC1·04",
+      "title": "Approximation and estimation",
+      "title_zh": "近似、取整与估算",
+      "summary_zh": "按小数位或有效数字取整，并估算运算结果。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Approximation and estimation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_ratio",
+      "parent_requirement_id": null,
+      "code": "G3·SEC1·05",
+      "title": "Ratios with rational quantities",
+      "title_zh": "有理数量的比",
+      "summary_zh": "化简含有理数的比并解决比例分配问题。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Ratios with rational quantities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_percentage",
+      "parent_requirement_id": null,
+      "code": "G3·SEC1·06",
+      "title": "Percentage comparison and change",
+      "title_zh": "百分数比较与增减",
+      "summary_zh": "处理百分数比较、百分比点、反向百分数及超过 100% 的百分数问题。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Percentage comparison and change"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_rate_speed",
+      "parent_requirement_id": null,
+      "code": "G3·SEC1·07",
+      "title": "Rate and speed",
+      "title_zh": "率、速度与单位换算",
+      "summary_zh": "区分平均率、速度、匀速和平均速度，换算单位并解决实际问题。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Rate and speed"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_algebra_notation_evaluation",
+      "parent_requirement_id": null,
+      "code": "G3·SEC1·08",
+      "title": "Algebraic notation and evaluation",
+      "title_zh": "代数记号与代入求值",
+      "summary_zh": "用字母表示数，解释代数记号并对代数式和公式代入求值。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Algebraic notation and evaluation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_algebra_translation",
+      "parent_requirement_id": null,
+      "code": "G3·SEC1·09",
+      "title": "Translating situations into algebra",
+      "title_zh": "把简单情境表示为代数式",
+      "summary_zh": "把简单现实关系翻译为代数式，并说明各量的意义。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Translating situations into algebra"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_nth_term_patterns",
+      "parent_requirement_id": null,
+      "code": "G3·SEC1·10",
+      "title": "Algebraic nth-term patterns",
+      "title_zh": "用通项表示规律",
+      "summary_zh": "识别数值或图形规律并写出第 n 项代数式。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Algebraic nth-term patterns"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_linear_expressions",
+      "parent_requirement_id": null,
+      "code": "G3·SEC1·11",
+      "title": "Operations on linear expressions",
+      "title_zh": "一次式的运算与因式提取",
+      "summary_zh": "加减、化简含括号的一次式并提取公因式。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Operations on linear expressions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_coordinate_relationships",
+      "parent_requirement_id": null,
+      "code": "G3·SEC1·12",
+      "title": "Coordinates and variable relationships",
+      "title_zh": "坐标与变量关系表示",
+      "summary_zh": "用二维笛卡尔坐标和有序数对图表示两个变量的关系。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Coordinates and variable relationships"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_linear_functions_gradient",
+      "parent_requirement_id": null,
+      "code": "G3·SEC1·13",
+      "title": "Linear functions, graphs and gradient",
+      "title_zh": "一次函数、图像与斜率",
+      "summary_zh": "绘制 y=ax+b 的图像，把斜率解释为纵向变化与横向变化之比。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Linear functions, graphs and gradient"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_linear_fractional_equations",
+      "parent_requirement_id": null,
+      "code": "G3·SEC1·14",
+      "title": "Linear and reducible fractional equations",
+      "title_zh": "一次方程与可化为一次的分式方程",
+      "summary_zh": "解一元一次方程和可约为一次方程的简单分式方程。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Linear and reducible fractional equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_formulate_linear_equation",
+      "parent_requirement_id": null,
+      "code": "G3·SEC1·15",
+      "title": "Formulating a linear equation",
+      "title_zh": "从情境建立一元一次方程",
+      "summary_zh": "从问题情境建立一元一次方程并解释解的现实意义。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Formulating a linear equation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_angle_relationships",
+      "parent_requirement_id": null,
+      "code": "G3·SEC1·16",
+      "title": "Angle relationships",
+      "title_zh": "基本角与平行线角关系",
+      "summary_zh": "识别各类角，并运用对顶角、周角、直线角和平行线截角关系。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Angle relationships"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_triangle_properties",
+      "parent_requirement_id": null,
+      "code": "G3·SEC1·17",
+      "title": "Triangle properties",
+      "title_zh": "三角形性质",
+      "summary_zh": "使用三角形的边角关系和基本分类性质。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Triangle properties"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_polygon_properties",
+      "parent_requirement_id": null,
+      "code": "G3·SEC1·18",
+      "title": "Quadrilaterals and regular polygons",
+      "title_zh": "特殊四边形与正多边形",
+      "summary_zh": "分类特殊四边形，使用正多边形的性质、对称性及内外角和。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Quadrilaterals and regular polygons"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_geometric_construction",
+      "parent_requirement_id": null,
+      "code": "G3·SEC1·19",
+      "title": "Geometric construction",
+      "title_zh": "尺规与量角作图",
+      "summary_zh": "按给定数据选择圆规、直尺、三角尺和量角器作简单几何图形。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Geometric construction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_plane_mensuration",
+      "parent_requirement_id": null,
+      "code": "G3·SEC1·20",
+      "title": "Area and composite plane figures",
+      "title_zh": "平面图形面积与组合图形",
+      "summary_zh": "计算平行四边形、梯形及组合平面图形的周长与面积。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Area and composite plane figures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_solid_mensuration",
+      "parent_requirement_id": null,
+      "code": "G3·SEC1·21",
+      "title": "Prisms, cylinders and composite solids",
+      "title_zh": "棱柱、圆柱与组合体的度量",
+      "summary_zh": "计算棱柱、圆柱和组合立体的体积、表面积并换算平方与立方单位。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Prisms, cylinders and composite solids"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_data_collection",
+      "parent_requirement_id": null,
+      "code": "G3·SEC1·22",
+      "title": "Collecting, classifying and tabulating data",
+      "title_zh": "数据收集、分类与制表",
+      "summary_zh": "理解简单数据收集、分类和制表过程。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Collecting, classifying and tabulating data"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_statistical_representations",
+      "parent_requirement_id": null,
+      "code": "G3·SEC1·23",
+      "title": "Reading and choosing statistical representations",
+      "title_zh": "读取和选择统计图表",
+      "summary_zh": "分析表格、条形图、象形图、折线图和饼图，并比较各表示的用途与局限。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Reading and choosing statistical representations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_misleading_diagrams",
+      "parent_requirement_id": null,
+      "code": "G3·SEC1·24",
+      "title": "Misleading statistical diagrams",
+      "title_zh": "误导性统计图",
+      "summary_zh": "解释统计图为何可能造成数据误读。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Misleading statistical diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_scale_proportion",
+      "parent_requirement_id": null,
+      "code": "G3·SEC2·01",
+      "title": "Map scales and proportion",
+      "title_zh": "地图比例尺与正反比例",
+      "summary_zh": "处理距离或面积比例尺，以及正比例与反比例关系。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Map scales and proportion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_algebra_expansion_identities",
+      "parent_requirement_id": null,
+      "code": "G3·SEC2·02",
+      "title": "Expansion and algebraic identities",
+      "title_zh": "代数展开与恒等式",
+      "summary_zh": "展开代数式并使用平方和、平方差等基本恒等式。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Expansion and algebraic identities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_formula_rearrangement",
+      "parent_requirement_id": null,
+      "code": "G3·SEC2·03",
+      "title": "Changing the subject of a formula",
+      "title_zh": "公式变形与未知量求值",
+      "summary_zh": "改变公式主项并求给定公式中的未知量。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Changing the subject of a formula"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_factorisation",
+      "parent_requirement_id": null,
+      "code": "G3·SEC2·04",
+      "title": "Linear and quadratic factorisation",
+      "title_zh": "一次式与二次式因式分解",
+      "summary_zh": "按分组或二次式结构完成因式分解。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Linear and quadratic factorisation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_algebraic_fractions_multiply_divide",
+      "parent_requirement_id": null,
+      "code": "G3·SEC2·05",
+      "title": "Multiplying and dividing algebraic fractions",
+      "title_zh": "代数分式乘除",
+      "summary_zh": "对简单代数分式进行乘法和除法。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Multiplying and dividing algebraic fractions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_algebraic_fractions_add_subtract",
+      "parent_requirement_id": null,
+      "code": "G3·SEC2·06",
+      "title": "Adding and subtracting algebraic fractions",
+      "title_zh": "代数分式加减",
+      "summary_zh": "对含一次或二次分母的代数分式通分并加减。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Adding and subtracting algebraic fractions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_quadratic_functions",
+      "parent_requirement_id": null,
+      "code": "G3·SEC2·07",
+      "title": "Quadratic functions and their graphs",
+      "title_zh": "二次函数及图像性质",
+      "summary_zh": "理解一般二次函数图像的开口、最大最小点和对称性。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Quadratic functions and their graphs"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_simple_linear_inequalities",
+      "parent_requirement_id": null,
+      "code": "G3·SEC2·08",
+      "title": "Simple linear inequalities",
+      "title_zh": "简单一元一次不等式",
+      "summary_zh": "解简单一元一次不等式并在数轴上表示解集。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Simple linear inequalities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_two_variable_linear_graphs",
+      "parent_requirement_id": null,
+      "code": "G3·SEC2·09",
+      "title": "Graphs of linear equations in two variables",
+      "title_zh": "二元一次方程图像",
+      "summary_zh": "把 ax+by=c 表示为平面直线图像。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Graphs of linear equations in two variables"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_simultaneous_linear_equations",
+      "parent_requirement_id": null,
+      "code": "G3·SEC2·10",
+      "title": "Simultaneous linear equations",
+      "title_zh": "二元一次联立方程",
+      "summary_zh": "用代入、消元和图像方法解二元一次联立方程。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Simultaneous linear equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_quadratic_factorisation_solve",
+      "parent_requirement_id": null,
+      "code": "G3·SEC2·11",
+      "title": "Solving quadratics by factorisation",
+      "title_zh": "因式分解法解二次方程",
+      "summary_zh": "用因式分解法解一元二次方程。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Solving quadratics by factorisation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_formulate_pair_linear",
+      "parent_requirement_id": null,
+      "code": "G3·SEC2·12",
+      "title": "Formulating a pair of linear equations",
+      "title_zh": "从情境建立二元一次方程组",
+      "summary_zh": "从问题情境建立二元一次方程组并解释解。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Formulating a pair of linear equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_congruence_similarity_foundations",
+      "parent_requirement_id": null,
+      "code": "G3·SEC2·13",
+      "title": "Congruence and similarity foundations",
+      "title_zh": "全等与相似基础",
+      "summary_zh": "识别全等和相似图形，使用相似三角形及多边形的对应角边关系。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Congruence and similarity foundations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_congruence_similarity_enlargement",
+      "parent_requirement_id": null,
+      "code": "G3·SEC2·14",
+      "title": "Enlargement and reduction",
+      "title_zh": "平面图形放大与缩小",
+      "summary_zh": "按比例因子放大或缩小平面图形，并解决简单全等相似问题。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Enlargement and reduction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_pythagoras",
+      "parent_requirement_id": null,
+      "code": "G3·SEC2·15",
+      "title": "Pythagoras theorem and converse",
+      "title_zh": "勾股定理及逆定理",
+      "summary_zh": "用勾股定理求长度，并由三边判断直角三角形。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Pythagoras theorem and converse"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_right_triangle_trig",
+      "parent_requirement_id": null,
+      "code": "G3·SEC2·16",
+      "title": "Trigonometry in right triangles",
+      "title_zh": "直角三角形三角比",
+      "summary_zh": "用锐角正弦、余弦和正切求直角三角形的边与角。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Trigonometry in right triangles"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_curved_solids",
+      "parent_requirement_id": null,
+      "code": "G3·SEC2·17",
+      "title": "Pyramids, cones and spheres",
+      "title_zh": "棱锥、圆锥与球的度量",
+      "summary_zh": "计算棱锥、圆锥和球的体积与表面积。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Pyramids, cones and spheres"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_distribution_diagrams",
+      "parent_requirement_id": null,
+      "code": "G3·SEC2·18",
+      "title": "Dot plots, histograms and stem-and-leaf diagrams",
+      "title_zh": "点图、直方图与茎叶图",
+      "summary_zh": "分析解释三种分布图，判断表示方法的用途与局限，并说明图表可能造成的误读。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Dot plots, histograms and stem-and-leaf diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_central_tendency",
+      "parent_requirement_id": null,
+      "code": "G3·SEC2·19",
+      "title": "Measures of central tendency",
+      "title_zh": "集中趋势与分组数据均值",
+      "summary_zh": "计算和选择平均数、众数、中位数，并计算分组数据平均数。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Measures of central tendency"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_single_event_probability",
+      "parent_requirement_id": null,
+      "code": "G3·SEC2·20",
+      "title": "Probability of single events",
+      "title_zh": "单一事件概率",
+      "summary_zh": "把概率理解为机会度量，列出简单样本结果并计算单一事件概率。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Probability of single events"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_standard_form",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·01",
+      "title": "Standard form",
+      "title_zh": "标准式",
+      "summary_zh": "用 A×10^n 表示和处理数，其中 n 为整数且 1≤A<10。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Standard form"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_indices",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·02",
+      "title": "Indices and their laws",
+      "title_zh": "整数与分数指数及指数律",
+      "summary_zh": "使用正、负、零和分数指数及指数律。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Indices and their laws"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_quadratic_sketch",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·03",
+      "title": "Sketching quadratic graphs from structured forms",
+      "title_zh": "由结构式草绘二次函数",
+      "summary_zh": "由顶点式或因式分解式确定关键点并草绘二次函数。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Sketching quadratic graphs from structured forms"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_power_graphs",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·04",
+      "title": "Power-function graphs",
+      "title_zh": "幂函数图像",
+      "summary_zh": "识别和绘制指定整数指数幂函数及不超过三项的简单和。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Power-function graphs"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_exponential_graphs",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·05",
+      "title": "Exponential-function graphs",
+      "title_zh": "指数函数图像",
+      "summary_zh": "识别和绘制 y=ka^x 型指数函数。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Exponential-function graphs"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_tangent_gradient",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·06",
+      "title": "Estimating curve gradient with a tangent",
+      "title_zh": "用切线估计曲线斜率",
+      "summary_zh": "在曲线上作切线并估计指定点的梯度。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Estimating curve gradient with a tangent"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_quadratic_formula_complete_graph",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·07",
+      "title": "Solving quadratic equations by standard methods",
+      "title_zh": "用标准方法解二次方程",
+      "summary_zh": "用公式、配方法或图像法解一元二次方程；因式分解法已在 G3 中二单独记录。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Solving quadratic equations by standard methods"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_fractional_quadratic_equations",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·08",
+      "title": "Fractional equations reducible to quadratics",
+      "title_zh": "可化为二次方程的分式方程",
+      "summary_zh": "解可约为二次方程的简单分式方程，并检查分母限制。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Fractional equations reducible to quadratics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_formulate_quadratic",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·09",
+      "title": "Formulating a quadratic equation",
+      "title_zh": "从情境建立一元二次方程",
+      "summary_zh": "从问题情境建立一元二次方程并解释有效解。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Formulating a quadratic equation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_congruence_similarity_enlargement",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·10",
+      "title": "Scale drawings, enlargement and reduction",
+      "title_zh": "比例作图与平面放缩",
+      "summary_zh": "完成比例作图，并按比例因子放大或缩小平面图形。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Scale drawings, enlargement and reduction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_bisector_construction",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·11",
+      "title": "Perpendicular and angle bisectors",
+      "title_zh": "垂直平分线与角平分线",
+      "summary_zh": "使用垂直平分线和角平分线的性质并完成相应作图。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Perpendicular and angle bisectors"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_circle_chord_tangent",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·12",
+      "title": "Chord and tangent properties",
+      "title_zh": "圆的弦与切线性质",
+      "summary_zh": "使用等弦、弦的垂直平分线及同一点引切线的对称性质。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Chord and tangent properties"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_circle_angles",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·13",
+      "title": "Circle angle properties",
+      "title_zh": "圆的角性质",
+      "summary_zh": "使用半圆角、圆心角、圆周角、同弓形角和对弓形角关系。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Circle angle properties"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_triangle_trigonometry",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·14",
+      "title": "Trigonometry for general triangles",
+      "title_zh": "任意三角形的三角计算",
+      "summary_zh": "使用钝角正余弦、三角形面积公式、正弦定理和余弦定理。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Trigonometry for general triangles"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_spatial_trigonometry",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·15",
+      "title": "Two- and three-dimensional trigonometric problems",
+      "title_zh": "二维与三维三角问题",
+      "summary_zh": "解决含仰角、俯角和方位角的二维或三维问题。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Two- and three-dimensional trigonometric problems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_circle_mensuration",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·16",
+      "title": "Arc, sector and segment measures",
+      "title_zh": "弧长、扇形与弓形度量",
+      "summary_zh": "计算弧长、扇形面积和弓形面积。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Arc, sector and segment measures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_radian_measure",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·17",
+      "title": "Radian measure",
+      "title_zh": "弧度制",
+      "summary_zh": "在弧度与角度之间换算并用于圆的度量。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Radian measure"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_coordinate_geometry",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·18",
+      "title": "Coordinate geometry of straight lines",
+      "title_zh": "直线坐标几何",
+      "summary_zh": "由两点求斜率和距离，建立 y=mx+c 并解决坐标几何问题。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Coordinate geometry of straight lines"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_quartiles_spread",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·19",
+      "title": "Quartiles, percentiles and spread",
+      "title_zh": "四分位数、百分位数与离散程度",
+      "summary_zh": "使用极差、四分位距、标准差、四分位数和百分位数描述分布。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Quartiles, percentiles and spread"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_cumulative_box",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·20",
+      "title": "Cumulative-frequency and box plots",
+      "title_zh": "累积频数图与箱线图",
+      "summary_zh": "分析解释累积频数图和箱线图并比较表示方式。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Cumulative-frequency and box plots"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_standard_deviation_compare",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·21",
+      "title": "Calculating and comparing standard deviation",
+      "title_zh": "计算标准差并比较数据集",
+      "summary_zh": "计算分组或未分组数据标准差，用平均数和标准差比较两个数据集。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Calculating and comparing standard deviation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_combined_probability",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·22",
+      "title": "Combined-event probability representations",
+      "title_zh": "复合事件概率表示",
+      "summary_zh": "用可能性图或树状图表示并计算简单复合事件概率。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Combined-event probability representations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_probability_laws",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·23",
+      "title": "Addition and multiplication laws",
+      "title_zh": "概率加法与乘法法则",
+      "summary_zh": "对互斥事件使用加法法则，对独立事件使用乘法法则。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Addition and multiplication laws"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_compound_linear_inequalities",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·24",
+      "title": "Compound linear inequalities",
+      "title_zh": "联立一元一次不等式",
+      "summary_zh": "解含联立约束的一元一次不等式并在数轴上表示解集。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Compound linear inequalities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_set_language",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·25",
+      "title": "Set language and operations",
+      "title_zh": "集合语言与基本运算",
+      "summary_zh": "使用元素、子集、全集、空集、补集、并集和交集的标准记号。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Set language and operations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_venn_diagrams",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·26",
+      "title": "Venn diagrams",
+      "title_zh": "文氏图",
+      "summary_zh": "用文氏图表示两个集合及其并、交和补集。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Venn diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_elementary_matrices",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·27",
+      "title": "Elementary matrix representation and operations",
+      "title_zh": "初等矩阵表示与运算",
+      "summary_zh": "用任意阶矩阵表示和解释信息，并完成数乘、加减和矩阵乘法。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Elementary matrix representation and operations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_congruence_similarity_tests",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·28",
+      "title": "Triangle congruence, similarity and scale ratios",
+      "title_zh": "三角形全等相似判定与面积体积比",
+      "summary_zh": "判定三角形全等或相似，并使用相似图形面积比和相似立体体积比。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Triangle congruence, similarity and scale ratios"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_vector_representation",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·29",
+      "title": "Plane-vector representation",
+      "title_zh": "平面向量表示",
+      "summary_zh": "使用列向量、有向线段、位置向量和模表示平面向量与位移。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Plane-vector representation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_vector_operations",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·30",
+      "title": "Plane-vector operations",
+      "title_zh": "平面向量运算",
+      "summary_zh": "用向量表示平移，并完成平面向量的和、差与数乘。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Plane-vector operations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_vector_geometry",
+      "parent_requirement_id": null,
+      "code": "G3·SEC3·4·31",
+      "title": "Geometric problems with vectors",
+      "title_zh": "用向量解决平面几何问题",
+      "summary_zh": "把平面向量运算用于几何关系和问题求解。",
+      "requirement_type": "skill",
+      "level_id": "g3_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Geometric problems with vectors"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_secondary_all_personal_finance",
+      "parent_requirement_id": null,
+      "code": "G2·SECONDARY·ALL·01",
+      "title": "Personal and household finance",
+      "title_zh": "个人与家庭金融数学",
+      "summary_zh": "在简单及复利、税费、分期付款、公用事业账单和货币兑换情境中选择并运用数学关系。",
+      "requirement_type": "skill",
+      "level_id": "g2_secondary_all",
+      "cognitive_processes": [
+        "apply",
+        "model"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.23, g2 secondary all, Personal and household finance"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_secondary_all_motion_data_graphs",
+      "parent_requirement_id": null,
+      "code": "G2·SECONDARY·ALL·02",
+      "title": "Distance-time and speed-time graphs",
+      "title_zh": "路程—时间与速度—时间图像",
+      "summary_zh": "解释表格、路程—时间图和速度—时间图中的变化关系，并把结论放回交通或运动情境。",
+      "requirement_type": "skill",
+      "level_id": "g2_secondary_all",
+      "cognitive_processes": [
+        "analyze",
+        "model",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.24, g2 secondary all, Distance-time and speed-time graphs"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_secondary_all_model_formulate",
+      "parent_requirement_id": null,
+      "code": "G2·SECONDARY·ALL·03",
+      "title": "Formulating a real-world problem",
+      "title_zh": "建立现实问题的数学模型",
+      "summary_zh": "在G2 四年问题中理解条件、作出适当假设与简化，并把现实问题表示为数学模型。",
+      "requirement_type": "practice",
+      "level_id": "g2_secondary_all",
+      "cognitive_processes": [
+        "model",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.24, g2 secondary all, Formulating a real-world problem"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_secondary_all_model_data",
+      "parent_requirement_id": null,
+      "code": "G2·SECONDARY·ALL·04",
+      "title": "Making sense of real data",
+      "title_zh": "理解并讨论真实数据",
+      "summary_zh": "在G2 四年情境中读取、质疑并讨论图表中的真实数据。",
+      "requirement_type": "practice",
+      "level_id": "g2_secondary_all",
+      "cognitive_processes": [
+        "analyze",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.24, g2 secondary all, Making sense of real data"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_secondary_all_model_solve",
+      "parent_requirement_id": null,
+      "code": "G2·SECONDARY·ALL·05",
+      "title": "Selecting methods and solving a model",
+      "title_zh": "选择方法并求解模型",
+      "summary_zh": "为G2 四年模型选择适当概念、技能和工具，完成求解并清楚呈现。",
+      "requirement_type": "practice",
+      "level_id": "g2_secondary_all",
+      "cognitive_processes": [
+        "apply",
+        "model",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.24, g2 secondary all, Selecting methods and solving a model"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_secondary_all_model_interpret",
+      "parent_requirement_id": null,
+      "code": "G2·SECONDARY·ALL·06",
+      "title": "Interpreting a mathematical solution",
+      "title_zh": "解释和评价模型解",
+      "summary_zh": "把数学解放回G2 四年现实情境，检查合理性、局限和可改进之处。",
+      "requirement_type": "practice",
+      "level_id": "g2_secondary_all",
+      "cognitive_processes": [
+        "analyze",
+        "evaluate",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.24, g2 secondary all, Interpreting a mathematical solution"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_prime_factorisation",
+      "parent_requirement_id": null,
+      "code": "G2·SEC1·01",
+      "title": "Prime factorisation, HCF, LCM and roots",
+      "title_zh": "质因数分解、HCF、LCM 与方根",
+      "summary_zh": "用质因数分解求最高公因数、最低公倍数、平方根与立方根。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Prime factorisation, HCF, LCM and roots"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_real_number_operations",
+      "parent_requirement_id": null,
+      "code": "G2·SEC1·02",
+      "title": "Real-number operations and order",
+      "title_zh": "实数运算、数轴与大小关系",
+      "summary_zh": "对负数、整数、有理数和实数进行四则运算，在数轴上表示排序并使用不等号。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Real-number operations and order"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_calculator_computation",
+      "parent_requirement_id": null,
+      "code": "G2·SEC1·03",
+      "title": "Calculator computation",
+      "title_zh": "计算器数值计算",
+      "summary_zh": "正确输入和检查计算器计算，包括显示精度和结果合理性。",
+      "requirement_type": "practice",
+      "level_id": "g2_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Calculator computation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_approximation_estimation",
+      "parent_requirement_id": null,
+      "code": "G2·SEC1·04",
+      "title": "Approximation and estimation",
+      "title_zh": "近似、取整与估算",
+      "summary_zh": "按小数位或有效数字取整，并估算运算结果。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Approximation and estimation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_ratio",
+      "parent_requirement_id": null,
+      "code": "G2·SEC1·05",
+      "title": "Ratio, fractions and division",
+      "title_zh": "比、分数关系与按比分配",
+      "summary_zh": "比较数量，联系比与分数，使用等价比、最简比并按比分配。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Ratio, fractions and division"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_percentage",
+      "parent_requirement_id": null,
+      "code": "G2·SEC1·06",
+      "title": "Percentage forms and change",
+      "title_zh": "百分数表示、比较与增减",
+      "summary_zh": "在分数、小数和百分数之间转换，处理百分比变化、百分比点和反向百分数。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Percentage forms and change"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_rate_speed",
+      "parent_requirement_id": null,
+      "code": "G2·SEC1·07",
+      "title": "Distance, time, rate and speed",
+      "title_zh": "路程、时间、率与速度",
+      "summary_zh": "联系路程、时间和速度，换算速度单位并解决平均率与速度问题。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Distance, time, rate and speed"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_algebra_notation_evaluation",
+      "parent_requirement_id": null,
+      "code": "G2·SEC1·08",
+      "title": "Algebraic notation and evaluation",
+      "title_zh": "代数记号与代入求值",
+      "summary_zh": "用字母表示数，解释代数记号并对代数式和公式代入求值。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Algebraic notation and evaluation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_algebra_translation",
+      "parent_requirement_id": null,
+      "code": "G2·SEC1·09",
+      "title": "Translating situations into algebra",
+      "title_zh": "把简单情境表示为代数式",
+      "summary_zh": "把简单现实关系翻译为代数式，并说明各量的意义。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Translating situations into algebra"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_nth_term_patterns",
+      "parent_requirement_id": null,
+      "code": "G2·SEC1·10",
+      "title": "Algebraic nth-term patterns",
+      "title_zh": "用通项表示规律",
+      "summary_zh": "识别数值或图形规律并写出第 n 项代数式。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Algebraic nth-term patterns"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_linear_expressions",
+      "parent_requirement_id": null,
+      "code": "G2·SEC1·11",
+      "title": "Operations on linear expressions",
+      "title_zh": "一次式的运算与化简",
+      "summary_zh": "对整数系数一次式进行加减、去括号和化简。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Operations on linear expressions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_linear_integer_equations",
+      "parent_requirement_id": null,
+      "code": "G2·SEC1·12",
+      "title": "Linear equations with integer coefficients",
+      "title_zh": "整数系数一元一次方程",
+      "summary_zh": "解整数系数一元一次方程。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Linear equations with integer coefficients"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_formulate_linear_equation",
+      "parent_requirement_id": null,
+      "code": "G2·SEC1·13",
+      "title": "Formulating a linear equation",
+      "title_zh": "从情境建立一元一次方程",
+      "summary_zh": "从问题情境建立一元一次方程并解释解。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Formulating a linear equation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_angle_relationships",
+      "parent_requirement_id": null,
+      "code": "G2·SEC1·14",
+      "title": "Angle relationships",
+      "title_zh": "基本角与平行线角关系",
+      "summary_zh": "识别各类角，并使用对顶角、直线角、周角和平行线截角关系。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Angle relationships"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_triangle_properties",
+      "parent_requirement_id": null,
+      "code": "G2·SEC1·15",
+      "title": "Triangle properties",
+      "title_zh": "三角形性质",
+      "summary_zh": "使用三角形的边角关系和基本分类性质。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Triangle properties"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_plane_mensuration",
+      "parent_requirement_id": null,
+      "code": "G2·SEC1·16",
+      "title": "Area and composite plane figures",
+      "title_zh": "平面图形面积与组合图形",
+      "summary_zh": "计算平行四边形、梯形及组合平面图形的周长与面积。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Area and composite plane figures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_solid_mensuration",
+      "parent_requirement_id": null,
+      "code": "G2·SEC1·17",
+      "title": "Prisms, cylinders and composite solids",
+      "title_zh": "棱柱、圆柱与组合体的度量",
+      "summary_zh": "计算棱柱、圆柱和组合立体的体积、表面积并换算平方与立方单位。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Prisms, cylinders and composite solids"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_data_collection",
+      "parent_requirement_id": null,
+      "code": "G2·SEC1·18",
+      "title": "Collecting, classifying and tabulating data",
+      "title_zh": "数据收集、分类与制表",
+      "summary_zh": "理解简单数据收集、分类和制表过程。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Collecting, classifying and tabulating data"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_statistical_representations",
+      "parent_requirement_id": null,
+      "code": "G2·SEC1·19",
+      "title": "Reading and choosing statistical representations",
+      "title_zh": "读取和选择统计图表",
+      "summary_zh": "分析表格、条形图、象形图、折线图和饼图，并比较不同表示的用途与局限。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Reading and choosing statistical representations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_misleading_diagrams",
+      "parent_requirement_id": null,
+      "code": "G2·SEC1·20",
+      "title": "Misleading statistical diagrams",
+      "title_zh": "误导性统计图",
+      "summary_zh": "解释统计图为何可能造成数据误读。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Misleading statistical diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_scale_proportion",
+      "parent_requirement_id": null,
+      "code": "G2·SEC2·01",
+      "title": "Map scales and proportion",
+      "title_zh": "地图比例尺与正反比例",
+      "summary_zh": "处理距离或面积比例尺，以及正比例与反比例关系。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Map scales and proportion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_linear_fractional_coefficients",
+      "parent_requirement_id": null,
+      "code": "G2·SEC2·02",
+      "title": "Linear expressions with fractional coefficients",
+      "title_zh": "分数系数一次式",
+      "summary_zh": "化简含分数系数的一次式。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Linear expressions with fractional coefficients"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_algebra_expansion_identities",
+      "parent_requirement_id": null,
+      "code": "G2·SEC2·03",
+      "title": "Expansion and algebraic identities",
+      "title_zh": "代数展开与恒等式",
+      "summary_zh": "展开两个一次式，并使用平方和、平方差等基本恒等式。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Expansion and algebraic identities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_factorisation",
+      "parent_requirement_id": null,
+      "code": "G2·SEC2·04",
+      "title": "Common-factor and quadratic factorisation",
+      "title_zh": "公因式与二次式因式分解",
+      "summary_zh": "提取公因式并因式分解 ax²+bx+c 型二次式。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Common-factor and quadratic factorisation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_algebraic_fractions_multiply_divide",
+      "parent_requirement_id": null,
+      "code": "G2·SEC2·05",
+      "title": "Multiplying and dividing algebraic fractions",
+      "title_zh": "代数分式乘除",
+      "summary_zh": "对简单代数分式进行乘法和除法。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Multiplying and dividing algebraic fractions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_linear_functions_gradient",
+      "parent_requirement_id": null,
+      "code": "G2·SEC2·06",
+      "title": "Linear functions, graphs and gradient",
+      "title_zh": "一次函数、图像与斜率",
+      "summary_zh": "用坐标和有序数对表示关系，绘制 y=ax+b 并解释正负斜率。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Linear functions, graphs and gradient"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_linear_fractional_equations",
+      "parent_requirement_id": null,
+      "code": "G2·SEC2·07",
+      "title": "Linear and reducible fractional equations",
+      "title_zh": "一次方程与可化为一次的分式方程",
+      "summary_zh": "解含分数系数的一元一次方程和可约为一次方程的简单分式方程。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Linear and reducible fractional equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_simple_linear_inequalities",
+      "parent_requirement_id": null,
+      "code": "G2·SEC2·08",
+      "title": "Simple linear inequalities",
+      "title_zh": "简单一元一次不等式",
+      "summary_zh": "解简单一元一次不等式并在数轴上表示解集。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Simple linear inequalities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_two_variable_linear_graphs",
+      "parent_requirement_id": null,
+      "code": "G2·SEC2·09",
+      "title": "Graphs of linear equations in two variables",
+      "title_zh": "二元一次方程图像",
+      "summary_zh": "把 ax+by=c 表示为平面直线图像。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Graphs of linear equations in two variables"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_simultaneous_linear_equations",
+      "parent_requirement_id": null,
+      "code": "G2·SEC2·10",
+      "title": "Simultaneous linear equations",
+      "title_zh": "二元一次联立方程",
+      "summary_zh": "用代入、消元和图像方法解二元一次联立方程。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Simultaneous linear equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_formulate_linear_systems",
+      "parent_requirement_id": null,
+      "code": "G2·SEC2·11",
+      "title": "Formulating linear equations and systems",
+      "title_zh": "从情境建立一次方程或方程组",
+      "summary_zh": "从问题情境建立一元一次方程或二元一次方程组。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Formulating linear equations and systems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_polygon_properties",
+      "parent_requirement_id": null,
+      "code": "G2·SEC2·12",
+      "title": "Quadrilaterals and regular polygons",
+      "title_zh": "特殊四边形与正多边形",
+      "summary_zh": "分类特殊四边形，使用正多边形的性质、对称性及内外角和。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Quadrilaterals and regular polygons"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_geometric_construction",
+      "parent_requirement_id": null,
+      "code": "G2·SEC2·13",
+      "title": "Geometric construction",
+      "title_zh": "尺规与量角作图",
+      "summary_zh": "按给定数据选择圆规、直尺、三角尺和量角器作简单几何图形。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Geometric construction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_congruence_similarity_foundations",
+      "parent_requirement_id": null,
+      "code": "G2·SEC2·14",
+      "title": "Congruence and similarity foundations",
+      "title_zh": "全等与相似基础",
+      "summary_zh": "识别全等和相似图形，使用相似三角形及多边形的对应角边关系。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Congruence and similarity foundations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_pythagoras",
+      "parent_requirement_id": null,
+      "code": "G2·SEC2·15",
+      "title": "Pythagoras theorem and converse",
+      "title_zh": "勾股定理及逆定理",
+      "summary_zh": "用勾股定理求长度，并由三边判断直角三角形。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Pythagoras theorem and converse"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_curved_solids",
+      "parent_requirement_id": null,
+      "code": "G2·SEC2·16",
+      "title": "Pyramids, cones and spheres",
+      "title_zh": "棱锥、圆锥与球的度量",
+      "summary_zh": "计算棱锥、圆锥和球的体积与表面积。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Pyramids, cones and spheres"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_distribution_diagrams",
+      "parent_requirement_id": null,
+      "code": "G2·SEC2·17",
+      "title": "Dot plots, histograms and stem-and-leaf diagrams",
+      "title_zh": "点图、直方图与茎叶图",
+      "summary_zh": "分析解释三种分布图并判断表示方法的用途、局限和潜在误导。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Dot plots, histograms and stem-and-leaf diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_central_tendency",
+      "parent_requirement_id": null,
+      "code": "G2·SEC2·18",
+      "title": "Measures of central tendency",
+      "title_zh": "集中趋势与分组数据均值",
+      "summary_zh": "计算和选择平均数、众数、中位数，并计算分组数据平均数。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Measures of central tendency"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_single_event_probability",
+      "parent_requirement_id": null,
+      "code": "G2·SEC2·19",
+      "title": "Probability of single events",
+      "title_zh": "单一事件概率",
+      "summary_zh": "把概率理解为机会度量，列出简单样本结果并计算单一事件概率。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Probability of single events"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_standard_form",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·01",
+      "title": "Standard form",
+      "title_zh": "标准式",
+      "summary_zh": "用 A×10^n 表示和处理数，其中 n 为整数且 1≤A<10。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Standard form"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_indices",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·02",
+      "title": "Indices and their laws",
+      "title_zh": "整数与分数指数及指数律",
+      "summary_zh": "使用正、负、零和分数指数及指数律。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Indices and their laws"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_power_graphs",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·03",
+      "title": "Power-function graphs",
+      "title_zh": "幂函数图像",
+      "summary_zh": "识别和绘制指定整数指数幂函数及不超过三项的简单和。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Power-function graphs"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_exponential_graphs",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·04",
+      "title": "Exponential-function graphs",
+      "title_zh": "指数函数图像",
+      "summary_zh": "识别和绘制 y=ka^x 型指数函数。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Exponential-function graphs"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_tangent_gradient",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·05",
+      "title": "Estimating curve gradient with a tangent",
+      "title_zh": "用切线估计曲线斜率",
+      "summary_zh": "在曲线上作切线并估计指定点的梯度。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Estimating curve gradient with a tangent"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_quadratic_methods",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·06",
+      "title": "Solving quadratic equations by standard methods",
+      "title_zh": "用标准方法解二次方程",
+      "summary_zh": "用因式分解、公式、配方法或图像法解一元二次方程。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Solving quadratic equations by standard methods"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_fractional_quadratic_equations",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·07",
+      "title": "Fractional equations reducible to quadratics",
+      "title_zh": "可化为二次方程的分式方程",
+      "summary_zh": "解可约为二次方程的简单分式方程，并检查分母限制。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Fractional equations reducible to quadratics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_formulate_quadratic",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·08",
+      "title": "Formulating a quadratic equation",
+      "title_zh": "从情境建立一元二次方程",
+      "summary_zh": "从问题情境建立一元二次方程并解释有效解。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Formulating a quadratic equation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_grouped_linear_factorisation",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·09",
+      "title": "Factorising grouped linear expressions",
+      "title_zh": "分组法分解一次式",
+      "summary_zh": "用分组和提取公因式分解 ax+bx+kay+kby 型一次式。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Factorising grouped linear expressions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_algebra_expansion_identities",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·10",
+      "title": "Expansion of algebraic expressions",
+      "title_zh": "代数式展开",
+      "summary_zh": "展开代数式并使用已有恒等式检查结果。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Expansion of algebraic expressions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_formula_rearrangement",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·11",
+      "title": "Changing the subject and evaluating formulae",
+      "title_zh": "公式变形与未知量求值",
+      "summary_zh": "改变公式主项并求给定公式中的未知量。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Changing the subject and evaluating formulae"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_algebraic_fractions_add_subtract",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·12",
+      "title": "Adding and subtracting algebraic fractions",
+      "title_zh": "代数分式加减",
+      "summary_zh": "对含一次或二次分母的代数分式通分并加减。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Adding and subtracting algebraic fractions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_congruence_similarity_enlargement",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·13",
+      "title": "Scale drawings, enlargement and reduction",
+      "title_zh": "比例作图与平面放缩",
+      "summary_zh": "完成比例作图，并按比例因子放大或缩小平面图形。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Scale drawings, enlargement and reduction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_bisector_construction",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·14",
+      "title": "Perpendicular and angle bisectors",
+      "title_zh": "垂直平分线与角平分线",
+      "summary_zh": "使用垂直平分线和角平分线的性质并完成相应作图。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Perpendicular and angle bisectors"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_circle_chord_tangent",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·15",
+      "title": "Chord and tangent properties",
+      "title_zh": "圆的弦与切线性质",
+      "summary_zh": "使用等弦、弦的垂直平分线及同一点引切线的对称性质。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Chord and tangent properties"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_circle_angles",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·16",
+      "title": "Circle angle properties",
+      "title_zh": "圆的角性质",
+      "summary_zh": "使用半圆角、圆心角、圆周角、同弓形角和对弓形角关系。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Circle angle properties"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_triangle_trigonometry",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·17",
+      "title": "Trigonometry for general triangles",
+      "title_zh": "任意三角形的三角计算",
+      "summary_zh": "使用钝角正余弦、三角形面积公式、正弦定理和余弦定理。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Trigonometry for general triangles"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_spatial_trigonometry",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·18",
+      "title": "Two- and three-dimensional trigonometric problems",
+      "title_zh": "二维与三维三角问题",
+      "summary_zh": "解决含仰角、俯角和方位角的二维或三维问题。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Two- and three-dimensional trigonometric problems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_circle_mensuration",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·19",
+      "title": "Arc, sector and segment measures",
+      "title_zh": "弧长、扇形与弓形度量",
+      "summary_zh": "计算弧长、扇形面积和弓形面积。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Arc, sector and segment measures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_radian_measure",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·20",
+      "title": "Radian measure",
+      "title_zh": "弧度制",
+      "summary_zh": "在弧度与角度之间换算并用于圆的度量。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Radian measure"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_coordinate_geometry",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·21",
+      "title": "Coordinate geometry of straight lines",
+      "title_zh": "直线坐标几何",
+      "summary_zh": "由两点求斜率和距离，建立 y=mx+c 并解决坐标几何问题。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Coordinate geometry of straight lines"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_quartiles_spread",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·22",
+      "title": "Quartiles, percentiles and spread",
+      "title_zh": "四分位数、百分位数与离散程度",
+      "summary_zh": "使用极差、四分位距、标准差、四分位数和百分位数描述分布。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.31, g2 sec3 4, Quartiles, percentiles and spread"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_cumulative_box",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·23",
+      "title": "Cumulative-frequency and box plots",
+      "title_zh": "累积频数图与箱线图",
+      "summary_zh": "分析解释累积频数图和箱线图并比较表示方式。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.31, g2 sec3 4, Cumulative-frequency and box plots"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_standard_deviation_compare",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·24",
+      "title": "Calculating and comparing standard deviation",
+      "title_zh": "计算标准差并比较数据集",
+      "summary_zh": "计算分组或未分组数据标准差，用平均数和标准差比较两个数据集。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.31, g2 sec3 4, Calculating and comparing standard deviation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_combined_probability",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·25",
+      "title": "Combined-event probability representations",
+      "title_zh": "复合事件概率表示",
+      "summary_zh": "用可能性图或树状图表示并计算简单复合事件概率。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.31, g2 sec3 4, Combined-event probability representations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_probability_laws",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·26",
+      "title": "Addition and multiplication laws",
+      "title_zh": "概率加法与乘法法则",
+      "summary_zh": "对互斥事件使用加法法则，对独立事件使用乘法法则。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.31, g2 sec3 4, Addition and multiplication laws"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_quadratic_functions",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·27",
+      "title": "Quadratic functions and their graphs",
+      "title_zh": "二次函数及图像性质",
+      "summary_zh": "理解一般二次函数图像的开口、最大最小点和对称性。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Quadratic functions and their graphs"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_congruence_similarity_problems",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·28",
+      "title": "Congruence and similarity problems",
+      "title_zh": "全等与相似问题",
+      "summary_zh": "解决使用全等和相似关系的简单问题。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Congruence and similarity problems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_right_triangle_trig",
+      "parent_requirement_id": null,
+      "code": "G2·SEC3·4·29",
+      "title": "Trigonometry in right triangles",
+      "title_zh": "直角三角形三角比",
+      "summary_zh": "用锐角正弦、余弦和正切求直角三角形的边与角。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec3_4",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Trigonometry in right triangles"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec5_bridge_quadratic_sketch",
+      "parent_requirement_id": null,
+      "code": "G2·SEC5·BRIDGE·01",
+      "title": "Sketching quadratic graphs from structured forms",
+      "title_zh": "由结构式草绘二次函数",
+      "summary_zh": "由顶点式或因式分解式确定关键点并草绘二次函数。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec5_bridge",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.32, g2 sec5 bridge, Sketching quadratic graphs from structured forms"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec5_bridge_compound_linear_inequalities",
+      "parent_requirement_id": null,
+      "code": "G2·SEC5·BRIDGE·02",
+      "title": "Compound linear inequalities",
+      "title_zh": "联立一元一次不等式",
+      "summary_zh": "解含联立约束的一元一次不等式并在数轴上表示解集。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec5_bridge",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.32, g2 sec5 bridge, Compound linear inequalities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec5_bridge_set_language_venn",
+      "parent_requirement_id": null,
+      "code": "G2·SEC5·BRIDGE·03",
+      "title": "Set language, operations and Venn diagrams",
+      "title_zh": "集合语言、运算与文氏图",
+      "summary_zh": "使用集合标准记号、并交补运算和文氏图。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec5_bridge",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.32, g2 sec5 bridge, Set language, operations and Venn diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec5_bridge_elementary_matrices",
+      "parent_requirement_id": null,
+      "code": "G2·SEC5·BRIDGE·04",
+      "title": "Elementary matrix representation and operations",
+      "title_zh": "初等矩阵表示与运算",
+      "summary_zh": "用矩阵表示和解释信息，并完成数乘、加减和矩阵乘法。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec5_bridge",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.32, g2 sec5 bridge, Elementary matrix representation and operations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec5_bridge_congruence_similarity_tests",
+      "parent_requirement_id": null,
+      "code": "G2·SEC5·BRIDGE·05",
+      "title": "Triangle congruence, similarity and scale ratios",
+      "title_zh": "三角形全等相似判定与面积体积比",
+      "summary_zh": "判定三角形全等或相似，并使用相似图形面积比和相似立体体积比。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec5_bridge",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.33, g2 sec5 bridge, Triangle congruence, similarity and scale ratios"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec5_bridge_vector_representation",
+      "parent_requirement_id": null,
+      "code": "G2·SEC5·BRIDGE·06",
+      "title": "Plane-vector representation",
+      "title_zh": "平面向量表示",
+      "summary_zh": "使用列向量、有向线段、位置向量和模表示平面向量与位移。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec5_bridge",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.33, g2 sec5 bridge, Plane-vector representation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec5_bridge_vector_operations",
+      "parent_requirement_id": null,
+      "code": "G2·SEC5·BRIDGE·07",
+      "title": "Plane-vector operations",
+      "title_zh": "平面向量运算",
+      "summary_zh": "用向量表示平移，并完成平面向量的和、差与数乘。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec5_bridge",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.33, g2 sec5 bridge, Plane-vector operations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_sec_math_2020_g2_sec5_bridge_vector_geometry",
+      "parent_requirement_id": null,
+      "code": "G2·SEC5·BRIDGE·08",
+      "title": "Geometric problems with vectors",
+      "title_zh": "用向量解决平面几何问题",
+      "summary_zh": "把平面向量运算用于几何关系和问题求解。",
+      "requirement_type": "skill",
+      "level_id": "g2_sec5_bridge",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.33, g2 sec5 bridge, Geometric problems with vectors"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

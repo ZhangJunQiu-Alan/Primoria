@@ -1,0 +1,4631 @@
+{
+  "schema_version": "2.0.0",
+  "content_version": "0.3.0",
+  "framework_id": "cfw_sg_seab_h2_physics_9478_2026_outcomes",
+  "curriculum_id": "cur_sg_seab_h2_physics_9478_2026",
+  "curriculum_kind": "examination_syllabus",
+  "title": "Singapore-Cambridge GCE Advanced Level H2 Physics 9478 outcome coverage",
+  "title_zh": "新加坡剑桥 GCE A-Level H2 物理 9478（2026）学习成果级覆盖",
+  "subject": "Physics",
+  "jurisdiction": "SG",
+  "education_stage": "pre_university",
+  "requirement_granularity": "outcome",
+  "levels": [
+    {
+      "level_id": "h2_9478",
+      "label": "H2 Physics 9478",
+      "label_zh": "H2 物理 9478"
+    }
+  ],
+  "languages": [
+    "en",
+    "zh-CN"
+  ],
+  "source_ids": [
+    "src_sg_seab_h2_physics_9478_2026"
+  ],
+  "valid_from": "2026-01-01",
+  "valid_to": "2026-12-31",
+  "review_status": "needs_review",
+  "scope_exclusions": [
+    {
+      "scope": "coefficients of friction and viscosity",
+      "rationale_zh": "主题 2(b) 明确不要求摩擦系数和黏度概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.12, topic 2 outcome (b)"
+        }
+      ]
+    },
+    {
+      "scope": "coefficient of restitution",
+      "rationale_zh": "主题 6(c) 明确不要求恢复系数。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.15, topic 6 outcome (c)"
+        }
+      ]
+    },
+    {
+      "scope": "spectrometer structure and use",
+      "rationale_zh": "主题 11(j) 明确不要求分光计结构和使用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.20, topic 11 outcome (j)"
+        }
+      ]
+    },
+    {
+      "scope": "positron emission",
+      "rationale_zh": "主题 20(g) 明确不要求正电子发射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 outcome (g)"
+        }
+      ]
+    },
+    {
+      "scope": "antineutrino details and the particle zoo",
+      "rationale_zh": "主题 20(o) 只要求守恒推理，明确不要求反中微子细节和粒子动物园。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 outcome (o)"
+        }
+      ]
+    }
+  ],
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "按 20 个官方内容主题建立主题级基线。"
+    },
+    {
+      "version": "0.2.1",
+      "date": "2026-07-18",
+      "summary_zh": "复核 2026 新版主题范围并删除旧大纲残留。"
+    },
+    {
+      "version": "0.3.0",
+      "date": "2026-07-19",
+      "summary_zh": "人工拆分 205 条内容成果，并加入 10 项科学实践、实验和电子表格能力；保留五组明确排除边界。"
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_1_si_base_quantities_units",
+      "parent_requirement_id": null,
+      "code": "1.a",
+      "title": "SI base quantities and units",
+      "title_zh": "使用六个指定 SI 基本量及单位",
+      "summary_zh": "使用六个指定 SI 基本量及单位",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.11, topic 1 Quantities and Measurement, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_1_si_prefixes",
+      "parent_requirement_id": null,
+      "code": "1.b",
+      "title": "SI prefixes",
+      "title_zh": "使用 pico 至 tera 的指定 SI 词头和符号",
+      "summary_zh": "使用 pico 至 tera 的指定 SI 词头和符号",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.11, topic 1 Quantities and Measurement, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_1_derived_units",
+      "parent_requirement_id": null,
+      "code": "1.c",
+      "title": "Derived units from SI bases",
+      "title_zh": "把导出单位表示为 SI 基本单位的乘积或商",
+      "summary_zh": "把导出单位表示为 SI 基本单位的乘积或商",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.11, topic 1 Quantities and Measurement, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_1_dimensional_homogeneity",
+      "parent_requirement_id": null,
+      "code": "1.d",
+      "title": "Dimensional homogeneity",
+      "title_zh": "用 SI 基本单位检查物理方程量纲齐次性",
+      "summary_zh": "用 SI 基本单位检查物理方程量纲齐次性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.11, topic 1 Quantities and Measurement, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_1_estimate_physical_quantities",
+      "parent_requirement_id": null,
+      "code": "1.e",
+      "title": "Reasonable physical estimates",
+      "title_zh": "对课程内物理量作合理数量级估测",
+      "summary_zh": "对课程内物理量作合理数量级估测",
+      "requirement_type": "practice",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.11, topic 1 Quantities and Measurement, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_1_random_systematic_errors",
+      "parent_requirement_id": null,
+      "code": "1.f",
+      "title": "Random and systematic errors",
+      "title_zh": "区分限制精密度与准确度的随机误差、系统误差和零点误差",
+      "summary_zh": "区分限制精密度与准确度的随机误差、系统误差和零点误差",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.11, topic 1 Quantities and Measurement, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_1_derived_uncertainty",
+      "parent_requirement_id": null,
+      "code": "1.g",
+      "title": "Uncertainty in derived quantities",
+      "title_zh": "用绝对或相对不确定度相加或数值代入评估导出量不确定度",
+      "summary_zh": "用绝对或相对不确定度相加或数值代入评估导出量不确定度",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.11, topic 1 Quantities and Measurement, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_1_scalar_vector_distinction",
+      "parent_requirement_id": null,
+      "code": "1.h",
+      "title": "Scalars and vectors",
+      "title_zh": "区分标量与矢量并举例",
+      "summary_zh": "区分标量与矢量并举例",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.11, topic 1 Quantities and Measurement, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_1_coplanar_vector_operations",
+      "parent_requirement_id": null,
+      "code": "1.i",
+      "title": "Coplanar vector addition and subtraction",
+      "title_zh": "完成共面矢量加减",
+      "summary_zh": "完成共面矢量加减",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.11, topic 1 Quantities and Measurement, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_1_perpendicular_vector_components",
+      "parent_requirement_id": null,
+      "code": "1.j",
+      "title": "Perpendicular vector components",
+      "title_zh": "把矢量表示为两个相互垂直的分量",
+      "summary_zh": "把矢量表示为两个相互垂直的分量",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.11, topic 1 Quantities and Measurement, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_2_forces_in_fields",
+      "parent_requirement_id": null,
+      "code": "2.a",
+      "title": "Forces in gravitational, electric and magnetic fields",
+      "title_zh": "描述质量、电荷和载流导线在相应场中的受力",
+      "summary_zh": "描述质量、电荷和载流导线在相应场中的受力",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.12, topic 2 Forces and Moments, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_2_qualitative_common_forces",
+      "parent_requirement_id": null,
+      "code": "2.b",
+      "title": "Qualitative common forces",
+      "title_zh": "定性解释支持力、浮力、摩擦力与黏滞阻力，不引入摩擦系数和黏度",
+      "summary_zh": "定性解释支持力、浮力、摩擦力与黏滞阻力，不引入摩擦系数和黏度",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.12, topic 2 Forces and Moments, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_2_hookes_law",
+      "parent_requirement_id": null,
+      "code": "2.c",
+      "title": "Hooke's law",
+      "title_zh": "应用胡克定律 F=kx 解决新情境",
+      "summary_zh": "应用胡克定律 F=kx 解决新情境",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.12, topic 2 Forces and Moments, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_2_moment_torque",
+      "parent_requirement_id": null,
+      "code": "2.d",
+      "title": "Moment and torque",
+      "title_zh": "定义并应用力矩和力偶矩",
+      "summary_zh": "定义并应用力矩和力偶矩",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.12, topic 2 Forces and Moments, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_2_couple_rotation",
+      "parent_requirement_id": null,
+      "code": "2.e",
+      "title": "Couple as pure rotation",
+      "title_zh": "说明力偶是一对只产生转动趋势的力",
+      "summary_zh": "说明力偶是一对只产生转动趋势的力",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.12, topic 2 Forces and Moments, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_2_centre_of_gravity",
+      "parent_requirement_id": null,
+      "code": "2.f",
+      "title": "Centre of gravity",
+      "title_zh": "把物体重量视为作用在重心这一点",
+      "summary_zh": "把物体重量视为作用在重心这一点",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.12, topic 2 Forces and Moments, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_2_principle_of_moments",
+      "parent_requirement_id": null,
+      "code": "2.g",
+      "title": "Principle of moments",
+      "title_zh": "在新情境中应用力矩原理",
+      "summary_zh": "在新情境中应用力矩原理",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.12, topic 2 Forces and Moments, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_2_translational_rotational_equilibrium",
+      "parent_requirement_id": null,
+      "code": "2.h",
+      "title": "Translational and rotational equilibrium",
+      "title_zh": "以合力和合力矩均为零判断系统平衡",
+      "summary_zh": "以合力和合力矩均为零判断系统平衡",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.12, topic 2 Forces and Moments, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_2_free_body_vector_triangles",
+      "parent_requirement_id": null,
+      "code": "2.i",
+      "title": "Free-body diagrams and vector triangles",
+      "title_zh": "用自由体图和矢量三角形表示平动与转动平衡中的力",
+      "summary_zh": "用自由体图和矢量三角形表示平动与转动平衡中的力",
+      "requirement_type": "practice",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.12, topic 2 Forces and Moments, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_3_kinematic_quantities",
+      "parent_requirement_id": null,
+      "code": "3.a",
+      "title": "Kinematic quantities",
+      "title_zh": "理解并使用位置、路程、位移、速率、速度和加速度",
+      "summary_zh": "理解并使用位置、路程、位移、速率、速度和加速度",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.13, topic 3 Motion and Forces, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_3_kinematic_graphs",
+      "parent_requirement_id": null,
+      "code": "3.b",
+      "title": "Graphical representations of motion",
+      "title_zh": "用图像表示路程、位移、速率、速度和加速度",
+      "summary_zh": "用图像表示路程、位移、速率、速度和加速度",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.13, topic 3 Motion and Forces, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_3_graph_gradients_areas",
+      "parent_requirement_id": null,
+      "code": "3.c",
+      "title": "Physical meaning of motion-graph gradients and areas",
+      "title_zh": "由位移时间图斜率及速度时间图斜率和面积提取物理量，包括非匀加速",
+      "summary_zh": "由位移时间图斜率及速度时间图斜率和面积提取物理量，包括非匀加速",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.13, topic 3 Motion and Forces, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_3_derive_suvat",
+      "parent_requirement_id": null,
+      "code": "3.d",
+      "title": "Derive uniformly accelerated motion equations",
+      "title_zh": "由速度和加速度定义推导直线匀加速运动方程",
+      "summary_zh": "由速度和加速度定义推导直线匀加速运动方程",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.13, topic 3 Motion and Forces, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_3_apply_suvat_free_fall",
+      "parent_requirement_id": null,
+      "code": "3.e",
+      "title": "Apply uniformly accelerated motion equations",
+      "title_zh": "应用直线匀加速方程解决均匀重力场无阻力落体等问题",
+      "summary_zh": "应用直线匀加速方程解决均匀重力场无阻力落体等问题",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.13, topic 3 Motion and Forces, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_3_mass_inertia",
+      "parent_requirement_id": null,
+      "code": "3.f",
+      "title": "Mass as inertia",
+      "title_zh": "说明质量是物体抵抗运动状态改变的属性",
+      "summary_zh": "说明质量是物体抵抗运动状态改变的属性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.13, topic 3 Motion and Forces, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_3_linear_momentum",
+      "parent_requirement_id": null,
+      "code": "3.g",
+      "title": "Linear momentum",
+      "title_zh": "定义并使用线性动量 p=mv",
+      "summary_zh": "定义并使用线性动量 p=mv",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.13, topic 3 Motion and Forces, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_3_newton_laws",
+      "parent_requirement_id": null,
+      "code": "3.h",
+      "title": "Newton's three laws",
+      "title_zh": "陈述并应用牛顿三条运动定律",
+      "summary_zh": "陈述并应用牛顿三条运动定律",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.13, topic 3 Motion and Forces, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_3_resultant_force_ma",
+      "parent_requirement_id": null,
+      "code": "3.i",
+      "title": "Resultant force for constant mass",
+      "title_zh": "对恒定质量物体应用合力 F=ma",
+      "summary_zh": "对恒定质量物体应用合力 F=ma",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.13, topic 3 Motion and Forces, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_4_energy_stores_transfers",
+      "parent_requirement_id": null,
+      "code": "4.a",
+      "title": "Energy stores and transfers",
+      "title_zh": "说明物理系统可储存能量且能量可在储存形式间转移",
+      "summary_zh": "说明物理系统可储存能量且能量可在储存形式间转移",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.14, topic 4 Energy and Fields, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_4_conservation_energy_examples",
+      "parent_requirement_id": null,
+      "code": "4.b",
+      "title": "Energy conservation in problem solving",
+      "title_zh": "举例说明能量储存与转移并用能量守恒解题",
+      "summary_zh": "举例说明能量储存与转移并用能量守恒解题",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.14, topic 4 Energy and Fields, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_4_work_mechanical_transfer",
+      "parent_requirement_id": null,
+      "code": "4.c",
+      "title": "Work as mechanical energy transfer",
+      "title_zh": "把功定义为力与沿力方向位移的乘积并作为机械能量转移",
+      "summary_zh": "把功定义为力与沿力方向位移的乘积并作为机械能量转移",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.14, topic 4 Energy and Fields, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_4_derive_kinetic_energy",
+      "parent_requirement_id": null,
+      "code": "4.d",
+      "title": "Derive kinetic energy",
+      "title_zh": "由功定义和匀加速方程推导 Ek=mv²/2",
+      "summary_zh": "由功定义和匀加速方程推导 Ek=mv²/2",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.14, topic 4 Energy and Fields, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_4_apply_kinetic_energy",
+      "parent_requirement_id": null,
+      "code": "4.e",
+      "title": "Apply kinetic energy",
+      "title_zh": "应用 Ek=mv²/2 解题",
+      "summary_zh": "应用 Ek=mv²/2 解题",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.14, topic 4 Energy and Fields, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_4_field_concept",
+      "parent_requirement_id": null,
+      "code": "4.f",
+      "title": "Concept of a field",
+      "title_zh": "把场理解为物体可能受到相应场力的空间区域",
+      "summary_zh": "把场理解为物体可能受到相应场力的空间区域",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.14, topic 4 Energy and Fields, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_4_gravitational_electric_field_strength_definitions",
+      "parent_requirement_id": null,
+      "code": "4.g",
+      "title": "Gravitational and electric field strength definitions",
+      "title_zh": "分别以单位质量受力和单位正电荷受力定义引力场强与电场强",
+      "summary_zh": "分别以单位质量受力和单位正电荷受力定义引力场强与电场强",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.14, topic 4 Energy and Fields, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_4_field_lines_equipotentials",
+      "parent_requirement_id": null,
+      "code": "4.h",
+      "title": "Field lines and equipotential surfaces",
+      "title_zh": "用均匀场和径向场的场线表示引力场与电场，并联系等势面",
+      "summary_zh": "用均匀场和径向场的场线表示引力场与电场，并联系等势面",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.14, topic 4 Energy and Fields, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_4_field_force_work_potential",
+      "parent_requirement_id": null,
+      "code": "4.i",
+      "title": "Field force, work and potential energy",
+      "title_zh": "说明场力沿场线作用，场力做功等于势能变化的负值",
+      "summary_zh": "说明场力沿场线作用，场力做功等于势能变化的负值",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.14, topic 4 Energy and Fields, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_4_potential_energy_types",
+      "parent_requirement_id": null,
+      "code": "4.j",
+      "title": "Gravitational, electric and elastic potential energy",
+      "title_zh": "区分引力势能、电势能和弹性势能",
+      "summary_zh": "区分引力势能、电势能和弹性势能",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.14, topic 4 Energy and Fields, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_4_elastic_energy_force_extension",
+      "parent_requirement_id": null,
+      "code": "4.k",
+      "title": "Elastic energy from force-extension area",
+      "title_zh": "由力伸长图面积求形变材料储存的弹性势能",
+      "summary_zh": "由力伸长图面积求形变材料储存的弹性势能",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.14, topic 4 Energy and Fields, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_4_power_rate_energy_transfer",
+      "parent_requirement_id": null,
+      "code": "4.l",
+      "title": "Power as rate of energy transfer",
+      "title_zh": "定义功率为能量转移速率",
+      "summary_zh": "定义功率为能量转移速率",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.14, topic 4 Energy and Fields, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_4_mechanical_power_force_velocity",
+      "parent_requirement_id": null,
+      "code": "4.m",
+      "title": "Mechanical power as force times velocity",
+      "title_zh": "说明机械功率等于力与沿力方向速度的乘积",
+      "summary_zh": "说明机械功率等于力与沿力方向速度的乘积",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.14, topic 4 Energy and Fields, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_4_efficiency_energy_losses",
+      "parent_requirement_id": null,
+      "code": "4.n",
+      "title": "Efficiency and practical energy losses",
+      "title_zh": "理解实际装置能量损失的影响并以有用输出与总输入之比计算效率",
+      "summary_zh": "理解实际装置能量损失的影响并以有用输出与总输入之比计算效率",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "apply",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.14, topic 4 Energy and Fields, outcome (n)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_5_weight_in_gravity",
+      "parent_requirement_id": null,
+      "code": "5.a",
+      "title": "Weight in a gravitational field",
+      "title_zh": "把重量描述为质量在引力场中受到的力",
+      "summary_zh": "把重量描述为质量在引力场中受到的力",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.15, topic 5 Projectile Motion, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_5_perpendicular_projectile_components",
+      "parent_requirement_id": null,
+      "code": "5.b",
+      "title": "Perpendicular projectile components",
+      "title_zh": "解释一个方向匀速与垂直方向匀加速合成的运动",
+      "summary_zh": "解释一个方向匀速与垂直方向匀加速合成的运动",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.15, topic 5 Projectile Motion, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_5_derive_uniform_gravity_potential",
+      "parent_requirement_id": null,
+      "code": "5.c",
+      "title": "Derive uniform-field gravitational potential energy",
+      "title_zh": "由功定义推导均匀重力场势能变化 ΔEp=mgΔh",
+      "summary_zh": "由功定义推导均匀重力场势能变化 ΔEp=mgΔh",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.15, topic 5 Projectile Motion, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_5_apply_uniform_gravity_potential",
+      "parent_requirement_id": null,
+      "code": "5.d",
+      "title": "Apply gravitational potential change",
+      "title_zh": "应用 ΔEp=mgΔh 解题",
+      "summary_zh": "应用 ΔEp=mgΔh 解题",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.15, topic 5 Projectile Motion, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_5_falling_with_drag_terminal_velocity",
+      "parent_requirement_id": null,
+      "code": "5.e",
+      "title": "Falling with drag and terminal velocity",
+      "title_zh": "从力和能量定性解释有空气阻力落体及终端速度",
+      "summary_zh": "从力和能量定性解释有空气阻力落体及终端速度",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.15, topic 5 Projectile Motion, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_6_impulse_force_time_area",
+      "parent_requirement_id": null,
+      "code": "6.a",
+      "title": "Impulse from force-time area",
+      "title_zh": "用力时间图下方面积求冲量",
+      "summary_zh": "用力时间图下方面积求冲量",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.15, topic 6 Collisions, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_6_momentum_conservation",
+      "parent_requirement_id": null,
+      "code": "6.b",
+      "title": "Conservation of momentum",
+      "title_zh": "陈述动量守恒原理",
+      "summary_zh": "陈述动量守恒原理",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.15, topic 6 Collisions, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_6_one_dimensional_collisions",
+      "parent_requirement_id": null,
+      "code": "6.c",
+      "title": "One-dimensional elastic and inelastic collisions",
+      "title_zh": "用动量守恒解决一维两物体非弹性与完全弹性相互作用，不引入恢复系数",
+      "summary_zh": "用动量守恒解决一维两物体非弹性与完全弹性相互作用，不引入恢复系数",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.15, topic 6 Collisions, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_6_elastic_relative_speeds",
+      "parent_requirement_id": null,
+      "code": "6.d",
+      "title": "Relative speeds in a perfectly elastic collision",
+      "title_zh": "说明完全弹性碰撞中接近相对速率等于分离相对速率",
+      "summary_zh": "说明完全弹性碰撞中接近相对速率等于分离相对速率",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.15, topic 6 Collisions, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_6_momentum_vs_kinetic_energy",
+      "parent_requirement_id": null,
+      "code": "6.e",
+      "title": "Momentum conservation and kinetic-energy change",
+      "title_zh": "区分封闭系统动量总守恒与相互作用中动能通常改变",
+      "summary_zh": "区分封闭系统动量总守恒与相互作用中动能通常改变",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.15, topic 6 Collisions, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_7_angular_displacement_radians",
+      "parent_requirement_id": null,
+      "code": "7.a",
+      "title": "Angular displacement in radians",
+      "title_zh": "用弧度表示角位移",
+      "summary_zh": "用弧度表示角位移",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.16, topic 7 Circular Motion, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_7_angular_velocity",
+      "parent_requirement_id": null,
+      "code": "7.b",
+      "title": "Angular velocity",
+      "title_zh": "理解并使用角速度",
+      "summary_zh": "理解并使用角速度",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.16, topic 7 Circular Motion, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_7_linear_angular_speed_relation",
+      "parent_requirement_id": null,
+      "code": "7.c",
+      "title": "Linear and angular speed relation",
+      "title_zh": "应用 v=rω",
+      "summary_zh": "应用 v=rω",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.16, topic 7 Circular Motion, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_7_centripetal_acceleration_concept",
+      "parent_requirement_id": null,
+      "code": "7.d",
+      "title": "Centripetal acceleration and curved motion",
+      "title_zh": "说明匀速圆周运动向心加速度，并把曲线运动归因于垂直速度且指向圆心的合力",
+      "summary_zh": "说明匀速圆周运动向心加速度，并把曲线运动归因于垂直速度且指向圆心的合力",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.16, topic 7 Circular Motion, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_7_centripetal_acceleration_formula",
+      "parent_requirement_id": null,
+      "code": "7.e",
+      "title": "Centripetal acceleration formulae",
+      "title_zh": "应用向心加速度 a=rω²=v²/r",
+      "summary_zh": "应用向心加速度 a=rω²=v²/r",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.16, topic 7 Circular Motion, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_7_centripetal_force_formula",
+      "parent_requirement_id": null,
+      "code": "7.f",
+      "title": "Centripetal force",
+      "title_zh": "应用 F=mrω²=mv²/r",
+      "summary_zh": "应用 F=mrω²=mv²/r",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.16, topic 7 Circular Motion, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_8_newton_gravitation",
+      "parent_requirement_id": null,
+      "code": "8.a",
+      "title": "Newton's law of gravitation",
+      "title_zh": "应用点质量间万有引力定律",
+      "summary_zh": "应用点质量间万有引力定律",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.17, topic 8 Gravitational Fields, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_8_derive_point_mass_gravity",
+      "parent_requirement_id": null,
+      "code": "8.b",
+      "title": "Derive point-mass gravitational field strength",
+      "title_zh": "由万有引力定律和场强定义推导点质量场强",
+      "summary_zh": "由万有引力定律和场强定义推导点质量场强",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.17, topic 8 Gravitational Fields, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_8_point_mass_gravity_formula",
+      "parent_requirement_id": null,
+      "code": "8.c",
+      "title": "Point-mass gravitational field strength",
+      "title_zh": "应用点质量引力场强 g=GM/r²",
+      "summary_zh": "应用点质量引力场强 g=GM/r²",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.17, topic 8 Gravitational Fields, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_8_near_earth_uniform_gravity",
+      "parent_requirement_id": null,
+      "code": "8.d",
+      "title": "Near-Earth uniform gravitational field",
+      "title_zh": "说明地表附近引力场强近似恒定且等于自由落体加速度",
+      "summary_zh": "说明地表附近引力场强近似恒定且等于自由落体加速度",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.17, topic 8 Gravitational Fields, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_8_gravitational_potential_definition",
+      "parent_requirement_id": null,
+      "code": "8.e",
+      "title": "Gravitational potential definition",
+      "title_zh": "以外力把单位测试质量从无穷远移到该点所做功定义引力势",
+      "summary_zh": "以外力把单位测试质量从无穷远移到该点所做功定义引力势",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.17, topic 8 Gravitational Fields, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_8_point_mass_gravitational_potential",
+      "parent_requirement_id": null,
+      "code": "8.f",
+      "title": "Point-mass gravitational potential",
+      "title_zh": "应用点质量引力势 V=-GM/r",
+      "summary_zh": "应用点质量引力势 V=-GM/r",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.17, topic 8 Gravitational Fields, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_8_two_mass_gravitational_energy",
+      "parent_requirement_id": null,
+      "code": "8.g",
+      "title": "Gravitational potential energy of two masses",
+      "title_zh": "说明两点质量系统的引力势能并应用相应关系",
+      "summary_zh": "说明两点质量系统的引力势能并应用相应关系",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.17, topic 8 Gravitational Fields, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_8_gravity_potential_gradient",
+      "parent_requirement_id": null,
+      "code": "8.h",
+      "title": "Gravitational field as negative potential gradient",
+      "title_zh": "应用引力场强等于引力势负梯度",
+      "summary_zh": "应用引力场强等于引力势负梯度",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.17, topic 8 Gravitational Fields, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_8_escape_velocity_energy",
+      "parent_requirement_id": null,
+      "code": "8.i",
+      "title": "Escape velocity from energy",
+      "title_zh": "用能量储存与转移分析逃逸速度",
+      "summary_zh": "用能量储存与转移分析逃逸速度",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.17, topic 8 Gravitational Fields, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_8_circular_orbits_inverse_square",
+      "parent_requirement_id": null,
+      "code": "8.j",
+      "title": "Circular orbits in inverse-square fields",
+      "title_zh": "把万有引力与向心加速度联系起来分析圆轨道",
+      "summary_zh": "把万有引力与向心加速度联系起来分析圆轨道",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.17, topic 8 Gravitational Fields, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_8_geostationary_satellites",
+      "parent_requirement_id": null,
+      "code": "8.k",
+      "title": "Geostationary satellites and applications",
+      "title_zh": "理解地球同步静止轨道卫星及其应用",
+      "summary_zh": "理解地球同步静止轨道卫星及其应用",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.17, topic 8 Gravitational Fields, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_9_free_oscillations",
+      "parent_requirement_id": null,
+      "code": "9.a",
+      "title": "Free oscillations",
+      "title_zh": "描述粒子周期返回平衡位置且不与环境交换净能量的自由振动",
+      "summary_zh": "描述粒子周期返回平衡位置且不与环境交换净能量的自由振动",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.18, topic 9 Oscillations, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_9_investigate_oscillator",
+      "parent_requirement_id": null,
+      "code": "9.b",
+      "title": "Investigate oscillator motion",
+      "title_zh": "用实验和图像方法研究振子运动",
+      "summary_zh": "用实验和图像方法研究振子运动",
+      "requirement_type": "practice",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.18, topic 9 Oscillations, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_9_oscillation_terms",
+      "parent_requirement_id": null,
+      "code": "9.c",
+      "title": "Oscillation quantities and phase",
+      "title_zh": "使用振幅、周期、频率、角频率、相位和相位差并联系周期、频率和角频率",
+      "summary_zh": "使用振幅、周期、频率、角频率、相位和相位差并联系周期、频率和角频率",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.18, topic 9 Oscillations, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_9_shm_acceleration_displacement",
+      "parent_requirement_id": null,
+      "code": "9.d",
+      "title": "SHM acceleration-displacement relation",
+      "title_zh": "理解并应用简谐运动 a=-ω²x",
+      "summary_zh": "理解并应用简谐运动 a=-ω²x",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.18, topic 9 Oscillations, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_9_shm_displacement_equation",
+      "parent_requirement_id": null,
+      "code": "9.e",
+      "title": "SHM displacement equation",
+      "title_zh": "识别并使用简谐位移正弦或余弦表达式",
+      "summary_zh": "识别并使用简谐位移正弦或余弦表达式",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.18, topic 9 Oscillations, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_9_shm_velocity_equations",
+      "parent_requirement_id": null,
+      "code": "9.f",
+      "title": "SHM velocity equations",
+      "title_zh": "使用简谐速度、位移和最大速度关系",
+      "summary_zh": "使用简谐速度、位移和最大速度关系",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.18, topic 9 Oscillations, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_9_shm_graph_relations",
+      "parent_requirement_id": null,
+      "code": "9.g",
+      "title": "SHM displacement, velocity and acceleration graphs",
+      "title_zh": "用图像描述简谐运动位移、速度和加速度的关系",
+      "summary_zh": "用图像描述简谐运动位移、速度和加速度的关系",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.18, topic 9 Oscillations, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_9_shm_energy_interchange",
+      "parent_requirement_id": null,
+      "code": "9.h",
+      "title": "SHM kinetic-potential energy interchange",
+      "title_zh": "描述简谐运动中动能与势能的相互转化",
+      "summary_zh": "描述简谐运动中动能与势能的相互转化",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.18, topic 9 Oscillations, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_9_damping_regimes_applications",
+      "parent_requirement_id": null,
+      "code": "9.i",
+      "title": "Damping regimes and applications",
+      "title_zh": "描述欠阻尼、临界阻尼和过阻尼及临界阻尼应用",
+      "summary_zh": "描述欠阻尼、临界阻尼和过阻尼及临界阻尼应用",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.18, topic 9 Oscillations, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_9_forced_response_resonance",
+      "parent_requirement_id": null,
+      "code": "9.j",
+      "title": "Forced response and resonance",
+      "title_zh": "用振幅频率图描述受迫振动在驱动频率接近固有频率时共振",
+      "summary_zh": "用振幅频率图描述受迫振动在驱动频率接近固有频率时共振",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.18, topic 9 Oscillations, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_9_damping_resonance_sharpness",
+      "parent_requirement_id": null,
+      "code": "9.k",
+      "title": "Damping and resonance sharpness",
+      "title_zh": "定性说明阻尼对频率响应与共振尖锐程度的影响",
+      "summary_zh": "定性说明阻尼对频率响应与共振尖锐程度的影响",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.18, topic 9 Oscillations, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_9_resonance_useful_harmful",
+      "parent_requirement_id": null,
+      "code": "9.l",
+      "title": "Useful and harmful resonance",
+      "title_zh": "举例说明受迫振动与共振，并评价共振何时有用或应避免",
+      "summary_zh": "举例说明受迫振动与共振，并评价共振何时有用或应避免",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.18, topic 9 Oscillations, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_10_mechanical_em_waves",
+      "parent_requirement_id": null,
+      "code": "10.a",
+      "title": "Mechanical and electromagnetic waves",
+      "title_zh": "区分介质粒子振动构成的机械波与时空电磁场振动构成的电磁波",
+      "summary_zh": "区分介质粒子振动构成的机械波与时空电磁场振动构成的电磁波",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.19, topic 10 Wave Motion, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_10_wave_quantities",
+      "parent_requirement_id": null,
+      "code": "10.b",
+      "title": "Wave quantities",
+      "title_zh": "使用位移、振幅、周期、频率、相位、相位差、波长和波速",
+      "summary_zh": "使用位移、振幅、周期、频率、相位、相位差、波长和波速",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.19, topic 10 Wave Motion, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_10_derive_wave_equation",
+      "parent_requirement_id": null,
+      "code": "10.c",
+      "title": "Derive the wave equation",
+      "title_zh": "由波速、频率和波长定义推导 v=fλ",
+      "summary_zh": "由波速、频率和波长定义推导 v=fλ",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.19, topic 10 Wave Motion, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_10_apply_wave_equation",
+      "parent_requirement_id": null,
+      "code": "10.d",
+      "title": "Apply the wave equation",
+      "title_zh": "应用 v=fλ 解题",
+      "summary_zh": "应用 v=fλ 解题",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.19, topic 10 Wave Motion, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_10_transverse_longitudinal_graphs",
+      "parent_requirement_id": null,
+      "code": "10.e",
+      "title": "Transverse and longitudinal wave graphs",
+      "title_zh": "分析随时间和位置变化的横波与纵波图像",
+      "summary_zh": "分析随时间和位置变化的横波与纵波图像",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.19, topic 10 Wave Motion, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_10_wave_energy_not_matter",
+      "parent_requirement_id": null,
+      "code": "10.f",
+      "title": "Wave energy transfer without matter transfer",
+      "title_zh": "说明行波传递能量但不传递物质",
+      "summary_zh": "说明行波传递能量但不传递物质",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.19, topic 10 Wave Motion, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_10_wave_intensity_amplitude",
+      "parent_requirement_id": null,
+      "code": "10.g",
+      "title": "Wave intensity and amplitude",
+      "title_zh": "使用单位面积功率定义强度及强度正比于振幅平方",
+      "summary_zh": "使用单位面积功率定义强度及强度正比于振幅平方",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.19, topic 10 Wave Motion, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_10_inverse_square_wave_intensity",
+      "parent_requirement_id": null,
+      "code": "10.h",
+      "title": "Inverse-square wave intensity",
+      "title_zh": "对无能量损失的点源波应用强度反平方关系",
+      "summary_zh": "对无能量损失的点源波应用强度反平方关系",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.19, topic 10 Wave Motion, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_10_polarisation_transverse",
+      "parent_requirement_id": null,
+      "code": "10.i",
+      "title": "Polarisation as a transverse-wave phenomenon",
+      "title_zh": "说明偏振是横波特有现象",
+      "summary_zh": "说明偏振是横波特有现象",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.19, topic 10 Wave Motion, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_10_malus_law",
+      "parent_requirement_id": null,
+      "code": "10.j",
+      "title": "Malus' law",
+      "title_zh": "应用马吕斯定律分析偏振强度",
+      "summary_zh": "应用马吕斯定律分析偏振强度",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.19, topic 10 Wave Motion, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_11_superposition_principle",
+      "parent_requirement_id": null,
+      "code": "11.a",
+      "title": "Principle of superposition",
+      "title_zh": "解释并应用叠加原理",
+      "summary_zh": "解释并应用叠加原理",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.20, topic 11 Superposition, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_11_standing_wave_experiments",
+      "parent_requirement_id": null,
+      "code": "11.b",
+      "title": "Standing-wave experiments",
+      "title_zh": "理解微波、弦和气柱驻波实验",
+      "summary_zh": "理解微波、弦和气柱驻波实验",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.20, topic 11 Superposition, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_11_standing_wave_nodes_antinodes",
+      "parent_requirement_id": null,
+      "code": "11.c",
+      "title": "Standing-wave formation and nodes",
+      "title_zh": "用图像解释驻波形成并区分节点、腹点以及声波压强和位移节点腹点",
+      "summary_zh": "用图像解释驻波形成并区分节点、腹点以及声波压强和位移节点腹点",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.20, topic 11 Superposition, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_11_sound_wavelength_standing_waves",
+      "parent_requirement_id": null,
+      "code": "11.d",
+      "title": "Sound wavelength from standing waves",
+      "title_zh": "用驻波测定声波波长",
+      "summary_zh": "用驻波测定声波波长",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.20, topic 11 Superposition, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_11_diffraction_interference_terms",
+      "parent_requirement_id": null,
+      "code": "11.e",
+      "title": "Diffraction and interference terms",
+      "title_zh": "使用衍射、干涉、相干、相位差和路程差术语",
+      "summary_zh": "使用衍射、干涉、相干、相位差和路程差术语",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.20, topic 11 Superposition, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_11_two_source_interference_phenomena",
+      "parent_requirement_id": null,
+      "code": "11.f",
+      "title": "Two-source interference phenomena",
+      "title_zh": "解释水波、声波、光和微波的双源干涉现象",
+      "summary_zh": "解释水波、声波、光和微波的双源干涉现象",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.20, topic 11 Superposition, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_11_interference_fringe_conditions",
+      "parent_requirement_id": null,
+      "code": "11.g",
+      "title": "Conditions for interference fringes",
+      "title_zh": "说明观察双源干涉条纹所需条件",
+      "summary_zh": "说明观察双源干涉条纹所需条件",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.20, topic 11 Superposition, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_11_double_slit_fringe_equation",
+      "parent_requirement_id": null,
+      "code": "11.h",
+      "title": "Double-slit fringe equation",
+      "title_zh": "应用双缝干涉条纹间距关系解题",
+      "summary_zh": "应用双缝干涉条纹间距关系解题",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.20, topic 11 Superposition, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_11_diffraction_grating_equation",
+      "parent_requirement_id": null,
+      "code": "11.i",
+      "title": "Diffraction-grating principal maxima",
+      "title_zh": "应用光栅主极大关系解题",
+      "summary_zh": "应用光栅主极大关系解题",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.20, topic 11 Superposition, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_11_grating_wavelength_measurement",
+      "parent_requirement_id": null,
+      "code": "11.j",
+      "title": "Measure wavelength with a diffraction grating",
+      "title_zh": "描述用衍射光栅测光波长，不要求分光计结构和使用",
+      "summary_zh": "描述用衍射光栅测光波长，不要求分光计结构和使用",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.20, topic 11 Superposition, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_11_single_aperture_edge_diffraction",
+      "parent_requirement_id": null,
+      "code": "11.k",
+      "title": "Single-aperture and edge diffraction",
+      "title_zh": "解释单缝、孔径或边缘衍射现象",
+      "summary_zh": "解释单缝、孔径或边缘衍射现象",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.20, topic 11 Superposition, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_11_single_slit_minima",
+      "parent_requirement_id": null,
+      "code": "11.l",
+      "title": "Single-slit first minima",
+      "title_zh": "应用单缝第一极小位置关系",
+      "summary_zh": "应用单缝第一极小位置关系",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.20, topic 11 Superposition, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_11_rayleigh_criterion",
+      "parent_requirement_id": null,
+      "code": "11.m",
+      "title": "Rayleigh criterion",
+      "title_zh": "应用瑞利判据分析单孔径分辨本领",
+      "summary_zh": "应用瑞利判据分析单孔径分辨本领",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.20, topic 11 Superposition, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_12_thermodynamic_temperature_scale",
+      "parent_requirement_id": null,
+      "code": "12.a",
+      "title": "Thermodynamic temperature scale",
+      "title_zh": "说明热力学温标有绝对零点且不依赖特定物质性质",
+      "summary_zh": "说明热力学温标有绝对零点且不依赖特定物质性质",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.21, topic 12 Temperature and Ideal Gases, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_12_celsius_kelvin_conversion",
+      "parent_requirement_id": null,
+      "code": "12.b",
+      "title": "Celsius-kelvin conversion",
+      "title_zh": "使用 T/K=T/°C+273.15 换算温度",
+      "summary_zh": "使用 T/K=T/°C+273.15 换算温度",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.21, topic 12 Temperature and Ideal Gases, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_12_ideal_gas_particle_equation",
+      "parent_requirement_id": null,
+      "code": "12.c",
+      "title": "Ideal-gas equation in particle form",
+      "title_zh": "应用 pV=NkT",
+      "summary_zh": "应用 pV=NkT",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.21, topic 12 Temperature and Ideal Gases, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_12_avogadro_boltzmann_gas_constant",
+      "parent_requirement_id": null,
+      "code": "12.d",
+      "title": "Avogadro, Boltzmann and molar gas constants",
+      "title_zh": "使用阿伏伽德罗常数、N=nNA 及 Nk=nR",
+      "summary_zh": "使用阿伏伽德罗常数、N=nNA 及 Nk=nR",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.21, topic 12 Temperature and Ideal Gases, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_12_kinetic_theory_assumptions",
+      "parent_requirement_id": null,
+      "code": "12.e",
+      "title": "Kinetic-theory assumptions",
+      "title_zh": "陈述气体动理论基本假设",
+      "summary_zh": "陈述气体动理论基本假设",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.21, topic 12 Temperature and Ideal Gases, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_12_derive_kinetic_pressure",
+      "parent_requirement_id": null,
+      "code": "12.f",
+      "title": "Derive kinetic-theory pressure",
+      "title_zh": "由粒子随机运动、碰撞和压强定义推导 pV=Nm<c²>/3",
+      "summary_zh": "由粒子随机运动、碰撞和压强定义推导 pV=Nm<c²>/3",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.21, topic 12 Temperature and Ideal Gases, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_12_mean_kinetic_energy_temperature",
+      "parent_requirement_id": null,
+      "code": "12.g",
+      "title": "Mean translational kinetic energy and temperature",
+      "title_zh": "应用理想气体粒子平均平动动能正比于热力学温度",
+      "summary_zh": "应用理想气体粒子平均平动动能正比于热力学温度",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.21, topic 12 Temperature and Ideal Gases, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_13_internal_energy_microstates",
+      "parent_requirement_id": null,
+      "code": "13.a",
+      "title": "Internal energy and microscopic energies",
+      "title_zh": "说明宏观状态决定内能，内能是粒子随机微观动能和势能之和",
+      "summary_zh": "说明宏观状态决定内能，内能是粒子随机微观动能和势能之和",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.22, topic 13 Thermodynamic Systems, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_13_temperature_mean_kinetic_energy",
+      "parent_requirement_id": null,
+      "code": "13.b",
+      "title": "Temperature and mean microscopic kinetic energy",
+      "title_zh": "说明热力学温度正比于粒子平均微观动能",
+      "summary_zh": "说明热力学温度正比于粒子平均微观动能",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.22, topic 13 Thermodynamic Systems, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_13_thermal_contact_equilibrium",
+      "parent_requirement_id": null,
+      "code": "13.c",
+      "title": "Heating and thermal equilibrium",
+      "title_zh": "说明热接触系统由高温向低温传能直至达到热平衡",
+      "summary_zh": "说明热接触系统由高温向低温传能直至达到热平衡",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.22, topic 13 Thermodynamic Systems, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_13_gas_work_sign_convention",
+      "parent_requirement_id": null,
+      "code": "13.d",
+      "title": "Work done by and on a gas",
+      "title_zh": "区分气体对外做功与外界对气体做功并应用恒外压 W=pΔV",
+      "summary_zh": "区分气体对外做功与外界对气体做功并应用恒外压 W=pΔV",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.22, topic 13 Thermodynamic Systems, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_13_zeroth_law",
+      "parent_requirement_id": null,
+      "code": "13.e",
+      "title": "Zeroth law of thermodynamics",
+      "title_zh": "陈述并应用热力学第零定律",
+      "summary_zh": "陈述并应用热力学第零定律",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.22, topic 13 Thermodynamic Systems, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_13_first_law",
+      "parent_requirement_id": null,
+      "code": "13.f",
+      "title": "First law of thermodynamics",
+      "title_zh": "应用 ΔU=Q+W 进行系统内能核算",
+      "summary_zh": "应用 ΔU=Q+W 进行系统内能核算",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.22, topic 13 Thermodynamic Systems, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_13_specific_heat_latent_heat",
+      "parent_requirement_id": null,
+      "code": "13.g",
+      "title": "Specific heat capacity and latent heat",
+      "title_zh": "定义并应用比热容和比潜热",
+      "summary_zh": "定义并应用比热容和比潜热",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.22, topic 13 Thermodynamic Systems, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_14_coulomb_law",
+      "parent_requirement_id": null,
+      "code": "14.a",
+      "title": "Coulomb's law",
+      "title_zh": "应用自由空间或空气中两点电荷的库仑定律",
+      "summary_zh": "应用自由空间或空气中两点电荷的库仑定律",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.23, topic 14 Electric Fields, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_14_point_charge_field_strength",
+      "parent_requirement_id": null,
+      "code": "14.b",
+      "title": "Point-charge electric field strength",
+      "title_zh": "应用点电荷电场强度关系",
+      "summary_zh": "应用点电荷电场强度关系",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.23, topic 14 Electric Fields, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_14_electric_potential_definition",
+      "parent_requirement_id": null,
+      "code": "14.c",
+      "title": "Electric potential definition",
+      "title_zh": "以外力把单位正试探电荷从无穷远移到该点所做功定义电势",
+      "summary_zh": "以外力把单位正试探电荷从无穷远移到该点所做功定义电势",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.23, topic 14 Electric Fields, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_14_point_charge_potential",
+      "parent_requirement_id": null,
+      "code": "14.d",
+      "title": "Point-charge electric potential",
+      "title_zh": "应用点电荷电势关系",
+      "summary_zh": "应用点电荷电势关系",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.23, topic 14 Electric Fields, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_14_two_charge_potential_energy",
+      "parent_requirement_id": null,
+      "code": "14.e",
+      "title": "Electric potential energy of two charges",
+      "title_zh": "说明并应用两点电荷系统电势能",
+      "summary_zh": "说明并应用两点电荷系统电势能",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.23, topic 14 Electric Fields, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_14_electric_potential_gradient",
+      "parent_requirement_id": null,
+      "code": "14.f",
+      "title": "Electric field as negative potential gradient",
+      "title_zh": "应用电场强度等于电势负梯度",
+      "summary_zh": "应用电场强度等于电势负梯度",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.23, topic 14 Electric Fields, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_14_parallel_plate_uniform_field",
+      "parent_requirement_id": null,
+      "code": "14.g",
+      "title": "Uniform field between parallel plates",
+      "title_zh": "由电势差和板间距计算平行板间匀强电场",
+      "summary_zh": "由电势差和板间距计算平行板间匀强电场",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.23, topic 14 Electric Fields, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_14_charge_force_uniform_field",
+      "parent_requirement_id": null,
+      "code": "14.h",
+      "title": "Force on a charge in a uniform electric field",
+      "title_zh": "计算匀强电场中电荷受力",
+      "summary_zh": "计算匀强电场中电荷受力",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.23, topic 14 Electric Fields, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_14_charged_particle_uniform_electric_motion",
+      "parent_requirement_id": null,
+      "code": "14.i",
+      "title": "Charged-particle motion in a uniform electric field",
+      "title_zh": "描述匀强电场对带电粒子运动的影响",
+      "summary_zh": "描述匀强电场对带电粒子运动的影响",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.23, topic 14 Electric Fields, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_14_capacitance_definition",
+      "parent_requirement_id": null,
+      "code": "14.j",
+      "title": "Capacitance",
+      "title_zh": "定义电容 C=Q/V 并应用",
+      "summary_zh": "定义电容 C=Q/V 并应用",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.23, topic 14 Electric Fields, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_14_capacitor_energy",
+      "parent_requirement_id": null,
+      "code": "14.k",
+      "title": "Energy stored in a capacitor",
+      "title_zh": "由电势差电荷图面积及三个等价关系计算电容器储能",
+      "summary_zh": "由电势差电荷图面积及三个等价关系计算电容器储能",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.23, topic 14 Electric Fields, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_15_current_charge_rate",
+      "parent_requirement_id": null,
+      "code": "15.a",
+      "title": "Current as rate of charge flow",
+      "title_zh": "把电流定义为电荷流率并应用 I=Q/t",
+      "summary_zh": "把电流定义为电荷流率并应用 I=Q/t",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.24, topic 15 Currents, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_15_drift_current_equation",
+      "parent_requirement_id": null,
+      "code": "15.b",
+      "title": "Drift-current equation",
+      "title_zh": "推导并应用 I=nAvq",
+      "summary_zh": "推导并应用 I=nAvq",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.24, topic 15 Currents, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_15_potential_difference_work_charge",
+      "parent_requirement_id": null,
+      "code": "15.c",
+      "title": "Potential difference as work per charge",
+      "title_zh": "用单位电荷电功定义电势差并解题",
+      "summary_zh": "用单位电荷电功定义电势差并解题",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.24, topic 15 Currents, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_15_electrical_power_equations",
+      "parent_requirement_id": null,
+      "code": "15.d",
+      "title": "Electrical power equations",
+      "title_zh": "应用 P=VI、P=I²R 和 P=V²/R",
+      "summary_zh": "应用 P=VI、P=I²R 和 P=V²/R",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.24, topic 15 Currents, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_15_emf_pd_energy",
+      "parent_requirement_id": null,
+      "code": "15.e",
+      "title": "EMF and potential difference",
+      "title_zh": "从能量角度区分电动势与电势差",
+      "summary_zh": "从能量角度区分电动势与电势差",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.24, topic 15 Currents, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_15_ac_quantities",
+      "parent_requirement_id": null,
+      "code": "15.f",
+      "title": "Alternating-current quantities",
+      "title_zh": "使用交流电流或电压的周期、频率、峰值和有效值",
+      "summary_zh": "使用交流电流或电压的周期、频率、峰值和有效值",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.24, topic 15 Currents, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_15_sinusoidal_ac_equation",
+      "parent_requirement_id": null,
+      "code": "15.g",
+      "title": "Sinusoidal alternating-current equation",
+      "title_zh": "用正弦表达式表示交流电流或电压",
+      "summary_zh": "用正弦表达式表示交流电流或电压",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.24, topic 15 Currents, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_15_mean_resistive_ac_power",
+      "parent_requirement_id": null,
+      "code": "15.h",
+      "title": "Mean power of a sinusoidal AC resistive load",
+      "title_zh": "推导正弦交流纯电阻负载平均功率为峰值功率一半",
+      "summary_zh": "推导正弦交流纯电阻负载平均功率为峰值功率一半",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.24, topic 15 Currents, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_15_rms_peak_relations",
+      "parent_requirement_id": null,
+      "code": "15.i",
+      "title": "RMS and peak relations",
+      "title_zh": "区分有效值与峰值并应用正弦交流关系",
+      "summary_zh": "区分有效值与峰值并应用正弦交流关系",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.24, topic 15 Currents, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_15_half_wave_rectification",
+      "parent_requirement_id": null,
+      "code": "15.j",
+      "title": "Half-wave rectification",
+      "title_zh": "解释单个二极管对交流电的半波整流",
+      "summary_zh": "解释单个二极管对交流电的半波整流",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.24, topic 15 Currents, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_16_circuit_symbols",
+      "parent_requirement_id": null,
+      "code": "16.a",
+      "title": "Circuit symbols",
+      "title_zh": "识别并使用合适电路符号",
+      "summary_zh": "识别并使用合适电路符号",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.25, topic 16 Circuits, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_16_draw_interpret_circuits",
+      "parent_requirement_id": null,
+      "code": "16.b",
+      "title": "Draw and interpret circuit diagrams",
+      "title_zh": "绘制和解释含指定电源、测量仪表、电阻、传感器、二极管和电容器的电路图",
+      "summary_zh": "绘制和解释含指定电源、测量仪表、电阻、传感器、二极管和电容器的电路图",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.25, topic 16 Circuits, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_16_resistance_definition_ohm",
+      "parent_requirement_id": null,
+      "code": "16.c",
+      "title": "Resistance and Ohm's law",
+      "title_zh": "以电压电流比定义电阻并应用 V=IR",
+      "summary_zh": "以电压电流比定义电阻并应用 V=IR",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.25, topic 16 Circuits, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_16_resistance_resistivity_geometry",
+      "parent_requirement_id": null,
+      "code": "16.d",
+      "title": "Resistance, resistivity and geometry",
+      "title_zh": "应用电阻率、长度和横截面积关系",
+      "summary_zh": "应用电阻率、长度和横截面积关系",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.25, topic 16 Circuits, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_16_component_iv_characteristics",
+      "parent_requirement_id": null,
+      "code": "16.e",
+      "title": "DC component I-V characteristics",
+      "title_zh": "绘制和解释欧姆电阻、二极管、灯丝灯泡和 NTC 热敏电阻的直流 I–V 特性",
+      "summary_zh": "绘制和解释欧姆电阻、二极管、灯丝灯泡和 NTC 热敏电阻的直流 I–V 特性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.25, topic 16 Circuits, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_16_temperature_resistivity_carriers",
+      "parent_requirement_id": null,
+      "code": "16.f",
+      "title": "Temperature dependence of resistivity",
+      "title_zh": "从漂移速度和载流子数密度解释金属与半导体电阻率的温度依赖",
+      "summary_zh": "从漂移速度和载流子数密度解释金属与半导体电阻率的温度依赖",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.25, topic 16 Circuits, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_16_internal_resistance_terminal_power",
+      "parent_requirement_id": null,
+      "code": "16.g",
+      "title": "Internal resistance, terminal voltage and power",
+      "title_zh": "说明电源内阻对端电压和输出功率的影响",
+      "summary_zh": "说明电源内阻对端电压和输出功率的影响",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.25, topic 16 Circuits, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_16_series_resistance",
+      "parent_requirement_id": null,
+      "code": "16.h",
+      "title": "Combined series resistance",
+      "title_zh": "计算两个或以上串联电阻的总电阻",
+      "summary_zh": "计算两个或以上串联电阻的总电阻",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.25, topic 16 Circuits, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_16_parallel_resistance",
+      "parent_requirement_id": null,
+      "code": "16.i",
+      "title": "Combined parallel resistance",
+      "title_zh": "计算两个或以上并联电阻的总电阻",
+      "summary_zh": "计算两个或以上并联电阻的总电阻",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.25, topic 16 Circuits, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_16_resistor_network_potential_divider",
+      "parent_requirement_id": null,
+      "code": "16.j",
+      "title": "Resistor networks and potential dividers",
+      "title_zh": "分析单电源串并联电阻和含 NTC/LDR 的分压电路",
+      "summary_zh": "分析单电源串并联电阻和含 NTC/LDR 的分压电路",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.25, topic 16 Circuits, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_16_capacitor_networks",
+      "parent_requirement_id": null,
+      "code": "16.k",
+      "title": "Series and parallel capacitors",
+      "title_zh": "计算两个或以上电容器串并联的等效电容",
+      "summary_zh": "计算两个或以上电容器串并联的等效电容",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.25, topic 16 Circuits, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_16_rc_charge_discharge",
+      "parent_requirement_id": null,
+      "code": "16.l",
+      "title": "RC charging and discharging",
+      "title_zh": "用指数关系描述电阻充放电电容器的电流、电荷和电势差随时间变化",
+      "summary_zh": "用指数关系描述电阻充放电电容器的电流、电荷和电势差随时间变化",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.25, topic 16 Circuits, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_17_magnetic_field_sources",
+      "parent_requirement_id": null,
+      "code": "17.a",
+      "title": "Sources of magnetic fields",
+      "title_zh": "说明磁场可由载流导线或永久磁体产生",
+      "summary_zh": "说明磁场可由载流导线或永久磁体产生",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_17_current_magnetic_field_patterns",
+      "parent_requirement_id": null,
+      "code": "17.b",
+      "title": "Magnetic field patterns due to currents",
+      "title_zh": "绘制长直导线、圆形线圈和长螺线管电流产生的磁场线",
+      "summary_zh": "绘制长直导线、圆形线圈和长螺线管电流产生的磁场线",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_17_current_field_equations",
+      "parent_requirement_id": null,
+      "code": "17.c",
+      "title": "Magnetic fields of wire and solenoid",
+      "title_zh": "应用长直导线和长螺线管磁场关系",
+      "summary_zh": "应用长直导线和长螺线管磁场关系",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_17_ferrous_core_solenoid",
+      "parent_requirement_id": null,
+      "code": "17.d",
+      "title": "Ferrous-core effect in a solenoid",
+      "title_zh": "说明铁磁芯会影响螺线管磁场",
+      "summary_zh": "说明铁磁芯会影响螺线管磁场",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_17_force_current_conductor",
+      "parent_requirement_id": null,
+      "code": "17.e",
+      "title": "Force on a current-carrying conductor",
+      "title_zh": "说明磁场中载流导线可能受力",
+      "summary_zh": "说明磁场中载流导线可能受力",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_17_conductor_force_equation",
+      "parent_requirement_id": null,
+      "code": "17.f",
+      "title": "Magnetic force on a conductor",
+      "title_zh": "应用 F=BIl sinθ",
+      "summary_zh": "应用 F=BIl sinθ",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_17_flux_density_definition",
+      "parent_requirement_id": null,
+      "code": "17.g",
+      "title": "Magnetic flux density definition",
+      "title_zh": "以垂直磁场中单位电流单位长度导线受力定义磁通密度",
+      "summary_zh": "以垂直磁场中单位电流单位长度导线受力定义磁通密度",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_17_current_balance_measurement",
+      "parent_requirement_id": null,
+      "code": "17.h",
+      "title": "Current-balance measurement of flux density",
+      "title_zh": "说明如何用电流天平测量磁场磁通密度",
+      "summary_zh": "说明如何用电流天平测量磁场磁通密度",
+      "requirement_type": "practice",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_17_forces_parallel_currents",
+      "parent_requirement_id": null,
+      "code": "17.i",
+      "title": "Forces between current-carrying conductors",
+      "title_zh": "解释载流导线间作用力并判断方向",
+      "summary_zh": "解释载流导线间作用力并判断方向",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_17_moving_charge_force_direction",
+      "parent_requirement_id": null,
+      "code": "17.j",
+      "title": "Direction of force on a moving charge",
+      "title_zh": "判断匀强磁场中运动电荷受力方向",
+      "summary_zh": "判断匀强磁场中运动电荷受力方向",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_17_moving_charge_force_equation",
+      "parent_requirement_id": null,
+      "code": "17.k",
+      "title": "Magnetic force on a moving charge",
+      "title_zh": "应用 F=BQv sinθ",
+      "summary_zh": "应用 F=BQv sinθ",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_17_charged_beam_deflections",
+      "parent_requirement_id": null,
+      "code": "17.l",
+      "title": "Charged-beam deflection in electric and magnetic fields",
+      "title_zh": "描述并分析带电粒子束在匀强电场和磁场中的偏转",
+      "summary_zh": "描述并分析带电粒子束在匀强电场和磁场中的偏转",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_17_crossed_field_velocity_selector",
+      "parent_requirement_id": null,
+      "code": "17.m",
+      "title": "Crossed-field velocity selector",
+      "title_zh": "解释垂直电场和磁场如何选择带电粒子速度",
+      "summary_zh": "解释垂直电场和磁场如何选择带电粒子速度",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_18_magnetic_flux",
+      "parent_requirement_id": null,
+      "code": "18.a",
+      "title": "Magnetic flux",
+      "title_zh": "定义磁通为磁通密度与垂直截面积的乘积",
+      "summary_zh": "定义磁通为磁通密度与垂直截面积的乘积",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.27, topic 18 Electromagnetic Induction, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_18_flux_linkage",
+      "parent_requirement_id": null,
+      "code": "18.b",
+      "title": "Magnetic flux linkage",
+      "title_zh": "理解并使用磁链",
+      "summary_zh": "理解并使用磁链",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.27, topic 18 Electromagnetic Induction, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_18_flux_linkage_equation",
+      "parent_requirement_id": null,
+      "code": "18.c",
+      "title": "Flux-linkage equation",
+      "title_zh": "应用磁链与匝数、磁通的关系",
+      "summary_zh": "应用磁链与匝数、磁通的关系",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.27, topic 18 Electromagnetic Induction, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_18_induction_experimental_inferences",
+      "parent_requirement_id": null,
+      "code": "18.d",
+      "title": "Experimental inferences about induction",
+      "title_zh": "由实验推断变化磁通会产生电动势及感应方向遵循能量守恒",
+      "summary_zh": "由实验推断变化磁通会产生电动势及感应方向遵循能量守恒",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.27, topic 18 Electromagnetic Induction, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_18_faraday_lenz_laws",
+      "parent_requirement_id": null,
+      "code": "18.e",
+      "title": "Faraday's and Lenz's laws",
+      "title_zh": "应用法拉第电磁感应定律与楞次定律",
+      "summary_zh": "应用法拉第电磁感应定律与楞次定律",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.27, topic 18 Electromagnetic Induction, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_18_induction_applications",
+      "parent_requirement_id": null,
+      "code": "18.f",
+      "title": "Applications of electromagnetic induction",
+      "title_zh": "解释简单电磁感应应用",
+      "summary_zh": "解释简单电磁感应应用",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.27, topic 18 Electromagnetic Induction, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_18_transformer_principle_equations",
+      "parent_requirement_id": null,
+      "code": "18.g",
+      "title": "Transformer principle and equations",
+      "title_zh": "解释铁芯变压器原理并应用匝数、电压和电流关系",
+      "summary_zh": "解释铁芯变压器原理并应用匝数、电压和电流关系",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.27, topic 18 Electromagnetic Induction, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_18_transformer_power_transmission",
+      "parent_requirement_id": null,
+      "code": "18.h",
+      "title": "Transformer efficiency and power transmission",
+      "title_zh": "分析变压器与输电中的功率、效率和能量损失",
+      "summary_zh": "分析变压器与输电中的功率、效率和能量损失",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.27, topic 18 Electromagnetic Induction, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_19_wave_particle_evidence",
+      "parent_requirement_id": null,
+      "code": "19.a",
+      "title": "Wave and particle evidence for radiation",
+      "title_zh": "用光电效应阈频支持电磁辐射粒子性，用干涉衍射支持波动性",
+      "summary_zh": "用光电效应阈频支持电磁辐射粒子性，用干涉衍射支持波动性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_19_photon_energy",
+      "parent_requirement_id": null,
+      "code": "19.b",
+      "title": "Photon energy",
+      "title_zh": "把光子视为电磁辐射能量子并应用 E=hf",
+      "summary_zh": "把光子视为电磁辐射能量子并应用 E=hf",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_19_photon_momentum",
+      "parent_requirement_id": null,
+      "code": "19.c",
+      "title": "Photon momentum",
+      "title_zh": "说明无静质量光子具有 p=E/c=h/λ 的动量",
+      "summary_zh": "说明无静质量光子具有 p=E/c=h/λ 的动量",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_19_matter_wave_evidence",
+      "parent_requirement_id": null,
+      "code": "19.d",
+      "title": "Evidence for matter waves",
+      "title_zh": "用电子衍射和单粒子双缝干涉支持粒子波动性",
+      "summary_zh": "用电子衍射和单粒子双缝干涉支持粒子波动性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_19_de_broglie_wavelength",
+      "parent_requirement_id": null,
+      "code": "19.e",
+      "title": "de Broglie wavelength",
+      "title_zh": "应用德布罗意关系 λ=h/p",
+      "summary_zh": "应用德布罗意关系 λ=h/p",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_19_wavefunction_probability_density",
+      "parent_requirement_id": null,
+      "code": "19.f",
+      "title": "Wavefunction and probability density",
+      "title_zh": "用波函数表示粒子状态，把 |ψ|² 解释为概率密度并归一化方形和正弦波函数",
+      "summary_zh": "用波函数表示粒子状态，把 |ψ|² 解释为概率密度并归一化方形和正弦波函数",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply",
+        "model"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_19_wavefunction_superposition",
+      "parent_requirement_id": null,
+      "code": "19.g",
+      "title": "Superposition of wavefunctions",
+      "title_zh": "把叠加原理用于位置波函数，联系势阱驻波与单粒子双缝干涉",
+      "summary_zh": "把叠加原理用于位置波函数，联系势阱驻波与单粒子双缝干涉",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_19_heisenberg_uncertainty",
+      "parent_requirement_id": null,
+      "code": "19.h",
+      "title": "Heisenberg position-momentum uncertainty",
+      "title_zh": "把位置动量不确定性联系到局域粒子需要动量展宽并解题",
+      "summary_zh": "把位置动量不确定性联系到局域粒子需要动量展宽并解题",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_19_infinite_well_wavefunctions",
+      "parent_requirement_id": null,
+      "code": "19.i",
+      "title": "Infinite-well standing wavefunctions",
+      "title_zh": "理解一维无限深方势阱中的驻波本征态 ψn",
+      "summary_zh": "理解一维无限深方势阱中的驻波本征态 ψn",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "model"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_19_infinite_well_energy_levels",
+      "parent_requirement_id": null,
+      "code": "19.j",
+      "title": "Infinite-well energy levels",
+      "title_zh": "应用一维无限深方势阱允许能级关系",
+      "summary_zh": "应用一维无限深方势阱允许能级关系",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_19_atomic_discrete_levels_spectra",
+      "parent_requirement_id": null,
+      "code": "19.k",
+      "title": "Atomic discrete energy levels and spectra",
+      "title_zh": "由孤立原子电子波函数离散能级解释线光谱",
+      "summary_zh": "由孤立原子电子波函数离散能级解释线光谱",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_19_emission_absorption_spectra",
+      "parent_requirement_id": null,
+      "code": "19.l",
+      "title": "Emission and absorption line spectra",
+      "title_zh": "区分发射线光谱和吸收线光谱",
+      "summary_zh": "区分发射线光谱和吸收线光谱",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_19_photon_atomic_transitions",
+      "parent_requirement_id": null,
+      "code": "19.m",
+      "title": "Photon absorption and emission in atomic transitions",
+      "title_zh": "分析原子能级跃迁中的光子吸收或发射",
+      "summary_zh": "分析原子能级跃迁中的光子吸收或发射",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_20_rutherford_nucleus",
+      "parent_requirement_id": null,
+      "code": "20.a",
+      "title": "Rutherford scattering and the nucleus",
+      "title_zh": "由 α 粒子散射结果推断原子核存在且尺度很小",
+      "summary_zh": "由 α 粒子散射结果推断原子核存在且尺度很小",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_20_nucleon_proton_numbers",
+      "parent_requirement_id": null,
+      "code": "20.b",
+      "title": "Nucleon and proton numbers",
+      "title_zh": "区分核子数与质子数",
+      "summary_zh": "区分核子数与质子数",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_20_isotopes_nuclide_notation",
+      "parent_requirement_id": null,
+      "code": "20.c",
+      "title": "Isotopes and nuclide notation",
+      "title_zh": "说明同一元素可有不同中子数的同位素并使用核素符号",
+      "summary_zh": "说明同一元素可有不同中子数的同位素并使用核素符号",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_20_spontaneous_random_decay",
+      "parent_requirement_id": null,
+      "code": "20.d",
+      "title": "Spontaneous and random nuclear decay",
+      "title_zh": "说明核衰变具有自发性和随机性",
+      "summary_zh": "说明核衰变具有自发性和随机性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_20_count_rate_fluctuation_randomness",
+      "parent_requirement_id": null,
+      "code": "20.e",
+      "title": "Count-rate fluctuations and decay randomness",
+      "title_zh": "由计数率波动推断放射性衰变随机性",
+      "summary_zh": "由计数率波动推断放射性衰变随机性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_20_background_radiation",
+      "parent_requirement_id": null,
+      "code": "20.f",
+      "title": "Origin and significance of background radiation",
+      "title_zh": "解释本底辐射的来源和意义",
+      "summary_zh": "解释本底辐射的来源和意义",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_20_alpha_beta_gamma_properties",
+      "parent_requirement_id": null,
+      "code": "20.g",
+      "title": "Properties of alpha, beta and gamma radiation",
+      "title_zh": "理解 α、β、γ 辐射的本质和性质，不要求正电子发射",
+      "summary_zh": "理解 α、β、γ 辐射的本质和性质，不要求正电子发射",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_20_activity_decay_constant",
+      "parent_requirement_id": null,
+      "code": "20.h",
+      "title": "Activity and decay constant",
+      "title_zh": "定义活度和衰变常量并应用 A=λN",
+      "summary_zh": "定义活度和衰变常量并应用 A=λN",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_20_exponential_decay",
+      "parent_requirement_id": null,
+      "code": "20.i",
+      "title": "Exponential radioactive decay",
+      "title_zh": "推断、绘制并应用指数衰变关系",
+      "summary_zh": "推断、绘制并应用指数衰变关系",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_20_half_life_definition",
+      "parent_requirement_id": null,
+      "code": "20.j",
+      "title": "Half-life definition",
+      "title_zh": "定义并使用半衰期",
+      "summary_zh": "定义并使用半衰期",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_20_half_life_decay_constant",
+      "parent_requirement_id": null,
+      "code": "20.k",
+      "title": "Half-life and decay constant",
+      "title_zh": "应用 t1/2=ln2/λ",
+      "summary_zh": "应用 t1/2=ln2/λ",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_20_radioactivity_uses_hazards",
+      "parent_requirement_id": null,
+      "code": "20.l",
+      "title": "Applications and hazards of radioactivity",
+      "title_zh": "依据半衰期、穿透能力和电离效应定性讨论放射性医学工业应用与危害",
+      "summary_zh": "依据半衰期、穿透能力和电离效应定性讨论放射性医学工业应用与危害",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_20_nuclear_equations",
+      "parent_requirement_id": null,
+      "code": "20.m",
+      "title": "Nuclear equations",
+      "title_zh": "用核方程表示简单核反应",
+      "summary_zh": "用核方程表示简单核反应",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_20_nuclear_conservation_laws",
+      "parent_requirement_id": null,
+      "code": "20.n",
+      "title": "Conservation laws in nuclear processes",
+      "title_zh": "在核过程解题中应用核子数、电荷和质能守恒",
+      "summary_zh": "在核过程解题中应用核子数、电荷和质能守恒",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (n)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_20_neutrino_prediction",
+      "parent_requirement_id": null,
+      "code": "20.o",
+      "title": "Neutrino prediction from conservation laws",
+      "title_zh": "说明如何由 β 衰变能量和动量守恒预测中微子或反中微子存在，不扩展到粒子动物园",
+      "summary_zh": "说明如何由 β 衰变能量和动量守恒预测中微子或反中微子存在，不扩展到粒子动物园",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (o)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_20_mass_defect",
+      "parent_requirement_id": null,
+      "code": "20.p",
+      "title": "Mass defect",
+      "title_zh": "理解质量亏损",
+      "summary_zh": "理解质量亏损",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (p)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_20_mass_energy_equivalence",
+      "parent_requirement_id": null,
+      "code": "20.q",
+      "title": "Mass-energy equivalence",
+      "title_zh": "应用 E=mc² 解决质能等价问题",
+      "summary_zh": "应用 E=mc² 解决质能等价问题",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (q)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_20_binding_energy_mass_defect",
+      "parent_requirement_id": null,
+      "code": "20.r",
+      "title": "Binding energy and mass defect",
+      "title_zh": "说明核结合能与质量亏损的关系",
+      "summary_zh": "说明核结合能与质量亏损的关系",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (r)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_20_binding_energy_per_nucleon_curve",
+      "parent_requirement_id": null,
+      "code": "20.s",
+      "title": "Binding energy per nucleon curve",
+      "title_zh": "绘制平均每核子结合能随核子数变化曲线",
+      "summary_zh": "绘制平均每核子结合能随核子数变化曲线",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (s)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_20_binding_energy_fission_fusion",
+      "parent_requirement_id": null,
+      "code": "20.t",
+      "title": "Binding energy in fission and fusion",
+      "title_zh": "用平均每核子结合能解释核裂变与核聚变",
+      "summary_zh": "用平均每核子结合能解释核裂变与核聚变",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (t)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_practice_pos_wotd",
+      "parent_requirement_id": null,
+      "code": "P.pos_wotd",
+      "title": "Ways of thinking and doing",
+      "title_zh": "提出问题、设计和实施调查、分析数据、以证据交流和辩护、作负责任决定、使用模型并建构解释或方案。",
+      "summary_zh": "提出问题、设计和实施调查、分析数据、以证据交流和辩护、作负责任决定、使用模型并建构解释或方案。",
+      "requirement_type": "practice",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.4, Practices of Science 1.1-1.8"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_practice_pos_nos",
+      "parent_requirement_id": null,
+      "code": "P.pos_nos",
+      "title": "Nature of scientific knowledge",
+      "title_zh": "理解科学以证据和模型建构对现实的认识，假设自然系统有秩序与一致性，并通过规范程序和批判讨论形成可修正知识。",
+      "summary_zh": "理解科学以证据和模型建构对现实的认识，假设自然系统有秩序与一致性，并通过规范程序和批判讨论形成可修正知识。",
+      "requirement_type": "practice",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.4, Practices of Science 2.1-2.4"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_practice_pos_stse",
+      "parent_requirement_id": null,
+      "code": "P.pos_stse",
+      "title": "Science, technology, society and environment",
+      "title_zh": "评价科学应用的风险、收益及伦理、社会、经济和环境影响，并理解科学发现与技术进步的双向推动。",
+      "summary_zh": "评价科学应用的风险、收益及伦理、社会、经济和环境影响，并理解科学发现与技术进步的双向推动。",
+      "requirement_type": "practice",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.4, Practices of Science 3.1-3.3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_practice_practical_planning",
+      "parent_requirement_id": null,
+      "code": "P.practical_planning",
+      "title": "Practical planning",
+      "title_zh": "定义实验问题，给出清晰程序和数据处理计划，评估风险并提出预防措施。",
+      "summary_zh": "定义实验问题，给出清晰程序和数据处理计划，评估风险并提出预防措施。",
+      "requirement_type": "practice",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.31, Practical Assessment: Planning"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_practice_practical_mmo",
+      "parent_requirement_id": null,
+      "code": "P.practical_mmo",
+      "title": "Manipulation, measurement and observation",
+      "title_zh": "熟练操作，按适当精密度记录观察和测量，作测量决策并识别异常数据。",
+      "summary_zh": "熟练操作，按适当精密度记录观察和测量，作测量决策并识别异常数据。",
+      "requirement_type": "practice",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.31, Practical Assessment: MMO"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_practice_practical_pdo",
+      "parent_requirement_id": null,
+      "code": "P.practical_pdo",
+      "title": "Presentation of data and observations",
+      "title_zh": "以适当形式呈现信息和定量数据，处理测量以识别趋势并使用合适小数位或有效数字。",
+      "summary_zh": "以适当形式呈现信息和定量数据，处理测量以识别趋势并使用合适小数位或有效数字。",
+      "requirement_type": "practice",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.31, Practical Assessment: PDO"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_practice_practical_ace",
+      "parent_requirement_id": null,
+      "code": "P.practical_ace",
+      "title": "Analysis, conclusions and evaluation",
+      "title_zh": "分析解释数据、作结论和预测，识别显著误差与局限并提出可行改进。",
+      "summary_zh": "分析解释数据、作结论和预测，识别显著误差与局限并提出可行改进。",
+      "requirement_type": "practice",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.31, Practical Assessment: ACE"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_practice_spreadsheet_data",
+      "parent_requirement_id": null,
+      "code": "P.spreadsheet_data",
+      "title": "Spreadsheet data input",
+      "title_zh": "导入 xlsx 数据或录入实验数据供后续处理。",
+      "summary_zh": "导入 xlsx 数据或录入实验数据供后续处理。",
+      "requirement_type": "practice",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.36, Spreadsheet requirements: Data input"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_practice_spreadsheet_operations",
+      "parent_requirement_id": null,
+      "code": "P.spreadsheet_operations",
+      "title": "Spreadsheet numerical operations",
+      "title_zh": "在电子表格中使用公式、科学记数法、三角函数、指数、对数并复制公式和格式。",
+      "summary_zh": "在电子表格中使用公式、科学记数法、三角函数、指数、对数并复制公式和格式。",
+      "requirement_type": "practice",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.36, Spreadsheet requirements: Functions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_physics_9478_2026_o_practice_spreadsheet_graphs",
+      "parent_requirement_id": null,
+      "code": "P.spreadsheet_graphs",
+      "title": "Spreadsheet graph analysis",
+      "title_zh": "绘制带标签折线图，调轴、拟合趋势线、显示方程并数值估计曲线下面积和局部梯度。",
+      "summary_zh": "绘制带标签折线图，调轴、拟合趋势线、显示方程并数值估计曲线下面积和局部梯度。",
+      "requirement_type": "practice",
+      "level_id": "h2_9478",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.36, Spreadsheet requirements: Graphs"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

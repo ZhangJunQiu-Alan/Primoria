@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "practice_set_id": "cpk_cn_moe_senior_high_biology_2020",
+  "framework_id": "cfw_cn_moe_senior_high_biology_2020_outcomes",
+  "curriculum_id": "cur_cn_moe_senior_high_biology_2020",
+  "subject": "Biology",
+  "source_ids": [
+    "src_cn_moe_senior_high_biology_2020"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "将纯价值立场成果分流为教学与社会责任实践。"
+    }
+  ],
+  "items": [
+    {
+      "practice_id": "practice_cn_sh_bio_2020_se_2_4_5_environmental_responsibility",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_se_2_4_5_environmental_responsibility"
+      ],
+      "name": "Environmental responsibility",
+      "name_zh": "从我做起的环境保护意识",
+      "kind": "assessment_task",
+      "description_zh": "形成个人参与环境保护的责任意识。",
+      "instructional_use_zh": "以真实生物学与社会情境组织证据阅读、立场辨析和责任决策，要求区分事实判断、价值判断和可执行行动。",
+      "assessment_evidence_zh": "提交基于课标事实和可核验资料的立场说明、理由、影响分析或行动方案；不能仅以口号替代证据与推理。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.5），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_bio_2020_sb_6_3_2_oppose_biological_weapons",
+      "requirement_ids": [
+        "req_cn_sh_bio_2020_o_sb_6_3_2_oppose_biological_weapons"
+      ],
+      "name": "Opposition to biological weapons",
+      "name_zh": "反对生物武器扩散的立场",
+      "kind": "assessment_task",
+      "description_zh": "认同反对生物武器及其技术和设备扩散的社会责任。",
+      "instructional_use_zh": "以真实生物学与社会情境组织证据阅读、立场辨析和责任决策，要求区分事实判断、价值判断和可执行行动。",
+      "assessment_evidence_zh": "提交基于课标事实和可核验资料的立场说明、理由、影响分析或行动方案；不能仅以口号替代证据与推理。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.3.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

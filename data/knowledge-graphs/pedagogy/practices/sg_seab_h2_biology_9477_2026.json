@@ -1,0 +1,212 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "practice_set_id": "cpk_sg_seab_h2_biology_9477_2026",
+  "framework_id": "cfw_sg_seab_h2_biology_9477_2026_outcomes",
+  "curriculum_id": "cur_sg_seab_h2_biology_9477_2026",
+  "subject": "Biology",
+  "source_ids": [
+    "src_sg_seab_h2_biology_9477_2026"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "把 3 项内容内探究和 7 项实验评测能力转为教学评测知识。"
+    }
+  ],
+  "items": [
+    {
+      "practice_id": "practice_sg_h2_biology_9477_2026_1_q",
+      "requirement_ids": [
+        "req_sg_h2_biology_9477_2026_o_1_q"
+      ],
+      "kind": "assessment_task",
+      "name": "Biology content-linked investigation",
+      "name_zh": "探究并解释温度、pH、酶浓度和底物浓度对酶促反应速率的影响",
+      "description_zh": "探究并解释温度、pH、酶浓度和底物浓度对酶促反应速率的影响",
+      "instructional_use_zh": "把变量控制、可重复测量和数据解释嵌入对应生物学机制，不以实验操作替代概念解释。",
+      "assessment_evidence_zh": "同时检查实验设计与生物学因果解释；分别记录实践表现和概念覆盖证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (q)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_biology_9477_2026_3_e",
+      "requirement_ids": [
+        "req_sg_h2_biology_9477_2026_o_3_e"
+      ],
+      "kind": "assessment_task",
+      "name": "Biology content-linked investigation",
+      "name_zh": "讨论并探究温度、光强和二氧化碳浓度等光合作用限制因素",
+      "description_zh": "讨论并探究温度、光强和二氧化碳浓度等光合作用限制因素",
+      "instructional_use_zh": "把变量控制、可重复测量和数据解释嵌入对应生物学机制，不以实验操作替代概念解释。",
+      "assessment_evidence_zh": "同时检查实验设计与生物学因果解释；分别记录实践表现和概念覆盖证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_biology_9477_2026_3_k",
+      "requirement_ids": [
+        "req_sg_h2_biology_9477_2026_o_3_k"
+      ],
+      "kind": "assessment_task",
+      "name": "Biology content-linked investigation",
+      "name_zh": "探究底物浓度、氧浓度和温度对呼吸速率的影响",
+      "description_zh": "探究底物浓度、氧浓度和温度对呼吸速率的影响",
+      "instructional_use_zh": "把变量控制、可重复测量和数据解释嵌入对应生物学机制，不以实验操作替代概念解释。",
+      "assessment_evidence_zh": "同时检查实验设计与生物学因果解释；分别记录实践表现和概念覆盖证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_biology_9477_2026_planning",
+      "requirement_ids": [
+        "req_sg_h2_biology_9477_2026_o_practice_planning"
+      ],
+      "kind": "assessment_task",
+      "name": "Biology practical assessment",
+      "name_zh": "界定实验问题并给出清晰、合逻辑和可执行的实验程序",
+      "description_zh": "界定实验问题并给出清晰、合逻辑和可执行的实验程序",
+      "instructional_use_zh": "在具体生物材料和问题情境中练习，并把过程证据与概念掌握分开记录。",
+      "assessment_evidence_zh": "检查计划、风险、原始记录、呈现、分析、结论或改进中与本项对应的可观察证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.22, Practical Assessment, Planning"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_biology_9477_2026_risk",
+      "requirement_ids": [
+        "req_sg_h2_biology_9477_2026_o_practice_risk"
+      ],
+      "kind": "assessment_task",
+      "name": "Biology practical assessment",
+      "name_zh": "评估实验风险并说明把风险降至最低的防护措施",
+      "description_zh": "评估实验风险并说明把风险降至最低的防护措施",
+      "instructional_use_zh": "在具体生物材料和问题情境中练习，并把过程证据与概念掌握分开记录。",
+      "assessment_evidence_zh": "检查计划、风险、原始记录、呈现、分析、结论或改进中与本项对应的可观察证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.22, Practical Assessment, Planning"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_biology_9477_2026_manipulation_measurement",
+      "requirement_ids": [
+        "req_sg_h2_biology_9477_2026_o_practice_manipulation_measurement"
+      ],
+      "kind": "assessment_task",
+      "name": "Biology practical assessment",
+      "name_zh": "熟练操作并以适当精度记录观察和测量，识别异常值",
+      "description_zh": "熟练操作并以适当精度记录观察和测量，识别异常值",
+      "instructional_use_zh": "在具体生物材料和问题情境中练习，并把过程证据与概念掌握分开记录。",
+      "assessment_evidence_zh": "检查计划、风险、原始记录、呈现、分析、结论或改进中与本项对应的可观察证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.22, Practical Assessment, MMO"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_biology_9477_2026_data_presentation",
+      "requirement_ids": [
+        "req_sg_h2_biology_9477_2026_o_practice_data_presentation"
+      ],
+      "kind": "assessment_task",
+      "name": "Biology practical assessment",
+      "name_zh": "以恰当形式、精度和有效数据处理呈现观察与定量结果",
+      "description_zh": "以恰当形式、精度和有效数据处理呈现观察与定量结果",
+      "instructional_use_zh": "在具体生物材料和问题情境中练习，并把过程证据与概念掌握分开记录。",
+      "assessment_evidence_zh": "检查计划、风险、原始记录、呈现、分析、结论或改进中与本项对应的可观察证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.22, Practical Assessment, PDO"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_biology_9477_2026_analysis",
+      "requirement_ids": [
+        "req_sg_h2_biology_9477_2026_o_practice_analysis"
+      ],
+      "kind": "assessment_task",
+      "name": "Biology practical assessment",
+      "name_zh": "依据任务和生物学原理分析、解释数据或观察",
+      "description_zh": "依据任务和生物学原理分析、解释数据或观察",
+      "instructional_use_zh": "在具体生物材料和问题情境中练习，并把过程证据与概念掌握分开记录。",
+      "assessment_evidence_zh": "检查计划、风险、原始记录、呈现、分析、结论或改进中与本项对应的可观察证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.22, Practical Assessment, ACE"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_biology_9477_2026_conclusion_prediction",
+      "requirement_ids": [
+        "req_sg_h2_biology_9477_2026_o_practice_conclusion_prediction"
+      ],
+      "kind": "assessment_task",
+      "name": "Biology practical assessment",
+      "name_zh": "由证据得出结论并作出有依据的预测",
+      "description_zh": "由证据得出结论并作出有依据的预测",
+      "instructional_use_zh": "在具体生物材料和问题情境中练习，并把过程证据与概念掌握分开记录。",
+      "assessment_evidence_zh": "检查计划、风险、原始记录、呈现、分析、结论或改进中与本项对应的可观察证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.22, Practical Assessment, ACE"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_biology_9477_2026_evaluation_improvement",
+      "requirement_ids": [
+        "req_sg_h2_biology_9477_2026_o_practice_evaluation_improvement"
+      ],
+      "kind": "assessment_task",
+      "name": "Biology practical assessment",
+      "name_zh": "识别重要误差和局限，解释影响并提出可验证的改进",
+      "description_zh": "识别重要误差和局限，解释影响并提出可验证的改进",
+      "instructional_use_zh": "在具体生物材料和问题情境中练习，并把过程证据与概念掌握分开记录。",
+      "assessment_evidence_zh": "检查计划、风险、原始记录、呈现、分析、结论或改进中与本项对应的可观察证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.22, Practical Assessment, ACE"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

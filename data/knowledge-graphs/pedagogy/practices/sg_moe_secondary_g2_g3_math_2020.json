@@ -1,0 +1,212 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "practice_set_id": "cpk_sg_moe_secondary_g2_g3_math_2020",
+  "framework_id": "cfw_sg_moe_secondary_g2_g3_math_2020_outcomes",
+  "curriculum_id": "cur_sg_moe_secondary_g2_g3_math_2020",
+  "subject": "Mathematics",
+  "source_ids": [
+    "src_sg_moe_secondary_g2_g3_math_2020"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "把 10 项计算器和 G2/G3 数学建模过程要求从知识概念分流至教学与评测知识层。"
+    }
+  ],
+  "items": [
+    {
+      "practice_id": "practice_sg_sec_math_2020_g3_secondary_all_model_formulate",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_secondary_all_model_formulate"
+      ],
+      "kind": "modelling_process",
+      "name": "Formulating a real-world problem",
+      "name_zh": "建立现实问题的数学模型",
+      "description_zh": "在G3 四年问题中理解条件、作出适当假设与简化，并把现实问题表示为数学模型。",
+      "instructional_use_zh": "在真实问题中明确建模阶段和当前决策，要求记录假设、数据解释、方法选择以及解回到情境后的合理性检查。",
+      "assessment_evidence_zh": "学习者提交可追踪的假设、数学表示、求解过程与情境解释；结论包含合理性和局限，而非只给数值答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.14, g3 secondary all, Formulating a real-world problem"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_sec_math_2020_g3_secondary_all_model_data",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_secondary_all_model_data"
+      ],
+      "kind": "modelling_process",
+      "name": "Making sense of real data",
+      "name_zh": "理解并讨论真实数据",
+      "description_zh": "在G3 四年情境中读取、质疑并讨论图表中的真实数据。",
+      "instructional_use_zh": "在真实问题中明确建模阶段和当前决策，要求记录假设、数据解释、方法选择以及解回到情境后的合理性检查。",
+      "assessment_evidence_zh": "学习者提交可追踪的假设、数学表示、求解过程与情境解释；结论包含合理性和局限，而非只给数值答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.14, g3 secondary all, Making sense of real data"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_sec_math_2020_g3_secondary_all_model_solve",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_secondary_all_model_solve"
+      ],
+      "kind": "modelling_process",
+      "name": "Selecting methods and solving a model",
+      "name_zh": "选择方法并求解模型",
+      "description_zh": "为G3 四年模型选择适当概念、技能和工具，完成求解并清楚呈现。",
+      "instructional_use_zh": "在真实问题中明确建模阶段和当前决策，要求记录假设、数据解释、方法选择以及解回到情境后的合理性检查。",
+      "assessment_evidence_zh": "学习者提交可追踪的假设、数学表示、求解过程与情境解释；结论包含合理性和局限，而非只给数值答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.14, g3 secondary all, Selecting methods and solving a model"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_sec_math_2020_g3_secondary_all_model_interpret",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_secondary_all_model_interpret"
+      ],
+      "kind": "modelling_process",
+      "name": "Interpreting a mathematical solution",
+      "name_zh": "解释和评价模型解",
+      "description_zh": "把数学解放回G3 四年现实情境，检查合理性、局限和可改进之处。",
+      "instructional_use_zh": "在真实问题中明确建模阶段和当前决策，要求记录假设、数据解释、方法选择以及解回到情境后的合理性检查。",
+      "assessment_evidence_zh": "学习者提交可追踪的假设、数学表示、求解过程与情境解释；结论包含合理性和局限，而非只给数值答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.14, g3 secondary all, Interpreting a mathematical solution"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_sec_math_2020_g3_sec1_calculator_computation",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec1_calculator_computation"
+      ],
+      "kind": "assessment_task",
+      "name": "Calculator computation",
+      "name_zh": "计算器数值计算",
+      "description_zh": "正确输入和检查计算器计算，包括显示精度和结果合理性。",
+      "instructional_use_zh": "要求学习者先估计数量级，再输入计算器并用逆运算、替代算法或情境范围检查输出。",
+      "assessment_evidence_zh": "输入、括号、精度和单位正确；结果通过独立估算或反向检查，且不会把显示值误当无限精确值。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Calculator computation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_sec_math_2020_g2_secondary_all_model_formulate",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_secondary_all_model_formulate"
+      ],
+      "kind": "modelling_process",
+      "name": "Formulating a real-world problem",
+      "name_zh": "建立现实问题的数学模型",
+      "description_zh": "在G2 四年问题中理解条件、作出适当假设与简化，并把现实问题表示为数学模型。",
+      "instructional_use_zh": "在真实问题中明确建模阶段和当前决策，要求记录假设、数据解释、方法选择以及解回到情境后的合理性检查。",
+      "assessment_evidence_zh": "学习者提交可追踪的假设、数学表示、求解过程与情境解释；结论包含合理性和局限，而非只给数值答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.24, g2 secondary all, Formulating a real-world problem"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_sec_math_2020_g2_secondary_all_model_data",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_secondary_all_model_data"
+      ],
+      "kind": "modelling_process",
+      "name": "Making sense of real data",
+      "name_zh": "理解并讨论真实数据",
+      "description_zh": "在G2 四年情境中读取、质疑并讨论图表中的真实数据。",
+      "instructional_use_zh": "在真实问题中明确建模阶段和当前决策，要求记录假设、数据解释、方法选择以及解回到情境后的合理性检查。",
+      "assessment_evidence_zh": "学习者提交可追踪的假设、数学表示、求解过程与情境解释；结论包含合理性和局限，而非只给数值答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.24, g2 secondary all, Making sense of real data"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_sec_math_2020_g2_secondary_all_model_solve",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_secondary_all_model_solve"
+      ],
+      "kind": "modelling_process",
+      "name": "Selecting methods and solving a model",
+      "name_zh": "选择方法并求解模型",
+      "description_zh": "为G2 四年模型选择适当概念、技能和工具，完成求解并清楚呈现。",
+      "instructional_use_zh": "在真实问题中明确建模阶段和当前决策，要求记录假设、数据解释、方法选择以及解回到情境后的合理性检查。",
+      "assessment_evidence_zh": "学习者提交可追踪的假设、数学表示、求解过程与情境解释；结论包含合理性和局限，而非只给数值答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.24, g2 secondary all, Selecting methods and solving a model"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_sec_math_2020_g2_secondary_all_model_interpret",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_secondary_all_model_interpret"
+      ],
+      "kind": "modelling_process",
+      "name": "Interpreting a mathematical solution",
+      "name_zh": "解释和评价模型解",
+      "description_zh": "把数学解放回G2 四年现实情境，检查合理性、局限和可改进之处。",
+      "instructional_use_zh": "在真实问题中明确建模阶段和当前决策，要求记录假设、数据解释、方法选择以及解回到情境后的合理性检查。",
+      "assessment_evidence_zh": "学习者提交可追踪的假设、数学表示、求解过程与情境解释；结论包含合理性和局限，而非只给数值答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.24, g2 secondary all, Interpreting a mathematical solution"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_sec_math_2020_g2_sec1_calculator_computation",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g2_sec1_calculator_computation"
+      ],
+      "kind": "assessment_task",
+      "name": "Calculator computation",
+      "name_zh": "计算器数值计算",
+      "description_zh": "正确输入和检查计算器计算，包括显示精度和结果合理性。",
+      "instructional_use_zh": "要求学习者先估计数量级，再输入计算器并用逆运算、替代算法或情境范围检查输出。",
+      "assessment_evidence_zh": "输入、括号、精度和单位正确；结果通过独立估算或反向检查，且不会把显示值误当无限精确值。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Calculator computation"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

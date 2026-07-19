@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://primoria.local/schemas/curriculum-practice-knowledge.schema.json",
+  "title": "Primoria Curriculum Practice and Assessment Knowledge",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "content_version",
+    "practice_set_id",
+    "framework_id",
+    "curriculum_id",
+    "subject",
+    "source_ids",
+    "generated_at",
+    "review_status",
+    "changelog",
+    "items"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "content_version": { "$ref": "#/$defs/semver" },
+    "practice_set_id": { "type": "string", "pattern": "^cpk_[a-z0-9_]+$" },
+    "framework_id": { "type": "string", "pattern": "^cfw_[a-z0-9_]+$" },
+    "curriculum_id": { "type": "string", "pattern": "^cur_[a-z0-9_]+$" },
+    "subject": { "type": "string", "minLength": 1 },
+    "source_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/sourceId" }
+    },
+    "generated_at": { "type": "string", "format": "date" },
+    "review_status": { "$ref": "#/$defs/reviewStatus" },
+    "changelog": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/changelogEntry" }
+    },
+    "items": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/item" }
+    }
+  },
+  "$defs": {
+    "semver": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+    },
+    "sourceId": { "type": "string", "pattern": "^src_[a-z0-9_]+$" },
+    "reviewStatus": {
+      "enum": ["unreviewed", "needs_review", "approved", "rejected", "superseded"]
+    },
+    "evidenceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "locator"],
+      "properties": {
+        "source_id": { "$ref": "#/$defs/sourceId" },
+        "locator": { "type": "string", "minLength": 1 },
+        "note_zh": { "type": "string", "minLength": 1 }
+      }
+    },
+    "changelogEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "date", "summary_zh"],
+      "properties": {
+        "version": { "$ref": "#/$defs/semver" },
+        "date": { "type": "string", "format": "date" },
+        "summary_zh": { "type": "string", "minLength": 1 }
+      }
+    },
+    "item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "practice_id",
+        "requirement_ids",
+        "kind",
+        "name",
+        "name_zh",
+        "description_zh",
+        "instructional_use_zh",
+        "assessment_evidence_zh",
+        "evidence_refs",
+        "review_status"
+      ],
+      "properties": {
+        "practice_id": { "type": "string", "pattern": "^practice_[a-z0-9_]+$" },
+        "requirement_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^req_[a-z0-9_]+$" }
+        },
+        "kind": {
+          "enum": ["modelling_process", "inquiry_process", "reporting_integrity", "assessment_task"]
+        },
+        "name": { "type": "string", "minLength": 1 },
+        "name_zh": { "type": "string", "minLength": 1 },
+        "description_zh": { "type": "string", "minLength": 1 },
+        "instructional_use_zh": { "type": "string", "minLength": 1 },
+        "assessment_evidence_zh": { "type": "string", "minLength": 1 },
+        "evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/evidenceRef" }
+        },
+        "review_status": { "$ref": "#/$defs/reviewStatus" }
+      }
+    }
+  }
+}

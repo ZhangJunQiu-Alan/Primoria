@@ -1,0 +1,174 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "practice_set_id": "cpk_sg_seab_h2_chemistry_9476_2026",
+  "framework_id": "cfw_sg_seab_h2_chemistry_9476_2026_outcomes",
+  "curriculum_id": "cur_sg_seab_h2_chemistry_9476_2026",
+  "subject": "Chemistry",
+  "source_ids": [
+    "src_sg_seab_h2_chemistry_9476_2026"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "把 1 项内容内实验设计和 7 项跨主题实践转为教学评测知识。"
+    }
+  ],
+  "items": [
+    {
+      "practice_id": "practice_sg_h2_chemistry_9476_2026_8_e",
+      "requirement_ids": [
+        "req_sg_h2_chemistry_9476_2026_o_8_e"
+      ],
+      "kind": "assessment_task",
+      "name": "Design a reaction-rate investigation",
+      "name_zh": "由给定信息设计研究反应速率的实验技术",
+      "description_zh": "由给定信息设计研究反应速率的实验技术",
+      "instructional_use_zh": "给出反应体系和可用仪器，让学习者明确自变量、因变量、控制变量、测量间隔、风险及数据处理。",
+      "assessment_evidence_zh": "提交可执行计划、变量控制、数据表设计和风险控制；按可重复性、有效性与安全性评分。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_chemistry_9476_2026_pos_wotd",
+      "requirement_ids": [
+        "req_sg_h2_chemistry_9476_2026_o_practice_pos_wotd"
+      ],
+      "kind": "inquiry_process",
+      "name": "Chemistry scientific practice",
+      "name_zh": "科学思维与实践：提出问题、形成假设、用证据和模型解释化学系统",
+      "description_zh": "科学思维与实践：提出问题、形成假设、用证据和模型解释化学系统",
+      "instructional_use_zh": "在具体化学内容中明确证据、模型、实验步骤、风险和社会环境权衡，让实践表现可观察、可留痕。",
+      "assessment_evidence_zh": "检查实验计划、原始记录、图表、推理链、误差评价或论证文本；评价证据质量而非只看最终答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.4, Practices of Science, component 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_chemistry_9476_2026_pos_nos",
+      "requirement_ids": [
+        "req_sg_h2_chemistry_9476_2026_o_practice_pos_nos"
+      ],
+      "kind": "inquiry_process",
+      "name": "Chemistry scientific practice",
+      "name_zh": "科学知识本质：评价模型、理论、证据、可重复性与知识限制",
+      "description_zh": "科学知识本质：评价模型、理论、证据、可重复性与知识限制",
+      "instructional_use_zh": "在具体化学内容中明确证据、模型、实验步骤、风险和社会环境权衡，让实践表现可观察、可留痕。",
+      "assessment_evidence_zh": "检查实验计划、原始记录、图表、推理链、误差评价或论证文本；评价证据质量而非只看最终答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.4, Practices of Science, component 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_chemistry_9476_2026_pos_stse",
+      "requirement_ids": [
+        "req_sg_h2_chemistry_9476_2026_o_practice_pos_stse"
+      ],
+      "kind": "inquiry_process",
+      "name": "Chemistry scientific practice",
+      "name_zh": "科学、技术、社会与环境：评价化学应用的收益、风险、伦理和可持续性",
+      "description_zh": "科学、技术、社会与环境：评价化学应用的收益、风险、伦理和可持续性",
+      "instructional_use_zh": "在具体化学内容中明确证据、模型、实验步骤、风险和社会环境权衡，让实践表现可观察、可留痕。",
+      "assessment_evidence_zh": "检查实验计划、原始记录、图表、推理链、误差评价或论证文本；评价证据质量而非只看最终答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.4, Practices of Science, component 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_chemistry_9476_2026_practical_planning",
+      "requirement_ids": [
+        "req_sg_h2_chemistry_9476_2026_o_practice_practical_planning"
+      ],
+      "kind": "assessment_task",
+      "name": "Chemistry scientific practice",
+      "name_zh": "实验计划：定义问题、设计步骤、使用数据、评估风险并控制风险",
+      "description_zh": "实验计划：定义问题、设计步骤、使用数据、评估风险并控制风险",
+      "instructional_use_zh": "在具体化学内容中明确证据、模型、实验步骤、风险和社会环境权衡，让实践表现可观察、可留痕。",
+      "assessment_evidence_zh": "检查实验计划、原始记录、图表、推理链、误差评价或论证文本；评价证据质量而非只看最终答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.36, Practical Assessment, Planning; assessment summary on p.9"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_chemistry_9476_2026_practical_mmo",
+      "requirement_ids": [
+        "req_sg_h2_chemistry_9476_2026_o_practice_practical_mmo"
+      ],
+      "kind": "assessment_task",
+      "name": "Chemistry scientific practice",
+      "name_zh": "实验操作、测量与观察：安全操作、精确记录、选择测量并识别异常",
+      "description_zh": "实验操作、测量与观察：安全操作、精确记录、选择测量并识别异常",
+      "instructional_use_zh": "在具体化学内容中明确证据、模型、实验步骤、风险和社会环境权衡，让实践表现可观察、可留痕。",
+      "assessment_evidence_zh": "检查实验计划、原始记录、图表、推理链、误差评价或论证文本；评价证据质量而非只看最终答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.36, Practical Assessment, MMO; assessment summary on p.9"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_chemistry_9476_2026_practical_pdo",
+      "requirement_ids": [
+        "req_sg_h2_chemistry_9476_2026_o_practice_practical_pdo"
+      ],
+      "kind": "assessment_task",
+      "name": "Chemistry scientific practice",
+      "name_zh": "数据与观察呈现：选择适当形式、处理测量并识别趋势",
+      "description_zh": "数据与观察呈现：选择适当形式、处理测量并识别趋势",
+      "instructional_use_zh": "在具体化学内容中明确证据、模型、实验步骤、风险和社会环境权衡，让实践表现可观察、可留痕。",
+      "assessment_evidence_zh": "检查实验计划、原始记录、图表、推理链、误差评价或论证文本；评价证据质量而非只看最终答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.37, Practical Assessment, PDO; assessment summary on p.9"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_chemistry_9476_2026_practical_ace",
+      "requirement_ids": [
+        "req_sg_h2_chemistry_9476_2026_o_practice_practical_ace"
+      ],
+      "kind": "assessment_task",
+      "name": "Chemistry scientific practice",
+      "name_zh": "分析、结论与评价：解释数据、处理不确定度、评价方法并提出改进",
+      "description_zh": "分析、结论与评价：解释数据、处理不确定度、评价方法并提出改进",
+      "instructional_use_zh": "在具体化学内容中明确证据、模型、实验步骤、风险和社会环境权衡，让实践表现可观察、可留痕。",
+      "assessment_evidence_zh": "检查实验计划、原始记录、图表、推理链、误差评价或论证文本；评价证据质量而非只看最终答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.37, Practical Assessment, ACE; assessment summary on p.9"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

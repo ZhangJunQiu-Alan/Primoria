@@ -1,0 +1,1610 @@
+{
+  "schema_version": "3.0.0",
+  "content_version": "0.4.0",
+  "mapping_set_id": "cms_sg_seab_h2_math_9758_2026_outcomes",
+  "framework_id": "cfw_sg_seab_h2_math_9758_2026_outcomes",
+  "curriculum_id": "cur_sg_seab_h2_math_9758_2026",
+  "subject": "Mathematics",
+  "mapping_scope": "outcome_coverage",
+  "source_ids": [
+    "src_sg_seab_h2_math_9758_2026"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "建立 H2 数学主题级候选映射。"
+    },
+    {
+      "version": "0.2.1",
+      "date": "2026-07-18",
+      "summary_zh": "复核主题映射的范围与排除项。"
+    },
+    {
+      "version": "0.3.0",
+      "date": "2026-07-19",
+      "summary_zh": "替换为 76 项成果级映射，保守区分 full、partial、unmapped 与工具实践 excluded。"
+    },
+    {
+      "version": "0.4.0",
+      "date": "2026-07-19",
+      "summary_zh": "应用 33 项缺口解析：学科成果闭合为 full，6 项工具实践继续保持 excluded 并进入独立教学评测知识集。"
+    }
+  ],
+  "mappings": [
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_gc_evidence_limitations",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_gc_evidence_limitations",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是贯穿课程的工具使用和作答证据要求，应进入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.4, Use of a Graphing Calculator"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_function_domain_range",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_function_domain_range",
+      "canonical_ids": [
+        "pc_d547d8eb03df4b28cc0357c7cae1d164"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有函数 canonical 概念直接覆盖定义域、值域与映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.1 Functions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_inverse_existence_restriction",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_inverse_existence_restriction",
+      "canonical_ids": [
+        "pc_5f10437c0846188d853443ee76c29385",
+        "pc_d547d8eb03df4b28cc0357c7cae1d164"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_5f10437c0846188d853443ee76c29385、pc_d547d8eb03df4b28cc0357c7cae1d164 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.1 Functions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_composite_conditions",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_composite_conditions",
+      "canonical_ids": [
+        "pc_6a6936f09677fca363b23f40f12d946d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有复合函数概念包含运算次序和定义域条件。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.1 Functions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_standard_graph_characteristics",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_standard_graph_characteristics",
+      "canonical_ids": [
+        "pc_01bf6e2b919084e9537bb1dae27d1509",
+        "pc_133d40fa0e72c29c5eb6ec7a9852c80c",
+        "pc_58591fb3c8294a83a9405568a100991e",
+        "pc_76707a52fc4d807bbdfb0e56f509c17e",
+        "pc_d236c68eb711f9a26eb4250a7843b517",
+        "pc_2fd09e919b7e73069c83ce49007f17d2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_01bf6e2b919084e9537bb1dae27d1509、pc_133d40fa0e72c29c5eb6ec7a9852c80c、pc_58591fb3c8294a83a9405568a100991e、pc_76707a52fc4d807bbdfb0e56f509c17e、pc_d236c68eb711f9a26eb4250a7843b517、pc_2fd09e919b7e73069c83ce49007f17d2 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.2 Graphs and transformations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_graphing_function_technology",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_graphing_function_technology",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是图形技术操作及作答证据，不应写成学科概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.2 Graphs and transformations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_graph_transformations",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_graph_transformations",
+      "canonical_ids": [
+        "pc_1aaf98f8144a2f3b3fae833eb1370db8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有图像变换概念与官方变换范围一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.2 Graphs and transformations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_related_function_graphs",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_related_function_graphs",
+      "canonical_ids": [
+        "pc_1aaf98f8144a2f3b3fae833eb1370db8",
+        "pc_bbf60fbe4b8e3e3bd3bd64a1b5fc3475",
+        "pc_d547d8eb03df4b28cc0357c7cae1d164"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "图像变换、绝对值和反函数概念组合覆盖该结果。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.2 Graphs and transformations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_parametric_graphs",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_parametric_graphs",
+      "canonical_ids": [
+        "pc_044eaaf9e74e43e4aee3e6898c91a012"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_044eaaf9e74e43e4aee3e6898c91a012 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.2 Graphs and transformations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_formulate_equations",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_formulate_equations",
+      "canonical_ids": [
+        "pc_2c7c77c12eaf42efced7f2a956e1bb16",
+        "pc_204206c0b72ea40b72d3055124b579af",
+        "pc_4307437065fb6fce9aa3b4c05e7ed82d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_2c7c77c12eaf42efced7f2a956e1bb16、pc_204206c0b72ea40b72d3055124b579af、pc_4307437065fb6fce9aa3b4c05e7ed82d 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 1.3 Equations and inequalities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_gc_equation_solving",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_gc_equation_solving",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "图形技术操作属于工具使用与评测策略，不应写成学科概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 1.3 Equations and inequalities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_rational_quadratic_inequalities",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_rational_quadratic_inequalities",
+      "canonical_ids": [
+        "pc_afd49425ab0864c75dcf18868acbba73",
+        "pc_4307437065fb6fce9aa3b4c05e7ed82d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_afd49425ab0864c75dcf18868acbba73、pc_4307437065fb6fce9aa3b4c05e7ed82d 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 1.3 Equations and inequalities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_modulus_inequalities",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_modulus_inequalities",
+      "canonical_ids": [
+        "pc_bbf60fbe4b8e3e3bd3bd64a1b5fc3475"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有绝对值函数概念直接覆盖图像、方程和不等式。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 1.3 Equations and inequalities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_sequence_series_representation",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_sequence_series_representation",
+      "canonical_ids": [
+        "pc_d628dbf58410331e403a76b3b121c7fd",
+        "pc_105655e3b7f36e0d0c2488e7d3e47a3a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "中国高中数列表示和 MIT 数列级数概念组合覆盖定义与表示。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 2.1 Sequences and series"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_recurrence_sequences",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_recurrence_sequences",
+      "canonical_ids": [
+        "pc_751f6453ef98be2b89e76c9a253bef03"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_751f6453ef98be2b89e76c9a253bef03 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 2.1 Sequences and series"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_recurrence_technology",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_recurrence_technology",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是工具实践和过程证据，应进入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 2.1 Sequences and series"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_series_operations_convergence",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_series_operations_convergence",
+      "canonical_ids": [
+        "pc_08b1eb5f8f685706a847adee808f59f9",
+        "pc_105655e3b7f36e0d0c2488e7d3e47a3a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_08b1eb5f8f685706a847adee808f59f9、pc_105655e3b7f36e0d0c2488e7d3e47a3a 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 2.1 Sequences and series"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_arithmetic_series",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_arithmetic_series",
+      "canonical_ids": [
+        "pc_9e401fe846a8c086510b3ea2102be253"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有等差级数概念直接覆盖通项与有限和。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 2.1 Sequences and series"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_geometric_series",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_geometric_series",
+      "canonical_ids": [
+        "pc_ced3271242c9a0d6fe67d9a446214543"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有等比级数概念直接覆盖有限与无穷情形。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 2.1 Sequences and series"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_vector_operations_geometry",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_vector_operations_geometry",
+      "canonical_ids": [
+        "pc_d4b7e2b6e2c8459d849405a8f6fc0b79",
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_d4b7e2b6e2c8459d849405a8f6fc0b79、pc_9ae5f17312ee21050edf3e4bd9b005a2 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 3.1 Basic properties of vectors"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_vector_types_magnitude",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_vector_types_magnitude",
+      "canonical_ids": [
+        "pc_621b21298876e61af0ada0dde5521dd6",
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2",
+        "pc_64e61e1cee5471619fa54db48800b916"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_621b21298876e61af0ada0dde5521dd6、pc_9ae5f17312ee21050edf3e4bd9b005a2、pc_64e61e1cee5471619fa54db48800b916 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 3.1 Basic properties of vectors"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_collinearity_ratio",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_collinearity_ratio",
+      "canonical_ids": [
+        "pc_c4a9b18aaa8cac61cd5719c4de9d6879",
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_c4a9b18aaa8cac61cd5719c4de9d6879、pc_9ae5f17312ee21050edf3e4bd9b005a2 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, collinearity; PDF p.8, ratio theorem, sub-topic 3.1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_scalar_cross_products",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_scalar_cross_products",
+      "canonical_ids": [
+        "pc_3e68cc383e695a3ae1773f286b5221f3",
+        "pc_909ca9d8010cb1a841ee03551e2afc16"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "既有标量积和 MIT 叉积概念直接覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 3.2 Scalar and vector products"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_product_geometric_meaning",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_product_geometric_meaning",
+      "canonical_ids": [
+        "pc_b70bbfb827c2b527f128f02bf360675e",
+        "pc_909ca9d8010cb1a841ee03551e2afc16"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "向量投影与叉积概念组合直接覆盖几何意义。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 3.2 Scalar and vector products"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_line_plane_equations",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_line_plane_equations",
+      "canonical_ids": [
+        "pc_0c3c2f35769f38762a59705783e03824",
+        "pc_8386363188df11ab28ae08ef72342a47"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有直线向量方程和 MIT 直线平面概念直接覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 3.3 Three-dimensional vector geometry"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_point_line_plane_distance",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_point_line_plane_distance",
+      "canonical_ids": [
+        "pc_44258dcc263e1037c0cac100f62afaa6",
+        "pc_b70bbfb827c2b527f128f02bf360675e",
+        "pc_8386363188df11ab28ae08ef72342a47"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_44258dcc263e1037c0cac100f62afaa6、pc_b70bbfb827c2b527f128f02bf360675e、pc_8386363188df11ab28ae08ef72342a47 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 3.3 Three-dimensional vector geometry"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_line_plane_angles",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_line_plane_angles",
+      "canonical_ids": [
+        "pc_3e68cc383e695a3ae1773f286b5221f3",
+        "pc_8386363188df11ab28ae08ef72342a47"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "标量积和直线平面表示组合覆盖夹角计算。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 3.3 Three-dimensional vector geometry"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_relative_positions_3d",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_relative_positions_3d",
+      "canonical_ids": [
+        "pc_e6bc28a8a732ece9251e6d7d12525dee",
+        "pc_8386363188df11ab28ae08ef72342a47"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_e6bc28a8a732ece9251e6d7d12525dee、pc_8386363188df11ab28ae08ef72342a47 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 3.3 Three-dimensional vector geometry"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_complex_extension_roots",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_complex_extension_roots",
+      "canonical_ids": [
+        "pc_24330767cc56747db538e56a7aaff4d4",
+        "pc_a2d1c2c86661b6706ceb2919619b89e5",
+        "pc_fc9bb3961ffd0d45670252b69c41d19c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_24330767cc56747db538e56a7aaff4d4、pc_a2d1c2c86661b6706ceb2919619b89e5、pc_fc9bb3961ffd0d45670252b69c41d19c 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_complex_mod_arg_conjugate",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_complex_mod_arg_conjugate",
+      "canonical_ids": [
+        "pc_08a0b36d500f85a79ecd1a38f6cef808",
+        "pc_84fa9a959816d2fd778aec459c7e0020",
+        "pc_8b0b34fcb52404046ccbf41b402895fd"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_08a0b36d500f85a79ecd1a38f6cef808、pc_84fa9a959816d2fd778aec459c7e0020、pc_8b0b34fcb52404046ccbf41b402895fd 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_complex_operations_equality",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_complex_operations_equality",
+      "canonical_ids": [
+        "pc_84fa9a959816d2fd778aec459c7e0020"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "既有复数运算 canonical 直接覆盖 a+bi 四则运算。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_conjugate_polynomial_roots",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_conjugate_polynomial_roots",
+      "canonical_ids": [
+        "pc_8b92b1da4df755ca8679ce69d4471470",
+        "pc_fc9bb3961ffd0d45670252b69c41d19c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_8b92b1da4df755ca8679ce69d4471470、pc_fc9bb3961ffd0d45670252b69c41d19c 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_argand_representation",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_argand_representation",
+      "canonical_ids": [
+        "pc_8b0b34fcb52404046ccbf41b402895fd"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "既有阿根图概念直接覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_complex_geometric_effects",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_complex_geometric_effects",
+      "canonical_ids": [
+        "pc_415bf497b8b12033e4f00630f6180261",
+        "pc_8b0b34fcb52404046ccbf41b402895fd",
+        "pc_c04ce0aed24384aaa5b223f59282d31c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_415bf497b8b12033e4f00630f6180261、pc_8b0b34fcb52404046ccbf41b402895fd、pc_c04ce0aed24384aaa5b223f59282d31c 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_derivative_graph_relations",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_derivative_graph_relations",
+      "canonical_ids": [
+        "pc_4d08149f9dd7b5784cadd265396b01c3",
+        "pc_f9249fb783344fbbcfe32c05267ebcb8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_4d08149f9dd7b5784cadd265396b01c3、pc_f9249fb783344fbbcfe32c05267ebcb8 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.1 Differentiation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_implicit_parametric_differentiation",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_implicit_parametric_differentiation",
+      "canonical_ids": [
+        "pc_291eccaad32d6e2b88654e4670202509",
+        "pc_7430a9a6308a8998f2a18d7a50c51616"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "两个既有概念分别完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.1 Differentiation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_stationary_point_classification",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_stationary_point_classification",
+      "canonical_ids": [
+        "pc_61dadf3e646d2fed3a3b5b81630b2563"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "既有驻点概念直接覆盖定位与分类。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.1 Differentiation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_gc_derivative_extrema",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_gc_derivative_extrema",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是图形技术操作和评测证据，不应成为独立学科概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.1 Differentiation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_tangents_normals",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_tangents_normals",
+      "canonical_ids": [
+        "pc_e48516f32ed219bfab284968f67ba2b4",
+        "pc_291eccaad32d6e2b88654e4670202509",
+        "pc_7430a9a6308a8998f2a18d7a50c51616"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有切法线及两类求导概念组合覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.1 Differentiation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_local_optimisation",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_local_optimisation",
+      "canonical_ids": [
+        "pc_7f364bd0df6065095b932f11a00d4941"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "中国高中导数优化窄概念直接覆盖同一诊断目标。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.1 Differentiation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_connected_rates",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_connected_rates",
+      "canonical_ids": [
+        "pc_5ada2e4818384405fb8ea25e390ece93"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "既有相关变化率 canonical 在 A-Level 与 MIT 图中共享。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.1 Differentiation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_standard_maclaurin_series",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_standard_maclaurin_series",
+      "canonical_ids": [
+        "pc_c1be934889ced7140179984f36bd37cf"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "MIT Taylor/Maclaurin 概念直接覆盖标准展开。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.2 Maclaurin series"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_derive_maclaurin_terms",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_derive_maclaurin_terms",
+      "canonical_ids": [
+        "pc_c1be934889ced7140179984f36bd37cf",
+        "pc_291eccaad32d6e2b88654e4670202509"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "Taylor 展开与隐式求导组合覆盖指定方法。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.2 Maclaurin series"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_series_convergence_range",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_series_convergence_range",
+      "canonical_ids": [
+        "pc_b4706d8b591bf0b18ba7aefbab523c9c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "MIT 幂级数概念直接包含收敛半径和区间。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.2 Maclaurin series"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_series_approximations",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_series_approximations",
+      "canonical_ids": [
+        "pc_155158921b82586ddb35fdb4e5be126e",
+        "pc_c1be934889ced7140179984f36bd37cf"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_155158921b82586ddb35fdb4e5be126e、pc_c1be934889ced7140179984f36bd37cf 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.2 Maclaurin series"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_standard_integration_forms",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_standard_integration_forms",
+      "canonical_ids": [
+        "pc_ccdbe5629abf3bd57a2af7fed2325222"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有标准函数积分概念直接覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.3 Integration techniques"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_given_substitution",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_given_substitution",
+      "canonical_ids": [
+        "pc_068c8dc8d8c675d3d5ce7ccecd096ffc"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "既有换元积分概念直接覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.3 Integration techniques"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_integration_by_parts",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_integration_by_parts",
+      "canonical_ids": [
+        "pc_109312f1b6fc1335fa82c6f6af1f684c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "既有分部积分概念直接覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.3 Integration techniques"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_riemann_sum_area",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_riemann_sum_area",
+      "canonical_ids": [
+        "pc_440f4c4a56ad058d19d3aab4c136729d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "MIT 定积分概念明确以黎曼和极限定义并解释有向面积。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.4 Definite integrals"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_definite_integral_evaluation",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_definite_integral_evaluation",
+      "canonical_ids": [
+        "pc_70ca4e3f9288a539a0658a8bfc5fd30e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有定积分与面积概念明确覆盖使用微积分基本定理计算定积分。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.4 Definite integrals"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_definite_integral_technology",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_definite_integral_technology",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是图形技术操作及作答证据，应进入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.4 Definite integrals"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_bounded_areas",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_bounded_areas",
+      "canonical_ids": [
+        "pc_70ca4e3f9288a539a0658a8bfc5fd30e",
+        "pc_fdb8e34b296a1710202568026f99cc54"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "A-Level 定积分面积和 MIT 曲线间面积组合完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.4 Definite integrals"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_volumes_of_revolution",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_volumes_of_revolution",
+      "canonical_ids": [
+        "pc_976815608b52b80566be2966aa010743"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有旋转体体积概念直接覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.4 Definite integrals"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_separable_ode_solutions",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_separable_ode_solutions",
+      "canonical_ids": [
+        "pc_3abc241a0eedef6ba58bf1ae2d6eb93a",
+        "pc_19b4d23ab3a52e66c899dbf16e583835"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_3abc241a0eedef6ba58bf1ae2d6eb93a、pc_19b4d23ab3a52e66c899dbf16e583835 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.5 Differential equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_form_differential_equation",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_form_differential_equation",
+      "canonical_ids": [
+        "pc_1c40f01e7df9a2f35a81598b9edf2a2a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "既有建立微分方程概念直接覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.5 Differential equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_interpret_ode_solution",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_interpret_ode_solution",
+      "canonical_ids": [
+        "pc_baed7089af5b006e15f04221326d2a5d",
+        "pc_1c40f01e7df9a2f35a81598b9edf2a2a",
+        "pc_19b4d23ab3a52e66c899dbf16e583835"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_baed7089af5b006e15f04221326d2a5d、pc_1c40f01e7df9a2f35a81598b9edf2a2a、pc_19b4d23ab3a52e66c899dbf16e583835 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.5 Differential equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_counting_arrangements",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_counting_arrangements",
+      "canonical_ids": [
+        "pc_eef96c990935a92e07a3e4f266c6d8b7",
+        "pc_72b8e1a7b680bd575ff6d93a1e2c592b"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_eef96c990935a92e07a3e4f266c6d8b7、pc_72b8e1a7b680bd575ff6d93a1e2c592b 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.11, sub-topic 6.1 Probability"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_probability_laws_independence",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_probability_laws_independence",
+      "canonical_ids": [
+        "pc_0c7c408f2fb208ecfb0b6758b1cd4a0a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有概率法则概念直接覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.11, sub-topic 6.1 Probability"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_probability_representations",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_probability_representations",
+      "canonical_ids": [
+        "pc_d087f482be941779c1774129f95c83cb",
+        "pc_c1ed59c17771ca7dfcca90c7c55fadc1",
+        "pc_cf8dbc5bcf596f0c4db74ea9886540a1",
+        "pc_0c7c408f2fb208ecfb0b6758b1cd4a0a",
+        "pc_72b8e1a7b680bd575ff6d93a1e2c592b"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_d087f482be941779c1774129f95c83cb、pc_c1ed59c17771ca7dfcca90c7c55fadc1、pc_cf8dbc5bcf596f0c4db74ea9886540a1、pc_0c7c408f2fb208ecfb0b6758b1cd4a0a、pc_72b8e1a7b680bd575ff6d93a1e2c592b 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.11, sub-topic 6.1 Probability"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_conditional_probability",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_conditional_probability",
+      "canonical_ids": [
+        "pc_cf8dbc5bcf596f0c4db74ea9886540a1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "既有条件概率概念直接覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.11, sub-topic 6.1 Probability"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_discrete_distribution_moments",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_discrete_distribution_moments",
+      "canonical_ids": [
+        "pc_bd3e94ad62025e9a58ab6e2016182924"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "既有离散随机变量概念直接覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.11, sub-topic 6.2 Discrete random variables"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_binomial_model_conditions",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_binomial_model_conditions",
+      "canonical_ids": [
+        "pc_dab02572a5e34659342ea1fb544803f8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "既有二项分布概念直接包含模型条件。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.11, sub-topic 6.2 Discrete random variables"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_binomial_mean_variance",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_binomial_mean_variance",
+      "canonical_ids": [
+        "pc_dab02572a5e34659342ea1fb544803f8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "同一二项分布 canonical 覆盖参数、均值和方差。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.11, sub-topic 6.2 Discrete random variables"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_continuous_normal_model",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_continuous_normal_model",
+      "canonical_ids": [
+        "pc_5f55e60931935e299996e34826f1a0e9",
+        "pc_23858effd2dd68284bd0c6b645607386"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "两个既有 canonical 概念分别覆盖连续变量和正态模型。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.3 Normal distribution"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_normal_probabilities_parameters",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_normal_probabilities_parameters",
+      "canonical_ids": [
+        "pc_d3fe5191e8f9cbcc11d138b2398d7d39",
+        "pc_23858effd2dd68284bd0c6b645607386"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_d3fe5191e8f9cbcc11d138b2398d7d39、pc_23858effd2dd68284bd0c6b645607386 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.3 Normal distribution"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_linear_transform_moments",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_linear_transform_moments",
+      "canonical_ids": [
+        "pc_6e5628aaaaa688905edfcdb9e9bd31de",
+        "pc_d9a0d8a8f6fc271c56cb2d9dde6576ec",
+        "pc_8d0a38a8e8f86cd83ae1f091a62f2cad"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_6e5628aaaaa688905edfcdb9e9bd31de、pc_d9a0d8a8f6fc271c56cb2d9dde6576ec、pc_8d0a38a8e8f86cd83ae1f091a62f2cad 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.3 Normal distribution"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_independent_sum_moments",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_independent_sum_moments",
+      "canonical_ids": [
+        "pc_b6ae379a519add3186b6f9563641f292",
+        "pc_d9a0d8a8f6fc271c56cb2d9dde6576ec",
+        "pc_8d0a38a8e8f86cd83ae1f091a62f2cad"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_b6ae379a519add3186b6f9563641f292、pc_d9a0d8a8f6fc271c56cb2d9dde6576ec、pc_8d0a38a8e8f86cd83ae1f091a62f2cad 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.3 Normal distribution"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_population_random_sample",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_population_random_sample",
+      "canonical_ids": [
+        "pc_14be091db45947021ec317ac23ac5401"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "既有抽样 canonical 明确覆盖总体与样本。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.4 Sampling"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_sample_mean_distribution",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_sample_mean_distribution",
+      "canonical_ids": [
+        "pc_14be091db45947021ec317ac23ac5401",
+        "pc_23858effd2dd68284bd0c6b645607386"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "抽样 canonical 和正态分布组合覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.4 Sampling"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_central_limit_sample_mean",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_central_limit_sample_mean",
+      "canonical_ids": [
+        "pc_2e9fda1932139d389e99613d454f355c",
+        "pc_14be091db45947021ec317ac23ac5401"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "CLT 与抽样概念组合直接覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.4 Sampling"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_unbiased_sample_estimates",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_unbiased_sample_estimates",
+      "canonical_ids": [
+        "pc_327828115364d07966390e1866528270"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "既有统计估计 canonical 直接覆盖无偏均值和方差估计。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.4 Sampling"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_hypothesis_test_concepts",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_hypothesis_test_concepts",
+      "canonical_ids": [
+        "pc_1b57223154105f385a53683ed93b8917",
+        "pc_5e8204fe2f43100f3de7f78a5824d321"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_1b57223154105f385a53683ed93b8917、pc_5e8204fe2f43100f3de7f78a5824d321 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_one_mean_hypothesis_test",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_one_mean_hypothesis_test",
+      "canonical_ids": [
+        "pc_0c7cea3a120654ca950f6328bada7f29",
+        "pc_5e8204fe2f43100f3de7f78a5824d321",
+        "pc_14be091db45947021ec317ac23ac5401",
+        "pc_23858effd2dd68284bd0c6b645607386"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_0c7cea3a120654ca950f6328bada7f29、pc_5e8204fe2f43100f3de7f78a5824d321、pc_14be091db45947021ec317ac23ac5401、pc_23858effd2dd68284bd0c6b645607386 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_one_two_tailed_tests",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_one_two_tailed_tests",
+      "canonical_ids": [
+        "pc_f415daef0495c59dcc47d3019cc79bc6",
+        "pc_5e8204fe2f43100f3de7f78a5824d321"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_f415daef0495c59dcc47d3019cc79bc6、pc_5e8204fe2f43100f3de7f78a5824d321 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_interpret_hypothesis_result",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_interpret_hypothesis_result",
+      "canonical_ids": [
+        "pc_5199b5ff650e904e87b0e95d4228f807",
+        "pc_5e8204fe2f43100f3de7f78a5824d321"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_5199b5ff650e904e87b0e95d4228f807、pc_5e8204fe2f43100f3de7f78a5824d321 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_scatter_linear_plausibility",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_scatter_linear_plausibility",
+      "canonical_ids": [
+        "pc_e509f13c1e239978b74733175b7f064c",
+        "pc_629b0c54807299e247ddd77ea5076dd6"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_e509f13c1e239978b74733175b7f064c、pc_629b0c54807299e247ddd77ea5076dd6 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_pmcc_interpretation",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_pmcc_interpretation",
+      "canonical_ids": [
+        "pc_ad7a1774c52a28bad236b9cd642c8867",
+        "pc_629b0c54807299e247ddd77ea5076dd6"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_ad7a1774c52a28bad236b9cd642c8867、pc_629b0c54807299e247ddd77ea5076dd6 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_least_squares_regression",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_least_squares_regression",
+      "canonical_ids": [
+        "pc_8c40d58addedb33cf22ac1efd9905af4",
+        "pc_ed18cde6c3d7e08e9e371061418a7424"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_8c40d58addedb33cf22ac1efd9905af4、pc_ed18cde6c3d7e08e9e371061418a7424 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_regression_prediction_limits",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_regression_prediction_limits",
+      "canonical_ids": [
+        "pc_85acd13e8f4afec2979a3288f911c926"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "中国高中回归预测窄概念直接覆盖相同统计边界。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_math_9758_2026_o_transform_to_linearity",
+      "requirement_id": "req_sg_h2_math_9758_2026_o_transform_to_linearity",
+      "canonical_ids": [
+        "pc_e36b98906e813a98f82ca4c1f2f8a68c",
+        "pc_1ea1ea6ee0e270c4aad9c97a380db664"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重和成果粒度复核，现由 pc_e36b98906e813a98f82ca4c1f2f8a68c、pc_1ea1ea6ee0e270c4aad9c97a380db664 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

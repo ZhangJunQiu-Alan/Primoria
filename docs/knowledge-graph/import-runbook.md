@@ -15,6 +15,25 @@ under `apps/web/src/lib/knowledge-graph/data/`.
 - 数据库 `knowledge_graph_concepts.canonical_id` 由 `0002_canonical_concept_ids.sql` 以兼容方式新增。迁移允许既有行暂时为空，但 `seed-kg.mjs` 会拒绝缺少或格式错误的 canonical ID；完成全量 seed 后不得存在空值。
 - 版权受限或许可不明的材料只提交元数据、校验值和知识映射，不把公开下载误判为允许再发布全文。
 
+## 地区课程映射
+
+- 官方课程框架存放在 `data/knowledge-graphs/curricula/frameworks/`；只保存可追溯的中文释义、版本和页码级证据，不保存受限正文。同一 `curriculum_id` 可以并存主题级和成果级表示，但必须使用不同且稳定的 `framework_id`。
+- 待审映射存放在 `data/knowledge-graphs/curricula/mappings/pending/`。每个集合必须声明 `mapping_scope`：`topic_alignment` 只用于主题级导航，`outcome_coverage` 才表示逐条学习成果覆盖。
+- `topic_alignment` 只能使用 `partial` 或 `unmapped`，不得声称 `full`。只有框架已经拆到 `requirement_granularity: outcome` 且逐条证据闭合时，`outcome_coverage` 才可使用 `full`；禁止为了提高覆盖率强行映射。
+- 成果级映射产生的待审缺口存放在 `data/knowledge-graphs/curricula/gaps/pending/`：`add_concept` 表示新增概念候选，`split_or_narrow_existing` 表示现有 canonical 概念范围过宽，`not_knowledge_concept` 表示应进入教学策略或评测知识而不是学科概念。缺口候选不得直接改正式 source KG。
+- `curriculum_id`、`framework_id`、`requirement_id`、`mapping_set_id`、`mapping_id` 和 `gap_id` 都是稳定 ID。名称、翻译或证据定位变化不得更换 ID。
+- 运行 `pnpm --filter @primoria/web build:curriculum-review-packs` 生成中文审核包。未经人工 decision record 批准，框架和映射保持 `needs_review`，不得用于正式 KG 发布或数据库导入。
+- `pnpm --filter @primoria/web validate:kg` 同时校验课程 Schema、来源、成果级精确页码、稳定 ID、canonical ID 引用、映射范围、要求—映射一一对应关系，以及每个 `partial/unmapped` 成果都存在且只存在一个缺口候选。
+
+## 误区、教学策略与评测知识
+
+- 核心概念教学档案存放在 `data/knowledge-graphs/pedagogy/core/`，以 canonical ID 连接学科概念，不复制或更换 legacy ID。每个档案同时包含可诊断错误模型、对比教学序列和至少两个可判分探针。
+- `diagnostic_hypothesis` 只表示由概念边界推导、可用于诊断的错误模型，不得写成“学生普遍如此”。只有 A/B 级、已核验的教育研究或官方阅卷报告直接记录该错误模型时才能标记 `empirically_documented`；同时必须保存原研究样本、方法、发现和外推限制。
+- `concept_boundary_design` 和 `curriculum_assessment_alignment` 分别说明教学策略和探针目前由概念边界、课程要求与学科证据推导，不冒充已验证的教学效果研究。
+- 每个档案必须链接真实 graph alias 和 canonical ID，至少包含课程标准与教材两类权威证据；所有内容默认 `needs_review`，只有人工 decision record 可以批准。
+- 前两批中国大陆 + 新加坡四学科核心档案由 `pnpm --filter @primoria/web build:core-pedagogy` 重建：共 48 个概念档案、96 条误区候选、48 个教学策略和 96 个可判分探针，地区与四学科均衡。其中 5 条具有直接实证来源，其余 91 条仍是诊断假设。`validate:kg` 同时校验 Schema、证据来源、稳定 ID、探针对误区的内部引用、“未证实流行率”措辞，以及实证来源的权威等级、类型和核验状态。
+- 实证升级按“证据支持主张”而不是“论文提到相近概念”判断。例如，中国高中电场访谈研究只访谈 3 名筛选学生，且把想法解释为情境化知识资源，本批不据此把电场错误模型升级为 `empirically_documented`。
+
 ## KG 质量评估方向
 
 衡量标准从「KG 被谁消费」倒推：定位(RAG)、建课(喂 lesson)、诊断+排课(prereq/order)。分为硬门禁与内容质量两层。

@@ -1,0 +1,2926 @@
+{
+  "schema_version": "2.0.0",
+  "content_version": "0.3.1",
+  "framework_id": "cfw_cn_moe_senior_high_physics_2020_outcomes",
+  "curriculum_id": "cur_cn_moe_senior_high_physics_2020",
+  "curriculum_kind": "national_standard",
+  "title": "China senior-high physics curriculum-standard outcome coverage",
+  "title_zh": "中国普通高中物理课程标准（2017 年版 2020 年修订）成果级覆盖",
+  "subject": "Physics",
+  "jurisdiction": "CN-MAINLAND",
+  "education_stage": "senior_secondary",
+  "requirement_granularity": "outcome",
+  "levels": [
+    {
+      "level_id": "r1",
+      "label": "Required 1",
+      "label_zh": "必修 1"
+    },
+    {
+      "level_id": "r2",
+      "label": "Required 2",
+      "label_zh": "必修 2"
+    },
+    {
+      "level_id": "r3",
+      "label": "Required 3",
+      "label_zh": "必修 3"
+    },
+    {
+      "level_id": "sr1",
+      "label": "Selective Required 1",
+      "label_zh": "选择性必修 1"
+    },
+    {
+      "level_id": "sr2",
+      "label": "Selective Required 2",
+      "label_zh": "选择性必修 2"
+    },
+    {
+      "level_id": "sr3",
+      "label": "Selective Required 3",
+      "label_zh": "选择性必修 3"
+    }
+  ],
+  "languages": [
+    "zh-CN",
+    "en"
+  ],
+  "source_ids": [
+    "src_cn_moe_senior_high_physics_2020"
+  ],
+  "valid_from": "2020-05-11",
+  "valid_to": null,
+  "review_status": "needs_review",
+  "scope_exclusions": [],
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "建立必修与选择性必修主题级基线。"
+    },
+    {
+      "version": "0.2.1",
+      "date": "2026-07-18",
+      "summary_zh": "复核主题页码并撤销未经逐项证明的完整覆盖声明。"
+    },
+    {
+      "version": "0.3.0",
+      "date": "2026-07-19",
+      "summary_zh": "按课程标准 87 个正式编号内容要求建立成果级矩阵。"
+    },
+    {
+      "version": "0.3.1",
+      "date": "2026-07-19",
+      "summary_zh": "全量粒度复核后拆为 135 个可独立诊断子成果，并把实验测量、科学史与方法实践从知识概念分离。"
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r1_1_1_1_experimental_science_history",
+      "parent_requirement_id": null,
+      "code": "必修 1·1.1.1",
+      "title": "Rise of experimental science",
+      "title_zh": "近代实验科学与物理学发展",
+      "summary_zh": "认识实验对近代物理学发展的推动作用，并能结合伽利略研究说明证据与方法的意义。",
+      "requirement_type": "practice",
+      "level_id": "r1",
+      "cognitive_processes": [
+        "understand",
+        "reason",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.20（正文对应内容要求 1.1.1），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r1_1_1_2_particle_model",
+      "parent_requirement_id": null,
+      "code": "必修 1·1.1.2",
+      "title": "Particle model and its conditions",
+      "title_zh": "质点模型及适用条件",
+      "summary_zh": "经历质点模型建构，判断特定情境能否把物体抽象为质点，并解释模型的作用与边界。",
+      "requirement_type": "skill",
+      "level_id": "r1",
+      "cognitive_processes": [
+        "model",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.20（正文对应内容要求 1.1.2），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r1_1_1_3a_kinematic_quantities",
+      "parent_requirement_id": null,
+      "code": "必修 1·1.1.3a",
+      "title": "Displacement, velocity and acceleration",
+      "title_zh": "位移、速度与加速度",
+      "summary_zh": "理解位移、速度和加速度并区分其方向、瞬时含义和变化关系。",
+      "requirement_type": "skill",
+      "level_id": "r1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.20（正文对应内容要求 1.1.3），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r1_1_1_3b_uniform_acceleration_representation",
+      "parent_requirement_id": null,
+      "code": "必修 1·1.1.3b",
+      "title": "Uniformly accelerated rectilinear motion",
+      "title_zh": "匀变速直线运动规律与表示",
+      "summary_zh": "用公式和图像描述匀变速直线运动并解决实际问题。",
+      "requirement_type": "skill",
+      "level_id": "r1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.20（正文对应内容要求 1.1.3），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r1_1_1_3c_investigate_uniform_acceleration",
+      "parent_requirement_id": null,
+      "code": "必修 1·1.1.3c",
+      "title": "Investigating uniformly accelerated motion",
+      "title_zh": "实验探究匀变速直线运动",
+      "summary_zh": "选择计时与位置测量工具，处理数据并检验匀变速直线运动规律。",
+      "requirement_type": "practice",
+      "level_id": "r1",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.20（正文对应内容要求 1.1.3），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r1_1_1_4_free_fall",
+      "parent_requirement_id": null,
+      "code": "必修 1·1.1.4",
+      "title": "Free-fall motion",
+      "title_zh": "自由落体运动",
+      "summary_zh": "理解自由落体的理想化条件和匀加速规律，并用运动方程分析简单情境。",
+      "requirement_type": "skill",
+      "level_id": "r1",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.21（正文对应内容要求 1.1.4），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r1_1_2_1a_gravity_elastic_force",
+      "parent_requirement_id": null,
+      "code": "必修 1·1.2.1a",
+      "title": "Gravity and elastic force",
+      "title_zh": "重力与弹力",
+      "summary_zh": "识别重力和弹力，判断方向并分析常见接触约束。",
+      "requirement_type": "skill",
+      "level_id": "r1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.21（正文对应内容要求 1.2.1），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r1_1_2_1b_hooke_law",
+      "parent_requirement_id": null,
+      "code": "必修 1·1.2.1b",
+      "title": "Hooke's law",
+      "title_zh": "胡克定律",
+      "summary_zh": "理解弹性限度内弹力与形变量的定量关系，并解释弹簧测力计等应用。",
+      "requirement_type": "skill",
+      "level_id": "r1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.21（正文对应内容要求 1.2.1），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r1_1_2_1c_friction",
+      "parent_requirement_id": null,
+      "code": "必修 1·1.2.1c",
+      "title": "Static and kinetic friction",
+      "title_zh": "静摩擦与滑动摩擦",
+      "summary_zh": "区分静摩擦与滑动摩擦并用动摩擦因数计算滑动摩擦力。",
+      "requirement_type": "skill",
+      "level_id": "r1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.21（正文对应内容要求 1.2.1），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r1_1_2_2a_force_composition_vectors",
+      "parent_requirement_id": null,
+      "code": "必修 1·1.2.2a",
+      "title": "Force composition and decomposition",
+      "title_zh": "力的合成分解与矢量",
+      "summary_zh": "区分矢量和标量，用平行四边形法则合成或分解力。",
+      "requirement_type": "skill",
+      "level_id": "r1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.21（正文对应内容要求 1.2.2），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r1_1_2_2b_concurrent_force_equilibrium",
+      "parent_requirement_id": null,
+      "code": "必修 1·1.2.2b",
+      "title": "Equilibrium of concurrent forces",
+      "title_zh": "共点力平衡",
+      "summary_zh": "用共点力平衡条件分析生产生活问题。",
+      "requirement_type": "skill",
+      "level_id": "r1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.21（正文对应内容要求 1.2.2），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r1_1_2_3a_investigate_newton_second",
+      "parent_requirement_id": null,
+      "code": "必修 1·1.2.3a",
+      "title": "Investigating acceleration, force and mass",
+      "title_zh": "实验探究加速度、力与质量关系",
+      "summary_zh": "用控制变量实验获取并分析加速度、受力和质量数据。",
+      "requirement_type": "practice",
+      "level_id": "r1",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.22（正文对应内容要求 1.2.3），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r1_1_2_3b_newton_laws",
+      "parent_requirement_id": null,
+      "code": "必修 1·1.2.3b",
+      "title": "Newton's laws of motion",
+      "title_zh": "牛顿运动定律",
+      "summary_zh": "理解并使用牛顿运动定律解释现象和解决动力学问题。",
+      "requirement_type": "skill",
+      "level_id": "r1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.22（正文对应内容要求 1.2.3），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r1_1_2_3c_overweight_weightlessness",
+      "parent_requirement_id": null,
+      "code": "必修 1·1.2.3c",
+      "title": "Overweight and weightlessness",
+      "title_zh": "超重与失重",
+      "summary_zh": "分析支持力变化并解释超重、失重和完全失重情境。",
+      "requirement_type": "skill",
+      "level_id": "r1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.22（正文对应内容要求 1.2.3），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r1_1_2_4_si_mechanics_units",
+      "parent_requirement_id": null,
+      "code": "必修 1·1.2.4",
+      "title": "SI mechanics units",
+      "title_zh": "国际单位制中的力学单位",
+      "summary_zh": "使用国际单位制的力学基本和导出单位，并说明一致单位制的重要性。",
+      "requirement_type": "skill",
+      "level_id": "r1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.22（正文对应内容要求 1.2.4），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r2_2_1_1a_work",
+      "parent_requirement_id": null,
+      "code": "必修 2·2.1.1a",
+      "title": "Work done by a force",
+      "title_zh": "力做功",
+      "summary_zh": "计算恒力做功并处理力与位移不共线的情形。",
+      "requirement_type": "skill",
+      "level_id": "r2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.23（正文对应内容要求 2.1.1），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r2_2_1_1b_power",
+      "parent_requirement_id": null,
+      "code": "必修 2·2.1.1b",
+      "title": "Power",
+      "title_zh": "功率",
+      "summary_zh": "理解功率并分析恒功率机械中牵引力与速度的关系。",
+      "requirement_type": "skill",
+      "level_id": "r2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.23（正文对应内容要求 2.1.1），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r2_2_1_2_kinetic_energy_theorem",
+      "parent_requirement_id": null,
+      "code": "必修 2·2.1.2",
+      "title": "Kinetic energy theorem",
+      "title_zh": "动能与动能定理",
+      "summary_zh": "理解动能和动能定理，并用动能定理解释或解决生产生活现象。",
+      "requirement_type": "skill",
+      "level_id": "r2",
+      "cognitive_processes": [
+        "apply",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.23（正文对应内容要求 2.1.2），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r2_2_1_3a_gravitational_potential_energy",
+      "parent_requirement_id": null,
+      "code": "必修 2·2.1.3a",
+      "title": "Gravitational potential energy",
+      "title_zh": "重力势能",
+      "summary_zh": "联系重力做功与重力势能变化，选择参考零势能面。",
+      "requirement_type": "skill",
+      "level_id": "r2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.23（正文对应内容要求 2.1.3），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r2_2_1_3b_elastic_potential_energy",
+      "parent_requirement_id": null,
+      "code": "必修 2·2.1.3b",
+      "title": "Elastic potential energy",
+      "title_zh": "弹性势能",
+      "summary_zh": "定性理解弹性势能及其与形变量的关系。",
+      "requirement_type": "skill",
+      "level_id": "r2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.23（正文对应内容要求 2.1.3），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r2_2_1_4a_mechanical_energy_conservation",
+      "parent_requirement_id": null,
+      "code": "必修 2·2.1.4a",
+      "title": "Conservation of mechanical energy",
+      "title_zh": "机械能守恒定律",
+      "summary_zh": "判断机械能守恒条件并用守恒定律分析实际问题。",
+      "requirement_type": "skill",
+      "level_id": "r2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.24（正文对应内容要求 2.1.4），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r2_2_1_4b_verify_mechanical_energy",
+      "parent_requirement_id": null,
+      "code": "必修 2·2.1.4b",
+      "title": "Verifying conservation of mechanical energy",
+      "title_zh": "实验验证机械能守恒",
+      "summary_zh": "设计测量、处理动能和势能数据，并评价机械能守恒实验误差。",
+      "requirement_type": "practice",
+      "level_id": "r2",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.24（正文对应内容要求 2.1.4），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r2_2_2_1_curvilinear_motion_condition",
+      "parent_requirement_id": null,
+      "code": "必修 2·2.2.1",
+      "title": "Curvilinear motion and its condition",
+      "title_zh": "曲线运动及发生条件",
+      "summary_zh": "判断物体发生曲线运动时合力与速度的方向关系，并解释轨迹弯曲的条件。",
+      "requirement_type": "skill",
+      "level_id": "r2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.24（正文对应内容要求 2.2.1），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r2_2_2_2_projectile_motion",
+      "parent_requirement_id": null,
+      "code": "必修 2·2.2.2",
+      "title": "Projectile motion",
+      "title_zh": "平抛与抛体运动",
+      "summary_zh": "用运动合成与分解分析平抛和一般抛体运动规律并解决实际问题。",
+      "requirement_type": "skill",
+      "level_id": "r2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.24（正文对应内容要求 2.2.2），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r2_2_2_3a_circular_kinematics",
+      "parent_requirement_id": null,
+      "code": "必修 2·2.2.3a",
+      "title": "Kinematics of uniform circular motion",
+      "title_zh": "匀速圆周运动的运动学量",
+      "summary_zh": "使用线速度、角速度和周期描述匀速圆周运动。",
+      "requirement_type": "skill",
+      "level_id": "r2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.24（正文对应内容要求 2.2.3），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r2_2_2_3b_centripetal_dynamics",
+      "parent_requirement_id": null,
+      "code": "必修 2·2.2.3b",
+      "title": "Centripetal-force dynamics",
+      "title_zh": "向心力动力学",
+      "summary_zh": "理解向心力与质量、半径、角速度的关系并用牛顿第二定律分析。",
+      "requirement_type": "skill",
+      "level_id": "r2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.24（正文对应内容要求 2.2.3），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r2_2_2_3c_centrifugal_phenomena",
+      "parent_requirement_id": null,
+      "code": "必修 2·2.2.3c",
+      "title": "Centrifugal phenomena and applications",
+      "title_zh": "离心现象及应用",
+      "summary_zh": "从惯性和向心力不足解释生产生活中的离心现象。",
+      "requirement_type": "skill",
+      "level_id": "r2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.24（正文对应内容要求 2.2.3），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r2_2_2_4_universal_gravitation",
+      "parent_requirement_id": null,
+      "code": "必修 2·2.2.4",
+      "title": "Law of universal gravitation",
+      "title_zh": "万有引力定律",
+      "summary_zh": "理解万有引力定律及其发现意义，并用统一性观念解释天体相互作用。",
+      "requirement_type": "skill",
+      "level_id": "r2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.24（正文对应内容要求 2.2.4），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r2_2_2_5a_satellite_orbital_speed",
+      "parent_requirement_id": null,
+      "code": "必修 2·2.2.5a",
+      "title": "Satellite orbital speed",
+      "title_zh": "人造地球卫星环绕速度",
+      "summary_zh": "由万有引力提供向心力计算圆轨道卫星环绕速度。",
+      "requirement_type": "skill",
+      "level_id": "r2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.25（正文对应内容要求 2.2.5），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r2_2_2_5b_cosmic_velocities",
+      "parent_requirement_id": null,
+      "code": "必修 2·2.2.5b",
+      "title": "Second and third cosmic velocities",
+      "title_zh": "第二与第三宇宙速度",
+      "summary_zh": "区分第二和第三宇宙速度及其物理意义。",
+      "requirement_type": "skill",
+      "level_id": "r2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.25（正文对应内容要求 2.2.5），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r2_2_3_1_newtonian_limits",
+      "parent_requirement_id": null,
+      "code": "必修 2·2.3.1",
+      "title": "Limits of Newtonian mechanics",
+      "title_zh": "牛顿力学的局限性",
+      "summary_zh": "说明牛顿力学的适用范围和局限，认识物理理论会随证据和尺度拓展。",
+      "requirement_type": "skill",
+      "level_id": "r2",
+      "cognitive_processes": [
+        "understand",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.25（正文对应内容要求 2.3.1），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r2_2_3_2_relativistic_spacetime",
+      "parent_requirement_id": null,
+      "code": "必修 2·2.3.2",
+      "title": "Introductory relativistic spacetime",
+      "title_zh": "相对论时空观初步",
+      "summary_zh": "初步理解相对论时空观，包括长度收缩、时间延缓及时空弯曲的定性含义。",
+      "requirement_type": "skill",
+      "level_id": "r2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.25（正文对应内容要求 2.3.2），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r2_2_3_3_cosmic_evolution",
+      "parent_requirement_id": null,
+      "code": "必修 2·2.3.3",
+      "title": "Origin and evolution of the universe",
+      "title_zh": "宇宙起源与演化",
+      "summary_zh": "概述宇宙起源和演化研究的主要证据，并说明典型恒星演化过程。",
+      "requirement_type": "skill",
+      "level_id": "r2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.25（正文对应内容要求 2.3.3），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_1_1_electrostatic_charge_conservation",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.1.1",
+      "title": "Electrostatic phenomena and charge conservation",
+      "title_zh": "静电现象与电荷守恒",
+      "summary_zh": "用原子结构模型和电荷守恒分析摩擦起电、接触起电与静电感应。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.1），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_1_2a_point_charge_model",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.1.2a",
+      "title": "Point-charge model",
+      "title_zh": "点电荷模型",
+      "summary_zh": "判断带电体可被抽象为点电荷的条件和模型边界。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "model",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.2），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_1_2b_coulomb_law",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.1.2b",
+      "title": "Coulomb's law",
+      "title_zh": "库仑定律",
+      "summary_zh": "使用点电荷相互作用规律计算静电力并说明适用条件。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.2），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_1_3a_electric_field_strength",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.1.3a",
+      "title": "Electric field strength",
+      "title_zh": "电场强度",
+      "summary_zh": "理解电场物质性和电场强度的比值定义。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.3），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_1_3b_electric_field_lines",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.1.3b",
+      "title": "Electric field-line model",
+      "title_zh": "电场线模型",
+      "summary_zh": "用电场线描述典型电场并解释疏密和方向含义。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "model",
+        "reason"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.3），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_1_4_electrostatic_applications",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.1.4",
+      "title": "Electrostatic applications and protection",
+      "title_zh": "静电利用与防护",
+      "summary_zh": "解释静电除尘、喷雾、打印等应用并分析可燃粉尘环境的静电防护。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.4），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_1_5a_electric_potential_quantities",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.1.5a",
+      "title": "Electric potential energy, potential and potential difference",
+      "title_zh": "电势能、电势与电势差",
+      "summary_zh": "理解静电场中的电势能、电势和电势差，并使用匀强电场强度关系。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.5），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_1_5b_charged_particle_electric_motion",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.1.5b",
+      "title": "Charged-particle motion in electric fields",
+      "title_zh": "带电粒子在电场中的运动",
+      "summary_zh": "分析带电粒子在匀强电场中的受力、运动和能量变化。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.5），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_1_6a_capacitance",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.1.6a",
+      "title": "Capacitors and capacitance",
+      "title_zh": "电容器与电容",
+      "summary_zh": "识别常见电容器并理解电容表示储存电荷能力。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.6），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_1_6b_capacitor_charge_discharge",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.1.6b",
+      "title": "Capacitor charging, discharging and applications",
+      "title_zh": "电容器充放电与应用",
+      "summary_zh": "描述电容器充放电过程中电荷、电流和电压的变化，并解释闪光灯等应用。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.6），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_2_1a_circuit_components",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.2.1a",
+      "title": "Circuit components and functions",
+      "title_zh": "电路元件及作用",
+      "summary_zh": "识别常见电路元件并解释其在电路中的作用。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.1），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_2_1b_multimeter_use",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.2.1b",
+      "title": "Using a multimeter",
+      "title_zh": "使用多用电表",
+      "summary_zh": "选择量程和接线方式，规范使用多用电表并读取测量结果。",
+      "requirement_type": "practice",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "apply",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.1），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_2_2a_resistance_geometry_material",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.2.2a",
+      "title": "Resistance, geometry and material",
+      "title_zh": "电阻与材料、长度和横截面积",
+      "summary_zh": "理解金属导体电阻与材料、长度和横截面积的定量关系，并解释 I-U 特性。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.2），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_2_2b_measure_resistivity",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.2.2b",
+      "title": "Measuring resistivity",
+      "title_zh": "测量金属丝电阻率",
+      "summary_zh": "设计并实施电阻率测量，处理长度、截面积、电压和电流数据。",
+      "requirement_type": "practice",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.2），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_2_3_series_parallel_resistance",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.2.3",
+      "title": "Series and parallel resistance",
+      "title_zh": "串并联电阻",
+      "summary_zh": "分析串、并联电路的等效电阻特点。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.3），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_2_4a_closed_circuit_ohm",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.2.4a",
+      "title": "Closed-circuit Ohm's law",
+      "title_zh": "闭合电路欧姆定律",
+      "summary_zh": "理解端电压、电动势、内阻和电流的关系并分析闭合电路。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.4），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_2_4b_measure_emf_internal_resistance",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.2.4b",
+      "title": "Measuring source EMF and internal resistance",
+      "title_zh": "测量电源电动势和内阻",
+      "summary_zh": "通过端电压—电流数据和图像测量电源电动势与内阻。",
+      "requirement_type": "practice",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "apply",
+        "analyze"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.4），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_2_5a_electrical_work_power",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.2.5a",
+      "title": "Electrical work and power",
+      "title_zh": "电功与电功率",
+      "summary_zh": "计算电功、电功率和用电量并解释额定量。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.5），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_2_5b_joule_law",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.2.5b",
+      "title": "Joule's law",
+      "title_zh": "焦耳定律",
+      "summary_zh": "使用焦耳定律计算电热并解释电热现象。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.5），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_2_6_household_electricity_safety",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.2.6",
+      "title": "Household circuits and electrical safety",
+      "title_zh": "家庭电路与安全节约用电",
+      "summary_zh": "分析家庭电路中的简单问题，把安全和节约用电原则应用于实际。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.29（正文对应内容要求 3.2.6），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_3_1_magnetism_applications_history",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.3.1",
+      "title": "Magnetic applications and historical contributions",
+      "title_zh": "磁现象应用与历史贡献",
+      "summary_zh": "列举磁现象的典型应用，说明中国古代磁学成果及其与现代磁技术的联系。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.29（正文对应内容要求 3.3.1），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_3_2_magnetic_field_lines",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.3.2",
+      "title": "Magnetic flux density and field lines",
+      "title_zh": "磁感应强度与磁感线",
+      "summary_zh": "理解磁场和磁感应强度，并用磁感线描述电流周围的典型磁场。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.29（正文对应内容要求 3.3.2），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_3_3a_magnetic_flux",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.3.3a",
+      "title": "Magnetic flux",
+      "title_zh": "磁通量",
+      "summary_zh": "理解磁通量及其与磁场、面积和取向的关系。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.29（正文对应内容要求 3.3.3），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_3_3b_induction_conditions",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.3.3b",
+      "title": "Conditions for induced current",
+      "title_zh": "产生感应电流的条件",
+      "summary_zh": "判断闭合回路磁通量变化与感应电流产生的关系，并说明典型应用。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.29（正文对应内容要求 3.3.3），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_3_4_electromagnetic_field_waves",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.3.4",
+      "title": "Electromagnetic waves and field materiality",
+      "title_zh": "电磁波与电磁场物质性",
+      "summary_zh": "说明电磁波由变化的电场和磁场传播，并解释电磁场具有物质性的含义。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.3.4），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_3_5_electromagnetic_wave_applications",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.3.5",
+      "title": "Electromagnetic-wave applications",
+      "title_zh": "电磁波应用与影响",
+      "summary_zh": "解释通信等电磁波应用并评价其社会影响。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.3.5），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_3_6a_light_electromagnetic_wave",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.3.6a",
+      "title": "Light as an electromagnetic wave",
+      "title_zh": "光的电磁本性",
+      "summary_zh": "说明光属于电磁波谱并联系电磁波特征。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.3.6），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_3_6b_light_energy_quantisation",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.3.6b",
+      "title": "Quantisation of light energy",
+      "title_zh": "光能量不连续与量子化",
+      "summary_zh": "说明光能量不连续并初步解释微观世界量子化。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.3.6），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_4_1a_renewable_energy_technologies",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.4.1a",
+      "title": "Water, wind and solar energy technologies",
+      "title_zh": "水能、风能与太阳能利用",
+      "summary_zh": "说明水能、风能和太阳能转化为可用能源的基本方式。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.1），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_4_1b_nuclear_energy_intro",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.4.1b",
+      "title": "Introductory nuclear energy",
+      "title_zh": "核能利用初步",
+      "summary_zh": "初步区分核裂变与核聚变释放能量的方式。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.1），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_4_2a_energy_conversion_conservation",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.4.2a",
+      "title": "Energy conversion and conservation",
+      "title_zh": "能量转化与守恒",
+      "summary_zh": "说明能量形式可相互转化且总量守恒。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.2），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_4_2b_energy_conversion_directionality",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.4.2b",
+      "title": "Directionality of energy conversion",
+      "title_zh": "能量转化的方向性",
+      "summary_zh": "解释实际能量转化的方向性和可用能品质变化。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.2），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_4_3_renewable_environment",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.4.3",
+      "title": "Renewable energy and environmental impact",
+      "title_zh": "可再生能源与环境影响",
+      "summary_zh": "分类可再生和不可再生能源，分析能源过度开发利用对环境的影响。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.3），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_r3_3_4_4_pollution_sustainable_development",
+      "parent_requirement_id": null,
+      "code": "必修 3·3.4.4",
+      "title": "Pollution and coordinated sustainable development",
+      "title_zh": "污染防治与协调发展",
+      "summary_zh": "认识环境污染危害，说明科学、技术、社会与环境协调发展的重要性。",
+      "requirement_type": "skill",
+      "level_id": "r3",
+      "cognitive_processes": [
+        "analyze",
+        "evaluate",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.4），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr1_1_1_1a_impulse_momentum_theorem",
+      "parent_requirement_id": null,
+      "code": "选择性必修 1·1.1.1a",
+      "title": "Impulse, momentum and momentum theorem",
+      "title_zh": "冲量、动量与动量定理",
+      "summary_zh": "理解冲量和动量，并从理论与实验联系动量定理和牛顿第二定律。",
+      "requirement_type": "skill",
+      "level_id": "sr1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.33（正文对应内容要求 1.1.1），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr1_1_1_1b_momentum_conservation",
+      "parent_requirement_id": null,
+      "code": "选择性必修 1·1.1.1b",
+      "title": "Conservation of momentum",
+      "title_zh": "动量守恒定律",
+      "summary_zh": "判断系统动量守恒条件并解决一维问题。",
+      "requirement_type": "skill",
+      "level_id": "sr1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.33（正文对应内容要求 1.1.1），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr1_1_1_2_elastic_inelastic_collisions",
+      "parent_requirement_id": null,
+      "code": "选择性必修 1·1.1.2",
+      "title": "Elastic and inelastic collisions",
+      "title_zh": "弹性与非弹性碰撞",
+      "summary_zh": "实验区分弹性与非弹性碰撞，并定量分析一维碰撞。",
+      "requirement_type": "skill",
+      "level_id": "sr1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.33（正文对应内容要求 1.1.2），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr1_1_1_3_conservation_reasoning",
+      "parent_requirement_id": null,
+      "code": "选择性必修 1·1.1.3",
+      "title": "Reasoning with conservation laws",
+      "title_zh": "用守恒定律分析问题",
+      "summary_zh": "比较守恒视角与其他方法，体会守恒定律在物理推理中的统一作用。",
+      "requirement_type": "practice",
+      "level_id": "sr1",
+      "cognitive_processes": [
+        "reason",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.33（正文对应内容要求 1.1.3），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr1_1_2_1_simple_harmonic_motion",
+      "parent_requirement_id": null,
+      "code": "选择性必修 1·1.2.1",
+      "title": "Simple harmonic motion",
+      "title_zh": "简谐运动",
+      "summary_zh": "实验认识简谐运动特征，并用公式和图像描述。",
+      "requirement_type": "skill",
+      "level_id": "sr1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.1），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr1_1_2_2a_simple_pendulum_period",
+      "parent_requirement_id": null,
+      "code": "选择性必修 1·1.2.2a",
+      "title": "Simple-pendulum period",
+      "title_zh": "单摆周期规律",
+      "summary_zh": "理解单摆周期与摆长、重力加速度的定量关系。",
+      "requirement_type": "skill",
+      "level_id": "sr1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.2），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr1_1_2_2b_measure_g_pendulum",
+      "parent_requirement_id": null,
+      "code": "选择性必修 1·1.2.2b",
+      "title": "Measuring g with a pendulum",
+      "title_zh": "用单摆测量重力加速度",
+      "summary_zh": "设计单摆实验、处理周期和摆长数据并评价误差。",
+      "requirement_type": "practice",
+      "level_id": "sr1",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.2），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr1_1_2_3a_forced_vibration",
+      "parent_requirement_id": null,
+      "code": "选择性必修 1·1.2.3a",
+      "title": "Forced vibration",
+      "title_zh": "受迫振动",
+      "summary_zh": "理解受迫振动及稳态振动频率与驱动力频率的关系。",
+      "requirement_type": "skill",
+      "level_id": "sr1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.3），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr1_1_2_3b_resonance",
+      "parent_requirement_id": null,
+      "code": "选择性必修 1·1.2.3b",
+      "title": "Resonance",
+      "title_zh": "共振",
+      "summary_zh": "判断共振条件并解释利用或防止共振的实例。",
+      "requirement_type": "skill",
+      "level_id": "sr1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.3），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr1_1_2_4a_wave_types_graphs",
+      "parent_requirement_id": null,
+      "code": "选择性必修 1·1.2.4a",
+      "title": "Transverse and longitudinal waves",
+      "title_zh": "横波、纵波与波形图",
+      "summary_zh": "区分横波和纵波并用图像描述横波。",
+      "requirement_type": "skill",
+      "level_id": "sr1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.4），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr1_1_2_4b_wave_speed_relation",
+      "parent_requirement_id": null,
+      "code": "选择性必修 1·1.2.4b",
+      "title": "Wave speed, wavelength and frequency",
+      "title_zh": "波速、波长与频率",
+      "summary_zh": "理解并使用波速、波长和频率关系。",
+      "requirement_type": "skill",
+      "level_id": "sr1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.4），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr1_1_2_5a_wave_reflection_refraction",
+      "parent_requirement_id": null,
+      "code": "选择性必修 1·1.2.5a",
+      "title": "Wave reflection and refraction",
+      "title_zh": "波的反射与折射",
+      "summary_zh": "识别并解释波的反射和折射现象。",
+      "requirement_type": "skill",
+      "level_id": "sr1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.5），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr1_1_2_5b_wave_interference_diffraction",
+      "parent_requirement_id": null,
+      "code": "选择性必修 1·1.2.5b",
+      "title": "Wave interference and diffraction",
+      "title_zh": "波的干涉与衍射",
+      "summary_zh": "识别波的干涉与衍射条件，并用叠加原理解释典型图样。",
+      "requirement_type": "skill",
+      "level_id": "sr1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.5），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr1_1_2_6_doppler_effect",
+      "parent_requirement_id": null,
+      "code": "选择性必修 1·1.2.6",
+      "title": "Doppler effect",
+      "title_zh": "多普勒效应",
+      "summary_zh": "解释多普勒效应的产生原因，并判断相对运动对接收频率的影响和典型应用。",
+      "requirement_type": "skill",
+      "level_id": "sr1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.6），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr1_1_3_1a_light_refraction_law",
+      "parent_requirement_id": null,
+      "code": "选择性必修 1·1.3.1a",
+      "title": "Law of refraction",
+      "title_zh": "光的折射定律",
+      "summary_zh": "理解并使用光的折射定律。",
+      "requirement_type": "skill",
+      "level_id": "sr1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.3.1），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr1_1_3_1b_measure_refractive_index",
+      "parent_requirement_id": null,
+      "code": "选择性必修 1·1.3.1b",
+      "title": "Measuring refractive index",
+      "title_zh": "测量材料折射率",
+      "summary_zh": "设计光路、测量入射角和折射角并求材料折射率。",
+      "requirement_type": "practice",
+      "level_id": "sr1",
+      "cognitive_processes": [
+        "apply",
+        "analyze"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.3.1），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr1_1_3_2a_total_internal_reflection",
+      "parent_requirement_id": null,
+      "code": "选择性必修 1·1.3.2a",
+      "title": "Total internal reflection",
+      "title_zh": "全反射及条件",
+      "summary_zh": "判断全反射发生条件并计算或比较临界角。",
+      "requirement_type": "skill",
+      "level_id": "sr1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.2），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr1_1_3_2b_optical_fibre",
+      "parent_requirement_id": null,
+      "code": "选择性必修 1·1.3.2b",
+      "title": "Optical-fibre principle and applications",
+      "title_zh": "光纤原理与应用",
+      "summary_zh": "用全反射解释光纤工作原理和生产生活应用。",
+      "requirement_type": "skill",
+      "level_id": "sr1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.2），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr1_1_3_3a_light_interference_diffraction",
+      "parent_requirement_id": null,
+      "code": "选择性必修 1·1.3.3a",
+      "title": "Light interference and diffraction",
+      "title_zh": "光的干涉与衍射",
+      "summary_zh": "观察干涉和衍射图样并用其论证光的波动性。",
+      "requirement_type": "skill",
+      "level_id": "sr1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.3），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr1_1_3_3b_light_polarisation",
+      "parent_requirement_id": null,
+      "code": "选择性必修 1·1.3.3b",
+      "title": "Polarisation and transverse nature of light",
+      "title_zh": "光的偏振与横波性质",
+      "summary_zh": "解释偏振现象，并据此说明光是横波。",
+      "requirement_type": "skill",
+      "level_id": "sr1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.3），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr1_1_3_3c_double_slit_wavelength",
+      "parent_requirement_id": null,
+      "code": "选择性必修 1·1.3.3c",
+      "title": "Measuring wavelength by double-slit interference",
+      "title_zh": "用双缝干涉测量光波长",
+      "summary_zh": "测量条纹间距和装置参数并计算光波长、评价误差。",
+      "requirement_type": "practice",
+      "level_id": "sr1",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.3），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr1_1_3_4_laser",
+      "parent_requirement_id": null,
+      "code": "选择性必修 1·1.3.4",
+      "title": "Laser properties and applications",
+      "title_zh": "激光特性与应用",
+      "summary_zh": "说明激光的单色性、方向性等主要特征及其技术应用。",
+      "requirement_type": "skill",
+      "level_id": "sr1",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.4），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr2_2_1_1_ampere_force",
+      "parent_requirement_id": null,
+      "code": "选择性必修 2·2.1.1",
+      "title": "Ampere force",
+      "title_zh": "安培力",
+      "summary_zh": "实验认识安培力，判断方向、计算大小并解释应用。",
+      "requirement_type": "skill",
+      "level_id": "sr2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.37（正文对应内容要求 2.1.1），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr2_2_1_2_lorentz_force",
+      "parent_requirement_id": null,
+      "code": "选择性必修 2·2.1.2",
+      "title": "Lorentz force",
+      "title_zh": "洛伦兹力",
+      "summary_zh": "实验认识洛伦兹力，判断方向并计算大小。",
+      "requirement_type": "skill",
+      "level_id": "sr2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.37（正文对应内容要求 2.1.2），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr2_2_1_3_charged_particle_magnetic_motion",
+      "parent_requirement_id": null,
+      "code": "选择性必修 2·2.1.3",
+      "title": "Charged-particle motion in a magnetic field",
+      "title_zh": "带电粒子在磁场中的运动",
+      "summary_zh": "用洛伦兹力分析匀强磁场中的圆周运动和偏转，并解释质谱仪或回旋加速器。",
+      "requirement_type": "skill",
+      "level_id": "sr2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.37（正文对应内容要求 2.1.3），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr2_2_2_1_lenz_law",
+      "parent_requirement_id": null,
+      "code": "选择性必修 2·2.2.1",
+      "title": "Lenz's law",
+      "title_zh": "楞次定律",
+      "summary_zh": "实验探究感应电流方向因素，理解并用能量观点解释楞次定律。",
+      "requirement_type": "skill",
+      "level_id": "sr2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.37（正文对应内容要求 2.2.1），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr2_2_2_2_faraday_law",
+      "parent_requirement_id": null,
+      "code": "选择性必修 2·2.2.2",
+      "title": "Faraday's law",
+      "title_zh": "法拉第电磁感应定律",
+      "summary_zh": "通过实验理解法拉第电磁感应定律并用于定量分析。",
+      "requirement_type": "skill",
+      "level_id": "sr2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.37（正文对应内容要求 2.2.2），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr2_2_2_3a_self_induction",
+      "parent_requirement_id": null,
+      "code": "选择性必修 2·2.2.3a",
+      "title": "Self-induction",
+      "title_zh": "自感现象",
+      "summary_zh": "解释自感电动势对电流变化的阻碍作用及典型应用。",
+      "requirement_type": "skill",
+      "level_id": "sr2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.3），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr2_2_2_3b_eddy_currents",
+      "parent_requirement_id": null,
+      "code": "选择性必修 2·2.2.3b",
+      "title": "Eddy currents",
+      "title_zh": "涡流现象",
+      "summary_zh": "解释涡流的形成条件及其在电磁炉、阻尼等装置中的作用。",
+      "requirement_type": "skill",
+      "level_id": "sr2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.3），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr2_2_2_4_sinusoidal_ac",
+      "parent_requirement_id": null,
+      "code": "选择性必修 2·2.2.4",
+      "title": "Sinusoidal alternating current",
+      "title_zh": "正弦交变电流",
+      "summary_zh": "用公式和图像描述正弦交流，并区分瞬时值、峰值和有效值。",
+      "requirement_type": "skill",
+      "level_id": "sr2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.4），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr2_2_2_5a_transformer",
+      "parent_requirement_id": null,
+      "code": "选择性必修 2·2.2.5a",
+      "title": "Transformer voltage and turns ratio",
+      "title_zh": "变压器电压与匝数关系",
+      "summary_zh": "理解并使用理想变压器原副线圈电压与匝数关系。",
+      "requirement_type": "skill",
+      "level_id": "sr2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.5），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr2_2_2_5b_high_voltage_transmission",
+      "parent_requirement_id": null,
+      "code": "选择性必修 2·2.2.5b",
+      "title": "High-voltage power transmission",
+      "title_zh": "远距离高压输电",
+      "summary_zh": "分析输电损耗因素并解释采用高压输电的原因。",
+      "requirement_type": "skill",
+      "level_id": "sr2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.5），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr2_2_2_6_generator_motor_energy",
+      "parent_requirement_id": null,
+      "code": "选择性必修 2·2.2.6",
+      "title": "Generator and motor energy conversion",
+      "title_zh": "发电机与电动机能量转化",
+      "summary_zh": "说明发电机和电动机工作过程中的能量转化及其社会作用。",
+      "requirement_type": "skill",
+      "level_id": "sr2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.6），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr2_2_3_1_maxwell_field_theory",
+      "parent_requirement_id": null,
+      "code": "选择性必修 2·2.3.1",
+      "title": "Introductory Maxwell electromagnetic-field theory",
+      "title_zh": "麦克斯韦电磁场理论初步",
+      "summary_zh": "初步理解麦克斯韦电磁场理论、场的统一性和多样性。",
+      "requirement_type": "skill",
+      "level_id": "sr2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.3.1），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr2_2_3_2_electromagnetic_oscillation",
+      "parent_requirement_id": null,
+      "code": "选择性必修 2·2.3.2",
+      "title": "Electromagnetic oscillation",
+      "title_zh": "电磁振荡",
+      "summary_zh": "描述电磁振荡中电场能与磁场能的周期性转换过程。",
+      "requirement_type": "skill",
+      "level_id": "sr2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.3.2），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr2_2_3_3_em_wave_transmission",
+      "parent_requirement_id": null,
+      "code": "选择性必修 2·2.3.3",
+      "title": "Emission, propagation and reception of electromagnetic waves",
+      "title_zh": "电磁波的发射、传播与接收",
+      "summary_zh": "说明电磁波发射、传播和接收的基本过程。",
+      "requirement_type": "skill",
+      "level_id": "sr2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.3.3），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr2_2_3_4_electromagnetic_spectrum",
+      "parent_requirement_id": null,
+      "code": "选择性必修 2·2.3.4",
+      "title": "Electromagnetic spectrum",
+      "title_zh": "电磁波谱",
+      "summary_zh": "识别各波段名称、特征和典型应用。",
+      "requirement_type": "skill",
+      "level_id": "sr2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.39（正文对应内容要求 2.3.4），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr2_2_4_1_sensor_conversion",
+      "parent_requirement_id": null,
+      "code": "选择性必修 2·2.4.1",
+      "title": "Conversion of non-electrical to electrical quantities",
+      "title_zh": "非电学量到电学量的转换",
+      "summary_zh": "说明把非电学量转换为电学量的技术意义和测量链路。",
+      "requirement_type": "skill",
+      "level_id": "sr2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.39（正文对应内容要求 2.4.1），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr2_2_4_2a_sensor_principles",
+      "parent_requirement_id": null,
+      "code": "选择性必修 2·2.4.2a",
+      "title": "Principles of common sensors",
+      "title_zh": "常见传感器工作原理",
+      "summary_zh": "解释热敏、光敏等常见传感器把非电学量转换为电学量的原理。",
+      "requirement_type": "skill",
+      "level_id": "sr2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.39（正文对应内容要求 2.4.2），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr2_2_4_2b_build_sensor_control",
+      "parent_requirement_id": null,
+      "code": "选择性必修 2·2.4.2b",
+      "title": "Building a sensor control device",
+      "title_zh": "制作传感器自动控制装置",
+      "summary_zh": "选择传感器和电路元件，制作并调试简单自动控制装置。",
+      "requirement_type": "practice",
+      "level_id": "sr2",
+      "cognitive_processes": [
+        "apply",
+        "create",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.39（正文对应内容要求 2.4.2），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr2_2_4_3_sensor_applications",
+      "parent_requirement_id": null,
+      "code": "选择性必修 2·2.4.3",
+      "title": "Sensor applications",
+      "title_zh": "传感器应用",
+      "summary_zh": "列举并解释传感器在生产生活中的应用。",
+      "requirement_type": "skill",
+      "level_id": "sr2",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.39（正文对应内容要求 2.4.3），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_1_1a_oil_film_molecule_size",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.1.1a",
+      "title": "Estimating molecular size by an oil film",
+      "title_zh": "油膜法估测分子大小",
+      "summary_zh": "实施油膜法测量并处理体积和面积数据，评价数量级和误差。",
+      "requirement_type": "practice",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.1），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_1_1b_molecular_kinetic_theory_evidence",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.1.1b",
+      "title": "Molecular kinetic theory and evidence",
+      "title_zh": "分子动理论及实验证据",
+      "summary_zh": "理解分子动理论基本观点并说明支持这些观点的实验证据。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.1），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_1_2a_diffusion_brownian",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.1.2a",
+      "title": "Diffusion and Brownian motion",
+      "title_zh": "扩散与布朗运动",
+      "summary_zh": "解释扩散与布朗运动，并用分子无规则运动说明其微观原因。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.2），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_1_2b_molecular_speed_distribution",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.1.2b",
+      "title": "Molecular-speed distribution",
+      "title_zh": "分子运动速率分布",
+      "summary_zh": "解释分子速率分布的统计规律和图像物理意义。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.2），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_1_3a_crystalline_amorphous",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.1.3a",
+      "title": "Crystalline and amorphous solids",
+      "title_zh": "晶体与非晶体",
+      "summary_zh": "比较晶体和非晶体微观结构、各向异性和宏观特点。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.3），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_1_3b_liquid_crystals",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.1.3b",
+      "title": "Liquid crystals",
+      "title_zh": "液晶性质与应用",
+      "summary_zh": "说明液晶主要性质及其在显示技术中的应用。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.3），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_1_4a_semiconductor_materials",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.1.4a",
+      "title": "Semiconductor materials",
+      "title_zh": "半导体材料",
+      "summary_zh": "说明半导体特点和技术应用。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.4），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_1_4b_nanomaterials",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.1.4b",
+      "title": "Nanomaterials",
+      "title_zh": "纳米材料",
+      "summary_zh": "说明纳米材料特性、应用及可能带来的问题。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.4），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_1_5_surface_tension_capillarity",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.1.5",
+      "title": "Surface tension and capillarity",
+      "title_zh": "表面张力与毛细现象",
+      "summary_zh": "解释表面张力的微观原因，并判断浸润、非浸润和毛细现象。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.42（正文对应内容要求 3.1.5），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_1_6a_gas_experimental_laws",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.1.6a",
+      "title": "Experimental gas laws and ideal-gas model",
+      "title_zh": "气体实验定律与理想气体模型",
+      "summary_zh": "理解气体状态参量关系并使用理想气体模型解决问题。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.42（正文对应内容要求 3.1.6），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_1_6b_kinetic_explanation_gas",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.1.6b",
+      "title": "Kinetic explanation of gas pressure and laws",
+      "title_zh": "气体压强与定律的分子动理论解释",
+      "summary_zh": "用分子动理论和统计观点解释气体压强与实验定律。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.42（正文对应内容要求 3.1.6），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_2_1_first_law_thermodynamics",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.2.1",
+      "title": "First law of thermodynamics",
+      "title_zh": "热力学第一定律",
+      "summary_zh": "理解热力学第一定律并联系能量守恒发现史。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.42（正文对应内容要求 3.2.1），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_2_2_general_energy_conservation",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.2.2",
+      "title": "General law of energy conservation",
+      "title_zh": "能量守恒定律",
+      "summary_zh": "用能量守恒解释自然现象并说明其普遍性。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.42（正文对应内容要求 3.2.2），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_2_3_second_law_thermodynamics",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.2.3",
+      "title": "Second law of thermodynamics",
+      "title_zh": "热力学第二定律",
+      "summary_zh": "由宏观过程方向性理解热力学第二定律并判断永动机不可能性。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.42（正文对应内容要求 3.2.3），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_3_1a_atomic_nuclear_model",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.3.1a",
+      "title": "Atomic nuclear model",
+      "title_zh": "原子核式结构模型",
+      "summary_zh": "概述原子结构探索证据并理解核式结构模型。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.1），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_3_1b_hydrogen_energy_levels",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.3.1b",
+      "title": "Hydrogen spectrum and energy levels",
+      "title_zh": "氢原子光谱与能级",
+      "summary_zh": "由氢原子光谱理解原子能级结构。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.1），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_3_2a_nuclear_composition_force",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.3.2a",
+      "title": "Nuclear composition and nuclear force",
+      "title_zh": "原子核组成与核力",
+      "summary_zh": "理解原子核组成和核力性质。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.2），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_3_2b_fundamental_interactions",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.3.2b",
+      "title": "Four fundamental interactions",
+      "title_zh": "四种基本相互作用",
+      "summary_zh": "识别四种基本相互作用及其典型尺度。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.2），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_3_2c_nuclear_reaction_equations",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.3.2c",
+      "title": "Nuclear reaction equations",
+      "title_zh": "核反应方程",
+      "summary_zh": "根据质量数和电荷守恒写出并检查核反应方程。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.2），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_3_3a_radioactive_decay_half_life",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.3.3a",
+      "title": "Radioactive decay and half-life",
+      "title_zh": "放射性衰变与半衰期",
+      "summary_zh": "解释放射性衰变和半衰期的统计意义。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.3），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_3_3b_radioisotope_application_safety",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.3.3b",
+      "title": "Radioisotope applications and radiation safety",
+      "title_zh": "放射性同位素应用与射线防护",
+      "summary_zh": "说明放射性同位素应用，并评价射线危害和防护。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.3），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_3_4a_nuclear_binding_energy",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.3.4a",
+      "title": "Nuclear binding energy",
+      "title_zh": "原子核结合能",
+      "summary_zh": "理解质量亏损和结合能并比较原子核稳定性。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.4），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_3_4b_nuclear_fission_fusion",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.3.4b",
+      "title": "Nuclear fission and fusion",
+      "title_zh": "核裂变与核聚变",
+      "summary_zh": "区分裂变与聚变反应并评价核技术影响。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.4），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_3_5_matter_exploration_history",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.3.5",
+      "title": "History of exploring matter structure",
+      "title_zh": "物质结构探索历程",
+      "summary_zh": "梳理人类探索物质结构的证据、仪器与模型演进。",
+      "requirement_type": "practice",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "reason",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.5），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_4_1a_photoelectric_effect_equation",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.4.1a",
+      "title": "Photoelectric effect and Einstein equation",
+      "title_zh": "光电效应与爱因斯坦方程",
+      "summary_zh": "实验认识光电效应并使用爱因斯坦光电效应方程。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.4.1），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_4_1b_light_wave_particle_duality",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.4.1b",
+      "title": "Wave-particle duality of light",
+      "title_zh": "光的波粒二象性",
+      "summary_zh": "依据干涉、衍射和光电效应证据说明光的波粒二象性。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.4.1），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_physics_2020_o_sr3_3_4_2_matter_waves_quantisation",
+      "parent_requirement_id": null,
+      "code": "选择性必修 3·3.4.2",
+      "title": "Matter waves and quantisation",
+      "title_zh": "实物粒子波动性与量子化",
+      "summary_zh": "说明实物粒子具有波动性，并联系电子衍射理解微观世界量子化。",
+      "requirement_type": "skill",
+      "level_id": "sr3",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.4.2），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

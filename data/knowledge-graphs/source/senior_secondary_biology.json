@@ -1,0 +1,3111 @@
+{
+  "schema_version": "2.0.0",
+  "content_version": "0.1.0",
+  "graph_id": "senior_secondary_biology",
+  "subject": "Biology",
+  "jurisdictions": [
+    "CN"
+  ],
+  "source_ids": [
+    "src_cn_moe_senior_high_biology_2020",
+    "src_openstax_biology_2e_2018",
+    "src_ncbi_neuroscience_2e_2001",
+    "src_openstax_microbiology_2016",
+    "src_pmc_apiaceae_protoplast_somatic_hybridisation_2023",
+    "src_pmc_plant_tissue_culture_applications_2023",
+    "src_fao_cattle_embryo_transfer_manual_1991",
+    "src_ncbi_genomes_2e_protein_engineering_2002",
+    "src_cn_nhc_assisted_reproduction_ethics_2003"
+  ],
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "依据中国普通高中生物学 120 条编号成果覆盖审查，新增最小可诊断概念、复用稳定 canonical 组合，并补齐第二类权威证据。"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "cn_sh_bio_topic_cell_chemistry_membrane",
+      "kind": "topic",
+      "name": "Cell chemistry and membrane",
+      "name_zh": "细胞化学与质膜",
+      "topic": null,
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 1.1.1），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §§2.1-2.4 atoms, water, carbon and biological macromolecules"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 1.1.3），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.1），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 5 Structure and Function of Plasma Membranes, especially §§5.1-5.4"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_cell_coordination",
+      "kind": "topic",
+      "name": "Cell organisation and coordination",
+      "name_zh": "细胞组织与协调",
+      "topic": null,
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.3），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 4 Cell Structure, especially §§4.2-4.6 prokaryotic/eukaryotic cells, organelles and cellular connections"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.4），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.3.1），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_membrane_transport",
+      "kind": "topic",
+      "name": "Selective and bulk transport",
+      "name_zh": "选择性与大分子运输",
+      "topic": null,
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 2.1.1），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 5 Structure and Function of Plasma Membranes, especially §§5.1-5.4"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 2.1.3），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_cell_fate",
+      "kind": "topic",
+      "name": "Cell differentiation and fate",
+      "name_zh": "细胞分化与命运",
+      "topic": null,
+      "default_order": 4,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.23（正文对应内容要求 2.3.2），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §16.3 Eukaryotic Epigenetic Gene Regulation; differential gene expression and cell differentiation"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.23（正文对应内容要求 2.3.3），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §§10.2-10.4 cell cycle control, cancer and programmed cell death"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_genetic_information",
+      "kind": "topic",
+      "name": "Genetic information and transmission",
+      "name_zh": "遗传信息与传递",
+      "topic": null,
+      "default_order": 5,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.1），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 14 DNA Structure and Function; Chapter 15 Genes and Proteins; §17.1 Biotechnology"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.5），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §16.3 Eukaryotic Epigenetic Gene Regulation"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.2.2），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 11 Meiosis and Sexual Reproduction; Chapter 13 Modern Understandings of Inheritance"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_genetic_variation",
+      "kind": "topic",
+      "name": "Inheritance and variation",
+      "name_zh": "遗传与变异",
+      "topic": null,
+      "default_order": 6,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.2.4），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 11 Meiosis and Sexual Reproduction; Chapter 13 Modern Understandings of Inheritance"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.3），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §10.4 Cancer and the Cell Cycle; §14.6 DNA Repair"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.5），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §13.2 Chromosomal Basis of Inherited Disorders"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_evolution_evidence_health",
+      "kind": "topic",
+      "name": "Genetic health and evolutionary evidence",
+      "name_zh": "遗传健康与进化证据",
+      "topic": null,
+      "default_order": 7,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.6），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §17.1 Biotechnology; genetic diagnosis and gene therapy"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 4.1.1），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §18.1 Understanding Evolution; fossil, anatomical and embryological evidence"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 4.1.2），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §20.2 Determining Evolutionary Relationships; molecular and cellular homology"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_internal_environment",
+      "kind": "topic",
+      "name": "Internal environment and exchange",
+      "name_zh": "内环境与物质交换",
+      "topic": null,
+      "default_order": 8,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.1），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §33.3 Homeostasis; Chapters 40-41 circulatory, respiratory, excretory and osmoregulatory exchange"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.2），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.3），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_nervous_regulation",
+      "kind": "topic",
+      "name": "Nervous regulation",
+      "name_zh": "神经调节",
+      "topic": null,
+      "default_order": 9,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.1），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 35 The Nervous System, especially §§35.1-35.3 neurons, central and peripheral nervous systems"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.4），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.5），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_neuroendocrine",
+      "kind": "topic",
+      "name": "Higher nervous and endocrine control",
+      "name_zh": "高级神经与内分泌调节",
+      "topic": null,
+      "default_order": 10,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.6），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_ncbi_neuroscience_2e_2001",
+          "locator": "Part V Complex Brain Functions, especially Chapters 27 and 31; cortical language function and the neural basis of learning and memory"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.1），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 37 The Endocrine System; §33.3 Homeostasis"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.3），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_homeostasis_immunity",
+      "kind": "topic",
+      "name": "Humoral regulation and immunity",
+      "name_zh": "体液调节与免疫",
+      "topic": null,
+      "default_order": 11,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.4），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §39.3 Breathing; carbon-dioxide and pH control of ventilation"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.5.2），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 42 The Immune System, especially §§42.1-42.4 innate, adaptive and disrupted immunity"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.5.4），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_plant_regulation",
+      "kind": "topic",
+      "name": "Auxin and plant growth regulation",
+      "name_zh": "生长素与植物生长调节",
+      "topic": null,
+      "default_order": 12,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.6.1），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §30.6 Plant Sensory Systems and Responses; auxin, tropisms and agricultural applications"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.31（正文对应内容要求 1.6.3），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_population_ecology",
+      "kind": "topic",
+      "name": "Population ecology",
+      "name_zh": "种群生态",
+      "topic": null,
+      "default_order": 13,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.1），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §45.1 Population Demography; population size, density, distribution and life-history structure"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.2），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §45.3 Environmental Limits to Population Growth; exponential and logistic growth models"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.3），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §45.4 Population Dynamics and Regulation; density-dependent and density-independent limiting factors"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_community_trophic",
+      "kind": "topic",
+      "name": "Communities and trophic networks",
+      "name_zh": "群落与营养网络",
+      "topic": null,
+      "default_order": 14,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.4），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 45 Population and Community Ecology; community structure and succession"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.5），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.2），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 46 Ecosystems; trophic structure, energy flow, biogeochemical cycles and ecosystem dynamics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_ecosystem_flows",
+      "kind": "topic",
+      "name": "Ecosystem flows and resource use",
+      "name_zh": "生态系统流动与资源利用",
+      "topic": null,
+      "default_order": 15,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.3），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 46 Ecosystems; trophic structure, energy flow, biogeochemical cycles and ecosystem dynamics"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.4），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.5），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_ecosystem_transfer",
+      "kind": "topic",
+      "name": "Transfer and trophic structure",
+      "name_zh": "生态传递与营养结构",
+      "topic": null,
+      "default_order": 16,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.6），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 46 Ecosystems; trophic structure, energy flow, biogeochemical cycles and ecosystem dynamics"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.7），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §45.7 Behavioral Biology; communication by visual, chemical, aural and tactile signals and its roles in reproduction and social behaviour"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.8），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_ecosystem_stability",
+      "kind": "topic",
+      "name": "Ecosystem stability",
+      "name_zh": "生态系统稳定性",
+      "topic": null,
+      "default_order": 17,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.1），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §§46.1-46.3 ecosystem dynamics, trophic interactions and biogeochemical cycles"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.2），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.3），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_environmental_change",
+      "kind": "topic",
+      "name": "Population and environmental change",
+      "name_zh": "人口与环境变化",
+      "topic": null,
+      "default_order": 18,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.1），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §45.5 Human Population Growth; demographic transition, resource demand and carrying capacity"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.2），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §44.5 Climate and the Effects of Global Climate Change; §47.3 Threats to Biodiversity"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.4），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §22.5 Beneficial Prokaryotes: bioremediation; §46.3 Biogeochemical Cycles; Chapter 47 conservation, restoration and sustainable resource use"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_microbial_control",
+      "kind": "topic",
+      "name": "Microbial culture control",
+      "name_zh": "微生物培养控制",
+      "topic": null,
+      "default_order": 19,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web Chapter 13 Control of Microbial Growth; physical and chemical control methods and aseptic practice"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.3），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web Chapter 9 Microbial Growth; culture media, isolation and direct/viable counting methods"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_microbial_measurement",
+      "kind": "topic",
+      "name": "Microbial isolation and measurement",
+      "name_zh": "微生物分离与测定",
+      "topic": null,
+      "default_order": 20,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.4），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web Chapter 9 Microbial Growth; culture media, isolation and direct/viable counting methods"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.5），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web §1.1 What Our Ancestors Knew and §8.4 Fermentation; traditional food and beverage fermentation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_fermentation_plant",
+      "kind": "topic",
+      "name": "Fermentation and plant culture",
+      "name_zh": "发酵与植物培养",
+      "topic": null,
+      "default_order": 21,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web §8.4 Fermentation; commercial food, pharmaceutical, solvent, vitamin and biofuel products"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.3），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §32.3 Asexual Reproduction; micropropagation, disease-free stock and plant tissue culture"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_plant_animal_cells",
+      "kind": "topic",
+      "name": "Plant and animal cell engineering",
+      "name_zh": "植物与动物细胞工程",
+      "topic": null,
+      "default_order": 22,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_pmc_apiaceae_protoplast_somatic_hybridisation_2023",
+          "locator": "Sections 1 and 9; protoplast isolation, chemical or electrical fusion, hybrid-plant regeneration and breeding applications"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.3），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_pmc_plant_tissue_culture_applications_2023",
+          "locator": "Sections 4.1-4.2; rapid micropropagation, virus-free plants, genetic improvement and secondary-metabolite production"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.2.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web §20.1 Polyclonal and Monoclonal Antibody Production; tissue culture and hybridoma cell fusion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_animal_cell_engineering",
+      "kind": "topic",
+      "name": "Animal-cell engineering",
+      "name_zh": "动物细胞工程",
+      "topic": null,
+      "default_order": 23,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §17.1 Biotechnology; somatic-cell nuclear transfer and reproductive cloning"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.3），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web §20.1 Polyclonal and Monoclonal Antibody Production; tissue culture and hybridoma cell fusion"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.4），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web §20.1 Polyclonal and Monoclonal Antibody Production"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_embryo_stem_cells",
+      "kind": "topic",
+      "name": "Embryo and stem-cell engineering",
+      "name_zh": "胚胎与干细胞工程",
+      "topic": null,
+      "default_order": 24,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.5），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §§43.6-43.7 early embryonic development, embryonic stem cells and differentiation"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.3.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §43.6 Fertilization and Early Embryonic Development"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.3.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_fao_cattle_embryo_transfer_manual_1991",
+          "locator": "Chapters 6-10, especially Chapter 10 Splitting Embryos; embryo recovery, transfer, bisection and demi-embryo transfer"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_molecular_engineering",
+      "kind": "topic",
+      "name": "Molecular engineering and impacts",
+      "name_zh": "分子工程及其影响",
+      "topic": null,
+      "default_order": 25,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.1.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §17.1 Biotechnology; recombinant-DNA tools, cloning, expression and engineered products"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.2.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_ncbi_genomes_2e_protein_engineering_2002",
+          "locator": "Chapter 7 §7.2.3; protein engineering by targeted gene alteration to change protein structure, activity and application properties"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.2.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.1.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §17.1 Biotechnology; agricultural, medical and ethical impacts of genetic modification"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_topic_biotechnology_ethics",
+      "kind": "topic",
+      "name": "Biotechnology ethics and security",
+      "name_zh": "生物技术伦理与安全",
+      "topic": null,
+      "default_order": 26,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.2.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §1.1 The Science of Biology: scientific ethics; §17.1 Biotechnology: reproductive cloning, safety and social consequences"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.2.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_cn_nhc_assisted_reproduction_ethics_2003",
+          "locator": "附件1 行为准则第（十五）项‘禁止克隆人’；附件3 社会公益原则第3项‘不得实施生殖性克隆技术’"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.3.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web §21.2 Bacterial Infections of the Skin and Eyes; anthrax as a biological weapon and documented harms"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_cellular_elements_carbon_skeletons",
+      "canonical_id": "pc_b010170fadec4b31174da9a87a4332e1",
+      "kind": "concept",
+      "name": "Cellular elements and carbon skeletons",
+      "name_zh": "细胞元素与碳链骨架",
+      "topic": "cn_sh_bio_topic_cell_chemistry_membrane",
+      "description": "说明细胞主要元素如何以碳链为骨架形成复杂生物大分子。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 1.1.1），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §§2.1-2.4 atoms, water, carbon and biological macromolecules"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_cellular_inorganic_salts",
+      "canonical_id": "pc_c088a7df0656c7e3658e30f9fda3d609",
+      "kind": "concept",
+      "name": "Inorganic salts in cells",
+      "name_zh": "细胞中的无机盐",
+      "topic": "cn_sh_bio_topic_cell_chemistry_membrane",
+      "description": "举例说明少量无机盐对细胞生命活动的重要作用。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 1.1.3），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §§2.1-2.4 atoms, water, carbon and biological macromolecules"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_plasma_membrane_functions",
+      "canonical_id": "pc_7f67c92fa0c79a54f0822060ac8a4080",
+      "kind": "concept",
+      "name": "Plasma-membrane functions",
+      "name_zh": "质膜的边界、运输与交流功能",
+      "topic": "cn_sh_bio_topic_cell_chemistry_membrane",
+      "description": "说明质膜分隔环境、控制物质进出并参与细胞间信息交流。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.1），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 5 Structure and Function of Plasma Membranes, especially §§5.1-5.4"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_nucleus_genetic_information",
+      "canonical_id": "pc_f25b23ea81c506e587d3067e86866c09",
+      "kind": "concept",
+      "name": "Nucleus and genetic information",
+      "name_zh": "细胞核与遗传信息",
+      "topic": "cn_sh_bio_topic_cell_coordination",
+      "description": "说明真核细胞遗传信息主要储存在细胞核中。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.3），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 4 Cell Structure, especially §§4.2-4.6 prokaryotic/eukaryotic cells, organelles and cellular connections"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_organelle_coordination",
+      "canonical_id": "pc_78dd182e4fbad59e57aeb4484e1c3954",
+      "kind": "concept",
+      "name": "Coordination among cell structures",
+      "name_zh": "细胞结构的协调合作",
+      "topic": "cn_sh_bio_topic_cell_coordination",
+      "description": "说明细胞各部分相互联系、协调执行生命活动。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.4），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 4 Cell Structure, especially §§4.2-4.6 prokaryotic/eukaryotic cells, organelles and cellular connections"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_cellular_unity_diversity",
+      "canonical_id": "pc_64852ab0501ee4d7b32d11655eb6b808",
+      "kind": "concept",
+      "name": "Cellular unity and diversity",
+      "name_zh": "细胞结构统一性与形态功能多样性",
+      "topic": "cn_sh_bio_topic_cell_coordination",
+      "description": "比较单细胞和多细胞生物的细胞结构共性及形态功能差异。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.3.1），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 4 Cell Structure, especially §§4.2-4.6 prokaryotic/eukaryotic cells, organelles and cellular connections"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_selective_permeability",
+      "canonical_id": "pc_4e487be68da0fcc9a3f8c5df2493c062",
+      "kind": "concept",
+      "name": "Selective permeability",
+      "name_zh": "质膜的选择透过性",
+      "topic": "cn_sh_bio_topic_membrane_transport",
+      "description": "说明质膜选择性控制不同物质通过。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 2.1.1），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 5 Structure and Function of Plasma Membranes, especially §§5.1-5.4"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_endocytosis_exocytosis",
+      "canonical_id": "pc_1264ba133e13ba77487296037ce4c00e",
+      "kind": "concept",
+      "name": "Endocytosis and exocytosis",
+      "name_zh": "胞吞与胞吐",
+      "topic": "cn_sh_bio_topic_membrane_transport",
+      "description": "说明大分子通过胞吞和胞吐进出细胞。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 2.1.3），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 5 Structure and Function of Plasma Membranes, especially §§5.1-5.4"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_cell_differentiation",
+      "canonical_id": "pc_603e03befcc0fac76e8a059261559f56",
+      "kind": "concept",
+      "name": "Cell differentiation",
+      "name_zh": "细胞分化",
+      "topic": "cn_sh_bio_topic_cell_fate",
+      "description": "说明细胞形态、结构和功能的特异性分化如何形成多细胞生物体。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.23（正文对应内容要求 2.3.2），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §16.3 Eukaryotic Epigenetic Gene Regulation; differential gene expression and cell differentiation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_cell_senescence_death",
+      "canonical_id": "pc_53d0352a79deedffc387d00ac17676a7",
+      "kind": "concept",
+      "name": "Cellular senescence and death",
+      "name_zh": "细胞衰老与死亡",
+      "topic": "cn_sh_bio_topic_cell_fate",
+      "description": "说明正常细胞衰老和死亡是自然生理过程。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.23（正文对应内容要求 2.3.3），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §§10.2-10.4 cell cycle control, cancer and programmed cell death"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_gene_nucleic_acid_segment",
+      "canonical_id": "pc_4968ce1f12aa3d8827a46863b03b81d2",
+      "kind": "concept",
+      "name": "Genes as nucleic-acid segments",
+      "name_zh": "基因是核酸功能片段",
+      "topic": "cn_sh_bio_topic_genetic_information",
+      "description": "说明多数生物基因位于 DNA，部分病毒基因位于 RNA。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.1），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 14 DNA Structure and Function; Chapter 15 Genes and Proteins; §17.1 Biotechnology"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_epigenetic_phenomena",
+      "canonical_id": "pc_db8e1b5b05c1c8cc184a64e1c68c3435",
+      "kind": "concept",
+      "name": "Epigenetic phenomena",
+      "name_zh": "表观遗传现象",
+      "topic": "cn_sh_bio_topic_genetic_information",
+      "description": "说明碱基序列不变而表型改变的表观遗传现象。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.5），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §16.3 Eukaryotic Epigenetic Gene Regulation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_gametic_inheritance",
+      "canonical_id": "pc_f90fa4062e2970091368eb5d22919cf4",
+      "kind": "concept",
+      "name": "Inheritance through gametes",
+      "name_zh": "遗传信息经配子传递",
+      "topic": "cn_sh_bio_topic_genetic_information",
+      "description": "说明有性生殖中遗传信息通过配子传给子代。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.2.2），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 11 Meiosis and Sexual Reproduction; Chapter 13 Modern Understandings of Inheritance"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_sex_linked_inheritance",
+      "canonical_id": "pc_8533c5cf0c58c968c6990001ab576642",
+      "kind": "concept",
+      "name": "Sex-linked inheritance",
+      "name_zh": "伴性遗传",
+      "topic": "cn_sh_bio_topic_genetic_variation",
+      "description": "说明性染色体基因的传递与性别相关联。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.2.4），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 11 Meiosis and Sexual Reproduction; Chapter 13 Modern Understandings of Inheritance"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_mutagens_cancer",
+      "canonical_id": "pc_043f05d8ef096d7bbdf67578bcc00662",
+      "kind": "concept",
+      "name": "Mutagens and cancer",
+      "name_zh": "诱变因素与癌变",
+      "topic": "cn_sh_bio_topic_genetic_variation",
+      "description": "说明化学物质、射线和病毒可能提高突变概率，部分突变导致分裂失控。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.3），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §10.4 Cancer and the Cell Cycle; §14.6 DNA Repair"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_chromosomal_variation",
+      "canonical_id": "pc_86f481ac1e4983f5844e9bf459df5d7e",
+      "kind": "concept",
+      "name": "Chromosomal variation",
+      "name_zh": "染色体结构与数量变异",
+      "topic": "cn_sh_bio_topic_genetic_variation",
+      "description": "说明染色体结构和数量变异可能改变性状甚至导致死亡。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.5），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §13.2 Chromosomal Basis of Inherited Disorders"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_genetic_disease_screening",
+      "canonical_id": "pc_2fa1c85e0d7a4075a6c60f671d363261",
+      "kind": "concept",
+      "name": "Genetic-disease screening and prevention",
+      "name_zh": "人类遗传病检测与预防",
+      "topic": "cn_sh_bio_topic_evolution_evidence_health",
+      "description": "举例说明人类遗传病的检测和预防。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.6），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §17.1 Biotechnology; genetic diagnosis and gene therapy"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_common_ancestry_fossil_anatomy",
+      "canonical_id": "pc_67cb55267032c55bab697c87ee0f205f",
+      "kind": "concept",
+      "name": "Evidence from fossils and comparative anatomy",
+      "name_zh": "化石、比较解剖与胚胎学的共同祖先证据",
+      "topic": "cn_sh_bio_topic_evolution_evidence_health",
+      "description": "使用化石、比较解剖和胚胎学事实说明共同祖先。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 4.1.1），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §18.1 Understanding Evolution; fossil, anatomical and embryological evidence"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_common_ancestry_cell_molecular",
+      "canonical_id": "pc_d83debf48c4c993831d6b7beb3321029",
+      "kind": "concept",
+      "name": "Cellular and molecular evidence of common ancestry",
+      "name_zh": "细胞与分子层面的共同祖先证据",
+      "topic": "cn_sh_bio_topic_evolution_evidence_health",
+      "description": "使用代谢和 DNA 结构功能共性说明共同祖先。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 4.1.2），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §20.2 Determining Evolutionary Relationships; molecular and cellular homology"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_internal_environment_fluids",
+      "canonical_id": "pc_990d45746021a0258ffce6947d5c9c25",
+      "kind": "concept",
+      "name": "Internal-environment fluids",
+      "name_zh": "内环境的细胞外液组成",
+      "topic": "cn_sh_bio_topic_internal_environment",
+      "description": "说明血浆、组织液和淋巴等细胞外液共同构成内环境。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.1），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §33.3 Homeostasis; Chapters 40-41 circulatory, respiratory, excretory and osmoregulatory exchange"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_internal_external_exchange",
+      "canonical_id": "pc_fea026b56e9f7d027299b4484d6be477",
+      "kind": "concept",
+      "name": "Exchange through the internal environment",
+      "name_zh": "细胞经内环境与外界交换",
+      "topic": "cn_sh_bio_topic_internal_environment",
+      "description": "说明细胞通过内环境与外界交换并参与内环境维持。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.2），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §33.3 Homeostasis; Chapters 40-41 circulatory, respiratory, excretory and osmoregulatory exchange"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_organ_system_exchange",
+      "canonical_id": "pc_169fad745be0c7b18694394af7fb06fe",
+      "kind": "concept",
+      "name": "Organ systems in material exchange",
+      "name_zh": "器官系统参与内外环境物质交换",
+      "topic": "cn_sh_bio_topic_internal_environment",
+      "description": "说明呼吸、消化、循环和泌尿系统如何参与内外环境交换。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.3），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §33.3 Homeostasis; Chapters 40-41 circulatory, respiratory, excretory and osmoregulatory exchange"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_reflex_arc",
+      "canonical_id": "pc_46347b1ad33ab3d77b635c228957c4fd",
+      "kind": "concept",
+      "name": "Reflexes and the reflex arc",
+      "name_zh": "反射与反射弧",
+      "topic": "cn_sh_bio_topic_nervous_regulation",
+      "description": "说明条件和非条件反射及反射弧结构。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.1），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 35 The Nervous System, especially §§35.1-35.3 neurons, central and peripheral nervous systems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_central_nervous_hierarchy",
+      "canonical_id": "pc_7865cefc3b34beceb184b410f393c1ba",
+      "kind": "concept",
+      "name": "Coordination of spinal and brain centres",
+      "name_zh": "脊髓与脑高级中枢协调",
+      "topic": "cn_sh_bio_topic_nervous_regulation",
+      "description": "说明低级和高级神经中枢协调调控器官和系统。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.4），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 35 The Nervous System, especially §§35.1-35.3 neurons, central and peripheral nervous systems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_autonomic_nervous_regulation",
+      "canonical_id": "pc_05a4fbd93dd3ebc240adc1e06c52f9a1",
+      "kind": "concept",
+      "name": "Autonomic nervous regulation",
+      "name_zh": "自主神经调节内脏",
+      "topic": "cn_sh_bio_topic_nervous_regulation",
+      "description": "说明中枢神经系统通过自主神经调节内脏活动。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.5），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 35 The Nervous System, especially §§35.1-35.3 neurons, central and peripheral nervous systems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_cortical_higher_activity",
+      "canonical_id": "pc_0083b75b35558081f0f25304f33efa6e",
+      "kind": "concept",
+      "name": "Cortical higher nervous activity",
+      "name_zh": "大脑皮层高级神经活动",
+      "topic": "cn_sh_bio_topic_neuroendocrine",
+      "description": "说明语言活动和条件反射由大脑皮层控制。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.6），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_ncbi_neuroscience_2e_2001",
+          "locator": "Part V Complex Brain Functions, especially Chapters 27 and 31; cortical language function and the neural basis of learning and memory"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_endocrine_system",
+      "canonical_id": "pc_73decdd85804bf6c56ea96df910916d1",
+      "kind": "concept",
+      "name": "Endocrine-system organisation",
+      "name_zh": "内分泌系统组成",
+      "topic": "cn_sh_bio_topic_neuroendocrine",
+      "description": "识别主要内分泌腺及其激素调节作用。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.1），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 37 The Endocrine System; §33.3 Homeostasis"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_neuroendocrine_coordination",
+      "canonical_id": "pc_a129b516baefe0c88abd508e71bb0e00",
+      "kind": "concept",
+      "name": "Neuroendocrine coordination",
+      "name_zh": "神经与体液调节协调",
+      "topic": "cn_sh_bio_topic_neuroendocrine",
+      "description": "说明神经和体液调节共同维持体温与水盐平衡。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.3），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 37 The Endocrine System; §33.3 Homeostasis"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_humoral_respiratory_regulation",
+      "canonical_id": "pc_c351ce3400d2b06f7e3fb6a7f25c9528",
+      "kind": "concept",
+      "name": "Humoral regulation of breathing",
+      "name_zh": "体液成分调节呼吸",
+      "topic": "cn_sh_bio_topic_homeostasis_immunity",
+      "description": "说明二氧化碳等体液成分参与呼吸运动调节。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.4），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §39.3 Breathing; carbon-dioxide and pH control of ventilation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_innate_adaptive_immunity",
+      "canonical_id": "pc_94f54f11e23c1c3e407c8036fb6321b6",
+      "kind": "concept",
+      "name": "Innate and adaptive immunity",
+      "name_zh": "非特异性与特异性免疫",
+      "topic": "cn_sh_bio_topic_homeostasis_immunity",
+      "description": "比较先天非特异性免疫和后天特异性免疫。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.5.2），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 42 The Immune System, especially §§42.1-42.4 innate, adaptive and disrupted immunity"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_immune_disorders",
+      "canonical_id": "pc_5f99a9c2ac6e1cab9e53477e2842eb6b",
+      "kind": "concept",
+      "name": "Immune disorders",
+      "name_zh": "免疫功能异常与疾病",
+      "topic": "cn_sh_bio_topic_homeostasis_immunity",
+      "description": "比较过敏、自身免疫病、艾滋病和先天免疫缺陷。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.5.4），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 42 The Immune System, especially §§42.1-42.4 innate, adaptive and disrupted immunity"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_auxin_dual_effects",
+      "canonical_id": "pc_3b0475fedf65a19d4227115cc008b92d",
+      "kind": "concept",
+      "name": "Auxin discovery and dual effects",
+      "name_zh": "生长素发现与两重性",
+      "topic": "cn_sh_bio_topic_plant_regulation",
+      "description": "说明生长素的发现及其促进或抑制生长的两重性。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.6.1），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §30.6 Plant Sensory Systems and Responses; auxin, tropisms and agricultural applications"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_plant_growth_regulator_applications",
+      "canonical_id": "pc_0758d51c8b98059f1780aee07c326953",
+      "kind": "concept",
+      "name": "Applications of plant growth regulators",
+      "name_zh": "植物激素及类似物的生产应用",
+      "topic": "cn_sh_bio_topic_plant_regulation",
+      "description": "说明主要植物激素及类似物在生产中的应用。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.31（正文对应内容要求 1.6.3），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §30.6 Plant Sensory Systems and Responses; auxin, tropisms and agricultural applications"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_population_characteristics",
+      "canonical_id": "pc_a9447add767e7c509fb5f3725435137d",
+      "kind": "concept",
+      "name": "Population characteristics",
+      "name_zh": "种群特征",
+      "topic": "cn_sh_bio_topic_population_ecology",
+      "description": "说明种群密度、出生死亡率、迁入迁出率、年龄结构和性别比例。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.1），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §45.1 Population Demography; population size, density, distribution and life-history structure"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_population_growth_models",
+      "canonical_id": "pc_ceeb7c1f2db353b57d85fa869f5bda71",
+      "kind": "concept",
+      "name": "Population-growth models",
+      "name_zh": "种群数量变化模型",
+      "topic": "cn_sh_bio_topic_population_ecology",
+      "description": "建立数学模型解释种群数量变动。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.2），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §45.3 Environmental Limits to Population Growth; exponential and logistic growth models"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_population_limiting_factors",
+      "canonical_id": "pc_7634f823e7f43393e5a89d2fb684676e",
+      "kind": "concept",
+      "name": "Factors affecting populations",
+      "name_zh": "种群特征的生物与非生物影响因素",
+      "topic": "cn_sh_bio_topic_population_ecology",
+      "description": "说明非生物因素和种间作用如何影响种群特征。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.3），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §45.4 Population Dynamics and Regulation; density-dependent and density-independent limiting factors"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_community_structure",
+      "canonical_id": "pc_738afe02309cf9d584681e013e11fe69",
+      "kind": "concept",
+      "name": "Community structure",
+      "name_zh": "群落垂直、水平结构及时间变化",
+      "topic": "cn_sh_bio_topic_community_trophic",
+      "description": "描述群落的垂直和水平结构及其时间变化。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.4），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 45 Population and Community Ecology; community structure and succession"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_ecological_succession",
+      "canonical_id": "pc_40daa84cf8496038cb7d02572227bac9",
+      "kind": "concept",
+      "name": "Ecological succession",
+      "name_zh": "初生演替与次生演替",
+      "topic": "cn_sh_bio_topic_community_trophic",
+      "description": "说明群落演替及初生、次生演替的区别。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.5），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 45 Population and Community Ecology; community structure and succession"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_food_chains_webs",
+      "canonical_id": "pc_70da4d7e60b713056853543f2b486297",
+      "kind": "concept",
+      "name": "Food chains and food webs",
+      "name_zh": "食物链与食物网",
+      "topic": "cn_sh_bio_topic_community_trophic",
+      "description": "说明生产者和消费者通过食物链、食物网形成营养结构。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.2），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 46 Ecosystems; trophic structure, energy flow, biogeochemical cycles and ecosystem dynamics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_matter_cycles_energy_flow",
+      "canonical_id": "pc_a26230828b27cf03028e959c4472f5f1",
+      "kind": "concept",
+      "name": "Matter cycling and energy flow",
+      "name_zh": "物质循环与能量流动",
+      "topic": "cn_sh_bio_topic_ecosystem_flows",
+      "description": "说明物质循环、能量单向流动和逐级递减规律。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.3），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 46 Ecosystems; trophic structure, energy flow, biogeochemical cycles and ecosystem dynamics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_ecological_resource_use",
+      "canonical_id": "pc_3104e1f4e490282faddf07783c2399b8",
+      "kind": "concept",
+      "name": "Ecological resource use",
+      "name_zh": "生态规律与资源利用",
+      "topic": "cn_sh_bio_topic_ecosystem_flows",
+      "description": "应用物质循环和能量流动规律提高生态资源利用效率。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.4），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 46 Ecosystems; trophic structure, energy flow, biogeochemical cycles and ecosystem dynamics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_ecological_pyramids",
+      "canonical_id": "pc_305adf8ebeefac092af08b8ad4ce31b5",
+      "kind": "concept",
+      "name": "Ecological pyramids",
+      "name_zh": "数量、生物量和能量金字塔",
+      "topic": "cn_sh_bio_topic_ecosystem_flows",
+      "description": "说明生态金字塔如何表征营养级数量、生物量和能量关系。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.5），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 46 Ecosystems; trophic structure, energy flow, biogeochemical cycles and ecosystem dynamics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_biomagnification",
+      "canonical_id": "pc_eec94f4451e73065d30fd63abe099466",
+      "kind": "concept",
+      "name": "Biomagnification",
+      "name_zh": "食物链中的有害物质富集",
+      "topic": "cn_sh_bio_topic_ecosystem_transfer",
+      "description": "说明有害物质沿食物链不断富集。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.6），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 46 Ecosystems; trophic structure, energy flow, biogeochemical cycles and ecosystem dynamics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_ecosystem_information_transfer",
+      "canonical_id": "pc_ba3fe6583fb4d40f15c1573e314b2897",
+      "kind": "concept",
+      "name": "Information transfer in ecosystems",
+      "name_zh": "生态系统信息传递",
+      "topic": "cn_sh_bio_topic_ecosystem_transfer",
+      "description": "说明物理、化学和行为信息对生命活动、繁衍和种间关系的作用。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.7），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §45.7 Behavioral Biology; communication by visual, chemical, aural and tactile signals and its roles in reproduction and social behaviour"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_trophic_structure_factors",
+      "canonical_id": "pc_5e3af190cf5d812135bc6cfb8de91b73",
+      "kind": "concept",
+      "name": "Determinants of trophic structure",
+      "name_zh": "营养结构的生物与非生物决定因素",
+      "topic": "cn_sh_bio_topic_ecosystem_transfer",
+      "description": "分析特定生态系统的生物和非生物因素如何决定营养结构。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.8），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 46 Ecosystems; trophic structure, energy flow, biogeochemical cycles and ecosystem dynamics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_ecosystem_stability",
+      "canonical_id": "pc_a853ca2b6804c3743c7a40f1c2ae5081",
+      "kind": "concept",
+      "name": "Ecosystem stability",
+      "name_zh": "生态系统稳定性",
+      "topic": "cn_sh_bio_topic_ecosystem_stability",
+      "description": "说明生态系统保持或恢复结构功能和动态平衡的能力。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.1），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §§46.1-46.3 ecosystem dynamics, trophic interactions and biogeochemical cycles"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_ecosystem_disturbances",
+      "canonical_id": "pc_cee4cb6816eac128a0e6f36535957b6a",
+      "kind": "concept",
+      "name": "Ecosystem disturbances",
+      "name_zh": "生态系统干扰因素",
+      "topic": "cn_sh_bio_topic_ecosystem_stability",
+      "description": "说明气候、自然事件、人类活动和外来物种对稳定性的影响。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.2），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §§46.1-46.3 ecosystem dynamics, trophic interactions and biogeochemical cycles"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_ecosystem_self_regulation",
+      "canonical_id": "pc_e842f2edde8b384472460c753b197e3f",
+      "kind": "concept",
+      "name": "Ecosystem self-regulation",
+      "name_zh": "生态系统自我调节",
+      "topic": "cn_sh_bio_topic_ecosystem_stability",
+      "description": "说明生态系统在一定干扰限度内通过自我调节维持稳定。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.3），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §§46.1-46.3 ecosystem dynamics, trophic interactions and biogeochemical cycles"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_population_environment_pressure",
+      "canonical_id": "pc_d736b9e86a2f00629df578cf4d065b89",
+      "kind": "concept",
+      "name": "Population pressure on the environment",
+      "name_zh": "人口增长的环境压力",
+      "topic": "cn_sh_bio_topic_environmental_change",
+      "description": "说明人口增长如何对环境造成压力。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.1），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §45.5 Human Population Growth; demographic transition, resource demand and carrying capacity"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_global_environmental_change",
+      "canonical_id": "pc_3c7141a671b5d3b21d36e648301947f1",
+      "kind": "concept",
+      "name": "Global environmental change",
+      "name_zh": "全球环境问题与生物圈稳态",
+      "topic": "cn_sh_bio_topic_environmental_change",
+      "description": "说明气候、水资源、臭氧、酸雨、荒漠化和污染对生物圈与人的影响。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.2），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §44.5 Climate and the Effects of Global Climate Change; §47.3 Threats to Biodiversity"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_ecological_engineering_circularity",
+      "canonical_id": "pc_d31768fc6f80dfb5ffee5fdcb356a5dd",
+      "kind": "concept",
+      "name": "Ecological engineering and circularity",
+      "name_zh": "生态工程与资源循环利用",
+      "topic": "cn_sh_bio_topic_environmental_change",
+      "description": "说明依据生态学原理和系统工程实现资源多层次循环利用。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.4），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §22.5 Beneficial Prokaryotes: bioremediation; §46.3 Biogeochemical Cycles; Chapter 47 conservation, restoration and sustainable resource use"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_sterilisation_microbe_culture",
+      "canonical_id": "pc_02db8c75f6ee755edfdd44db1800d190",
+      "kind": "concept",
+      "name": "Sterilisation for pure culture",
+      "name_zh": "纯培养中的灭菌",
+      "topic": "cn_sh_bio_topic_microbial_control",
+      "description": "说明灭菌是获得纯净微生物培养物的前提。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web Chapter 13 Control of Microbial Growth; physical and chemical control methods and aseptic practice"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_aseptic_technique",
+      "canonical_id": "pc_da199aa16f2cf927e3eb52617c37220d",
+      "kind": "concept",
+      "name": "Aseptic technique",
+      "name_zh": "无菌技术",
+      "topic": "cn_sh_bio_topic_microbial_control",
+      "description": "说明操作中保持无菌物品和区域不被污染的技术。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web Chapter 13 Control of Microbial Growth; physical and chemical control methods and aseptic practice"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_selective_culture_media",
+      "canonical_id": "pc_3ffc91735aa4009319d97d82b2bd6cb1",
+      "kind": "concept",
+      "name": "Selective culture media",
+      "name_zh": "培养基配方与目的培养",
+      "topic": "cn_sh_bio_topic_microbial_control",
+      "description": "说明调整培养基配方可有目的地培养微生物。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.3），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web Chapter 9 Microbial Growth; culture media, isolation and direct/viable counting methods"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_microbial_isolation_methods",
+      "canonical_id": "pc_9d5bceaf3c265dcafdaa249db80ad329",
+      "kind": "concept",
+      "name": "Microbial isolation methods",
+      "name_zh": "平板划线与稀释涂布分离",
+      "topic": "cn_sh_bio_topic_microbial_measurement",
+      "description": "比较平板划线法和稀释涂布平板法的分离纯化用途。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.4），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web Chapter 9 Microbial Growth; culture media, isolation and direct/viable counting methods"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_microbial_counting_methods",
+      "canonical_id": "pc_d5a40034050d02c152d7f51ce3bd2513",
+      "kind": "concept",
+      "name": "Microbial counting methods",
+      "name_zh": "稀释涂布与显微镜计数",
+      "topic": "cn_sh_bio_topic_microbial_measurement",
+      "description": "比较稀释涂布平板法和显微镜计数法测定微生物数量。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.5），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web Chapter 9 Microbial Growth; culture media, isolation and direct/viable counting methods"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_traditional_fermentation",
+      "canonical_id": "pc_316272b1915e07a00215e5b2801d2772",
+      "kind": "concept",
+      "name": "Traditional fermentation",
+      "name_zh": "传统发酵食品",
+      "topic": "cn_sh_bio_topic_microbial_measurement",
+      "description": "说明微生物在传统发酵食品生产中的作用。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web §1.1 What Our Ancestors Knew and §8.4 Fermentation; traditional food and beverage fermentation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_industrial_fermentation",
+      "canonical_id": "pc_339a5f3174c1fa2f8c4273228d1abe4d",
+      "kind": "concept",
+      "name": "Industrial fermentation",
+      "name_zh": "现代发酵工程",
+      "topic": "cn_sh_bio_topic_fermentation_plant",
+      "description": "说明现代工程技术利用微生物功能工业化生产产品。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web §8.4 Fermentation; commercial food, pharmaceutical, solvent, vitamin and biofuel products"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_fermentation_applications",
+      "canonical_id": "pc_1fffd89a6d612ed5bd06d8559028652b",
+      "kind": "concept",
+      "name": "Applications of fermentation engineering",
+      "name_zh": "发酵工程应用",
+      "topic": "cn_sh_bio_topic_fermentation_plant",
+      "description": "说明发酵工程在医药、食品和工农业中的应用价值。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.3），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web §8.4 Fermentation; commercial food, pharmaceutical, solvent, vitamin and biofuel products"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_plant_tissue_culture",
+      "canonical_id": "pc_6cc7ae70a5a7f498efda3c0155ece301",
+      "kind": "concept",
+      "name": "Plant tissue culture",
+      "name_zh": "植物组织培养",
+      "topic": "cn_sh_bio_topic_fermentation_plant",
+      "description": "说明离体材料形成愈伤组织、再分化并形成完整植株的过程。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §32.3 Asexual Reproduction; micropropagation, disease-free stock and plant tissue culture"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_plant_somatic_hybridisation",
+      "canonical_id": "pc_23f52412736512b8f40fac9958079322",
+      "kind": "concept",
+      "name": "Plant somatic hybridisation",
+      "name_zh": "植物体细胞杂交",
+      "topic": "cn_sh_bio_topic_plant_animal_cells",
+      "description": "说明不同植物体细胞融合并培育新植物体的技术。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_pmc_apiaceae_protoplast_somatic_hybridisation_2023",
+          "locator": "Sections 1 and 9; protoplast isolation, chemical or electrical fusion, hybrid-plant regeneration and breeding applications"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_plant_cell_engineering_applications",
+      "canonical_id": "pc_d30f1f836c9100c1462e7a4a389ce02f",
+      "kind": "concept",
+      "name": "Applications of plant-cell engineering",
+      "name_zh": "植物细胞工程应用",
+      "topic": "cn_sh_bio_topic_plant_animal_cells",
+      "description": "说明快速繁殖、脱毒、次生代谢产物生产和育种应用。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.3），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_pmc_plant_tissue_culture_applications_2023",
+          "locator": "Sections 4.1-4.2; rapid micropropagation, virus-free plants, genetic improvement and secondary-metabolite production"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_animal_cell_culture",
+      "canonical_id": "pc_df3d6997dd440131a8dad40c4acbc338",
+      "kind": "concept",
+      "name": "Animal cell culture",
+      "name_zh": "动物细胞培养",
+      "topic": "cn_sh_bio_topic_plant_animal_cells",
+      "description": "说明动物组织分散成细胞并在适宜条件下培养增殖的过程。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.2.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web §20.1 Polyclonal and Monoclonal Antibody Production; tissue culture and hybridoma cell fusion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_somatic_cell_nuclear_transfer",
+      "canonical_id": "pc_73b8a50a14796395bbb0ae7525ab1b99",
+      "kind": "concept",
+      "name": "Somatic-cell nuclear transfer",
+      "name_zh": "动物体细胞核移植",
+      "topic": "cn_sh_bio_topic_animal_cell_engineering",
+      "description": "说明体细胞核移入去核卵母细胞并发育为新个体的过程。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §17.1 Biotechnology; somatic-cell nuclear transfer and reproductive cloning"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_animal_cell_fusion",
+      "canonical_id": "pc_ab54a12e8f3ea29b213314991f5dccfc",
+      "kind": "concept",
+      "name": "Animal cell fusion",
+      "name_zh": "动物细胞融合",
+      "topic": "cn_sh_bio_topic_animal_cell_engineering",
+      "description": "说明物理、化学或生物手段使动物细胞融合。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.3），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web §20.1 Polyclonal and Monoclonal Antibody Production; tissue culture and hybridoma cell fusion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_monoclonal_antibody_production",
+      "canonical_id": "pc_076accb0e6c48dc5a6b42dcc36152da3",
+      "kind": "concept",
+      "name": "Monoclonal-antibody production",
+      "name_zh": "单克隆抗体制备",
+      "topic": "cn_sh_bio_topic_animal_cell_engineering",
+      "description": "说明细胞融合技术在单克隆抗体制备中的作用。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.4），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web §20.1 Polyclonal and Monoclonal Antibody Production"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_stem_cell_applications",
+      "canonical_id": "pc_f24ca070bfceb1f905930f4386fc0b75",
+      "kind": "concept",
+      "name": "Stem-cell applications",
+      "name_zh": "干细胞的生物医学应用",
+      "topic": "cn_sh_bio_topic_embryo_stem_cells",
+      "description": "说明干细胞在生物医学工程中的应用价值。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.5），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §§43.6-43.7 early embryonic development, embryonic stem cells and differentiation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_fertilisation_early_embryo",
+      "canonical_id": "pc_2bb6c5caf86fb9a1beb4b9ed7331d3fc",
+      "kind": "concept",
+      "name": "Fertilisation and early embryonic development",
+      "name_zh": "受精与早期胚胎发育",
+      "topic": "cn_sh_bio_topic_embryo_stem_cells",
+      "description": "说明胚胎形成经历受精和早期发育。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.3.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §43.6 Fertilization and Early Embryonic Development"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_embryo_engineering",
+      "canonical_id": "pc_fea1ab91762f39ce21af7aee8d10f9b1",
+      "kind": "concept",
+      "name": "Embryo engineering",
+      "name_zh": "体外受精、胚胎移植与分割",
+      "topic": "cn_sh_bio_topic_embryo_stem_cells",
+      "description": "说明体外受精、胚胎移植和胚胎分割等胚胎工程技术。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.3.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_fao_cattle_embryo_transfer_manual_1991",
+          "locator": "Chapters 6-10, especially Chapter 10 Splitting Embryos; embryo recovery, transfer, bisection and demi-embryo transfer"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_gene_engineering_tools",
+      "canonical_id": "pc_2453884856757a434254e3d2465428a9",
+      "kind": "concept",
+      "name": "Tools of genetic engineering",
+      "name_zh": "限制酶、连接酶与载体",
+      "topic": "cn_sh_bio_topic_molecular_engineering",
+      "description": "说明限制性内切核酸酶、DNA 连接酶和载体的作用。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.1.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §17.1 Biotechnology; recombinant-DNA tools, cloning, expression and engineered products"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_protein_engineering",
+      "canonical_id": "pc_c106243302f8fd6e37f9a27d11d0c458",
+      "kind": "concept",
+      "name": "Protein engineering",
+      "name_zh": "蛋白质工程",
+      "topic": "cn_sh_bio_topic_molecular_engineering",
+      "description": "说明以目标蛋白质结构和功能为导向，通过基因设计与改造获得满足人类需求蛋白质的原理和过程。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.2.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_ncbi_genomes_2e_protein_engineering_2002",
+          "locator": "Chapter 7 §7.2.3; protein engineering by targeted gene alteration to change protein structure, activity and application properties"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.2.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_gmo_impacts",
+      "canonical_id": "pc_c3e39f880db577df6f6c3b5c414c354c",
+      "kind": "concept",
+      "name": "Impacts of genetically modified technology",
+      "name_zh": "转基因技术影响",
+      "topic": "cn_sh_bio_topic_molecular_engineering",
+      "description": "比较转基因技术应用可能带来的收益、风险和社会影响。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.1.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §17.1 Biotechnology; agricultural, medical and ethical impacts of genetic modification"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_reproductive_cloning_ethics",
+      "canonical_id": "pc_8fdb51d08a8ed66fb99b97be9cfdd375",
+      "kind": "concept",
+      "name": "Ethics of human reproductive cloning",
+      "name_zh": "生殖性克隆人的伦理问题",
+      "topic": "cn_sh_bio_topic_biotechnology_ethics",
+      "description": "说明生殖性克隆人面临的伦理问题。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.2.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §1.1 The Science of Biology: scientific ethics; §17.1 Biotechnology: reproductive cloning, safety and social consequences"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_reproductive_cloning_china_policy",
+      "canonical_id": "pc_daad7f4952e846d491f4766b7ec46c7a",
+      "kind": "concept",
+      "name": "China policy on reproductive cloning",
+      "name_zh": "中国禁止生殖性克隆人",
+      "topic": "cn_sh_bio_topic_biotechnology_ethics",
+      "description": "说明中国不赞成、不允许、不支持、不接受生殖性克隆人实验的理由。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.2.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_cn_nhc_assisted_reproduction_ethics_2003",
+          "locator": "附件1 行为准则第（十五）项‘禁止克隆人’；附件3 社会公益原则第3项‘不得实施生殖性克隆技术’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_bio_biological_weapons_harms",
+      "canonical_id": "pc_1a63fde8aa0fbbde94fa5ea18f52d1a5",
+      "kind": "concept",
+      "name": "Harms of biological weapons",
+      "name_zh": "生物武器的威胁与伤害",
+      "topic": "cn_sh_bio_topic_biotechnology_ethics",
+      "description": "说明生物武器对人类造成的严重威胁和伤害。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.3.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web §21.2 Bacterial Infections of the Skin and Eyes; anthrax as a biological weapon and documented harms"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ],
+  "edges": [
+    {
+      "from": "cn_sh_bio_plasma_membrane_functions",
+      "to": "cn_sh_bio_selective_permeability",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "解释选择透过性需要先理解质膜作为细胞边界和运输界面的功能。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.1），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 5 Structure and Function of Plasma Membranes, especially §§5.1-5.4"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 2.1.1），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_plasma_membrane_functions",
+      "to": "cn_sh_bio_endocytosis_exocytosis",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "理解胞吞和胞吐需要先掌握质膜的结构、边界和动态运输功能。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.1），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 5 Structure and Function of Plasma Membranes, especially §§5.1-5.4"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 2.1.3），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_gene_nucleic_acid_segment",
+      "to": "cn_sh_bio_epigenetic_phenomena",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "区分表观遗传与序列突变需要先理解基因作为核酸功能片段。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.1），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 14 DNA Structure and Function; Chapter 15 Genes and Proteins; §17.1 Biotechnology"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.5），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §16.3 Eukaryotic Epigenetic Gene Regulation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_gametic_inheritance",
+      "to": "cn_sh_bio_sex_linked_inheritance",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "分析伴性遗传需要先理解遗传信息通过配子传递。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.2.2），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 11 Meiosis and Sexual Reproduction; Chapter 13 Modern Understandings of Inheritance"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.2.4），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_internal_environment_fluids",
+      "to": "cn_sh_bio_internal_external_exchange",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "分析细胞与外界交换需要先识别内环境的液体组成。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.1），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §33.3 Homeostasis; Chapters 40-41 circulatory, respiratory, excretory and osmoregulatory exchange"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.2），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_internal_external_exchange",
+      "to": "cn_sh_bio_organ_system_exchange",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "说明器官系统协同前需要先建立细胞经内环境交换的路径。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.2），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §33.3 Homeostasis; Chapters 40-41 circulatory, respiratory, excretory and osmoregulatory exchange"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.3），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_reflex_arc",
+      "to": "cn_sh_bio_central_nervous_hierarchy",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "理解高级和低级中枢协调需要先掌握反射弧的基本输入输出结构。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.1），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 35 The Nervous System, especially §§35.1-35.3 neurons, central and peripheral nervous systems"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.4），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_central_nervous_hierarchy",
+      "to": "cn_sh_bio_autonomic_nervous_regulation",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "解释自主神经调节内脏需要先理解中枢层级的协调。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.4），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 35 The Nervous System, especially §§35.1-35.3 neurons, central and peripheral nervous systems"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.5），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_endocrine_system",
+      "to": "cn_sh_bio_neuroendocrine_coordination",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "解释神经体液协同需要先识别内分泌系统和激素信号。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.1），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 37 The Endocrine System; §33.3 Homeostasis"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.3），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_population_characteristics",
+      "to": "cn_sh_bio_population_limiting_factors",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "分析限制因素的作用需要先明确种群密度、出生死亡和迁入迁出等响应变量。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.1），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §45.1 Population Demography; population size, density, distribution and life-history structure"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.3），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §45.4 Population Dynamics and Regulation; density-dependent and density-independent limiting factors"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_population_limiting_factors",
+      "to": "cn_sh_bio_population_growth_models",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "理解逻辑斯谛增长及环境容纳量需要先掌握密度相关和非密度相关限制因素。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.3），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §45.4 Population Dynamics and Regulation; density-dependent and density-independent limiting factors"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.2），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §45.3 Environmental Limits to Population Growth; exponential and logistic growth models"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_community_structure",
+      "to": "cn_sh_bio_ecological_succession",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "理解群落随时间替代需要先识别其垂直和水平结构。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.4），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 45 Population and Community Ecology; community structure and succession"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.5），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_food_chains_webs",
+      "to": "cn_sh_bio_matter_cycles_energy_flow",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "分析能量与物质路径需要先建立食物链和食物网营养结构。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.2），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 46 Ecosystems; trophic structure, energy flow, biogeochemical cycles and ecosystem dynamics"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.3），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_matter_cycles_energy_flow",
+      "to": "cn_sh_bio_ecological_pyramids",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "解释生态金字塔需要先掌握能量逐级递减和物质循环的差异。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.3），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 46 Ecosystems; trophic structure, energy flow, biogeochemical cycles and ecosystem dynamics"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.5），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_food_chains_webs",
+      "to": "cn_sh_bio_biomagnification",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "说明有害物质富集需要先理解食物链中的摄食关系。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.2），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 46 Ecosystems; trophic structure, energy flow, biogeochemical cycles and ecosystem dynamics"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.6），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_ecosystem_disturbances",
+      "to": "cn_sh_bio_ecosystem_self_regulation",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "评价自我调节能力需要先识别扰动来源和强度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.2），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §§46.1-46.3 ecosystem dynamics, trophic interactions and biogeochemical cycles"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.3），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_ecosystem_self_regulation",
+      "to": "cn_sh_bio_ecological_engineering_circularity",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "设计生态工程需要先理解系统自我调节和结构功能关系。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.3），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §§46.1-46.3 ecosystem dynamics, trophic interactions and biogeochemical cycles"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.4），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §22.5 Beneficial Prokaryotes: bioremediation; §46.3 Biogeochemical Cycles; Chapter 47 conservation, restoration and sustainable resource use"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_sterilisation_microbe_culture",
+      "to": "cn_sh_bio_aseptic_technique",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "实施无菌操作需要先理解灭菌对纯培养的作用边界。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web Chapter 13 Control of Microbial Growth; physical and chemical control methods and aseptic practice"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_selective_culture_media",
+      "to": "cn_sh_bio_microbial_isolation_methods",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "选择分离方法前需要理解培养基如何筛选目标微生物。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.3），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web Chapter 9 Microbial Growth; culture media, isolation and direct/viable counting methods"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.4），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_industrial_fermentation",
+      "to": "cn_sh_bio_fermentation_applications",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "评价发酵工程应用需要先掌握工业化培养和过程控制。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web §8.4 Fermentation; commercial food, pharmaceutical, solvent, vitamin and biofuel products"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.3），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_plant_tissue_culture",
+      "to": "cn_sh_bio_plant_cell_engineering_applications",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "理解植物细胞工程应用需要先掌握组织培养和再分化。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §32.3 Asexual Reproduction; micropropagation, disease-free stock and plant tissue culture"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.3），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_pmc_plant_tissue_culture_applications_2023",
+          "locator": "Sections 4.1-4.2; rapid micropropagation, virus-free plants, genetic improvement and secondary-metabolite production"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_plant_tissue_culture",
+      "to": "cn_sh_bio_plant_somatic_hybridisation",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "原生质体融合后的杂种细胞需要通过组织培养和植株再生才能形成完整杂种植株。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §32.3 Asexual Reproduction; micropropagation, disease-free stock and plant tissue culture"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_pmc_apiaceae_protoplast_somatic_hybridisation_2023",
+          "locator": "Sections 1 and 9; protoplast isolation, chemical or electrical fusion, hybrid-plant regeneration and breeding applications"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_plant_somatic_hybridisation",
+      "to": "cn_sh_bio_plant_cell_engineering_applications",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "理解植物细胞工程的育种应用需要先掌握原生质体融合与体细胞杂交。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_pmc_apiaceae_protoplast_somatic_hybridisation_2023",
+          "locator": "Sections 1 and 9; protoplast isolation, chemical or electrical fusion, hybrid-plant regeneration and breeding applications"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.3），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_pmc_plant_tissue_culture_applications_2023",
+          "locator": "Sections 4.1-4.2; rapid micropropagation, virus-free plants, genetic improvement and secondary-metabolite production"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_animal_cell_culture",
+      "to": "cn_sh_bio_animal_cell_fusion",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "动物细胞融合操作建立在体外培养和维持细胞的基础上。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.2.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web §20.1 Polyclonal and Monoclonal Antibody Production; tissue culture and hybridoma cell fusion"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.3），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_animal_cell_fusion",
+      "to": "cn_sh_bio_monoclonal_antibody_production",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "单克隆抗体制备需要先理解细胞融合形成杂交瘤的原理。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.3），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web §20.1 Polyclonal and Monoclonal Antibody Production; tissue culture and hybridoma cell fusion"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.4），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web §20.1 Polyclonal and Monoclonal Antibody Production"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_fertilisation_early_embryo",
+      "to": "cn_sh_bio_embryo_engineering",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "理解胚胎移植和分割需要先掌握受精与早期胚胎发育。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.3.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §43.6 Fertilization and Early Embryonic Development"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.3.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_fao_cattle_embryo_transfer_manual_1991",
+          "locator": "Chapters 6-10, especially Chapter 10 Splitting Embryos; embryo recovery, transfer, bisection and demi-embryo transfer"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_gene_engineering_tools",
+      "to": "cn_sh_bio_protein_engineering",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "蛋白质工程通过基因设计实现，依赖限制酶、连接酶和载体等工具。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.1.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §17.1 Biotechnology; recombinant-DNA tools, cloning, expression and engineered products"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.2.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_ncbi_genomes_2e_protein_engineering_2002",
+          "locator": "Chapter 7 §7.2.3; protein engineering by targeted gene alteration to change protein structure, activity and application properties"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.2.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_somatic_cell_nuclear_transfer",
+      "to": "cn_sh_bio_reproductive_cloning_ethics",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "评价生殖性克隆伦理问题需要先理解体细胞核移植技术。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §17.1 Biotechnology; somatic-cell nuclear transfer and reproductive cloning"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.2.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §1.1 The Science of Biology: scientific ethics; §17.1 Biotechnology: reproductive cloning, safety and social consequences"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_reproductive_cloning_ethics",
+      "to": "cn_sh_bio_reproductive_cloning_china_policy",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "理解中国禁止生殖性克隆人的政策理由需要先分析该技术的安全与伦理问题。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.2.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §1.1 The Science of Biology: scientific ethics; §17.1 Biotechnology: reproductive cloning, safety and social consequences"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.2.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_cn_nhc_assisted_reproduction_ethics_2003",
+          "locator": "附件1 行为准则第（十五）项‘禁止克隆人’；附件3 社会公益原则第3项‘不得实施生殖性克隆技术’"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

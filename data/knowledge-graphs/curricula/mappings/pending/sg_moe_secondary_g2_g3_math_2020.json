@@ -1,0 +1,3129 @@
+{
+  "schema_version": "3.0.0",
+  "content_version": "0.4.0",
+  "mapping_set_id": "cms_sg_moe_secondary_g2_g3_math_2020_outcomes",
+  "framework_id": "cfw_sg_moe_secondary_g2_g3_math_2020_outcomes",
+  "curriculum_id": "cur_sg_moe_secondary_g2_g3_math_2020",
+  "subject": "Mathematics",
+  "mapping_scope": "outcome_coverage",
+  "source_ids": [
+    "src_sg_moe_secondary_g2_g3_math_2020"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "建立 G2/G3 主题级候选映射。"
+    },
+    {
+      "version": "0.2.1",
+      "date": "2026-07-18",
+      "summary_zh": "复核主题映射并清理跨层级和超范围概念。"
+    },
+    {
+      "version": "0.3.0",
+      "date": "2026-07-19",
+      "summary_zh": "替换为 163 项成果级映射；同一知识要求在不同层级共享 canonical ID，但保留独立课程证据。"
+    },
+    {
+      "version": "0.4.0",
+      "date": "2026-07-19",
+      "summary_zh": "应用 118 项缺口解析并去重为 53 个概念；学科成果闭合为 full，10 项计算器与建模实践继续保持 excluded。"
+    }
+  ],
+  "mappings": [
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_secondary_all_personal_finance",
+      "requirement_id": "req_sg_sec_math_2020_g3_secondary_all_personal_finance",
+      "canonical_ids": [
+        "pc_0035396047335920724c5a50e48736a4"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_0035396047335920724c5a50e48736a4 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.13, g3 secondary all, Personal and household finance"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_secondary_all_motion_data_graphs",
+      "requirement_id": "req_sg_sec_math_2020_g3_secondary_all_motion_data_graphs",
+      "canonical_ids": [
+        "pc_2773177458caa7328645c0f0d304fbc9"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_2773177458caa7328645c0f0d304fbc9 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.14, g3 secondary all, Distance-time and speed-time graphs"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_secondary_all_model_formulate",
+      "requirement_id": "req_sg_sec_math_2020_g3_secondary_all_model_formulate",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是工具操作、数学建模或作答过程要求，应进入教学与评测知识层，不写成学科概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.14, g3 secondary all, Formulating a real-world problem"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_secondary_all_model_data",
+      "requirement_id": "req_sg_sec_math_2020_g3_secondary_all_model_data",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是工具操作、数学建模或作答过程要求，应进入教学与评测知识层，不写成学科概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.14, g3 secondary all, Making sense of real data"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_secondary_all_model_solve",
+      "requirement_id": "req_sg_sec_math_2020_g3_secondary_all_model_solve",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是工具操作、数学建模或作答过程要求，应进入教学与评测知识层，不写成学科概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.14, g3 secondary all, Selecting methods and solving a model"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_secondary_all_model_interpret",
+      "requirement_id": "req_sg_sec_math_2020_g3_secondary_all_model_interpret",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是工具操作、数学建模或作答过程要求，应进入教学与评测知识层，不写成学科概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.14, g3 secondary all, Interpreting a mathematical solution"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec1_prime_factorisation",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_prime_factorisation",
+      "canonical_ids": [
+        "pc_ef2bd7b2bbab07b9c004309c8f0bae24"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_ef2bd7b2bbab07b9c004309c8f0bae24 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Prime factorisation, HCF, LCM and roots"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec1_real_number_operations",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_real_number_operations",
+      "canonical_ids": [
+        "pc_215f79963d339e5cdffa19299629d2fe"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_215f79963d339e5cdffa19299629d2fe 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Real-number operations and order"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec1_calculator_computation",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_calculator_computation",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是工具操作、数学建模或作答过程要求，应进入教学与评测知识层，不写成学科概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Calculator computation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec1_approximation_estimation",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_approximation_estimation",
+      "canonical_ids": [
+        "pc_2fafc753b71eb0586f200d6255e6d156"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_2fafc753b71eb0586f200d6255e6d156 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Approximation and estimation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec1_ratio",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_ratio",
+      "canonical_ids": [
+        "pc_8396d50d2a90e5d83b9dc099398d8ef3"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_8396d50d2a90e5d83b9dc099398d8ef3 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Ratios with rational quantities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec1_percentage",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_percentage",
+      "canonical_ids": [
+        "pc_6c734715b50b77ef6f24871baa834f83"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_6c734715b50b77ef6f24871baa834f83 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Percentage comparison and change"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec1_rate_speed",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_rate_speed",
+      "canonical_ids": [
+        "pc_48618600ad3adf13d961a619b532eedd"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_48618600ad3adf13d961a619b532eedd 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Rate and speed"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec1_algebra_notation_evaluation",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_algebra_notation_evaluation",
+      "canonical_ids": [
+        "pc_5e0f4f344259b5ebc17ecb23c9c49115"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_5e0f4f344259b5ebc17ecb23c9c49115 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Algebraic notation and evaluation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec1_algebra_translation",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_algebra_translation",
+      "canonical_ids": [
+        "pc_b8681872460e1ec21b74eafa7d1620a7"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_b8681872460e1ec21b74eafa7d1620a7 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Translating situations into algebra"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec1_nth_term_patterns",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_nth_term_patterns",
+      "canonical_ids": [
+        "pc_fa3d1adfea0227a8f6b9c9b24b726304"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_fa3d1adfea0227a8f6b9c9b24b726304 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Algebraic nth-term patterns"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec1_linear_expressions",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_linear_expressions",
+      "canonical_ids": [
+        "pc_8269caa3a2876c8df937c31ec1fa8cf7"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_8269caa3a2876c8df937c31ec1fa8cf7 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Operations on linear expressions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec1_coordinate_relationships",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_coordinate_relationships",
+      "canonical_ids": [
+        "pc_43232f4e8e5445fc6169006d5681f732"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_43232f4e8e5445fc6169006d5681f732 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Coordinates and variable relationships"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec1_linear_functions_gradient",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_linear_functions_gradient",
+      "canonical_ids": [
+        "pc_2fd09e919b7e73069c83ce49007f17d2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Linear functions, graphs and gradient"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec1_linear_fractional_equations",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_linear_fractional_equations",
+      "canonical_ids": [
+        "pc_f8029da3342530575f9ea5dae5ddd1f7"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_f8029da3342530575f9ea5dae5ddd1f7 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Linear and reducible fractional equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec1_formulate_linear_equation",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_formulate_linear_equation",
+      "canonical_ids": [
+        "pc_2c7c77c12eaf42efced7f2a956e1bb16"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Formulating a linear equation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec1_angle_relationships",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_angle_relationships",
+      "canonical_ids": [
+        "pc_04ea2830751757a6b38f545e638bb3f6"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_04ea2830751757a6b38f545e638bb3f6 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Angle relationships"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec1_triangle_properties",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_triangle_properties",
+      "canonical_ids": [
+        "pc_dddd87a5aa9f0d0de98de641d2e71916"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_dddd87a5aa9f0d0de98de641d2e71916 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Triangle properties"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec1_polygon_properties",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_polygon_properties",
+      "canonical_ids": [
+        "pc_f6953bbfa35fb2292dad3e721606667a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_f6953bbfa35fb2292dad3e721606667a 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Quadrilaterals and regular polygons"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec1_geometric_construction",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_geometric_construction",
+      "canonical_ids": [
+        "pc_8204d8e8132790908d8ac9cfd08014ca"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_8204d8e8132790908d8ac9cfd08014ca 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Geometric construction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec1_plane_mensuration",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_plane_mensuration",
+      "canonical_ids": [
+        "pc_2fea18f07e7d3874be1ad3c07a2e7d43"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_2fea18f07e7d3874be1ad3c07a2e7d43 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Area and composite plane figures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec1_solid_mensuration",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_solid_mensuration",
+      "canonical_ids": [
+        "pc_75a504416c16571e44cc269b50bb6db3"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_75a504416c16571e44cc269b50bb6db3 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Prisms, cylinders and composite solids"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec1_data_collection",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_data_collection",
+      "canonical_ids": [
+        "pc_d496e16963961ec00c57f63bdc93ab19"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_d496e16963961ec00c57f63bdc93ab19 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Collecting, classifying and tabulating data"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec1_statistical_representations",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_statistical_representations",
+      "canonical_ids": [
+        "pc_8c501cd4b04f2e3ab0c424ad09fcc14e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_8c501cd4b04f2e3ab0c424ad09fcc14e 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Reading and choosing statistical representations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec1_misleading_diagrams",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec1_misleading_diagrams",
+      "canonical_ids": [
+        "pc_556fa04ba7f3b979476b0cc147b23720"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_556fa04ba7f3b979476b0cc147b23720 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Misleading statistical diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec2_scale_proportion",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_scale_proportion",
+      "canonical_ids": [
+        "pc_14da60ce2cc89759b132a22227040e3e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_14da60ce2cc89759b132a22227040e3e 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Map scales and proportion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec2_algebra_expansion_identities",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_algebra_expansion_identities",
+      "canonical_ids": [
+        "pc_37efdccc48565e833f89715be7bcdb65"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_37efdccc48565e833f89715be7bcdb65 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Expansion and algebraic identities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec2_formula_rearrangement",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_formula_rearrangement",
+      "canonical_ids": [
+        "pc_93a0d2c5aebad77851a87bb60b75f16b"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_93a0d2c5aebad77851a87bb60b75f16b 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Changing the subject of a formula"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec2_factorisation",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_factorisation",
+      "canonical_ids": [
+        "pc_f0f451916c42f12800200d683aef2376"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_f0f451916c42f12800200d683aef2376 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Linear and quadratic factorisation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec2_algebraic_fractions_multiply_divide",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_algebraic_fractions_multiply_divide",
+      "canonical_ids": [
+        "pc_15c649df7800fe1b3ca94e60f96513d8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_15c649df7800fe1b3ca94e60f96513d8 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Multiplying and dividing algebraic fractions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec2_algebraic_fractions_add_subtract",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_algebraic_fractions_add_subtract",
+      "canonical_ids": [
+        "pc_ee5e980fe9f65a9f13a1edb86253a1bf"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_ee5e980fe9f65a9f13a1edb86253a1bf 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Adding and subtracting algebraic fractions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec2_quadratic_functions",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_quadratic_functions",
+      "canonical_ids": [
+        "pc_133d40fa0e72c29c5eb6ec7a9852c80c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Quadratic functions and their graphs"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec2_simple_linear_inequalities",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_simple_linear_inequalities",
+      "canonical_ids": [
+        "pc_b8e922438c5de1840ad2ef00400070be"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_b8e922438c5de1840ad2ef00400070be 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Simple linear inequalities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec2_two_variable_linear_graphs",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_two_variable_linear_graphs",
+      "canonical_ids": [
+        "pc_2fd09e919b7e73069c83ce49007f17d2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Graphs of linear equations in two variables"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec2_simultaneous_linear_equations",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_simultaneous_linear_equations",
+      "canonical_ids": [
+        "pc_204206c0b72ea40b72d3055124b579af"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Simultaneous linear equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec2_quadratic_factorisation_solve",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_quadratic_factorisation_solve",
+      "canonical_ids": [
+        "pc_178d30f2870e67bdf24249ddba825997"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_178d30f2870e67bdf24249ddba825997 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Solving quadratics by factorisation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec2_formulate_pair_linear",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_formulate_pair_linear",
+      "canonical_ids": [
+        "pc_2c7c77c12eaf42efced7f2a956e1bb16",
+        "pc_204206c0b72ea40b72d3055124b579af"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Formulating a pair of linear equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec2_congruence_similarity_foundations",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_congruence_similarity_foundations",
+      "canonical_ids": [
+        "pc_e6ca7a0d3df677d8c407bd47798531d9"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_e6ca7a0d3df677d8c407bd47798531d9 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Congruence and similarity foundations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec2_congruence_similarity_enlargement",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_congruence_similarity_enlargement",
+      "canonical_ids": [
+        "pc_762c0ab945b9e36ad8fc899b2d596340"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_762c0ab945b9e36ad8fc899b2d596340 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Enlargement and reduction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec2_pythagoras",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_pythagoras",
+      "canonical_ids": [
+        "pc_cd44c4602467808d0664260064ac2f58"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_cd44c4602467808d0664260064ac2f58 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Pythagoras theorem and converse"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec2_right_triangle_trig",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_right_triangle_trig",
+      "canonical_ids": [
+        "pc_55b7ab76aeec1ea42cda56f714fc2853"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_55b7ab76aeec1ea42cda56f714fc2853 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Trigonometry in right triangles"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec2_curved_solids",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_curved_solids",
+      "canonical_ids": [
+        "pc_75a504416c16571e44cc269b50bb6db3"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Pyramids, cones and spheres"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec2_distribution_diagrams",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_distribution_diagrams",
+      "canonical_ids": [
+        "pc_6d74d544d28698e9d61d7ae1e5691cab"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_6d74d544d28698e9d61d7ae1e5691cab 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Dot plots, histograms and stem-and-leaf diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec2_central_tendency",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_central_tendency",
+      "canonical_ids": [
+        "pc_b0f426fa7ff2e1150d95beab326aa71d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_b0f426fa7ff2e1150d95beab326aa71d 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Measures of central tendency"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec2_single_event_probability",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec2_single_event_probability",
+      "canonical_ids": [
+        "pc_b8d5720ccf68022f15e24275e67f5ded",
+        "pc_d087f482be941779c1774129f95c83cb"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Probability of single events"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_standard_form",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_standard_form",
+      "canonical_ids": [
+        "pc_ba9ab55c8fa45ca1d909474c1482313c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_ba9ab55c8fa45ca1d909474c1482313c 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Standard form"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_indices",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_indices",
+      "canonical_ids": [
+        "pc_1add3aa204b9f7ebde97168966ddc984"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_1add3aa204b9f7ebde97168966ddc984 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Indices and their laws"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_quadratic_sketch",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_quadratic_sketch",
+      "canonical_ids": [
+        "pc_133d40fa0e72c29c5eb6ec7a9852c80c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Sketching quadratic graphs from structured forms"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_power_graphs",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_power_graphs",
+      "canonical_ids": [
+        "pc_a36a0e32990824d34dc04d553ec0dc45"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Power-function graphs"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_exponential_graphs",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_exponential_graphs",
+      "canonical_ids": [
+        "pc_81e5444941a3e64858bae20e97e58cf8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Exponential-function graphs"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_tangent_gradient",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_tangent_gradient",
+      "canonical_ids": [
+        "pc_d15e4876926cc2580ff4808653357b4f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_d15e4876926cc2580ff4808653357b4f 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Estimating curve gradient with a tangent"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_quadratic_formula_complete_graph",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_quadratic_formula_complete_graph",
+      "canonical_ids": [
+        "pc_17734ef6df479e2834d50b676271d92d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_17734ef6df479e2834d50b676271d92d 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Solving quadratic equations by standard methods"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_fractional_quadratic_equations",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_fractional_quadratic_equations",
+      "canonical_ids": [
+        "pc_1a74a0765adb9da5ef0aae6b6558f3b6"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_1a74a0765adb9da5ef0aae6b6558f3b6 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Fractional equations reducible to quadratics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_formulate_quadratic",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_formulate_quadratic",
+      "canonical_ids": [
+        "pc_2c7c77c12eaf42efced7f2a956e1bb16"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Formulating a quadratic equation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_congruence_similarity_enlargement",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_congruence_similarity_enlargement",
+      "canonical_ids": [
+        "pc_762c0ab945b9e36ad8fc899b2d596340"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_762c0ab945b9e36ad8fc899b2d596340 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Scale drawings, enlargement and reduction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_bisector_construction",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_bisector_construction",
+      "canonical_ids": [
+        "pc_8204d8e8132790908d8ac9cfd08014ca"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_8204d8e8132790908d8ac9cfd08014ca 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Perpendicular and angle bisectors"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_circle_chord_tangent",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_circle_chord_tangent",
+      "canonical_ids": [
+        "pc_367201efd937747abdefe2f3739e5132"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_367201efd937747abdefe2f3739e5132 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Chord and tangent properties"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_circle_angles",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_circle_angles",
+      "canonical_ids": [
+        "pc_d46035586f5c24f181969a36ed456bf5"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_d46035586f5c24f181969a36ed456bf5 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Circle angle properties"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_triangle_trigonometry",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_triangle_trigonometry",
+      "canonical_ids": [
+        "pc_217987a9c88ae06397d8e62abf847891"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_217987a9c88ae06397d8e62abf847891 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Trigonometry for general triangles"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_spatial_trigonometry",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_spatial_trigonometry",
+      "canonical_ids": [
+        "pc_6ee0bb592a0fde530ae9f3ec96dfd28f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_6ee0bb592a0fde530ae9f3ec96dfd28f 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Two- and three-dimensional trigonometric problems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_circle_mensuration",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_circle_mensuration",
+      "canonical_ids": [
+        "pc_04897092166e867a8d93f1382fb4e3c1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_04897092166e867a8d93f1382fb4e3c1 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Arc, sector and segment measures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_radian_measure",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_radian_measure",
+      "canonical_ids": [
+        "pc_249bb1a239e11b22bde8356cc52a08a0"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Radian measure"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_coordinate_geometry",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_coordinate_geometry",
+      "canonical_ids": [
+        "pc_2fd09e919b7e73069c83ce49007f17d2",
+        "pc_2a20781f550c684afa2cda1e4dde847d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Coordinate geometry of straight lines"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_quartiles_spread",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_quartiles_spread",
+      "canonical_ids": [
+        "pc_e27f4d18434be33a5d90fcbf0ac6926c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_e27f4d18434be33a5d90fcbf0ac6926c 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Quartiles, percentiles and spread"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_cumulative_box",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_cumulative_box",
+      "canonical_ids": [
+        "pc_daa080e67e644277c09d3965ff40ef90"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_daa080e67e644277c09d3965ff40ef90 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Cumulative-frequency and box plots"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_standard_deviation_compare",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_standard_deviation_compare",
+      "canonical_ids": [
+        "pc_f622b985ca319c5dafccfad432b71c27"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_f622b985ca319c5dafccfad432b71c27 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Calculating and comparing standard deviation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_combined_probability",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_combined_probability",
+      "canonical_ids": [
+        "pc_368281a2f6ec71f3e8a782e510871a58"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_368281a2f6ec71f3e8a782e510871a58 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Combined-event probability representations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_probability_laws",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_probability_laws",
+      "canonical_ids": [
+        "pc_0c7c408f2fb208ecfb0b6758b1cd4a0a",
+        "pc_e49409332f2ff6e17899d2b7d3e6d7fe"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Addition and multiplication laws"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_compound_linear_inequalities",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_compound_linear_inequalities",
+      "canonical_ids": [
+        "pc_b8e922438c5de1840ad2ef00400070be"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_b8e922438c5de1840ad2ef00400070be 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Compound linear inequalities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_set_language",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_set_language",
+      "canonical_ids": [
+        "pc_f9729a6d15dc682f677a3ab91f6b39d4",
+        "pc_63e1c41b5a34e8ad98170b678d0a1387",
+        "pc_a28a2c466a40fba9dbb862c5b26631d7"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Set language and operations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_venn_diagrams",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_venn_diagrams",
+      "canonical_ids": [
+        "pc_c1ed59c17771ca7dfcca90c7c55fadc1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Venn diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_elementary_matrices",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_elementary_matrices",
+      "canonical_ids": [
+        "pc_565f1698f0475654a9d3e8fe5ce43bf4"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_565f1698f0475654a9d3e8fe5ce43bf4 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Elementary matrix representation and operations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_congruence_similarity_tests",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_congruence_similarity_tests",
+      "canonical_ids": [
+        "pc_e2a2524edb746a003e7b535fa8188937"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_e2a2524edb746a003e7b535fa8188937 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Triangle congruence, similarity and scale ratios"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_vector_representation",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_vector_representation",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_9ae5f17312ee21050edf3e4bd9b005a2 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Plane-vector representation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_vector_operations",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_vector_operations",
+      "canonical_ids": [
+        "pc_d4b7e2b6e2c8459d849405a8f6fc0b79"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_d4b7e2b6e2c8459d849405a8f6fc0b79 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Plane-vector operations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g3_sec3_4_vector_geometry",
+      "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_vector_geometry",
+      "canonical_ids": [
+        "pc_08974dd9a6e44fc3fbcacdb999e75f58"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Geometric problems with vectors"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_secondary_all_personal_finance",
+      "requirement_id": "req_sg_sec_math_2020_g2_secondary_all_personal_finance",
+      "canonical_ids": [
+        "pc_0035396047335920724c5a50e48736a4"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_0035396047335920724c5a50e48736a4 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.23, g2 secondary all, Personal and household finance"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_secondary_all_motion_data_graphs",
+      "requirement_id": "req_sg_sec_math_2020_g2_secondary_all_motion_data_graphs",
+      "canonical_ids": [
+        "pc_2773177458caa7328645c0f0d304fbc9"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_2773177458caa7328645c0f0d304fbc9 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.24, g2 secondary all, Distance-time and speed-time graphs"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_secondary_all_model_formulate",
+      "requirement_id": "req_sg_sec_math_2020_g2_secondary_all_model_formulate",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是工具操作、数学建模或作答过程要求，应进入教学与评测知识层，不写成学科概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.24, g2 secondary all, Formulating a real-world problem"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_secondary_all_model_data",
+      "requirement_id": "req_sg_sec_math_2020_g2_secondary_all_model_data",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是工具操作、数学建模或作答过程要求，应进入教学与评测知识层，不写成学科概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.24, g2 secondary all, Making sense of real data"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_secondary_all_model_solve",
+      "requirement_id": "req_sg_sec_math_2020_g2_secondary_all_model_solve",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是工具操作、数学建模或作答过程要求，应进入教学与评测知识层，不写成学科概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.24, g2 secondary all, Selecting methods and solving a model"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_secondary_all_model_interpret",
+      "requirement_id": "req_sg_sec_math_2020_g2_secondary_all_model_interpret",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是工具操作、数学建模或作答过程要求，应进入教学与评测知识层，不写成学科概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.24, g2 secondary all, Interpreting a mathematical solution"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec1_prime_factorisation",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_prime_factorisation",
+      "canonical_ids": [
+        "pc_ef2bd7b2bbab07b9c004309c8f0bae24"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_ef2bd7b2bbab07b9c004309c8f0bae24 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Prime factorisation, HCF, LCM and roots"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec1_real_number_operations",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_real_number_operations",
+      "canonical_ids": [
+        "pc_215f79963d339e5cdffa19299629d2fe"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_215f79963d339e5cdffa19299629d2fe 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Real-number operations and order"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec1_calculator_computation",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_calculator_computation",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是工具操作、数学建模或作答过程要求，应进入教学与评测知识层，不写成学科概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Calculator computation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec1_approximation_estimation",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_approximation_estimation",
+      "canonical_ids": [
+        "pc_2fafc753b71eb0586f200d6255e6d156"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_2fafc753b71eb0586f200d6255e6d156 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Approximation and estimation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec1_ratio",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_ratio",
+      "canonical_ids": [
+        "pc_8396d50d2a90e5d83b9dc099398d8ef3"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_8396d50d2a90e5d83b9dc099398d8ef3 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Ratio, fractions and division"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec1_percentage",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_percentage",
+      "canonical_ids": [
+        "pc_6c734715b50b77ef6f24871baa834f83"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_6c734715b50b77ef6f24871baa834f83 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Percentage forms and change"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec1_rate_speed",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_rate_speed",
+      "canonical_ids": [
+        "pc_48618600ad3adf13d961a619b532eedd"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_48618600ad3adf13d961a619b532eedd 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Distance, time, rate and speed"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec1_algebra_notation_evaluation",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_algebra_notation_evaluation",
+      "canonical_ids": [
+        "pc_5e0f4f344259b5ebc17ecb23c9c49115"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_5e0f4f344259b5ebc17ecb23c9c49115 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Algebraic notation and evaluation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec1_algebra_translation",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_algebra_translation",
+      "canonical_ids": [
+        "pc_b8681872460e1ec21b74eafa7d1620a7"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_b8681872460e1ec21b74eafa7d1620a7 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Translating situations into algebra"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec1_nth_term_patterns",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_nth_term_patterns",
+      "canonical_ids": [
+        "pc_fa3d1adfea0227a8f6b9c9b24b726304"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_fa3d1adfea0227a8f6b9c9b24b726304 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Algebraic nth-term patterns"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec1_linear_expressions",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_linear_expressions",
+      "canonical_ids": [
+        "pc_8269caa3a2876c8df937c31ec1fa8cf7"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_8269caa3a2876c8df937c31ec1fa8cf7 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Operations on linear expressions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec1_linear_integer_equations",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_linear_integer_equations",
+      "canonical_ids": [
+        "pc_7a3ed0313c37ee78a2ffc1d5f58fa52d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_7a3ed0313c37ee78a2ffc1d5f58fa52d 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Linear equations with integer coefficients"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec1_formulate_linear_equation",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_formulate_linear_equation",
+      "canonical_ids": [
+        "pc_2c7c77c12eaf42efced7f2a956e1bb16"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Formulating a linear equation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec1_angle_relationships",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_angle_relationships",
+      "canonical_ids": [
+        "pc_04ea2830751757a6b38f545e638bb3f6"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_04ea2830751757a6b38f545e638bb3f6 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Angle relationships"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec1_triangle_properties",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_triangle_properties",
+      "canonical_ids": [
+        "pc_dddd87a5aa9f0d0de98de641d2e71916"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_dddd87a5aa9f0d0de98de641d2e71916 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Triangle properties"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec1_plane_mensuration",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_plane_mensuration",
+      "canonical_ids": [
+        "pc_2fea18f07e7d3874be1ad3c07a2e7d43"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_2fea18f07e7d3874be1ad3c07a2e7d43 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Area and composite plane figures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec1_solid_mensuration",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_solid_mensuration",
+      "canonical_ids": [
+        "pc_75a504416c16571e44cc269b50bb6db3"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_75a504416c16571e44cc269b50bb6db3 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Prisms, cylinders and composite solids"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec1_data_collection",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_data_collection",
+      "canonical_ids": [
+        "pc_d496e16963961ec00c57f63bdc93ab19"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_d496e16963961ec00c57f63bdc93ab19 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Collecting, classifying and tabulating data"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec1_statistical_representations",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_statistical_representations",
+      "canonical_ids": [
+        "pc_8c501cd4b04f2e3ab0c424ad09fcc14e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_8c501cd4b04f2e3ab0c424ad09fcc14e 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Reading and choosing statistical representations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec1_misleading_diagrams",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec1_misleading_diagrams",
+      "canonical_ids": [
+        "pc_556fa04ba7f3b979476b0cc147b23720"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_556fa04ba7f3b979476b0cc147b23720 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Misleading statistical diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec2_scale_proportion",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_scale_proportion",
+      "canonical_ids": [
+        "pc_14da60ce2cc89759b132a22227040e3e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_14da60ce2cc89759b132a22227040e3e 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Map scales and proportion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec2_linear_fractional_coefficients",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_linear_fractional_coefficients",
+      "canonical_ids": [
+        "pc_8269caa3a2876c8df937c31ec1fa8cf7"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_8269caa3a2876c8df937c31ec1fa8cf7 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Linear expressions with fractional coefficients"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec2_algebra_expansion_identities",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_algebra_expansion_identities",
+      "canonical_ids": [
+        "pc_37efdccc48565e833f89715be7bcdb65"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_37efdccc48565e833f89715be7bcdb65 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Expansion and algebraic identities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec2_factorisation",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_factorisation",
+      "canonical_ids": [
+        "pc_f0f451916c42f12800200d683aef2376"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_f0f451916c42f12800200d683aef2376 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Common-factor and quadratic factorisation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec2_algebraic_fractions_multiply_divide",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_algebraic_fractions_multiply_divide",
+      "canonical_ids": [
+        "pc_15c649df7800fe1b3ca94e60f96513d8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_15c649df7800fe1b3ca94e60f96513d8 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Multiplying and dividing algebraic fractions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec2_linear_functions_gradient",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_linear_functions_gradient",
+      "canonical_ids": [
+        "pc_2fd09e919b7e73069c83ce49007f17d2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Linear functions, graphs and gradient"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec2_linear_fractional_equations",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_linear_fractional_equations",
+      "canonical_ids": [
+        "pc_f8029da3342530575f9ea5dae5ddd1f7"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_f8029da3342530575f9ea5dae5ddd1f7 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Linear and reducible fractional equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec2_simple_linear_inequalities",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_simple_linear_inequalities",
+      "canonical_ids": [
+        "pc_b8e922438c5de1840ad2ef00400070be"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_b8e922438c5de1840ad2ef00400070be 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Simple linear inequalities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec2_two_variable_linear_graphs",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_two_variable_linear_graphs",
+      "canonical_ids": [
+        "pc_2fd09e919b7e73069c83ce49007f17d2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Graphs of linear equations in two variables"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec2_simultaneous_linear_equations",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_simultaneous_linear_equations",
+      "canonical_ids": [
+        "pc_204206c0b72ea40b72d3055124b579af"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Simultaneous linear equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec2_formulate_linear_systems",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_formulate_linear_systems",
+      "canonical_ids": [
+        "pc_2c7c77c12eaf42efced7f2a956e1bb16",
+        "pc_204206c0b72ea40b72d3055124b579af"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Formulating linear equations and systems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec2_polygon_properties",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_polygon_properties",
+      "canonical_ids": [
+        "pc_f6953bbfa35fb2292dad3e721606667a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_f6953bbfa35fb2292dad3e721606667a 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Quadrilaterals and regular polygons"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec2_geometric_construction",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_geometric_construction",
+      "canonical_ids": [
+        "pc_8204d8e8132790908d8ac9cfd08014ca"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_8204d8e8132790908d8ac9cfd08014ca 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Geometric construction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec2_congruence_similarity_foundations",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_congruence_similarity_foundations",
+      "canonical_ids": [
+        "pc_e6ca7a0d3df677d8c407bd47798531d9"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_e6ca7a0d3df677d8c407bd47798531d9 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Congruence and similarity foundations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec2_pythagoras",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_pythagoras",
+      "canonical_ids": [
+        "pc_cd44c4602467808d0664260064ac2f58"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_cd44c4602467808d0664260064ac2f58 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Pythagoras theorem and converse"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec2_curved_solids",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_curved_solids",
+      "canonical_ids": [
+        "pc_75a504416c16571e44cc269b50bb6db3"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Pyramids, cones and spheres"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec2_distribution_diagrams",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_distribution_diagrams",
+      "canonical_ids": [
+        "pc_6d74d544d28698e9d61d7ae1e5691cab"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_6d74d544d28698e9d61d7ae1e5691cab 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Dot plots, histograms and stem-and-leaf diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec2_central_tendency",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_central_tendency",
+      "canonical_ids": [
+        "pc_b0f426fa7ff2e1150d95beab326aa71d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_b0f426fa7ff2e1150d95beab326aa71d 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Measures of central tendency"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec2_single_event_probability",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec2_single_event_probability",
+      "canonical_ids": [
+        "pc_b8d5720ccf68022f15e24275e67f5ded",
+        "pc_d087f482be941779c1774129f95c83cb"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Probability of single events"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_standard_form",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_standard_form",
+      "canonical_ids": [
+        "pc_ba9ab55c8fa45ca1d909474c1482313c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_ba9ab55c8fa45ca1d909474c1482313c 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Standard form"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_indices",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_indices",
+      "canonical_ids": [
+        "pc_1add3aa204b9f7ebde97168966ddc984"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_1add3aa204b9f7ebde97168966ddc984 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Indices and their laws"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_power_graphs",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_power_graphs",
+      "canonical_ids": [
+        "pc_a36a0e32990824d34dc04d553ec0dc45"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Power-function graphs"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_exponential_graphs",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_exponential_graphs",
+      "canonical_ids": [
+        "pc_81e5444941a3e64858bae20e97e58cf8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Exponential-function graphs"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_tangent_gradient",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_tangent_gradient",
+      "canonical_ids": [
+        "pc_d15e4876926cc2580ff4808653357b4f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_d15e4876926cc2580ff4808653357b4f 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Estimating curve gradient with a tangent"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_quadratic_methods",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_quadratic_methods",
+      "canonical_ids": [
+        "pc_178d30f2870e67bdf24249ddba825997",
+        "pc_17734ef6df479e2834d50b676271d92d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_178d30f2870e67bdf24249ddba825997、pc_17734ef6df479e2834d50b676271d92d 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Solving quadratic equations by standard methods"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_fractional_quadratic_equations",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_fractional_quadratic_equations",
+      "canonical_ids": [
+        "pc_1a74a0765adb9da5ef0aae6b6558f3b6"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_1a74a0765adb9da5ef0aae6b6558f3b6 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Fractional equations reducible to quadratics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_formulate_quadratic",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_formulate_quadratic",
+      "canonical_ids": [
+        "pc_2c7c77c12eaf42efced7f2a956e1bb16"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Formulating a quadratic equation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_grouped_linear_factorisation",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_grouped_linear_factorisation",
+      "canonical_ids": [
+        "pc_f0f451916c42f12800200d683aef2376"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_f0f451916c42f12800200d683aef2376 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Factorising grouped linear expressions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_algebra_expansion_identities",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_algebra_expansion_identities",
+      "canonical_ids": [
+        "pc_37efdccc48565e833f89715be7bcdb65"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_37efdccc48565e833f89715be7bcdb65 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Expansion of algebraic expressions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_formula_rearrangement",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_formula_rearrangement",
+      "canonical_ids": [
+        "pc_93a0d2c5aebad77851a87bb60b75f16b"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_93a0d2c5aebad77851a87bb60b75f16b 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Changing the subject and evaluating formulae"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_algebraic_fractions_add_subtract",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_algebraic_fractions_add_subtract",
+      "canonical_ids": [
+        "pc_ee5e980fe9f65a9f13a1edb86253a1bf"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_ee5e980fe9f65a9f13a1edb86253a1bf 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Adding and subtracting algebraic fractions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_congruence_similarity_enlargement",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_congruence_similarity_enlargement",
+      "canonical_ids": [
+        "pc_762c0ab945b9e36ad8fc899b2d596340"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_762c0ab945b9e36ad8fc899b2d596340 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Scale drawings, enlargement and reduction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_bisector_construction",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_bisector_construction",
+      "canonical_ids": [
+        "pc_8204d8e8132790908d8ac9cfd08014ca"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_8204d8e8132790908d8ac9cfd08014ca 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Perpendicular and angle bisectors"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_circle_chord_tangent",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_circle_chord_tangent",
+      "canonical_ids": [
+        "pc_367201efd937747abdefe2f3739e5132"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_367201efd937747abdefe2f3739e5132 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Chord and tangent properties"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_circle_angles",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_circle_angles",
+      "canonical_ids": [
+        "pc_d46035586f5c24f181969a36ed456bf5"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_d46035586f5c24f181969a36ed456bf5 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Circle angle properties"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_triangle_trigonometry",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_triangle_trigonometry",
+      "canonical_ids": [
+        "pc_217987a9c88ae06397d8e62abf847891"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_217987a9c88ae06397d8e62abf847891 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Trigonometry for general triangles"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_spatial_trigonometry",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_spatial_trigonometry",
+      "canonical_ids": [
+        "pc_6ee0bb592a0fde530ae9f3ec96dfd28f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_6ee0bb592a0fde530ae9f3ec96dfd28f 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Two- and three-dimensional trigonometric problems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_circle_mensuration",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_circle_mensuration",
+      "canonical_ids": [
+        "pc_04897092166e867a8d93f1382fb4e3c1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_04897092166e867a8d93f1382fb4e3c1 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Arc, sector and segment measures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_radian_measure",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_radian_measure",
+      "canonical_ids": [
+        "pc_249bb1a239e11b22bde8356cc52a08a0"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Radian measure"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_coordinate_geometry",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_coordinate_geometry",
+      "canonical_ids": [
+        "pc_2fd09e919b7e73069c83ce49007f17d2",
+        "pc_2a20781f550c684afa2cda1e4dde847d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Coordinate geometry of straight lines"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_quartiles_spread",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_quartiles_spread",
+      "canonical_ids": [
+        "pc_e27f4d18434be33a5d90fcbf0ac6926c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_e27f4d18434be33a5d90fcbf0ac6926c 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.31, g2 sec3 4, Quartiles, percentiles and spread"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_cumulative_box",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_cumulative_box",
+      "canonical_ids": [
+        "pc_daa080e67e644277c09d3965ff40ef90"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_daa080e67e644277c09d3965ff40ef90 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.31, g2 sec3 4, Cumulative-frequency and box plots"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_standard_deviation_compare",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_standard_deviation_compare",
+      "canonical_ids": [
+        "pc_f622b985ca319c5dafccfad432b71c27"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_f622b985ca319c5dafccfad432b71c27 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.31, g2 sec3 4, Calculating and comparing standard deviation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_combined_probability",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_combined_probability",
+      "canonical_ids": [
+        "pc_368281a2f6ec71f3e8a782e510871a58"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_368281a2f6ec71f3e8a782e510871a58 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.31, g2 sec3 4, Combined-event probability representations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_probability_laws",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_probability_laws",
+      "canonical_ids": [
+        "pc_0c7c408f2fb208ecfb0b6758b1cd4a0a",
+        "pc_e49409332f2ff6e17899d2b7d3e6d7fe"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.31, g2 sec3 4, Addition and multiplication laws"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_quadratic_functions",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_quadratic_functions",
+      "canonical_ids": [
+        "pc_133d40fa0e72c29c5eb6ec7a9852c80c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Quadratic functions and their graphs"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_congruence_similarity_problems",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_congruence_similarity_problems",
+      "canonical_ids": [
+        "pc_e6ca7a0d3df677d8c407bd47798531d9"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_e6ca7a0d3df677d8c407bd47798531d9 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Congruence and similarity problems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec3_4_right_triangle_trig",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_right_triangle_trig",
+      "canonical_ids": [
+        "pc_55b7ab76aeec1ea42cda56f714fc2853"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_55b7ab76aeec1ea42cda56f714fc2853 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Trigonometry in right triangles"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec5_bridge_quadratic_sketch",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec5_bridge_quadratic_sketch",
+      "canonical_ids": [
+        "pc_133d40fa0e72c29c5eb6ec7a9852c80c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.32, g2 sec5 bridge, Sketching quadratic graphs from structured forms"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec5_bridge_compound_linear_inequalities",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec5_bridge_compound_linear_inequalities",
+      "canonical_ids": [
+        "pc_b8e922438c5de1840ad2ef00400070be"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_b8e922438c5de1840ad2ef00400070be 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.32, g2 sec5 bridge, Compound linear inequalities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec5_bridge_set_language_venn",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec5_bridge_set_language_venn",
+      "canonical_ids": [
+        "pc_f9729a6d15dc682f677a3ab91f6b39d4",
+        "pc_63e1c41b5a34e8ad98170b678d0a1387",
+        "pc_a28a2c466a40fba9dbb862c5b26631d7",
+        "pc_c1ed59c17771ca7dfcca90c7c55fadc1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.32, g2 sec5 bridge, Set language, operations and Venn diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec5_bridge_elementary_matrices",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec5_bridge_elementary_matrices",
+      "canonical_ids": [
+        "pc_565f1698f0475654a9d3e8fe5ce43bf4"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_565f1698f0475654a9d3e8fe5ce43bf4 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.32, g2 sec5 bridge, Elementary matrix representation and operations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec5_bridge_congruence_similarity_tests",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec5_bridge_congruence_similarity_tests",
+      "canonical_ids": [
+        "pc_e2a2524edb746a003e7b535fa8188937"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_e2a2524edb746a003e7b535fa8188937 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.33, g2 sec5 bridge, Triangle congruence, similarity and scale ratios"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec5_bridge_vector_representation",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec5_bridge_vector_representation",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_9ae5f17312ee21050edf3e4bd9b005a2 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.33, g2 sec5 bridge, Plane-vector representation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec5_bridge_vector_operations",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec5_bridge_vector_operations",
+      "canonical_ids": [
+        "pc_d4b7e2b6e2c8459d849405a8f6fc0b79"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经跨层级反向查重与第二轮粒度复核，现由 pc_d4b7e2b6e2c8459d849405a8f6fc0b79 完整覆盖；新增节点仍为 needs_review。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.33, g2 sec5 bridge, Plane-vector operations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_sec_math_2020_g2_sec5_bridge_vector_geometry",
+      "requirement_id": "req_sg_sec_math_2020_g2_sec5_bridge_vector_geometry",
+      "canonical_ids": [
+        "pc_08974dd9a6e44fc3fbcacdb999e75f58"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念与该官方学习成果的知识边界一致；不同 G2/G3 层级保留各自课程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.33, g2 sec5 bridge, Geometric problems with vectors"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

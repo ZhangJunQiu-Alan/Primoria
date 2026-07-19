@@ -1,0 +1,1085 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "resolution_set_id": "cgr_sg_seab_h2_biology_9477_2026_outcomes",
+  "gap_set_id": "cgs_sg_seab_h2_biology_9477_2026_outcomes",
+  "framework_id": "cfw_sg_seab_h2_biology_9477_2026_outcomes",
+  "curriculum_id": "cur_sg_seab_h2_biology_9477_2026",
+  "subject": "Biology",
+  "source_ids": [
+    "src_sg_seab_h2_biology_9477_2026",
+    "src_openstax_biology_2e_2018",
+    "src_openstax_microbiology_2016",
+    "src_openstax_anatomy_physiology_2e_2022"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "完成 45 项 H2 生物缺口的反向查重、概念归并、稳定 ID 和双类证据登记。"
+    }
+  ],
+  "resolutions": [
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_1_a",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_fbf734590d69356e6620de58900890b7"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_cell_theory"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (a)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §4.1, Studying Cells, cell theory"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_1_f",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_6dc6738077c8e4b6d5ce05c88301b7f1"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_virus_living_boundary"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (f)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §6.1, Viruses, noncellular infectious agents and host dependence"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_1_t",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_135065621595f495cc5dbad83d71a736"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_stem_cell_potency"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (t)"
+        },
+        {
+          "source_id": "src_openstax_anatomy_physiology_2e_2022",
+          "locator": "OpenStax Anatomy and Physiology 2e §3.6, Cellular Differentiation, stem-cell potency hierarchy"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_1_u",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_221d25cb3f73143fcd2b69d321f352b0"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_stem_cell_normal_functions"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (u)"
+        },
+        {
+          "source_id": "src_openstax_anatomy_physiology_2e_2022",
+          "locator": "OpenStax Anatomy and Physiology 2e §§3.6 and 18.2, Cellular Differentiation; Production of the Formed Elements"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_2_b",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_592815451c087a8d756c14e831e52d9c"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_dna_end_replication_problem"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (b)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §14.3, DNA Replication in Eukaryotes, telomeres and telomerase"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_2_d",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_537aba421c041ae37f65cd32932fec27"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_comparative_genome_architecture"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (d)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§14.1 and 17.3, DNA structure; whole-genome sequencing and genome organisation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_2_e",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ae6cc43dff9fb9761d5d4726b4a09b99"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_viral_reproductive_cycles"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (e)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §§6.2-6.3, Viral Life Cycle; Isolation, Culture, and Identification of Viruses"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_2_f",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_83b60c915b393962bc20085ab5ed558a"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_viral_genome_variation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (f)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §6.2, The Viral Life Cycle, influenza antigenic drift and shift"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_2_g",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ca343b4bd2c01e20b01d5e64c3cecaec"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_prokaryotic_horizontal_gene_transfer"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §11.6, How Asexual Prokaryotes Achieve Genetic Diversity"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_2_h",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_db3e62fe08b80340a769dc3839070f1e"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_noncoding_genome_elements"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (h)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§14.3 and 16.3, telomeres; eukaryotic transcriptional regulation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_2_i",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_7e223bfc05f6ec9124d8aee5193decc1"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_multilevel_eukaryotic_gene_regulation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (i)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§16.2-16.5, Eukaryotic Epigenetic, Transcriptional, Post-transcriptional and Translational Regulation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_2_j",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_c83a8b007ebf17728bb76b2ece193f67"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_southern_blot_hybridisation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (j)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §17.1, Biotechnology, nucleic-acid probes, hybridisation and DNA analysis"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_2_m",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_5ee270f8ca4283376f94e53152f85c08"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_maternal_genetic_screening_ethics"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (m)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §17.4, Applying Genomics, genetic testing and ethical implications"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_2_o",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_499991bf33c64eba5ad5578e4807fcc1"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_cell_cycle_dysregulation_cancer_risk"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (o)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (p)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §10.4, Cancer and the Cell Cycle"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_2_p",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_499991bf33c64eba5ad5578e4807fcc1"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_cell_cycle_dysregulation_cancer_risk"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (o)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (p)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §10.4, Cancer and the Cell Cycle"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_2_q",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_bd589da3ada63146c5f5b029f0064d07"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_oncogene_tumour_suppressor_control"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (q)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §10.4, Proto-oncogenes and Tumor-Suppressor Genes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_2_r",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_9763501544d8bfe2340c69f5168122ef"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_multistep_cancer_progression"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (r)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §10.4, Cancer and the Cell Cycle, tumour progression and metastasis"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_2_aa",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_8e4f9fe204596ba3cffe0a866b752acc"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_epistasis_problem_solving"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (aa)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §12.3, Laws of Inheritance, gene interactions and epistasis"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_2_bb",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_26342a7db434bca7f388ae17a9185c9f"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_genotype_environment_phenotype"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (bb)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §12.3, Laws of Inheritance, environmental effects on phenotype"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_3_m",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_3ac937bdebb4ad7797e85cc8b7d9f724"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_cell_signalling_stages"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (m)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§9.1-9.3, Signaling Molecules and Cellular Receptors; Propagation of the Signal; Response to the Signal"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_3_n",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_89fe9703885466be0c72a2bd8ff474d1"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_second_messengers"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (n)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §9.2, Propagation of the Signal, second messengers and cyclic AMP"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_3_o",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_4e374f5b44ab4f7b3b4f0fe61343d1a7"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_kinase_phosphatase_signalling"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (o)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §9.2, Propagation of the Signal, phosphorylation cascades"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_3_p",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_de08a6e55637e2602e66ed4106e226c5"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_insulin_glucagon_receptor_pathways"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (p)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§9.1 and 37.3, receptor signalling; regulation of body processes by insulin and glucagon"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_4_e",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_24f7468eb16b3deb8939b301b540fa6d"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_recessive_allele_persistence"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (e)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §19.1, Population Evolution, selection and maintenance of variation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_4_f",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_bd1067e6725705e4fdfa03eea740a3ca"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_microevolution_macroevolution_link"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (f)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§18.1 and 19.1, Understanding Evolution; Population Evolution"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_4_g",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_bc4e3b704ae858690db84875134dd94a"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_integrated_evolution_evidence"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §18.1, Understanding Evolution, evidence from fossils, anatomy, biogeography and molecules"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_4_h",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_4e68c5823f659e70812a25fdd648eb6e"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_biological_species_concept_limits"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (h)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §18.2, Formation of New Species, biological species concept"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_4_k",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_39ea2f145fd0890bf614289d08b77ce3"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_phylogeny_and_molecular_classification"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (k)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (l)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§20.1-20.2, Organizing Life on Earth; Determining Evolutionary Relationships"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_4_l",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_39ea2f145fd0890bf614289d08b77ce3"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_phylogeny_and_molecular_classification"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (k)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (l)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§20.1-20.2, Organizing Life on Earth; Determining Evolutionary Relationships"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_a_b",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d936b5538a6e6efea0a86a5c61d4e7f8"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_adaptive_immune_cell_coordination"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (b)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §§18.3 and 18.5, T Lymphocytes and Cellular Immunity; Vaccines"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_a_d",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ba9ef4894326b03822a9ce369153bdf1"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_antibody_diversity_mechanisms"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (d)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §18.4, B Lymphocytes and Humoral Immunity, antibody diversity"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_a_e",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_2a1d5be94da2719c6b406a95faba674e"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_vaccination_population_control_tradeoffs"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (e)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (f)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §18.5, Vaccines, herd immunity, benefits and adverse effects"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_a_f",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_2a1d5be94da2719c6b406a95faba674e"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_vaccination_population_control_tradeoffs"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (e)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (f)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §18.5, Vaccines, herd immunity, benefits and adverse effects"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_a_g",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_2764b729ab7775f74e2d91a89df45cb7"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_viral_tissue_pathogenesis"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §§22.3 and 25.3, Viral Infections of the Respiratory Tract; Viral Infections of the Circulatory and Lymphatic Systems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_a_j",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ce2b49c3c95511238c3d7aab749233e1"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_basic_reproduction_number"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (j)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §16.1, Characteristics of Infectious Disease, disease transmission and epidemiological measures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_a_k",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_82bbf3cc11d075387a78803f6848b7d2"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_outbreak_epidemic_pandemic"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (k)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §16.1, Characteristics of Infectious Disease, epidemiological patterns"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_b_a",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_319573f1dca6e679a2190e2a0cb2fa47"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_greenhouse_gas_human_drivers"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (a)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §44.5, Climate and the Effects of Global Climate Change"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_b_b",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_2749a18428b999a138d50408dbe6ade0"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_climate_system_ecological_impacts"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (b)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §44.5, Climate and the Effects of Global Climate Change"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_b_c",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_a0e33d77e9874ae332cc68f48f6afcad"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_mangrove_climate_mitigation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (c)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§44.3 and 47.1, Aquatic Biomes; The Biodiversity Crisis, coastal ecosystems and carbon storage context"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_b_d",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_4f4af16b906ef8ca4809dbec4bbe1cae"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_anthropogenic_carbon_footprints"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (d)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §44.5, Climate and the Effects of Global Climate Change, anthropogenic emissions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_b_e",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ac5535dab2f267fa369064b9b6c18143"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_climate_stress_food_supply"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (e)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §44.5, Climate and the Effects of Global Climate Change, agriculture and food security"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_b_f",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_6ecac9d7cebd37963fde0acddff3be22"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_climate_ecological_redistribution"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (f)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§44.1 and 44.5, The Scope of Ecology; Climate and the Effects of Global Climate Change"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_b_g",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_8c1f65f463454e88852c30db0397bf45"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_tropical_biodiversity_resources"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §47.2, The Importance of Biodiversity to Human Life"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_b_h",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e15b0826aa2278c39f7c816e8ec8dddb"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_temperature_insect_vector_lifecycle"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (h)"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§28.6 and 44.5, Superphylum Ecdysozoa; climate effects on organisms"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_biology_9477_2026_o_b_i",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_6b8c57b0c399f1e72abda5b9a54c7c2e"
+      ],
+      "created_node_ids": [
+        "sg_h2_biology_warming_vector_borne_range_shift"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "反向核对既有 A-Level 与中国高中生物节点后，未发现同时满足 9477 范围、机制深度和独立诊断粒度的 canonical；新增窄概念且不修改任何旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (i)"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §§16.3 and 25.3, Modes of Disease Transmission; vector-borne infections"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

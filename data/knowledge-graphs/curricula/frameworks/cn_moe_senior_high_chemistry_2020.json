@@ -1,0 +1,2993 @@
+{
+  "schema_version": "2.0.0",
+  "content_version": "0.3.0",
+  "framework_id": "cfw_cn_moe_senior_high_chemistry_2020_outcomes",
+  "curriculum_id": "cur_cn_moe_senior_high_chemistry_2020",
+  "curriculum_kind": "national_standard",
+  "title": "China senior-high chemistry curriculum-standard outcome coverage",
+  "title_zh": "中国普通高中化学课程标准（2017 年版 2020 年修订）成果级覆盖",
+  "subject": "Chemistry",
+  "jurisdiction": "CN-MAINLAND",
+  "education_stage": "senior_secondary",
+  "requirement_granularity": "outcome",
+  "levels": [
+    {
+      "level_id": "r",
+      "label": "Required",
+      "label_zh": "必修"
+    },
+    {
+      "level_id": "se",
+      "label": "Selective required: Chemical reaction principles",
+      "label_zh": "选择性必修·化学反应原理"
+    },
+    {
+      "level_id": "ss",
+      "label": "Selective required: Structure and properties",
+      "label_zh": "选择性必修·物质结构与性质"
+    },
+    {
+      "level_id": "so",
+      "label": "Selective required: Organic chemistry",
+      "label_zh": "选择性必修·有机化学基础"
+    }
+  ],
+  "languages": [
+    "zh-CN",
+    "en"
+  ],
+  "source_ids": [
+    "src_cn_moe_senior_high_chemistry_2020"
+  ],
+  "valid_from": "2020-05-11",
+  "valid_to": null,
+  "review_status": "needs_review",
+  "scope_exclusions": [],
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "建立必修与选择性必修主题级基线。"
+    },
+    {
+      "version": "0.2.1",
+      "date": "2026-07-18",
+      "summary_zh": "复核主题边界并撤销未经逐项证明的完整覆盖声明。"
+    },
+    {
+      "version": "0.3.0",
+      "date": "2026-07-19",
+      "summary_zh": "按 63 个正式编号内容段落拆为 138 个可独立诊断成果，实验探究与安全实践不写入学科概念。"
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_1_1a_chemical_science_scope",
+      "parent_requirement_id": null,
+      "code": "必修·1.1a",
+      "title": "Scope of chemical science",
+      "title_zh": "化学科学的研究对象与特征",
+      "summary_zh": "说明化学在原子、分子层次研究并创造物质的主要特征及发展趋势。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.19（正文对应内容要求 1.1），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_1_1b_chemical_evidence_models",
+      "parent_requirement_id": null,
+      "code": "必修·1.1b",
+      "title": "Evidence and models in chemistry",
+      "title_zh": "化学中的实证、推理与模型",
+      "summary_zh": "在化学问题中区分实验事实、假说、模型、比较和分类的作用。",
+      "requirement_type": "practice",
+      "level_id": "r",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.19（正文对应内容要求 1.1），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_1_1c_amount_of_substance_quantities",
+      "parent_requirement_id": null,
+      "code": "必修·1.1c",
+      "title": "Amount of substance and related quantities",
+      "title_zh": "物质的量及相关物理量",
+      "summary_zh": "使用物质的量、摩尔质量、气体摩尔体积和物质的量浓度进行简单换算与计算。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.19（正文对应内容要求 1.1），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_1_2a_inquiry_question_hypothesis",
+      "parent_requirement_id": null,
+      "code": "必修·1.2a",
+      "title": "Inquiry questions and hypotheses",
+      "title_zh": "探究问题与假设",
+      "summary_zh": "从现象提出可检验问题，形成有依据的预测或假设。",
+      "requirement_type": "practice",
+      "level_id": "r",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.20（正文对应内容要求 1.2），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_1_2b_inquiry_design_evidence",
+      "parent_requirement_id": null,
+      "code": "必修·1.2b",
+      "title": "Inquiry design and evidence",
+      "title_zh": "探究方案、证据与结论",
+      "summary_zh": "依据目的设计方案、获取证据、分析解释并评价结论。",
+      "requirement_type": "practice",
+      "level_id": "r",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.20（正文对应内容要求 1.2），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_1_3a_chemical_experiment_roles",
+      "parent_requirement_id": null,
+      "code": "必修·1.3a",
+      "title": "Roles of chemical experiments",
+      "title_zh": "化学实验的功能",
+      "summary_zh": "根据研究目的选择性质研究、分离、检验或制备实验的基本思路。",
+      "requirement_type": "practice",
+      "level_id": "r",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.20（正文对应内容要求 1.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_1_3b_separation_purification_solution",
+      "parent_requirement_id": null,
+      "code": "必修·1.3b",
+      "title": "Separation, purification and solution preparation",
+      "title_zh": "分离、提纯、检验与溶液配制",
+      "summary_zh": "规范选择和实施物质检验、分离、提纯与溶液配制的基本操作。",
+      "requirement_type": "practice",
+      "level_id": "r",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.20（正文对应内容要求 1.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_1_3c_experimental_condition_control",
+      "parent_requirement_id": null,
+      "code": "必修·1.3c",
+      "title": "Control of experimental conditions",
+      "title_zh": "实验条件控制",
+      "summary_zh": "识别并控制影响化学实验结论的关键变量和条件。",
+      "requirement_type": "practice",
+      "level_id": "r",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.20（正文对应内容要求 1.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_1_4a_scientific_attitude_collaboration",
+      "parent_requirement_id": null,
+      "code": "必修·1.4a",
+      "title": "Scientific attitude and collaboration",
+      "title_zh": "科学态度、质疑与合作",
+      "summary_zh": "如实记录证据，严谨交流，并在合作中提出有依据的质疑和改进。",
+      "requirement_type": "practice",
+      "level_id": "r",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.20（正文对应内容要求 1.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_1_4b_laboratory_safety_waste",
+      "parent_requirement_id": null,
+      "code": "必修·1.4b",
+      "title": "Laboratory safety and waste",
+      "title_zh": "实验安全、废弃物与突发事件",
+      "summary_zh": "识别化学品安全标识，选择废弃物处理和实验室突发事件应对措施。",
+      "requirement_type": "practice",
+      "level_id": "r",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.20（正文对应内容要求 1.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_1_5a_prepare_molar_solution",
+      "parent_requirement_id": null,
+      "code": "必修·1.5a",
+      "title": "Preparing a molar solution",
+      "title_zh": "配制一定物质的量浓度的溶液",
+      "summary_zh": "选择容量仪器，完成称量或移液、溶解、转移、定容和误差检查。",
+      "requirement_type": "practice",
+      "level_id": "r",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.20（正文对应内容要求 1.5），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_2_1a_substance_classification_conversion",
+      "parent_requirement_id": null,
+      "code": "必修·2.1a",
+      "title": "Substance classification and conversion",
+      "title_zh": "物质分类与类别转化",
+      "summary_zh": "依据组成和性质分类物质，并说明同类物质的共性及类别间转化条件。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.22（正文对应内容要求 2.1），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_2_1b_element_valence_conversion",
+      "parent_requirement_id": null,
+      "code": "必修·2.1b",
+      "title": "Element valence-state conversion",
+      "title_zh": "元素价态与物质转化",
+      "summary_zh": "依据元素价态分析同一元素不同价态物质间的氧化还原转化。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.22（正文对应内容要求 2.1），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_2_1c_colloidal_dispersions",
+      "parent_requirement_id": null,
+      "code": "必修·2.1c",
+      "title": "Colloidal dispersions",
+      "title_zh": "胶体与分散系",
+      "summary_zh": "区分溶液、胶体等分散系并解释胶体的典型特征。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.22（正文对应内容要求 2.1），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_2_2a_redox_electron_transfer",
+      "parent_requirement_id": null,
+      "code": "必修·2.2a",
+      "title": "Redox and electron transfer",
+      "title_zh": "氧化还原与电子转移",
+      "summary_zh": "从化合价变化和电子转移判断氧化还原反应并说明其本质。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.2），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_2_2b_oxidising_reducing_agents",
+      "parent_requirement_id": null,
+      "code": "必修·2.2b",
+      "title": "Oxidising and reducing agents",
+      "title_zh": "氧化剂与还原剂",
+      "summary_zh": "识别常见氧化剂和还原剂并判断反应中的氧化、还原过程。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.2），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_2_3a_electrolyte_ionisation",
+      "parent_requirement_id": null,
+      "code": "必修·2.3a",
+      "title": "Electrolyte ionisation",
+      "title_zh": "电解质与电离",
+      "summary_zh": "说明酸、碱、盐等电解质在水溶液或熔融状态中的电离并书写简单电离方程式。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_2_3b_ionic_reaction_conditions",
+      "parent_requirement_id": null,
+      "code": "必修·2.3b",
+      "title": "Conditions for ionic reactions",
+      "title_zh": "离子反应及发生条件",
+      "summary_zh": "从溶液中离子变化判断离子反应发生条件并书写简单离子方程式。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_2_3c_common_ion_tests",
+      "parent_requirement_id": null,
+      "code": "必修·2.3c",
+      "title": "Tests for common ions",
+      "title_zh": "常见离子的检验",
+      "summary_zh": "根据特征反应和干扰因素选择试剂并解释常见离子检验现象。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_2_4a_sodium_compounds",
+      "parent_requirement_id": null,
+      "code": "必修·2.4a",
+      "title": "Sodium and its compounds",
+      "title_zh": "钠及其重要化合物",
+      "summary_zh": "说明钠及其重要化合物的主要性质、转化和生产生活应用。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_2_4b_iron_compounds",
+      "parent_requirement_id": null,
+      "code": "必修·2.4b",
+      "title": "Iron and its compounds",
+      "title_zh": "铁及其重要化合物",
+      "summary_zh": "说明铁及其重要化合物不同价态的性质、转化和应用。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_2_5a_chlorine_compounds",
+      "parent_requirement_id": null,
+      "code": "必修·2.5a",
+      "title": "Chlorine and its compounds",
+      "title_zh": "氯及其重要化合物",
+      "summary_zh": "说明氯及其重要化合物的性质、转化、应用和安全使用。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.5），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_2_5b_nitrogen_compounds",
+      "parent_requirement_id": null,
+      "code": "必修·2.5b",
+      "title": "Nitrogen and its compounds",
+      "title_zh": "氮及其重要化合物",
+      "summary_zh": "说明氮及其重要化合物的性质、转化和工业应用。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.5），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_2_5c_sulfur_compounds",
+      "parent_requirement_id": null,
+      "code": "必修·2.5c",
+      "title": "Sulfur and its compounds",
+      "title_zh": "硫及其重要化合物",
+      "summary_zh": "说明硫及其重要化合物的价态、性质、转化和工业应用。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.5），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_2_6a_inorganic_conversion_pathways",
+      "parent_requirement_id": null,
+      "code": "必修·2.6a",
+      "title": "Inorganic conversion pathways",
+      "title_zh": "无机物性质与转化路径",
+      "summary_zh": "从物质类别和元素价态设计常见无机物的转化路径。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.6），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_2_6b_inorganic_stse_value",
+      "parent_requirement_id": null,
+      "code": "必修·2.6b",
+      "title": "Value and impact of inorganic chemistry",
+      "title_zh": "无机物应用价值与环境影响",
+      "summary_zh": "评价常见无机物转化对资源利用、社会发展和环境的影响。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.6），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_2_7a_iron_compounds_lab",
+      "parent_requirement_id": null,
+      "code": "必修·2.7a",
+      "title": "Iron-compound investigation",
+      "title_zh": "铁及其化合物性质实验",
+      "summary_zh": "设计并实施铁及其化合物性质和价态转化实验。",
+      "requirement_type": "practice",
+      "level_id": "r",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.7），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_2_7b_sulfur_valence_lab",
+      "parent_requirement_id": null,
+      "code": "必修·2.7b",
+      "title": "Sulfur valence-state conversion",
+      "title_zh": "不同价态含硫物质转化实验",
+      "summary_zh": "通过证据判断不同价态含硫物质间的氧化还原转化。",
+      "requirement_type": "practice",
+      "level_id": "r",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.7），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_2_7c_coarse_salt_purification",
+      "parent_requirement_id": null,
+      "code": "必修·2.7c",
+      "title": "Purifying crude salt",
+      "title_zh": "粗盐杂质离子的沉淀去除",
+      "summary_zh": "选择沉淀剂和操作顺序去除粗盐中杂质离子并评价方案。",
+      "requirement_type": "practice",
+      "level_id": "r",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.7），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_3_1a_atomic_structure_nuclides",
+      "parent_requirement_id": null,
+      "code": "必修·3.1a",
+      "title": "Atomic structure, elements and nuclides",
+      "title_zh": "原子结构、元素与核素",
+      "summary_zh": "使用原子结构说明元素和核素含义及核外电子的基本排布。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.26（正文对应内容要求 3.1），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_3_1b_periodic_table_structure_trends",
+      "parent_requirement_id": null,
+      "code": "必修·3.1b",
+      "title": "Periodic table and trends",
+      "title_zh": "元素周期表结构与递变规律",
+      "summary_zh": "说明周期表的周期和主族结构，并比较第三周期、碱金属和卤族性质递变。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.26（正文对应内容要求 3.1），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_3_1c_periodic_prediction",
+      "parent_requirement_id": null,
+      "code": "必修·3.1c",
+      "title": "Periodic-law prediction",
+      "title_zh": "元素周期律的解释与预测",
+      "summary_zh": "从原子结构解释元素性质周期性，并利用周期律预测简单性质。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.26（正文对应内容要求 3.1），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_3_2a_ionic_covalent_bonding",
+      "parent_requirement_id": null,
+      "code": "必修·3.2a",
+      "title": "Ionic and covalent bonding",
+      "title_zh": "离子键与共价键",
+      "summary_zh": "从微粒相互作用说明离子键和共价键的形成及典型物质构成。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.26（正文对应内容要求 3.2），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_3_2b_intro_molecular_geometry",
+      "parent_requirement_id": null,
+      "code": "必修·3.2b",
+      "title": "Introductory molecular geometry",
+      "title_zh": "分子空间结构初步",
+      "summary_zh": "识别简单分子的空间结构，并联系成键方式进行解释。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.26（正文对应内容要求 3.2），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_3_2c_bond_changes_reaction_energy",
+      "parent_requirement_id": null,
+      "code": "必修·3.2c",
+      "title": "Bond changes and reaction energy",
+      "title_zh": "化学键变化与反应能量",
+      "summary_zh": "用化学键断裂与形成解释物质变化和反应能量变化。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.26（正文对应内容要求 3.2），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_3_3a_reversible_dynamic_equilibrium",
+      "parent_requirement_id": null,
+      "code": "必修·3.3a",
+      "title": "Reversible reactions and equilibrium",
+      "title_zh": "可逆反应与化学平衡",
+      "summary_zh": "说明可逆反应达到动态平衡的条件和宏观特征。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.26（正文对应内容要求 3.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_3_3b_average_rate_factors",
+      "parent_requirement_id": null,
+      "code": "必修·3.3b",
+      "title": "Average rate and influencing factors",
+      "title_zh": "平均反应速率与影响因素",
+      "summary_zh": "表示平均反应速率，并解释浓度、温度和催化剂等因素的影响。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.26（正文对应内容要求 3.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_3_3c_rate_variable_control",
+      "parent_requirement_id": null,
+      "code": "必修·3.3c",
+      "title": "Variable control in rate studies",
+      "title_zh": "反应速率变量控制",
+      "summary_zh": "使用控制变量法探究影响反应速率的因素并评价证据。",
+      "requirement_type": "practice",
+      "level_id": "r",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.26（正文对应内容要求 3.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_3_4a_endo_exothermic_bond_energy",
+      "parent_requirement_id": null,
+      "code": "必修·3.4a",
+      "title": "Endothermic and exothermic reactions",
+      "title_zh": "吸热、放热与化学键",
+      "summary_zh": "区分吸热和放热反应，并从化学键变化解释体系能量改变。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.26（正文对应内容要求 3.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_3_4b_intro_galvanic_cell",
+      "parent_requirement_id": null,
+      "code": "必修·3.4b",
+      "title": "Introductory galvanic cells",
+      "title_zh": "原电池工作原理初步",
+      "summary_zh": "从氧化还原反应分析简单原电池的构成、电子和离子迁移及能量转化。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.26（正文对应内容要求 3.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_3_4c_fuel_battery_evaluation",
+      "parent_requirement_id": null,
+      "code": "必修·3.4c",
+      "title": "Fuel and battery evaluation",
+      "title_zh": "燃料效率与化学电源价值",
+      "summary_zh": "从能量、资源和环境角度比较燃料与化学电源的使用价值。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.26（正文对应内容要求 3.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_3_5a_periodic_trends_lab",
+      "parent_requirement_id": null,
+      "code": "必修·3.5a",
+      "title": "Periodic-trend investigation",
+      "title_zh": "同周期同主族性质递变实验",
+      "summary_zh": "用实验事实和数据检验同周期、同主族元素性质递变。",
+      "requirement_type": "practice",
+      "level_id": "r",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.27（正文对应内容要求 3.5），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_3_5b_rate_factors_lab",
+      "parent_requirement_id": null,
+      "code": "必修·3.5b",
+      "title": "Reaction-rate factors investigation",
+      "title_zh": "反应速率影响因素实验",
+      "summary_zh": "控制变量并测量影响反应速率的因素。",
+      "requirement_type": "practice",
+      "level_id": "r",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.27（正文对应内容要求 3.5），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_3_5c_chemical_to_electrical_lab",
+      "parent_requirement_id": null,
+      "code": "必修·3.5c",
+      "title": "Chemical-to-electrical energy experiment",
+      "title_zh": "化学能转化为电能实验",
+      "summary_zh": "搭建并检验简单原电池，记录电极和电流方向证据。",
+      "requirement_type": "practice",
+      "level_id": "r",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.27（正文对应内容要求 3.5），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_4_1a_carbon_bonding_geometry",
+      "parent_requirement_id": null,
+      "code": "必修·4.1a",
+      "title": "Carbon bonding and molecular geometry",
+      "title_zh": "碳原子成键与有机分子空间结构",
+      "summary_zh": "以甲烷、乙烯、乙炔和苯说明碳原子的成键特点和分子空间结构。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.29（正文对应内容要求 4.1），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_4_1b_intro_functional_groups",
+      "parent_requirement_id": null,
+      "code": "必修·4.1b",
+      "title": "Introductory functional groups",
+      "title_zh": "有机化合物官能团初步",
+      "summary_zh": "在乙烯、乙醇、乙酸和乙酸乙酯中识别官能团并联系分类。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.29（正文对应内容要求 4.1），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_4_1c_intro_isomerism",
+      "parent_requirement_id": null,
+      "code": "必修·4.1c",
+      "title": "Introductory isomerism",
+      "title_zh": "同分异构现象初步",
+      "summary_zh": "说明同分异构现象并辨识简单有机物的结构差异。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.29（正文对应内容要求 4.1），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_4_2a_ethene_properties",
+      "parent_requirement_id": null,
+      "code": "必修·4.2a",
+      "title": "Ethene properties and applications",
+      "title_zh": "乙烯的性质与应用",
+      "summary_zh": "从碳碳双键解释乙烯的主要反应、性质和应用。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.29（正文对应内容要求 4.2），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_4_2b_ethanol_ethanoic_properties",
+      "parent_requirement_id": null,
+      "code": "必修·4.2b",
+      "title": "Ethanol and ethanoic acid",
+      "title_zh": "乙醇与乙酸的性质",
+      "summary_zh": "联系羟基和羧基说明乙醇、乙酸的主要性质、反应和应用。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.29（正文对应内容要求 4.2），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_4_2c_intro_organic_reaction_types",
+      "parent_requirement_id": null,
+      "code": "必修·4.2c",
+      "title": "Introductory organic reaction types",
+      "title_zh": "有机反应类型与转化初步",
+      "summary_zh": "识别氧化、加成、取代和聚合反应，并说明简单有机物间的转化。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.29（正文对应内容要求 4.2），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_4_3a_organic_synthesis_value",
+      "parent_requirement_id": null,
+      "code": "必修·4.3a",
+      "title": "Value of organic synthesis",
+      "title_zh": "有机合成创造新物质",
+      "summary_zh": "说明有机合成在创造新物质和改善生活中的作用。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.29（正文对应内容要求 4.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_4_3b_intro_macromolecule_applications",
+      "parent_requirement_id": null,
+      "code": "必修·4.3b",
+      "title": "Introductory macromolecule applications",
+      "title_zh": "高分子与生物大分子应用初步",
+      "summary_zh": "概述高分子、油脂、糖类和蛋白质在生产生活中的应用。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.29（正文对应内容要求 4.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_4_4a_organic_model_building",
+      "parent_requirement_id": null,
+      "code": "必修·4.4a",
+      "title": "Organic molecular model building",
+      "title_zh": "有机分子球棍模型",
+      "summary_zh": "搭建球棍模型并用模型比较有机分子结构。",
+      "requirement_type": "practice",
+      "level_id": "r",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.30（正文对应内容要求 4.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_4_4b_ethanol_ethanoic_lab",
+      "parent_requirement_id": null,
+      "code": "必修·4.4b",
+      "title": "Ethanol and ethanoic-acid experiment",
+      "title_zh": "乙醇、乙酸性质实验",
+      "summary_zh": "实施乙醇、乙酸性质实验并以证据联系官能团。",
+      "requirement_type": "practice",
+      "level_id": "r",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.30（正文对应内容要求 4.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_5_1a_chemistry_sustainable_development",
+      "parent_requirement_id": null,
+      "code": "必修·5.1a",
+      "title": "Chemistry and sustainable development",
+      "title_zh": "化学促进可持续发展",
+      "summary_zh": "从资源、能源、材料和环境案例说明化学对可持续发展的作用与限制。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.31（正文对应内容要求 5.1），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_5_1b_green_chemistry_principles",
+      "parent_requirement_id": null,
+      "code": "必修·5.1b",
+      "title": "Green chemistry principles",
+      "title_zh": "绿色化学基本思想",
+      "summary_zh": "从原料、过程、能耗、产物和废物角度解释绿色化学的基本取向。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.31（正文对应内容要求 5.1），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_5_2a_chemistry_materials",
+      "parent_requirement_id": null,
+      "code": "必修·5.2a",
+      "title": "Chemistry in materials science",
+      "title_zh": "化学与材料科学",
+      "summary_zh": "说明化学在金属、无机非金属、高分子和复合材料开发中的作用。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.2），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_5_2b_chemistry_health",
+      "parent_requirement_id": null,
+      "code": "必修·5.2b",
+      "title": "Chemistry and human health",
+      "title_zh": "化学与人类健康",
+      "summary_zh": "说明化学在药物、营养、检测和健康风险管理中的作用。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.2），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_5_3a_fossil_resource_utilisation",
+      "parent_requirement_id": null,
+      "code": "必修·5.3a",
+      "title": "Integrated use of fossil resources",
+      "title_zh": "化石资源综合利用",
+      "summary_zh": "比较煤、石油和天然气的组成、加工转化与综合利用路径。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_5_3b_energy_resource_systems",
+      "parent_requirement_id": null,
+      "code": "必修·5.3b",
+      "title": "Energy-resource systems",
+      "title_zh": "自然资源与能源综合利用",
+      "summary_zh": "从物质转化、能量效率和环境影响评价自然资源与能源利用方案。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_5_4a_pollutant_detection_treatment",
+      "parent_requirement_id": null,
+      "code": "必修·5.4a",
+      "title": "Pollutant detection and treatment",
+      "title_zh": "污染物检测与治理",
+      "summary_zh": "根据污染物性质选择检测、分离、转化或无害化处理思路。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_5_4b_clean_production_circularity",
+      "parent_requirement_id": null,
+      "code": "必修·5.4b",
+      "title": "Clean production and circularity",
+      "title_zh": "清洁生产与循环利用",
+      "summary_zh": "说明清洁生产、废物资源化和循环利用中的化学原理。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_r_5_5a_chemical_rules_safe_use",
+      "parent_requirement_id": null,
+      "code": "必修·5.5a",
+      "title": "Chemical application laws and rules",
+      "title_zh": "化学应用法律法规与规则意识",
+      "summary_zh": "说明遵守化学品应用、化工生产、环境保护、食品与药品安全等法律法规的重要性。",
+      "requirement_type": "skill",
+      "level_id": "r",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.5），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_1_1a_energy_forms_conservation",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·1.1a",
+      "title": "Energy forms and conservation",
+      "title_zh": "化学能转化与能量守恒",
+      "summary_zh": "说明化学能与热能、电能等形式相互转化且遵循能量守恒。",
+      "requirement_type": "skill",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_1_1b_internal_energy_state",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·1.1b",
+      "title": "Internal energy and state variables",
+      "title_zh": "内能与体系状态",
+      "summary_zh": "说明内能与体系温度、压强、组成和聚集状态的关系。",
+      "requirement_type": "skill",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_1_2a_enthalpy_thermochemical_equations",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·1.2a",
+      "title": "Enthalpy and thermochemical equations",
+      "title_zh": "焓变与热化学方程式",
+      "summary_zh": "用焓变表示恒温恒压反应热，书写并解释热化学方程式。",
+      "requirement_type": "skill",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.36（正文对应内容要求 1.2），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_1_2b_hess_law_application",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·1.2b",
+      "title": "Hess's law applications",
+      "title_zh": "盖斯定律及应用",
+      "summary_zh": "使用盖斯定律计算简单反应焓变并说明路径无关性。",
+      "requirement_type": "skill",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.36（正文对应内容要求 1.2），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_1_3a_electrochemical_cells_sources",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·1.3a",
+      "title": "Galvanic cells and chemical sources",
+      "title_zh": "原电池与化学电源",
+      "summary_zh": "分析原电池和常见化学电源的电极反应、载流路径和能量转化。",
+      "requirement_type": "skill",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.36（正文对应内容要求 1.3），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_1_3b_electrolytic_cells_applications",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·1.3b",
+      "title": "Electrolytic cells and applications",
+      "title_zh": "电解池原理与应用",
+      "summary_zh": "分析电解池工作原理并解释电解在物质转化和储能中的应用。",
+      "requirement_type": "skill",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.36（正文对应内容要求 1.3），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_1_3c_electrochemical_corrosion",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·1.3c",
+      "title": "Electrochemical corrosion and protection",
+      "title_zh": "金属电化学腐蚀与防护",
+      "summary_zh": "从电化学过程解释金属腐蚀，并比较常见防腐措施。",
+      "requirement_type": "skill",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.36（正文对应内容要求 1.3），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_1_4a_electroplating_lab",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·1.4a",
+      "title": "Electroplating experiment",
+      "title_zh": "简单电镀实验",
+      "summary_zh": "搭建电解装置实施简单电镀并解释电极产物。",
+      "requirement_type": "practice",
+      "level_id": "se",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.36（正文对应内容要求 1.4），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_1_4b_fuel_cell_build",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·1.4b",
+      "title": "Building a fuel cell",
+      "title_zh": "制作简单燃料电池",
+      "summary_zh": "制作简单燃料电池并用电极反应证据评价其工作。",
+      "requirement_type": "practice",
+      "level_id": "se",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.36（正文对应内容要求 1.4），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_2_1a_reaction_direction_enthalpy_entropy",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·2.1a",
+      "title": "Reaction direction, enthalpy and entropy",
+      "title_zh": "反应方向、焓变与熵变",
+      "summary_zh": "使用焓变和熵变定性判断化学变化的方向和条件。",
+      "requirement_type": "skill",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.38（正文对应内容要求 2.1），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_2_1b_equilibrium_constant_extent",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·2.1b",
+      "title": "Equilibrium constant and reaction extent",
+      "title_zh": "平衡常数与反应限度",
+      "summary_zh": "书写并解释平衡常数表达式，计算简单平衡组成和转化率。",
+      "requirement_type": "skill",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.38（正文对应内容要求 2.1），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_2_1c_reaction_quotient_direction",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·2.1c",
+      "title": "Reaction quotient and direction",
+      "title_zh": "浓度商与反应方向",
+      "summary_zh": "比较浓度商与平衡常数，判断是否平衡及净反应方向。",
+      "requirement_type": "skill",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.38（正文对应内容要求 2.1），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_2_1d_equilibrium_factor_effects",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·2.1d",
+      "title": "Effects on equilibrium",
+      "title_zh": "浓度、压强和温度对平衡的影响",
+      "summary_zh": "预测浓度、压强和温度改变引起的平衡移动及相关量变化。",
+      "requirement_type": "skill",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.38（正文对应内容要求 2.1），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_2_2a_rate_representation_measurement",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·2.2a",
+      "title": "Rate representation and measurement",
+      "title_zh": "反应速率表示与测定",
+      "summary_zh": "计算反应速率并根据可测物理量选择简单的速率测定方法。",
+      "requirement_type": "skill",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.39（正文对应内容要求 2.2），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_2_2b_rate_factor_models",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·2.2b",
+      "title": "Models for rate factors",
+      "title_zh": "反应速率影响因素模型",
+      "summary_zh": "用碰撞和能量分布模型解释温度、浓度、压强和催化剂对速率的影响。",
+      "requirement_type": "skill",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.39（正文对应内容要求 2.2），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_2_2c_reaction_path_activation",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·2.2c",
+      "title": "Reaction pathways and activation energy",
+      "title_zh": "反应历程与活化能",
+      "summary_zh": "说明基元反应、反应历程和活化能如何约束宏观反应速率。",
+      "requirement_type": "skill",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.39（正文对应内容要求 2.2），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_2_3a_industrial_condition_optimisation",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·2.3a",
+      "title": "Industrial condition optimisation",
+      "title_zh": "化工反应条件综合优化",
+      "summary_zh": "从速率、限度、能耗、安全和成本综合比较生产条件。",
+      "requirement_type": "skill",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.39（正文对应内容要求 2.3），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_2_3b_catalyst_pathway_control",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·2.3b",
+      "title": "Catalyst pathway control",
+      "title_zh": "催化剂与反应历程调控",
+      "summary_zh": "说明催化剂通过改变反应历程和活化能调控速率但不改变平衡常数。",
+      "requirement_type": "skill",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.39（正文对应内容要求 2.3），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_2_4a_equilibrium_shift_lab",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·2.4a",
+      "title": "Equilibrium-shift investigation",
+      "title_zh": "影响化学平衡移动因素实验",
+      "summary_zh": "控制变量探究浓度、压强或温度对平衡移动的影响。",
+      "requirement_type": "practice",
+      "level_id": "se",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.39（正文对应内容要求 2.4），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_3_1a_aqueous_electrolyte_systems",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·3.1a",
+      "title": "Aqueous electrolyte systems",
+      "title_zh": "电解质水溶液体系",
+      "summary_zh": "从电离、离子反应和化学平衡统一分析电解质水溶液的组成、性质和反应。",
+      "requirement_type": "skill",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.41（正文对应内容要求 3.1），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_3_2a_weak_electrolyte_equilibrium",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·3.2a",
+      "title": "Weak-electrolyte equilibrium",
+      "title_zh": "弱电解质电离平衡",
+      "summary_zh": "说明弱电解质电离平衡和电离常数含义，并进行简单比较。",
+      "requirement_type": "skill",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.41（正文对应内容要求 3.2），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_3_2b_water_ionisation_ph",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·3.2b",
+      "title": "Water ionisation, ionic product and pH",
+      "title_zh": "水的电离、离子积与 pH",
+      "summary_zh": "使用水的离子积和 pH 表示溶液酸碱性并进行简单计算。",
+      "requirement_type": "skill",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.41（正文对应内容要求 3.2），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_3_2c_ph_measurement",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·3.2c",
+      "title": "Measuring solution pH",
+      "title_zh": "溶液 pH 检测",
+      "summary_zh": "选择试纸或仪器测定 pH，记录并评价测量精度。",
+      "requirement_type": "practice",
+      "level_id": "se",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.41（正文对应内容要求 3.2），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_3_3a_salt_hydrolysis",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·3.3a",
+      "title": "Salt hydrolysis",
+      "title_zh": "盐类水解平衡",
+      "summary_zh": "从离子与水反应解释盐溶液酸碱性及影响水解的主要因素。",
+      "requirement_type": "skill",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.42（正文对应内容要求 3.3），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_3_4a_precipitation_dissolution",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·3.4a",
+      "title": "Precipitation-dissolution equilibrium",
+      "title_zh": "沉淀溶解平衡",
+      "summary_zh": "使用沉淀溶解平衡解释难溶电解质的生成、溶解和转化。",
+      "requirement_type": "skill",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.42（正文对应内容要求 3.4），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_3_5a_aqueous_equilibrium_applications",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·3.5a",
+      "title": "Applications of aqueous equilibria",
+      "title_zh": "水溶液离子平衡应用",
+      "summary_zh": "综合电离、水解和沉淀平衡解决检测、分离和物质转化问题。",
+      "requirement_type": "skill",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.42（正文对应内容要求 3.5），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_3_5b_ph_control_buffers",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·3.5b",
+      "title": "pH control and buffers",
+      "title_zh": "pH 调控与缓冲",
+      "summary_zh": "解释 pH 调控的生产研究应用和缓冲溶液抵抗 pH 变化的原理。",
+      "requirement_type": "skill",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.42（正文对应内容要求 3.5），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_3_6a_acid_base_titration",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·3.6a",
+      "title": "Strong acid-base titration",
+      "title_zh": "强酸强碱中和滴定",
+      "summary_zh": "规范实施中和滴定，判断终点并计算未知浓度。",
+      "requirement_type": "practice",
+      "level_id": "se",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.42（正文对应内容要求 3.6），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_se_3_6b_salt_hydrolysis_application_lab",
+      "parent_requirement_id": null,
+      "code": "选择性必修·化学反应原理·3.6b",
+      "title": "Salt-hydrolysis application",
+      "title_zh": "盐类水解应用实验",
+      "summary_zh": "设计实验检验盐类水解及其影响因素和应用。",
+      "requirement_type": "practice",
+      "level_id": "se",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.42（正文对应内容要求 3.6），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_ss_1_1a_electron_model_history",
+      "parent_requirement_id": null,
+      "code": "选择性必修·物质结构与性质·1.1a",
+      "title": "History of electron models",
+      "title_zh": "核外电子运动模型演进",
+      "summary_zh": "用光谱等证据比较核外电子运动模型及其局限。",
+      "requirement_type": "practice",
+      "level_id": "ss",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.44（正文对应内容要求 1.1），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_ss_1_1b_quantised_levels_transitions",
+      "parent_requirement_id": null,
+      "code": "选择性必修·物质结构与性质·1.1b",
+      "title": "Quantised energy levels and transitions",
+      "title_zh": "电子能级、激发与跃迁",
+      "summary_zh": "说明电子能量状态量子化以及能级间激发和跃迁。",
+      "requirement_type": "skill",
+      "level_id": "ss",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.44（正文对应内容要求 1.1），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_ss_1_1c_orbitals_electron_clouds",
+      "parent_requirement_id": null,
+      "code": "选择性必修·物质结构与性质·1.1c",
+      "title": "Orbitals and electron clouds",
+      "title_zh": "原子轨道与电子云",
+      "summary_zh": "用原子轨道和电子云描述电子空间分布和能量状态。",
+      "requirement_type": "skill",
+      "level_id": "ss",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.44（正文对应内容要求 1.1），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_ss_1_2a_aufbau_energy_order",
+      "parent_requirement_id": null,
+      "code": "选择性必修·物质结构与性质·1.2a",
+      "title": "Orbital-energy order and Aufbau",
+      "title_zh": "能级顺序与构造原理",
+      "summary_zh": "使用能级高低和构造原理确定基态电子排布顺序。",
+      "requirement_type": "skill",
+      "level_id": "ss",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.45（正文对应内容要求 1.2），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_ss_1_2b_pauli_hund_configurations",
+      "parent_requirement_id": null,
+      "code": "选择性必修·物质结构与性质·1.2b",
+      "title": "Pauli, Hund and configurations",
+      "title_zh": "泡利原理、洪特规则与电子排布",
+      "summary_zh": "依据能量最低、泡利不相容和洪特规则书写 1—36 号元素基态排布。",
+      "requirement_type": "skill",
+      "level_id": "ss",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.45（正文对应内容要求 1.2），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_ss_1_3a_advanced_periodic_properties",
+      "parent_requirement_id": null,
+      "code": "选择性必修·物质结构与性质·1.3a",
+      "title": "Atomic radius, ionisation energy and electronegativity",
+      "title_zh": "原子半径、电离能与电负性周期性",
+      "summary_zh": "解释原子半径、第一电离能和电负性的周期变化与例外。",
+      "requirement_type": "skill",
+      "level_id": "ss",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.45（正文对应内容要求 1.3），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_ss_1_3b_periodic_blocks_valence",
+      "parent_requirement_id": null,
+      "code": "选择性必修·物质结构与性质·1.3b",
+      "title": "Periodic blocks and valence configurations",
+      "title_zh": "元素周期表分区与价电子排布",
+      "summary_zh": "从价电子排布解释周期表分区、周期和族，并用于性质预测。",
+      "requirement_type": "skill",
+      "level_id": "ss",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.45（正文对应内容要求 1.3），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_ss_2_1a_bonding_structure_properties",
+      "parent_requirement_id": null,
+      "code": "选择性必修·物质结构与性质·2.1a",
+      "title": "Bonding, structure and properties",
+      "title_zh": "微粒作用、结构与性质",
+      "summary_zh": "比较离子键、共价键和金属键模型，并由构成微粒和作用解释典型性质。",
+      "requirement_type": "skill",
+      "level_id": "ss",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.47（正文对应内容要求 2.1），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_ss_2_1b_coordination_bonding",
+      "parent_requirement_id": null,
+      "code": "选择性必修·物质结构与性质·2.1b",
+      "title": "Coordination bonding and complexes",
+      "title_zh": "配位键与配位化合物",
+      "summary_zh": "说明配位键、中心离子、配体和简单配合物的成键特征及应用。",
+      "requirement_type": "skill",
+      "level_id": "ss",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.47（正文对应内容要求 2.1），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_ss_2_1c_van_der_waals_hydrogen_bond",
+      "parent_requirement_id": null,
+      "code": "选择性必修·物质结构与性质·2.1c",
+      "title": "Van der Waals forces and hydrogen bonding",
+      "title_zh": "范德华力与氢键",
+      "summary_zh": "比较范德华力、分子内和分子间氢键及其对物质性质的影响。",
+      "requirement_type": "skill",
+      "level_id": "ss",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.47（正文对应内容要求 2.1），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_ss_2_2a_orbital_overlap_sigma_pi",
+      "parent_requirement_id": null,
+      "code": "选择性必修·物质结构与性质·2.2a",
+      "title": "Orbital overlap, sigma and pi bonds",
+      "title_zh": "轨道重叠、σ 键与 π 键",
+      "summary_zh": "用原子轨道重叠解释共价键方向性、饱和性以及 σ、π 键。",
+      "requirement_type": "skill",
+      "level_id": "ss",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.47（正文对应内容要求 2.2），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_ss_2_2b_bond_polarity_metrics",
+      "parent_requirement_id": null,
+      "code": "选择性必修·物质结构与性质·2.2b",
+      "title": "Bond polarity and bond metrics",
+      "title_zh": "键极性、键能、键长与键角",
+      "summary_zh": "使用电负性、键能、键长和键角描述共价键和分子结构。",
+      "requirement_type": "skill",
+      "level_id": "ss",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.47（正文对应内容要求 2.2），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_ss_2_3a_molecular_shape_models",
+      "parent_requirement_id": null,
+      "code": "选择性必修·物质结构与性质·2.3a",
+      "title": "Molecular-shape models",
+      "title_zh": "分子空间结构模型",
+      "summary_zh": "用相关理论和模型解释、预测简单共价分子的空间结构。",
+      "requirement_type": "skill",
+      "level_id": "ss",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.48（正文对应内容要求 2.3），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_ss_2_3b_structure_measurement",
+      "parent_requirement_id": null,
+      "code": "选择性必修·物质结构与性质·2.3b",
+      "title": "Molecular-structure measurement",
+      "title_zh": "分子结构测定方法",
+      "summary_zh": "说明波谱和晶体 X 射线衍射信息如何支持分子结构模型。",
+      "requirement_type": "skill",
+      "level_id": "ss",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.48（正文对应内容要求 2.3），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_ss_2_3c_molecular_polarity_chirality",
+      "parent_requirement_id": null,
+      "code": "选择性必修·物质结构与性质·2.3c",
+      "title": "Molecular polarity and chirality",
+      "title_zh": "分子极性与手性",
+      "summary_zh": "由键极性和空间结构判断分子极性，并说明手性对性质的影响。",
+      "requirement_type": "skill",
+      "level_id": "ss",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.48（正文对应内容要求 2.3），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_ss_2_4a_crystal_cells_types",
+      "parent_requirement_id": null,
+      "code": "选择性必修·物质结构与性质·2.4a",
+      "title": "Unit cells and crystal types",
+      "title_zh": "晶胞与晶体类型",
+      "summary_zh": "描述晶体周期性和简单晶胞，比较分子、共价、离子和金属晶体结构。",
+      "requirement_type": "skill",
+      "level_id": "ss",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.48（正文对应内容要求 2.4），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_ss_2_4b_transitional_mixed_crystals",
+      "parent_requirement_id": null,
+      "code": "选择性必修·物质结构与性质·2.4b",
+      "title": "Transitional and mixed crystals",
+      "title_zh": "过渡晶体与混合型晶体",
+      "summary_zh": "解释典型晶体模型之间存在连续过渡和混合型结构。",
+      "requirement_type": "skill",
+      "level_id": "ss",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.48（正文对应内容要求 2.4），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_ss_2_4c_aggregation_state_materials",
+      "parent_requirement_id": null,
+      "code": "选择性必修·物质结构与性质·2.4c",
+      "title": "Aggregation states and materials",
+      "title_zh": "聚集状态、微粒作用与材料性质",
+      "summary_zh": "从微粒种类、作用和聚集程度解释聚集状态与材料性质。",
+      "requirement_type": "skill",
+      "level_id": "ss",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.48（正文对应内容要求 2.4），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_ss_2_5a_prepare_complex_lab",
+      "parent_requirement_id": null,
+      "code": "选择性必修·物质结构与性质·2.5a",
+      "title": "Preparing a simple complex",
+      "title_zh": "简单配合物制备",
+      "summary_zh": "制备简单配合物并用现象支持配位形成判断。",
+      "requirement_type": "practice",
+      "level_id": "ss",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.48（正文对应内容要求 2.5），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_ss_3_1a_structure_scale_model_evolution",
+      "parent_requirement_id": null,
+      "code": "选择性必修·物质结构与性质·3.1a",
+      "title": "Structure scales and model evolution",
+      "title_zh": "物质结构尺度与模型演进",
+      "summary_zh": "比较原子、分子和超分子尺度模型，并用证据说明模型演进。",
+      "requirement_type": "practice",
+      "level_id": "ss",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.51（正文对应内容要求 3.1），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_ss_3_2a_spectroscopy_xrd_methods",
+      "parent_requirement_id": null,
+      "code": "选择性必修·物质结构与性质·3.2a",
+      "title": "Spectroscopy and X-ray diffraction",
+      "title_zh": "光谱与晶体 X 射线衍射",
+      "summary_zh": "区分原子光谱、分子光谱和晶体 X 射线衍射所提供的结构信息。",
+      "requirement_type": "skill",
+      "level_id": "ss",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.51（正文对应内容要求 3.2），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_ss_3_3a_structure_guided_material_design",
+      "parent_requirement_id": null,
+      "code": "选择性必修·物质结构与性质·3.3a",
+      "title": "Structure-guided material design",
+      "title_zh": "结构—性质与材料设计",
+      "summary_zh": "利用结构—性质关系解释材料优化和预期性质新物质设计。",
+      "requirement_type": "skill",
+      "level_id": "ss",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.51（正文对应内容要求 3.3），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_ss_3_3b_structure_methods_life_science",
+      "parent_requirement_id": null,
+      "code": "选择性必修·物质结构与性质·3.3b",
+      "title": "Structure methods in life science",
+      "title_zh": "结构理论与生命科学",
+      "summary_zh": "说明结构理论和分析测试技术对生命科学问题研究的支持。",
+      "requirement_type": "skill",
+      "level_id": "ss",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.51（正文对应内容要求 3.3），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_so_1_1a_organic_connectivity_geometry",
+      "parent_requirement_id": null,
+      "code": "选择性必修·有机化学基础·1.1a",
+      "title": "Organic connectivity, bonding and geometry",
+      "title_zh": "有机分子连接、成键与空间排布",
+      "summary_zh": "说明原子连接顺序、成键方式和空间排布共同决定有机分子结构。",
+      "requirement_type": "skill",
+      "level_id": "so",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.53（正文对应内容要求 1.1），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_so_1_1b_constitutional_stereoisomerism",
+      "parent_requirement_id": null,
+      "code": "选择性必修·有机化学基础·1.1b",
+      "title": "Constitutional and stereoisomerism",
+      "title_zh": "构造异构与立体异构",
+      "summary_zh": "辨识构造异构和立体异构并写出符合简单条件的异构体。",
+      "requirement_type": "skill",
+      "level_id": "so",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.53（正文对应内容要求 1.1），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_so_1_1c_organic_ir_nmr",
+      "parent_requirement_id": null,
+      "code": "选择性必修·有机化学基础·1.1c",
+      "title": "IR and NMR for organic structure",
+      "title_zh": "红外与核磁共振测定有机结构",
+      "summary_zh": "结合简单红外和核磁共振信息判断官能团和分子结构。",
+      "requirement_type": "skill",
+      "level_id": "so",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.53（正文对应内容要求 1.1），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_so_1_2a_functional_groups_classification_naming",
+      "parent_requirement_id": null,
+      "code": "选择性必修·有机化学基础·1.2a",
+      "title": "Functional groups, classification and naming",
+      "title_zh": "官能团、分类与命名",
+      "summary_zh": "辨识课标所列官能团，按官能团分类并命名简单有机物。",
+      "requirement_type": "skill",
+      "level_id": "so",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.53（正文对应内容要求 1.2），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_so_1_2b_functional_group_properties_conversion",
+      "parent_requirement_id": null,
+      "code": "选择性必修·有机化学基础·1.2b",
+      "title": "Functional-group properties and conversion",
+      "title_zh": "官能团性质、相互影响与转化",
+      "summary_zh": "由官能团和基团间相互影响预测特征性质与官能团转化。",
+      "requirement_type": "skill",
+      "level_id": "so",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.53（正文对应内容要求 1.2），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_so_1_2c_functional_group_tests",
+      "parent_requirement_id": null,
+      "code": "选择性必修·有机化学基础·1.2c",
+      "title": "Tests for functional groups",
+      "title_zh": "常见官能团检验",
+      "summary_zh": "根据特征反应和干扰选择常见官能团检验并解释现象。",
+      "requirement_type": "skill",
+      "level_id": "so",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.53（正文对应内容要求 1.2），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_so_1_3a_organic_bond_polarity_reactivity",
+      "parent_requirement_id": null,
+      "code": "选择性必修·有机化学基础·1.3a",
+      "title": "Organic bond polarity and reactivity",
+      "title_zh": "有机化学键极性与反应",
+      "summary_zh": "从共价键类型、极性和基团相互影响判断可能断键成键位置与转化。",
+      "requirement_type": "skill",
+      "level_id": "so",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.54（正文对应内容要求 1.3），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_so_2_1a_hydrocarbon_classes",
+      "parent_requirement_id": null,
+      "code": "选择性必修·有机化学基础·2.1a",
+      "title": "Hydrocarbon classes and applications",
+      "title_zh": "烷烃、烯烃、炔烃与芳香烃",
+      "summary_zh": "比较主要烃类的组成、结构、性质和生产生活应用。",
+      "requirement_type": "skill",
+      "level_id": "so",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.56（正文对应内容要求 2.1），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_so_2_2a_halogenoalkanes_alcohols",
+      "parent_requirement_id": null,
+      "code": "选择性必修·有机化学基础·2.2a",
+      "title": "Halogenoalkanes and alcohols",
+      "title_zh": "卤代烃与醇",
+      "summary_zh": "由结构解释卤代烃和醇的主要性质、转化与应用。",
+      "requirement_type": "skill",
+      "level_id": "so",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.56（正文对应内容要求 2.2），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_so_2_2b_carbonyl_acid_ester",
+      "parent_requirement_id": null,
+      "code": "选择性必修·有机化学基础·2.2b",
+      "title": "Carbonyls, carboxylic acids and esters",
+      "title_zh": "醛、酮、羧酸与酯",
+      "summary_zh": "比较醛、酮、羧酸和酯的结构、特征反应、转化和应用。",
+      "requirement_type": "skill",
+      "level_id": "so",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.56（正文对应内容要求 2.2），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_so_2_2c_phenols_amines_amides",
+      "parent_requirement_id": null,
+      "code": "选择性必修·有机化学基础·2.2c",
+      "title": "Phenols, amines and amides",
+      "title_zh": "酚、胺与酰胺",
+      "summary_zh": "说明酚、胺和酰胺的结构特点、典型性质和应用。",
+      "requirement_type": "skill",
+      "level_id": "so",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.56（正文对应内容要求 2.2），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_so_2_3a_organic_reaction_patterns",
+      "parent_requirement_id": null,
+      "code": "选择性必修·有机化学基础·2.3a",
+      "title": "Organic reaction patterns",
+      "title_zh": "有机反应类型与规律",
+      "summary_zh": "从官能团和断键成键识别加成、取代、消去和氧化还原反应规律。",
+      "requirement_type": "skill",
+      "level_id": "so",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.56（正文对应内容要求 2.3），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_so_2_3b_organic_synthesis_routes",
+      "parent_requirement_id": null,
+      "code": "选择性必修·有机化学基础·2.3b",
+      "title": "Organic synthesis routes",
+      "title_zh": "有机合成路线设计",
+      "summary_zh": "围绕碳骨架构建和官能团转化设计、比较简单有机合成路线。",
+      "requirement_type": "skill",
+      "level_id": "so",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.56（正文对应内容要求 2.3），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_so_2_4a_organic_safety_green_synthesis",
+      "parent_requirement_id": null,
+      "code": "选择性必修·有机化学基础·2.4a",
+      "title": "Organic safety and green synthesis",
+      "title_zh": "有机物安全与绿色合成",
+      "summary_zh": "评价有机物对环境健康的影响，并用绿色化学思想比较合成方案。",
+      "requirement_type": "skill",
+      "level_id": "so",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.56（正文对应内容要求 2.4），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_so_2_5a_ethyl_ethanoate_lab",
+      "parent_requirement_id": null,
+      "code": "选择性必修·有机化学基础·2.5a",
+      "title": "Ethyl ethanoate preparation",
+      "title_zh": "乙酸乙酯制备与性质",
+      "summary_zh": "制备乙酸乙酯，控制条件并检验产物性质。",
+      "requirement_type": "practice",
+      "level_id": "so",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.56（正文对应内容要求 2.5），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_so_2_5b_functional_group_test_lab",
+      "parent_requirement_id": null,
+      "code": "选择性必修·有机化学基础·2.5b",
+      "title": "Functional-group testing",
+      "title_zh": "有机官能团检验实验",
+      "summary_zh": "设计并实施常见官能团检验，处理干扰并解释证据。",
+      "requirement_type": "practice",
+      "level_id": "so",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.56（正文对应内容要求 2.5），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_so_3_1a_polymer_monomer_repeat_unit",
+      "parent_requirement_id": null,
+      "code": "选择性必修·有机化学基础·3.1a",
+      "title": "Polymer, monomer and repeat unit",
+      "title_zh": "聚合物、单体与链节",
+      "summary_zh": "由聚合物结构识别单体、链节和聚合方式。",
+      "requirement_type": "skill",
+      "level_id": "so",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.58（正文对应内容要求 3.1），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_so_3_1b_addition_condensation_polymerisation",
+      "parent_requirement_id": null,
+      "code": "选择性必修·有机化学基础·3.1b",
+      "title": "Addition and condensation polymerisation",
+      "title_zh": "加聚与缩聚",
+      "summary_zh": "比较加聚、缩聚反应的单体特征、成键和小分子副产物。",
+      "requirement_type": "skill",
+      "level_id": "so",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.58（正文对应内容要求 3.1），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_so_3_2a_carbohydrates",
+      "parent_requirement_id": null,
+      "code": "选择性必修·有机化学基础·3.2a",
+      "title": "Carbohydrates",
+      "title_zh": "糖类、葡萄糖、淀粉与纤维素",
+      "summary_zh": "说明葡萄糖、淀粉和纤维素的结构关系、主要性质和应用。",
+      "requirement_type": "skill",
+      "level_id": "so",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.59（正文对应内容要求 3.2），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_so_3_2b_amino_acids_proteins",
+      "parent_requirement_id": null,
+      "code": "选择性必修·有机化学基础·3.2b",
+      "title": "Amino acids and proteins",
+      "title_zh": "氨基酸与蛋白质",
+      "summary_zh": "说明氨基酸结构与性质、肽键形成及蛋白质结构性质和健康意义。",
+      "requirement_type": "skill",
+      "level_id": "so",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.59（正文对应内容要求 3.2），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_so_3_2c_dna_rna",
+      "parent_requirement_id": null,
+      "code": "选择性必修·有机化学基础·3.2c",
+      "title": "DNA and RNA",
+      "title_zh": "DNA、RNA 结构与功能",
+      "summary_zh": "概述 DNA、RNA 的基本结构特点、生物功能及人工合成意义。",
+      "requirement_type": "skill",
+      "level_id": "so",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.59（正文对应内容要求 3.2），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_so_3_3a_synthetic_polymers_materials",
+      "parent_requirement_id": null,
+      "code": "选择性必修·有机化学基础·3.3a",
+      "title": "Synthetic polymers and advanced materials",
+      "title_zh": "合成高分子与新型材料",
+      "summary_zh": "比较塑料、合成橡胶、合成纤维的结构特点和新型高分子材料应用。",
+      "requirement_type": "skill",
+      "level_id": "so",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.59（正文对应内容要求 3.3），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_chem_2020_o_so_3_4a_carbohydrate_properties_lab",
+      "parent_requirement_id": null,
+      "code": "选择性必修·有机化学基础·3.4a",
+      "title": "Carbohydrate properties",
+      "title_zh": "糖类性质实验",
+      "summary_zh": "实施糖类性质实验并用反应证据区分相关物质。",
+      "requirement_type": "practice",
+      "level_id": "so",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.59（正文对应内容要求 3.4），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

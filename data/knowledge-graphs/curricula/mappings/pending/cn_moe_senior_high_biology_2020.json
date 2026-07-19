@@ -1,0 +1,2384 @@
+{
+  "schema_version": "3.0.0",
+  "content_version": "0.4.0",
+  "mapping_set_id": "cms_cn_moe_senior_high_biology_2020_outcomes",
+  "framework_id": "cfw_cn_moe_senior_high_biology_2020_outcomes",
+  "curriculum_id": "cur_cn_moe_senior_high_biology_2020",
+  "subject": "Biology",
+  "mapping_scope": "outcome_coverage",
+  "source_ids": [
+    "src_cn_moe_senior_high_biology_2020"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "建立主题级候选映射。"
+    },
+    {
+      "version": "0.2.1",
+      "date": "2026-07-18",
+      "summary_zh": "复核主题边界和跨层级误映射。"
+    },
+    {
+      "version": "0.3.0",
+      "date": "2026-07-19",
+      "summary_zh": "替换为 120 个编号成果的保守映射。"
+    },
+    {
+      "version": "0.4.0",
+      "date": "2026-07-19",
+      "summary_zh": "应用全库定义复核与缺口解析：118 项知识成果闭合为 full，2 项纯价值与社会责任成果保持 excluded。"
+    }
+  ],
+  "mappings": [
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rc_1_1_1_cellular_elements_carbon_skeletons",
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_1_1_cellular_elements_carbon_skeletons",
+      "canonical_ids": [
+        "pc_fa5e5c389a8f790944f2e6049357654b",
+        "pc_b010170fadec4b31174da9a87a4332e1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_fa5e5c389a8f790944f2e6049357654b、pc_b010170fadec4b31174da9a87a4332e1 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 1.1.1），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rc_1_1_2_cellular_water",
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_1_2_cellular_water",
+      "canonical_ids": [
+        "pc_63dfa087168bfb9834409155d515790e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 1.1.2），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rc_1_1_3_cellular_inorganic_salts",
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_1_3_cellular_inorganic_salts",
+      "canonical_ids": [
+        "pc_c088a7df0656c7e3658e30f9fda3d609"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_c088a7df0656c7e3658e30f9fda3d609 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 1.1.3），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rc_1_1_4_carbohydrate_roles",
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_1_4_carbohydrate_roles",
+      "canonical_ids": [
+        "pc_d2d44c20526a3ef06addda76bd0c3a1a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 1.1.4），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rc_1_1_5_lipid_roles",
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_1_5_lipid_roles",
+      "canonical_ids": [
+        "pc_a25a3778f32928001d458246f6e48696"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 1.1.5），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rc_1_1_6_protein_structure_function",
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_1_6_protein_structure_function",
+      "canonical_ids": [
+        "pc_e6ccc14f032828a2848774a7431ee682",
+        "pc_fa5e5c389a8f790944f2e6049357654b"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 1.1.6），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rc_1_1_7_nucleic_acids_information",
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_1_7_nucleic_acids_information",
+      "canonical_ids": [
+        "pc_6a00c0df14c5b18459964bd5ccb5c243",
+        "pc_7c8644ecf9e964364af575d584241cf8",
+        "pc_fa5e5c389a8f790944f2e6049357654b"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 1.1.7），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rc_1_2_1_plasma_membrane_functions",
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_2_1_plasma_membrane_functions",
+      "canonical_ids": [
+        "pc_5ff2cda97c05cbe449e6d6bcff0c0834",
+        "pc_7f67c92fa0c79a54f0822060ac8a4080"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_5ff2cda97c05cbe449e6d6bcff0c0834、pc_7f67c92fa0c79a54f0822060ac8a4080 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.1），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rc_1_2_2_organelle_functions",
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_2_2_organelle_functions",
+      "canonical_ids": [
+        "pc_cb341a51c60bb212ac55750a84630c03"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.2），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rc_1_2_3_nucleus_genetic_information",
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_2_3_nucleus_genetic_information",
+      "canonical_ids": [
+        "pc_6a00c0df14c5b18459964bd5ccb5c243",
+        "pc_cb341a51c60bb212ac55750a84630c03",
+        "pc_f25b23ea81c506e587d3067e86866c09"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_6a00c0df14c5b18459964bd5ccb5c243、pc_cb341a51c60bb212ac55750a84630c03、pc_f25b23ea81c506e587d3067e86866c09 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.3），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rc_1_2_4_organelle_coordination",
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_2_4_organelle_coordination",
+      "canonical_ids": [
+        "pc_cb341a51c60bb212ac55750a84630c03",
+        "pc_78dd182e4fbad59e57aeb4484e1c3954"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_cb341a51c60bb212ac55750a84630c03、pc_78dd182e4fbad59e57aeb4484e1c3954 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.4），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rc_1_3_1_cellular_unity_diversity",
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_3_1_cellular_unity_diversity",
+      "canonical_ids": [
+        "pc_64852ab0501ee4d7b32d11655eb6b808"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_64852ab0501ee4d7b32d11655eb6b808 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.3.1），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rc_1_3_2_prokaryotic_eukaryotic_cells",
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_3_2_prokaryotic_eukaryotic_cells",
+      "canonical_ids": [
+        "pc_73b46a23c7b4bbe42eefc3cac483d36a",
+        "pc_cb341a51c60bb212ac55750a84630c03"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.3.2），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rc_2_1_1_selective_permeability",
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_2_1_1_selective_permeability",
+      "canonical_ids": [
+        "pc_5ff2cda97c05cbe449e6d6bcff0c0834",
+        "pc_c2e6fec2c47cd86ee9b8726b908a7a8b",
+        "pc_4e487be68da0fcc9a3f8c5df2493c062"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_5ff2cda97c05cbe449e6d6bcff0c0834、pc_c2e6fec2c47cd86ee9b8726b908a7a8b、pc_4e487be68da0fcc9a3f8c5df2493c062 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 2.1.1），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rc_2_1_2_passive_active_transport",
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_2_1_2_passive_active_transport",
+      "canonical_ids": [
+        "pc_c2e6fec2c47cd86ee9b8726b908a7a8b",
+        "pc_0e1132fcaae68d745353f67bc9411890"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 2.1.2），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rc_2_1_3_endocytosis_exocytosis",
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_2_1_3_endocytosis_exocytosis",
+      "canonical_ids": [
+        "pc_1264ba133e13ba77487296037ce4c00e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_1264ba133e13ba77487296037ce4c00e 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 2.1.3），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rc_2_2_1_enzymes_environment",
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_2_2_1_enzymes_environment",
+      "canonical_ids": [
+        "pc_eb22ca391770b29f75a2f022a09e31af",
+        "pc_564bc6d850ae2725515787c450597c10",
+        "pc_e6ccc14f032828a2848774a7431ee682"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 2.2.1），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rc_2_2_2_atp_direct_energy",
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_2_2_2_atp_direct_energy",
+      "canonical_ids": [
+        "pc_bd16e15b61962db0c5d04fea198cb45c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 2.2.2），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rc_2_2_3_photosynthetic_energy_conversion",
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_2_2_3_photosynthetic_energy_conversion",
+      "canonical_ids": [
+        "pc_04f61e525cd19d1f02e6846892d426c8",
+        "pc_4b41c3d012fb26c23a16100b7cbafcd5"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 2.2.3），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rc_2_2_4_respiratory_energy_conversion",
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_2_2_4_respiratory_energy_conversion",
+      "canonical_ids": [
+        "pc_2fbda0110630d41f4792066ddae82f27",
+        "pc_ae13d4aab464e4aaeeb019b31d5433b1",
+        "pc_f9019fae31d0d89640aa7147bd1511ba"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.23（正文对应内容要求 2.2.4），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rc_2_3_1_mitosis_information_continuity",
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_2_3_1_mitosis_information_continuity",
+      "canonical_ids": [
+        "pc_e8a318724c6c8e8096b98fc763ca69c6"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.23（正文对应内容要求 2.3.1），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rc_2_3_2_cell_differentiation",
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_2_3_2_cell_differentiation",
+      "canonical_ids": [
+        "pc_56602e952c30d81d754e3900e34590cf",
+        "pc_603e03befcc0fac76e8a059261559f56"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_56602e952c30d81d754e3900e34590cf、pc_603e03befcc0fac76e8a059261559f56 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.23（正文对应内容要求 2.3.2），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rc_2_3_3_cell_senescence_death",
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_2_3_3_cell_senescence_death",
+      "canonical_ids": [
+        "pc_53d0352a79deedffc387d00ac17676a7"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_53d0352a79deedffc387d00ac17676a7 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.23（正文对应内容要求 2.3.3），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rg_3_1_1_gene_nucleic_acid_segment",
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_1_1_gene_nucleic_acid_segment",
+      "canonical_ids": [
+        "pc_6a00c0df14c5b18459964bd5ccb5c243",
+        "pc_7c8644ecf9e964364af575d584241cf8",
+        "pc_a5f0cc3dc0636e18a4fef67d49bec23e",
+        "pc_4968ce1f12aa3d8827a46863b03b81d2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_6a00c0df14c5b18459964bd5ccb5c243、pc_7c8644ecf9e964364af575d584241cf8、pc_a5f0cc3dc0636e18a4fef67d49bec23e、pc_4968ce1f12aa3d8827a46863b03b81d2 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.1），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rg_3_1_2_dna_structure_information",
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_1_2_dna_structure_information",
+      "canonical_ids": [
+        "pc_6a00c0df14c5b18459964bd5ccb5c243"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.2），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rg_3_1_3_semiconservative_replication",
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_1_3_semiconservative_replication",
+      "canonical_ids": [
+        "pc_04b4d91c6cced626ffbf487f19cdfefe"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.3），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rg_3_1_4_gene_expression_traits",
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_1_4_gene_expression_traits",
+      "canonical_ids": [
+        "pc_7674a139c06bd613155a2e3818756eb6",
+        "pc_5f5a971454fc73259add3a98f4ad69cd",
+        "pc_56602e952c30d81d754e3900e34590cf"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.4），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rg_3_1_5_epigenetic_phenomena",
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_1_5_epigenetic_phenomena",
+      "canonical_ids": [
+        "pc_db8e1b5b05c1c8cc184a64e1c68c3435"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_db8e1b5b05c1c8cc184a64e1c68c3435 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.5），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rg_3_2_1_meiotic_reduction",
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_2_1_meiotic_reduction",
+      "canonical_ids": [
+        "pc_9a64e0d9f35ef30bda722f5b7364e0c4",
+        "pc_41f9701a3bd0fb4527df662b596620b5"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.2.1），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rg_3_2_2_gametic_inheritance",
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_2_2_gametic_inheritance",
+      "canonical_ids": [
+        "pc_9a64e0d9f35ef30bda722f5b7364e0c4",
+        "pc_f90fa4062e2970091368eb5d22919cf4"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_9a64e0d9f35ef30bda722f5b7364e0c4、pc_f90fa4062e2970091368eb5d22919cf4 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.2.2），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rg_3_2_3_segregation_independent_assortment",
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_2_3_segregation_independent_assortment",
+      "canonical_ids": [
+        "pc_0a20187ab8711d84834ffc5e887d019b"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.2.3），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rg_3_2_4_sex_linked_inheritance",
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_2_4_sex_linked_inheritance",
+      "canonical_ids": [
+        "pc_8533c5cf0c58c968c6990001ab576642"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_8533c5cf0c58c968c6990001ab576642 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.2.4），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rg_3_3_1_mutation_sequence_changes",
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_3_1_mutation_sequence_changes",
+      "canonical_ids": [
+        "pc_aa917911c35a5a84a131d3c4b99b89af"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.1），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rg_3_3_2_mutation_protein_function",
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_3_2_mutation_protein_function",
+      "canonical_ids": [
+        "pc_aa917911c35a5a84a131d3c4b99b89af",
+        "pc_5f5a971454fc73259add3a98f4ad69cd"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.2），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rg_3_3_3_mutagens_cancer",
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_3_3_mutagens_cancer",
+      "canonical_ids": [
+        "pc_aa917911c35a5a84a131d3c4b99b89af",
+        "pc_043f05d8ef096d7bbdf67578bcc00662"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_aa917911c35a5a84a131d3c4b99b89af、pc_043f05d8ef096d7bbdf67578bcc00662 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.3），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rg_3_3_4_meiotic_recombination",
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_3_4_meiotic_recombination",
+      "canonical_ids": [
+        "pc_9a64e0d9f35ef30bda722f5b7364e0c4",
+        "pc_cf480d2c17869e9f06f3980b2bd57ea2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.4），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rg_3_3_5_chromosomal_variation",
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_3_5_chromosomal_variation",
+      "canonical_ids": [
+        "pc_41f9701a3bd0fb4527df662b596620b5",
+        "pc_592a494ab52d102d4cb731b24a77b320",
+        "pc_86f481ac1e4983f5844e9bf459df5d7e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_41f9701a3bd0fb4527df662b596620b5、pc_592a494ab52d102d4cb731b24a77b320、pc_86f481ac1e4983f5844e9bf459df5d7e 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.5），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rg_3_3_6_genetic_disease_screening",
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_3_6_genetic_disease_screening",
+      "canonical_ids": [
+        "pc_2fa1c85e0d7a4075a6c60f671d363261"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_2fa1c85e0d7a4075a6c60f671d363261 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.6），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rg_4_1_1_common_ancestry_fossil_anatomy",
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_4_1_1_common_ancestry_fossil_anatomy",
+      "canonical_ids": [
+        "pc_67cb55267032c55bab697c87ee0f205f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_67cb55267032c55bab697c87ee0f205f 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 4.1.1），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rg_4_1_2_common_ancestry_cell_molecular",
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_4_1_2_common_ancestry_cell_molecular",
+      "canonical_ids": [
+        "pc_d83debf48c4c993831d6b7beb3321029"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_d83debf48c4c993831d6b7beb3321029 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 4.1.2），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rg_4_2_1_heritable_advantage",
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_4_2_1_heritable_advantage",
+      "canonical_ids": [
+        "pc_592a494ab52d102d4cb731b24a77b320",
+        "pc_a87eb54cbeafebfc2ba275effe0eaa14"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 4.2.1），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rg_4_2_2_selection_frequency_change",
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_4_2_2_selection_frequency_change",
+      "canonical_ids": [
+        "pc_a87eb54cbeafebfc2ba275effe0eaa14",
+        "pc_f0a830e611bfffffd41f5757e75d4804"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 4.2.2），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rg_4_2_3_adaptation_natural_selection",
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_4_2_3_adaptation_natural_selection",
+      "canonical_ids": [
+        "pc_a87eb54cbeafebfc2ba275effe0eaa14"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 4.2.3），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rg_4_2_4_modern_evolutionary_theory",
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_4_2_4_modern_evolutionary_theory",
+      "canonical_ids": [
+        "pc_592a494ab52d102d4cb731b24a77b320",
+        "pc_a87eb54cbeafebfc2ba275effe0eaa14",
+        "pc_f0a830e611bfffffd41f5757e75d4804"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 4.2.4），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_rg_4_2_5_speciation_variation_selection_isolation",
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_4_2_5_speciation_variation_selection_isolation",
+      "canonical_ids": [
+        "pc_592a494ab52d102d4cb731b24a77b320",
+        "pc_a87eb54cbeafebfc2ba275effe0eaa14",
+        "pc_1ff54d59bd08ce31d146088b725569e6"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 4.2.5），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sh_1_1_1_internal_environment_fluids",
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_1_1_internal_environment_fluids",
+      "canonical_ids": [
+        "pc_990d45746021a0258ffce6947d5c9c25"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_990d45746021a0258ffce6947d5c9c25 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.1），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sh_1_1_2_internal_external_exchange",
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_1_2_internal_external_exchange",
+      "canonical_ids": [
+        "pc_fea026b56e9f7d027299b4484d6be477"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_fea026b56e9f7d027299b4484d6be477 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.2），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sh_1_1_3_organ_system_exchange",
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_1_3_organ_system_exchange",
+      "canonical_ids": [
+        "pc_023dd94962e430b671d1014972b54342",
+        "pc_ff5a585bec0e26749bef92e5b2ec6c2c",
+        "pc_dc1ea419f7f0124901b64a622aee0648",
+        "pc_169fad745be0c7b18694394af7fb06fe"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_023dd94962e430b671d1014972b54342、pc_ff5a585bec0e26749bef92e5b2ec6c2c、pc_dc1ea419f7f0124901b64a622aee0648、pc_169fad745be0c7b18694394af7fb06fe 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.3），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sh_1_2_1_homeostatic_variables",
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_2_1_homeostatic_variables",
+      "canonical_ids": [
+        "pc_2a9c578569ae3d146bdaf824188b711a",
+        "pc_6f2fdad0698885c810176f4c7f506bae",
+        "pc_dc1ea419f7f0124901b64a622aee0648"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.2.1），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sh_1_2_2_organ_coordination_homeostasis",
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_2_2_organ_coordination_homeostasis",
+      "canonical_ids": [
+        "pc_2a9c578569ae3d146bdaf824188b711a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.2.2），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sh_1_3_1_reflex_arc",
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_3_1_reflex_arc",
+      "canonical_ids": [
+        "pc_46347b1ad33ab3d77b635c228957c4fd"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_46347b1ad33ab3d77b635c228957c4fd 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.1），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sh_1_3_2_resting_action_potentials",
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_3_2_resting_action_potentials",
+      "canonical_ids": [
+        "pc_944f33c2a947e2a2f5d42856cb825a4a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.2），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sh_1_3_3_chemical_synaptic_transmission",
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_3_3_chemical_synaptic_transmission",
+      "canonical_ids": [
+        "pc_0df40f95b0a4b28f4ac9880528a91fde"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.3），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sh_1_3_4_central_nervous_hierarchy",
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_3_4_central_nervous_hierarchy",
+      "canonical_ids": [
+        "pc_944f33c2a947e2a2f5d42856cb825a4a",
+        "pc_7865cefc3b34beceb184b410f393c1ba"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_944f33c2a947e2a2f5d42856cb825a4a、pc_7865cefc3b34beceb184b410f393c1ba 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.4），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sh_1_3_5_autonomic_nervous_regulation",
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_3_5_autonomic_nervous_regulation",
+      "canonical_ids": [
+        "pc_05a4fbd93dd3ebc240adc1e06c52f9a1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_05a4fbd93dd3ebc240adc1e06c52f9a1 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.5），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sh_1_3_6_cortical_higher_activity",
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_3_6_cortical_higher_activity",
+      "canonical_ids": [
+        "pc_0083b75b35558081f0f25304f33efa6e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_0083b75b35558081f0f25304f33efa6e 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.6），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sh_1_4_1_endocrine_system",
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_4_1_endocrine_system",
+      "canonical_ids": [
+        "pc_c7f7ea6f7ce0f78324c900821216e75c",
+        "pc_73decdd85804bf6c56ea96df910916d1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_c7f7ea6f7ce0f78324c900821216e75c、pc_73decdd85804bf6c56ea96df910916d1 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.1），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sh_1_4_2_hormonal_feedback_hierarchies",
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_4_2_hormonal_feedback_hierarchies",
+      "canonical_ids": [
+        "pc_c7f7ea6f7ce0f78324c900821216e75c",
+        "pc_6f2fdad0698885c810176f4c7f506bae"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.2），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sh_1_4_3_neuroendocrine_coordination",
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_4_3_neuroendocrine_coordination",
+      "canonical_ids": [
+        "pc_944f33c2a947e2a2f5d42856cb825a4a",
+        "pc_c7f7ea6f7ce0f78324c900821216e75c",
+        "pc_dc1ea419f7f0124901b64a622aee0648",
+        "pc_a129b516baefe0c88abd508e71bb0e00"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_944f33c2a947e2a2f5d42856cb825a4a、pc_c7f7ea6f7ce0f78324c900821216e75c、pc_dc1ea419f7f0124901b64a622aee0648、pc_a129b516baefe0c88abd508e71bb0e00 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.3），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sh_1_4_4_humoral_respiratory_regulation",
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_4_4_humoral_respiratory_regulation",
+      "canonical_ids": [
+        "pc_c9fd444d9acfb11faef011f5755c1418",
+        "pc_023dd94962e430b671d1014972b54342",
+        "pc_c351ce3400d2b06f7e3fb6a7f25c9528"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_c9fd444d9acfb11faef011f5755c1418、pc_023dd94962e430b671d1014972b54342、pc_c351ce3400d2b06f7e3fb6a7f25c9528 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.4），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sh_1_5_1_immune_system_components",
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_5_1_immune_system_components",
+      "canonical_ids": [
+        "pc_b396f7788c77baeecc089eeec83538e5",
+        "pc_4e3f76f101debb1e241b0bab776e4cf1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.5.1），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sh_1_5_2_innate_adaptive_immunity",
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_5_2_innate_adaptive_immunity",
+      "canonical_ids": [
+        "pc_b396f7788c77baeecc089eeec83538e5",
+        "pc_94f54f11e23c1c3e407c8036fb6321b6"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_b396f7788c77baeecc089eeec83538e5、pc_94f54f11e23c1c3e407c8036fb6321b6 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.5.2），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sh_1_5_3_humoral_cellular_immunity",
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_5_3_humoral_cellular_immunity",
+      "canonical_ids": [
+        "pc_b396f7788c77baeecc089eeec83538e5",
+        "pc_4e3f76f101debb1e241b0bab776e4cf1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.5.3），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sh_1_5_4_immune_disorders",
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_5_4_immune_disorders",
+      "canonical_ids": [
+        "pc_5f99a9c2ac6e1cab9e53477e2842eb6b"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_5f99a9c2ac6e1cab9e53477e2842eb6b 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.5.4），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sh_1_6_1_auxin_dual_effects",
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_6_1_auxin_dual_effects",
+      "canonical_ids": [
+        "pc_ec9ed2577284952c142079dc7a389627",
+        "pc_3b0475fedf65a19d4227115cc008b92d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_ec9ed2577284952c142079dc7a389627、pc_3b0475fedf65a19d4227115cc008b92d 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.6.1），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sh_1_6_2_plant_hormone_coordination",
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_6_2_plant_hormone_coordination",
+      "canonical_ids": [
+        "pc_ec9ed2577284952c142079dc7a389627",
+        "pc_e8352e234d2f8fb344dafcdbd894f99e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.6.2），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sh_1_6_3_plant_growth_regulator_applications",
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_6_3_plant_growth_regulator_applications",
+      "canonical_ids": [
+        "pc_ec9ed2577284952c142079dc7a389627",
+        "pc_e8352e234d2f8fb344dafcdbd894f99e",
+        "pc_0758d51c8b98059f1780aee07c326953"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_ec9ed2577284952c142079dc7a389627、pc_e8352e234d2f8fb344dafcdbd894f99e、pc_0758d51c8b98059f1780aee07c326953 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.31（正文对应内容要求 1.6.3），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sh_1_6_4_environmental_plant_regulation",
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_6_4_environmental_plant_regulation",
+      "canonical_ids": [
+        "pc_ec9ed2577284952c142079dc7a389627"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.31（正文对应内容要求 1.6.4），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_se_2_1_1_population_characteristics",
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_1_1_population_characteristics",
+      "canonical_ids": [
+        "pc_a9447add767e7c509fb5f3725435137d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_a9447add767e7c509fb5f3725435137d 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.1），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_se_2_1_2_population_growth_models",
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_1_2_population_growth_models",
+      "canonical_ids": [
+        "pc_ceeb7c1f2db353b57d85fa869f5bda71"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_ceeb7c1f2db353b57d85fa869f5bda71 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.2），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_se_2_1_3_population_limiting_factors",
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_1_3_population_limiting_factors",
+      "canonical_ids": [
+        "pc_ecfaff613c7086e0cece6014f44b68ba",
+        "pc_7634f823e7f43393e5a89d2fb684676e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_ecfaff613c7086e0cece6014f44b68ba、pc_7634f823e7f43393e5a89d2fb684676e 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.3），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_se_2_1_4_community_structure",
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_1_4_community_structure",
+      "canonical_ids": [
+        "pc_ecfaff613c7086e0cece6014f44b68ba",
+        "pc_738afe02309cf9d584681e013e11fe69"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_ecfaff613c7086e0cece6014f44b68ba、pc_738afe02309cf9d584681e013e11fe69 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.4），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_se_2_1_5_ecological_succession",
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_1_5_ecological_succession",
+      "canonical_ids": [
+        "pc_40daa84cf8496038cb7d02572227bac9"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_40daa84cf8496038cb7d02572227bac9 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.5），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_se_2_1_6_community_adaptations",
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_1_6_community_adaptations",
+      "canonical_ids": [
+        "pc_ecfaff613c7086e0cece6014f44b68ba",
+        "pc_a87eb54cbeafebfc2ba275effe0eaa14"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.6），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_se_2_2_1_ecosystem_components",
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_2_1_ecosystem_components",
+      "canonical_ids": [
+        "pc_ecfaff613c7086e0cece6014f44b68ba"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.1），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_se_2_2_2_food_chains_webs",
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_2_2_food_chains_webs",
+      "canonical_ids": [
+        "pc_70da4d7e60b713056853543f2b486297"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_70da4d7e60b713056853543f2b486297 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.2），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_se_2_2_3_matter_cycles_energy_flow",
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_2_3_matter_cycles_energy_flow",
+      "canonical_ids": [
+        "pc_a26230828b27cf03028e959c4472f5f1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_a26230828b27cf03028e959c4472f5f1 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.3），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_se_2_2_4_ecological_resource_use",
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_2_4_ecological_resource_use",
+      "canonical_ids": [
+        "pc_ecfaff613c7086e0cece6014f44b68ba",
+        "pc_aa24b4324d962f7ab29f0ddeb0f63405",
+        "pc_3104e1f4e490282faddf07783c2399b8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_ecfaff613c7086e0cece6014f44b68ba、pc_aa24b4324d962f7ab29f0ddeb0f63405、pc_3104e1f4e490282faddf07783c2399b8 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.4），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_se_2_2_5_ecological_pyramids",
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_2_5_ecological_pyramids",
+      "canonical_ids": [
+        "pc_305adf8ebeefac092af08b8ad4ce31b5"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_305adf8ebeefac092af08b8ad4ce31b5 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.5），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_se_2_2_6_biomagnification",
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_2_6_biomagnification",
+      "canonical_ids": [
+        "pc_eec94f4451e73065d30fd63abe099466"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_eec94f4451e73065d30fd63abe099466 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.6），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_se_2_2_7_ecosystem_information_transfer",
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_2_7_ecosystem_information_transfer",
+      "canonical_ids": [
+        "pc_ba3fe6583fb4d40f15c1573e314b2897"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_ba3fe6583fb4d40f15c1573e314b2897 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.7），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_se_2_2_8_trophic_structure_factors",
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_2_8_trophic_structure_factors",
+      "canonical_ids": [
+        "pc_ecfaff613c7086e0cece6014f44b68ba",
+        "pc_5e3af190cf5d812135bc6cfb8de91b73"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_ecfaff613c7086e0cece6014f44b68ba、pc_5e3af190cf5d812135bc6cfb8de91b73 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.8），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_se_2_3_1_ecosystem_stability",
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_3_1_ecosystem_stability",
+      "canonical_ids": [
+        "pc_a853ca2b6804c3743c7a40f1c2ae5081"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_a853ca2b6804c3743c7a40f1c2ae5081 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.1），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_se_2_3_2_ecosystem_disturbances",
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_3_2_ecosystem_disturbances",
+      "canonical_ids": [
+        "pc_ecfaff613c7086e0cece6014f44b68ba",
+        "pc_cee4cb6816eac128a0e6f36535957b6a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_ecfaff613c7086e0cece6014f44b68ba、pc_cee4cb6816eac128a0e6f36535957b6a 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.2），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_se_2_3_3_ecosystem_self_regulation",
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_3_3_ecosystem_self_regulation",
+      "canonical_ids": [
+        "pc_e842f2edde8b384472460c753b197e3f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_e842f2edde8b384472460c753b197e3f 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.3），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_se_2_4_1_population_environment_pressure",
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_4_1_population_environment_pressure",
+      "canonical_ids": [
+        "pc_d736b9e86a2f00629df578cf4d065b89"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_d736b9e86a2f00629df578cf4d065b89 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.1），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_se_2_4_2_global_environmental_change",
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_4_2_global_environmental_change",
+      "canonical_ids": [
+        "pc_aa24b4324d962f7ab29f0ddeb0f63405",
+        "pc_3c7141a671b5d3b21d36e648301947f1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_aa24b4324d962f7ab29f0ddeb0f63405、pc_3c7141a671b5d3b21d36e648301947f1 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.2），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_se_2_4_3_biodiversity_importance",
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_4_3_biodiversity_importance",
+      "canonical_ids": [
+        "pc_ff6c4a398294b049cadd95acd7c8ace2",
+        "pc_aa24b4324d962f7ab29f0ddeb0f63405"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.3），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_se_2_4_4_ecological_engineering_circularity",
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_4_4_ecological_engineering_circularity",
+      "canonical_ids": [
+        "pc_ecfaff613c7086e0cece6014f44b68ba",
+        "pc_aa24b4324d962f7ab29f0ddeb0f63405",
+        "pc_d31768fc6f80dfb5ffee5fdcb356a5dd"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_ecfaff613c7086e0cece6014f44b68ba、pc_aa24b4324d962f7ab29f0ddeb0f63405、pc_d31768fc6f80dfb5ffee5fdcb356a5dd 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.4），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_se_2_4_5_environmental_responsibility",
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_4_5_environmental_responsibility",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "该成果只要求形成价值立场和社会责任，不写入学科概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.5），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_3_1_1_sterilisation_microbe_culture",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_3_1_1_sterilisation_microbe_culture",
+      "canonical_ids": [
+        "pc_02db8c75f6ee755edfdd44db1800d190"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_02db8c75f6ee755edfdd44db1800d190 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_3_1_2_aseptic_technique",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_3_1_2_aseptic_technique",
+      "canonical_ids": [
+        "pc_da199aa16f2cf927e3eb52617c37220d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_da199aa16f2cf927e3eb52617c37220d 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_3_1_3_selective_culture_media",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_3_1_3_selective_culture_media",
+      "canonical_ids": [
+        "pc_3ffc91735aa4009319d97d82b2bd6cb1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_3ffc91735aa4009319d97d82b2bd6cb1 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.3），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_3_1_4_microbial_isolation_methods",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_3_1_4_microbial_isolation_methods",
+      "canonical_ids": [
+        "pc_9d5bceaf3c265dcafdaa249db80ad329"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_9d5bceaf3c265dcafdaa249db80ad329 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.4），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_3_1_5_microbial_counting_methods",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_3_1_5_microbial_counting_methods",
+      "canonical_ids": [
+        "pc_d5a40034050d02c152d7f51ce3bd2513"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_d5a40034050d02c152d7f51ce3bd2513 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.5），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_3_2_1_traditional_fermentation",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_3_2_1_traditional_fermentation",
+      "canonical_ids": [
+        "pc_316272b1915e07a00215e5b2801d2772"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_316272b1915e07a00215e5b2801d2772 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_3_2_2_industrial_fermentation",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_3_2_2_industrial_fermentation",
+      "canonical_ids": [
+        "pc_339a5f3174c1fa2f8c4273228d1abe4d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_339a5f3174c1fa2f8c4273228d1abe4d 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_3_2_3_fermentation_applications",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_3_2_3_fermentation_applications",
+      "canonical_ids": [
+        "pc_1fffd89a6d612ed5bd06d8559028652b"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_1fffd89a6d612ed5bd06d8559028652b 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.3），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_4_1_1_plant_tissue_culture",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_4_1_1_plant_tissue_culture",
+      "canonical_ids": [
+        "pc_6cc7ae70a5a7f498efda3c0155ece301"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_6cc7ae70a5a7f498efda3c0155ece301 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_4_1_2_plant_somatic_hybridisation",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_4_1_2_plant_somatic_hybridisation",
+      "canonical_ids": [
+        "pc_23f52412736512b8f40fac9958079322"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_23f52412736512b8f40fac9958079322 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_4_1_3_plant_cell_engineering_applications",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_4_1_3_plant_cell_engineering_applications",
+      "canonical_ids": [
+        "pc_d30f1f836c9100c1462e7a4a389ce02f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_d30f1f836c9100c1462e7a4a389ce02f 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.3），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_4_2_1_animal_cell_culture",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_4_2_1_animal_cell_culture",
+      "canonical_ids": [
+        "pc_df3d6997dd440131a8dad40c4acbc338"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_df3d6997dd440131a8dad40c4acbc338 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.2.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_4_2_2_somatic_cell_nuclear_transfer",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_4_2_2_somatic_cell_nuclear_transfer",
+      "canonical_ids": [
+        "pc_0185ccac3ad47cd14f266d12099ab528",
+        "pc_73b8a50a14796395bbb0ae7525ab1b99"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_0185ccac3ad47cd14f266d12099ab528、pc_73b8a50a14796395bbb0ae7525ab1b99 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_4_2_3_animal_cell_fusion",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_4_2_3_animal_cell_fusion",
+      "canonical_ids": [
+        "pc_ab54a12e8f3ea29b213314991f5dccfc"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_ab54a12e8f3ea29b213314991f5dccfc 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.3），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_4_2_4_monoclonal_antibody_production",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_4_2_4_monoclonal_antibody_production",
+      "canonical_ids": [
+        "pc_4e3f76f101debb1e241b0bab776e4cf1",
+        "pc_076accb0e6c48dc5a6b42dcc36152da3"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_4e3f76f101debb1e241b0bab776e4cf1、pc_076accb0e6c48dc5a6b42dcc36152da3 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.4），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_4_2_5_stem_cell_applications",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_4_2_5_stem_cell_applications",
+      "canonical_ids": [
+        "pc_f24ca070bfceb1f905930f4386fc0b75"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_f24ca070bfceb1f905930f4386fc0b75 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.5），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_4_3_1_fertilisation_early_embryo",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_4_3_1_fertilisation_early_embryo",
+      "canonical_ids": [
+        "pc_2bb6c5caf86fb9a1beb4b9ed7331d3fc"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_2bb6c5caf86fb9a1beb4b9ed7331d3fc 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.3.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_4_3_2_embryo_engineering",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_4_3_2_embryo_engineering",
+      "canonical_ids": [
+        "pc_fea1ab91762f39ce21af7aee8d10f9b1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_fea1ab91762f39ce21af7aee8d10f9b1 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.3.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_5_1_1_gene_engineering_foundations",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_5_1_1_gene_engineering_foundations",
+      "canonical_ids": [
+        "pc_0185ccac3ad47cd14f266d12099ab528"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.1.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_5_1_2_gene_engineering_tools",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_5_1_2_gene_engineering_tools",
+      "canonical_ids": [
+        "pc_0185ccac3ad47cd14f266d12099ab528",
+        "pc_2453884856757a434254e3d2465428a9"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_0185ccac3ad47cd14f266d12099ab528、pc_2453884856757a434254e3d2465428a9 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.1.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_5_1_3_gene_engineering_workflow",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_5_1_3_gene_engineering_workflow",
+      "canonical_ids": [
+        "pc_0185ccac3ad47cd14f266d12099ab528"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.1.3），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_5_1_4_gene_engineering_applications",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_5_1_4_gene_engineering_applications",
+      "canonical_ids": [
+        "pc_30f178143e2c42de28b6d054fb8f8e88"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.1.4），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_5_2_1_protein_engineering_design",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_5_2_1_protein_engineering_design",
+      "canonical_ids": [
+        "pc_c106243302f8fd6e37f9a27d11d0c458"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_c106243302f8fd6e37f9a27d11d0c458 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.2.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_5_2_2_protein_engineering_process",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_5_2_2_protein_engineering_process",
+      "canonical_ids": [
+        "pc_c106243302f8fd6e37f9a27d11d0c458"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_c106243302f8fd6e37f9a27d11d0c458 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.2.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_6_1_1_gmo_products",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_6_1_1_gmo_products",
+      "canonical_ids": [
+        "pc_30f178143e2c42de28b6d054fb8f8e88"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有 canonical 概念组合与该诊断成果的定义和课程深度一致。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.1.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_6_1_2_gmo_impacts",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_6_1_2_gmo_impacts",
+      "canonical_ids": [
+        "pc_c3e39f880db577df6f6c3b5c414c354c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_c3e39f880db577df6f6c3b5c414c354c 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.1.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_6_2_1_reproductive_cloning_ethics",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_6_2_1_reproductive_cloning_ethics",
+      "canonical_ids": [
+        "pc_8fdb51d08a8ed66fb99b97be9cfdd375"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_8fdb51d08a8ed66fb99b97be9cfdd375 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.2.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_6_2_2_reproductive_cloning_china_policy",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_6_2_2_reproductive_cloning_china_policy",
+      "canonical_ids": [
+        "pc_daad7f4952e846d491f4766b7ec46c7a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_daad7f4952e846d491f4766b7ec46c7a 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.2.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_6_3_1_biological_weapons_harms",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_6_3_1_biological_weapons_harms",
+      "canonical_ids": [
+        "pc_1a63fde8aa0fbbde94fa5ea18f52d1a5"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经定义边界复核，现由 canonical 概念 pc_1a63fde8aa0fbbde94fa5ea18f52d1a5 完整覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.3.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_cn_sh_bio_2020_o_sb_6_3_2_oppose_biological_weapons",
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_6_3_2_oppose_biological_weapons",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "该成果只要求形成价值立场和社会责任，不写入学科概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.3.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

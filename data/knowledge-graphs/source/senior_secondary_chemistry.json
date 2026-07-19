@@ -1,0 +1,1963 @@
+{
+  "schema_version": "2.0.0",
+  "content_version": "0.1.0",
+  "graph_id": "senior_secondary_chemistry",
+  "subject": "Chemistry",
+  "jurisdictions": [
+    "CN"
+  ],
+  "source_ids": [
+    "src_cn_moe_senior_high_chemistry_2020",
+    "src_openstax_chemistry_2e_2019",
+    "src_openstax_organic_chemistry_2023",
+    "src_cn_state_council_hazardous_chemicals_2013"
+  ],
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "依据中国普通高中化学成果级覆盖审查，新增最小可诊断概念、复用稳定 canonical 组合，并补齐第二类权威证据。"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "cn_sh_chem_topic_foundations",
+      "kind": "topic",
+      "name": "Foundations of chemical science",
+      "name_zh": "化学科学基础",
+      "topic": null,
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.19（正文对应内容要求 1.1），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §1.1 Chemistry in Context"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.22（正文对应内容要求 2.1），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §§1.2-1.3 Phases and Classification of Matter; Physical and Chemical Properties; §4.2 Classifying Chemical Reactions"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §11.5 Colloids"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_topic_redox_ions",
+      "kind": "topic",
+      "name": "Redox and ions",
+      "name_zh": "氧化还原与离子",
+      "topic": null,
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.22（正文对应内容要求 2.1），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.2 Classifying Chemical Reactions; §17.1 Review of Redox Chemistry"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.2），必修"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.3），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §11.2 Electrolytes; §4.2 Classifying Chemical Reactions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_topic_ionic_analysis",
+      "kind": "topic",
+      "name": "Ionic reactions and analysis",
+      "name_zh": "离子反应与分析",
+      "topic": null,
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.3），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §11.2 Electrolytes; §4.2 Classifying Chemical Reactions"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.5 Quantitative Chemical Analysis; Chapter 15 Equilibria of Other Reaction Classes"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.4），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 18, sections on the occurrence, preparation, properties and uses of representative metals"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_topic_inorganic_elements",
+      "kind": "topic",
+      "name": "Important inorganic elements",
+      "name_zh": "重要无机元素",
+      "topic": null,
+      "default_order": 4,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.4），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 19 Transition Metals and Coordination Chemistry; occurrence, preparation and properties of iron"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.5），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 18, sections on the occurrence, preparation, properties and uses of nitrogen and sulfur"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_topic_inorganic_stse",
+      "kind": "topic",
+      "name": "Inorganic conversion and impact",
+      "name_zh": "无机转化及社会影响",
+      "topic": null,
+      "default_order": 5,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.6），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.2 Classifying Chemical Reactions; Chapters 18-19 representative and transition-element chemistry"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapters 18-19, preparation, uses and environmental context of inorganic substances"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.26（正文对应内容要求 3.4），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §17.5 Batteries and Fuel Cells"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_topic_organic_intro",
+      "kind": "topic",
+      "name": "Organic chemistry and resources",
+      "name_zh": "有机化学与资源",
+      "topic": null,
+      "default_order": 6,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.29（正文对应内容要求 4.3），必修"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapter 6 An Overview of Organic Reactions; Chapter 31 Synthetic Polymers"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 25-28 Biomolecules; Chapter 31 Synthetic Polymers"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.3），必修"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 3, 7 and 15 alkanes, alkenes and aromatic compounds"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_topic_sustainability",
+      "kind": "topic",
+      "name": "Sustainable chemistry",
+      "name_zh": "可持续化学",
+      "topic": null,
+      "default_order": 7,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.31（正文对应内容要求 5.1），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §1.1 Chemistry in Context; Chapters 17-20 energy, materials and organic-chemistry applications"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.4 Reaction Yields; Chapter 16 Thermodynamics; Chapters 18-20 resource and process applications"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_topic_chemistry_society",
+      "kind": "topic",
+      "name": "Chemistry, materials and health",
+      "name_zh": "化学、材料与健康",
+      "topic": null,
+      "default_order": 8,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.2），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §10.6 Lattice Structures in Crystalline Solids; Chapters 18-20 metals, nonmetals and organic materials"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 25-28 carbohydrates, proteins, lipids and nucleic acids"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.3），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 5 Thermochemistry; §17.5 Batteries and Fuel Cells; Chapters 18 and 20 resource applications"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_topic_environment_safety",
+      "kind": "topic",
+      "name": "Environment and chemical rules",
+      "name_zh": "环境与化学规则",
+      "topic": null,
+      "default_order": 9,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.4），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.5 Quantitative Chemical Analysis; Chapters 11 and 15 separation, precipitation and solution equilibria"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.5），必修"
+        },
+        {
+          "source_id": "src_cn_state_council_hazardous_chemicals_2013",
+          "locator": "第二条（生产、储存、使用、经营和运输的安全管理范围）与第四条（安全第一、预防为主、综合治理）"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_topic_thermo_electrochem",
+      "kind": "topic",
+      "name": "Thermodynamics and electrochemistry",
+      "name_zh": "热力学与电化学",
+      "topic": null,
+      "default_order": 10,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 5 Thermochemistry; Chapter 16 Thermodynamics"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.36（正文对应内容要求 1.3），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §17.6 Corrosion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_topic_equilibrium_kinetics",
+      "kind": "topic",
+      "name": "Equilibrium and kinetics in production",
+      "name_zh": "平衡、动力学与生产",
+      "topic": null,
+      "default_order": 11,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.38（正文对应内容要求 2.1），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §§13.2-13.3 Equilibrium Constants; Shifting Equilibria: Le Châtelier's Principle"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.39（正文对应内容要求 2.3），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §12.7 Catalysis; §13.3 Shifting Equilibria: Le Châtelier's Principle"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.41（正文对应内容要求 3.1），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §11.2 Electrolytes; Chapters 14-15 aqueous acid-base and solubility equilibria"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_topic_aqueous_chemistry",
+      "kind": "topic",
+      "name": "Aqueous equilibria",
+      "name_zh": "水溶液平衡",
+      "topic": null,
+      "default_order": 12,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.41（正文对应内容要求 3.2），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 14, water autoionisation, pH and pOH"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.42（正文对应内容要求 3.3），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 14, acid-base properties and hydrolysis of salt solutions"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.42（正文对应内容要求 3.5），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapters 14-15 acid-base, buffer, precipitation and complex-ion equilibria"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_topic_atomic_structure_methods",
+      "kind": "topic",
+      "name": "Atomic structure and measurement",
+      "name_zh": "原子结构与测定",
+      "topic": null,
+      "default_order": 13,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.44（正文对应内容要求 1.1），选择性必修·物质结构与性质"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §§6.1-6.3 Electromagnetic Energy; The Bohr Model; Development of Quantum Theory"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.48（正文对应内容要求 2.3），选择性必修·物质结构与性质"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §10.6 Lattice Structures in Crystalline Solids; X-ray diffraction"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 12-14 mass spectrometry, infrared, nuclear magnetic resonance and ultraviolet spectroscopy"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.51（正文对应内容要求 3.2），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_topic_materials_structure",
+      "kind": "topic",
+      "name": "Structure of materials",
+      "name_zh": "材料结构",
+      "topic": null,
+      "default_order": 14,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.48（正文对应内容要求 2.4），选择性必修·物质结构与性质"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §§10.1-10.6 intermolecular forces, states of matter, phase behaviour and crystal structures"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.51（正文对应内容要求 3.3），选择性必修·物质结构与性质"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapters 7 and 10 bonding, molecular geometry, intermolecular forces and crystal structures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_topic_structure_applications",
+      "kind": "topic",
+      "name": "Structure and functional groups",
+      "name_zh": "结构与官能团",
+      "topic": null,
+      "default_order": 15,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.51（正文对应内容要求 3.3），选择性必修·物质结构与性质"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 12-14 structure determination; Chapters 25-28 biomolecular structure"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.53（正文对应内容要求 1.2），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 6-24 reaction families and functional-group interconversions"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 12-14 spectroscopic identification; Chapters 17-24 characteristic functional-group reactions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_topic_organic_design",
+      "kind": "topic",
+      "name": "Organic synthesis and polymer structure",
+      "name_zh": "有机合成与聚合物结构",
+      "topic": null,
+      "default_order": 16,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.56（正文对应内容要求 2.3），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 6-24 reaction mechanisms, carbon-skeleton construction and functional-group interconversions"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.56（正文对应内容要求 2.4），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §1.1 Chemistry in Context; §4.4 Reaction Yields; Chapter 16 Thermodynamics"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.58（正文对应内容要求 3.1），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapter 31 Synthetic Polymers"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_topic_biomolecules_polymers",
+      "kind": "topic",
+      "name": "Biomolecules and polymers",
+      "name_zh": "生物大分子与高分子",
+      "topic": null,
+      "default_order": 17,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.59（正文对应内容要求 3.2），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapter 25 Biomolecules: Carbohydrates"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapter 28 Biomolecules: Nucleic Acids"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.59（正文对应内容要求 3.3），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapter 31 Synthetic Polymers"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_chemical_science_scope",
+      "canonical_id": "pc_b793cabfc6adc098cd6407d4d067ef2f",
+      "kind": "concept",
+      "name": "Scope of chemical science",
+      "name_zh": "化学科学的研究对象与特征",
+      "topic": "cn_sh_chem_topic_foundations",
+      "description": "说明化学在原子、分子层次研究并创造物质的主要特征及发展趋势。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.19（正文对应内容要求 1.1），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §1.1 Chemistry in Context"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_substance_classification_conversion",
+      "canonical_id": "pc_75b3836fc0d83d4b0cdc346c8ac5d125",
+      "kind": "concept",
+      "name": "Substance classification and conversion",
+      "name_zh": "物质分类与类别转化",
+      "topic": "cn_sh_chem_topic_foundations",
+      "description": "依据组成和性质分类物质，并说明同类物质的共性及类别间转化条件。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.22（正文对应内容要求 2.1），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §§1.2-1.3 Phases and Classification of Matter; Physical and Chemical Properties; §4.2 Classifying Chemical Reactions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_element_valence_conversion",
+      "canonical_id": "pc_48c23386b228371864ca5fe0f1632f1d",
+      "kind": "concept",
+      "name": "Element valence-state conversion",
+      "name_zh": "元素价态与物质转化",
+      "topic": "cn_sh_chem_topic_redox_ions",
+      "description": "依据元素价态分析同一元素不同价态物质间的氧化还原转化。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.22（正文对应内容要求 2.1），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.2 Classifying Chemical Reactions; §17.1 Review of Redox Chemistry"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_colloidal_dispersions",
+      "canonical_id": "pc_beb45d013bb8fe55d38730f8c8caf40e",
+      "kind": "concept",
+      "name": "Colloidal dispersions",
+      "name_zh": "胶体与分散系",
+      "topic": "cn_sh_chem_topic_foundations",
+      "description": "区分溶液、胶体等分散系并解释胶体的典型特征。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.22（正文对应内容要求 2.1），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §11.5 Colloids"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_oxidising_reducing_agents",
+      "canonical_id": "pc_377dad2703bed7f040a5cf507fd3022b",
+      "kind": "concept",
+      "name": "Oxidising and reducing agents",
+      "name_zh": "氧化剂与还原剂",
+      "topic": "cn_sh_chem_topic_redox_ions",
+      "description": "识别常见氧化剂和还原剂并判断反应中的氧化、还原过程。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.2），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.2 Classifying Chemical Reactions; §17.1 Review of Redox Chemistry"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_electrolyte_ionisation",
+      "canonical_id": "pc_f7c04a5105eb18e7aff30b03775453df",
+      "kind": "concept",
+      "name": "Electrolyte ionisation",
+      "name_zh": "电解质与电离",
+      "topic": "cn_sh_chem_topic_redox_ions",
+      "description": "说明酸、碱、盐等电解质在水溶液或熔融状态中的电离并书写简单电离方程式。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.3），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §11.2 Electrolytes; §4.2 Classifying Chemical Reactions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_ionic_reaction_conditions",
+      "canonical_id": "pc_a45921260ca525ac9bf3e69edfc293ab",
+      "kind": "concept",
+      "name": "Conditions for ionic reactions",
+      "name_zh": "离子反应及发生条件",
+      "topic": "cn_sh_chem_topic_ionic_analysis",
+      "description": "从溶液中离子变化判断离子反应发生条件并书写简单离子方程式。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.3），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §11.2 Electrolytes; §4.2 Classifying Chemical Reactions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_common_ion_tests",
+      "canonical_id": "pc_2d39a426abf9824742b1287d073caf9b",
+      "kind": "concept",
+      "name": "Tests for common ions",
+      "name_zh": "常见离子的检验",
+      "topic": "cn_sh_chem_topic_ionic_analysis",
+      "description": "根据特征反应和干扰因素选择试剂并解释常见离子检验现象。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.3），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.5 Quantitative Chemical Analysis; Chapter 15 Equilibria of Other Reaction Classes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_sodium_compounds",
+      "canonical_id": "pc_e5aff6eb70c25f008fbf7139bccb2f5e",
+      "kind": "concept",
+      "name": "Sodium and its compounds",
+      "name_zh": "钠及其重要化合物",
+      "topic": "cn_sh_chem_topic_ionic_analysis",
+      "description": "说明钠及其重要化合物的主要性质、转化和生产生活应用。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.4），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 18, sections on the occurrence, preparation, properties and uses of representative metals"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_iron_compounds",
+      "canonical_id": "pc_bfed5c3af1308dfe9e373df84e4f47c7",
+      "kind": "concept",
+      "name": "Iron and its compounds",
+      "name_zh": "铁及其重要化合物",
+      "topic": "cn_sh_chem_topic_inorganic_elements",
+      "description": "说明铁及其重要化合物不同价态的性质、转化和应用。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.4），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 19 Transition Metals and Coordination Chemistry; occurrence, preparation and properties of iron"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_nitrogen_compounds",
+      "canonical_id": "pc_fa18ca8a34ff92855c12ed2a9333b352",
+      "kind": "concept",
+      "name": "Nitrogen and its compounds",
+      "name_zh": "氮及其重要化合物",
+      "topic": "cn_sh_chem_topic_inorganic_elements",
+      "description": "说明氮及其重要化合物的性质、转化和工业应用。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.5），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 18, sections on the occurrence, preparation, properties and uses of nitrogen and sulfur"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_sulfur_compounds",
+      "canonical_id": "pc_1ba2aafb506f153663e2ec775895f553",
+      "kind": "concept",
+      "name": "Sulfur and its compounds",
+      "name_zh": "硫及其重要化合物",
+      "topic": "cn_sh_chem_topic_inorganic_elements",
+      "description": "说明硫及其重要化合物的价态、性质、转化和工业应用。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.5），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 18, sections on the occurrence, preparation, properties and uses of nitrogen and sulfur"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_inorganic_conversion_pathways",
+      "canonical_id": "pc_73476caa93ea9100a33aa2cb05d49c25",
+      "kind": "concept",
+      "name": "Inorganic conversion pathways",
+      "name_zh": "无机物性质与转化路径",
+      "topic": "cn_sh_chem_topic_inorganic_stse",
+      "description": "从物质类别和元素价态设计常见无机物的转化路径。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.6），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.2 Classifying Chemical Reactions; Chapters 18-19 representative and transition-element chemistry"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_inorganic_stse_value",
+      "canonical_id": "pc_cfad06f00128c04d39e47fa742513249",
+      "kind": "concept",
+      "name": "Value and impact of inorganic chemistry",
+      "name_zh": "无机物应用价值与环境影响",
+      "topic": "cn_sh_chem_topic_inorganic_stse",
+      "description": "评价常见无机物转化对资源利用、社会发展和环境的影响。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.6），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapters 18-19, preparation, uses and environmental context of inorganic substances"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_fuel_battery_evaluation",
+      "canonical_id": "pc_7eed0f70fe0b90b51729bf5de0a91ac2",
+      "kind": "concept",
+      "name": "Fuel and battery evaluation",
+      "name_zh": "燃料效率与化学电源价值",
+      "topic": "cn_sh_chem_topic_inorganic_stse",
+      "description": "从能量、资源和环境角度比较燃料与化学电源的使用价值。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.26（正文对应内容要求 3.4），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §17.5 Batteries and Fuel Cells"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_organic_synthesis_value",
+      "canonical_id": "pc_96c8edf3efb4fb0b372ae363534dec31",
+      "kind": "concept",
+      "name": "Value of organic synthesis",
+      "name_zh": "有机合成创造新物质",
+      "topic": "cn_sh_chem_topic_organic_intro",
+      "description": "说明有机合成在创造新物质和改善生活中的作用。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.29（正文对应内容要求 4.3），必修"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapter 6 An Overview of Organic Reactions; Chapter 31 Synthetic Polymers"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_intro_macromolecule_applications",
+      "canonical_id": "pc_6584aaea12fe36af1f97d5ade42e4386",
+      "kind": "concept",
+      "name": "Introductory macromolecule applications",
+      "name_zh": "高分子与生物大分子应用初步",
+      "topic": "cn_sh_chem_topic_organic_intro",
+      "description": "概述高分子、油脂、糖类和蛋白质在生产生活中的应用。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.29（正文对应内容要求 4.3），必修"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 25-28 Biomolecules; Chapter 31 Synthetic Polymers"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_chemistry_sustainable_development",
+      "canonical_id": "pc_c3131ea59560f498b6982176cdeb8913",
+      "kind": "concept",
+      "name": "Chemistry and sustainable development",
+      "name_zh": "化学促进可持续发展",
+      "topic": "cn_sh_chem_topic_sustainability",
+      "description": "从资源、能源、材料和环境案例说明化学对可持续发展的作用与限制。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.31（正文对应内容要求 5.1），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §1.1 Chemistry in Context; Chapters 17-20 energy, materials and organic-chemistry applications"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_green_chemistry_principles",
+      "canonical_id": "pc_2c0adadb1e67172588d738b6b7641726",
+      "kind": "concept",
+      "name": "Green chemistry principles",
+      "name_zh": "绿色化学基本思想",
+      "topic": "cn_sh_chem_topic_sustainability",
+      "description": "从原料、过程、能耗、产物和废物角度解释绿色化学的基本取向。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.31（正文对应内容要求 5.1），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.4 Reaction Yields; Chapter 16 Thermodynamics; Chapters 18-20 resource and process applications"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_chemistry_materials",
+      "canonical_id": "pc_d929d58ea205d5447fbe57bd97b9739d",
+      "kind": "concept",
+      "name": "Chemistry in materials science",
+      "name_zh": "化学与材料科学",
+      "topic": "cn_sh_chem_topic_chemistry_society",
+      "description": "说明化学在金属、无机非金属、高分子和复合材料开发中的作用。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.2），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §10.6 Lattice Structures in Crystalline Solids; Chapters 18-20 metals, nonmetals and organic materials"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_chemistry_health",
+      "canonical_id": "pc_0e325dcddd180ae322ba3e28f7d99c25",
+      "kind": "concept",
+      "name": "Chemistry and human health",
+      "name_zh": "化学与人类健康",
+      "topic": "cn_sh_chem_topic_chemistry_society",
+      "description": "说明化学在药物、营养、检测和健康风险管理中的作用。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.2），必修"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 25-28 carbohydrates, proteins, lipids and nucleic acids"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_fossil_resource_utilisation",
+      "canonical_id": "pc_25bba2e8b8bf7802c9e134ed6ab58e21",
+      "kind": "concept",
+      "name": "Integrated use of fossil resources",
+      "name_zh": "化石资源综合利用",
+      "topic": "cn_sh_chem_topic_organic_intro",
+      "description": "比较煤、石油和天然气的组成、加工转化与综合利用路径。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.3），必修"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 3, 7 and 15 alkanes, alkenes and aromatic compounds"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_energy_resource_systems",
+      "canonical_id": "pc_bcee33dfe384aed022e1af81bfb9384f",
+      "kind": "concept",
+      "name": "Energy-resource systems",
+      "name_zh": "自然资源与能源综合利用",
+      "topic": "cn_sh_chem_topic_chemistry_society",
+      "description": "从物质转化、能量效率和环境影响评价自然资源与能源利用方案。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.3），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 5 Thermochemistry; §17.5 Batteries and Fuel Cells; Chapters 18 and 20 resource applications"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_pollutant_detection_treatment",
+      "canonical_id": "pc_78a50d8641d4b0678e159d7c139530f4",
+      "kind": "concept",
+      "name": "Pollutant detection and treatment",
+      "name_zh": "污染物检测与治理",
+      "topic": "cn_sh_chem_topic_environment_safety",
+      "description": "根据污染物性质选择检测、分离、转化或无害化处理思路。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.4），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.5 Quantitative Chemical Analysis; Chapters 11 and 15 separation, precipitation and solution equilibria"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_clean_production_circularity",
+      "canonical_id": "pc_a933378eb31c78b07a59cc030c9fafc4",
+      "kind": "concept",
+      "name": "Clean production and circularity",
+      "name_zh": "清洁生产与循环利用",
+      "topic": "cn_sh_chem_topic_sustainability",
+      "description": "说明清洁生产、废物资源化和循环利用中的化学原理。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.4），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.4 Reaction Yields; Chapter 16 Thermodynamics; Chapters 18-20 resource and process applications"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_chemical_rules_safe_use",
+      "canonical_id": "pc_5ec1709b8d3d731aa8552cf0828ef253",
+      "kind": "concept",
+      "name": "Chemical application laws and rules",
+      "name_zh": "化学应用法律法规与规则意识",
+      "topic": "cn_sh_chem_topic_environment_safety",
+      "description": "说明遵守化学品应用、化工生产、环境保护、食品与药品安全等法律法规的重要性。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.5），必修"
+        },
+        {
+          "source_id": "src_cn_state_council_hazardous_chemicals_2013",
+          "locator": "第二条（生产、储存、使用、经营和运输的安全管理范围）与第四条（安全第一、预防为主、综合治理）"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_energy_forms_conservation",
+      "canonical_id": "pc_24ba4230641410361421c44883b583a4",
+      "kind": "concept",
+      "name": "Energy forms and conservation",
+      "name_zh": "化学能转化与能量守恒",
+      "topic": "cn_sh_chem_topic_thermo_electrochem",
+      "description": "说明化学能与热能、电能等形式相互转化且遵循能量守恒。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 5 Thermochemistry; Chapter 16 Thermodynamics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_internal_energy_state",
+      "canonical_id": "pc_57e67f0b2d828d124fc1ed6b252442c7",
+      "kind": "concept",
+      "name": "Internal energy and state variables",
+      "name_zh": "内能与体系状态",
+      "topic": "cn_sh_chem_topic_thermo_electrochem",
+      "description": "说明内能与体系温度、压强、组成和聚集状态的关系。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 5 Thermochemistry; Chapter 16 Thermodynamics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_electrochemical_corrosion",
+      "canonical_id": "pc_eb79e19103c45ee35d2e6d1e7bf11c08",
+      "kind": "concept",
+      "name": "Electrochemical corrosion and protection",
+      "name_zh": "金属电化学腐蚀与防护",
+      "topic": "cn_sh_chem_topic_thermo_electrochem",
+      "description": "从电化学过程解释金属腐蚀，并比较常见防腐措施。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.36（正文对应内容要求 1.3），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §17.6 Corrosion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_reaction_quotient_direction",
+      "canonical_id": "pc_89e2557a2afb5105f1b6fdb45f2c8557",
+      "kind": "concept",
+      "name": "Reaction quotient and direction",
+      "name_zh": "浓度商与反应方向",
+      "topic": "cn_sh_chem_topic_equilibrium_kinetics",
+      "description": "比较浓度商与平衡常数，判断是否平衡及净反应方向。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.38（正文对应内容要求 2.1），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §§13.2-13.3 Equilibrium Constants; Shifting Equilibria: Le Châtelier's Principle"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_industrial_condition_optimisation",
+      "canonical_id": "pc_7c98c67402dacc3d9d7e3db6b4c7b1f4",
+      "kind": "concept",
+      "name": "Industrial condition optimisation",
+      "name_zh": "化工反应条件综合优化",
+      "topic": "cn_sh_chem_topic_equilibrium_kinetics",
+      "description": "从速率、限度、能耗、安全和成本综合比较生产条件。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.39（正文对应内容要求 2.3），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §12.7 Catalysis; §13.3 Shifting Equilibria: Le Châtelier's Principle"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_aqueous_electrolyte_systems",
+      "canonical_id": "pc_4d60857bbc8efac2d15739195c48b4fb",
+      "kind": "concept",
+      "name": "Aqueous electrolyte systems",
+      "name_zh": "电解质水溶液体系",
+      "topic": "cn_sh_chem_topic_equilibrium_kinetics",
+      "description": "从电离、离子反应和化学平衡统一分析电解质水溶液的组成、性质和反应。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.41（正文对应内容要求 3.1），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §11.2 Electrolytes; Chapters 14-15 aqueous acid-base and solubility equilibria"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_water_ionisation_ph",
+      "canonical_id": "pc_9bbd098371d4d3b54f8c721fa44edce9",
+      "kind": "concept",
+      "name": "Water ionisation, ionic product and pH",
+      "name_zh": "水的电离、离子积与 pH",
+      "topic": "cn_sh_chem_topic_aqueous_chemistry",
+      "description": "使用水的离子积和 pH 表示溶液酸碱性并进行简单计算。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.41（正文对应内容要求 3.2），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 14, water autoionisation, pH and pOH"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_salt_hydrolysis",
+      "canonical_id": "pc_328cda31419ed2b8c55cf39d1cc44cae",
+      "kind": "concept",
+      "name": "Salt hydrolysis",
+      "name_zh": "盐类水解平衡",
+      "topic": "cn_sh_chem_topic_aqueous_chemistry",
+      "description": "从离子与水反应解释盐溶液酸碱性及影响水解的主要因素。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.42（正文对应内容要求 3.3），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 14, acid-base properties and hydrolysis of salt solutions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_aqueous_equilibrium_applications",
+      "canonical_id": "pc_e65a80e3ebb618b67421efebbe223d4a",
+      "kind": "concept",
+      "name": "Applications of aqueous equilibria",
+      "name_zh": "水溶液离子平衡应用",
+      "topic": "cn_sh_chem_topic_aqueous_chemistry",
+      "description": "综合电离、水解和沉淀平衡解决检测、分离和物质转化问题。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.42（正文对应内容要求 3.5），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapters 14-15 acid-base, buffer, precipitation and complex-ion equilibria"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_quantised_levels_transitions",
+      "canonical_id": "pc_18741f38cfd4c697036aee6fe4658797",
+      "kind": "concept",
+      "name": "Quantised energy levels and transitions",
+      "name_zh": "电子能级、激发与跃迁",
+      "topic": "cn_sh_chem_topic_atomic_structure_methods",
+      "description": "说明电子能量状态量子化以及能级间激发和跃迁。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.44（正文对应内容要求 1.1），选择性必修·物质结构与性质"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §§6.1-6.3 Electromagnetic Energy; The Bohr Model; Development of Quantum Theory"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_spectroscopy_xrd_methods",
+      "canonical_id": "pc_c65a64a6433978912db1af23a08dd44b",
+      "kind": "concept",
+      "name": "Spectroscopic and X-ray structure determination",
+      "name_zh": "光谱与晶体 X 射线结构测定",
+      "topic": "cn_sh_chem_topic_atomic_structure_methods",
+      "description": "说明原子光谱、分子光谱和晶体 X 射线衍射提供的结构信息，并用这些信息支持物质结构模型。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.48（正文对应内容要求 2.3），选择性必修·物质结构与性质"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §10.6 Lattice Structures in Crystalline Solids; X-ray diffraction"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 12-14 mass spectrometry, infrared, nuclear magnetic resonance and ultraviolet spectroscopy"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.51（正文对应内容要求 3.2），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_transitional_mixed_crystals",
+      "canonical_id": "pc_09d7deaa84a83cf94fcb0b1c3f8d1b48",
+      "kind": "concept",
+      "name": "Transitional and mixed crystals",
+      "name_zh": "过渡晶体与混合型晶体",
+      "topic": "cn_sh_chem_topic_materials_structure",
+      "description": "解释典型晶体模型之间存在连续过渡和混合型结构。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.48（正文对应内容要求 2.4），选择性必修·物质结构与性质"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §§10.1-10.6 intermolecular forces, states of matter, phase behaviour and crystal structures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_aggregation_state_materials",
+      "canonical_id": "pc_ad4a725dfac81fa47283f00bb46d8b4c",
+      "kind": "concept",
+      "name": "Aggregation states and materials",
+      "name_zh": "聚集状态、微粒作用与材料性质",
+      "topic": "cn_sh_chem_topic_materials_structure",
+      "description": "从微粒种类、作用和聚集程度解释聚集状态与材料性质。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.48（正文对应内容要求 2.4），选择性必修·物质结构与性质"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §§10.1-10.6 intermolecular forces, states of matter, phase behaviour and crystal structures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_structure_guided_material_design",
+      "canonical_id": "pc_bc4434394172ce6789e764c282f12a2e",
+      "kind": "concept",
+      "name": "Structure-guided material design",
+      "name_zh": "结构—性质与材料设计",
+      "topic": "cn_sh_chem_topic_materials_structure",
+      "description": "利用结构—性质关系解释材料优化和预期性质新物质设计。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.51（正文对应内容要求 3.3），选择性必修·物质结构与性质"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapters 7 and 10 bonding, molecular geometry, intermolecular forces and crystal structures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_structure_methods_life_science",
+      "canonical_id": "pc_06a35cc7966558ea8c51e3c5184153fe",
+      "kind": "concept",
+      "name": "Structure methods in life science",
+      "name_zh": "结构理论与生命科学",
+      "topic": "cn_sh_chem_topic_structure_applications",
+      "description": "说明结构理论和分析测试技术对生命科学问题研究的支持。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.51（正文对应内容要求 3.3），选择性必修·物质结构与性质"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 12-14 structure determination; Chapters 25-28 biomolecular structure"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_functional_group_properties_conversion",
+      "canonical_id": "pc_1b9d0c4713e1e96792abd35a2860e4e8",
+      "kind": "concept",
+      "name": "Functional-group properties and conversion",
+      "name_zh": "官能团性质、相互影响与转化",
+      "topic": "cn_sh_chem_topic_structure_applications",
+      "description": "由官能团和基团间相互影响预测特征性质与官能团转化。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.53（正文对应内容要求 1.2），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 6-24 reaction families and functional-group interconversions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_functional_group_tests",
+      "canonical_id": "pc_b1b08174971c68ef5b60cadcd6c7f22a",
+      "kind": "concept",
+      "name": "Tests for functional groups",
+      "name_zh": "常见官能团检验",
+      "topic": "cn_sh_chem_topic_structure_applications",
+      "description": "根据特征反应和干扰选择常见官能团检验并解释现象。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.53（正文对应内容要求 1.2），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 12-14 spectroscopic identification; Chapters 17-24 characteristic functional-group reactions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_organic_synthesis_routes",
+      "canonical_id": "pc_e27c68a56f8ce39167fc39768f956ba0",
+      "kind": "concept",
+      "name": "Organic synthesis routes",
+      "name_zh": "有机合成路线设计",
+      "topic": "cn_sh_chem_topic_organic_design",
+      "description": "围绕碳骨架构建和官能团转化设计、比较简单有机合成路线。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.56（正文对应内容要求 2.3），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 6-24 reaction mechanisms, carbon-skeleton construction and functional-group interconversions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_organic_safety_green_synthesis",
+      "canonical_id": "pc_98510162e1e934be009d93665229c064",
+      "kind": "concept",
+      "name": "Organic safety and green synthesis",
+      "name_zh": "有机物安全与绿色合成",
+      "topic": "cn_sh_chem_topic_organic_design",
+      "description": "评价有机物对环境健康的影响，并用绿色化学思想比较合成方案。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.56（正文对应内容要求 2.4），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §1.1 Chemistry in Context; §4.4 Reaction Yields; Chapter 16 Thermodynamics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_polymer_monomer_repeat_unit",
+      "canonical_id": "pc_886ababec38c47f72220f747b1afd3d8",
+      "kind": "concept",
+      "name": "Polymer, monomer and repeat unit",
+      "name_zh": "聚合物、单体与链节",
+      "topic": "cn_sh_chem_topic_organic_design",
+      "description": "由聚合物结构识别单体、链节和聚合方式。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.58（正文对应内容要求 3.1），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapter 31 Synthetic Polymers"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_carbohydrates",
+      "canonical_id": "pc_e19f4ce3dfe214b9941a293fb43de7b0",
+      "kind": "concept",
+      "name": "Carbohydrates",
+      "name_zh": "糖类、葡萄糖、淀粉与纤维素",
+      "topic": "cn_sh_chem_topic_biomolecules_polymers",
+      "description": "说明葡萄糖、淀粉和纤维素的结构关系、主要性质和应用。",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.59（正文对应内容要求 3.2），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapter 25 Biomolecules: Carbohydrates"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_dna_rna",
+      "canonical_id": "pc_86fb27c4713339280eebe9dac099b314",
+      "kind": "concept",
+      "name": "DNA and RNA",
+      "name_zh": "DNA、RNA 结构与功能",
+      "topic": "cn_sh_chem_topic_biomolecules_polymers",
+      "description": "概述 DNA、RNA 的基本结构特点、生物功能及人工合成意义。",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.59（正文对应内容要求 3.2），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapter 28 Biomolecules: Nucleic Acids"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "cn_sh_chem_synthetic_polymers_materials",
+      "canonical_id": "pc_3cab9d25d2a79faaf4e4267df1439df1",
+      "kind": "concept",
+      "name": "Synthetic polymers and advanced materials",
+      "name_zh": "合成高分子与新型材料",
+      "topic": "cn_sh_chem_topic_biomolecules_polymers",
+      "description": "比较塑料、合成橡胶、合成纤维的结构特点和新型高分子材料应用。",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.59（正文对应内容要求 3.3），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapter 31 Synthetic Polymers"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ],
+  "edges": [
+    {
+      "from": "cn_sh_chem_substance_classification_conversion",
+      "to": "cn_sh_chem_inorganic_conversion_pathways",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "设计无机物转化路径前需要先能按组成和性质分类物质。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.22（正文对应内容要求 2.1），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §§1.2-1.3 Phases and Classification of Matter; Physical and Chemical Properties; §4.2 Classifying Chemical Reactions"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.6），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.2 Classifying Chemical Reactions; Chapters 18-19 representative and transition-element chemistry"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_element_valence_conversion",
+      "to": "cn_sh_chem_oxidising_reducing_agents",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "判断氧化剂和还原剂需要先分析元素价态及其变化方向。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.22（正文对应内容要求 2.1），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.2 Classifying Chemical Reactions; §17.1 Review of Redox Chemistry"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.2），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_electrolyte_ionisation",
+      "to": "cn_sh_chem_ionic_reaction_conditions",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "判断离子反应发生条件需要先识别电解质产生的溶液离子。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.3），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §11.2 Electrolytes; §4.2 Classifying Chemical Reactions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_ionic_reaction_conditions",
+      "to": "cn_sh_chem_common_ion_tests",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "设计离子检验需要先掌握特征离子反应及其发生条件。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.3），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §11.2 Electrolytes; §4.2 Classifying Chemical Reactions"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.5 Quantitative Chemical Analysis; Chapter 15 Equilibria of Other Reaction Classes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_inorganic_conversion_pathways",
+      "to": "cn_sh_chem_inorganic_stse_value",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "评价无机化工的价值与影响需要先理解物质转化路径。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.6），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.2 Classifying Chemical Reactions; Chapters 18-19 representative and transition-element chemistry"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapters 18-19, preparation, uses and environmental context of inorganic substances"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_green_chemistry_principles",
+      "to": "cn_sh_chem_clean_production_circularity",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "清洁生产和循环利用方案建立在绿色化学的原料、过程与废物原则上。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.31（正文对应内容要求 5.1），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.4 Reaction Yields; Chapter 16 Thermodynamics; Chapters 18-20 resource and process applications"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_internal_energy_state",
+      "to": "cn_sh_chem_energy_forms_conservation",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "分析化学能的转化和守恒需要先明确体系内能及其状态依赖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 5 Thermochemistry; Chapter 16 Thermodynamics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_aqueous_electrolyte_systems",
+      "to": "cn_sh_chem_water_ionisation_ph",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "使用水的离子积和 pH 前需要先建立电解质水溶液的平衡模型。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.41（正文对应内容要求 3.1），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §11.2 Electrolytes; Chapters 14-15 aqueous acid-base and solubility equilibria"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.41（正文对应内容要求 3.2），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 14, water autoionisation, pH and pOH"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_aqueous_electrolyte_systems",
+      "to": "cn_sh_chem_salt_hydrolysis",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "解释盐类水解需要先能分析溶液中的离子和电离平衡。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.41（正文对应内容要求 3.1），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §11.2 Electrolytes; Chapters 14-15 aqueous acid-base and solubility equilibria"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.42（正文对应内容要求 3.3），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 14, acid-base properties and hydrolysis of salt solutions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_water_ionisation_ph",
+      "to": "cn_sh_chem_aqueous_equilibrium_applications",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "综合应用水溶液平衡需要先能表示溶液酸碱性和水的电离。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.41（正文对应内容要求 3.2），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 14, water autoionisation, pH and pOH"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.42（正文对应内容要求 3.5），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapters 14-15 acid-base, buffer, precipitation and complex-ion equilibria"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_salt_hydrolysis",
+      "to": "cn_sh_chem_aqueous_equilibrium_applications",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "利用离子平衡解决物质转化问题需要先掌握盐类水解。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.42（正文对应内容要求 3.3），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 14, acid-base properties and hydrolysis of salt solutions"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.42（正文对应内容要求 3.5），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapters 14-15 acid-base, buffer, precipitation and complex-ion equilibria"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_aggregation_state_materials",
+      "to": "cn_sh_chem_structure_guided_material_design",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "用结构指导材料设计需要先理解微粒作用和聚集状态如何决定材料性质。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.48（正文对应内容要求 2.4），选择性必修·物质结构与性质"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §§10.1-10.6 intermolecular forces, states of matter, phase behaviour and crystal structures"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.51（正文对应内容要求 3.3），选择性必修·物质结构与性质"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapters 7 and 10 bonding, molecular geometry, intermolecular forces and crystal structures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_functional_group_properties_conversion",
+      "to": "cn_sh_chem_functional_group_tests",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "选择官能团检验需要先掌握其特征性质、相互影响和转化。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.53（正文对应内容要求 1.2），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 6-24 reaction families and functional-group interconversions"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 12-14 spectroscopic identification; Chapters 17-24 characteristic functional-group reactions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_organic_synthesis_value",
+      "to": "cn_sh_chem_organic_synthesis_routes",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "比较具体合成路线前需要理解有机合成通过结构转化创造物质的基本价值。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.29（正文对应内容要求 4.3），必修"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapter 6 An Overview of Organic Reactions; Chapter 31 Synthetic Polymers"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.56（正文对应内容要求 2.3），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 6-24 reaction mechanisms, carbon-skeleton construction and functional-group interconversions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_organic_synthesis_routes",
+      "to": "cn_sh_chem_organic_safety_green_synthesis",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "评价合成方案的安全性和绿色程度需要先能读懂并比较反应路线。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.56（正文对应内容要求 2.3），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 6-24 reaction mechanisms, carbon-skeleton construction and functional-group interconversions"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.56（正文对应内容要求 2.4），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §1.1 Chemistry in Context; §4.4 Reaction Yields; Chapter 16 Thermodynamics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_polymer_monomer_repeat_unit",
+      "to": "cn_sh_chem_synthetic_polymers_materials",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "比较合成高分子材料需要先能从聚合物结构识别单体、链节和聚合方式。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.58（正文对应内容要求 3.1），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapter 31 Synthetic Polymers"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.59（正文对应内容要求 3.3），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}
