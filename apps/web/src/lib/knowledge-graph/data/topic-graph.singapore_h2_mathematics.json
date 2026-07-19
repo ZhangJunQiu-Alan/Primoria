@@ -1,0 +1,463 @@
+{
+  "graphId": "singapore_h2_mathematics",
+  "subject": "Mathematics",
+  "generatedFrom": "data/knowledge-graphs/source/singapore_h2_mathematics.json",
+  "generatedAt": "2026-07-19",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
+  "topics": [
+    {
+      "topicId": "sg_h2_math_topic_function_graphs",
+      "name": "Functions and graphs",
+      "nameZh": "函数与图像",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_math_inverse_existence_restriction",
+          "name": "Inverse-function existence and domain restriction",
+          "nameZh": "反函数存在条件与定义域限制",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_math_standard_graph_characteristics",
+          "name": "Characteristics of standard algebraic graphs",
+          "nameZh": "常见代数函数图像特征",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_math_parametric_graphs",
+          "name": "Simple parametric equations and plane graphs",
+          "nameZh": "简单参数方程与平面图像",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_math_topic_algebraic_modelling",
+      "name": "Algebraic modelling and inequalities",
+      "nameZh": "代数建模与不等式",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_math_formulate_equations",
+          "name": "Formulating equations and inequalities from context",
+          "nameZh": "从情境建立方程与不等式",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_math_rational_quadratic_inequalities",
+          "name": "Rational inequalities with linear and quadratic factors",
+          "nameZh": "一次与二次因式构成的分式不等式",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_math_topic_sequences_series",
+      "name": "Sequences and series",
+      "nameZh": "数列与级数",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_math_recurrence_sequences",
+          "name": "Recurrence-generated sequences",
+          "nameZh": "递推数列",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_math_series_operations_convergence",
+          "name": "Series operations, convergence and infinite sums",
+          "nameZh": "级数运算、收敛与无穷和",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_math_topic_vector_foundations",
+      "name": "Vector foundations and geometry",
+      "nameZh": "向量基础与几何",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_math_vector_types_magnitude",
+          "name": "Position and displacement vectors with point distance",
+          "nameZh": "位置、位移向量与两点距离",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_math_vector_operations_geometry",
+          "name": "Geometric interpretation of vector operations",
+          "nameZh": "向量运算的几何解释",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_math_collinearity_ratio",
+          "name": "Vector collinearity and ratio theorem",
+          "nameZh": "向量共线与比例定理",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "sg_h2_math_topic_vector_geometry_3d",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_math_topic_vector_geometry_3d",
+      "name": "Three-dimensional vector geometry",
+      "nameZh": "三维向量几何",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_math_point_line_plane_distance",
+          "name": "Perpendicular feet and point-to-line or plane distance",
+          "nameZh": "垂足及点到直线或平面的距离",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_math_relative_positions_3d",
+          "name": "Relative positions of lines and planes in three dimensions",
+          "nameZh": "三维直线与平面的相对位置",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "sg_h2_math_topic_vector_foundations"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "sg_h2_math_topic_complex_foundations",
+      "name": "Complex number foundations",
+      "nameZh": "复数基础",
+      "defaultOrder": 6,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_math_complex_extension_roots",
+          "name": "Non-real roots of real-coefficient quadratic equations",
+          "nameZh": "实系数二次方程的非实根",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_math_complex_mod_arg_conjugate",
+          "name": "Modulus and principal argument from Cartesian form",
+          "nameZh": "由笛卡尔形式求模与主辐角",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "sg_h2_math_topic_complex_roots_geometry",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_math_topic_complex_roots_geometry",
+      "name": "Complex roots and geometry",
+      "nameZh": "复数根与几何",
+      "defaultOrder": 7,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_math_conjugate_polynomial_roots",
+          "name": "Conjugate roots of real-coefficient polynomials",
+          "nameZh": "实系数多项式的共轭根",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_math_complex_geometric_effects",
+          "name": "Geometric effects of Cartesian complex operations",
+          "nameZh": "复数运算的几何效果",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "sg_h2_math_topic_complex_foundations"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "sg_h2_math_topic_calculus_approximations",
+      "name": "Calculus graphs and approximations",
+      "nameZh": "微积分图像与近似",
+      "defaultOrder": 8,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_math_derivative_graph_relations",
+          "name": "Relations among a function and its derivative graphs",
+          "nameZh": "函数与导函数图像关系",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_math_series_approximations",
+          "name": "Maclaurin and small-angle approximations",
+          "nameZh": "麦克劳林与小角近似",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_math_topic_differential_equations",
+      "name": "Differential equations",
+      "nameZh": "微分方程",
+      "defaultOrder": 9,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_math_separable_ode_solutions",
+          "name": "Separable differential equations with initial conditions and substitution",
+          "nameZh": "含初值与给定换元的可分离微分方程",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_math_interpret_ode_solution",
+          "name": "Interpreting differential equations and solutions in context",
+          "nameZh": "情境中解释微分方程及其解",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_math_topic_counting_probability",
+      "name": "Counting and probability representations",
+      "nameZh": "计数与概率表示",
+      "defaultOrder": 10,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_math_counting_arrangements",
+          "name": "Restricted, repeated and circular arrangements",
+          "nameZh": "受限、重复与圆周排列",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_math_probability_representations",
+          "name": "Probability representations and sample-space conversion",
+          "nameZh": "概率表示与样本空间转换",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_math_topic_normal_moments",
+      "name": "Normal distributions and moments",
+      "nameZh": "正态分布与矩",
+      "defaultOrder": 11,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_math_normal_probabilities_parameters",
+          "name": "Normal probabilities and inverse parameter problems",
+          "nameZh": "正态概率与参数反求",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_math_linear_transform_moments",
+          "name": "Expectation and variance under an affine transformation",
+          "nameZh": "随机变量线性变换的期望与方差",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_math_independent_sum_moments",
+          "name": "Moments of independent linear combinations",
+          "nameZh": "独立随机变量线性组合的期望与方差",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "sg_h2_math_topic_hypothesis_testing",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_math_topic_hypothesis_testing",
+      "name": "Hypothesis testing",
+      "nameZh": "假设检验",
+      "defaultOrder": 12,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_math_hypothesis_test_concepts",
+          "name": "Hypothesis-test concepts, critical regions and p-values",
+          "nameZh": "假设检验概念、临界域与 p 值",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_math_one_two_tailed_tests",
+          "name": "One-tailed and two-tailed hypothesis tests",
+          "nameZh": "单尾与双尾假设检验",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_math_one_mean_hypothesis_test",
+          "name": "One-sample tests for a population mean",
+          "nameZh": "单总体均值假设检验",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "sg_h2_math_topic_statistical_interpretation",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "sg_h2_math_topic_normal_moments"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "sg_h2_math_topic_statistical_interpretation",
+      "name": "Statistical evidence interpretation",
+      "nameZh": "统计证据解释",
+      "defaultOrder": 13,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_math_interpret_hypothesis_result",
+          "name": "Interpreting hypothesis-test decisions in context",
+          "nameZh": "情境中解释假设检验结论",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_math_scatter_linear_plausibility",
+          "name": "Scatter plots and plausibility of a linear relationship",
+          "nameZh": "散点图与线性关系合理性",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_math_pmcc_interpretation",
+          "name": "Product-moment correlation coefficient interpretation",
+          "nameZh": "积矩相关系数解释",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "sg_h2_math_topic_hypothesis_testing"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "sg_h2_math_topic_regression",
+      "name": "Regression and linearisation",
+      "nameZh": "回归与线性化",
+      "defaultOrder": 14,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_math_least_squares_regression",
+          "name": "Least-squares regression for bivariate data",
+          "nameZh": "二元数据最小二乘回归",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_math_transform_to_linearity",
+          "name": "Transforming variables to achieve linearity",
+          "nameZh": "变量变换实现线性化",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "sg_h2_math_complex_extension_roots",
+      "to": "sg_h2_math_conjugate_polynomial_roots",
+      "strength": "soft",
+      "reason": "使用实系数多项式共轭根定理前，需要先能求二次方程的非实根并识别共轭对。"
+    },
+    {
+      "from": "sg_h2_math_counting_arrangements",
+      "to": "sg_h2_math_probability_representations",
+      "strength": "soft",
+      "reason": "使用排列组合构造概率表示需要先能准确计数受限样本空间。"
+    },
+    {
+      "from": "sg_h2_math_hypothesis_test_concepts",
+      "to": "sg_h2_math_one_two_tailed_tests",
+      "strength": "soft",
+      "reason": "选择检验尾部和临界域需要先理解假设、显著性水平与 p 值。"
+    },
+    {
+      "from": "sg_h2_math_least_squares_regression",
+      "to": "sg_h2_math_transform_to_linearity",
+      "strength": "soft",
+      "reason": "用变量变换实现线性化后拟合参数，需要先理解最小二乘回归线。"
+    },
+    {
+      "from": "sg_h2_math_linear_transform_moments",
+      "to": "sg_h2_math_independent_sum_moments",
+      "strength": "soft",
+      "reason": "计算独立随机变量线性组合的矩需要先掌握单个随机变量仿射变换的期望与方差法则。"
+    },
+    {
+      "from": "sg_h2_math_normal_probabilities_parameters",
+      "to": "sg_h2_math_one_mean_hypothesis_test",
+      "strength": "soft",
+      "reason": "已知方差总体均值检验需要先能进行正态标准化和反向概率判断。"
+    },
+    {
+      "from": "sg_h2_math_one_mean_hypothesis_test",
+      "to": "sg_h2_math_interpret_hypothesis_result",
+      "strength": "soft",
+      "reason": "解释检验结论需要先正确完成检验并得到拒绝或不拒绝决策。"
+    },
+    {
+      "from": "sg_h2_math_one_two_tailed_tests",
+      "to": "sg_h2_math_one_mean_hypothesis_test",
+      "strength": "soft",
+      "reason": "执行总体均值检验前需要依据备择假设确定单尾或双尾程序。"
+    },
+    {
+      "from": "sg_h2_math_scatter_linear_plausibility",
+      "to": "sg_h2_math_pmcc_interpretation",
+      "strength": "soft",
+      "reason": "解释相关系数前应先确认散点图中线性关系是否合理。"
+    },
+    {
+      "from": "sg_h2_math_separable_ode_solutions",
+      "to": "sg_h2_math_interpret_ode_solution",
+      "strength": "soft",
+      "reason": "解释微分方程解的情境含义需要先能求出通解和满足初值的特解。"
+    },
+    {
+      "from": "sg_h2_math_vector_operations_geometry",
+      "to": "sg_h2_math_collinearity_ratio",
+      "strength": "soft",
+      "reason": "向量共线与分点计算建立在加减和数乘的几何解释之上。"
+    },
+    {
+      "from": "sg_h2_math_vector_operations_geometry",
+      "to": "sg_h2_math_point_line_plane_distance",
+      "strength": "soft",
+      "reason": "投影和距离算法需要能正确组合与缩放向量。"
+    }
+  ]
+}

@@ -1098,7 +1098,7 @@
       "name_zh": "化学能转化与能量守恒",
       "topic": "cn_sh_chem_topic_thermo_electrochem",
       "description": "说明化学能与热能、电能等形式相互转化且遵循能量守恒。",
-      "default_order": 1,
+      "default_order": 2,
       "evidence_refs": [
         {
           "source_id": "src_cn_moe_senior_high_chemistry_2020",
@@ -1119,7 +1119,7 @@
       "name_zh": "内能与体系状态",
       "topic": "cn_sh_chem_topic_thermo_electrochem",
       "description": "说明内能与体系温度、压强、组成和聚集状态的关系。",
-      "default_order": 2,
+      "default_order": 1,
       "evidence_refs": [
         {
           "source_id": "src_cn_moe_senior_high_chemistry_2020",

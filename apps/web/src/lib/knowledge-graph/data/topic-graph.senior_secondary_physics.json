@@ -1,0 +1,921 @@
+{
+  "graphId": "senior_secondary_physics",
+  "subject": "Physics",
+  "generatedFrom": "data/knowledge-graphs/source/senior_secondary_physics.json",
+  "generatedAt": "2026-07-19",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
+  "topics": [
+    {
+      "topicId": "cn_sh_physics_topic_mechanics_models_units",
+      "name": "Models and units in mechanics",
+      "nameZh": "力学模型与单位",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_particle_model",
+          "name": "Particle model and its conditions",
+          "nameZh": "质点模型及适用条件",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_si_mechanics_units",
+          "name": "SI mechanics units",
+          "nameZh": "国际单位制中的力学单位",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_physics_topic_kinematics_common_forces",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_physics_topic_kinematics_common_forces",
+      "name": "Kinematics and common forces",
+      "nameZh": "运动学与常见力",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_free_fall",
+          "name": "Free-fall motion",
+          "nameZh": "自由落体运动",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_gravity_elastic_force",
+          "name": "Gravity and elastic force",
+          "nameZh": "重力与弹力",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_physics_friction",
+          "name": "Static and kinetic friction",
+          "nameZh": "静摩擦与滑动摩擦",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_physics_topic_mechanics_models_units"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_physics_topic_force_motion_analysis",
+      "name": "Force and motion analysis",
+      "nameZh": "受力与运动分析",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_force_composition_vectors",
+          "name": "Force composition and decomposition",
+          "nameZh": "力的合成分解与矢量",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_overweight_weightlessness",
+          "name": "Overweight and weightlessness",
+          "nameZh": "超重与失重",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_physics_curvilinear_motion_condition",
+          "name": "Curvilinear motion and its condition",
+          "nameZh": "曲线运动及发生条件",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_physics_topic_circular_cosmic_motion",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_physics_topic_work_energy",
+      "name": "Work and potential energy",
+      "nameZh": "功与势能",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_kinetic_energy_theorem",
+          "name": "Kinetic energy theorem",
+          "nameZh": "动能与动能定理",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_gravitational_potential_energy",
+          "name": "Gravitational potential energy",
+          "nameZh": "重力势能",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_physics_elastic_potential_energy",
+          "name": "Elastic potential energy",
+          "nameZh": "弹性势能",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_physics_topic_circular_cosmic_motion",
+      "name": "Circular and cosmic motion",
+      "nameZh": "圆周与宇宙运动",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_centrifugal_phenomena",
+          "name": "Centrifugal phenomena and applications",
+          "nameZh": "离心现象及应用",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_cosmic_velocities",
+          "name": "Second and third cosmic velocities",
+          "nameZh": "第二与第三宇宙速度",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_physics_topic_force_motion_analysis"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_physics_topic_relativity_cosmology",
+      "name": "Relativity and cosmology",
+      "nameZh": "相对论与宇宙学",
+      "defaultOrder": 6,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_newtonian_limits",
+          "name": "Limits of Newtonian mechanics",
+          "nameZh": "牛顿力学的局限性",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_relativistic_spacetime",
+          "name": "Introductory relativistic spacetime",
+          "nameZh": "相对论时空观初步",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_physics_cosmic_evolution",
+          "name": "Origin and evolution of the universe",
+          "nameZh": "宇宙起源与演化",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_physics_topic_electrostatic_models",
+      "name": "Electrostatic models",
+      "nameZh": "静电模型",
+      "defaultOrder": 7,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_electrostatic_charge_conservation",
+          "name": "Electrostatic phenomena and charge conservation",
+          "nameZh": "静电现象与电荷守恒",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_point_charge_model",
+          "name": "Point-charge model",
+          "nameZh": "点电荷模型",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_physics_electric_field_lines",
+          "name": "Electric field-line model",
+          "nameZh": "电场线模型",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_physics_topic_electric_field_applications",
+      "name": "Electric-field applications",
+      "nameZh": "电场及其应用",
+      "defaultOrder": 8,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_electrostatic_applications",
+          "name": "Electrostatic applications and protection",
+          "nameZh": "静电利用与防护",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_electric_potential_quantities",
+          "name": "Electric potential energy, potential and potential difference",
+          "nameZh": "电势能、电势与电势差",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_physics_charged_particle_electric_motion",
+          "name": "Charged-particle motion in electric fields",
+          "nameZh": "带电粒子在电场中的运动",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_physics_topic_capacitors_components",
+      "name": "Capacitors and circuit components",
+      "nameZh": "电容器与电路元件",
+      "defaultOrder": 9,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_capacitance",
+          "name": "Capacitors and capacitance",
+          "nameZh": "电容器与电容",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_capacitor_charge_discharge",
+          "name": "Capacitor charging, discharging and applications",
+          "nameZh": "电容器充放电与应用",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_physics_circuit_components",
+          "name": "Circuit components and functions",
+          "nameZh": "电路元件及作用",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_physics_topic_dc_circuit_analysis",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_physics_topic_dc_circuit_analysis",
+      "name": "Direct-current circuit analysis",
+      "nameZh": "直流电路分析",
+      "defaultOrder": 10,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_resistance_geometry_material",
+          "name": "Resistance, geometry and material",
+          "nameZh": "电阻与材料、长度和横截面积",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_closed_circuit_ohm",
+          "name": "Closed-circuit Ohm's law",
+          "nameZh": "闭合电路欧姆定律",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_physics_electrical_work_power",
+          "name": "Electrical work and power",
+          "nameZh": "电功与电功率",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_physics_topic_electrical_heating_safety",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "cn_sh_physics_topic_capacitors_components"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_physics_topic_electrical_heating_safety",
+      "name": "Electrical heating and safety",
+      "nameZh": "电热与用电安全",
+      "defaultOrder": 11,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_joule_law",
+          "name": "Joule's law",
+          "nameZh": "焦耳定律",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_household_electricity_safety",
+          "name": "Household circuits and electrical safety",
+          "nameZh": "家庭电路与安全节约用电",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_physics_topic_dc_circuit_analysis"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_physics_topic_magnetism_em_waves",
+      "name": "Magnetism and electromagnetic waves",
+      "nameZh": "磁现象与电磁波",
+      "defaultOrder": 12,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_magnetism_applications_history",
+          "name": "Magnetic applications and historical contributions",
+          "nameZh": "磁现象应用与历史贡献",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_electromagnetic_field_waves",
+          "name": "Electromagnetic waves and field materiality",
+          "nameZh": "电磁波与电磁场物质性",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_physics_electromagnetic_wave_applications",
+          "name": "Electromagnetic-wave applications",
+          "nameZh": "电磁波应用与影响",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_physics_topic_quantum_wave_particle",
+      "name": "Wave-particle quantisation",
+      "nameZh": "波粒二象性与量子化",
+      "defaultOrder": 13,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_light_energy_quantisation",
+          "name": "Quantisation of light energy",
+          "nameZh": "光能量不连续与量子化",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_matter_waves_quantisation",
+          "name": "Matter waves and quantisation",
+          "nameZh": "实物粒子波动性与量子化",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_physics_topic_energy_technologies",
+      "name": "Energy technologies",
+      "nameZh": "能源技术",
+      "defaultOrder": 14,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_renewable_energy_technologies",
+          "name": "Water, wind and solar energy technologies",
+          "nameZh": "水能、风能与太阳能利用",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_nuclear_energy_intro",
+          "name": "Introductory nuclear energy",
+          "nameZh": "核能利用初步",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_physics_topic_thermodynamic_directionality",
+      "name": "Thermodynamic directionality",
+      "nameZh": "能量方向性",
+      "defaultOrder": 15,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_energy_conversion_directionality",
+          "name": "Directionality of energy conversion",
+          "nameZh": "能量转化的方向性",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_second_law_thermodynamics",
+          "name": "Second law of thermodynamics",
+          "nameZh": "热力学第二定律",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_physics_topic_energy_environment",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_physics_topic_energy_environment",
+      "name": "Energy and environment",
+      "nameZh": "能源与环境",
+      "defaultOrder": 16,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_renewable_environment",
+          "name": "Renewable energy and environmental impact",
+          "nameZh": "可再生能源与环境影响",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_pollution_sustainable_development",
+          "name": "Pollution and coordinated sustainable development",
+          "nameZh": "污染防治与协调发展",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_physics_topic_thermodynamic_directionality"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_physics_topic_oscillations_sound",
+      "name": "Oscillations and sound",
+      "nameZh": "振动与声学",
+      "defaultOrder": 17,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_simple_pendulum_period",
+          "name": "Simple-pendulum period",
+          "nameZh": "单摆周期规律",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_forced_vibration",
+          "name": "Forced vibration",
+          "nameZh": "受迫振动",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_physics_doppler_effect",
+          "name": "Doppler effect",
+          "nameZh": "多普勒效应",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_physics_topic_wave_refraction",
+      "name": "Wave and light refraction",
+      "nameZh": "波与光的折射",
+      "defaultOrder": 18,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_wave_reflection_refraction",
+          "name": "Wave reflection and refraction",
+          "nameZh": "波的反射与折射",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_light_refraction_law",
+          "name": "Law of refraction",
+          "nameZh": "光的折射定律",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_physics_total_internal_reflection",
+          "name": "Total internal reflection",
+          "nameZh": "全反射及条件",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_physics_topic_optical_applications",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_physics_topic_optical_applications",
+      "name": "Optical applications",
+      "nameZh": "光学应用",
+      "defaultOrder": 19,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_optical_fibre",
+          "name": "Optical-fibre principle and applications",
+          "nameZh": "光纤原理与应用",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_light_polarisation",
+          "name": "Polarisation and transverse nature of light",
+          "nameZh": "光的偏振与横波性质",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_physics_laser",
+          "name": "Laser properties and applications",
+          "nameZh": "激光特性与应用",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_physics_topic_wave_refraction"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_physics_topic_induction_ac",
+      "name": "Induction and alternating current",
+      "nameZh": "自感、涡流与交流",
+      "defaultOrder": 20,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_self_induction",
+          "name": "Self-induction",
+          "nameZh": "自感现象",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_eddy_currents",
+          "name": "Eddy currents",
+          "nameZh": "涡流现象",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_physics_sinusoidal_ac",
+          "name": "Sinusoidal alternating current",
+          "nameZh": "正弦交变电流",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_physics_topic_power_machines",
+      "name": "Power transmission and machines",
+      "nameZh": "输电与电机",
+      "defaultOrder": 21,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_high_voltage_transmission",
+          "name": "High-voltage power transmission",
+          "nameZh": "远距离高压输电",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_generator_motor_energy",
+          "name": "Generator and motor energy conversion",
+          "nameZh": "发电机与电动机能量转化",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_physics_topic_electromagnetic_theory",
+      "name": "Electromagnetic theory and transmission",
+      "nameZh": "电磁理论与传播",
+      "defaultOrder": 22,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_maxwell_field_theory",
+          "name": "Introductory Maxwell electromagnetic-field theory",
+          "nameZh": "麦克斯韦电磁场理论初步",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_electromagnetic_oscillation",
+          "name": "Electromagnetic oscillation",
+          "nameZh": "电磁振荡",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_physics_em_wave_transmission",
+          "name": "Emission, propagation and reception of electromagnetic waves",
+          "nameZh": "电磁波的发射、传播与接收",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_physics_topic_sensor_systems",
+      "name": "Sensor systems",
+      "nameZh": "传感器系统",
+      "defaultOrder": 23,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_sensor_conversion",
+          "name": "Conversion of non-electrical to electrical quantities",
+          "nameZh": "非电学量到电学量的转换",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_sensor_applications",
+          "name": "Sensor applications",
+          "nameZh": "传感器应用",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_physics_topic_molecular_kinetic_evidence",
+      "name": "Molecular motion and evidence",
+      "nameZh": "分子运动与证据",
+      "defaultOrder": 24,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_molecular_kinetic_theory_evidence",
+          "name": "Molecular kinetic theory and evidence",
+          "nameZh": "分子动理论及实验证据",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_diffusion_brownian",
+          "name": "Diffusion and Brownian motion",
+          "nameZh": "扩散与布朗运动",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_physics_molecular_speed_distribution",
+          "name": "Molecular-speed distribution",
+          "nameZh": "分子运动速率分布",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_physics_topic_states_of_matter",
+      "name": "States and interfaces of matter",
+      "nameZh": "物态与界面",
+      "defaultOrder": 25,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_crystalline_amorphous",
+          "name": "Crystalline and amorphous solids",
+          "nameZh": "晶体与非晶体",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_liquid_crystals",
+          "name": "Liquid crystals",
+          "nameZh": "液晶性质与应用",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_physics_surface_tension_capillarity",
+          "name": "Surface tension and capillarity",
+          "nameZh": "表面张力与毛细现象",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_physics_topic_advanced_materials",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_physics_topic_advanced_materials",
+      "name": "Advanced materials",
+      "nameZh": "先进材料",
+      "defaultOrder": 26,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_semiconductor_materials",
+          "name": "Semiconductor materials",
+          "nameZh": "半导体材料",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_nanomaterials",
+          "name": "Nanomaterials",
+          "nameZh": "纳米材料",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_physics_topic_states_of_matter"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_physics_topic_nuclear_structure",
+      "name": "Nuclear structure and interactions",
+      "nameZh": "原子核结构与相互作用",
+      "defaultOrder": 27,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_atomic_nuclear_model",
+          "name": "Atomic nuclear model",
+          "nameZh": "原子核式结构模型",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_nuclear_composition_force",
+          "name": "Nuclear composition and nuclear force",
+          "nameZh": "原子核组成与核力",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_physics_fundamental_interactions",
+          "name": "Four fundamental interactions",
+          "nameZh": "四种基本相互作用",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_physics_topic_nuclear_reactions",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_physics_topic_nuclear_reactions",
+      "name": "Nuclear reactions and radiation",
+      "nameZh": "核反应与辐射",
+      "defaultOrder": 28,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_physics_nuclear_reaction_equations",
+          "name": "Nuclear reaction equations",
+          "nameZh": "核反应方程",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_physics_radioisotope_application_safety",
+          "name": "Radioisotope applications and radiation safety",
+          "nameZh": "放射性同位素应用与射线防护",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_physics_topic_nuclear_structure"
+      ],
+      "isRoot": false
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "cn_sh_physics_atomic_nuclear_model",
+      "to": "cn_sh_physics_nuclear_composition_force",
+      "strength": "soft",
+      "reason": "核力和核组成建立在原子核式结构模型上。"
+    },
+    {
+      "from": "cn_sh_physics_capacitance",
+      "to": "cn_sh_physics_capacitor_charge_discharge",
+      "strength": "soft",
+      "reason": "分析充放电过程需要先理解电容和储电能力。"
+    },
+    {
+      "from": "cn_sh_physics_circuit_components",
+      "to": "cn_sh_physics_closed_circuit_ohm",
+      "strength": "soft",
+      "reason": "闭合电路分析需要先识别电源、负载和测量元件的作用。"
+    },
+    {
+      "from": "cn_sh_physics_crystalline_amorphous",
+      "to": "cn_sh_physics_semiconductor_materials",
+      "strength": "soft",
+      "reason": "理解半导体能带与材料性质需要先认识固体微观结构。"
+    },
+    {
+      "from": "cn_sh_physics_curvilinear_motion_condition",
+      "to": "cn_sh_physics_centrifugal_phenomena",
+      "strength": "soft",
+      "reason": "解释离心现象需要先理解速度方向与合力方向不共线时的曲线运动。"
+    },
+    {
+      "from": "cn_sh_physics_electrical_work_power",
+      "to": "cn_sh_physics_joule_law",
+      "strength": "soft",
+      "reason": "焦耳热计算建立在电能转化和电功率关系上。"
+    },
+    {
+      "from": "cn_sh_physics_electromagnetic_oscillation",
+      "to": "cn_sh_physics_em_wave_transmission",
+      "strength": "soft",
+      "reason": "说明电磁波发射需要先理解振荡电荷和电磁振荡。"
+    },
+    {
+      "from": "cn_sh_physics_energy_conversion_directionality",
+      "to": "cn_sh_physics_renewable_environment",
+      "strength": "soft",
+      "reason": "评价能源环境影响需要理解能量转化中的不可逆损耗和资源品质变化。"
+    },
+    {
+      "from": "cn_sh_physics_force_composition_vectors",
+      "to": "cn_sh_physics_overweight_weightlessness",
+      "strength": "soft",
+      "reason": "分析支持力变化前需要能合成竖直方向上的力。"
+    },
+    {
+      "from": "cn_sh_physics_light_refraction_law",
+      "to": "cn_sh_physics_total_internal_reflection",
+      "strength": "soft",
+      "reason": "判断全反射临界条件需要先掌握折射定律。"
+    },
+    {
+      "from": "cn_sh_physics_maxwell_field_theory",
+      "to": "cn_sh_physics_electromagnetic_oscillation",
+      "strength": "soft",
+      "reason": "理解振荡电场与磁场的耦合需要先掌握电磁场统一观点。"
+    },
+    {
+      "from": "cn_sh_physics_molecular_kinetic_theory_evidence",
+      "to": "cn_sh_physics_diffusion_brownian",
+      "strength": "soft",
+      "reason": "用分子热运动解释扩散和布朗运动需要先掌握分子动理论。"
+    },
+    {
+      "from": "cn_sh_physics_molecular_kinetic_theory_evidence",
+      "to": "cn_sh_physics_molecular_speed_distribution",
+      "strength": "soft",
+      "reason": "理解分子速率分布需要先掌握大量分子无规则运动的统计模型。"
+    },
+    {
+      "from": "cn_sh_physics_nuclear_composition_force",
+      "to": "cn_sh_physics_nuclear_reaction_equations",
+      "strength": "soft",
+      "reason": "书写核反应方程需要先识别核子组成、质量数和电荷数。"
+    },
+    {
+      "from": "cn_sh_physics_particle_model",
+      "to": "cn_sh_physics_free_fall",
+      "strength": "soft",
+      "reason": "自由落体建模需要先判断研究对象何时可抽象为质点。"
+    },
+    {
+      "from": "cn_sh_physics_resistance_geometry_material",
+      "to": "cn_sh_physics_closed_circuit_ohm",
+      "strength": "soft",
+      "reason": "分析闭合电路电流需要理解外电路电阻的来源和变化。"
+    },
+    {
+      "from": "cn_sh_physics_sensor_conversion",
+      "to": "cn_sh_physics_sensor_applications",
+      "strength": "soft",
+      "reason": "解释传感器应用需要先理解非电学量到电学量的转换链路。"
+    },
+    {
+      "from": "cn_sh_physics_total_internal_reflection",
+      "to": "cn_sh_physics_optical_fibre",
+      "strength": "soft",
+      "reason": "光纤导光原理直接依赖全反射条件。"
+    }
+  ]
+}

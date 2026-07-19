@@ -1,0 +1,240 @@
+{
+  "graphId": "singapore_h2_chemistry",
+  "subject": "Chemistry",
+  "generatedFrom": "data/knowledge-graphs/source/singapore_h2_chemistry.json",
+  "generatedAt": "2026-07-19",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
+  "topics": [
+    {
+      "topicId": "sg_h2_chemistry_topic_acid_base_models",
+      "name": "Acid-base models and measurement",
+      "nameZh": "酸碱模型与测量",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_chemistry_acid_base_models_arrhenius_lewis",
+          "name": "Arrhenius and Lewis acid-base models",
+          "nameZh": "Arrhenius 与 Lewis 酸碱模型",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_chemistry_base_dissociation_water_ionic_product",
+          "name": "Base dissociation and the ionic product of water",
+          "nameZh": "碱解离与水的离子积",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_chemistry_titration_curves_indicator_selection",
+          "name": "Acid-base titration curves and indicator selection",
+          "nameZh": "酸碱滴定曲线与指示剂选择",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "sg_h2_chemistry_topic_aqueous_contexts",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_chemistry_topic_aqueous_contexts",
+      "name": "Coupled aqueous equilibria",
+      "nameZh": "耦合水溶液平衡",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_chemistry_ocean_carbonate_buffer_acidification",
+          "name": "Ocean carbonate buffering and acidification",
+          "nameZh": "海洋碳酸盐缓冲与酸化",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_chemistry_complex_ion_solubility_control",
+          "name": "Complex-ion control of solubility",
+          "nameZh": "配离子形成对溶解度的调控",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "sg_h2_chemistry_topic_acid_base_models"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "sg_h2_chemistry_topic_physical_chemistry_models",
+      "name": "Physical-chemistry models and limits",
+      "nameZh": "物理化学模型与适用边界",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_chemistry_ideal_gas_mixture_partial_pressures",
+          "name": "Ideal-gas mixtures and partial pressures",
+          "nameZh": "理想气体混合物与分压",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_chemistry_lattice_energy_ionic_factors",
+          "name": "Ionic charge and radius effects on lattice energy",
+          "nameZh": "离子电荷、半径与晶格能",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_chemistry_standard_state_prediction_limits",
+          "name": "Limits of standard-state spontaneity predictions",
+          "nameZh": "标准态自发性预测的适用边界",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "sg_h2_chemistry_topic_electrochemical_applications",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_chemistry_topic_mechanism_selectivity",
+      "name": "Mechanism and selectivity",
+      "nameZh": "反应机理与选择性",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_chemistry_enzyme_catalysis_specificity_conditions",
+          "name": "Enzyme specificity and condition sensitivity",
+          "nameZh": "酶催化的专一性与条件敏感性",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_chemistry_organic_electronic_steric_effects",
+          "name": "Electronic and steric effects in organic reactivity",
+          "nameZh": "有机反应性中的电子效应与位阻效应",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_chemistry_nucleophilic_substitution_stereochemistry",
+          "name": "Stereochemical outcomes of SN1 and SN2 substitution",
+          "nameZh": "SN1 与 SN2 取代的立体化学结果",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_chemistry_topic_environmental_chemistry",
+      "name": "Environmental chemistry and materials",
+      "nameZh": "环境化学与材料",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_chemistry_combustion_pollutants_greenhouse",
+          "name": "Combustion pollutants and greenhouse impacts",
+          "nameZh": "燃烧污染物与温室效应影响",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_chemistry_halocarbon_environmental_impacts",
+          "name": "Environmental impacts of CFC, HCFC and HFC compounds",
+          "nameZh": "CFC、HCFC 与 HFC 的环境影响",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_chemistry_polymer_recycling_sustainability",
+          "name": "Polymer recycling and sustainability trade-offs",
+          "nameZh": "聚合物回收与可持续性权衡",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_chemistry_topic_electrochemical_applications",
+      "name": "Electrochemical conditions and applications",
+      "nameZh": "电化学条件与应用",
+      "defaultOrder": 6,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_chemistry_electrode_potential_concentration_trends",
+          "name": "Electrode potential under concentration changes",
+          "nameZh": "浓度变化下的电极电势趋势",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_chemistry_industrial_electrolysis_applications",
+          "name": "Electrode reactions in anodising and copper purification",
+          "nameZh": "阳极氧化与铜电解精炼的电极反应",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "sg_h2_chemistry_topic_physical_chemistry_models"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "sg_h2_chemistry_topic_transition_elements",
+      "name": "Transition-element patterns and complexes",
+      "nameZh": "过渡元素规律与配合物",
+      "defaultOrder": 7,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_chemistry_transition_periodic_invariance",
+          "name": "Relative invariance across the first transition series",
+          "nameZh": "第一过渡系半径与第一电离能的相对稳定",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_chemistry_ligand_exchange_complex_contexts",
+          "name": "Ligand exchange in coordination complexes",
+          "nameZh": "配位化合物中的配体交换",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "sg_h2_chemistry_acid_base_models_arrhenius_lewis",
+      "to": "sg_h2_chemistry_base_dissociation_water_ionic_product",
+      "strength": "soft",
+      "reason": "使用 Kb、Kw 和共轭酸碱关系前，需要先区分酸碱定义及适用体系。"
+    },
+    {
+      "from": "sg_h2_chemistry_base_dissociation_water_ionic_product",
+      "to": "sg_h2_chemistry_ocean_carbonate_buffer_acidification",
+      "strength": "soft",
+      "reason": "分析海洋碳酸盐缓冲和酸化，需要先掌握水中酸碱解离与 Kw 关系。"
+    },
+    {
+      "from": "sg_h2_chemistry_base_dissociation_water_ionic_product",
+      "to": "sg_h2_chemistry_titration_curves_indicator_selection",
+      "strength": "soft",
+      "reason": "解释弱酸弱碱滴定曲线和指示剂区间，需要先理解水的离子积与酸碱解离平衡。"
+    },
+    {
+      "from": "sg_h2_chemistry_organic_electronic_steric_effects",
+      "to": "sg_h2_chemistry_nucleophilic_substitution_stereochemistry",
+      "strength": "soft",
+      "reason": "解释 SN1 与 SN2 的构型结果，需要先理解位阻和电子效应如何决定机理路径。"
+    },
+    {
+      "from": "sg_h2_chemistry_standard_state_prediction_limits",
+      "to": "sg_h2_chemistry_electrode_potential_concentration_trends",
+      "strength": "soft",
+      "reason": "讨论浓度改变电极电势前，需要先区分标准态数值与非标准实际条件。"
+    }
+  ]
+}

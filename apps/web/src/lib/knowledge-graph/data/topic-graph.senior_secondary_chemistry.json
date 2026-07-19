@@ -1,0 +1,623 @@
+{
+  "graphId": "senior_secondary_chemistry",
+  "subject": "Chemistry",
+  "generatedFrom": "data/knowledge-graphs/source/senior_secondary_chemistry.json",
+  "generatedAt": "2026-07-19",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
+  "topics": [
+    {
+      "topicId": "cn_sh_chem_topic_foundations",
+      "name": "Foundations of chemical science",
+      "nameZh": "化学科学基础",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_chem_chemical_science_scope",
+          "name": "Scope of chemical science",
+          "nameZh": "化学科学的研究对象与特征",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_chem_substance_classification_conversion",
+          "name": "Substance classification and conversion",
+          "nameZh": "物质分类与类别转化",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_chem_colloidal_dispersions",
+          "name": "Colloidal dispersions",
+          "nameZh": "胶体与分散系",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_chem_topic_inorganic_stse",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_chem_topic_redox_ions",
+      "name": "Redox and ions",
+      "nameZh": "氧化还原与离子",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_chem_element_valence_conversion",
+          "name": "Element valence-state conversion",
+          "nameZh": "元素价态与物质转化",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_chem_oxidising_reducing_agents",
+          "name": "Oxidising and reducing agents",
+          "nameZh": "氧化剂与还原剂",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_chem_electrolyte_ionisation",
+          "name": "Electrolyte ionisation",
+          "nameZh": "电解质与电离",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_chem_topic_ionic_analysis",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_chem_topic_ionic_analysis",
+      "name": "Ionic reactions and analysis",
+      "nameZh": "离子反应与分析",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_chem_ionic_reaction_conditions",
+          "name": "Conditions for ionic reactions",
+          "nameZh": "离子反应及发生条件",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_chem_common_ion_tests",
+          "name": "Tests for common ions",
+          "nameZh": "常见离子的检验",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_chem_sodium_compounds",
+          "name": "Sodium and its compounds",
+          "nameZh": "钠及其重要化合物",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_chem_topic_redox_ions"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_chem_topic_inorganic_elements",
+      "name": "Important inorganic elements",
+      "nameZh": "重要无机元素",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_chem_iron_compounds",
+          "name": "Iron and its compounds",
+          "nameZh": "铁及其重要化合物",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_chem_nitrogen_compounds",
+          "name": "Nitrogen and its compounds",
+          "nameZh": "氮及其重要化合物",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_chem_sulfur_compounds",
+          "name": "Sulfur and its compounds",
+          "nameZh": "硫及其重要化合物",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_chem_topic_inorganic_stse",
+      "name": "Inorganic conversion and impact",
+      "nameZh": "无机转化及社会影响",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_chem_inorganic_conversion_pathways",
+          "name": "Inorganic conversion pathways",
+          "nameZh": "无机物性质与转化路径",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_chem_inorganic_stse_value",
+          "name": "Value and impact of inorganic chemistry",
+          "nameZh": "无机物应用价值与环境影响",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_chem_fuel_battery_evaluation",
+          "name": "Fuel and battery evaluation",
+          "nameZh": "燃料效率与化学电源价值",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_chem_topic_foundations"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_chem_topic_organic_intro",
+      "name": "Organic chemistry and resources",
+      "nameZh": "有机化学与资源",
+      "defaultOrder": 6,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_chem_organic_synthesis_value",
+          "name": "Value of organic synthesis",
+          "nameZh": "有机合成创造新物质",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_chem_intro_macromolecule_applications",
+          "name": "Introductory macromolecule applications",
+          "nameZh": "高分子与生物大分子应用初步",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_chem_fossil_resource_utilisation",
+          "name": "Integrated use of fossil resources",
+          "nameZh": "化石资源综合利用",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_chem_topic_organic_design",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_chem_topic_sustainability",
+      "name": "Sustainable chemistry",
+      "nameZh": "可持续化学",
+      "defaultOrder": 7,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_chem_chemistry_sustainable_development",
+          "name": "Chemistry and sustainable development",
+          "nameZh": "化学促进可持续发展",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_chem_green_chemistry_principles",
+          "name": "Green chemistry principles",
+          "nameZh": "绿色化学基本思想",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_chem_clean_production_circularity",
+          "name": "Clean production and circularity",
+          "nameZh": "清洁生产与循环利用",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_chem_topic_chemistry_society",
+      "name": "Chemistry, materials and health",
+      "nameZh": "化学、材料与健康",
+      "defaultOrder": 8,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_chem_chemistry_materials",
+          "name": "Chemistry in materials science",
+          "nameZh": "化学与材料科学",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_chem_chemistry_health",
+          "name": "Chemistry and human health",
+          "nameZh": "化学与人类健康",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_chem_energy_resource_systems",
+          "name": "Energy-resource systems",
+          "nameZh": "自然资源与能源综合利用",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_chem_topic_environment_safety",
+      "name": "Environment and chemical rules",
+      "nameZh": "环境与化学规则",
+      "defaultOrder": 9,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_chem_pollutant_detection_treatment",
+          "name": "Pollutant detection and treatment",
+          "nameZh": "污染物检测与治理",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_chem_chemical_rules_safe_use",
+          "name": "Chemical application laws and rules",
+          "nameZh": "化学应用法律法规与规则意识",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_chem_topic_thermo_electrochem",
+      "name": "Thermodynamics and electrochemistry",
+      "nameZh": "热力学与电化学",
+      "defaultOrder": 10,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_chem_internal_energy_state",
+          "name": "Internal energy and state variables",
+          "nameZh": "内能与体系状态",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_chem_energy_forms_conservation",
+          "name": "Energy forms and conservation",
+          "nameZh": "化学能转化与能量守恒",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_chem_electrochemical_corrosion",
+          "name": "Electrochemical corrosion and protection",
+          "nameZh": "金属电化学腐蚀与防护",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_chem_topic_equilibrium_kinetics",
+      "name": "Equilibrium and kinetics in production",
+      "nameZh": "平衡、动力学与生产",
+      "defaultOrder": 11,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_chem_reaction_quotient_direction",
+          "name": "Reaction quotient and direction",
+          "nameZh": "浓度商与反应方向",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_chem_industrial_condition_optimisation",
+          "name": "Industrial condition optimisation",
+          "nameZh": "化工反应条件综合优化",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_chem_aqueous_electrolyte_systems",
+          "name": "Aqueous electrolyte systems",
+          "nameZh": "电解质水溶液体系",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_chem_topic_aqueous_chemistry",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_chem_topic_aqueous_chemistry",
+      "name": "Aqueous equilibria",
+      "nameZh": "水溶液平衡",
+      "defaultOrder": 12,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_chem_water_ionisation_ph",
+          "name": "Water ionisation, ionic product and pH",
+          "nameZh": "水的电离、离子积与 pH",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_chem_salt_hydrolysis",
+          "name": "Salt hydrolysis",
+          "nameZh": "盐类水解平衡",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_chem_aqueous_equilibrium_applications",
+          "name": "Applications of aqueous equilibria",
+          "nameZh": "水溶液离子平衡应用",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_chem_topic_equilibrium_kinetics"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_chem_topic_atomic_structure_methods",
+      "name": "Atomic structure and measurement",
+      "nameZh": "原子结构与测定",
+      "defaultOrder": 13,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_chem_quantised_levels_transitions",
+          "name": "Quantised energy levels and transitions",
+          "nameZh": "电子能级、激发与跃迁",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_chem_spectroscopy_xrd_methods",
+          "name": "Spectroscopic and X-ray structure determination",
+          "nameZh": "光谱与晶体 X 射线结构测定",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_chem_topic_materials_structure",
+      "name": "Structure of materials",
+      "nameZh": "材料结构",
+      "defaultOrder": 14,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_chem_transitional_mixed_crystals",
+          "name": "Transitional and mixed crystals",
+          "nameZh": "过渡晶体与混合型晶体",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_chem_aggregation_state_materials",
+          "name": "Aggregation states and materials",
+          "nameZh": "聚集状态、微粒作用与材料性质",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_chem_structure_guided_material_design",
+          "name": "Structure-guided material design",
+          "nameZh": "结构—性质与材料设计",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_chem_topic_structure_applications",
+      "name": "Structure and functional groups",
+      "nameZh": "结构与官能团",
+      "defaultOrder": 15,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_chem_structure_methods_life_science",
+          "name": "Structure methods in life science",
+          "nameZh": "结构理论与生命科学",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_chem_functional_group_properties_conversion",
+          "name": "Functional-group properties and conversion",
+          "nameZh": "官能团性质、相互影响与转化",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_chem_functional_group_tests",
+          "name": "Tests for functional groups",
+          "nameZh": "常见官能团检验",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_chem_topic_organic_design",
+      "name": "Organic synthesis and polymer structure",
+      "nameZh": "有机合成与聚合物结构",
+      "defaultOrder": 16,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_chem_organic_synthesis_routes",
+          "name": "Organic synthesis routes",
+          "nameZh": "有机合成路线设计",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_chem_organic_safety_green_synthesis",
+          "name": "Organic safety and green synthesis",
+          "nameZh": "有机物安全与绿色合成",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_chem_polymer_monomer_repeat_unit",
+          "name": "Polymer, monomer and repeat unit",
+          "nameZh": "聚合物、单体与链节",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_chem_topic_biomolecules_polymers",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "cn_sh_chem_topic_organic_intro"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_chem_topic_biomolecules_polymers",
+      "name": "Biomolecules and polymers",
+      "nameZh": "生物大分子与高分子",
+      "defaultOrder": 17,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_chem_carbohydrates",
+          "name": "Carbohydrates",
+          "nameZh": "糖类、葡萄糖、淀粉与纤维素",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_chem_dna_rna",
+          "name": "DNA and RNA",
+          "nameZh": "DNA、RNA 结构与功能",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_chem_synthetic_polymers_materials",
+          "name": "Synthetic polymers and advanced materials",
+          "nameZh": "合成高分子与新型材料",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_chem_topic_organic_design"
+      ],
+      "isRoot": false
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "cn_sh_chem_aggregation_state_materials",
+      "to": "cn_sh_chem_structure_guided_material_design",
+      "strength": "soft",
+      "reason": "用结构指导材料设计需要先理解微粒作用和聚集状态如何决定材料性质。"
+    },
+    {
+      "from": "cn_sh_chem_aqueous_electrolyte_systems",
+      "to": "cn_sh_chem_salt_hydrolysis",
+      "strength": "soft",
+      "reason": "解释盐类水解需要先能分析溶液中的离子和电离平衡。"
+    },
+    {
+      "from": "cn_sh_chem_aqueous_electrolyte_systems",
+      "to": "cn_sh_chem_water_ionisation_ph",
+      "strength": "soft",
+      "reason": "使用水的离子积和 pH 前需要先建立电解质水溶液的平衡模型。"
+    },
+    {
+      "from": "cn_sh_chem_electrolyte_ionisation",
+      "to": "cn_sh_chem_ionic_reaction_conditions",
+      "strength": "soft",
+      "reason": "判断离子反应发生条件需要先识别电解质产生的溶液离子。"
+    },
+    {
+      "from": "cn_sh_chem_element_valence_conversion",
+      "to": "cn_sh_chem_oxidising_reducing_agents",
+      "strength": "soft",
+      "reason": "判断氧化剂和还原剂需要先分析元素价态及其变化方向。"
+    },
+    {
+      "from": "cn_sh_chem_functional_group_properties_conversion",
+      "to": "cn_sh_chem_functional_group_tests",
+      "strength": "soft",
+      "reason": "选择官能团检验需要先掌握其特征性质、相互影响和转化。"
+    },
+    {
+      "from": "cn_sh_chem_green_chemistry_principles",
+      "to": "cn_sh_chem_clean_production_circularity",
+      "strength": "soft",
+      "reason": "清洁生产和循环利用方案建立在绿色化学的原料、过程与废物原则上。"
+    },
+    {
+      "from": "cn_sh_chem_inorganic_conversion_pathways",
+      "to": "cn_sh_chem_inorganic_stse_value",
+      "strength": "soft",
+      "reason": "评价无机化工的价值与影响需要先理解物质转化路径。"
+    },
+    {
+      "from": "cn_sh_chem_internal_energy_state",
+      "to": "cn_sh_chem_energy_forms_conservation",
+      "strength": "soft",
+      "reason": "分析化学能的转化和守恒需要先明确体系内能及其状态依赖。"
+    },
+    {
+      "from": "cn_sh_chem_ionic_reaction_conditions",
+      "to": "cn_sh_chem_common_ion_tests",
+      "strength": "soft",
+      "reason": "设计离子检验需要先掌握特征离子反应及其发生条件。"
+    },
+    {
+      "from": "cn_sh_chem_organic_synthesis_routes",
+      "to": "cn_sh_chem_organic_safety_green_synthesis",
+      "strength": "soft",
+      "reason": "评价合成方案的安全性和绿色程度需要先能读懂并比较反应路线。"
+    },
+    {
+      "from": "cn_sh_chem_organic_synthesis_value",
+      "to": "cn_sh_chem_organic_synthesis_routes",
+      "strength": "soft",
+      "reason": "比较具体合成路线前需要理解有机合成通过结构转化创造物质的基本价值。"
+    },
+    {
+      "from": "cn_sh_chem_polymer_monomer_repeat_unit",
+      "to": "cn_sh_chem_synthetic_polymers_materials",
+      "strength": "soft",
+      "reason": "比较合成高分子材料需要先能从聚合物结构识别单体、链节和聚合方式。"
+    },
+    {
+      "from": "cn_sh_chem_salt_hydrolysis",
+      "to": "cn_sh_chem_aqueous_equilibrium_applications",
+      "strength": "soft",
+      "reason": "利用离子平衡解决物质转化问题需要先掌握盐类水解。"
+    },
+    {
+      "from": "cn_sh_chem_substance_classification_conversion",
+      "to": "cn_sh_chem_inorganic_conversion_pathways",
+      "strength": "soft",
+      "reason": "设计无机物转化路径前需要先能按组成和性质分类物质。"
+    },
+    {
+      "from": "cn_sh_chem_water_ionisation_ph",
+      "to": "cn_sh_chem_aqueous_equilibrium_applications",
+      "strength": "soft",
+      "reason": "综合应用水溶液平衡需要先能表示溶液酸碱性和水的电离。"
+    }
+  ]
+}

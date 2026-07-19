@@ -1,0 +1,104 @@
+{
+  "graphId": "singapore_h2_physics",
+  "subject": "Physics",
+  "generatedFrom": "data/knowledge-graphs/source/singapore_h2_physics.json",
+  "generatedAt": "2026-07-19",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
+  "topics": [
+    {
+      "topicId": "sg_h2_physics_topic_field_applications",
+      "name": "Field representations and applications",
+      "nameZh": "场的表示与应用",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_physics_field_lines_equipotential_geometry",
+          "name": "Field-line and equipotential geometry",
+          "nameZh": "场线与等势面的几何关系",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_physics_crossed_field_velocity_selector",
+          "name": "Crossed-field velocity selector",
+          "nameZh": "交叉电磁场速度选择器",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_physics_topic_quantum_foundations",
+      "name": "Quantum foundations",
+      "nameZh": "量子物理基础",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_physics_wavefunction_probability_superposition",
+          "name": "Wavefunction probability and superposition",
+          "nameZh": "波函数概率解释与量子叠加",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_physics_heisenberg_position_momentum_uncertainty",
+          "name": "Heisenberg position-momentum uncertainty",
+          "nameZh": "海森堡位置—动量不确定性",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_physics_infinite_square_well_states",
+          "name": "Infinite square-well wavefunctions and energy levels",
+          "nameZh": "无限深方势阱波函数与能级",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_physics_topic_nuclear_reasoning",
+      "name": "Nuclear radiation and conservation",
+      "nameZh": "核辐射与守恒推理",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_physics_background_radiation_properties",
+          "name": "Background radiation and alpha-beta-gamma properties",
+          "nameZh": "本底辐射与 α、β、γ 辐射性质",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_physics_nuclear_equations_conservation",
+          "name": "Nuclear equations and conservation laws",
+          "nameZh": "核方程与守恒定律",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_physics_beta_decay_neutrino_inference",
+          "name": "Neutrino inference from beta decay",
+          "nameZh": "由 β 衰变守恒缺口推断中微子",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "sg_h2_physics_nuclear_equations_conservation",
+      "to": "sg_h2_physics_beta_decay_neutrino_inference",
+      "strength": "soft",
+      "reason": "从 β 衰变观测缺口推断中微子，需要先能对核方程逐项检查电荷、核子数、能量和动量守恒。"
+    },
+    {
+      "from": "sg_h2_physics_wavefunction_probability_superposition",
+      "to": "sg_h2_physics_infinite_square_well_states",
+      "strength": "soft",
+      "reason": "求解无限深方势阱并解释定态概率前，需要先掌握波函数、归一化与概率密度。"
+    }
+  ]
+}

@@ -152,7 +152,7 @@ const TOPIC_GROUPS = [
   ["sustainability", "Sustainable chemistry", "可持续化学", ["chemistry_sustainable_development", "green_chemistry_principles", "clean_production_circularity"]],
   ["chemistry_society", "Chemistry, materials and health", "化学、材料与健康", ["chemistry_materials", "chemistry_health", "energy_resource_systems"]],
   ["environment_safety", "Environment and chemical rules", "环境与化学规则", ["pollutant_detection_treatment", "chemical_rules_safe_use"]],
-  ["thermo_electrochem", "Thermodynamics and electrochemistry", "热力学与电化学", ["energy_forms_conservation", "internal_energy_state", "electrochemical_corrosion"]],
+  ["thermo_electrochem", "Thermodynamics and electrochemistry", "热力学与电化学", ["internal_energy_state", "energy_forms_conservation", "electrochemical_corrosion"]],
   ["equilibrium_kinetics", "Equilibrium and kinetics in production", "平衡、动力学与生产", ["reaction_quotient_direction", "industrial_condition_optimisation", "aqueous_electrolyte_systems"]],
   ["aqueous_chemistry", "Aqueous equilibria", "水溶液平衡", ["water_ionisation_ph", "salt_hydrolysis", "aqueous_equilibrium_applications"]],
   ["atomic_structure_methods", "Atomic structure and measurement", "原子结构与测定", ["quantised_levels_transitions", "spectroscopy_xrd_methods"]],

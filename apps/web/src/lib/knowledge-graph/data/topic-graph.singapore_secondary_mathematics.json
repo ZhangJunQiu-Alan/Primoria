@@ -1,0 +1,676 @@
+{
+  "graphId": "singapore_secondary_mathematics",
+  "subject": "Mathematics",
+  "generatedFrom": "data/knowledge-graphs/source/singapore_secondary_mathematics.json",
+  "generatedAt": "2026-07-19",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
+  "topics": [
+    {
+      "topicId": "sg_sec_math_topic_number_structure",
+      "name": "Number structure and approximation",
+      "nameZh": "数的结构与近似",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "sg_sec_math_prime_factorisation",
+          "name": "Prime factorisation, common factors and roots",
+          "nameZh": "质因数分解、公因倍数与方根",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_sec_math_real_number_operations",
+          "name": "Real-number operations and order",
+          "nameZh": "实数运算、数轴与大小关系",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_sec_math_approximation_estimation",
+          "name": "Rounding, approximation and estimation",
+          "nameZh": "取整、近似与估算",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_sec_math_topic_ratio_percentage",
+      "name": "Ratio, percentage and proportion",
+      "nameZh": "比、百分数与比例",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "sg_sec_math_ratio",
+          "name": "Ratio reasoning and proportional division",
+          "nameZh": "比与按比分配",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_sec_math_percentage",
+          "name": "Percentage representation, comparison and change",
+          "nameZh": "百分数表示、比较与变化",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_sec_math_scale_proportion",
+          "name": "Map scales and direct or inverse proportion",
+          "nameZh": "地图比例尺与正反比例",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "sg_sec_math_topic_quantitative_contexts",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_sec_math_topic_quantitative_contexts",
+      "name": "Rates and quantitative contexts",
+      "nameZh": "率与数量情境",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "sg_sec_math_rate_speed",
+          "name": "Rate, distance, time and speed",
+          "nameZh": "率、路程、时间与速度",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_sec_math_personal_finance",
+          "name": "Personal and household financial mathematics",
+          "nameZh": "个人与家庭金融数学",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_sec_math_motion_data_graphs",
+          "name": "Distance-time and speed-time graph interpretation",
+          "nameZh": "路程—时间与速度—时间图像",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "sg_sec_math_topic_ratio_percentage"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "sg_sec_math_topic_algebra_language",
+      "name": "Algebraic language and patterns",
+      "nameZh": "代数语言与规律",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "sg_sec_math_algebra_notation_evaluation",
+          "name": "Algebraic notation and substitution",
+          "nameZh": "代数记号与代入求值",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_sec_math_algebra_translation",
+          "name": "Translating simple situations into algebraic expressions",
+          "nameZh": "把简单情境表示为代数式",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_sec_math_nth_term_patterns",
+          "name": "Algebraic nth terms for patterns",
+          "nameZh": "用代数通项表示规律",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "sg_sec_math_topic_linear_foundations",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_sec_math_topic_linear_foundations",
+      "name": "Linear expressions and equations",
+      "nameZh": "一次式与一次方程",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "sg_sec_math_linear_expressions",
+          "name": "Operations on linear expressions",
+          "nameZh": "一次式的运算与化简",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_sec_math_linear_integer_equations",
+          "name": "Linear equations with integer coefficients",
+          "nameZh": "整数系数一元一次方程",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_sec_math_linear_fractional_equations",
+          "name": "Linear equations with fractional forms",
+          "nameZh": "含分数形式的一次方程",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "sg_sec_math_topic_representations_constraints",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "sg_sec_math_topic_algebra_language"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "sg_sec_math_topic_expansion_factorisation",
+      "name": "Expansion, factorisation and formulae",
+      "nameZh": "展开、因式分解与公式",
+      "defaultOrder": 6,
+      "conceptIds": [
+        {
+          "conceptId": "sg_sec_math_algebra_expansion_identities",
+          "name": "Expansion and elementary algebraic identities",
+          "nameZh": "代数展开与基本恒等式",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_sec_math_factorisation",
+          "name": "Factorising linear and quadratic expressions",
+          "nameZh": "一次式与二次式因式分解",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_sec_math_formula_rearrangement",
+          "name": "Changing the subject and evaluating formulae",
+          "nameZh": "改变公式主项与未知量求值",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_sec_math_topic_algebraic_fractions",
+      "name": "Algebraic fractions",
+      "nameZh": "代数分式",
+      "defaultOrder": 7,
+      "conceptIds": [
+        {
+          "conceptId": "sg_sec_math_algebraic_fractions_multiply_divide",
+          "name": "Multiplying and dividing algebraic fractions",
+          "nameZh": "代数分式乘除",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_sec_math_algebraic_fractions_add_subtract",
+          "name": "Adding and subtracting algebraic fractions",
+          "nameZh": "代数分式加减",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_sec_math_topic_representations_constraints",
+      "name": "Representations and constraints",
+      "nameZh": "表示与约束",
+      "defaultOrder": 8,
+      "conceptIds": [
+        {
+          "conceptId": "sg_sec_math_coordinate_relationships",
+          "name": "Coordinate representation of two-variable relationships",
+          "nameZh": "二维坐标中的变量关系表示",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_sec_math_linear_inequalities",
+          "name": "Simple and compound linear inequalities",
+          "nameZh": "简单与联立一元一次不等式",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_sec_math_elementary_matrices",
+          "name": "Elementary matrix representation and operations",
+          "nameZh": "初等矩阵表示与运算",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "sg_sec_math_topic_linear_foundations"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "sg_sec_math_topic_indices_gradient",
+      "name": "Standard form, indices and gradient",
+      "nameZh": "标准式、指数与斜率",
+      "defaultOrder": 9,
+      "conceptIds": [
+        {
+          "conceptId": "sg_sec_math_standard_form",
+          "name": "Scientific notation with integer powers",
+          "nameZh": "整数次幂标准式",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_sec_math_indices",
+          "name": "Integer and fractional indices",
+          "nameZh": "整数与分数指数及指数律",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_sec_math_tangent_gradient",
+          "name": "Estimating curve gradient with a tangent",
+          "nameZh": "用切线估计曲线斜率",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_sec_math_topic_quadratic_equations",
+      "name": "Quadratic equation methods",
+      "nameZh": "二次方程方法",
+      "defaultOrder": 10,
+      "conceptIds": [
+        {
+          "conceptId": "sg_sec_math_quadratic_factorisation_solve",
+          "name": "Solving quadratic equations by factorisation",
+          "nameZh": "因式分解法解二次方程",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_sec_math_quadratic_formula_complete_graph",
+          "name": "Quadratic formula, completing the square and graphical solution",
+          "nameZh": "公式、配方与图像法解二次方程",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_sec_math_fractional_quadratic_equations",
+          "name": "Fractional equations reducible to quadratics",
+          "nameZh": "可化为二次方程的分式方程",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_sec_math_topic_elementary_geometry",
+      "name": "Angles, triangles and polygons",
+      "nameZh": "角、三角形与多边形",
+      "defaultOrder": 11,
+      "conceptIds": [
+        {
+          "conceptId": "sg_sec_math_angle_relationships",
+          "name": "Angle types and angle relationships",
+          "nameZh": "角的类型与基本关系",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_sec_math_triangle_properties",
+          "name": "Triangle properties and classification",
+          "nameZh": "三角形性质与分类",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_sec_math_polygon_properties",
+          "name": "Quadrilateral and polygon properties",
+          "nameZh": "四边形与多边形性质",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_sec_math_topic_construction_similarity",
+      "name": "Construction and similarity",
+      "nameZh": "作图与相似",
+      "defaultOrder": 12,
+      "conceptIds": [
+        {
+          "conceptId": "sg_sec_math_geometric_construction",
+          "name": "Instrument-based geometric construction",
+          "nameZh": "几何作图",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_sec_math_congruence_similarity_foundations",
+          "name": "Congruence and similarity foundations",
+          "nameZh": "全等与相似基础",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_sec_math_congruence_similarity_enlargement",
+          "name": "Enlargement, reduction and scale drawings",
+          "nameZh": "放缩与比例作图",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "sg_sec_math_topic_triangle_similarity_trig",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_sec_math_topic_triangle_reasoning",
+      "name": "Triangle measurement and reasoning",
+      "nameZh": "三角形度量与推理",
+      "defaultOrder": 13,
+      "conceptIds": [
+        {
+          "conceptId": "sg_sec_math_plane_mensuration",
+          "name": "Perimeter and area of composite plane figures",
+          "nameZh": "组合平面图形的周长与面积",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_sec_math_pythagoras",
+          "name": "Pythagoras theorem and its converse",
+          "nameZh": "勾股定理及逆定理",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_sec_math_right_triangle_trig",
+          "name": "Right-triangle trigonometric ratios",
+          "nameZh": "直角三角形三角比",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "sg_sec_math_topic_triangle_similarity_trig",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_sec_math_topic_triangle_similarity_trig",
+      "name": "Triangle similarity and trigonometry",
+      "nameZh": "三角形相似与三角计算",
+      "defaultOrder": 14,
+      "conceptIds": [
+        {
+          "conceptId": "sg_sec_math_congruence_similarity_tests",
+          "name": "Triangle congruence and similarity tests with scale ratios",
+          "nameZh": "三角形全等相似判定与尺度比",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_sec_math_triangle_trigonometry",
+          "name": "Trigonometry for non-right triangles",
+          "nameZh": "任意三角形的三角计算",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_sec_math_spatial_trigonometry",
+          "name": "Trigonometric problems in two and three dimensions",
+          "nameZh": "二维与三维三角问题",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "sg_sec_math_topic_construction_similarity",
+        "sg_sec_math_topic_triangle_reasoning"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "sg_sec_math_topic_circle_geometry",
+      "name": "Circle geometry and measurement",
+      "nameZh": "圆的几何与度量",
+      "defaultOrder": 15,
+      "conceptIds": [
+        {
+          "conceptId": "sg_sec_math_circle_chord_tangent",
+          "name": "Circle chord and tangent properties",
+          "nameZh": "圆的弦与切线性质",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_sec_math_circle_angles",
+          "name": "Circle angle properties",
+          "nameZh": "圆的角性质",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_sec_math_circle_mensuration",
+          "name": "Arc length, sector area and segment area",
+          "nameZh": "弧长、扇形面积与弓形面积",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_sec_math_topic_data_foundations",
+      "name": "Data collection and representation",
+      "nameZh": "数据收集与表示",
+      "defaultOrder": 16,
+      "conceptIds": [
+        {
+          "conceptId": "sg_sec_math_data_collection",
+          "name": "Collecting, classifying and tabulating data",
+          "nameZh": "数据收集、分类与制表",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_sec_math_statistical_representations",
+          "name": "Selecting and interpreting statistical representations",
+          "nameZh": "选择和解释统计表示",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_sec_math_misleading_diagrams",
+          "name": "Detecting misleading statistical diagrams",
+          "nameZh": "识别误导性统计图",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_sec_math_topic_distribution_description",
+      "name": "Describing distributions",
+      "nameZh": "描述数据分布",
+      "defaultOrder": 17,
+      "conceptIds": [
+        {
+          "conceptId": "sg_sec_math_distribution_diagrams",
+          "name": "Dot plots, histograms and stem-and-leaf plots",
+          "nameZh": "点图、直方图与茎叶图",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_sec_math_central_tendency",
+          "name": "Mean, median, mode and grouped mean",
+          "nameZh": "平均数、中位数、众数与分组均值",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_sec_math_quartiles_spread",
+          "name": "Quartiles, percentiles and measures of spread",
+          "nameZh": "四分位数、百分位数与离散程度",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "sg_sec_math_topic_distribution_probability",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_sec_math_topic_distribution_probability",
+      "name": "Distribution comparison and probability",
+      "nameZh": "分布比较与概率",
+      "defaultOrder": 18,
+      "conceptIds": [
+        {
+          "conceptId": "sg_sec_math_cumulative_box",
+          "name": "Cumulative-frequency diagrams and box plots",
+          "nameZh": "累积频数图与箱线图",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_sec_math_standard_deviation_compare",
+          "name": "Calculating standard deviation and comparing datasets",
+          "nameZh": "计算标准差并比较数据集",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_sec_math_combined_probability",
+          "name": "Representing simple combined-event probability",
+          "nameZh": "复合事件概率表示",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "sg_sec_math_topic_distribution_description"
+      ],
+      "isRoot": false
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "sg_sec_math_algebra_expansion_identities",
+      "to": "sg_sec_math_factorisation",
+      "strength": "soft",
+      "reason": "把恒等式反向用于因式分解需要先能正确展开并识别结构。"
+    },
+    {
+      "from": "sg_sec_math_algebra_notation_evaluation",
+      "to": "sg_sec_math_linear_expressions",
+      "strength": "soft",
+      "reason": "一次式化简依赖对代数记号和代入意义的理解。"
+    },
+    {
+      "from": "sg_sec_math_algebraic_fractions_multiply_divide",
+      "to": "sg_sec_math_algebraic_fractions_add_subtract",
+      "strength": "soft",
+      "reason": "代数分式通分加减需要先掌握约分、乘除和非零限制。"
+    },
+    {
+      "from": "sg_sec_math_angle_relationships",
+      "to": "sg_sec_math_triangle_properties",
+      "strength": "soft",
+      "reason": "三角形角关系和分类需要先能识别并计算基本角关系。"
+    },
+    {
+      "from": "sg_sec_math_central_tendency",
+      "to": "sg_sec_math_standard_deviation_compare",
+      "strength": "soft",
+      "reason": "联合比较中心与离散程度需要先会计算并选择集中趋势指标。"
+    },
+    {
+      "from": "sg_sec_math_congruence_similarity_foundations",
+      "to": "sg_sec_math_congruence_similarity_tests",
+      "strength": "soft",
+      "reason": "使用判定条件和尺度比前需要理解对应角边及比例关系。"
+    },
+    {
+      "from": "sg_sec_math_linear_expressions",
+      "to": "sg_sec_math_linear_integer_equations",
+      "strength": "soft",
+      "reason": "移项和保持等式需要先能正确展开与合并一次式。"
+    },
+    {
+      "from": "sg_sec_math_linear_integer_equations",
+      "to": "sg_sec_math_linear_fractional_equations",
+      "strength": "soft",
+      "reason": "含分数形式的一次方程建立在基本一元一次方程求解之上。"
+    },
+    {
+      "from": "sg_sec_math_linear_integer_equations",
+      "to": "sg_sec_math_linear_inequalities",
+      "strength": "soft",
+      "reason": "一元一次不等式求解复用一次方程的等价变形，并增加乘除负数时反向规则。"
+    },
+    {
+      "from": "sg_sec_math_percentage",
+      "to": "sg_sec_math_personal_finance",
+      "strength": "soft",
+      "reason": "利息、税费和分期付款的数量关系需要百分数变化基础。"
+    },
+    {
+      "from": "sg_sec_math_pythagoras",
+      "to": "sg_sec_math_right_triangle_trig",
+      "strength": "soft",
+      "reason": "直角三角形三角计算需要先能识别直角结构并处理边长关系。"
+    },
+    {
+      "from": "sg_sec_math_quartiles_spread",
+      "to": "sg_sec_math_cumulative_box",
+      "strength": "soft",
+      "reason": "累积频数图和箱线图依赖四分位数、百分位数与四分位距。"
+    },
+    {
+      "from": "sg_sec_math_rate_speed",
+      "to": "sg_sec_math_motion_data_graphs",
+      "strength": "soft",
+      "reason": "解释路程—时间和速度—时间图像需要先理解路程、时间、速度与单位。"
+    },
+    {
+      "from": "sg_sec_math_ratio",
+      "to": "sg_sec_math_scale_proportion",
+      "strength": "soft",
+      "reason": "比例尺和正反比例需要先能解释、化简并按比推理。"
+    },
+    {
+      "from": "sg_sec_math_right_triangle_trig",
+      "to": "sg_sec_math_triangle_trigonometry",
+      "strength": "soft",
+      "reason": "正弦定理、余弦定理与三角形面积公式建立在正弦余弦比的含义上。"
+    },
+    {
+      "from": "sg_sec_math_statistical_representations",
+      "to": "sg_sec_math_misleading_diagrams",
+      "strength": "soft",
+      "reason": "识别误导性图表需要先理解各统计表示的正常编码与用途。"
+    },
+    {
+      "from": "sg_sec_math_triangle_properties",
+      "to": "sg_sec_math_polygon_properties",
+      "strength": "soft",
+      "reason": "四边形与多边形性质建立在三角形分割和角关系之上。"
+    },
+    {
+      "from": "sg_sec_math_triangle_trigonometry",
+      "to": "sg_sec_math_spatial_trigonometry",
+      "strength": "soft",
+      "reason": "三维和方位问题需要先能在单个任意三角形中选择正确的三角方法。"
+    }
+  ]
+}

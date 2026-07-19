@@ -2646,11 +2646,11 @@
       "review_status": "needs_review"
     },
     {
-      "from": "cn_sh_bio_population_limiting_factors",
-      "to": "cn_sh_bio_population_growth_models",
+      "from": "cn_sh_bio_population_growth_models",
+      "to": "cn_sh_bio_population_limiting_factors",
       "type": "prereq",
       "strength": "soft",
-      "reason": "理解逻辑斯谛增长及环境容纳量需要先掌握密度相关和非密度相关限制因素。",
+      "reason": "以指数和逻辑斯谛增长模型及环境容纳量为动态基线，有助于进一步分析各类限制因素如何改变种群数量。",
       "evidence_refs": [
         {
           "source_id": "src_cn_moe_senior_high_biology_2020",

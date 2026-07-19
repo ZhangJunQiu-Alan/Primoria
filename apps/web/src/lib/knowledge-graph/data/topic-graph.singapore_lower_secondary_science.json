@@ -1,0 +1,472 @@
+{
+  "graphId": "singapore_lower_secondary_science",
+  "subject": "Science",
+  "generatedFrom": "data/knowledge-graphs/source/singapore_lower_secondary_science.json",
+  "generatedAt": "2026-07-19",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
+  "topics": [
+    {
+      "topicId": "sg_lss_science_topic_matter_properties_composition",
+      "name": "Matter properties and composition",
+      "nameZh": "物质性质与组成",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "sg_lss_science_physical_properties_density",
+          "name": "Physical properties, mass, volume and density",
+          "nameZh": "物理性质、质量、体积与密度",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_lss_science_elements_compounds",
+          "name": "Elements, compounds and their distinguishing properties",
+          "nameZh": "元素、化合物及其性质边界",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_lss_science_mixtures_solutions",
+          "name": "Mixtures, solutions and suspensions",
+          "nameZh": "混合物、溶液与悬浊液",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "sg_lss_science_topic_mixture_separation",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_lss_science_topic_mixture_separation",
+      "name": "Mixture separation",
+      "nameZh": "混合物分离",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "sg_lss_science_separation_principles",
+          "name": "Principles of mixture separation",
+          "nameZh": "混合物分离原理",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_lss_science_separation_applications",
+          "name": "Applications of separation techniques",
+          "nameZh": "分离技术的生活与工业应用",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "sg_lss_science_topic_matter_properties_composition"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "sg_lss_science_topic_light_ray_model",
+      "name": "Ray model of light",
+      "nameZh": "光的射线模型",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "sg_lss_science_ray_model_reflection",
+          "name": "Ray model and reflection from surfaces",
+          "nameZh": "射线模型与表面反射",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_lss_science_refraction_dispersion",
+          "name": "Qualitative refraction and dispersion",
+          "nameZh": "定性折射与色散",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_lss_science_topic_cell_model",
+      "name": "Cell models and organisation",
+      "nameZh": "细胞模型与结构层级",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "sg_lss_science_typical_cell_structure_function",
+          "name": "Typical plant and animal cell structures and functions",
+          "nameZh": "典型动植物细胞结构与功能",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_lss_science_multicellular_organisation_labour",
+          "name": "Multicellular organisation and division of labour",
+          "nameZh": "多细胞生物的结构层级与细胞分工",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_lss_science_topic_particle_matter",
+      "name": "Particle model of matter",
+      "nameZh": "物质粒子模型",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "sg_lss_science_particle_model_states",
+          "name": "Particle model of solids, liquids and gases",
+          "nameZh": "固液气三态的粒子模型",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_lss_science_particle_model_thermal_changes",
+          "name": "Particle explanation of thermal expansion and state change",
+          "nameZh": "粒子模型解释热胀冷缩与物态变化",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_lss_science_topic_atoms_molecules",
+      "name": "Atoms and molecules",
+      "nameZh": "原子与分子",
+      "defaultOrder": 6,
+      "conceptIds": [
+        {
+          "conceptId": "sg_lss_science_atomic_identity_mass",
+          "name": "Proton number, nuclear mass and elemental identity",
+          "nameZh": "质子数、原子核质量与元素身份",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_lss_science_molecules_formula_reading",
+          "name": "Molecules and reading chemical formulae",
+          "nameZh": "分子及化学式信息读取",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_lss_science_topic_forces_pressure",
+      "name": "Forces, energy transfer and pressure",
+      "nameZh": "力、能量转移与压强",
+      "defaultOrder": 7,
+      "conceptIds": [
+        {
+          "conceptId": "sg_lss_science_force_effects_energy_transfer",
+          "name": "Effects of force and associated energy transfer",
+          "nameZh": "力的效应及其能量转移",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_lss_science_solid_atmospheric_liquid_pressure",
+          "name": "Solid, atmospheric and liquid pressure in context",
+          "nameZh": "固体、大气与液体压强情境",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_lss_science_topic_thermal_transfer",
+      "name": "Thermal transfer and expansion",
+      "nameZh": "热传递与热膨胀",
+      "defaultOrder": 8,
+      "conceptIds": [
+        {
+          "conceptId": "sg_lss_science_thermal_expansion_density",
+          "name": "Thermal expansion, contraction and density change",
+          "nameZh": "热胀冷缩与密度变化",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_lss_science_heat_transfer_mechanisms",
+          "name": "Conduction, convection and thermal radiation",
+          "nameZh": "传导、对流与热辐射",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_lss_science_thermal_radiation_rate_factors",
+          "name": "Surface and temperature factors in thermal radiation",
+          "nameZh": "影响热辐射速率的表面与温度因素",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_lss_science_topic_chemical_change",
+      "name": "Chemical change",
+      "nameZh": "化学变化",
+      "defaultOrder": 9,
+      "conceptIds": [
+        {
+          "conceptId": "sg_lss_science_chemical_change_particle_conservation",
+          "name": "Chemical change, atomic rearrangement and mass conservation",
+          "nameZh": "化学变化、原子重排与质量守恒",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_lss_science_word_equations_reaction_types",
+          "name": "Word equations and introductory reaction types",
+          "nameZh": "文字方程式与基础反应类型",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_lss_science_topic_ecosystem_interactions",
+      "name": "Ecosystem interactions and cycling",
+      "nameZh": "生态相互作用与物质循环",
+      "defaultOrder": 10,
+      "conceptIds": [
+        {
+          "conceptId": "sg_lss_science_ecosystem_factors_adaptation_interactions",
+          "name": "Abiotic factors, adaptations and community interactions",
+          "nameZh": "非生物因素、适应与群落关系",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_lss_science_decomposers_nutrient_cycle",
+          "name": "Decomposers and nutrient recycling",
+          "nameZh": "分解者与营养物质循环",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_lss_science_topic_current_effects",
+      "name": "Effects of electric current",
+      "nameZh": "电流的效应",
+      "defaultOrder": 11,
+      "conceptIds": [
+        {
+          "conceptId": "sg_lss_science_current_chemical_heating_effects",
+          "name": "Chemical and heating effects of electric current",
+          "nameZh": "电流的化学效应与热效应",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_lss_science_current_magnetic_effect",
+          "name": "Magnetic effect of electric current",
+          "nameZh": "电流的磁效应",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_lss_science_topic_digestion",
+      "name": "Human digestion",
+      "nameZh": "人体消化",
+      "defaultOrder": 12,
+      "conceptIds": [
+        {
+          "conceptId": "sg_lss_science_digestive_system_structure_process",
+          "name": "Digestive-system structure and the process of digestion",
+          "nameZh": "消化系统结构与消化过程",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_lss_science_digestion_products_cellular_use",
+          "name": "Absorbed digestion products in cellular processes",
+          "nameZh": "消化吸收产物在细胞过程中的用途",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_lss_science_topic_transport",
+      "name": "Transport in living things",
+      "nameZh": "生物体内的运输",
+      "defaultOrder": 13,
+      "conceptIds": [
+        {
+          "conceptId": "sg_lss_science_multicellular_transport_blood_exchange",
+          "name": "Need for multicellular transport and blood-vessel exchange",
+          "nameZh": "多细胞运输需求与血管交换",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_lss_science_plant_diffusion_transport",
+          "name": "Diffusion in plant transport",
+          "nameZh": "植物运输中的扩散",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_lss_science_topic_reproductive_foundations",
+      "name": "Human reproductive foundations",
+      "nameZh": "人类生殖基础",
+      "defaultOrder": 14,
+      "conceptIds": [
+        {
+          "conceptId": "sg_lss_science_sexual_reproduction_heredity_anatomy",
+          "name": "Human reproductive anatomy, fertilisation and heredity",
+          "nameZh": "人类生殖结构、受精与遗传",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_lss_science_puberty_menstrual_cycle",
+          "name": "Puberty and the menstrual cycle",
+          "nameZh": "青春期与月经周期",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "sg_lss_science_topic_reproductive_health",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_lss_science_topic_reproductive_health",
+      "name": "Reproductive health",
+      "nameZh": "生殖健康",
+      "defaultOrder": 15,
+      "conceptIds": [
+        {
+          "conceptId": "sg_lss_science_contraception_mechanisms",
+          "name": "Temporary and permanent contraception mechanisms",
+          "nameZh": "临时与永久避孕机制",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_lss_science_sti_consequences_treatment",
+          "name": "Consequences and treatment boundaries of sexually transmitted infections",
+          "nameZh": "性传播感染的危害与治疗边界",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "sg_lss_science_topic_reproductive_foundations"
+      ],
+      "isRoot": false
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "sg_lss_science_atomic_identity_mass",
+      "to": "sg_lss_science_molecules_formula_reading",
+      "strength": "soft",
+      "reason": "理解分子和化学式中的原子种类，需要先掌握原子与元素身份。"
+    },
+    {
+      "from": "sg_lss_science_chemical_change_particle_conservation",
+      "to": "sg_lss_science_word_equations_reaction_types",
+      "strength": "soft",
+      "reason": "用文字方程式表示并分类反应前，需要先理解新物质形成、原子重排和质量守恒。"
+    },
+    {
+      "from": "sg_lss_science_digestive_system_structure_process",
+      "to": "sg_lss_science_digestion_products_cellular_use",
+      "strength": "soft",
+      "reason": "解释消化产物的细胞用途前，需要先理解消化、吸收和系统各部分的作用。"
+    },
+    {
+      "from": "sg_lss_science_ecosystem_factors_adaptation_interactions",
+      "to": "sg_lss_science_decomposers_nutrient_cycle",
+      "strength": "soft",
+      "reason": "解释分解者在生态系统中的循环作用，需要先理解环境因素与群落相互作用。"
+    },
+    {
+      "from": "sg_lss_science_elements_compounds",
+      "to": "sg_lss_science_mixtures_solutions",
+      "strength": "soft",
+      "reason": "区分混合物前需要先理解元素与化合物作为纯物质类别及其性质边界。"
+    },
+    {
+      "from": "sg_lss_science_force_effects_energy_transfer",
+      "to": "sg_lss_science_solid_atmospheric_liquid_pressure",
+      "strength": "soft",
+      "reason": "压强是力在面积上的作用结果，解释压强情境前需先理解力的效应。"
+    },
+    {
+      "from": "sg_lss_science_heat_transfer_mechanisms",
+      "to": "sg_lss_science_thermal_radiation_rate_factors",
+      "strength": "soft",
+      "reason": "分析表面和温度对辐射速率的影响，需要先区分辐射与传导、对流。"
+    },
+    {
+      "from": "sg_lss_science_mixtures_solutions",
+      "to": "sg_lss_science_separation_principles",
+      "strength": "soft",
+      "reason": "分离混合物前需要先辨认组分、溶液与悬浊液的组成关系。"
+    },
+    {
+      "from": "sg_lss_science_particle_model_states",
+      "to": "sg_lss_science_particle_model_thermal_changes",
+      "strength": "soft",
+      "reason": "用粒子运动解释熔化、沸腾和热胀冷缩，需要先掌握三态粒子排列与运动。"
+    },
+    {
+      "from": "sg_lss_science_physical_properties_density",
+      "to": "sg_lss_science_separation_principles",
+      "strength": "soft",
+      "reason": "依据物理性质选择分离方法，需要先能识别和比较相关性质。"
+    },
+    {
+      "from": "sg_lss_science_ray_model_reflection",
+      "to": "sg_lss_science_refraction_dispersion",
+      "strength": "soft",
+      "reason": "用射线表示折射和色散路径，需要先掌握射线模型的方向与画法。"
+    },
+    {
+      "from": "sg_lss_science_separation_principles",
+      "to": "sg_lss_science_separation_applications",
+      "strength": "soft",
+      "reason": "评价水处理等应用前需要先理解各分离方法利用的性质差异。"
+    },
+    {
+      "from": "sg_lss_science_sexual_reproduction_heredity_anatomy",
+      "to": "sg_lss_science_contraception_mechanisms",
+      "strength": "soft",
+      "reason": "解释避孕方法中断何种过程或器官功能，需要先掌握生殖结构与受精过程。"
+    },
+    {
+      "from": "sg_lss_science_sexual_reproduction_heredity_anatomy",
+      "to": "sg_lss_science_puberty_menstrual_cycle",
+      "strength": "soft",
+      "reason": "描述月经周期中各部分的作用，需要先认识生殖系统结构及基本功能。"
+    },
+    {
+      "from": "sg_lss_science_typical_cell_structure_function",
+      "to": "sg_lss_science_multicellular_organisation_labour",
+      "strength": "soft",
+      "reason": "理解细胞分工及结构层级需要先能联系典型细胞结构与功能。"
+    }
+  ]
+}

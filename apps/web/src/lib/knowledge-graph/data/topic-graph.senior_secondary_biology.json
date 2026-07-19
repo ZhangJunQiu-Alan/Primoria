@@ -1,0 +1,983 @@
+{
+  "graphId": "senior_secondary_biology",
+  "subject": "Biology",
+  "generatedFrom": "data/knowledge-graphs/source/senior_secondary_biology.json",
+  "generatedAt": "2026-07-19",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
+  "topics": [
+    {
+      "topicId": "cn_sh_bio_topic_cell_chemistry_membrane",
+      "name": "Cell chemistry and membrane",
+      "nameZh": "细胞化学与质膜",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_cellular_elements_carbon_skeletons",
+          "name": "Cellular elements and carbon skeletons",
+          "nameZh": "细胞元素与碳链骨架",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_cellular_inorganic_salts",
+          "name": "Inorganic salts in cells",
+          "nameZh": "细胞中的无机盐",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_bio_plasma_membrane_functions",
+          "name": "Plasma-membrane functions",
+          "nameZh": "质膜的边界、运输与交流功能",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_bio_topic_membrane_transport",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_bio_topic_cell_coordination",
+      "name": "Cell organisation and coordination",
+      "nameZh": "细胞组织与协调",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_nucleus_genetic_information",
+          "name": "Nucleus and genetic information",
+          "nameZh": "细胞核与遗传信息",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_organelle_coordination",
+          "name": "Coordination among cell structures",
+          "nameZh": "细胞结构的协调合作",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_bio_cellular_unity_diversity",
+          "name": "Cellular unity and diversity",
+          "nameZh": "细胞结构统一性与形态功能多样性",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_bio_topic_membrane_transport",
+      "name": "Selective and bulk transport",
+      "nameZh": "选择性与大分子运输",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_selective_permeability",
+          "name": "Selective permeability",
+          "nameZh": "质膜的选择透过性",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_endocytosis_exocytosis",
+          "name": "Endocytosis and exocytosis",
+          "nameZh": "胞吞与胞吐",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_bio_topic_cell_chemistry_membrane"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_bio_topic_cell_fate",
+      "name": "Cell differentiation and fate",
+      "nameZh": "细胞分化与命运",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_cell_differentiation",
+          "name": "Cell differentiation",
+          "nameZh": "细胞分化",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_cell_senescence_death",
+          "name": "Cellular senescence and death",
+          "nameZh": "细胞衰老与死亡",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_bio_topic_genetic_information",
+      "name": "Genetic information and transmission",
+      "nameZh": "遗传信息与传递",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_gene_nucleic_acid_segment",
+          "name": "Genes as nucleic-acid segments",
+          "nameZh": "基因是核酸功能片段",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_epigenetic_phenomena",
+          "name": "Epigenetic phenomena",
+          "nameZh": "表观遗传现象",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_bio_gametic_inheritance",
+          "name": "Inheritance through gametes",
+          "nameZh": "遗传信息经配子传递",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_bio_topic_genetic_variation",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_bio_topic_genetic_variation",
+      "name": "Inheritance and variation",
+      "nameZh": "遗传与变异",
+      "defaultOrder": 6,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_sex_linked_inheritance",
+          "name": "Sex-linked inheritance",
+          "nameZh": "伴性遗传",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_mutagens_cancer",
+          "name": "Mutagens and cancer",
+          "nameZh": "诱变因素与癌变",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_bio_chromosomal_variation",
+          "name": "Chromosomal variation",
+          "nameZh": "染色体结构与数量变异",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_bio_topic_genetic_information"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_bio_topic_evolution_evidence_health",
+      "name": "Genetic health and evolutionary evidence",
+      "nameZh": "遗传健康与进化证据",
+      "defaultOrder": 7,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_genetic_disease_screening",
+          "name": "Genetic-disease screening and prevention",
+          "nameZh": "人类遗传病检测与预防",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_common_ancestry_fossil_anatomy",
+          "name": "Evidence from fossils and comparative anatomy",
+          "nameZh": "化石、比较解剖与胚胎学的共同祖先证据",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_bio_common_ancestry_cell_molecular",
+          "name": "Cellular and molecular evidence of common ancestry",
+          "nameZh": "细胞与分子层面的共同祖先证据",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_bio_topic_internal_environment",
+      "name": "Internal environment and exchange",
+      "nameZh": "内环境与物质交换",
+      "defaultOrder": 8,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_internal_environment_fluids",
+          "name": "Internal-environment fluids",
+          "nameZh": "内环境的细胞外液组成",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_internal_external_exchange",
+          "name": "Exchange through the internal environment",
+          "nameZh": "细胞经内环境与外界交换",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_bio_organ_system_exchange",
+          "name": "Organ systems in material exchange",
+          "nameZh": "器官系统参与内外环境物质交换",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_bio_topic_nervous_regulation",
+      "name": "Nervous regulation",
+      "nameZh": "神经调节",
+      "defaultOrder": 9,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_reflex_arc",
+          "name": "Reflexes and the reflex arc",
+          "nameZh": "反射与反射弧",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_central_nervous_hierarchy",
+          "name": "Coordination of spinal and brain centres",
+          "nameZh": "脊髓与脑高级中枢协调",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_bio_autonomic_nervous_regulation",
+          "name": "Autonomic nervous regulation",
+          "nameZh": "自主神经调节内脏",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_bio_topic_neuroendocrine",
+      "name": "Higher nervous and endocrine control",
+      "nameZh": "高级神经与内分泌调节",
+      "defaultOrder": 10,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_cortical_higher_activity",
+          "name": "Cortical higher nervous activity",
+          "nameZh": "大脑皮层高级神经活动",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_endocrine_system",
+          "name": "Endocrine-system organisation",
+          "nameZh": "内分泌系统组成",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_bio_neuroendocrine_coordination",
+          "name": "Neuroendocrine coordination",
+          "nameZh": "神经与体液调节协调",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_bio_topic_homeostasis_immunity",
+      "name": "Humoral regulation and immunity",
+      "nameZh": "体液调节与免疫",
+      "defaultOrder": 11,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_humoral_respiratory_regulation",
+          "name": "Humoral regulation of breathing",
+          "nameZh": "体液成分调节呼吸",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_innate_adaptive_immunity",
+          "name": "Innate and adaptive immunity",
+          "nameZh": "非特异性与特异性免疫",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_bio_immune_disorders",
+          "name": "Immune disorders",
+          "nameZh": "免疫功能异常与疾病",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_bio_topic_plant_regulation",
+      "name": "Auxin and plant growth regulation",
+      "nameZh": "生长素与植物生长调节",
+      "defaultOrder": 12,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_auxin_dual_effects",
+          "name": "Auxin discovery and dual effects",
+          "nameZh": "生长素发现与两重性",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_plant_growth_regulator_applications",
+          "name": "Applications of plant growth regulators",
+          "nameZh": "植物激素及类似物的生产应用",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_bio_topic_population_ecology",
+      "name": "Population ecology",
+      "nameZh": "种群生态",
+      "defaultOrder": 13,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_population_characteristics",
+          "name": "Population characteristics",
+          "nameZh": "种群特征",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_population_growth_models",
+          "name": "Population-growth models",
+          "nameZh": "种群数量变化模型",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_bio_population_limiting_factors",
+          "name": "Factors affecting populations",
+          "nameZh": "种群特征的生物与非生物影响因素",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_bio_topic_community_trophic",
+      "name": "Communities and trophic networks",
+      "nameZh": "群落与营养网络",
+      "defaultOrder": 14,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_community_structure",
+          "name": "Community structure",
+          "nameZh": "群落垂直、水平结构及时间变化",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_ecological_succession",
+          "name": "Ecological succession",
+          "nameZh": "初生演替与次生演替",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_bio_food_chains_webs",
+          "name": "Food chains and food webs",
+          "nameZh": "食物链与食物网",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_bio_topic_ecosystem_flows",
+          "hard": false
+        },
+        {
+          "topicId": "cn_sh_bio_topic_ecosystem_transfer",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_bio_topic_ecosystem_flows",
+      "name": "Ecosystem flows and resource use",
+      "nameZh": "生态系统流动与资源利用",
+      "defaultOrder": 15,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_matter_cycles_energy_flow",
+          "name": "Matter cycling and energy flow",
+          "nameZh": "物质循环与能量流动",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_ecological_resource_use",
+          "name": "Ecological resource use",
+          "nameZh": "生态规律与资源利用",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_bio_ecological_pyramids",
+          "name": "Ecological pyramids",
+          "nameZh": "数量、生物量和能量金字塔",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_bio_topic_community_trophic"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_bio_topic_ecosystem_transfer",
+      "name": "Transfer and trophic structure",
+      "nameZh": "生态传递与营养结构",
+      "defaultOrder": 16,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_biomagnification",
+          "name": "Biomagnification",
+          "nameZh": "食物链中的有害物质富集",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_ecosystem_information_transfer",
+          "name": "Information transfer in ecosystems",
+          "nameZh": "生态系统信息传递",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_bio_trophic_structure_factors",
+          "name": "Determinants of trophic structure",
+          "nameZh": "营养结构的生物与非生物决定因素",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_bio_topic_community_trophic"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_bio_topic_ecosystem_stability",
+      "name": "Ecosystem stability",
+      "nameZh": "生态系统稳定性",
+      "defaultOrder": 17,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_ecosystem_stability",
+          "name": "Ecosystem stability",
+          "nameZh": "生态系统稳定性",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_ecosystem_disturbances",
+          "name": "Ecosystem disturbances",
+          "nameZh": "生态系统干扰因素",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_bio_ecosystem_self_regulation",
+          "name": "Ecosystem self-regulation",
+          "nameZh": "生态系统自我调节",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_bio_topic_environmental_change",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_bio_topic_environmental_change",
+      "name": "Population and environmental change",
+      "nameZh": "人口与环境变化",
+      "defaultOrder": 18,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_population_environment_pressure",
+          "name": "Population pressure on the environment",
+          "nameZh": "人口增长的环境压力",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_global_environmental_change",
+          "name": "Global environmental change",
+          "nameZh": "全球环境问题与生物圈稳态",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_bio_ecological_engineering_circularity",
+          "name": "Ecological engineering and circularity",
+          "nameZh": "生态工程与资源循环利用",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_bio_topic_ecosystem_stability"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_bio_topic_microbial_control",
+      "name": "Microbial culture control",
+      "nameZh": "微生物培养控制",
+      "defaultOrder": 19,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_sterilisation_microbe_culture",
+          "name": "Sterilisation for pure culture",
+          "nameZh": "纯培养中的灭菌",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_aseptic_technique",
+          "name": "Aseptic technique",
+          "nameZh": "无菌技术",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_bio_selective_culture_media",
+          "name": "Selective culture media",
+          "nameZh": "培养基配方与目的培养",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_bio_topic_microbial_measurement",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_bio_topic_microbial_measurement",
+      "name": "Microbial isolation and measurement",
+      "nameZh": "微生物分离与测定",
+      "defaultOrder": 20,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_microbial_isolation_methods",
+          "name": "Microbial isolation methods",
+          "nameZh": "平板划线与稀释涂布分离",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_microbial_counting_methods",
+          "name": "Microbial counting methods",
+          "nameZh": "稀释涂布与显微镜计数",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_bio_traditional_fermentation",
+          "name": "Traditional fermentation",
+          "nameZh": "传统发酵食品",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_bio_topic_microbial_control"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_bio_topic_fermentation_plant",
+      "name": "Fermentation and plant culture",
+      "nameZh": "发酵与植物培养",
+      "defaultOrder": 21,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_industrial_fermentation",
+          "name": "Industrial fermentation",
+          "nameZh": "现代发酵工程",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_fermentation_applications",
+          "name": "Applications of fermentation engineering",
+          "nameZh": "发酵工程应用",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_bio_plant_tissue_culture",
+          "name": "Plant tissue culture",
+          "nameZh": "植物组织培养",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_bio_topic_plant_animal_cells",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_bio_topic_plant_animal_cells",
+      "name": "Plant and animal cell engineering",
+      "nameZh": "植物与动物细胞工程",
+      "defaultOrder": 22,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_plant_somatic_hybridisation",
+          "name": "Plant somatic hybridisation",
+          "nameZh": "植物体细胞杂交",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_plant_cell_engineering_applications",
+          "name": "Applications of plant-cell engineering",
+          "nameZh": "植物细胞工程应用",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_bio_animal_cell_culture",
+          "name": "Animal cell culture",
+          "nameZh": "动物细胞培养",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_bio_topic_animal_cell_engineering",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "cn_sh_bio_topic_fermentation_plant"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_bio_topic_animal_cell_engineering",
+      "name": "Animal-cell engineering",
+      "nameZh": "动物细胞工程",
+      "defaultOrder": 23,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_somatic_cell_nuclear_transfer",
+          "name": "Somatic-cell nuclear transfer",
+          "nameZh": "动物体细胞核移植",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_animal_cell_fusion",
+          "name": "Animal cell fusion",
+          "nameZh": "动物细胞融合",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_bio_monoclonal_antibody_production",
+          "name": "Monoclonal-antibody production",
+          "nameZh": "单克隆抗体制备",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_bio_topic_biotechnology_ethics",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "cn_sh_bio_topic_plant_animal_cells"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_bio_topic_embryo_stem_cells",
+      "name": "Embryo and stem-cell engineering",
+      "nameZh": "胚胎与干细胞工程",
+      "defaultOrder": 24,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_stem_cell_applications",
+          "name": "Stem-cell applications",
+          "nameZh": "干细胞的生物医学应用",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_fertilisation_early_embryo",
+          "name": "Fertilisation and early embryonic development",
+          "nameZh": "受精与早期胚胎发育",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_bio_embryo_engineering",
+          "name": "Embryo engineering",
+          "nameZh": "体外受精、胚胎移植与分割",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_bio_topic_molecular_engineering",
+      "name": "Molecular engineering and impacts",
+      "nameZh": "分子工程及其影响",
+      "defaultOrder": 25,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_gene_engineering_tools",
+          "name": "Tools of genetic engineering",
+          "nameZh": "限制酶、连接酶与载体",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_protein_engineering",
+          "name": "Protein engineering",
+          "nameZh": "蛋白质工程",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_bio_gmo_impacts",
+          "name": "Impacts of genetically modified technology",
+          "nameZh": "转基因技术影响",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_bio_topic_biotechnology_ethics",
+      "name": "Biotechnology ethics and security",
+      "nameZh": "生物技术伦理与安全",
+      "defaultOrder": 26,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_bio_reproductive_cloning_ethics",
+          "name": "Ethics of human reproductive cloning",
+          "nameZh": "生殖性克隆人的伦理问题",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_bio_reproductive_cloning_china_policy",
+          "name": "China policy on reproductive cloning",
+          "nameZh": "中国禁止生殖性克隆人",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_bio_biological_weapons_harms",
+          "name": "Harms of biological weapons",
+          "nameZh": "生物武器的威胁与伤害",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_bio_topic_animal_cell_engineering"
+      ],
+      "isRoot": false
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "cn_sh_bio_animal_cell_culture",
+      "to": "cn_sh_bio_animal_cell_fusion",
+      "strength": "soft",
+      "reason": "动物细胞融合操作建立在体外培养和维持细胞的基础上。"
+    },
+    {
+      "from": "cn_sh_bio_animal_cell_fusion",
+      "to": "cn_sh_bio_monoclonal_antibody_production",
+      "strength": "soft",
+      "reason": "单克隆抗体制备需要先理解细胞融合形成杂交瘤的原理。"
+    },
+    {
+      "from": "cn_sh_bio_central_nervous_hierarchy",
+      "to": "cn_sh_bio_autonomic_nervous_regulation",
+      "strength": "soft",
+      "reason": "解释自主神经调节内脏需要先理解中枢层级的协调。"
+    },
+    {
+      "from": "cn_sh_bio_community_structure",
+      "to": "cn_sh_bio_ecological_succession",
+      "strength": "soft",
+      "reason": "理解群落随时间替代需要先识别其垂直和水平结构。"
+    },
+    {
+      "from": "cn_sh_bio_ecosystem_disturbances",
+      "to": "cn_sh_bio_ecosystem_self_regulation",
+      "strength": "soft",
+      "reason": "评价自我调节能力需要先识别扰动来源和强度。"
+    },
+    {
+      "from": "cn_sh_bio_ecosystem_self_regulation",
+      "to": "cn_sh_bio_ecological_engineering_circularity",
+      "strength": "soft",
+      "reason": "设计生态工程需要先理解系统自我调节和结构功能关系。"
+    },
+    {
+      "from": "cn_sh_bio_endocrine_system",
+      "to": "cn_sh_bio_neuroendocrine_coordination",
+      "strength": "soft",
+      "reason": "解释神经体液协同需要先识别内分泌系统和激素信号。"
+    },
+    {
+      "from": "cn_sh_bio_fertilisation_early_embryo",
+      "to": "cn_sh_bio_embryo_engineering",
+      "strength": "soft",
+      "reason": "理解胚胎移植和分割需要先掌握受精与早期胚胎发育。"
+    },
+    {
+      "from": "cn_sh_bio_food_chains_webs",
+      "to": "cn_sh_bio_biomagnification",
+      "strength": "soft",
+      "reason": "说明有害物质富集需要先理解食物链中的摄食关系。"
+    },
+    {
+      "from": "cn_sh_bio_food_chains_webs",
+      "to": "cn_sh_bio_matter_cycles_energy_flow",
+      "strength": "soft",
+      "reason": "分析能量与物质路径需要先建立食物链和食物网营养结构。"
+    },
+    {
+      "from": "cn_sh_bio_gametic_inheritance",
+      "to": "cn_sh_bio_sex_linked_inheritance",
+      "strength": "soft",
+      "reason": "分析伴性遗传需要先理解遗传信息通过配子传递。"
+    },
+    {
+      "from": "cn_sh_bio_gene_engineering_tools",
+      "to": "cn_sh_bio_protein_engineering",
+      "strength": "soft",
+      "reason": "蛋白质工程通过基因设计实现，依赖限制酶、连接酶和载体等工具。"
+    },
+    {
+      "from": "cn_sh_bio_gene_nucleic_acid_segment",
+      "to": "cn_sh_bio_epigenetic_phenomena",
+      "strength": "soft",
+      "reason": "区分表观遗传与序列突变需要先理解基因作为核酸功能片段。"
+    },
+    {
+      "from": "cn_sh_bio_industrial_fermentation",
+      "to": "cn_sh_bio_fermentation_applications",
+      "strength": "soft",
+      "reason": "评价发酵工程应用需要先掌握工业化培养和过程控制。"
+    },
+    {
+      "from": "cn_sh_bio_internal_environment_fluids",
+      "to": "cn_sh_bio_internal_external_exchange",
+      "strength": "soft",
+      "reason": "分析细胞与外界交换需要先识别内环境的液体组成。"
+    },
+    {
+      "from": "cn_sh_bio_internal_external_exchange",
+      "to": "cn_sh_bio_organ_system_exchange",
+      "strength": "soft",
+      "reason": "说明器官系统协同前需要先建立细胞经内环境交换的路径。"
+    },
+    {
+      "from": "cn_sh_bio_matter_cycles_energy_flow",
+      "to": "cn_sh_bio_ecological_pyramids",
+      "strength": "soft",
+      "reason": "解释生态金字塔需要先掌握能量逐级递减和物质循环的差异。"
+    },
+    {
+      "from": "cn_sh_bio_plant_somatic_hybridisation",
+      "to": "cn_sh_bio_plant_cell_engineering_applications",
+      "strength": "soft",
+      "reason": "理解植物细胞工程的育种应用需要先掌握原生质体融合与体细胞杂交。"
+    },
+    {
+      "from": "cn_sh_bio_plant_tissue_culture",
+      "to": "cn_sh_bio_plant_cell_engineering_applications",
+      "strength": "soft",
+      "reason": "理解植物细胞工程应用需要先掌握组织培养和再分化。"
+    },
+    {
+      "from": "cn_sh_bio_plant_tissue_culture",
+      "to": "cn_sh_bio_plant_somatic_hybridisation",
+      "strength": "soft",
+      "reason": "原生质体融合后的杂种细胞需要通过组织培养和植株再生才能形成完整杂种植株。"
+    },
+    {
+      "from": "cn_sh_bio_plasma_membrane_functions",
+      "to": "cn_sh_bio_endocytosis_exocytosis",
+      "strength": "soft",
+      "reason": "理解胞吞和胞吐需要先掌握质膜的结构、边界和动态运输功能。"
+    },
+    {
+      "from": "cn_sh_bio_plasma_membrane_functions",
+      "to": "cn_sh_bio_selective_permeability",
+      "strength": "soft",
+      "reason": "解释选择透过性需要先理解质膜作为细胞边界和运输界面的功能。"
+    },
+    {
+      "from": "cn_sh_bio_population_characteristics",
+      "to": "cn_sh_bio_population_limiting_factors",
+      "strength": "soft",
+      "reason": "分析限制因素的作用需要先明确种群密度、出生死亡和迁入迁出等响应变量。"
+    },
+    {
+      "from": "cn_sh_bio_population_growth_models",
+      "to": "cn_sh_bio_population_limiting_factors",
+      "strength": "soft",
+      "reason": "以指数和逻辑斯谛增长模型及环境容纳量为动态基线，有助于进一步分析各类限制因素如何改变种群数量。"
+    },
+    {
+      "from": "cn_sh_bio_reflex_arc",
+      "to": "cn_sh_bio_central_nervous_hierarchy",
+      "strength": "soft",
+      "reason": "理解高级和低级中枢协调需要先掌握反射弧的基本输入输出结构。"
+    },
+    {
+      "from": "cn_sh_bio_reproductive_cloning_ethics",
+      "to": "cn_sh_bio_reproductive_cloning_china_policy",
+      "strength": "soft",
+      "reason": "理解中国禁止生殖性克隆人的政策理由需要先分析该技术的安全与伦理问题。"
+    },
+    {
+      "from": "cn_sh_bio_selective_culture_media",
+      "to": "cn_sh_bio_microbial_isolation_methods",
+      "strength": "soft",
+      "reason": "选择分离方法前需要理解培养基如何筛选目标微生物。"
+    },
+    {
+      "from": "cn_sh_bio_somatic_cell_nuclear_transfer",
+      "to": "cn_sh_bio_reproductive_cloning_ethics",
+      "strength": "soft",
+      "reason": "评价生殖性克隆伦理问题需要先理解体细胞核移植技术。"
+    },
+    {
+      "from": "cn_sh_bio_sterilisation_microbe_culture",
+      "to": "cn_sh_bio_aseptic_technique",
+      "strength": "soft",
+      "reason": "实施无菌操作需要先理解灭菌对纯培养的作用边界。"
+    }
+  ]
+}
