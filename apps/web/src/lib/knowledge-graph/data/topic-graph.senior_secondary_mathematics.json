@@ -1,0 +1,1073 @@
+{
+  "graphId": "senior_secondary_mathematics",
+  "subject": "Mathematics",
+  "generatedFrom": "data/knowledge-graphs/source/senior_secondary_mathematics.json",
+  "generatedAt": "2026-07-19",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
+  "topics": [
+    {
+      "topicId": "cn_sh_math_topic_set_foundations",
+      "name": "Set foundations",
+      "nameZh": "集合基础",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_set_membership_representation",
+          "name": "Set membership and representation",
+          "nameZh": "集合、元素与表示",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_set_relations_special_sets",
+          "name": "Set relations and special sets",
+          "nameZh": "集合关系、全集与空集",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_math_set_operations",
+          "name": "Set operations",
+          "nameZh": "集合基本运算",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_math_topic_sets_and_logic",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_math_topic_sets_and_logic",
+      "name": "Sets and logic",
+      "nameZh": "集合表达与逻辑",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_venn_diagrams",
+          "name": "Venn diagrams",
+          "nameZh": "Venn 图表达",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_logical_conditions",
+          "name": "Necessary and sufficient conditions",
+          "nameZh": "必要、充分与充要条件",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_math_quantifiers_negation",
+          "name": "Quantifiers and negation",
+          "nameZh": "量词命题及其否定",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_math_topic_set_foundations"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_math_topic_inequalities_and_optimisation",
+      "name": "Inequalities and optimisation",
+      "nameZh": "不等式与最值",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_inequality_properties",
+          "name": "Properties of inequalities",
+          "nameZh": "不等式概念与性质",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_basic_inequality_optimization",
+          "name": "Basic inequality and optimisation",
+          "nameZh": "基本不等式与最值",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_math_topic_function_representations",
+      "name": "Function representations",
+      "nameZh": "函数表示",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_function_representations",
+          "name": "Representations of functions",
+          "nameZh": "函数的表示方法",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_piecewise_functions",
+          "name": "Piecewise functions",
+          "nameZh": "分段函数",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_math_topic_function_qualitative_properties",
+          "hard": false
+        },
+        {
+          "topicId": "cn_sh_math_topic_elementary_function_behaviour",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_math_topic_function_qualitative_properties",
+      "name": "Qualitative properties of functions",
+      "nameZh": "函数定性性质",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_function_monotonicity",
+          "name": "Function monotonicity",
+          "nameZh": "函数单调性",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_function_extrema",
+          "name": "Function maxima and minima",
+          "nameZh": "函数最大值与最小值",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_math_function_parity",
+          "name": "Parity of functions",
+          "nameZh": "函数奇偶性",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_math_topic_function_representations"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_math_topic_elementary_function_behaviour",
+      "name": "Elementary function behaviour",
+      "nameZh": "基本初等函数性质",
+      "defaultOrder": 6,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_function_periodicity",
+          "name": "Periodicity of functions",
+          "nameZh": "函数周期性",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_power_functions",
+          "name": "Power functions",
+          "nameZh": "幂函数",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_math_real_exponents_laws",
+          "name": "Real exponents and laws",
+          "nameZh": "实数指数幂及运算性质",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_math_topic_function_representations"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_math_topic_logarithmic_growth",
+      "name": "Logarithmic behaviour and growth",
+      "nameZh": "对数函数与增长比较",
+      "defaultOrder": 7,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_logarithmic_function_behavior",
+          "name": "Logarithmic function behaviour",
+          "nameZh": "对数函数图像与单调性",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_compare_growth_rates",
+          "name": "Comparing growth rates",
+          "nameZh": "比较函数增长速度",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_math_topic_function_modelling",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_math_topic_trigonometric_transformations",
+      "name": "Trigonometric transformations",
+      "nameZh": "三角函数变换",
+      "defaultOrder": 8,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_trig_reduction_formulas",
+          "name": "Trigonometric reduction formulas",
+          "nameZh": "三角函数诱导公式",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_trig_product_sum_half_angle",
+          "name": "Product-sum and half-angle transformations",
+          "nameZh": "积化和差、和差化积与半角变换",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_math_trig_modelling",
+          "name": "Trigonometric modelling",
+          "nameZh": "三角函数建模",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_math_topic_function_modelling",
+      "name": "Function modelling",
+      "nameZh": "函数建模",
+      "defaultOrder": 9,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_choose_function_models",
+          "name": "Choosing function models",
+          "nameZh": "选择函数模型",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_interpret_model_parameters",
+          "name": "Interpreting model parameters",
+          "nameZh": "函数模型参数解释",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_math_topic_logarithmic_growth"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_math_topic_plane_vector_foundations",
+      "name": "Plane vector foundations",
+      "nameZh": "平面向量基础",
+      "defaultOrder": 10,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_plane_vector_basis_coordinates",
+          "name": "Plane vector basis and coordinates",
+          "nameZh": "平面向量基本定理与坐标",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_vector_projection",
+          "name": "Vector projection",
+          "nameZh": "向量投影",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_math_topic_vector_triangle_applications",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_math_topic_vector_triangle_applications",
+      "name": "Vector and triangle applications",
+      "nameZh": "向量与三角形应用",
+      "defaultOrder": 11,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_vector_applications",
+          "name": "Applications of plane vectors",
+          "nameZh": "平面向量应用",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_sine_cosine_laws",
+          "name": "Sine and cosine laws",
+          "nameZh": "正弦定理与余弦定理",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_math_topic_plane_vector_foundations"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_math_topic_complex_foundations",
+      "name": "Complex number foundations",
+      "nameZh": "复数表示基础",
+      "defaultOrder": 12,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_complex_introduction",
+          "name": "Introduction to complex numbers",
+          "nameZh": "复数与数系扩充",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_complex_algebraic_representation",
+          "name": "Complex algebraic representation and equality",
+          "nameZh": "复数代数表示与相等",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_math_complex_argand_representation",
+          "name": "Argand diagram",
+          "nameZh": "复平面表示",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_math_topic_complex_operations",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_math_topic_complex_operations",
+      "name": "Complex number operations",
+      "nameZh": "复数运算",
+      "defaultOrder": 13,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_complex_arithmetic",
+          "name": "Complex arithmetic in algebraic form",
+          "nameZh": "复数代数形式四则运算",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_complex_addition_geometry",
+          "name": "Geometric meaning of complex addition and subtraction",
+          "nameZh": "复数加减的几何意义",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_math_topic_complex_foundations"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_math_topic_solid_structures",
+      "name": "Solid structures and representation",
+      "nameZh": "立体结构与表示",
+      "defaultOrder": 14,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_solid_structures",
+          "name": "Structures of solids",
+          "nameZh": "基本立体图形结构",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_solid_surface_volume",
+          "name": "Surface area and volume",
+          "nameZh": "几何体表面积与体积",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_math_oblique_drawings",
+          "name": "Oblique drawings of solids",
+          "nameZh": "空间图形直观图",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_math_topic_spatial_relations",
+      "name": "Spatial relations",
+      "nameZh": "空间位置关系性质",
+      "defaultOrder": 15,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_spatial_axioms",
+          "name": "Spatial incidence axioms",
+          "nameZh": "空间点线面基本事实",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_spatial_parallel_properties",
+          "name": "Spatial parallelism properties",
+          "nameZh": "空间平行性质",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_math_spatial_perpendicular_properties",
+          "name": "Spatial perpendicularity properties",
+          "nameZh": "空间垂直属性",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_math_topic_spatial_criteria_and_proof",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_math_topic_spatial_criteria_and_proof",
+      "name": "Spatial criteria and proof",
+      "nameZh": "空间判定与证明",
+      "defaultOrder": 16,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_spatial_parallel_criteria",
+          "name": "Spatial parallelism criteria",
+          "nameZh": "空间平行判定",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_spatial_perpendicular_criteria",
+          "name": "Spatial perpendicularity criteria",
+          "nameZh": "空间垂直判定",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_math_solid_geometry_proofs",
+          "name": "Elementary solid geometry proofs",
+          "nameZh": "立体几何简单证明",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_math_topic_spatial_relations"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_math_topic_probability_models",
+      "name": "Probability models",
+      "nameZh": "概率模型",
+      "defaultOrder": 17,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_classical_probability",
+          "name": "Classical probability",
+          "nameZh": "古典概型",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_frequency_probability",
+          "name": "Estimating probability by frequency",
+          "nameZh": "用频率估计概率",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_math_total_probability_formula",
+          "name": "Total probability formula",
+          "nameZh": "全概率公式",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_math_topic_sampling_methods",
+      "name": "Sampling methods",
+      "nameZh": "抽样方法",
+      "defaultOrder": 18,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_data_sources_population",
+          "name": "Data sources, populations and samples",
+          "nameZh": "数据来源、总体与样本",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_simple_random_sampling",
+          "name": "Simple random sampling",
+          "nameZh": "简单随机抽样",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_math_stratified_sampling",
+          "name": "Stratified random sampling",
+          "nameZh": "分层随机抽样",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_math_topic_sampling_and_inference",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_math_topic_sampling_and_inference",
+      "name": "Sampling and inference",
+      "nameZh": "抽样设计与推断",
+      "defaultOrder": 19,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_sampling_design",
+          "name": "Sampling design",
+          "nameZh": "抽样方案选择",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_distribution_percentiles",
+          "name": "Distribution patterns and percentiles",
+          "nameZh": "取值规律与百分位数",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_math_statistical_inference_uncertainty",
+          "name": "Uncertainty in statistical inference",
+          "nameZh": "统计推断的或然性",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_math_topic_sampling_methods"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_math_topic_arithmetic_sequences",
+      "name": "Arithmetic sequences",
+      "nameZh": "等差数列",
+      "defaultOrder": 20,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_sequence_concept_representation",
+          "name": "Sequence concept and representation",
+          "nameZh": "数列概念与表示",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_arithmetic_sequence_modelling",
+          "name": "Arithmetic sequence modelling",
+          "nameZh": "等差数列建模",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_math_arithmetic_linear_relation",
+          "name": "Arithmetic sequences and linear functions",
+          "nameZh": "等差数列与一次函数",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_math_topic_geometric_sequences",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_math_topic_geometric_sequences",
+      "name": "Geometric sequences",
+      "nameZh": "等比数列",
+      "defaultOrder": 21,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_geometric_sequence_modelling",
+          "name": "Geometric sequence modelling",
+          "nameZh": "等比数列建模",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_geometric_exponential_relation",
+          "name": "Geometric sequences and exponential functions",
+          "nameZh": "等比数列与指数函数",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_math_topic_arithmetic_sequences"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_math_topic_derivative_applications",
+      "name": "Derivative applications",
+      "nameZh": "导数应用",
+      "defaultOrder": 22,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_simple_linear_composites",
+          "name": "Derivatives of simple linear composites",
+          "nameZh": "简单线性复合函数求导",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_derivative_optimisation",
+          "name": "Optimisation with derivatives",
+          "nameZh": "导数解决实际优化",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_math_topic_spatial_vectors",
+      "name": "Spatial vectors",
+      "nameZh": "空间向量",
+      "defaultOrder": 23,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_spatial_coordinates_distance",
+          "name": "Spatial coordinates and distance",
+          "nameZh": "空间直角坐标系与两点距离",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_spatial_vector_basis",
+          "name": "Spatial vector basis and coordinates",
+          "nameZh": "空间向量基本定理与坐标",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_math_vector_geometry_proofs",
+          "name": "Vector proofs in solid geometry",
+          "nameZh": "向量法证明立体几何定理",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_math_topic_analytic_geometry_methods",
+      "name": "Analytic geometry methods",
+      "nameZh": "解析几何方法",
+      "defaultOrder": 24,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_line_intersections_distances",
+          "name": "Line intersections and distances",
+          "nameZh": "直线交点与距离",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_analytic_geometry_method",
+          "name": "Analytic geometry method",
+          "nameZh": "解析几何数形结合",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_math_conic_context",
+          "name": "Conic contexts",
+          "nameZh": "圆锥曲线背景与作用",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "cn_sh_math_topic_conic_sections",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_math_topic_conic_sections",
+      "name": "Conic sections",
+      "nameZh": "圆锥曲线",
+      "defaultOrder": 25,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_ellipse",
+          "name": "Ellipse definition and equation",
+          "nameZh": "椭圆定义、方程与性质",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_parabola",
+          "name": "Parabola",
+          "nameZh": "抛物线",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cn_sh_math_hyperbola",
+          "name": "Hyperbola",
+          "nameZh": "双曲线",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "cn_sh_math_topic_analytic_geometry_methods"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "cn_sh_math_topic_quantitative_association",
+      "name": "Quantitative association",
+      "nameZh": "定量关联分析",
+      "defaultOrder": 26,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_sample_correlation",
+          "name": "Sample correlation coefficient",
+          "nameZh": "样本相关系数",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_regression_prediction_limits",
+          "name": "Regression prediction and limitations",
+          "nameZh": "回归预测及其限制",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "cn_sh_math_topic_categorical_association",
+      "name": "Categorical association",
+      "nameZh": "分类变量关联",
+      "defaultOrder": 27,
+      "conceptIds": [
+        {
+          "conceptId": "cn_sh_math_contingency_table",
+          "name": "Two-by-two contingency tables",
+          "nameZh": "2×2 列联表",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cn_sh_math_contingency_independence_test",
+          "name": "Independence test with contingency tables",
+          "nameZh": "列联表独立性检验",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "cn_sh_math_analytic_geometry_method",
+      "to": "cn_sh_math_ellipse",
+      "strength": "soft",
+      "reason": "建立椭圆方程需要先能把几何约束转化为代数关系。"
+    },
+    {
+      "from": "cn_sh_math_analytic_geometry_method",
+      "to": "cn_sh_math_hyperbola",
+      "strength": "soft",
+      "reason": "建立双曲线方程需要先能把几何约束转化为代数关系。"
+    },
+    {
+      "from": "cn_sh_math_analytic_geometry_method",
+      "to": "cn_sh_math_parabola",
+      "strength": "soft",
+      "reason": "建立抛物线方程需要先能把几何约束转化为代数关系。"
+    },
+    {
+      "from": "cn_sh_math_arithmetic_sequence_modelling",
+      "to": "cn_sh_math_arithmetic_linear_relation",
+      "strength": "soft",
+      "reason": "比较等差数列与一次函数需要先理解等差模型。"
+    },
+    {
+      "from": "cn_sh_math_choose_function_models",
+      "to": "cn_sh_math_interpret_model_parameters",
+      "strength": "soft",
+      "reason": "解释参数前需要先明确模型类型和变量关系。"
+    },
+    {
+      "from": "cn_sh_math_classical_probability",
+      "to": "cn_sh_math_total_probability_formula",
+      "strength": "soft",
+      "reason": "全概率计算需要先能在有限样本模型中计算分支事件概率。"
+    },
+    {
+      "from": "cn_sh_math_compare_growth_rates",
+      "to": "cn_sh_math_choose_function_models",
+      "strength": "soft",
+      "reason": "选择函数模型需要先能区分常见模型的增长规律。"
+    },
+    {
+      "from": "cn_sh_math_complex_algebraic_representation",
+      "to": "cn_sh_math_complex_argand_representation",
+      "strength": "soft",
+      "reason": "复平面表示需要先能把复数写为 a+bi 并识别实部和虚部。"
+    },
+    {
+      "from": "cn_sh_math_complex_algebraic_representation",
+      "to": "cn_sh_math_complex_arithmetic",
+      "strength": "soft",
+      "reason": "复数四则运算需要先掌握 a+bi 形式及复数相等。"
+    },
+    {
+      "from": "cn_sh_math_complex_argand_representation",
+      "to": "cn_sh_math_complex_addition_geometry",
+      "strength": "soft",
+      "reason": "解释复数加减的几何意义需要先掌握复平面的点和向量表示。"
+    },
+    {
+      "from": "cn_sh_math_complex_arithmetic",
+      "to": "cn_sh_math_complex_addition_geometry",
+      "strength": "soft",
+      "reason": "把加减运算解释为向量运算需要先能完成复数加减。"
+    },
+    {
+      "from": "cn_sh_math_complex_introduction",
+      "to": "cn_sh_math_complex_algebraic_representation",
+      "strength": "soft",
+      "reason": "复数的代数表示和相等关系建立在数系扩充与复数定义之上。"
+    },
+    {
+      "from": "cn_sh_math_contingency_table",
+      "to": "cn_sh_math_contingency_independence_test",
+      "strength": "soft",
+      "reason": "独立性检验需要先能正确整理和解释列联表。"
+    },
+    {
+      "from": "cn_sh_math_data_sources_population",
+      "to": "cn_sh_math_simple_random_sampling",
+      "strength": "soft",
+      "reason": "实施简单随机抽样前必须明确总体、样本和数据来源。"
+    },
+    {
+      "from": "cn_sh_math_data_sources_population",
+      "to": "cn_sh_math_stratified_sampling",
+      "strength": "soft",
+      "reason": "实施分层抽样前必须明确总体结构、样本和数据来源。"
+    },
+    {
+      "from": "cn_sh_math_function_monotonicity",
+      "to": "cn_sh_math_function_extrema",
+      "strength": "soft",
+      "reason": "由函数变化趋势识别区间或全局最大值和最小值。"
+    },
+    {
+      "from": "cn_sh_math_function_representations",
+      "to": "cn_sh_math_function_monotonicity",
+      "strength": "soft",
+      "reason": "判断函数在区间上的变化需要先能读取函数图像、解析式或列表表示。"
+    },
+    {
+      "from": "cn_sh_math_function_representations",
+      "to": "cn_sh_math_function_parity",
+      "strength": "soft",
+      "reason": "判断奇偶性及其几何意义需要先能在解析式与图像表示之间转换。"
+    },
+    {
+      "from": "cn_sh_math_function_representations",
+      "to": "cn_sh_math_function_periodicity",
+      "strength": "soft",
+      "reason": "识别周期性及其几何意义需要先能读取函数图像和解析表示。"
+    },
+    {
+      "from": "cn_sh_math_function_representations",
+      "to": "cn_sh_math_piecewise_functions",
+      "strength": "soft",
+      "reason": "理解分段函数需要能在解析式、图像和列表表示之间转换。"
+    },
+    {
+      "from": "cn_sh_math_function_representations",
+      "to": "cn_sh_math_power_functions",
+      "strength": "soft",
+      "reason": "识别幂函数典型图像及变化规律需要先掌握函数的基本表示。"
+    },
+    {
+      "from": "cn_sh_math_geometric_sequence_modelling",
+      "to": "cn_sh_math_geometric_exponential_relation",
+      "strength": "soft",
+      "reason": "比较等比数列与指数函数需要先理解等比模型。"
+    },
+    {
+      "from": "cn_sh_math_inequality_properties",
+      "to": "cn_sh_math_basic_inequality_optimization",
+      "strength": "soft",
+      "reason": "基本不等式的变形和最值应用依赖不等式基本性质。"
+    },
+    {
+      "from": "cn_sh_math_line_intersections_distances",
+      "to": "cn_sh_math_analytic_geometry_method",
+      "strength": "soft",
+      "reason": "解析几何方法需要能把直线交点和距离条件转写为方程。"
+    },
+    {
+      "from": "cn_sh_math_logarithmic_function_behavior",
+      "to": "cn_sh_math_compare_growth_rates",
+      "strength": "soft",
+      "reason": "比较对数与其他函数增长速度需要先理解对数函数图像和单调性。"
+    },
+    {
+      "from": "cn_sh_math_plane_vector_basis_coordinates",
+      "to": "cn_sh_math_vector_applications",
+      "strength": "soft",
+      "reason": "向量解决平面问题需要先能建立基底和坐标表示。"
+    },
+    {
+      "from": "cn_sh_math_sample_correlation",
+      "to": "cn_sh_math_regression_prediction_limits",
+      "strength": "soft",
+      "reason": "解释线性回归预测需要先理解样本相关性的强弱和方向。"
+    },
+    {
+      "from": "cn_sh_math_sequence_concept_representation",
+      "to": "cn_sh_math_arithmetic_sequence_modelling",
+      "strength": "soft",
+      "reason": "识别和建立等差模型需要先理解数列及其表示。"
+    },
+    {
+      "from": "cn_sh_math_sequence_concept_representation",
+      "to": "cn_sh_math_geometric_sequence_modelling",
+      "strength": "soft",
+      "reason": "识别和建立等比模型需要先理解数列及其表示。"
+    },
+    {
+      "from": "cn_sh_math_set_membership_representation",
+      "to": "cn_sh_math_set_relations_special_sets",
+      "strength": "soft",
+      "reason": "集合关系以集合、元素和属于关系为基础。"
+    },
+    {
+      "from": "cn_sh_math_set_operations",
+      "to": "cn_sh_math_venn_diagrams",
+      "strength": "soft",
+      "reason": "Venn 图表达集合运算需要先掌握并、交、补。"
+    },
+    {
+      "from": "cn_sh_math_set_relations_special_sets",
+      "to": "cn_sh_math_set_operations",
+      "strength": "soft",
+      "reason": "并、交、补运算需要先识别集合包含关系以及全集和空集。"
+    },
+    {
+      "from": "cn_sh_math_simple_random_sampling",
+      "to": "cn_sh_math_sampling_design",
+      "strength": "soft",
+      "reason": "选择抽样方案需要理解简单随机抽样的适用条件和限制。"
+    },
+    {
+      "from": "cn_sh_math_solid_structures",
+      "to": "cn_sh_math_oblique_drawings",
+      "strength": "soft",
+      "reason": "绘制空间直观图需要先识别基本立体及其组合关系。"
+    },
+    {
+      "from": "cn_sh_math_solid_structures",
+      "to": "cn_sh_math_solid_surface_volume",
+      "strength": "soft",
+      "reason": "表面积和体积计算需要先识别几何体结构及组成。"
+    },
+    {
+      "from": "cn_sh_math_spatial_axioms",
+      "to": "cn_sh_math_spatial_parallel_criteria",
+      "strength": "soft",
+      "reason": "空间平行判定建立在点、线、面基本事实和位置关系上。"
+    },
+    {
+      "from": "cn_sh_math_spatial_axioms",
+      "to": "cn_sh_math_spatial_perpendicular_criteria",
+      "strength": "soft",
+      "reason": "空间垂直判定建立在点、线、面基本事实和位置关系上。"
+    },
+    {
+      "from": "cn_sh_math_spatial_coordinates_distance",
+      "to": "cn_sh_math_spatial_vector_basis",
+      "strength": "soft",
+      "reason": "空间向量坐标分解需要先建立空间直角坐标系。"
+    },
+    {
+      "from": "cn_sh_math_spatial_parallel_criteria",
+      "to": "cn_sh_math_solid_geometry_proofs",
+      "strength": "soft",
+      "reason": "证明空间平行命题需要能正确选用平行判定。"
+    },
+    {
+      "from": "cn_sh_math_spatial_parallel_properties",
+      "to": "cn_sh_math_solid_geometry_proofs",
+      "strength": "soft",
+      "reason": "证明空间位置关系命题还需要能正确使用平行性质定理。"
+    },
+    {
+      "from": "cn_sh_math_spatial_perpendicular_criteria",
+      "to": "cn_sh_math_solid_geometry_proofs",
+      "strength": "soft",
+      "reason": "证明空间垂直命题需要能正确选用垂直判定。"
+    },
+    {
+      "from": "cn_sh_math_spatial_perpendicular_properties",
+      "to": "cn_sh_math_solid_geometry_proofs",
+      "strength": "soft",
+      "reason": "证明空间位置关系命题还需要能正确使用垂直性质定理。"
+    },
+    {
+      "from": "cn_sh_math_spatial_vector_basis",
+      "to": "cn_sh_math_vector_geometry_proofs",
+      "strength": "soft",
+      "reason": "使用向量证明空间命题需要先掌握空间向量基底与坐标表示。"
+    },
+    {
+      "from": "cn_sh_math_stratified_sampling",
+      "to": "cn_sh_math_sampling_design",
+      "strength": "soft",
+      "reason": "选择抽样方案需要理解分层抽样的适用条件和限制。"
+    },
+    {
+      "from": "cn_sh_math_trig_reduction_formulas",
+      "to": "cn_sh_math_trig_product_sum_half_angle",
+      "strength": "soft",
+      "reason": "积和与半角变换建立在基本诱导及和差、倍角关系之上。"
+    },
+    {
+      "from": "cn_sh_math_vector_projection",
+      "to": "cn_sh_math_vector_applications",
+      "strength": "soft",
+      "reason": "力学和几何中的分解应用依赖向量投影。"
+    }
+  ]
+}

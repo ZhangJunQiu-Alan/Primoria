@@ -2,7 +2,7 @@
   "graphId": "numerical_analysis",
   "subject": "Introduction to Numerical Analysis",
   "generatedFrom": "data/knowledge-graphs/source/numerical_analysis.json",
-  "generatedAt": "2026-07-18",
+  "generatedAt": "2026-07-19",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {

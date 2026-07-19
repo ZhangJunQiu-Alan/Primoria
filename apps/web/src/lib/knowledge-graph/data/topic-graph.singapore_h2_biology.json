@@ -1,0 +1,553 @@
+{
+  "graphId": "singapore_h2_biology",
+  "subject": "Biology",
+  "generatedFrom": "data/knowledge-graphs/source/singapore_h2_biology.json",
+  "generatedAt": "2026-07-19",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
+  "topics": [
+    {
+      "topicId": "sg_h2_biology_topic_cell_life_boundaries",
+      "name": "Cellular life and genome boundaries",
+      "nameZh": "细胞生命与基因组边界",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_biology_cell_theory",
+          "name": "Cell theory",
+          "nameZh": "细胞学说",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_biology_virus_living_boundary",
+          "name": "Viruses and the boundary of life",
+          "nameZh": "病毒与生命边界",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_biology_comparative_genome_architecture",
+          "name": "Comparative genome architecture",
+          "nameZh": "病毒、原核与真核基因组结构比较",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "sg_h2_biology_topic_microbial_genome_change",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_biology_topic_stem_replication",
+      "name": "Stem-cell potency and chromosome ends",
+      "nameZh": "干细胞潜能与染色体末端",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_biology_stem_cell_potency",
+          "name": "Stem-cell potency",
+          "nameZh": "干细胞潜能层级",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_biology_stem_cell_normal_functions",
+          "name": "Normal functions of stem cells",
+          "nameZh": "干细胞的正常生理功能",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_biology_dna_end_replication_problem",
+          "name": "The DNA end-replication problem",
+          "nameZh": "DNA 末端复制问题",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_biology_topic_microbial_genome_change",
+      "name": "Microbial genome inheritance and change",
+      "nameZh": "微生物基因组继承与变异",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_biology_viral_reproductive_cycles",
+          "name": "Viral reproductive cycles and genome inheritance",
+          "nameZh": "病毒繁殖周期与基因组继承",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_biology_viral_genome_variation",
+          "name": "Antigenic drift and antigenic shift",
+          "nameZh": "抗原漂移与抗原转变",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_biology_prokaryotic_horizontal_gene_transfer",
+          "name": "Prokaryotic horizontal gene transfer",
+          "nameZh": "原核生物水平基因转移",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "sg_h2_biology_topic_cell_life_boundaries"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "sg_h2_biology_topic_genome_regulation_analysis",
+      "name": "Genome regulation and analysis",
+      "nameZh": "基因组调控与分析",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_biology_noncoding_genome_elements",
+          "name": "Functional non-coding genome elements",
+          "nameZh": "功能性非编码基因组元件",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_biology_multilevel_eukaryotic_gene_regulation",
+          "name": "Multilevel regulation of eukaryotic gene expression",
+          "nameZh": "真核基因表达的多层调控",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_biology_southern_blot_hybridisation",
+          "name": "Southern blotting and nucleic-acid hybridisation",
+          "nameZh": "Southern 印迹与核酸杂交",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_biology_topic_screening_cancer_control",
+      "name": "Screening and cancer control",
+      "nameZh": "遗传筛查与癌症控制",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_biology_maternal_genetic_screening_ethics",
+          "name": "Ethics of maternal genetic screening",
+          "nameZh": "母体遗传筛查伦理",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_biology_cell_cycle_dysregulation_cancer_risk",
+          "name": "Cell-cycle dysregulation and cancer risk",
+          "nameZh": "细胞周期失调与癌变风险",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_biology_oncogene_tumour_suppressor_control",
+          "name": "Oncogenes and tumour-suppressor genes",
+          "nameZh": "原癌基因与抑癌基因",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "sg_h2_biology_topic_cancer_complex_inheritance",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_biology_topic_cancer_complex_inheritance",
+      "name": "Cancer progression and complex inheritance",
+      "nameZh": "癌症进展与复杂遗传",
+      "defaultOrder": 6,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_biology_multistep_cancer_progression",
+          "name": "Multistep cancer progression",
+          "nameZh": "癌症的多步骤进展",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_biology_epistasis_problem_solving",
+          "name": "Epistasis problem solving",
+          "nameZh": "上位性遗传问题求解",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_biology_genotype_environment_phenotype",
+          "name": "Genotype-environment effects on phenotype",
+          "nameZh": "基因型、环境与表型",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "sg_h2_biology_topic_screening_cancer_control"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "sg_h2_biology_topic_signal_transduction",
+      "name": "Cell signal transduction",
+      "nameZh": "细胞信号转导",
+      "defaultOrder": 7,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_biology_cell_signalling_stages",
+          "name": "Stages of cell signalling",
+          "nameZh": "细胞信号传导阶段",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_biology_second_messengers",
+          "name": "Second messengers",
+          "nameZh": "第二信使",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_biology_kinase_phosphatase_signalling",
+          "name": "Kinases and phosphatases in signalling",
+          "nameZh": "信号传导中的激酶与磷酸酶",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "sg_h2_biology_topic_receptor_population_evolution",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_biology_topic_receptor_population_evolution",
+      "name": "Receptor pathways and population evolution",
+      "nameZh": "受体通路与种群进化",
+      "defaultOrder": 8,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_biology_insulin_glucagon_receptor_pathways",
+          "name": "Insulin and glucagon receptor pathways",
+          "nameZh": "胰岛素与胰高血糖素受体通路",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_biology_recessive_allele_persistence",
+          "name": "Persistence of harmful recessive alleles",
+          "nameZh": "有害隐性等位基因的保留",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_biology_microevolution_macroevolution_link",
+          "name": "Microevolution and macroevolution",
+          "nameZh": "微观进化与宏观进化的联系",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "sg_h2_biology_topic_signal_transduction"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "sg_h2_biology_topic_evolutionary_relationships",
+      "name": "Evidence, species and phylogeny",
+      "nameZh": "进化证据、物种与系统发育",
+      "defaultOrder": 9,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_biology_integrated_evolution_evidence",
+          "name": "Integrated evidence for evolution",
+          "nameZh": "进化的综合证据",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_biology_biological_species_concept_limits",
+          "name": "Biological species concept and its limits",
+          "nameZh": "生物学物种概念及局限",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_biology_phylogeny_and_molecular_classification",
+          "name": "Phylogeny and molecular classification",
+          "nameZh": "系统发育与分子分类",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_biology_topic_adaptive_immunity",
+      "name": "Adaptive immunity and vaccination",
+      "nameZh": "适应性免疫与疫苗",
+      "defaultOrder": 10,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_biology_adaptive_immune_cell_coordination",
+          "name": "Coordination of adaptive immune cells",
+          "nameZh": "适应性免疫细胞协同",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_biology_antibody_diversity_mechanisms",
+          "name": "Mechanisms of antibody diversity",
+          "nameZh": "抗体多样性的形成机制",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_biology_vaccination_population_control_tradeoffs",
+          "name": "Vaccination, population control and trade-offs",
+          "nameZh": "疫苗的群体控制与权衡",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_biology_topic_infection_epidemiology",
+      "name": "Viral pathogenesis and epidemiology",
+      "nameZh": "病毒致病与流行病学",
+      "defaultOrder": 11,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_biology_viral_tissue_pathogenesis",
+          "name": "Viral tissue pathogenesis",
+          "nameZh": "病毒对宿主组织的致病机制",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_biology_basic_reproduction_number",
+          "name": "Basic reproduction number",
+          "nameZh": "基本再生数 R0",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_biology_outbreak_epidemic_pandemic",
+          "name": "Outbreak, epidemic and pandemic",
+          "nameZh": "暴发、流行与大流行",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_biology_topic_climate_forcing",
+      "name": "Climate forcing and footprint",
+      "nameZh": "气候强迫与碳足迹",
+      "defaultOrder": 12,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_biology_greenhouse_gas_human_drivers",
+          "name": "Human drivers of carbon dioxide and methane accumulation",
+          "nameZh": "二氧化碳与甲烷累积的人为驱动",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_biology_climate_system_ecological_impacts",
+          "name": "Climate-system and ecological impacts",
+          "nameZh": "气候系统与生态影响",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_biology_anthropogenic_carbon_footprints",
+          "name": "Comparing anthropogenic carbon footprints",
+          "nameZh": "人为活动碳足迹比较",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "sg_h2_biology_topic_climate_vectors",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_biology_topic_climate_mitigation_resources",
+      "name": "Climate mitigation, food and biodiversity",
+      "nameZh": "气候缓解、粮食与生物多样性",
+      "defaultOrder": 13,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_biology_mangrove_climate_mitigation",
+          "name": "Mangrove climate mitigation",
+          "nameZh": "红树林的气候缓解作用",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_biology_climate_stress_food_supply",
+          "name": "Climate stress and sustainable food supply",
+          "nameZh": "气候压力与可持续食物供应",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_biology_tropical_biodiversity_resources",
+          "name": "Tropical biodiversity as a biomedical and food resource",
+          "nameZh": "热带生物多样性的医药与粮食资源价值",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_biology_topic_climate_vectors",
+      "name": "Ecological redistribution and disease vectors",
+      "nameZh": "生态重新分布与疾病媒介",
+      "defaultOrder": 14,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_biology_climate_ecological_redistribution",
+          "name": "Climate-driven ecological redistribution",
+          "nameZh": "气候驱动的生态重新分布",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_biology_temperature_insect_vector_lifecycle",
+          "name": "Temperature effects on insect-vector life cycles",
+          "nameZh": "温度对昆虫媒介生命周期的影响",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_biology_warming_vector_borne_range_shift",
+          "name": "Warming-driven shifts in vector-borne disease range",
+          "nameZh": "变暖驱动的蚊媒疾病范围变化",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "sg_h2_biology_topic_climate_forcing"
+      ],
+      "isRoot": false
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "sg_h2_biology_adaptive_immune_cell_coordination",
+      "to": "sg_h2_biology_antibody_diversity_mechanisms",
+      "strength": "soft",
+      "reason": "解释抗体多样性如何用于应答前，需要先理解 B、T 和抗原呈递细胞的协同。"
+    },
+    {
+      "from": "sg_h2_biology_adaptive_immune_cell_coordination",
+      "to": "sg_h2_biology_vaccination_population_control_tradeoffs",
+      "strength": "soft",
+      "reason": "评价疫苗群体效果前，需要先理解免疫记忆和初次、二次应答。"
+    },
+    {
+      "from": "sg_h2_biology_basic_reproduction_number",
+      "to": "sg_h2_biology_outbreak_epidemic_pandemic",
+      "strength": "soft",
+      "reason": "区分疾病传播规模时，需要先理解传染性指标与病例增长趋势。"
+    },
+    {
+      "from": "sg_h2_biology_biological_species_concept_limits",
+      "to": "sg_h2_biology_phylogeny_and_molecular_classification",
+      "strength": "soft",
+      "reason": "解释系统发育分类的价值时，需要先认识单一物种概念的适用边界。"
+    },
+    {
+      "from": "sg_h2_biology_cell_cycle_dysregulation_cancer_risk",
+      "to": "sg_h2_biology_oncogene_tumour_suppressor_control",
+      "strength": "soft",
+      "reason": "解释特定癌基因改变前，需要理解细胞周期控制失调与癌变的联系。"
+    },
+    {
+      "from": "sg_h2_biology_cell_signalling_stages",
+      "to": "sg_h2_biology_second_messengers",
+      "strength": "soft",
+      "reason": "解释第二信使时，需要先定位其在受体激活后的信号转导阶段。"
+    },
+    {
+      "from": "sg_h2_biology_cell_theory",
+      "to": "sg_h2_biology_virus_living_boundary",
+      "strength": "soft",
+      "reason": "判断病毒为何挑战生命定义，需要先明确细胞学说的核心断言。"
+    },
+    {
+      "from": "sg_h2_biology_climate_system_ecological_impacts",
+      "to": "sg_h2_biology_climate_ecological_redistribution",
+      "strength": "soft",
+      "reason": "分析物种和生态位重新分布，需要先理解升温与极端事件对环境的影响。"
+    },
+    {
+      "from": "sg_h2_biology_comparative_genome_architecture",
+      "to": "sg_h2_biology_viral_reproductive_cycles",
+      "strength": "soft",
+      "reason": "追踪病毒基因组继承前，需要先区分不同基因组的结构组织。"
+    },
+    {
+      "from": "sg_h2_biology_greenhouse_gas_human_drivers",
+      "to": "sg_h2_biology_climate_system_ecological_impacts",
+      "strength": "soft",
+      "reason": "解释气候系统和生态后果前，需要先建立人为温室气体来源的因果链。"
+    },
+    {
+      "from": "sg_h2_biology_integrated_evolution_evidence",
+      "to": "sg_h2_biology_phylogeny_and_molecular_classification",
+      "strength": "soft",
+      "reason": "使用分子数据重建系统发育前，需要理解多类进化证据为何能够相互印证。"
+    },
+    {
+      "from": "sg_h2_biology_kinase_phosphatase_signalling",
+      "to": "sg_h2_biology_insulin_glucagon_receptor_pathways",
+      "strength": "soft",
+      "reason": "比较两类血糖受体通路前，需要理解激酶与磷酸酶的通用调控作用。"
+    },
+    {
+      "from": "sg_h2_biology_noncoding_genome_elements",
+      "to": "sg_h2_biology_multilevel_eukaryotic_gene_regulation",
+      "strength": "soft",
+      "reason": "分析多层基因调控前，需要识别启动子、增强子、沉默子和内含子等功能元件。"
+    },
+    {
+      "from": "sg_h2_biology_oncogene_tumour_suppressor_control",
+      "to": "sg_h2_biology_multistep_cancer_progression",
+      "strength": "soft",
+      "reason": "理解癌症多步骤进展，需要先掌握促进和抑制增殖的基因控制。"
+    },
+    {
+      "from": "sg_h2_biology_recessive_allele_persistence",
+      "to": "sg_h2_biology_microevolution_macroevolution_link",
+      "strength": "soft",
+      "reason": "联系微观和宏观进化前，需要理解选择如何改变或保留种群等位基因。"
+    },
+    {
+      "from": "sg_h2_biology_second_messengers",
+      "to": "sg_h2_biology_kinase_phosphatase_signalling",
+      "strength": "soft",
+      "reason": "解释磷酸化级联的放大与终止，需要先理解第二信使如何启动下游通路。"
+    },
+    {
+      "from": "sg_h2_biology_temperature_insect_vector_lifecycle",
+      "to": "sg_h2_biology_warming_vector_borne_range_shift",
+      "strength": "soft",
+      "reason": "解释疾病地理范围移动前，需要先理解温度对蚊媒存活和发育的作用。"
+    },
+    {
+      "from": "sg_h2_biology_viral_reproductive_cycles",
+      "to": "sg_h2_biology_viral_genome_variation",
+      "strength": "soft",
+      "reason": "比较抗原漂移与转变前，需要理解病毒复制和基因组传递路径。"
+    }
+  ]
+}

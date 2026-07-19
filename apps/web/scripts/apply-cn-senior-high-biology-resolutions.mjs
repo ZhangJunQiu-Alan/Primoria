@@ -165,7 +165,7 @@ const EDGE_SPECS = [
   ["central_nervous_hierarchy", "autonomic_nervous_regulation", "解释自主神经调节内脏需要先理解中枢层级的协调。"],
   ["endocrine_system", "neuroendocrine_coordination", "解释神经体液协同需要先识别内分泌系统和激素信号。"],
   ["population_characteristics", "population_limiting_factors", "分析限制因素的作用需要先明确种群密度、出生死亡和迁入迁出等响应变量。"],
-  ["population_limiting_factors", "population_growth_models", "理解逻辑斯谛增长及环境容纳量需要先掌握密度相关和非密度相关限制因素。"],
+  ["population_growth_models", "population_limiting_factors", "以指数和逻辑斯谛增长模型及环境容纳量为动态基线，有助于进一步分析各类限制因素如何改变种群数量。"],
   ["community_structure", "ecological_succession", "理解群落随时间替代需要先识别其垂直和水平结构。"],
   ["food_chains_webs", "matter_cycles_energy_flow", "分析能量与物质路径需要先建立食物链和食物网营养结构。"],
   ["matter_cycles_energy_flow", "ecological_pyramids", "解释生态金字塔需要先掌握能量逐级递减和物质循环的差异。"],

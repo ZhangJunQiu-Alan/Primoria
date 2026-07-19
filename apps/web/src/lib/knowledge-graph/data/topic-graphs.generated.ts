@@ -20,9 +20,19 @@ import g14 from "./topic-graph.machine_learning.json";
 import g15 from "./topic-graph.mit_calculus.json";
 import g16 from "./topic-graph.numerical_analysis.json";
 import g17 from "./topic-graph.python_fundamentals.json";
-import g18 from "./topic-graph.sicp_cs61a.json";
-import g19 from "./topic-graph.software_construction.json";
-import g20 from "./topic-graph.web_applications.json";
+import g18 from "./topic-graph.senior_secondary_biology.json";
+import g19 from "./topic-graph.senior_secondary_chemistry.json";
+import g20 from "./topic-graph.senior_secondary_mathematics.json";
+import g21 from "./topic-graph.senior_secondary_physics.json";
+import g22 from "./topic-graph.sicp_cs61a.json";
+import g23 from "./topic-graph.singapore_h2_biology.json";
+import g24 from "./topic-graph.singapore_h2_chemistry.json";
+import g25 from "./topic-graph.singapore_h2_mathematics.json";
+import g26 from "./topic-graph.singapore_h2_physics.json";
+import g27 from "./topic-graph.singapore_lower_secondary_science.json";
+import g28 from "./topic-graph.singapore_secondary_mathematics.json";
+import g29 from "./topic-graph.software_construction.json";
+import g30 from "./topic-graph.web_applications.json";
 
 export const DEFAULT_TOPIC_GRAPH_ID = "mit_calculus";
 
@@ -45,7 +55,17 @@ export const TOPIC_GRAPHS: Record<string, TopicGraph> = {
   "mit_calculus": g15 as unknown as TopicGraph,
   "numerical_analysis": g16 as unknown as TopicGraph,
   "python_fundamentals": g17 as unknown as TopicGraph,
-  "sicp_cs61a": g18 as unknown as TopicGraph,
-  "software_construction": g19 as unknown as TopicGraph,
-  "web_applications": g20 as unknown as TopicGraph,
+  "senior_secondary_biology": g18 as unknown as TopicGraph,
+  "senior_secondary_chemistry": g19 as unknown as TopicGraph,
+  "senior_secondary_mathematics": g20 as unknown as TopicGraph,
+  "senior_secondary_physics": g21 as unknown as TopicGraph,
+  "sicp_cs61a": g22 as unknown as TopicGraph,
+  "singapore_h2_biology": g23 as unknown as TopicGraph,
+  "singapore_h2_chemistry": g24 as unknown as TopicGraph,
+  "singapore_h2_mathematics": g25 as unknown as TopicGraph,
+  "singapore_h2_physics": g26 as unknown as TopicGraph,
+  "singapore_lower_secondary_science": g27 as unknown as TopicGraph,
+  "singapore_secondary_mathematics": g28 as unknown as TopicGraph,
+  "software_construction": g29 as unknown as TopicGraph,
+  "web_applications": g30 as unknown as TopicGraph,
 };
