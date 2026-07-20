@@ -58,11 +58,12 @@ directions, not active runtime capabilities.
 
 ### 3.2 Cold-start onboarding
 
-Onboarding captures three explicit signals:
+Onboarding captures four explicit signals across three pages:
 
 1. learning goal;
-2. a skippable 2–2000 character self-introduction for Facts intake;
-3. Tutor style (`socratic`, `feynman`, or `euclid`).
+2. current education stage and confirmed curriculum;
+3. an optional 2–2000 character self-introduction for Facts intake;
+4. Tutor style (`socratic`, `feynman`, or `euclid`).
 
 The goal is positioned against library KGs. A broad covered subject may reuse
 the full authored graph; a precise topic/concept uses its prerequisite closure;
@@ -70,15 +71,34 @@ and a covered subject constrained by an application purpose uses a minimal
 `goal_scoped` subgraph. If named outcomes exceed one graph or the subject is
 outside library coverage while infrastructure is healthy, Primoria may create
 or reuse a generated/hybrid graph. Partial coverage never silently becomes a
-full course merely because one subject keyword matched. Submitting the
-introduction only queues durable work and moves
-the learner directly to Tutor style; it never waits for a model response or
-shows a candidate-review step. First-course preparation begins only after goal
+full course merely because one subject keyword matched. The stage question
+shows a compact curriculum badge. Stage plus region may prefill it only when
+one candidate remains; multiple candidates require an inline learner choice.
+IP/region never becomes a fact, and Continue confirms the structured fields.
+Submitting optional introduction text only queues durable work and moves the
+learner directly to the unchanged Tutor Style page; it never waits for a model
+response or shows a fact-review step. First-course preparation begins only after goal
 positioning and Facts intake reaches `completed`, `skipped`, or `failed`.
 Pending intake does not block onboarding completion or workspace entry.
 
+For biology, chemistry, mathematics, physics, and science graphs that belong to
+different school systems, curriculum is a hard route constraint. An explicit
+system in the goal or an explicit subject-chip selection wins. Otherwise Web
+uses the confirmed structured onboarding curriculum, then—only for migrated
+profiles—an active, explicit curriculum/study-jurisdiction Fact from
+`profile_context` or `prior_knowledge`. UI language, timezone, and IP location
+cannot commit a curriculum. If several systems remain possible, onboarding asks
+inline before building. A first-time goal waiting on this choice is
+re-positioned behind a same-goal write fence.
+
+The runtime topic-graph registry currently contains 31 graphs: 21
+source-approved graphs and 10 China/Singapore graphs whose runtime artifacts are
+registered while their source governance state remains `needs_review`.
+Availability must not be described as approval. The canonical inventory is
+`docs/knowledge-graph/catalog.md`.
+
 The Extractor writes supported statements directly as evidence-backed Facts.
-It derives `knowledgeBackground` (`high_school`, `undergraduate`, or `graduate`)
+It derives `knowledgeBackground` (`middle_school`, `high_school`, `undergraduate`, or `graduate`)
 only when the introduction explicitly names the education stage; course names
 or apparent sophistication are not sufficient evidence.
 
@@ -173,15 +193,25 @@ its own quiz rather than moving all checks to the lesson end.
 ### 3.6 Quiz, events, mastery, and next-step decisions
 
 Course quiz submissions use a client `submissionId` plus a database uniqueness
-constraint so retries cannot duplicate attempts or learning evidence. Quiz
-attempts and learning events are owner-scoped.
+constraint so retries cannot duplicate attempts or learning evidence. The
+browser keeps the pending id for the same answer set across response loss,
+remount, and reload, and presents an explicit retry action until the server
+confirms persistence. Quiz attempts and learning events are owner-scoped.
 
 Lesson completion enqueues a recoverable `learning_progress_job`:
 
 1. read per-concept quiz evidence;
 2. update `user_concept_mastery` using explicit rules;
-3. diagnose the next action;
+3. diagnose the next action against the exact next persisted lesson by
+   `sort_key`, not the next authored topic;
 4. persist a recommendation for learner confirmation before remediation work.
+
+Accepting a continue/remediation recommendation resolves the decision and
+materializes or enqueues its target lesson in one transaction. A missing target
+leaves the recommendation pending and retryable. `course.completed` and the
+course-completion achievement are written only after mastery projection returns
+a clean `course_complete` decision; a weak final lesson produces remediation
+without either completion side effect.
 
 Mastery states are `untested`, `weak`, `learning`, and `mastered`. Mastery is
 based on quiz/evidence rules; a chat claim such as “I understand” cannot by
@@ -220,7 +250,8 @@ IANA timezone from `user_settings`; missing values fall back to UTC.
 ### 3.7 Learner profile and facts
 
 `learner_profiles` stores explicit cold-start choices and onboarding lifecycle,
-including Facts intake status/job/message timestamps. `learner_facts` stores
+including education stage, confirmed curriculum, confirmation source/time, and
+Facts intake status/job/message timestamps. `learner_facts` stores
 durable statements in six categories:
 
 - `preference`;
@@ -292,6 +323,8 @@ reserved private-media channel with no current lesson-image writers.
 - Concept ids are globally unique; cross-topic and cross-subject prerequisites are allowed.
 - `default_order` guides a stable topic path but does not override prerequisite correctness.
 - Source graphs live under `data/knowledge-graphs/source`; generated candidates live under `data/knowledge-graphs/generated`.
+- Source/license/stable-ID decisions live under `data/knowledge-graphs/governance`; official curriculum representations and pending mappings/gaps/resolutions live under `data/knowledge-graphs/curricula`; reviewable diagnostic and teaching knowledge lives under `data/knowledge-graphs/pedagogy`.
+- Runtime registration, database import, source approval, curriculum-mapping approval, and pedagogy approval are separate states. Current build/import scripts do not infer an approval gate from `review_status`.
 - KG source import and embedding initialization are separate from schema bootstrap.
 
 ## 5. Ownership and durability
@@ -348,3 +381,8 @@ pnpm build
 
 DB-backed and browser suites are separate gates; see `README.md` and
 `docs/deployment-preflight.md`.
+
+`pnpm test:learning-goal-routing` currently verifies and validates 1,718 cases
+across all 31 runtime graphs. The protected minimum is 1,718, bilingual labels
+are required, and each China/Singapore graph must retain English and Chinese
+manual boundary coverage.

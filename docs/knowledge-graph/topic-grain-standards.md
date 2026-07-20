@@ -6,6 +6,11 @@
 `data/knowledge-graphs/source/`；自动门禁运行
 `pnpm --filter @primoria/web validate:kg`。本规范解释内容判断，不能替代脚本校验与人工学科审核。
 
+当前 31 张运行时图全部通过硬门禁，但新增 10 张中国大陆/新加坡图均触发
+root concept 过多的内容质量警告，且 source 仍为 `needs_review`。应逐图补充有
+学理依据的先修边，或由学科审核明确接受这些入口；不得为了消除警告制造伪
+先修。实时数量和状态见 [`catalog.md`](catalog.md)。
+
 ## 节点 (concept node)
 
 **定义**:一个能独立出 quiz 题检验的最小概念 = 单一可诊断技能/结果。

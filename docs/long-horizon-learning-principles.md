@@ -117,7 +117,7 @@ The core loop is:
 
 | Principle | Current implementation | Remaining gap |
 | --- | --- | --- |
-| Goal and cold start | Onboarding captures the desired learning goal, a skippable free-text Facts intake, and Tutor style; the intake is processed after navigation | Make later goal changes and conflicting facts reviewable |
+| Goal and cold start | Onboarding captures the desired learning goal, confirmed education stage/curriculum, an optional free-text Facts intake, and Tutor style; the intake is processed after navigation | Make later goal changes and conflicting facts reviewable |
 | Structured progress | Courses, lessons, blocks, generation decisions, and progress state are persisted | Improve recovery/resume and intervention explanations |
 | Evidence | Quiz attempts, learning events, course edits, and Tutor conversations provide raw evidence | Normalize success criteria across teaching methods |
 | Learner state | Concept mastery, six-category learner facts, profile-intake/lesson extractor jobs, and Settings correction/deletion controls | Surface source quotes and confidence more clearly, then measure adaptive value |

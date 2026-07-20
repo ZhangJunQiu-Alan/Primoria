@@ -17,6 +17,7 @@ highest-precedence source of truth.
 | Multiple named outcomes that one curated graph cannot cover | `hybrid_graph` | Generated goal graph; never silently relabel one library graph as full coverage |
 | Healthy KG with no suitable library coverage | `generated_graph` | Governed generated graph |
 | Ambiguous subject | `clarify` | No course until the subject is resolved |
+| Covered school subject shared by multiple curriculum systems | Curriculum gate | Explicit goal system, then explicit learner fact, otherwise clarification |
 | Invalid or too-vague input | `fallback` | Ask for a usable learning goal |
 | KG infrastructure failure | Safe API error | Never masquerade as a coverage miss |
 
@@ -36,6 +37,34 @@ When no approved deterministic mapping exists, the goal-scope selector may
 choose terminal concepts from one graph. `partial` coverage or an invalid model
 answer fails closed into out-of-library creation; it never expands to the full
 graph merely because one keyword matched.
+
+## Curriculum-system gate
+
+China senior high school, Singapore H2, Singapore lower secondary/G2/G3, and
+Cambridge International A-Level are different curricula even when the subject
+name is the same. The route priority is:
+
+1. an explicit curriculum in the current goal or an explicit subject chip;
+2. a learner-confirmed structured onboarding curriculum;
+3. an active `profile_context` or `prior_knowledge` fact that explicitly names
+   the curriculum or study jurisdiction;
+4. clarification before recall, Stage 2, or course creation.
+
+UI language, timezone, IP location, and semantic similarity are not curriculum
+evidence. Region may only narrow uncommitted onboarding candidates; a single
+candidate can be displayed, but Continue is still the confirmation boundary.
+A Mainland China confirmed profile can therefore constrain generic
+`高中数学` to `senior_secondary_mathematics`; a generic Singapore fact still
+requires a choice between H2 and G2/G3 mathematics when the stage is unknown.
+Conflicting explicit curriculum facts do not produce an automatic choice.
+
+The positioning API reads confirmed structured fields first and derives a
+bounded curriculum enum on the server. It never passes raw profile facts into
+KG routing. During first-time onboarding, if the initial goal is waiting on
+curriculum clarification, the shared readiness gate re-positions it using the
+confirmed selection and persists the anchor only while the same goal is current.
+Explicit curricula without a matching library graph route out of library rather
+than borrowing a different school system's graph.
 
 ## Persisted contract
 
@@ -63,9 +92,16 @@ The corpus is a permanent product contract:
 - generator/invariant checks: `apps/web/scripts/generate-learning-goal-routing-dataset.ts`;
 - evaluator: `apps/web/scripts/eval-learning-goal-routing.ts`.
 
-The current fixture contains 1,252 bilingual cases across 21 graphs. Generation
-fails if the corpus shrinks below 1,250 cases or if either reported regression
-changes its required policy. CI runs the validation on every pull request.
+The current fixture contains 1,718 cases: 859 English and 859 Chinese, covering
+all 31 runtime graphs, 579 topics, and 1,456 graph-local concepts. The generator
+requires at least one English and one Chinese manual boundary case for each of
+the 10 China/Singapore graphs.
+
+Generation fails if the corpus shrinks below 1,718 cases, if a runtime graph
+loses bilingual labels or required boundary coverage, or if either reported
+regression changes its required policy. CI runs the validation on every pull
+request. `pnpm test:learning-goal-routing` currently verifies and validates all
+1,718 cases without calling a model.
 
 ```bash
 # Regenerate after adding reviewed seeds or KG content.

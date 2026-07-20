@@ -9,23 +9,30 @@ AG-UI Agent runtime; it is not a static mock and has no Supabase runtime path.
 ## Implemented product loop
 
 - Self-owned email/password auth, sessions, password reset, and rate limiting.
-- Cold-start onboarding for learning goal, KG anchor, background Facts intake,
-  Tutor style, first-course readiness, stale-run recovery, and asynchronous fact
-  extraction after durable enqueue.
+- Cold-start onboarding for learning goal, KG anchor, confirmed education
+  stage/curriculum, optional background Facts intake, unchanged Tutor Style,
+  first-course readiness, stale-run recovery, and asynchronous fact extraction
+  after durable enqueue. Region only narrows uncommitted curriculum candidates;
+  multi-candidate contexts require an inline learner choice.
 - Main CopilotKit Tutor connected to the durable `primoria_tutor` runtime.
 - Postgres-backed chat threads and New chat lifecycle.
-- KG positioning across library graphs with canonical, topic/concept closure,
-  and goal-scoped routes; deterministic cross-subject targets where approved;
-  generated/hybrid fallback for missing outcomes; and explicit
-  infrastructure-failure handling.
+- KG positioning across a 31-graph runtime registry with canonical,
+  topic/concept closure, and goal-scoped routes; deterministic cross-subject
+  targets where approved; generated/hybrid fallback for missing outcomes; and
+  explicit infrastructure-failure handling. The original 21 source graphs are
+  approved; 10 China/Singapore graphs are runtime-registered but remain
+  `needs_review` at source level.
 - Concept-frontier course outline initialization (mastery-aware 2–3 concept
   lesson bundles), background title/description enrichment, lazy lesson
   generation, job recovery, and Jump ahead generation.
 - One-block-at-a-time lesson reader plus course-aware Tutor rail.
 - Text, analogy, image, visual, quiz, code, transfer, mind-map, slide, and
   worksheet block renderers.
-- Idempotent course quiz submissions, learning events, concept mastery, and
-  post-lesson diagnosis/recommendations.
+- Recoverable idempotent course quiz submissions (stable retry id across
+  response loss/reload), learning events, concept mastery, and exact
+  persisted-next-lesson diagnosis/recommendations. Recommendation acceptance is
+  atomic with lesson materialization; course completion events/rewards are
+  deferred until a clean mastery decision.
 - Server-authoritative solo progression with an idempotent XP ledger, eight
   guild ranks, three daily quests, course quest map, and ten Profile
   achievements. Full RPG presentation is Profile-only; older learning history
@@ -133,21 +140,29 @@ pnpm build
 DB-backed and browser suites remain separate CI gates. The latest local
 catalog-routing run passed all 28 real-model cases; this result is evidence, not
 a permanent guarantee, so rerun the evaluator after catalog or prompt changes.
-Learning-goal routing has a permanent 1,252-case bilingual corpus with a
-1,250-case minimum, gold-policy invariants, deterministic course-scope checks,
+Learning-goal routing has a permanent 1,718-case bilingual corpus with a
+1,718-case minimum, gold-policy invariants, deterministic course-scope checks,
 and a CI gate. The two reported production regressions also pass configured
 real-model evaluation. See `docs/knowledge-graph/learning-goal-routing.md`.
 
+The fixture covers all 31 runtime graphs, including bilingual labels and manual
+boundary coverage for the 10 China/Singapore graphs. The curriculum gate keeps
+shared school subjects behind explicit goal context, explicit learner facts, or
+clarification before course creation.
+
 ## Remaining hardening
 
-1. Accumulate 2–4 weeks of real visualization traffic before selecting the
+1. Review the high root-concept counts reported by `validate:kg` for all 10 new
+   graphs; add justified prerequisite coverage or explicitly approve the entry
+   points rather than suppressing the warnings.
+2. Accumulate 2–4 weeks of real visualization traffic before selecting the
    next component batch.
-2. Deepen high-value humanities interactions before optimizing for component count.
-3. Close the full remediation/resume loop, including cross-graph prerequisites.
-4. Improve learner-fact extraction quality, review, correction, and decay.
-5. Observe XP pace and quest completion quality before changing the fixed
+3. Deepen high-value humanities interactions before optimizing for component count.
+4. Close the full remediation/resume loop, including cross-graph prerequisites.
+5. Improve learner-fact extraction quality, review, correction, and decay.
+6. Observe XP pace and quest completion quality before changing the fixed
    launch economy; do not add competitive or social progression implicitly.
-6. Keep browser QA representative across text, visual, code, quiz, worksheet,
+7. Keep browser QA representative across text, visual, code, quiz, worksheet,
    course sharing, onboarding, and Tutor patch flows.
-7. Reduce Stage-2 learning-goal routing latency while preserving the fail-closed
+9. Reduce Stage-2 learning-goal routing latency while preserving the fail-closed
    KG coverage policy.

@@ -36,6 +36,11 @@ pnpm --filter @primoria/web db:migrate
 # First-time full KG data + embedding import
 pnpm db:initialize:kg
 
+# KG source/governance validation and review-pack regeneration
+pnpm --filter @primoria/web validate:kg
+pnpm --filter @primoria/web build:curriculum-review-packs
+pnpm --filter @primoria/web build:core-pedagogy
+
 # One-time local data import into a DB account
 pnpm --filter @primoria/web import:local-data <email>
 ```
@@ -81,6 +86,9 @@ apps/agent/   Self-hosted Node/AG-UI runtime for the primoria_tutor graph
 packages/contracts/  Cross-runtime artifacts, tool schemas, dependency and interactive catalogs
 data/knowledge-graphs/source/  Committed KG source JSON files and sidecars
 data/knowledge-graphs/generated/  Exported generated graph candidates awaiting review/promotion
+data/knowledge-graphs/governance/  Provenance, license, stable-ID, review, and decision records
+data/knowledge-graphs/curricula/  Official frameworks plus pending mappings, gaps, and resolutions
+data/knowledge-graphs/pedagogy/  Reviewable diagnostic, teaching-strategy, and assessment knowledge
 data/visualization-components/  Versioned all-subject catalog and JSON Schema
 ```
 
@@ -93,6 +101,21 @@ Browser CopilotKit UI → `apps/web/src/app/api/copilotkit/route.ts` → `Primor
 The legacy `POST /api/tutor/chat` stack has been deleted. If you find references to it in older docs, they are stale.
 
 The Agent runtime persists AG-UI events, run state, leases, cancellation, retry metadata, and LangGraph checkpoints in PostgreSQL's isolated `agent_runtime` schema. Automatic retry is allowed only before user-visible/tool output. Interrupted runs with persisted output fail explicitly to avoid replaying side effects. Manual retry creates a new run ID and preserves the original audit trail.
+
+### Knowledge graph catalog and governance
+
+The runtime topic-graph registry currently contains 31 source-derived graphs:
+21 source-approved graphs plus 10 China/Singapore secondary and H2 graphs whose
+runtime artifacts are registered while source `review_status` remains
+`needs_review`. Runtime registration, DB import, source approval, curriculum
+mapping approval, and pedagogy approval are separate states; current build and
+import scripts do not automatically enforce a review-status gate. Canonical
+inventory: `docs/knowledge-graph/catalog.md`.
+
+The permanent learning-goal fixture contains 1,718 bilingual cases across all
+31 runtime graphs. Its generator requires bilingual subject labels and English
+plus Chinese manual boundary coverage for every China/Singapore graph. Keep the
+1,718-case floor and all existing gold policies intact.
 
 ### Visualization routing
 
@@ -150,19 +173,35 @@ In the main AI Tutor, course creation starts with the `position_learning_goal` t
 
 Positioning distinguishes canonical full-graph, topic/concept closure, `goal_scoped`, hybrid/generated, clarification, and fallback outcomes. Goal-scoped anchors carry multiple terminal `targetConceptIds`, `scope: "goal"`, and the original `learningGoal`. Approved cross-subject prerequisite edges provide deterministic targets when available; otherwise the selector may choose a minimal in-graph target set. Partial or invalid coverage routes out of library instead of expanding to the whole matched KG. Courses persist `scope_key` and active reuse is unique by owner plus exact scope, so canonical and goal-specific courses from the same graph coexist. Canonical policy: `docs/knowledge-graph/learning-goal-routing.md`.
 
+For overlapping school subjects, curriculum system is a hard route constraint.
+Priority is: an explicit system in the current goal or subject chip, then a
+confirmed structured onboarding curriculum, then an explicit active
+`profile_context`/`prior_knowledge` fact, then clarification. Region/IP may only
+narrow uncommitted onboarding suggestions; it is never persisted as curriculum
+evidence. Auto-display a curriculum only when stage plus region leaves one
+candidate; multiple candidates require an inline learner choice. Continue is
+the confirmation boundary. Re-position a previously clarifying goal behind the
+current-goal write fence before building the first course.
+
 The outline is built from a **concept frontier**, not one lesson per authored topic. At creation the web side takes a one-time mastery snapshot (`user_concept_mastery`, status `mastered`) and calls the pure `buildConceptFrontierOutline` (`apps/web/src/lib/knowledge-graph/concept-frontier.ts`): it walks the concept prerequisite DAG (built into the `topic-graphs.generated` artifact as `conceptEdges` by `build-topic-graph.mjs`; generated `gen_*` graphs get a synthesized linear chain) in a priority topological order keyed by authored order (`topicDefaultOrder`, then `conceptDefaultOrder`), skips mastered concepts, and greedily groups the remainder into lessons of 2–3 concepts. `centrality` is only a full-tie break plus a `[core]` depth marker in the generation prompt — never a primary sort key. Empty mastery reproduces the authored order exactly. Each lesson persists its `conceptIds` (jsonb); a mastery read failure degrades to an empty set (cold, never skip content), and an old lesson with empty `conceptIds` dual-reads its whole authored topic. A `conceptEdges` edge may carry an optional `reason` (why `to` needs `from`): source edges author it opt-in, `gen_*` graphs emit it from the generator, `validate-kg.mjs` bounds it (≤240 chars), and `lesson-generation-context.ts` threads intra-lesson reasons into the planner prompt to motivate ordering (`buildKgContextPrompt`). A concept may likewise carry an optional `assessmentHint` (`assessment_hint` in KG source; ≤240 chars; gen_* graphs emit it) — consumed ONLY by quiz-block generation (`block-writer.ts` appends it to quiz jobs), never by mastery scoring, which stays rule-based in `apps/web/src/lib/mastery/rules.ts`.
 
 Lesson titles and descriptions start as deterministic concept-name templates; after a NEW course is created, one best-effort background LLM call (`apps/web/src/lib/ai/course-generation/outline-enrichment.ts`, scheduled with `after()` in `initializeCourseOutline`) rewrites both the title and description behind a title+description-equality write fence — failures keep the templates, and `PRIMORIA_DISABLE_OUTLINE_ENRICHMENT=1` disables the call.
 
 ### Onboarding, mastery, and learner facts
 
-Onboarding persists the learning goal/KG anchor, a skippable free-text Facts
-intake, and Tutor style in `learner_profiles`. `POST /api/onboarding/facts`
-durably enqueues `profile_fact_intake_jobs` and advances immediately; the shared
-Extractor Worker prioritizes those jobs, directly writes supported facts, and
-derives `knowledgeBackground` only from explicit education-stage evidence.
+Onboarding persists the learning goal/KG anchor, confirmed `education_stage`
+and `curriculum_system`, a skippable free-text Facts intake, and Tutor style in
+`learner_profiles`. `POST /api/onboarding/facts` synchronously confirms the
+structured education context; when optional text exists it durably enqueues a
+`profile_fact_intake_jobs` row and advances immediately. The shared Extractor
+Worker writes supported facts and derives `knowledgeBackground` only from
+explicit education-stage evidence.
 Course preparation waits for goal positioning plus a terminal intake state,
-while pending intake never blocks workspace entry. Settings uses the same queue.
+while pending intake never blocks workspace entry. A curriculum-ambiguous goal
+is re-positioned from confirmed structured context first, with explicit Facts
+as a compatibility fallback after intake reaches a terminal state;
+if multiple systems remain possible, course creation stays behind clarification.
+Settings uses the same queue.
 
 Keep mastery and facts distinct. `user_concept_mastery` is rule/evidence-driven
 concept state written by the learning-progress worker. `learner_facts` stores

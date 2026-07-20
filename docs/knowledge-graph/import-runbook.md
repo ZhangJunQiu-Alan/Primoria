@@ -7,11 +7,17 @@ Current source of truth: KG source JSON files live in
 in `data/knowledge-graphs/generated/`. Runtime topic DAG artifacts are generated
 under `apps/web/src/lib/knowledge-graph/data/`.
 
+The current runtime registry contains 31 source-derived graphs. The original 21
+source graphs are `approved`; 10 China/Singapore graphs are registered at
+runtime while their source records remain `needs_review`. Runtime registration,
+database import eligibility, and human approval are distinct states. The exact
+inventory and counts are maintained in [`catalog.md`](catalog.md).
+
 ## 来源治理与稳定概念 ID
 
 - `data/knowledge-graphs/governance/sources.json` 是来源、版本、许可和保存策略注册表；节点与边必须以 `evidence_refs` 指向具体章节、页码或条款。
 - `data/knowledge-graphs/governance/concept-registry.json` 维护全局 `canonical_id`、各图 legacy ID alias 和历史重定向。legacy ID 继续作为图内主键，名称、翻译或 Topic 变化不得生成新的 canonical ID。
-- 图、Topic、Concept 和边使用 `unreviewed / needs_review / approved / rejected / superseded`；只有带人工审核者的 decision record 可以进入 `approved`。
+- 图、Topic、Concept 和边使用 `unreviewed / needs_review / approved / rejected / superseded`；只有带人工审核者的 decision record 可以进入 `approved`。当前 `build:topic-graph all` 与 `db:seed:kg-all` 不按该字段自动排除图，因此“已生成/已注册/可导入”不得在文档中改写成“已批准”。生产导入前必须由发布流程显式核对允许的审核状态。
 - 数据库 `knowledge_graph_concepts.canonical_id` 由 `0002_canonical_concept_ids.sql` 以兼容方式新增。迁移允许既有行暂时为空，但 `seed-kg.mjs` 会拒绝缺少或格式错误的 canonical ID；完成全量 seed 后不得存在空值。
 - 版权受限或许可不明的材料只提交元数据、校验值和知识映射，不把公开下载误判为允许再发布全文。
 
@@ -22,7 +28,7 @@ under `apps/web/src/lib/knowledge-graph/data/`.
 - `topic_alignment` 只能使用 `partial` 或 `unmapped`，不得声称 `full`。只有框架已经拆到 `requirement_granularity: outcome` 且逐条证据闭合时，`outcome_coverage` 才可使用 `full`；禁止为了提高覆盖率强行映射。
 - 成果级映射产生的待审缺口存放在 `data/knowledge-graphs/curricula/gaps/pending/`：`add_concept` 表示新增概念候选，`split_or_narrow_existing` 表示现有 canonical 概念范围过宽，`not_knowledge_concept` 表示应进入教学策略或评测知识而不是学科概念。缺口候选不得直接改正式 source KG。
 - `curriculum_id`、`framework_id`、`requirement_id`、`mapping_set_id`、`mapping_id` 和 `gap_id` 都是稳定 ID。名称、翻译或证据定位变化不得更换 ID。
-- 运行 `pnpm --filter @primoria/web build:curriculum-review-packs` 生成中文审核包。未经人工 decision record 批准，框架和映射保持 `needs_review`，不得用于正式 KG 发布或数据库导入。
+- 运行 `pnpm --filter @primoria/web build:curriculum-review-packs` 生成中文审核包。未经人工 decision record 批准，框架和映射保持 `needs_review`，不得被称为已批准覆盖或作为审批证据。当前导入与派生脚本不会替运营方执行这道状态门禁。
 - `pnpm --filter @primoria/web validate:kg` 同时校验课程 Schema、来源、成果级精确页码、稳定 ID、canonical ID 引用、映射范围、要求—映射一一对应关系，以及每个 `partial/unmapped` 成果都存在且只存在一个缺口候选。
 
 ## 误区、教学策略与评测知识
@@ -64,6 +70,7 @@ under `apps/web/src/lib/knowledge-graph/data/`.
 5. **跨学科边**：`seed-kg` 只写同图边；更新 `data/knowledge-graphs/source/cross_subject_edges.json` 后运行 `pnpm --filter @primoria/web db:seed:kg-cross`。这些审核通过的边也用于目标范围裁剪，必须在步骤 7 重建运行时派生件。
 6. **嵌入**：`pnpm --filter @primoria/web db:seed:kg-embeddings <graph_id>`，供定位/RAG 使用。Provider 由 `KG_EMBEDDING_PROVIDER` 配置，当前支持 `openai-compatible` 与 `minimax`；嵌入模型与维度必须和数据库数据一致。
 7. **topic/范围派生件**：`pnpm --filter @primoria/web build:topic-graph <graph_id>` → `apps/web/src/lib/knowledge-graph/data/topic-graph.<id>.json`（入口分类/下一 topic）并同步生成 `cross-subject-edges.generated.json`（确定性 goal scope）。新增/删除图时使用 `pnpm --filter @primoria/web build:topic-graph all` 重建 barrel。
-8. **接消费端**：确认 `search.ts`、图路由和显示名称能找到新图；不要另建与 source 目录并行的图注册表。
+8. **接消费端**：确认 `search.ts`、图路由、显示名称和中英文 subject label 能找到新图；不要另建与 source 目录并行的图注册表。
+9. **同步路由语料**：为新图补齐中英文 subject label 与人工种子，运行 `pnpm generate:learning-goal-routing`，再运行 `pnpm test:learning-goal-routing`。运行时图数与回归 fixture 覆盖图数必须分别报告，直到两者确实一致。
 
 新环境全量导入：`pnpm db:initialize:kg`（所有 subject graphs + retired graph cleanup + cross-subject edges + 所有 embeddings）。单图维护按步骤 4、6 分别传 `<graph_id>`；任何 source 变更都必须重新执行步骤 1。

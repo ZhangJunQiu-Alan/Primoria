@@ -81,6 +81,11 @@ docker compose -f docker-compose.prod.yml config --quiet
 docker compose -f docker-compose.prod.yml build
 ```
 
+`pnpm test:learning-goal-routing` must verify and validate at least 1,718 cases
+across all 31 runtime graphs. Do not lower the corpus floor, remove the bilingual
+China/Singapore boundary requirements, or weaken existing gold policies to make
+this gate pass.
+
 The container build gate is mandatory. It must confirm that Web, Agent, and all
 Workers start as the non-root `node` user with the read-only filesystem and
 capability restrictions in `docker-compose.prod.yml`.
@@ -97,6 +102,10 @@ capability restrictions in `docker-compose.prod.yml`.
 6. Confirm that long-running services use `primoria_runtime`, never
    `primoria_migrator`.
 7. On the first deployment only, initialize KG data and embeddings.
+   `db:initialize:kg` currently includes all 31 source graphs, including 10
+   China/Singapore graphs whose source status remains `needs_review`. Record the
+   production review-state decision before running the all-graph command; the
+   importer does not enforce it automatically.
 8. Verify health, authentication, course access, one quiz submission/replay,
    Tutor streaming, Worker queue consumption, email delivery, and public TLS.
    Include one onboarding or Settings Facts intake: the request should return
