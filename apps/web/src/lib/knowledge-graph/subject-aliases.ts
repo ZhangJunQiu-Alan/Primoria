@@ -58,12 +58,13 @@ const EXTRA_ALIASES: Record<string, string[]> = {
   a_level_physics: ["物理", "物理学"],
   linear_algebra: ["线代"],
   data_structures_and_algorithms: ["data structures and algorithms", "数据结构和算法"],
+  discrete_math_and_probability: ["discrete mathematics and probability"],
   introduction_to_computer_science: ["intro to computer science"],
   python_fundamentals: ["python fundamentals"],
-  senior_secondary_biology: ["生物学"],
-  senior_secondary_chemistry: ["化学"],
-  senior_secondary_mathematics: ["数学"],
-  senior_secondary_physics: ["物理", "物理学"],
+  senior_secondary_biology: ["中国普通高中生物", "生物学"],
+  senior_secondary_chemistry: ["中国普通高中化学", "化学"],
+  senior_secondary_mathematics: ["中国普通高中数学", "数学"],
+  senior_secondary_physics: ["中国普通高中物理", "物理", "物理学"],
   singapore_h2_biology: ["生物学"],
   singapore_h2_chemistry: ["化学"],
   singapore_h2_mathematics: ["数学"],
@@ -84,7 +85,7 @@ function normalize(value: string) {
 export function findExplicitSubjectGraphIds(query: string): string[] {
   const normalized = normalize(query);
   if (!normalized) return [];
-  const matches: Array<{ graphId: string; length: number }> = [];
+  const matches: Array<{ graphId: string; alias: string }> = [];
   for (const graphId of listTopicGraphIds()) {
     const graph = getTopicGraph(graphId);
     const aliases = [
@@ -95,14 +96,40 @@ export function findExplicitSubjectGraphIds(query: string): string[] {
       ...(EXTRA_ALIASES[graphId] ?? []),
     ].filter((alias): alias is string => Boolean(alias));
     const longest = aliases.map(normalize).filter((alias) => alias.length >= 3 && normalized.includes(alias)).sort((a, b) => b.length - a.length)[0];
-    if (longest) matches.push({ graphId, length: longest.length });
+    if (longest) matches.push({ graphId, alias: longest });
   }
-  return matches.sort((a, b) => b.length - a.length || a.graphId.localeCompare(b.graphId)).map((match) => match.graphId);
+  const aliasUseCount = new Map<string, number>();
+  for (const match of matches) aliasUseCount.set(match.alias, (aliasUseCount.get(match.alias) ?? 0) + 1);
+  const withoutNestedAliases = matches
+    .filter((match) => !matches.some(
+      (other) => other.alias.length > match.alias.length && other.alias.includes(match.alias),
+    ));
+  return withoutNestedAliases
+    .filter((match) => {
+      if ((aliasUseCount.get(match.alias) ?? 0) === 1) return true;
+      return !withoutNestedAliases.some(
+        (other) => (aliasUseCount.get(other.alias) ?? 0) === 1 && other.alias.length > match.alias.length,
+      );
+    })
+    .sort((a, b) => b.alias.length - a.alias.length || a.graphId.localeCompare(b.graphId))
+    .map((match) => match.graphId);
 }
 
 export function findPrimarySubjectGraphId(query: string): string | null {
   const all = findExplicitSubjectGraphIds(query);
   if (all.length <= 1) return all[0] ?? null;
+
+  const englishContainer = query.match(/\bwithin\s+([^,;]+)/i) ?? query.match(/\bas part of\s+([^,;]+)/i);
+  if (englishContainer) {
+    const inContainer = findExplicitSubjectGraphIds(englishContainer[1]);
+    if (inContainer.length === 1) return inContainer[0];
+  }
+
+  const chineseContainer = query.match(/在([^，。！？!?]+?)中/u) ?? query.match(/作为([^，。！？!?]+?)课程/u);
+  if (chineseContainer) {
+    const inContainer = findExplicitSubjectGraphIds(chineseContainer[1]);
+    if (inContainer.length === 1) return inContainer[0];
+  }
 
   const chinesePurpose = query.match(/(?:面向|用于|为了)[\s\S]*的([^，。！？!?]+)$/);
   if (chinesePurpose) {

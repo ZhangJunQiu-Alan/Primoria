@@ -2,7 +2,11 @@ import { describe, expect, it, vi } from "vitest";
 
 import { runStage2Positioning, type Stage2Graph } from "../src/lib/knowledge-graph/positioning-llm";
 import { planFromPositioning, positionLearningGoal } from "../src/lib/knowledge-graph/position-learning-goal";
-import { resolvePositioningParams, type PositioningResult } from "../src/lib/knowledge-graph/positioning";
+import {
+  finalizeStage2,
+  resolvePositioningParams,
+  type PositioningResult,
+} from "../src/lib/knowledge-graph/positioning";
 import {
   normalizeTopicKey,
   parseGeneratedGraph,
@@ -16,6 +20,7 @@ import {
 } from "../src/lib/knowledge-graph/search";
 import { isCodeEligibleLessonContext } from "../src/lib/ai/course-generation/code-eligibility";
 import type { CourseContext } from "../src/lib/ai/deepagent/course-kg-context";
+import { getTopicGraph } from "../src/lib/knowledge-graph/topic-graph";
 
 const GRAPHS: Stage2Graph[] = [{ graphId: "artificial_intelligence", subject: "Introduction to Artificial Intelligence" }];
 const LIBRARY: Stage2Graph[] = [
@@ -82,6 +87,70 @@ describe("stage-2 out_of_library decision", () => {
       invokerReturning({ outcome: "positioned", graphId: "made_up", mode: "subject_start", startTopicId: "root" }),
     );
     expect(decision).toBeNull();
+  });
+
+  it("fails closed for evaluator runs when the model errors", async () => {
+    await expect(
+      runStage2Positioning(
+        { query: "AI", language: "en", graphs: GRAPHS, librarySubjects: LIBRARY, failOnModelError: true },
+        async () => {
+          throw new Error("provider unavailable");
+        },
+      ),
+    ).rejects.toThrow("provider unavailable");
+  });
+
+  it("normalizes a mode emitted as the outcome while keeping ids grounded", async () => {
+    const decision = await runStage2Positioning(
+      { query: "AI applications", language: "en", graphs: GRAPHS, librarySubjects: LIBRARY },
+      async () => JSON.stringify({
+        outcome: "goal_scoped",
+        graphId: "artificial_intelligence",
+        startTopicId: "ai_search_part1",
+        targetConceptIds: ["ai_heuristics"],
+      }),
+    );
+
+    expect(decision).toMatchObject({
+      outcome: "positioned",
+      graphId: "artificial_intelligence",
+      mode: "goal_scoped",
+      startTopicId: "ai_search_part1",
+    });
+  });
+});
+
+describe("stage-2 topic scope guardrail", () => {
+  it("keeps a valid topic bounded when a specific decision omits its concept", () => {
+    const graphId = "a_level_biology";
+    const topicId = "bio_biodiversity";
+    const topic = getTopicGraph(graphId).topics.find((candidate) => candidate.topicId === topicId)!;
+    const result = finalizeStage2(
+      {
+        outcome: "positioned",
+        graphId,
+        mode: "specific",
+        startTopicId: topicId,
+        targetConceptId: null,
+      },
+      {
+        candidates: [{ graphId, subject: "Cambridge International A-Level Biology", bestSimilarity: 1 }],
+        librarySubjects: [{ graphId, subject: "Cambridge International A-Level Biology" }],
+        hitTopicIdsByGraph: new Map([[graphId, new Set([topicId])]]),
+        language: "en",
+        diagnostics: { maxSimilarity: 1, candidateGraphs: [{ graphId, bestSimilarity: 1 }] },
+        params: resolvePositioningParams(),
+      },
+    );
+
+    expect(result).toMatchObject({
+      branch: "positioned",
+      graphId,
+      mode: "directed",
+      startTopicId: topicId,
+      targetConceptId: null,
+      targetConceptIds: topic.conceptIds.map((concept) => concept.conceptId),
+    });
   });
 });
 
@@ -218,7 +287,11 @@ describe("positionLearningGoal goal-scoped orchestration", () => {
       branch: "positioned",
       graphId: "linear_algebra",
       mode: "goal_scoped",
-      targetConceptIds: ["c_mit1806_matrix_ops", "c_mit1806_linear_transformations"],
+      targetConceptIds: [
+        "c_mit1806_vectors",
+        "c_mit1806_matrix_ops",
+        "c_mit1806_linear_transformations",
+      ],
       learningGoal: query,
     });
     const plan = planFromPositioning(positioned);
@@ -227,7 +300,11 @@ describe("positionLearningGoal goal-scoped orchestration", () => {
       courseContext: {
         scope: "goal",
         learningGoal: query,
-        targetConceptIds: ["c_mit1806_matrix_ops", "c_mit1806_linear_transformations"],
+        targetConceptIds: [
+          "c_mit1806_vectors",
+          "c_mit1806_matrix_ops",
+          "c_mit1806_linear_transformations",
+        ],
       },
     });
     expect(selectGoalScope).not.toHaveBeenCalled();

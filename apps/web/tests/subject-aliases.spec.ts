@@ -3,37 +3,46 @@ import { describe, expect, it } from "vitest";
 import {
   findExplicitSubjectGraphIds,
   findPrimarySubjectGraphId,
-  getKnowledgeGraphSubjectLabel,
 } from "../src/lib/knowledge-graph/subject-aliases";
-import { listTopicGraphIds } from "../src/lib/knowledge-graph/topic-graph";
 
-describe("knowledge graph subject aliases", () => {
-  it("provides unique bilingual routing labels for every runtime graph", () => {
-    const graphIds = listTopicGraphIds();
-    const english = graphIds.map((graphId) => getKnowledgeGraphSubjectLabel(graphId, "en"));
-    const chinese = graphIds.map((graphId) => getKnowledgeGraphSubjectLabel(graphId, "zh"));
-
-    expect(new Set(english).size).toBe(graphIds.length);
-    expect(new Set(chinese).size).toBe(graphIds.length);
+describe("explicit subject aliases", () => {
+  it("prefers a full subject name over generic curriculum words inside it", () => {
+    expect(findExplicitSubjectGraphIds(
+      "Within Discrete Mathematics and Probability, teach me the PageRank algorithm",
+    )).toEqual(["discrete_math_and_probability"]);
+    expect(findExplicitSubjectGraphIds(
+      "Within Introduction to Computer Science, teach me functions",
+    )).toEqual(["introduction_to_computer_science"]);
   });
 
-  it("keeps a bare shared subject ambiguous across curriculum systems", () => {
-    expect(findExplicitSubjectGraphIds("I want to learn biology")).toEqual(
-      expect.arrayContaining(["a_level_biology", "senior_secondary_biology", "singapore_h2_biology"]),
-    );
+  it("keeps independent subjects in a composed goal", () => {
+    expect(findExplicitSubjectGraphIds("Connect linear algebra with deep learning")).toEqual([
+      "linear_algebra",
+      "deep_learning",
+    ]);
   });
 
-  it("ranks a curriculum-qualified label ahead of generic subject matches", () => {
-    expect(findExplicitSubjectGraphIds("I want to learn Singapore H2 Biology")[0]).toBe("singapore_h2_biology");
-    expect(findExplicitSubjectGraphIds("我想学习中国普通高中物理学")[0]).toBe("senior_secondary_physics");
-  });
-
-  it("resolves a curriculum-qualified primary subject in a purpose-scoped goal", () => {
-    expect(findPrimarySubjectGraphId("I want to learn Singapore H2 Biology for medical school")).toBe(
+  it("keeps same-length curriculum choices ambiguous for a bare subject", () => {
+    expect(findExplicitSubjectGraphIds("I want to learn biology")).toEqual([
+      "a_level_biology",
+      "senior_secondary_biology",
       "singapore_h2_biology",
-    );
-    expect(findPrimarySubjectGraphId("我想学习为了工程应用的新加坡 H2 物理学")).toBe(
-      "singapore_h2_physics",
-    );
+    ]);
+  });
+
+  it("uses containment grammar to identify the primary subject", () => {
+    expect(findPrimarySubjectGraphId(
+      "Within Introduction to Artificial Intelligence, focus on Machine Learning",
+    )).toBe("artificial_intelligence");
+    expect(findPrimarySubjectGraphId("我想在人工智能中重点学习机器学习")).toBe("artificial_intelligence");
+  });
+
+  it("does not let a generic topic word override a fully named curriculum subject", () => {
+    expect(findExplicitSubjectGraphIds(
+      "Within Mainland China Senior High School Biology, focus on Cell chemistry and membrane",
+    )).toEqual(["senior_secondary_biology"]);
+    expect(findExplicitSubjectGraphIds(
+      "我想按中国普通高中生物课程重点学习细胞化学与质膜",
+    )).toEqual(["senior_secondary_biology"]);
   });
 });

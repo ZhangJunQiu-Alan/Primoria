@@ -155,4 +155,51 @@ describe("curriculum routing policy", () => {
     );
     expect(result).toMatchObject({ branch: "positioned", graphId });
   });
+
+  it("does not let lexical subject matches escape an explicit curriculum graph", async () => {
+    const query = "I want to learn Cambridge International A-Level Biology from the beginning";
+    const graphId = "a_level_biology";
+    const root = [...getTopicGraph(graphId).topics].sort((a, b) => a.defaultOrder - b.defaultOrder)[0]!;
+    const runStage2Positioning = vi.fn(async () => ({
+      outcome: "positioned" as const,
+      graphId,
+      mode: "subject_start" as const,
+      startTopicId: root.topicId,
+    }));
+
+    const { result } = await positionLearningGoal(
+      { query, language: "en" },
+      {
+        searchKnowledgeGraphNodes: vi.fn(async () => ({
+          encodedQuery: encodeKnowledgeGraphQuery(query),
+          graphId,
+          modelVersion: "test-model",
+          topK: 15,
+          results: [{
+            graphId,
+            kind: "topic" as const,
+            nodeId: root.topicId,
+            name: root.name,
+            description: null,
+            topicId: null,
+            topicName: null,
+            embedText: root.name,
+            modelVersion: "test-model",
+            distance: 0.1,
+            similarity: 0.9,
+          }],
+        })),
+        runStage2Positioning,
+      },
+    );
+
+    expect(runStage2Positioning).toHaveBeenCalledWith(
+      expect.objectContaining({
+        graphs: [{ graphId, subject: "Cambridge International A-Level Biology" }],
+        librarySubjects: [{ graphId, subject: "Cambridge International A-Level Biology" }],
+      }),
+      undefined,
+    );
+    expect(result).toMatchObject({ branch: "positioned", graphId });
+  });
 });

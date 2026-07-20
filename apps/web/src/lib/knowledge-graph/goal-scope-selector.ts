@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { invokeJson } from "../ai/course-generation/model-json";
+import { fastTierSettings } from "../ai/deepagent/model";
 import { resolveKgDisplayName, type KgLanguage } from "./display-name";
 import { getTopicGraph } from "./topic-graph";
 
@@ -22,10 +23,11 @@ const defaultInvoker: GoalScopeModelInvoker = async ({ system, user }) => {
   const response = await invokeJson({
     system,
     user,
+    settings: fastTierSettings(),
     schema: GoalScopeSchema,
     schemaName: "goal_scope",
-    maxTokens: 512,
-    timeoutMs: 30_000,
+    maxTokens: 2048,
+    timeoutMs: 45_000,
   });
   return JSON.stringify(response);
 };
@@ -89,7 +91,7 @@ export function parseGoalScopeSelection(text: string, graphId: string): GoalScop
 }
 
 export async function selectGoalScope(
-  input: { query: string; graphId: string; language: KgLanguage },
+  input: { query: string; graphId: string; language: KgLanguage; failOnModelError?: boolean },
   invokeModel: GoalScopeModelInvoker = defaultInvoker,
 ): Promise<GoalScopeSelection | null> {
   try {
@@ -97,8 +99,11 @@ export async function selectGoalScope(
       system: SYSTEM_PROMPT,
       user: graphPrompt(input.query, input.graphId, input.language),
     });
-    return parseGoalScopeSelection(text, input.graphId);
+    const selection = parseGoalScopeSelection(text, input.graphId);
+    if (!selection && input.failOnModelError) throw new Error("Goal-scope selector returned an invalid decision");
+    return selection;
   } catch (error) {
+    if (input.failOnModelError) throw error;
     console.warn("[kg-goal-scope] selection failed:", error instanceof Error ? error.message : error);
     return null;
   }

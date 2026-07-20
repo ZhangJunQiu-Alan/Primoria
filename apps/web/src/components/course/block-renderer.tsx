@@ -313,6 +313,9 @@ function ImageBlockView({ block }: { block: ImageBlock }) {
             </span>
           </div>
         ) : (
+          // The media endpoint is authenticated and dimensions vary by asset;
+          // a direct browser request preserves the user's session.
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             className="course-image"
             src={block.imageUrl}

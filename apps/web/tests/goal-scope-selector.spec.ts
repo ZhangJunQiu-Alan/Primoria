@@ -60,4 +60,13 @@ describe("goal scope selector", () => {
 
     expect(result).toEqual({ coverage: "partial", targetConceptIds: ["dl_transformer"], reason: "Apps are missing" });
   });
+
+  it("fails closed for evaluator runs when the selector returns invalid output", async () => {
+    await expect(
+      selectGoalScope(
+        { query: "linear algebra for robotics", graphId: GRAPH_ID, language: "en", failOnModelError: true },
+        async () => "not json",
+      ),
+    ).rejects.toThrow("invalid decision");
+  });
 });

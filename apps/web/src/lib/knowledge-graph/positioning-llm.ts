@@ -1,4 +1,7 @@
-import { createUtilityModel } from "../ai/deepagent/model";
+import { z } from "zod";
+
+import { invokeJson } from "../ai/course-generation/model-json";
+import { fastTierSettings } from "../ai/deepagent/model";
 import { getTopicGraph } from "./topic-graph";
 import { resolveKgDisplayName, type KgLanguage } from "./display-name";
 import type { PositioningMode, Stage2Decision } from "./positioning";
@@ -7,25 +10,55 @@ import type { PositioningMode, Stage2Decision } from "./positioning";
 // picks the subject (among the candidate graphs recall surfaced) and positions
 // the goal inside it. The full topic list of each candidate graph is in the
 // prompt (a single graph is ~10K tokens, 3 graphs ~30K) so the model can only
-// reference real ids — no hallucinated topics. It runs on the MAIN tutor model
-// (createUtilityModel with no settings → AI_PROVIDER/OPENAI_MODEL), deliberately
-// NOT bound to KG_ROUTER_MODEL: this is the heavy positioning decision, not the
-// cheap subject router. Returns an untrusted Stage2Decision (validated by
-// finalizeStage2) or null on error/parse failure (caller degrades to subject_start).
+// reference real ids — no hallucinated topics. It runs on the configured fast
+// model tier because this is a bounded structured-routing task. Returns an
+// untrusted Stage2Decision (validated by
+// finalizeStage2) or null on error/parse failure (caller degrades safely in
+// production; the evaluator opts into fail-closed model errors).
 
-const MODES: PositioningMode[] = ["specific", "subject_start", "directed", "goal_scoped"];
+const MODES = ["specific", "subject_start", "directed", "goal_scoped"] as const;
 
 export type Stage2Graph = { graphId: string; subject: string };
 
 export type Stage2ModelInvoker = (input: { system: string; user: string }) => Promise<string>;
 
+const Stage2DecisionSchema = z.discriminatedUnion("outcome", [
+  z.object({
+    outcome: z.literal("positioned"),
+    graphId: z.string(),
+    mode: z.enum(MODES),
+    startTopicId: z.string(),
+    targetConceptId: z.string().nullable().optional(),
+    targetConceptIds: z.array(z.string()).optional(),
+    reason: z.string().optional(),
+  }),
+  z.object({
+    outcome: z.literal("clarify_subject"),
+    candidateGraphIds: z.array(z.string()),
+    message: z.string().optional(),
+  }),
+  z.object({
+    outcome: z.literal("out_of_library"),
+    topic: z.string().optional(),
+    message: z.string().optional(),
+  }),
+  z.object({
+    outcome: z.literal("fallback"),
+    message: z.string().optional(),
+  }),
+]);
+
 const defaultInvoker: Stage2ModelInvoker = async ({ system, user }) => {
-  const model = createUtilityModel({}, { maxTokens: 2048, timeoutMs: 30_000 });
-  const response = await model.invoke([
-    { role: "system", content: system },
-    { role: "user", content: user },
-  ]);
-  return typeof response.content === "string" ? response.content : JSON.stringify(response.content);
+  const response = await invokeJson({
+    system,
+    user,
+    settings: fastTierSettings(),
+    schema: Stage2DecisionSchema,
+    schemaName: "kg_position",
+    maxTokens: 4096,
+    timeoutMs: 45_000,
+  });
+  return JSON.stringify(response);
 };
 
 const SYSTEM_PROMPT = [
@@ -114,9 +147,10 @@ function parseDecision(text: string, validGraphIds: Set<string>): Stage2Decision
       message: typeof obj.message === "string" ? obj.message : undefined,
     };
   }
-  if (outcome === "positioned") {
+  const shorthandMode = MODES.includes(outcome as PositioningMode) ? (outcome as PositioningMode) : null;
+  if (outcome === "positioned" || shorthandMode) {
     const graphId = typeof obj.graphId === "string" ? obj.graphId : "";
-    const mode = MODES.includes(obj.mode as PositioningMode) ? (obj.mode as PositioningMode) : null;
+    const mode = shorthandMode ?? (MODES.includes(obj.mode as PositioningMode) ? (obj.mode as PositioningMode) : null);
     const startTopicId = typeof obj.startTopicId === "string" ? obj.startTopicId : "";
     if (!validGraphIds.has(graphId) || !mode || !startTopicId) return null;
     return {
@@ -135,7 +169,13 @@ function parseDecision(text: string, validGraphIds: Set<string>): Stage2Decision
 }
 
 export async function runStage2Positioning(
-  input: { query: string; language: KgLanguage; graphs: Stage2Graph[]; librarySubjects?: Stage2Graph[] },
+  input: {
+    query: string;
+    language: KgLanguage;
+    graphs: Stage2Graph[];
+    librarySubjects?: Stage2Graph[];
+    failOnModelError?: boolean;
+  },
   invokeModel: Stage2ModelInvoker = defaultInvoker,
 ): Promise<Stage2Decision | null> {
   if (input.graphs.length === 0) return null;
@@ -147,11 +187,15 @@ export async function runStage2Positioning(
       user: buildUserPrompt(input.query, input.graphs, librarySubjects, input.language),
     });
     const decision = parseDecision(text, validGraphIds);
+    if (!decision && input.failOnModelError) {
+      throw new Error(`KG Stage 2 returned an invalid decision. Preview: ${text.replace(/\s+/g, " ").slice(0, 200)}`);
+    }
     if (process.env.KG_POSITION_DEBUG === "1") {
       console.log("[kg-stage2]", { query: input.query, graphs: [...validGraphIds], decision });
     }
     return decision;
   } catch (error) {
+    if (input.failOnModelError) throw error;
     console.warn("[kg-stage2] positioning failed:", error instanceof Error ? error.message : error);
     return null;
   }
