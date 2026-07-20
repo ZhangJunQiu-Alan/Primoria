@@ -8,7 +8,8 @@ import { listConceptMasteryByOwner, upsertConceptMasteryByOwner } from "../maste
 import { computeMasteryUpdates, type ConceptEvidence } from "../mastery/rules";
 import type { MasteryStatus } from "../mastery/store";
 import { decideNextStep } from "./learning-progress-decider";
-import { applyMasteryProgression } from "../gamification/store";
+import { applyCourseCompletionProgression, applyMasteryProgression } from "../gamification/store";
+import { recordLearningEvent } from "../learning-events/store";
 import { getUserPreferences } from "../settings/user-settings";
 import {
   completeLearningProgressJobWithDecision,
@@ -95,17 +96,38 @@ export async function processLearningProgressJob(claim: LearningProgressClaim): 
 
   const sorted = [...course.lessons].sort((a, b) => a.sortKey - b.sortKey);
   const currentIndex = sorted.findIndex((entry) => entry.id === lessonId);
-  const nextLessonSortKey = currentIndex >= 0 && sorted[currentIndex + 1] ? sorted[currentIndex + 1].sortKey : null;
+  const nextLesson = currentIndex >= 0 ? sorted[currentIndex + 1] ?? null : null;
+  const currentConceptIds = (lesson.conceptIds?.length ?? 0) > 0
+    ? lesson.conceptIds!
+    : getTopic(graphId, topicId)?.conceptIds.map((concept) => concept.conceptId) ?? [];
 
   const decision = decideNextStep({
     graphId,
     currentTopicId: topicId,
+    currentConceptIds,
     currentLessonSortKey: lesson.sortKey,
-    nextLessonSortKey,
+    nextLesson: nextLesson
+      ? { id: nextLesson.id, title: nextLesson.title, topicId: nextLesson.topicId ?? null, sortKey: nextLesson.sortKey }
+      : null,
     masteryByConcept,
   });
 
-  const result = await completeLearningProgressJobWithDecision(fence, decision);
+  const result = await getDb().transaction(async (tx) => {
+    const completed = await completeLearningProgressJobWithDecision(fence, decision, tx);
+    if (!completed.ok || decision.kind !== "course_complete") return completed;
+    await recordLearningEvent(
+      {
+        type: "course.completed",
+        ownerId,
+        id: `course_completed_${courseId}`,
+        courseId,
+        graphId,
+      },
+      tx,
+    );
+    await applyCourseCompletionProgression(tx, { ownerId, courseId });
+    return completed;
+  });
   if (!result.ok) {
     // Lost the lease between stages — abandon without writing (expiry recovers).
     throw new LeaseLostError("lease lost before recording decision");

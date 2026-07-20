@@ -196,9 +196,6 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
       const answered = new Set(attempted.map((row) => row.blockId));
       const complete = quizBlockIds.every((blockId) => answered.has(blockId));
       const lessonCompleted = complete && lesson.progress !== "completed";
-      const courseCompleted = lessonCompleted && course.lessons.every(
-        (courseLesson) => courseLesson.id === lessonId || courseLesson.progress === "completed",
-      );
       if (complete) {
         // Advance the resume pointer: a completed lesson is no longer the
         // course's first non-completed lesson, so Continue moves to the next.
@@ -214,18 +211,6 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
           },
           tx,
         );
-        if (courseCompleted) {
-          await recordLearningEvent(
-            {
-              type: "course.completed",
-              ownerId: user.id,
-              id: `course_completed_${courseId}`,
-              courseId,
-              graphId: course.graphId ?? null,
-            },
-            tx,
-          );
-        }
         await enqueueLearningProgressJob(
           {
             ownerId: user.id,
@@ -257,7 +242,6 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
         lessonRole: lesson.role ?? "new",
         lessonCompleted,
         courseId,
-        courseCompleted,
         timeZone: preferences.timeZone,
         now,
       });

@@ -300,10 +300,14 @@ export async function failLearningProgressJob(
 }
 
 /** Fenced completion: persist the decision and mark it pending for the user. */
-export async function completeLearningProgressJobWithDecision(fence: Fence, decision: LearningDecision): Promise<{ ok: boolean }> {
+export async function completeLearningProgressJobWithDecision(
+  fence: Fence,
+  decision: LearningDecision,
+  db: DbOrTx = getDb(),
+): Promise<{ ok: boolean }> {
   requireDatabase();
   const now = new Date();
-  const rows = await getDb()
+  const rows = await db
     .update(learningProgressJobs)
     .set({
       status: "completed",
@@ -355,10 +359,11 @@ export async function resolveLearningProgressDecision(
   jobId: string,
   ownerId: string,
   status: "accepted" | "dismissed",
+  db: DbOrTx = getDb(),
 ): Promise<LearningProgressJob | undefined> {
   requireDatabase();
   const now = new Date();
-  const rows = await getDb()
+  const rows = await db
     .update(learningProgressJobs)
     .set({ decisionStatus: status, updatedAt: now })
     .where(

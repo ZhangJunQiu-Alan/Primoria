@@ -1,6 +1,6 @@
 import { randomBytes } from "node:crypto";
 import { and, eq, inArray, sql } from "drizzle-orm";
-import { getDb, hasDatabaseUrl } from "../db/client";
+import { getDb, hasDatabaseUrl, type DbOrTx } from "../db/client";
 import { CourseResourceNotFoundError } from "./errors";
 import { courses as coursesTable, lessons as lessonsTable, lessonGenerationCheckpoints, lessonGenerationJobs } from "../db/schema";
 import type { CourseBlock } from "./types";
@@ -116,12 +116,13 @@ function requireDatabase() {
  * transaction that locks and ownership-validates the lesson. */
 export async function enqueueLessonGenerationJob(
   input: EnqueueLessonGenerationJobInput,
+  db?: DbOrTx,
 ): Promise<EnqueueLessonGenerationJobResult> {
   requireDatabase();
   const { ownerId, courseId, lessonId } = input;
   if (!ownerId || !courseId || !lessonId) throw new Error("ownerId, courseId and lessonId are required to enqueue a lesson job.");
 
-  return getDb().transaction(async (tx) => {
+  const run = async (tx: DbOrTx): Promise<EnqueueLessonGenerationJobResult> => {
     const lessonRows = await tx.select().from(lessonsTable).where(eq(lessonsTable.id, lessonId)).for("update");
     const lesson = lessonRows[0];
     if (!lesson || lesson.ownerId !== ownerId || lesson.courseId !== courseId) {
@@ -186,7 +187,8 @@ export async function enqueueLessonGenerationJob(
       .returning();
     await tx.update(lessonsTable).set({ status: "generating", updatedAt: now }).where(eq(lessonsTable.id, lessonId));
     return { kind: "queued", job: rowToJob(rows[0]) };
-  });
+  };
+  return db ? run(db) : getDb().transaction(run);
 }
 
 // ── Claim & lease ────────────────────────────────────────────────────────────

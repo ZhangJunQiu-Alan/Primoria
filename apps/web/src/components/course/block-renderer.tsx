@@ -438,6 +438,45 @@ type QuizState =
   | { phase: "answering"; selections: Record<string, string | string[] | boolean> }
   | { phase: "submitted"; selections: Record<string, string | string[] | boolean>; score: number };
 
+type QuizSubmission = { id: string; fingerprint: string };
+
+function quizSubmissionStorageKey(courseId: string, blockId: string) {
+  return `primoria:quiz-submission:${courseId}:${blockId}`;
+}
+
+function loadQuizSubmission(courseId: string, blockId: string, fingerprint: string): QuizSubmission | null {
+  try {
+    const raw = window.sessionStorage.getItem(quizSubmissionStorageKey(courseId, blockId));
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as Partial<QuizSubmission>;
+    return typeof parsed.id === "string" && parsed.fingerprint === fingerprint
+      ? { id: parsed.id, fingerprint }
+      : null;
+  } catch {
+    return null;
+  }
+}
+
+function storeQuizSubmission(courseId: string, blockId: string, submission: QuizSubmission) {
+  try {
+    window.sessionStorage.setItem(quizSubmissionStorageKey(courseId, blockId), JSON.stringify(submission));
+  } catch {
+    // In-memory retry still works when storage is unavailable.
+  }
+}
+
+function clearQuizSubmission(courseId: string, blockId: string, submissionId: string) {
+  try {
+    const key = quizSubmissionStorageKey(courseId, blockId);
+    const raw = window.sessionStorage.getItem(key);
+    if (!raw || (JSON.parse(raw) as Partial<QuizSubmission>).id === submissionId) {
+      window.sessionStorage.removeItem(key);
+    }
+  } catch {
+    // A completed server submission does not depend on client storage cleanup.
+  }
+}
+
 function isCorrect(q: QuizQuestion, sel: string | string[] | boolean | undefined): boolean {
   if (sel === undefined) return false;
   if (q.kind === "single") return sel === q.correctId;
@@ -458,6 +497,8 @@ const QUIZ_COPY = {
     score: "Score",
     allCorrect: "All correct!",
     saveFailed: "Progress was not saved. Try again before leaving this lesson.",
+    retry: "Retry saving",
+    saving: "Saving…",
     xpEarned: "XP earned",
     levelUp: "Guild rank advanced",
     badgesUnlocked: "Badge unlocked",
@@ -473,6 +514,8 @@ const QUIZ_COPY = {
     score: "得分",
     allCorrect: "全部正确！",
     saveFailed: "学习进度未保存，请在离开课程前重试。",
+    retry: "重试保存",
+    saving: "保存中…",
     xpEarned: "获得 XP",
     levelUp: "公会阶位提升",
     badgesUnlocked: "解锁徽章",
@@ -488,13 +531,14 @@ function quizCopyFor(language?: string | null) {
 function QuizBlockView({ block, courseId, contentLanguage }: { block: QuizBlock; courseId?: string; contentLanguage?: string | null }) {
   const copy = quizCopyFor(contentLanguage);
   const locale = contentLanguage?.toLowerCase().startsWith("zh") ? "zh" : "en";
-  const submissionIdRef = useRef<string | null>(null);
+  const submissionRef = useRef<QuizSubmission | null>(null);
   const [rewardNotice, setRewardNotice] = useState<{
     xpAwarded: number;
     levelUp: { from: LevelCode; to: LevelCode } | null;
     unlockedAchievements: AchievementCode[];
   } | null>(null);
   const [saveError, setSaveError] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [state, setState] = useState<QuizState>({
     phase: "answering",
     selections: {},
@@ -516,27 +560,38 @@ function QuizBlockView({ block, courseId, contentLanguage }: { block: QuizBlock;
   }, [rewardNotice]);
 
   const handleSubmit = useCallback(async () => {
-    if (state.phase !== "answering") return;
+    if (saving || (state.phase === "submitted" && !saveError)) return;
     // Local score is optimistic UI only; the server regrades authoritatively.
     const score = block.questions.filter((q) => isCorrect(q, state.selections[q.id])).length;
-    setState({ phase: "submitted", selections: state.selections, score });
+    if (state.phase === "answering") {
+      setState({ phase: "submitted", selections: state.selections, score });
+    }
 
     if (courseId) {
+      setSaving(true);
       setSaveError(false);
-      submissionIdRef.current ??= crypto.randomUUID();
       const answers = block.questions.map((q) => {
         const sel = state.selections[q.id];
         if (q.kind === "single") return { kind: "single" as const, questionId: q.id, selectedId: String(sel ?? "") };
         if (q.kind === "multi") return { kind: "multi" as const, questionId: q.id, selectedIds: Array.isArray(sel) ? sel : [] };
         return { kind: "truefalse" as const, questionId: q.id, selected: sel === true };
       });
+      const fingerprint = JSON.stringify(answers);
+      if (!submissionRef.current || submissionRef.current.fingerprint !== fingerprint) {
+        submissionRef.current = loadQuizSubmission(courseId, block.id, fingerprint) ?? {
+          id: crypto.randomUUID(),
+          fingerprint,
+        };
+        storeQuizSubmission(courseId, block.id, submissionRef.current);
+      }
       try {
         const response = await fetch(`/api/courses/${courseId}/quiz`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ blockId: block.id, submissionId: submissionIdRef.current, answers }),
+          body: JSON.stringify({ blockId: block.id, submissionId: submissionRef.current.id, answers }),
         });
         if (!response.ok) throw new Error("quiz persistence failed");
+        clearQuizSubmission(courseId, block.id, submissionRef.current.id);
         const payload = await response.json() as {
           rewards?: {
             xpAwarded: number;
@@ -553,9 +608,11 @@ function QuizBlockView({ block, courseId, contentLanguage }: { block: QuizBlock;
         }
       } catch {
         setSaveError(true);
+      } finally {
+        setSaving(false);
       }
     }
-  }, [block, courseId, state]);
+  }, [block, courseId, saveError, saving, state]);
 
   return (
     <BlockShell kind="quiz" title={block.title}>
@@ -571,24 +628,32 @@ function QuizBlockView({ block, courseId, contentLanguage }: { block: QuizBlock;
             copy={copy}
           />
         ))}
-        {state.phase === "answering" ? (
+        {state.phase === "answering" || saveError ? (
           <button
             className="course-quiz-submit"
             type="button"
-            disabled={!allAnswered}
+            disabled={saving || (state.phase === "answering" && !allAnswered)}
             onClick={handleSubmit}
             tabIndex={-1}
             aria-hidden="true"
           >
-            Check
+            {saving ? copy.saving : state.phase === "answering" ? "Check" : copy.retry}
           </button>
-        ) : (
+        ) : null}
+        {state.phase === "submitted" ? (
           <div className="course-quiz-result-stack">
             <div className="course-quiz-score">
               {copy.score}: {state.score} / {block.questions.length}
               {state.score === block.questions.length ? ` ${copy.allCorrect}` : ""}
             </div>
-            {saveError ? <div className="course-quiz-save-error" role="alert">{copy.saveFailed}</div> : null}
+            {saveError ? (
+              <div className="course-quiz-save-error" role="alert">
+                <span>{copy.saveFailed}</span>
+                <button type="button" className="course-quiz-retry" disabled={saving} onClick={handleSubmit}>
+                  {saving ? copy.saving : copy.retry}
+                </button>
+              </div>
+            ) : null}
             {rewardNotice ? (
               <div className="course-reward-toast" role="status" aria-live="polite">
                 {rewardNotice.xpAwarded > 0 ? <strong>+{rewardNotice.xpAwarded} XP · {copy.xpEarned}</strong> : null}
@@ -601,7 +666,7 @@ function QuizBlockView({ block, courseId, contentLanguage }: { block: QuizBlock;
               </div>
             ) : null}
           </div>
-        )}
+        ) : null}
       </div>
     </BlockShell>
   );

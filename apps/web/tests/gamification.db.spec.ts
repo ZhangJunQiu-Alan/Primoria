@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { getDb } from "@/lib/db/client";
 import { achievementUnlocks, dailyQuestCompletions, playerProgress, users, xpAwards } from "@/lib/db/schema";
+import { applyCourseCompletionProgression } from "@/lib/gamification/store";
 import { resetTestDb, setupTestDb, teardownTestDb, TEST_DB_AVAILABLE } from "./helpers/test-db";
 
 const run = process.env.RUN_GAMIFICATION_DB === "1" && TEST_DB_AVAILABLE;
@@ -61,5 +62,17 @@ suite("gamification database invariants", () => {
     }).returning();
     expect(await insertQuest()).toHaveLength(1);
     expect(await insertQuest()).toHaveLength(0);
+  });
+
+  it("awards course completion exactly once when the progress decision is replayed", async () => {
+    await getDb().insert(users).values({ id: ownerId, displayName: "Guild Test" });
+
+    await applyCourseCompletionProgression(getDb(), { ownerId, courseId: "course-1" });
+    await applyCourseCompletionProgression(getDb(), { ownerId, courseId: "course-1" });
+
+    const unlocks = await getDb().select().from(achievementUnlocks);
+    const awards = await getDb().select().from(xpAwards);
+    expect(unlocks.filter((row) => row.code === "questline_complete")).toHaveLength(1);
+    expect(awards.filter((row) => row.ruleCode === "achievement_bonus" && row.dedupeKey === "questline_complete")).toHaveLength(1);
   });
 });

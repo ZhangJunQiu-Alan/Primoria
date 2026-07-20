@@ -295,7 +295,6 @@ export async function applyQuizProgression(
     lessonRole: LessonRole;
     lessonCompleted: boolean;
     courseId: string;
-    courseCompleted: boolean;
     timeZone: string;
     now?: Date;
   },
@@ -356,9 +355,6 @@ export async function applyQuizProgression(
     if (input.lessonRole === "remediation") {
       xpAwarded += await unlockAchievement(db, input.ownerId, "remediation_complete", input.lessonId, now, unlocked);
     }
-  }
-  if (input.courseCompleted) {
-    xpAwarded += await unlockAchievement(db, input.ownerId, "questline_complete", input.courseId, now, unlocked);
   }
   if (input.total >= 3 && input.score === input.total) {
     xpAwarded += await unlockAchievement(db, input.ownerId, "perfect_trial", input.attemptId, now, unlocked);
@@ -427,6 +423,17 @@ export async function applyQuizProgression(
     unlockedAchievements: unlocked,
     completedQuests: completed,
   };
+}
+
+/** Award structural course completion only after the learning-progress worker
+ * has applied mastery evidence and decided that no remediation is needed. */
+export async function applyCourseCompletionProgression(
+  db: DbOrTx,
+  input: { ownerId: string; courseId: string; now?: Date },
+): Promise<void> {
+  const now = input.now ?? new Date();
+  await ensurePlayer(input.ownerId, db, now);
+  await unlockAchievement(db, input.ownerId, "questline_complete", input.courseId, now, []);
 }
 
 export async function currentRewardSnapshot(ownerId: string, db: DbOrTx = getDb()): Promise<RewardSummary> {

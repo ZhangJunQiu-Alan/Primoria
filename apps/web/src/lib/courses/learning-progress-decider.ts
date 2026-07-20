@@ -1,10 +1,10 @@
-import { findTopicByConcept, getTopic, nextTopic } from "../knowledge-graph/topic-graph";
+import { findTopicByConcept, getTopic } from "../knowledge-graph/topic-graph";
 import type { MasteryStatus } from "../mastery/store";
 
 // Pure post-lesson decision engine (docs/product/feature_specification.md §28–30). Given
 // updated concept mastery, decide what the learner should do next: insert a
 // same-graph remediation lesson when a concept is weak, otherwise advance to the
-// outline's next topic, or report the course complete when there is no next
+// persisted outline's next lesson, or report the course complete when there is no next
 // lesson. Progression is driven purely by the outline + mastery — the goal anchor
 // is no longer consulted to decide when a learning line ends. No I/O — topic-graph
 // reads are in-memory generated data — so every branch is unit-testable. The
@@ -15,6 +15,9 @@ export type LearningDecisionKind = "next" | "remediation" | "course_complete";
 export type LearningDecision = {
   kind: LearningDecisionKind;
   reason: string;
+  /** Exact course-outline target. Older persisted decisions may not carry it;
+   * the accept route falls back to the immediate next lesson by sortKey. */
+  targetLessonId?: string | null;
   targetTopicId: string | null;
   targetConceptId: string | null;
   proposedSortKey: number | null;
@@ -28,10 +31,11 @@ export type LearningDecision = {
 export type DecideNextStepInput = {
   graphId: string;
   currentTopicId: string;
+  currentConceptIds: string[];
   currentLessonSortKey: number;
-  /** sortKey of the next lesson after the current one (by sortKey), or null if
-   * the current lesson is last — used to place a remediation lesson between. */
-  nextLessonSortKey: number | null;
+  /** The actual next lesson in this persisted course outline. The global graph
+   * order is not authoritative after concept-frontier bundling or goal scoping. */
+  nextLesson: { id: string; title: string; topicId: string | null; sortKey: number } | null;
   /** Graph-wide concept mastery after this lesson's update. */
   masteryByConcept: Map<string, MasteryStatus>;
 };
@@ -41,27 +45,31 @@ function midpointSortKey(current: number, next: number | null): number {
 }
 
 export function decideNextStep(input: DecideNextStepInput): LearningDecision {
-  const { graphId, currentTopicId, masteryByConcept } = input;
-  const topic = getTopic(graphId, currentTopicId);
-  const concepts = topic?.conceptIds ?? [];
-  const next = nextTopic(graphId, currentTopicId);
-  const nextLessonTitle = next?.name ?? null;
+  const { graphId, currentTopicId, masteryByConcept, nextLesson } = input;
+  const nextLessonTitle = nextLesson?.title ?? null;
 
   const isWeak = (conceptId: string) => masteryByConcept.get(conceptId) === "weak";
 
   // 1) Same-graph remediation if any current-topic concept is weak. Prefer the
   // root cause: if a prereq topic also has a weak concept, remediate that first.
-  const weakHere = concepts.filter((c) => isWeak(c.conceptId));
+  const weakHere = input.currentConceptIds
+    .filter(isWeak)
+    .map((conceptId) => {
+      const ownerTopic = findTopicByConcept(graphId, conceptId);
+      const concept = ownerTopic?.conceptIds.find((candidate) => candidate.conceptId === conceptId);
+      return { conceptId, name: concept?.name ?? conceptId, topicId: ownerTopic?.topicId ?? currentTopicId };
+    });
   if (weakHere.length > 0) {
-    const rootCause = findPrereqRootCause(graphId, currentTopicId, masteryByConcept);
+    const rootCause = findPrereqRootCause(graphId, weakHere[0].topicId, masteryByConcept);
     const target = rootCause ?? { conceptId: weakHere[0].conceptId, name: weakHere[0].name };
-    const remediationSortKey = midpointSortKey(input.currentLessonSortKey, input.nextLessonSortKey);
+    const remediationSortKey = midpointSortKey(input.currentLessonSortKey, nextLesson?.sortKey ?? null);
     const reason = rootCause
       ? `「${weakHere[0].name}」掌握较弱，可能源于先修概念「${rootCause.name}」。建议先补一节「${rootCause.name}」。`
       : `「${target.name}」掌握较弱，建议先补一节巩固后再继续。`;
     return {
       kind: "remediation",
       reason,
+      targetLessonId: null,
       targetTopicId: findTopicByConcept(graphId, target.conceptId)?.topicId ?? currentTopicId,
       targetConceptId: target.conceptId,
       proposedSortKey: remediationSortKey,
@@ -71,10 +79,11 @@ export function decideNextStep(input: DecideNextStepInput): LearningDecision {
   }
 
   // 2) No weak point and no next outline topic — the course is complete.
-  if (!next) {
+  if (!nextLesson) {
     return {
       kind: "course_complete",
       reason: "你已完成本课程的全部内容，做得很好！",
+      targetLessonId: null,
       targetTopicId: currentTopicId,
       targetConceptId: null,
       proposedSortKey: null,
@@ -83,11 +92,12 @@ export function decideNextStep(input: DecideNextStepInput): LearningDecision {
     };
   }
 
-  // 3) Otherwise advance to the next outline topic.
+  // 3) Otherwise advance to the exact next persisted outline lesson.
   return {
     kind: "next",
-    reason: `你已掌握本节内容，准备好进入下一节「${next.name}」。`,
-    targetTopicId: next.topicId,
+    reason: `你已完成本节内容，准备好进入下一节「${nextLesson.title}」。`,
+    targetLessonId: nextLesson.id,
+    targetTopicId: nextLesson.topicId,
     targetConceptId: null,
     proposedSortKey: null,
     proposedTitle: null,

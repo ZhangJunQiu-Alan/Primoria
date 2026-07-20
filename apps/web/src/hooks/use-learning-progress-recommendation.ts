@@ -9,6 +9,7 @@ import type { LearningProgressJobSummary } from "@/lib/courses/learning-progress
 export function useLearningProgressRecommendation(courseId: string | null | undefined) {
   const [recommendations, setRecommendations] = useState<LearningProgressJobSummary[]>([]);
   const [resolving, setResolving] = useState(false);
+  const [resolveError, setResolveError] = useState(false);
 
   const pending = recommendations[0] ?? null;
 
@@ -43,13 +44,22 @@ export function useLearningProgressRecommendation(courseId: string | null | unde
     async (jobId: string, action: "accept" | "dismiss") => {
       if (!courseId) return null;
       setResolving(true);
+      setResolveError(false);
       try {
         const res = await fetch(`/api/courses/${courseId}/learning-progress/${jobId}`, {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify({ action }),
         });
-        const data = res.ok ? await res.json().catch(() => null) : null;
+        if (!res.ok) {
+          setResolveError(true);
+          return null;
+        }
+        const data = await res.json().catch(() => null);
+        if (!data) {
+          setResolveError(true);
+          return null;
+        }
         // Drop the resolved recommendation locally so the popup closes immediately.
         setRecommendations((prev) => prev.filter((r) => r.id !== jobId));
         return data as { status?: string; kind?: string; lessonId?: string } | null;
@@ -60,5 +70,5 @@ export function useLearningProgressRecommendation(courseId: string | null | unde
     [courseId],
   );
 
-  return { pending, recommendations, resolving, refresh, resolve };
+  return { pending, recommendations, resolving, resolveError, refresh, resolve };
 }

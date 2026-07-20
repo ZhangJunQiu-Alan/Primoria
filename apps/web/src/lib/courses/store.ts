@@ -234,9 +234,8 @@ export async function insertPlannedLesson(input: {
   role: LessonRole;
   sortKey: number;
   triggeredFrom?: string | null;
-}): Promise<Lesson> {
+}, db: DbOrTx = getDb()): Promise<Lesson> {
   const now = new Date();
-  const db = getDb();
   const rows = await db
     .insert(lessonsTable)
     .values({

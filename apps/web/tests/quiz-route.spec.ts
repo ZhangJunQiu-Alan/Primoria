@@ -306,7 +306,7 @@ describe("quiz route server-authoritative grading", () => {
     expect(routeState.recordLearningEvent).not.toHaveBeenCalled();
   });
 
-  it("commits completion, lesson.completed and the progress job in the same transaction", async () => {
+  it("commits lesson completion and downstream jobs but defers course completion until mastery is decided", async () => {
     const { tx } = installDb({ attemptedBlockIds: ["b1", "b2"] });
 
     const response = await postQuiz({
@@ -328,11 +328,12 @@ describe("quiz route server-authoritative grading", () => {
       tx,
     );
     const courseCompletionEvent = routeState.recordLearningEvent.mock.calls.find(([event]) => event.type === "course.completed");
-    expect(courseCompletionEvent?.[0]).toMatchObject({ id: "course_completed_c1", courseId: "c1" });
+    expect(courseCompletionEvent).toBeUndefined();
     expect(routeState.applyQuizProgression).toHaveBeenCalledWith(
       tx,
-      expect.objectContaining({ ownerId: "u1", lessonCompleted: true, courseCompleted: true, timeZone: "UTC" }),
+      expect.objectContaining({ ownerId: "u1", lessonCompleted: true, timeZone: "UTC" }),
     );
+    expect(routeState.applyQuizProgression.mock.calls[0]?.[1]).not.toHaveProperty("courseCompleted");
   });
 });
 

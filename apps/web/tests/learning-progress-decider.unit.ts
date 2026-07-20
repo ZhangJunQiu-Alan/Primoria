@@ -31,18 +31,22 @@ function mastery(topicIds: string[], status: MasteryStatus): Map<string, Mastery
 function main() {
   assert(nonLeaf && leaf, "graph has a non-leaf and a leaf topic with concepts");
 
-  // 1) No weak point, has a next outline topic → advance to the next topic.
+  // 1) No weak point → advance to the exact next persisted lesson, even when
+  // concept-frontier bundling keeps two adjacent lessons in the same topic.
   {
+    const next = { id: "lesson_next", title: "Next concept bundle", topicId: nonLeaf.topicId, sortKey: 2 };
     const decision = decideNextStep({
       graphId,
       currentTopicId: nonLeaf.topicId,
+      currentConceptIds: nonLeaf.conceptIds.map((concept) => concept.conceptId),
       currentLessonSortKey: 1,
-      nextLessonSortKey: null,
+      nextLesson: next,
       masteryByConcept: mastery([nonLeaf.topicId], "mastered"),
     });
     assert(decision.kind === "next", "all mastered → next");
-    assert(decision.targetTopicId === nextTopic(graphId, nonLeaf.topicId)?.topicId, "next targets the next topic");
-    assert(decision.nextLessonTitle === nextTopic(graphId, nonLeaf.topicId)?.name, "next carries the next lesson title");
+    assert(decision.targetLessonId === next.id, "next pins the exact persisted lesson");
+    assert(decision.targetTopicId === nonLeaf.topicId, "same-topic concept bundle remains valid");
+    assert(decision.nextLessonTitle === next.title, "next carries the persisted lesson title");
   }
 
   // 2) A weak concept in the current topic → remediation between current and next.
@@ -53,15 +57,16 @@ function main() {
     const decision = decideNextStep({
       graphId,
       currentTopicId: nonLeaf.topicId,
+      currentConceptIds: nonLeaf.conceptIds.map((concept) => concept.conceptId),
       currentLessonSortKey: 1,
-      nextLessonSortKey: 2,
+      nextLesson: { id: "lesson_next", title: "Next lesson", topicId: nextTopic(graphId, nonLeaf.topicId)?.topicId ?? null, sortKey: 2 },
       masteryByConcept: m,
     });
     assert(decision.kind === "remediation", "weak concept → remediation");
     assert(decision.targetConceptId === weakConcept, "remediation targets the weak concept");
     assert(decision.targetTopicId === nonLeaf.topicId, "remediation lands in the concept's topic");
     assert(decision.proposedSortKey === 1.5, "remediation sortKey is the midpoint");
-    assert(decision.nextLessonTitle === nextTopic(graphId, nonLeaf.topicId)?.name, "remediation still reports the next lesson title");
+    assert(decision.nextLessonTitle === "Next lesson", "remediation still reports the actual next lesson title");
   }
 
   // 3) Root-cause retarget: a prereq topic concept is also weak → remediate the prereq.
@@ -74,8 +79,9 @@ function main() {
     const decision = decideNextStep({
       graphId,
       currentTopicId: withPrereq.topicId,
+      currentConceptIds: withPrereq.conceptIds.map((concept) => concept.conceptId),
       currentLessonSortKey: 3,
-      nextLessonSortKey: 4,
+      nextLesson: { id: "lesson_next", title: "Next lesson", topicId: null, sortKey: 4 },
       masteryByConcept: m,
     });
     assert(decision.kind === "remediation", "weak with weak prereq → remediation");
@@ -88,8 +94,9 @@ function main() {
     const decision = decideNextStep({
       graphId,
       currentTopicId: leaf.topicId,
+      currentConceptIds: leaf.conceptIds.map((concept) => concept.conceptId),
       currentLessonSortKey: 9,
-      nextLessonSortKey: null,
+      nextLesson: null,
       masteryByConcept: mastery([leaf.topicId], "mastered"),
     });
     assert(decision.kind === "course_complete", "leaf + no weak → course_complete (outline end)");
@@ -103,8 +110,9 @@ function main() {
     const decision = decideNextStep({
       graphId,
       currentTopicId: nonLeaf.topicId,
+      currentConceptIds: nonLeaf.conceptIds.map((concept) => concept.conceptId),
       currentLessonSortKey: 5,
-      nextLessonSortKey: null,
+      nextLesson: null,
       masteryByConcept: m,
     });
     assert(decision.kind === "remediation" && decision.proposedSortKey === 6, "no next lesson → remediation sortKey = current + 1");
