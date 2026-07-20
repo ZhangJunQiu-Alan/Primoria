@@ -40,6 +40,7 @@ Use four label families on implementation issues:
 | --- | --- |
 | `type:roadmap` | Umbrella direction, not one PR. |
 | `type:learning-signal` | Attempts, mastery, weak concepts, revision evidence, adaptive decisions. |
+| `type:knowledge-graph` | Source graphs, curriculum governance, stable IDs, routing coverage, and KG quality gates. |
 | `type:course-tutor` | Course detail assistant context, selected text, block edits, course patching. |
 | `type:renderer` | HTML/React/widget/artifact rendering runtime. |
 | `type:classroom` | Future classroom, assignments, class/team flows, and collaboration. |
@@ -57,6 +58,7 @@ Use four label families on implementation issues:
 | Label | Use for |
 | --- | --- |
 | `area:adaptive-learning` | System-level learning loop and mastery decisions. |
+| `area:knowledge-graph` | KG source/runtime artifacts, curriculum evidence, embeddings, routing, and review gates. |
 | `area:course` | Course generation, blocks, course detail, course edits. |
 | `area:artifact` | Generated artifact representation, renderers, saved outputs. |
 | `area:classroom` | Future classroom and collaboration surfaces. |
@@ -125,6 +127,19 @@ weak/repeated evidence -> explainable adaptive decision
 
 XP, quests, streaks, and achievements may make this loop visible and motivating,
 but they must not become mastery evidence or change the remediation decision.
+
+### Completed baseline: China/Singapore Routing Coverage
+
+The runtime registry now contains 31 graphs, including 10 China/Singapore
+secondary and H2 graphs. The protected fixture now contains 1,718 bilingual
+cases across all 31 graphs, with curriculum-specific labels and English/Chinese
+manual boundary coverage for each new graph. The structural gate passes with a
+1,718-case minimum and unchanged gold policies.
+
+Remaining work is content governance rather than routing-fixture restoration:
+
+- review and resolve or explicitly accept each new graph's high root-concept warning;
+- keep source/runtime registration and human approval status distinct.
 
 ### P1: Maintain The Private Progression Baseline
 

@@ -15,7 +15,7 @@ use the priority order below and verify behavior against the code.
 ## Current product and architecture
 
 - [`product/feature_specification.md`](product/feature_specification.md) — current product behavior, ownership boundaries, implemented capabilities, and roadmap.
-- [`product/facts-intake.md`](product/facts-intake.md) — onboarding/Settings background Facts intake contract, queue lifecycle, classification, and mastery boundary.
+- [`product/facts-intake.md`](product/facts-intake.md) — onboarding structured education context, optional background Facts intake, queue lifecycle, classification, and mastery boundary.
 - [`product/gamification.md`](product/gamification.md) — implemented private guild Profile, reward rules, and safe modification points.
 - [`product-architecture.md`](product-architecture.md) — current modular-monolith-plus ownership, data flow, workers, and adaptive-learning boundaries.
 - [`web-implementation-status.md`](web-implementation-status.md) — concise implementation inventory and remaining hardening work.
@@ -29,6 +29,7 @@ use the priority order below and verify behavior against the code.
 
 ## Knowledge graph
 
+- [`knowledge-graph/catalog.md`](knowledge-graph/catalog.md) — current 31-graph runtime inventory, approval-state split, China/Singapore corpus, routing coverage, and remaining content warnings.
 - [`knowledge-graph/learning-goal-routing.md`](knowledge-graph/learning-goal-routing.md) — canonical KG-vs-goal-subgraph-vs-generated-course policy, persisted scope identity, and permanent regression corpus.
 - [`knowledge-graph/import-runbook.md`](knowledge-graph/import-runbook.md) — validation, schema, import, cross-graph edges, embeddings, and derived artifacts.
 - [`knowledge-graph/topic-grain-standards.md`](knowledge-graph/topic-grain-standards.md) — concept granularity and prerequisite-edge rules.

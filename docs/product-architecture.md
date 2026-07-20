@@ -68,6 +68,13 @@ failure degrades to teaching all concepts. Remaining concepts are grouped into
 lessons of two or three in authored topological order. Each lesson persists its
 concept IDs and is materialized by a background worker when needed.
 
+Post-lesson progression follows the persisted outline itself: it evaluates the
+current lesson's concept IDs and targets the immediate next `sort_key` lesson,
+including same-topic or cross-topic bundles. Recommendation acceptance and
+target materialization are transactional. Course completion events and rewards
+are emitted only after mastery projection chooses `course_complete`; remediation
+never emits them.
+
 Positioning treats a purpose-qualified subject as a scope-selection problem,
 not as permission to reuse the whole graph. Goal-scoped anchors carry multiple
 terminal concept ids and the original learning goal. Approved cross-subject
@@ -76,6 +83,23 @@ supplies only required foundations. Partial single-graph coverage routes to a
 generated/hybrid graph. Courses persist a stable scope identity, so two active
 courses may share a source graph without sharing a curriculum. The canonical
 policy is `docs/knowledge-graph/learning-goal-routing.md`.
+
+Overlapping school subjects pass through a curriculum-system gate before
+semantic routing. The current goal's explicit curriculum wins, followed by the
+learner-confirmed structured onboarding curriculum, then an explicit active
+learner fact; otherwise the Web returns curriculum-specific choices. Language,
+timezone, IP location, and embedding similarity cannot commit a jurisdiction.
+Region may only narrow uncommitted onboarding candidates. The Agent and browser
+never receive raw Facts for this decision; Web derives only a bounded
+curriculum system/region value.
+
+The runtime topic-graph registry currently contains 31 source-derived graphs.
+The original 21 source graphs are approved; 10 China/Singapore secondary and H2
+graphs are registered while their source status remains `needs_review`.
+Governance evidence under `data/knowledge-graphs/{governance,curricula,pedagogy}`
+stays separate from the runtime artifact registry, and current build/import
+code does not automatically enforce a review-status publication gate. See
+`docs/knowledge-graph/catalog.md` for the exact inventory and status split.
 
 Lesson titles and descriptions start as deterministic templates. One
 best-effort background enrichment call may rewrite them behind an equality
@@ -103,16 +127,23 @@ capped at two, while `goal` and `profile_context` remain profile-only.
 
 ## 5. Onboarding and course readiness
 
-Onboarding persists the learning goal/KG anchor, a skippable free-text Facts
-intake, and Tutor style. `POST /api/onboarding/facts` durably enqueues a
-`profile_fact_intake_jobs` row and advances immediately. The shared Extractor
-Worker validates and directly writes supported facts in the background.
+Onboarding persists the learning goal/KG anchor, confirmed education stage and
+curriculum, a skippable free-text Facts intake, and Tutor style. Step two shows
+the curriculum as a compact inline badge: a single stage/region candidate is
+displayed directly; multiple candidates remain unselected until the learner
+chooses. Continue, not IP detection, is the persistence boundary.
+`POST /api/onboarding/facts` writes the structured context synchronously and,
+when optional text exists, enqueues a `profile_fact_intake_jobs` row before
+advancing. The shared Extractor Worker writes supported facts in the background.
 
 First-course preparation requires completed goal positioning and a terminal
 Facts Intake state: `completed`, `skipped`, or `failed`. Pending intake does not
 block onboarding completion or workspace entry. A shared readiness check plus
 course uniqueness constraints removes ordering races among goal, intake, and
-Tutor-style completion.
+Tutor-style completion. When an initial goal is waiting on curriculum
+clarification, the readiness check re-positions it from confirmed structured
+context first, then explicit Facts as a compatibility fallback, and commits the
+anchor only if the same goal is still current.
 
 ## 6. Visualization routing
 

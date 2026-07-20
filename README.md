@@ -35,6 +35,13 @@ components are likewise cross-disciplinary: STEM simulations sit alongside
 timelines, source comparison, close reading, argument maps, language, music,
 geography, policy, art, and experiment design.
 
+The runtime topic-graph catalog contains 31 source-derived graphs. The original
+21 are source-approved; 10 China/Singapore secondary and
+H2 graphs are runtime-registered while their source governance state remains
+`needs_review`. Registration is not approval. The exact graph list, counts, and
+review boundary live in
+[`docs/knowledge-graph/catalog.md`](docs/knowledge-graph/catalog.md).
+
 ## Repository Layout
 
 This is a pnpm monorepo:
@@ -45,6 +52,9 @@ This is a pnpm monorepo:
 - `packages/memory` - optional memory-provider package integration.
 - `data/knowledge-graphs/source` - committed source-of-truth KG JSON files and sidecars.
 - `data/knowledge-graphs/generated` - exported generated graph candidates awaiting review/promotion.
+- `data/knowledge-graphs/governance` - source, license, stable-ID, review-policy, and decision records.
+- `data/knowledge-graphs/curricula` - official framework translations plus reviewable mappings, gaps, and resolutions.
+- `data/knowledge-graphs/pedagogy` - reviewable misconception, teaching-strategy, and assessment knowledge.
 - `data/visualization-components` - versioned all-subject interactive-component catalog and JSON Schema.
 - `docs` - current product, KG, UX, operations, and dated implementation evidence; `docs/README.md` defines status and precedence.
 
@@ -159,6 +169,12 @@ new environment, import every graph, cross-subject edge, and embedding with:
 ```bash
 pnpm db:initialize:kg
 ```
+
+This command currently imports all 31 source graphs, including the 10
+China/Singapore graphs whose source status is still `needs_review`. Runtime
+availability does not promote their governance status; production operators
+must make the review-state decision explicitly before running the all-graph
+initializer.
 
 Individual maintenance commands remain available when updating one graph:
 
@@ -369,6 +385,11 @@ pnpm test:learning-goal-routing
 pnpm eval:learning-goal-routing --case=<case-id>
 ```
 
+The permanent fixture contains 1,718 bilingual cases across all 31 runtime
+graphs. Its generator requires bilingual labels plus English and Chinese manual
+boundary coverage for each of the 10 China/Singapore graphs, and this validation
+command passes without calling a model.
+
 ## Tests and Verification
 
 Unit tests run under Vitest:
@@ -444,6 +465,11 @@ docker compose -f docker-compose.prod.yml up -d --build
 docker compose -f docker-compose.prod.yml run --rm migrate \
   pnpm --filter @primoria/web db:initialize:kg
 ```
+
+`db:initialize:kg` includes all 31 current source graphs. Before production
+initialization, explicitly accept or exclude the 10 runtime-registered
+China/Singapore graphs that remain `needs_review`; the command itself does not
+enforce that governance decision.
 
 Startup order is enforced by the compose file: postgres (healthcheck) →
 `migrate` (App/KG) → `agent-migrate` (`agent_runtime` tables plus LangGraph
@@ -553,11 +579,23 @@ their hard prerequisites instead of teaching the remainder of the source KG.
 Approved cross-subject edges provide deterministic scope when available, while
 partial single-graph coverage fails closed into generated/hybrid creation.
 
+Curriculum system is a hard routing constraint for overlapping school subjects.
+An explicitly named system in the goal wins, followed by the onboarding's
+confirmed structured curriculum, then an explicit curriculum or
+study-jurisdiction Fact. UI language, timezone, and IP location are never
+curriculum evidence. Region may narrow the onboarding's uncommitted UI
+suggestions only: one candidate is displayed directly, while multiple
+candidates require an inline learner choice. Nothing becomes a curriculum fact
+until Continue. A clarifying first-time goal is then re-positioned before the
+first course is built.
+
 Courses persist a `scope_key` and active-course reuse is unique by owner plus
 exact scope, not merely owner plus graph. Canonical and goal-specific courses
 from the same KG can therefore coexist. The complete policy and its permanent
-1,252-case regression contract are documented in
+1,718-case regression contract are documented in
 [`docs/knowledge-graph/learning-goal-routing.md`](docs/knowledge-graph/learning-goal-routing.md).
+The fixture covers all 31 runtime-registered graphs; source approval remains a
+separate governance state.
 
 The agent may read persisted course data for bounded tool behavior such as restoring a course card, but new state-changing behavior should be implemented through web-owned APIs, workers, or repositories rather than direct agent-side database mutation.
 
@@ -649,10 +687,13 @@ Lesson materialization is recoverable and worker-driven:
 - `worker:learning-progress` updates concept mastery and produces next-step recommendations after lesson completion.
 - `worker:extractor` prioritizes onboarding/Settings fact-intake jobs, then distills durable learner facts from learning events.
 
-Cold start is also persistent. Onboarding captures a learning goal, a skippable
-free-text introduction, and Tutor style. The introduction is durably queued and
-the learner advances immediately; the Extractor later writes supported facts and
-derives `knowledgeBackground` only from an explicit education-stage statement.
+Cold start is also persistent. Onboarding captures a learning goal, required
+education stage and curriculum, a skippable free-text introduction, and Tutor
+style. Stage plus region may prefill only a single unambiguous curriculum; an
+ambiguous set stays unselected. Continue persists the confirmed structured
+context, while any introduction is durably queued and processed after the
+learner advances. The Extractor writes supported facts and derives
+`knowledgeBackground` only from an explicit education-stage statement.
 First-course preparation waits for goal positioning and a terminal intake state,
 but the pending intake never blocks entry to the workspace. Later lesson
 completion queues both mastery/diagnosis work and an idempotent Extractor job;
@@ -701,6 +742,9 @@ progression, chat history, and account/session foundations.
 
 Near-term priorities:
 
+- Review the high root-concept counts in the 10 China/Singapore graphs and
+  either add justified prerequisite coverage or explicitly accept the entry
+  points without weakening the 1,718-case routing contract.
 - Stabilize remediation after lesson quizzes, including learner choice, navigation, resume behavior, and cross-graph prerequisites.
 - Improve learner-memory extraction quality, evidence review, correction, and decay without confusing facts with concept mastery.
 - Observe private XP pace and daily-quest completion quality before changing the
