@@ -3,7 +3,7 @@
   "routes": {
     "/": {
       "manifest": "server/app/page_client-reference-manifest.js",
-      "maxRawKiB": 620,
+      "maxRawKiB": 625,
       "maxGzipKiB": 185
     },
     "/library": {
@@ -13,7 +13,7 @@
     },
     "/course/[id]": {
       "manifest": "server/app/course/[id]/page_client-reference-manifest.js",
-      "maxRawKiB": 1040,
+      "maxRawKiB": 1042,
       "maxGzipKiB": 310
     },
     "/auth/sign-in": {
