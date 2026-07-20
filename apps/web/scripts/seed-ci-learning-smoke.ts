@@ -4,11 +4,15 @@ import { saveCourse } from "../src/lib/courses/store";
 import type { Course } from "../src/lib/courses/types";
 import { closeDb, getDb } from "../src/lib/db/client";
 import { authRateLimits, identities, users } from "../src/lib/db/schema";
+import { DEFAULT_TOPIC_GRAPH_ID, getTopicGraph } from "../src/lib/knowledge-graph/topic-graph";
 
 const USER_ID = "usr_ci_learning_smoke";
 const COURSE_ID = "crs_ci_learning_smoke";
 const EMAIL = "ci-learning-smoke@example.com";
 const PASSWORD = "CiLearningSmoke123!";
+const graph = getTopicGraph(DEFAULT_TOPIC_GRAPH_ID);
+const topic = graph.topics.find((candidate) => candidate.conceptIds.length > 0)!;
+const concept = topic.conceptIds[0];
 
 function requireIsolatedTestDatabase() {
   if (process.env.CI_LEARNING_SMOKE !== "1") {
@@ -48,8 +52,8 @@ async function main() {
     topic: "Reliable learning workflows",
     summary: "A deterministic course used to verify authentication, reading, assessment, and persistence.",
     estimatedMinutes: 5,
-    anchorConceptId: null,
-    graphId: null,
+    anchorConceptId: concept.conceptId,
+    graphId: DEFAULT_TOPIC_GRAPH_ID,
     language: "en",
     archivedAt: null,
     version: 1,
@@ -63,7 +67,8 @@ async function main() {
       progress: "not_started",
       status: "generated",
       sortKey: 1,
-      topicId: null,
+      topicId: topic.topicId,
+      conceptIds: [concept.conceptId],
       triggeredFrom: null,
       estimatedMinutes: 5,
       version: 1,
@@ -73,17 +78,20 @@ async function main() {
         id: "blk_ci_learning_smoke_quiz",
         type: "quiz",
         title: "Completion check",
-        questions: [{
-          kind: "single",
-          id: "q_ci_learning_smoke",
-          question: "Which result proves the learning loop persisted?",
+        conceptIds: [concept.conceptId],
+        pedagogicalRole: "assessment",
+        questions: Array.from({ length: 3 }, (_, index) => ({
+          kind: "single" as const,
+          id: `q_ci_learning_smoke_${index + 1}`,
+          question: `Which result proves learning-loop stage ${index + 1} persisted?`,
           choices: [
-            { id: "persisted", text: "The attempt and lesson progress are stored" },
+            { id: "persisted", text: `Persisted result ${index + 1}` },
             { id: "rendered", text: "Only the page rendered" }
           ],
           correctId: "persisted",
-          explanation: "The server must grade and persist the attempt before the loop is complete."
-        }]
+          explanation: "The server must grade and persist evidence before the loop is complete.",
+          conceptId: concept.conceptId,
+        }))
       }]
     }]
   };

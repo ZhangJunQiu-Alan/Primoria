@@ -62,17 +62,45 @@ async function fillPasswordAfterHydration(page, value) {
 async function verifyPersistence() {
   const sql = postgres(process.env.DATABASE_URL, { prepare: false, onnotice: () => {} });
   try {
-    const [result] = await sql`
-      select
-        (select count(*)::int from quiz_attempts where course_id = ${COURSE_ID}) as attempts,
-        (select progress from lessons where id = ${LESSON_ID}) as progress,
-        (select count(*)::int from learning_progress_jobs where course_id = ${COURSE_ID}) as progress_jobs,
-        (select count(*)::int from extractor_jobs where course_id = ${COURSE_ID}) as extractor_jobs
-    `;
+    const deadline = Date.now() + 30_000;
+    let result;
+    while (Date.now() < deadline) {
+      [result] = await sql`
+        select
+          (select count(*)::int from quiz_attempts where course_id = ${COURSE_ID}) as attempts,
+          (select progress from lessons where id = ${LESSON_ID}) as progress,
+          (select count(*)::int from learning_progress_jobs where course_id = ${COURSE_ID}) as progress_jobs,
+          (select status from learning_progress_jobs where course_id = ${COURSE_ID}) as progress_status,
+          (select decision->>'kind' from learning_progress_jobs where course_id = ${COURSE_ID}) as decision_kind,
+          (select count(*)::int from extractor_jobs where course_id = ${COURSE_ID}) as extractor_jobs,
+          (select count(*)::int from user_concept_mastery where owner_id = 'usr_ci_learning_smoke' and status = 'mastered') as mastered,
+          (select count(*)::int from learning_events where course_id = ${COURSE_ID} and type = 'course.completed') as completion_events,
+          (select count(*)::int from achievement_unlocks where owner_id = 'usr_ci_learning_smoke' and code = 'questline_complete') as completion_achievements
+      `;
+      if (result.progress_status === "completed") break;
+      await delay(250);
+    }
     assert(result.attempts === 1, "one quiz attempt should be persisted");
     assert(result.progress === "completed", "the only lesson should be completed");
     assert(result.progress_jobs === 1, "a learning-progress job should be queued");
+    assert(result.progress_status === "completed", "the learning-progress worker should complete the job");
+    assert(result.decision_kind === "course_complete", "the final mastery decision should complete the course");
     assert(result.extractor_jobs === 1, "an extractor job should be queued");
+    assert(result.mastered === 1, "three correct concept questions should produce mastered state");
+    assert(result.completion_events === 1, "course completion should be recorded after mastery is decided");
+    assert(result.completion_achievements === 1, "course completion achievement should be awarded once");
+  } finally {
+    await sql.end({ timeout: 5 });
+  }
+}
+
+async function verifyRecommendationResolved() {
+  const sql = postgres(process.env.DATABASE_URL, { prepare: false, onnotice: () => {} });
+  try {
+    const [result] = await sql`
+      select decision_status from learning_progress_jobs where course_id = ${COURSE_ID}
+    `;
+    assert(result.decision_status === "accepted", "course-complete recommendation should be accepted");
   } finally {
     await sql.end({ timeout: 5 });
   }
@@ -86,6 +114,15 @@ const server = spawn("pnpm", ["--filter", "@primoria/web", "dev"], {
 });
 server.stdout.on("data", (chunk) => process.stdout.write(`[next] ${chunk}`));
 server.stderr.on("data", (chunk) => process.stderr.write(`[next:err] ${chunk}`));
+
+const progressWorker = spawn("pnpm", ["--filter", "@primoria/web", "worker:learning-progress"], {
+  cwd: process.cwd(),
+  env: { ...process.env },
+  stdio: ["ignore", "pipe", "pipe"],
+  detached: process.platform !== "win32",
+});
+progressWorker.stdout.on("data", (chunk) => process.stdout.write(`[progress] ${chunk}`));
+progressWorker.stderr.on("data", (chunk) => process.stderr.write(`[progress:err] ${chunk}`));
 
 let browser;
 let page;
@@ -107,8 +144,10 @@ try {
   assert(signInResponse.ok(), "sign-in API should succeed");
 
   await page.waitForURL(`**/course/${COURSE_ID}`, { timeout: 20_000 });
-  await page.locator(".course-quiz-question").waitFor({ timeout: 90_000 });
-  await page.locator(".course-quiz-choices button").filter({ hasText: "attempt and lesson progress" }).click();
+  await page.locator(".course-quiz-question").first().waitFor({ timeout: 90_000 });
+  const correctChoices = page.locator(".course-quiz-choices button").filter({ hasText: "Persisted result" });
+  assert(await correctChoices.count() === 3, "three deterministic concept questions should render");
+  for (let index = 0; index < 3; index += 1) await correctChoices.nth(index).click();
   const [response] = await Promise.all([
     page.waitForResponse(
       (candidate) => candidate.url().endsWith(`/api/courses/${COURSE_ID}/quiz`) && candidate.request().method() === "POST",
@@ -117,9 +156,13 @@ try {
     page.locator(".course-reader-primary").click(),
   ]);
   assert(response.ok(), `quiz API should succeed (got ${response.status()})`);
-  await page.locator(".course-quiz-score").filter({ hasText: "1 / 1" }).waitFor();
+  await page.locator(".course-quiz-score").filter({ hasText: "3 / 3" }).waitFor();
 
   await verifyPersistence();
+  await page.locator(".learning-progress-popup-card").waitFor({ timeout: 30_000 });
+  await page.locator(".learning-progress-popup-card button").click();
+  await page.waitForURL((url) => url.pathname === "/" || url.pathname === "/onboarding", { timeout: 20_000 });
+  await verifyRecommendationResolved();
   assert(pageErrors.length === 0, `unexpected page errors: ${pageErrors.join(" | ")}`);
   process.stdout.write("[learning-path.smoke] ALL CHECKS PASSED\n");
 } catch (error) {
@@ -129,15 +172,17 @@ try {
   process.exitCode = 1;
 } finally {
   if (browser) await browser.close();
-  const signalServer = (signal) => {
+  const signalProcess = (processHandle, signal) => {
     try {
-      if (process.platform === "win32") server.kill(signal);
-      else process.kill(-server.pid, signal);
+      if (process.platform === "win32") processHandle.kill(signal);
+      else process.kill(-processHandle.pid, signal);
     } catch {
       // process already exited
     }
   };
-  signalServer("SIGTERM");
+  signalProcess(server, "SIGTERM");
+  signalProcess(progressWorker, "SIGTERM");
   await delay(1_000);
-  if (server.exitCode === null) signalServer("SIGKILL");
+  if (server.exitCode === null) signalProcess(server, "SIGKILL");
+  if (progressWorker.exitCode === null) signalProcess(progressWorker, "SIGKILL");
 }

@@ -151,7 +151,7 @@ const POPUP_PRIMARY_BTN: React.CSSProperties = {
 function LearningProgressPopup({ courseId, onResolved }: { courseId: string; onResolved: () => Promise<void> | void }) {
   const router = useRouter();
   const t = useT().course;
-  const { pending, resolving, resolve } = useLearningProgressRecommendation(courseId);
+  const { pending, resolving, resolveError, resolve } = useLearningProgressRecommendation(courseId);
   const [generatingLessonId, setGeneratingLessonId] = useState<string | null>(null);
   const popupDialogRef = useRef<HTMLDivElement | null>(null);
   const popupPrimaryRef = useRef<HTMLButtonElement | null>(null);
@@ -192,6 +192,7 @@ function LearningProgressPopup({ courseId, onResolved }: { courseId: string; onR
   async function acceptPrimary() {
     if (!jobId) return;
     const result = await resolve(jobId, "accept");
+    if (!result) return;
     if (decision!.kind === "remediation" && result?.lessonId) {
       setGeneratingLessonId(result.lessonId);
       return;
@@ -213,7 +214,8 @@ function LearningProgressPopup({ courseId, onResolved }: { courseId: string; onR
   //   • next ("Good Job") → "否", go home
   async function declineSecondary() {
     if (!jobId) return;
-    await resolve(jobId, "dismiss");
+    const result = await resolve(jobId, "dismiss");
+    if (!result) return;
     if (decision!.kind === "remediation" && decision!.nextLessonTitle) {
       await onResolved();
       router.push(`/course/${courseId}`);
@@ -223,7 +225,8 @@ function LearningProgressPopup({ courseId, onResolved }: { courseId: string; onR
   // Closing the popup == declining remediation; reveal the preloaded next lesson.
   async function closePopup() {
     if (!jobId) return;
-    await resolve(jobId, "dismiss");
+    const result = await resolve(jobId, "dismiss");
+    if (!result) return;
     await onResolved();
     router.push(`/course/${courseId}`);
   }
@@ -284,6 +287,7 @@ function LearningProgressPopup({ courseId, onResolved }: { courseId: string; onR
           {learningDecisionHeadline(decision, t)}
         </strong>
         <p style={{ margin: 0, color: "#5a4727", fontSize: 14, lineHeight: 1.6 }}>{decision.reason}</p>
+        {resolveError ? <p role="alert" style={{ margin: "12px 0 0", color: "#9d3d2d", fontSize: 13 }}>{t.recommendationFailed}</p> : null}
         <div style={{ display: "flex", gap: 10, justifyContent: "flex-end", marginTop: 22 }}>
           {secondaryLabel && (
             <button

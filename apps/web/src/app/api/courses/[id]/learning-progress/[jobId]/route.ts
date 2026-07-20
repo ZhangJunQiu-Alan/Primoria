@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { requireAuthUser } from "@/lib/auth/guard";
+import { getDb } from "@/lib/db/client";
 import { getCourse, insertPlannedLesson } from "@/lib/courses/store";
-import { resolveLearningProgressDecision } from "@/lib/courses/learning-progress-jobs";
+import { getLearningProgressJob, resolveLearningProgressDecision } from "@/lib/courses/learning-progress-jobs";
 import { enqueueLessonGenerationJob, toLessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
 
 export const dynamic = "force-dynamic";
@@ -23,55 +24,82 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     const { id: courseId, jobId } = await context.params;
     const { action } = RequestSchema.parse(await request.json());
 
-    const resolved = await resolveLearningProgressDecision(jobId, ownerId, action === "accept" ? "accepted" : "dismissed");
-    if (!resolved) {
+    const pending = await getLearningProgressJob(jobId, ownerId);
+    if (!pending || pending.decisionStatus !== "pending") {
       // Not found, not owned, or no longer pending (already resolved).
       return NextResponse.json({ error: "Recommendation not found or already resolved" }, { status: 404 });
     }
 
     if (action === "dismiss") {
+      const resolved = await resolveLearningProgressDecision(jobId, ownerId, "dismissed");
+      if (!resolved) return NextResponse.json({ error: "Recommendation not found or already resolved" }, { status: 404 });
       return NextResponse.json({ status: "dismissed" }, { status: 200 });
     }
 
-    const decision = resolved.decision;
-    if (!decision) return NextResponse.json({ status: "accepted" }, { status: 200 });
+    const decision = pending.decision;
+    if (!decision) {
+      const resolved = await resolveLearningProgressDecision(jobId, ownerId, "accepted");
+      return resolved
+        ? NextResponse.json({ status: "accepted" }, { status: 200 })
+        : NextResponse.json({ error: "Recommendation not found or already resolved" }, { status: 404 });
+    }
 
     if (decision.kind === "course_complete") {
-      return NextResponse.json({ status: "accepted", kind: "course_complete" }, { status: 200 });
+      const resolved = await resolveLearningProgressDecision(jobId, ownerId, "accepted");
+      return resolved
+        ? NextResponse.json({ status: "accepted", kind: "course_complete" }, { status: 200 })
+        : NextResponse.json({ error: "Recommendation not found or already resolved" }, { status: 404 });
     }
 
     if (decision.kind === "next") {
       const course = await getCourse(courseId, ownerId);
-      // The next outline lesson may already be generated — preload warms it while
-      // the learner studies the current lesson — so match on topic regardless of
-      // status and treat an already-generated target as success (no re-enqueue).
-      const target = [...(course?.lessons ?? [])]
-        .sort((a, b) => a.sortKey - b.sortKey)
-        .find((l) => l.topicId === decision.targetTopicId);
+      const sorted = [...(course?.lessons ?? [])].sort((a, b) => a.sortKey - b.sortKey);
+      const currentIndex = sorted.findIndex((lesson) => lesson.id === pending.lessonId);
+      // New decisions pin the exact lesson. For old persisted decisions, the
+      // immediate next lesson is the only safe source of truth; topic matching
+      // can skip concept-frontier bundles or escape a goal-scoped course.
+      const target = decision.targetLessonId
+        ? sorted.find((lesson) => lesson.id === decision.targetLessonId)
+        : currentIndex >= 0
+          ? sorted[currentIndex + 1]
+          : undefined;
       if (!target) return NextResponse.json({ error: "Next lesson not found in outline" }, { status: 404 });
-      if (target.status === "generated") {
-        return NextResponse.json({ status: "accepted", kind: "next", lessonId: target.id, job: null }, { status: 200 });
-      }
-      const result = await enqueueLessonGenerationJob({ ownerId, courseId, lessonId: target.id });
-      const job = "job" in result && result.job ? toLessonGenerationJobSummary(result.job) : null;
-      return NextResponse.json({ status: "accepted", kind: "next", lessonId: target.id, job }, { status: 202 });
+      const materialized = await getDb().transaction(async (tx) => {
+        const resolved = await resolveLearningProgressDecision(jobId, ownerId, "accepted", tx);
+        if (!resolved) return null;
+        if (target.status === "generated") return { job: null, status: 200 } as const;
+        const result = await enqueueLessonGenerationJob({ ownerId, courseId, lessonId: target.id }, tx);
+        const job = "job" in result && result.job ? toLessonGenerationJobSummary(result.job) : null;
+        return { job, status: 202 } as const;
+      });
+      if (!materialized) return NextResponse.json({ error: "Recommendation not found or already resolved" }, { status: 404 });
+      return NextResponse.json(
+        { status: "accepted", kind: "next", lessonId: target.id, job: materialized.job },
+        { status: materialized.status },
+      );
     }
 
     // remediation
-    const lesson = await insertPlannedLesson({
-      id: `rem_${jobId}`,
-      courseId,
-      ownerId,
-      topicId: decision.targetTopicId,
-      title: decision.proposedTitle ?? "补救练习",
-      description: decision.reason ? `针对前一节练习结果补强：${decision.reason}` : "针对前一节练习暴露的问题补强关键概念。",
-      role: "remediation",
-      sortKey: decision.proposedSortKey ?? resolved.updatedAt,
-      triggeredFrom: resolved.lessonId,
+    const materialized = await getDb().transaction(async (tx) => {
+      const resolved = await resolveLearningProgressDecision(jobId, ownerId, "accepted", tx);
+      if (!resolved) return null;
+      const lesson = await insertPlannedLesson({
+        id: `rem_${jobId}`,
+        courseId,
+        ownerId,
+        topicId: decision.targetTopicId,
+        title: decision.proposedTitle ?? "补救练习",
+        description: decision.reason ? `针对前一节练习结果补强：${decision.reason}` : "针对前一节练习暴露的问题补强关键概念。",
+        role: "remediation",
+        sortKey: decision.proposedSortKey ?? resolved.updatedAt,
+        triggeredFrom: resolved.lessonId,
+      }, tx);
+      const result = await enqueueLessonGenerationJob({ ownerId, courseId, lessonId: lesson.id }, tx);
+      const job = "job" in result && result.job ? toLessonGenerationJobSummary(result.job) : null;
+      return { lesson, job };
     });
-    const result = await enqueueLessonGenerationJob({ ownerId, courseId, lessonId: lesson.id });
-    const job = "job" in result && result.job ? toLessonGenerationJobSummary(result.job) : null;
-    return NextResponse.json({ status: "accepted", kind: "remediation", lessonId: lesson.id, job }, { status: 202 });
+    if (!materialized) return NextResponse.json({ error: "Recommendation not found or already resolved" }, { status: 404 });
+    return NextResponse.json({ status: "accepted", kind: "remediation", lessonId: materialized.lesson.id, job: materialized.job }, { status: 202 });
   } catch (error) {
     console.error("[course/learning-progress/confirm]", error);
     if (error instanceof z.ZodError) {

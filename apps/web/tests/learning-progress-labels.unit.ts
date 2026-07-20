@@ -16,7 +16,7 @@ function assert(condition: unknown, message: string): asserts condition {
 }
 
 function decision(kind: LearningDecision["kind"], nextLessonTitle: string | null = null): LearningDecision {
-  return { kind, reason: "r", targetTopicId: null, targetConceptId: null, proposedSortKey: null, proposedTitle: null, nextLessonTitle };
+  return { kind, reason: "r", targetLessonId: null, targetTopicId: null, targetConceptId: null, proposedSortKey: null, proposedTitle: null, nextLessonTitle };
 }
 
 function main() {

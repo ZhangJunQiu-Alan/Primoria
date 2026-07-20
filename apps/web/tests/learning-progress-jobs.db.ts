@@ -18,10 +18,12 @@ function remediationDecision(): LearningDecision {
   return {
     kind: "remediation",
     reason: "weak concept",
+    targetLessonId: null,
     targetTopicId: "t1",
     targetConceptId: "c1",
     proposedSortKey: 1.5,
     proposedTitle: "补救：c1",
+    nextLessonTitle: null,
   };
 }
 
