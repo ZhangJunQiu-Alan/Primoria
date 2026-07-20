@@ -9,8 +9,14 @@ import {
   type GoalPositioningCandidate,
   type GoalPositioningStatus,
   type FactsIntakeStatus,
+  isEducationContextSource,
+  isEducationCurriculum,
+  isEducationStage,
   isKnowledgeBackground,
   isTutorStyle,
+  type EducationContextSource,
+  type EducationCurriculum,
+  type EducationStage,
   type KnowledgeBackground,
   type LearnerOnboardingState,
   type LearnerProfile,
@@ -18,6 +24,7 @@ import {
   type OnboardingStep,
   type TutorStyle,
 } from "./types";
+import { knowledgeBackgroundFromEducationStage } from "./education-context";
 
 const GOAL_POSITIONING_STATUSES: readonly GoalPositioningStatus[] = ["pending", "positioned", "clarify", "failed"];
 const ONBOARDING_COURSE_STATUSES: readonly OnboardingCourseStatus[] = ["pending", "building", "ready", "failed"];
@@ -53,6 +60,10 @@ export function rowToLearnerProfile(row: LearnerProfileRow): LearnerProfile {
     factsIntakeJobId: row.factsIntakeJobId ?? null,
     factsIntakeMessage: row.factsIntakeMessage ?? null,
     factsIntakeUpdatedAt: iso(row.factsIntakeUpdatedAt),
+    educationStage: isEducationStage(row.educationStage) ? row.educationStage : null,
+    curriculumSystem: isEducationCurriculum(row.curriculumSystem) ? row.curriculumSystem : null,
+    educationContextSource: isEducationContextSource(row.educationContextSource) ? row.educationContextSource : null,
+    educationContextConfirmedAt: iso(row.educationContextConfirmedAt),
     knowledgeBackground: isKnowledgeBackground(row.knowledgeBackground) ? row.knowledgeBackground : null,
     knowledgeBackgroundSkippedAt: iso(row.knowledgeBackgroundSkippedAt),
     tutorStyle: isTutorStyle(row.tutorStyle) ? row.tutorStyle : null,
@@ -417,6 +428,48 @@ export async function savePositionedLearningGoalIfPending(input: {
   });
 }
 
+export async function savePositionedLearningGoalFromFactsIfClarifying(input: {
+  ownerId: string;
+  learningGoal: string;
+  graphId: string;
+  startTopicId: string;
+  targetConceptId: string | null;
+  targetConceptIds?: string[];
+  scope?: "canonical" | "goal";
+}) {
+  const now = new Date();
+  const rows = await getDb()
+    .update(learnerProfiles)
+    .set({
+      goalGraphId: input.graphId,
+      goalStartTopicId: input.startTopicId,
+      goalTargetConceptId: input.targetConceptId,
+      goalTargetConceptIds: input.targetConceptIds ?? (input.targetConceptId ? [input.targetConceptId] : []),
+      goalScope: input.scope ?? "canonical",
+      goalSkippedAt: null,
+      goalPositioningStatus: "positioned",
+      goalPositioningMessage: null,
+      goalPositioningCandidates: null,
+      goalPositioningAttemptId: null,
+      goalPositioningUpdatedAt: now,
+      onboardingCourseStatus: "pending",
+      onboardingCourseAttemptId: null,
+      onboardingCourseMessage: null,
+      onboardingCourseUpdatedAt: now,
+      onboardingSkippedAt: null,
+      updatedAt: now,
+    })
+    .where(
+      and(
+        eq(learnerProfiles.ownerId, input.ownerId),
+        eq(learnerProfiles.learningGoal, input.learningGoal),
+        eq(learnerProfiles.goalPositioningStatus, "clarify"),
+      ),
+    )
+    .returning();
+  return rows[0] ? rowToLearnerProfile(rows[0]) : null;
+}
+
 export async function saveLearningGoalClarification(input: {
   ownerId: string;
   learningGoal: string;
@@ -544,6 +597,24 @@ export async function saveKnowledgeBackground(ownerId: string, knowledgeBackgrou
   return upsertLearnerProfile(ownerId, {
     knowledgeBackground,
     knowledgeBackgroundSkippedAt: null,
+    onboardingSkippedAt: null,
+  });
+}
+
+export async function saveEducationContext(input: {
+  ownerId: string;
+  educationStage: EducationStage;
+  curriculumSystem: EducationCurriculum;
+  source: EducationContextSource;
+}) {
+  const knowledgeBackground = knowledgeBackgroundFromEducationStage(input.educationStage);
+  return upsertLearnerProfile(input.ownerId, {
+    educationStage: input.educationStage,
+    curriculumSystem: input.curriculumSystem,
+    educationContextSource: input.source,
+    educationContextConfirmedAt: new Date(),
+    knowledgeBackground,
+    knowledgeBackgroundSkippedAt: knowledgeBackground ? null : new Date(),
     onboardingSkippedAt: null,
   });
 }

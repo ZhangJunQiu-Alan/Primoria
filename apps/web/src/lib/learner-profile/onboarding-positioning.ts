@@ -1,4 +1,5 @@
 import { detectKgLanguage, resolveKgDisplayName } from "@/lib/knowledge-graph/display-name";
+import type { LearnerCurriculumContext } from "@/lib/knowledge-graph/curriculum-routing";
 import { LearningGoalUserMessageError } from "@/lib/knowledge-graph/errors";
 import { getOrCreateGeneratedGraph } from "@/lib/knowledge-graph/generated-graph";
 import { planFromPositioning, positionLearningGoal } from "@/lib/knowledge-graph/position-learning-goal";
@@ -52,7 +53,7 @@ function subjectStartAnchor(graphId: string, language: "zh" | "en"): OnboardingG
 
 export async function resolveOnboardingGoalAnchor(
   query: string,
-  opts: { graphId?: string } = {},
+  opts: { graphId?: string; curriculumContext?: LearnerCurriculumContext | null } = {},
 ): Promise<OnboardingGoalResolution> {
   const trimmed = query.trim();
   const language = detectKgLanguage(trimmed);
@@ -62,7 +63,11 @@ export async function resolveOnboardingGoalAnchor(
     return { kind: "anchor", anchor: subjectStartAnchor(opts.graphId, language) };
   }
 
-  const { result } = await positionLearningGoal({ query: trimmed, language });
+  const { result } = await positionLearningGoal({
+    query: trimmed,
+    language,
+    curriculumContext: opts.curriculumContext,
+  });
   const plan = planFromPositioning(result);
 
   if (plan.branch === "fallback") {

@@ -1,4 +1,5 @@
-import { getTopicGraph, listTopicGraphIds } from "./topic-graph";
+import { listTopicGraphIds } from "./topic-graph";
+import { getKnowledgeGraphSubjectLabel } from "./subject-aliases";
 import type { KnowledgeGraphSearchResult } from "./search";
 
 // Cross-graph recall grouped into ranked candidate subjects. Subject selection
@@ -20,7 +21,7 @@ export type GraphCandidate = {
 
 function safeSubject(graphId: string): string | null {
   try {
-    return getTopicGraph(graphId).subject || graphId;
+    return getKnowledgeGraphSubjectLabel(graphId, "en");
   } catch {
     // Unknown/dirty graphId (not in the generated topic graphs) — skip it.
     return null;

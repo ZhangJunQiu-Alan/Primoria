@@ -69,6 +69,17 @@ describe("profile fact intake", () => {
     expect(result.knowledgeBackground).toBeNull();
   });
 
+  it("recognizes an explicit middle-school stage without collapsing it into high school", () => {
+    const sourceText = "我目前在读初中，也喜欢用图形理解数学。";
+    const result = parseProfileIntakeResult({
+      facts: [],
+      knowledgeBackground: "middle_school",
+      knowledgeBackgroundQuote: "在读初中",
+    }, { sourceText, sourceKind: "onboarding", jobId: "job-middle" });
+
+    expect(result.knowledgeBackground).toBe("middle_school");
+  });
+
   it("documents all six categories and the no-mastery rule in the prompt", () => {
     const prompt = buildProfileIntakePrompt({ sourceText: INPUT, existingFacts: [] });
     for (const category of ["preference", "prior_knowledge", "learning_gap", "interest", "goal", "profile_context"]) {

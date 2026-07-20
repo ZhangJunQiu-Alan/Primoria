@@ -2,6 +2,7 @@ import { and, desc, eq } from "drizzle-orm";
 import { getDb, hasDatabaseUrl, type DbOrTx } from "../db/client";
 import { learnerFacts } from "../db/schema";
 import type {
+  EducationCurriculum,
   FactCategory,
   FactEvidence,
   KnowledgeBackground,
@@ -9,6 +10,7 @@ import type {
   LearnerProfile,
   TutorStyle,
 } from "../learner-profile/types";
+import { EDUCATION_CURRICULUM_LABELS } from "../learner-profile/education-context";
 
 // Owner-scoped access to distilled learner facts. Written from the Extractor
 // worker (explicit ownerId, no request session); read by lesson generation, the
@@ -74,6 +76,7 @@ export function isLikelySemanticFactDuplicate(left: string, right: string) {
 export type OnboardingFactInput =
   | { kind: "learning_goal"; value: string | null }
   | { kind: "knowledge_background"; value: KnowledgeBackground | null }
+  | { kind: "curriculum_system"; value: EducationCurriculum | null }
   | { kind: "tutor_style"; value: TutorStyle | null };
 
 export type OnboardingFactDescriptor = {
@@ -94,6 +97,7 @@ export function buildOnboardingFact(input: OnboardingFactInput): OnboardingFactD
 
   if (input.kind === "knowledge_background") {
     const labels: Record<KnowledgeBackground, string> = {
+      middle_school: "Middle school",
       high_school: "High school",
       undergraduate: "University",
       graduate: "Graduate",
@@ -102,6 +106,14 @@ export function buildOnboardingFact(input: OnboardingFactInput): OnboardingFactD
       sourceId: "onboarding:knowledge_background",
       text: `Knowledge background: ${labels[input.value]}`,
       category: "prior_knowledge",
+    };
+  }
+
+  if (input.kind === "curriculum_system") {
+    return {
+      sourceId: "onboarding:curriculum_system",
+      text: `Curriculum: ${EDUCATION_CURRICULUM_LABELS[input.value]}`,
+      category: "profile_context",
     };
   }
 
@@ -175,10 +187,11 @@ export async function syncOnboardingFact(ownerId: string, input: OnboardingFactI
 }
 
 export async function syncOnboardingProfileFacts(
-  profile: Pick<LearnerProfile, "ownerId" | "learningGoal" | "knowledgeBackground" | "tutorStyle">,
+  profile: Pick<LearnerProfile, "ownerId" | "learningGoal" | "knowledgeBackground" | "curriculumSystem" | "tutorStyle">,
 ): Promise<void> {
   await syncOnboardingFact(profile.ownerId, { kind: "learning_goal", value: profile.learningGoal });
   await syncOnboardingFact(profile.ownerId, { kind: "knowledge_background", value: profile.knowledgeBackground });
+  await syncOnboardingFact(profile.ownerId, { kind: "curriculum_system", value: profile.curriculumSystem });
   await syncOnboardingFact(profile.ownerId, { kind: "tutor_style", value: profile.tutorStyle });
 }
 
