@@ -24,6 +24,7 @@ const mockState = vi.hoisted(() => ({
   savePendingLearningGoal: vi.fn(),
   savePositionedLearningGoalIfPending: vi.fn(),
   skipLearningGoal: vi.fn(),
+  saveEducationContext: vi.fn(),
   saveKnowledgeBackground: vi.fn(),
   beginOnboardingCourseBuild: vi.fn(),
   completeOnboardingCourseBuild: vi.fn(),
@@ -65,6 +66,7 @@ vi.mock("@/lib/learner-profile/store", () => ({
   savePendingLearningGoal: mockState.savePendingLearningGoal,
   savePositionedLearningGoalIfPending: mockState.savePositionedLearningGoalIfPending,
   skipLearningGoal: mockState.skipLearningGoal,
+  saveEducationContext: mockState.saveEducationContext,
   saveKnowledgeBackground: mockState.saveKnowledgeBackground,
   beginOnboardingCourseBuild: mockState.beginOnboardingCourseBuild,
   completeOnboardingCourseBuild: mockState.completeOnboardingCourseBuild,
@@ -78,10 +80,6 @@ vi.mock("@/lib/learner-facts/intake-jobs", () => ({
   ProfileFactIntakeBusyError: class ProfileFactIntakeBusyError extends Error {},
 }));
 
-vi.mock("@/lib/learner-profile/types", () => ({
-  isKnowledgeBackground: (value: unknown) => value === "beginner",
-}));
-
 function postRequest(body: unknown) {
   return new Request("http://localhost/api/onboarding", {
     method: "POST",
@@ -89,6 +87,12 @@ function postRequest(body: unknown) {
     body: JSON.stringify(body),
   });
 }
+
+const factsPayload = {
+  educationStage: "high_school",
+  curriculumSystem: "mainland_china_senior_high",
+  educationContextSource: "user_selected",
+} as const;
 
 function expectNoLeak(text: string) {
   for (const marker of LEAK_MARKERS) {
@@ -115,6 +119,11 @@ describe("onboarding route error safety", () => {
     });
     mockState.savePositionedLearningGoalIfPending.mockResolvedValue({ ownerId: "u1" });
     mockState.saveLearningGoalPositioningFailure.mockResolvedValue({ ownerId: "u1" });
+    mockState.saveEducationContext.mockResolvedValue({
+      ownerId: "u1",
+      knowledgeBackground: "high_school",
+      curriculumSystem: "mainland_china_senior_high",
+    });
     mockState.beginOnboardingCourseBuild.mockResolvedValue({
       attemptId: COURSE_ATTEMPT_ID,
       profile: { ownerId: "u1" },
@@ -263,7 +272,7 @@ describe("onboarding route error safety", () => {
     const { POST } = await import("../src/app/api/onboarding/facts/route");
     mockState.enqueueProfileFactIntakeJob.mockRejectedValue(Object.assign(new Error(RAW_SQL_MESSAGE), { code: "42P01" }));
 
-    const response = await POST(postRequest({ text: "I study algorithms" }));
+    const response = await POST(postRequest({ ...factsPayload, text: "I study algorithms" }));
     expect(response.status).toBe(503);
     expectNoLeak(JSON.stringify(await response.json()));
     expect(mockState.buildOnboardingCourse).not.toHaveBeenCalled();
@@ -277,7 +286,7 @@ describe("onboarding route error safety", () => {
     mockState.getLearnerOnboardingState.mockResolvedValue({ nextStep: "style", complete: false });
     const { POST } = await import("../src/app/api/onboarding/facts/route");
 
-    const response = await POST(postRequest({ text: "I study algorithms" }));
+    const response = await POST(postRequest({ ...factsPayload, text: "I study algorithms" }));
 
     expect(response.status).toBe(202);
     expect(await response.json()).toMatchObject({
@@ -288,15 +297,30 @@ describe("onboarding route error safety", () => {
     expect(mockState.buildOnboardingCourse).not.toHaveBeenCalled();
   });
 
-  it("skips facts without creating an intake job", async () => {
+  it("saves required education context while leaving the free-text note empty", async () => {
     mockState.skipFactsIntake.mockResolvedValue({ ownerId: "u1", factsIntakeStatus: "skipped" });
     mockState.getLearnerOnboardingState.mockResolvedValue({ nextStep: "style", complete: false });
     const { POST } = await import("../src/app/api/onboarding/facts/route");
 
-    const response = await POST(postRequest({ skip: true }));
+    const response = await POST(postRequest(factsPayload));
 
     expect(response.status).toBe(200);
     expect(mockState.skipFactsIntake).toHaveBeenCalledWith("u1");
+    expect(mockState.saveEducationContext).toHaveBeenCalledWith({
+      ownerId: "u1",
+      educationStage: "high_school",
+      curriculumSystem: "mainland_china_senior_high",
+      source: "user_selected",
+    });
     expect(mockState.enqueueProfileFactIntakeJob).not.toHaveBeenCalled();
+  });
+
+  it("rejects raw geo data instead of persisting it as curriculum evidence", async () => {
+    const { POST } = await import("../src/app/api/onboarding/facts/route");
+
+    const response = await POST(postRequest({ ...factsPayload, ipCountry: "SG" }));
+
+    expect(response.status).toBe(400);
+    expect(mockState.saveEducationContext).not.toHaveBeenCalled();
   });
 });

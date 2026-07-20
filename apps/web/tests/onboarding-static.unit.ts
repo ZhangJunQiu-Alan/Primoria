@@ -22,6 +22,8 @@ function profile(patch: Partial<LearnerProfile> = {}): LearnerProfile {
     goalGraphId: null,
     goalStartTopicId: null,
     goalTargetConceptId: null,
+    goalTargetConceptIds: [],
+    goalScope: null,
     goalSkippedAt: null,
     goalPositioningStatus: null,
     goalPositioningMessage: null,
@@ -34,6 +36,10 @@ function profile(patch: Partial<LearnerProfile> = {}): LearnerProfile {
     factsIntakeJobId: null,
     factsIntakeMessage: null,
     factsIntakeUpdatedAt: null,
+    educationStage: null,
+    curriculumSystem: null,
+    educationContextSource: null,
+    educationContextConfirmedAt: null,
     knowledgeBackground: null,
     knowledgeBackgroundSkippedAt: null,
     tutorStyle: null,
@@ -80,7 +86,7 @@ function main() {
 
   const page = src("app/page.tsx");
   assert(page.includes("getLearnerOnboardingState"), "homepage loads onboarding state");
-  assert(page.includes("<OnboardingClient initialState={onboarding} />"), "homepage gates into onboarding client");
+  assert(page.includes("<OnboardingClient initialState={onboarding} suggestedRegion={curriculumRegion} />"), "homepage gates into onboarding client with an ephemeral curriculum suggestion");
 
   const devOnboardingPage = src("app/dev/onboarding/page.tsx");
   assert(devOnboardingPage.includes("debugMode"), "dev onboarding route renders client in debug mode");
@@ -109,6 +115,7 @@ function main() {
   const factsRoute = src("app/api/onboarding/facts/route.ts");
   assert(factsRoute.includes("enqueueProfileFactIntakeJob"), "facts route enqueues background extraction without calling the model");
   assert(factsRoute.includes("skipFactsIntake"), "facts route supports step skip");
+  assert(factsRoute.includes("saveEducationContext"), "facts route persists confirmed structured education context");
 
   const courseGenerator = src("lib/ai/deepagent/course-generator.ts");
   assert(courseGenerator.includes("isOwnerScopeUniqueViolation"), "course init recovers from owner+scope race");

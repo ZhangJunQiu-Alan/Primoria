@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
-import { KG_SUBJECT_ZH } from "../src/lib/knowledge-graph/subject-aliases";
+import { getKnowledgeGraphSubjectLabel, KG_SUBJECT_ZH } from "../src/lib/knowledge-graph/subject-aliases";
 
 type Language = "en" | "zh";
 type Split = "dev" | "test";
@@ -87,7 +87,19 @@ const FIXTURE_DIR = join(WEB_ROOT, "tests/fixtures");
 const SEED_PATH = join(FIXTURE_DIR, "learning-goal-routing.manual-seeds.v2.json");
 const OUTPUT_PATH = join(FIXTURE_DIR, "learning-goal-routing.v2.json");
 const NON_GRAPH_FILES = new Set(["cross_subject_edges.json", "kg_zh_labels.json"]);
-const MIN_PERMANENT_CASES = 1_250;
+const MIN_PERMANENT_CASES = 1_718;
+const REGIONAL_CURRICULUM_GRAPH_IDS = [
+  "senior_secondary_biology",
+  "senior_secondary_chemistry",
+  "senior_secondary_mathematics",
+  "senior_secondary_physics",
+  "singapore_h2_biology",
+  "singapore_h2_chemistry",
+  "singapore_h2_mathematics",
+  "singapore_h2_physics",
+  "singapore_lower_secondary_science",
+  "singapore_secondary_mathematics",
+] as const;
 const PERMANENT_REGRESSION_CONTRACTS = [
   {
     input: "我想要学习大模型架构和在AI应用中的使用",
@@ -165,6 +177,7 @@ function buildKgCases(graphs: SourceGraph[]) {
   for (const graph of graphs) {
     const subjectZh = KG_SUBJECT_ZH[graph.graph_id];
     if (!subjectZh) throw new Error(`Missing Chinese subject label for ${graph.graph_id}`);
+    const subjectEn = getKnowledgeGraphSubjectLabel(graph.graph_id, "en");
     const topics = graph.nodes
       .filter((node) => node.kind === "topic")
       .sort((a, b) => a.default_order - b.default_order || a.id.localeCompare(b.id));
@@ -178,8 +191,8 @@ function buildKgCases(graphs: SourceGraph[]) {
     if (topics.length === 0 || concepts.length === 0) throw new Error(`${graph.graph_id} has no topics or concepts`);
 
     const broadVariants: Array<{ language: Language; templateId: string; input: string }> = [
-      { language: "en", templateId: "subject_beginner_en", input: `I want to learn ${graph.subject} from the beginning` },
-      { language: "en", templateId: "subject_systematic_en", input: `Build me a systematic course on ${graph.subject}` },
+      { language: "en", templateId: "subject_beginner_en", input: `I want to learn ${subjectEn} from the beginning` },
+      { language: "en", templateId: "subject_systematic_en", input: `Build me a systematic course on ${subjectEn}` },
       { language: "zh", templateId: "subject_beginner_zh", input: `我想从零开始学习${subjectZh}` },
       { language: "zh", templateId: "subject_systematic_zh", input: `请给我设计一门系统的${subjectZh}课程` },
     ];
@@ -212,7 +225,7 @@ function buildKgCases(graphs: SourceGraph[]) {
         {
           language: "en",
           templateId: `topic_en_${topicIndex % EN_TOPIC_TEMPLATES.length}`,
-          input: EN_TOPIC_TEMPLATES[topicIndex % EN_TOPIC_TEMPLATES.length](topic.name, graph.subject),
+          input: EN_TOPIC_TEMPLATES[topicIndex % EN_TOPIC_TEMPLATES.length](topic.name, subjectEn),
         },
         {
           language: "zh",
@@ -254,7 +267,7 @@ function buildKgCases(graphs: SourceGraph[]) {
         {
           language: "en",
           templateId: "concept_specific_en",
-          input: `Within ${graph.subject}, I want to understand ${concept.name} in depth`,
+          input: `Within ${subjectEn}, I want to understand ${concept.name} in depth`,
         },
         {
           language: "zh",
@@ -499,6 +512,19 @@ function validateDataset(cases: EvalCase[], graphs: SourceGraph[]) {
     }
   }
 
+  for (const graphId of REGIONAL_CURRICULUM_GRAPH_IDS) {
+    for (const language of ["en", "zh"] as const) {
+      const boundary = cases.filter(
+        (item) =>
+          item.category === "library_boundary" &&
+          item.language === language &&
+          item.reference?.graphId === graphId &&
+          item.origin.kind === "manual_seed",
+      );
+      if (boundary.length < 1) throw new Error(`${graphId} missing ${language} manual boundary coverage`);
+    }
+  }
+
   for (const contract of PERMANENT_REGRESSION_CONTRACTS) {
     const item = cases.find((candidate) => candidate.input === contract.input);
     if (!item) throw new Error(`Missing permanent regression input: ${contract.input}`);
@@ -522,7 +548,7 @@ function main() {
     datasetId: "primoria-home-learning-goal-routing-v2",
     description:
       "Homepage AI Tutor learning-goal routing goldens. The dataset starts after position_learning_goal is selected and never creates courses or writes user data.",
-    generatorVersion: 1,
+    generatorVersion: 2,
     generatedFrom: {
       knowledgeGraphs: "data/knowledge-graphs/source/*.json",
       manualSeeds: "apps/web/tests/fixtures/learning-goal-routing.manual-seeds.v2.json",
@@ -532,6 +558,7 @@ function main() {
         "Versioned data and evaluator separation",
         "Knowledge-graph-grounded scenario generation",
         "Treat curated KGs as reusable concept sources, not immutable course templates",
+        "Keep overlapping school subjects curriculum-specific; explicit curriculum context outranks learner facts, and unresolved systems require clarification",
         "Use canonical KG paths for standard subject goals, compose minimal KG subgraphs for contextual goals, extend partial coverage with hybrid graphs, and freely generate only when coverage is absent",
         "Explicit canonical, composed, hybrid, generated, ambiguous, and invalid policy labels",
         "Fixed deterministic dev/test split",

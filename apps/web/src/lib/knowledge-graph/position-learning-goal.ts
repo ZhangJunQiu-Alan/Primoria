@@ -30,12 +30,18 @@ import { buildGraphCandidates } from "./graph-router";
 import {
   findExplicitSubjectGraphIds,
   findPrimarySubjectGraphId,
+  getKnowledgeGraphSubjectLabel,
   hasCompositionConnector,
   hasGoalScopeModifier,
 } from "./subject-aliases";
 import { detectKgLanguage, type KgLanguage } from "./display-name";
 import { getTopicGraph, listTopicGraphIds } from "./topic-graph";
 import { selectDeterministicGoalTargets } from "./cross-subject-edges";
+import {
+  CURRICULUM_SYSTEM_LABELS,
+  resolveCurriculumRoute,
+  type LearnerCurriculumContext,
+} from "./curriculum-routing";
 import type { CourseContext, CourseContextTopic } from "./course-context";
 
 export type { CourseContext, CourseContextTopic } from "./course-context";
@@ -55,6 +61,9 @@ export type PositionLearningGoalInput = {
   // User-facing locale for topic/concept display names. When omitted it is
   // inferred from the query text (CJK => "zh").
   language?: string;
+  // Server-derived, bounded context from confirmed profile fields or explicit
+  // learner facts. UI language, timezone, and IP location cannot confirm it.
+  curriculumContext?: LearnerCurriculumContext | null;
 };
 
 export type PositionLearningGoalResult = {
@@ -83,7 +92,7 @@ function listLibrarySubjects(): Array<{ graphId: string; subject: string }> {
   const out: Array<{ graphId: string; subject: string }> = [];
   for (const graphId of listTopicGraphIds()) {
     try {
-      out.push({ graphId, subject: getTopicGraph(graphId).subject || graphId });
+      out.push({ graphId, subject: getKnowledgeGraphSubjectLabel(graphId, "en") });
     } catch {
       // skip dirty ids
     }
@@ -180,31 +189,89 @@ export async function positionLearningGoal(
   input: PositionLearningGoalInput,
   deps: PositionLearningGoalDeps = {},
 ): Promise<PositionLearningGoalResult> {
+  const overrides: Partial<PositioningParams> = {};
+  if (input.floor !== undefined) overrides.floor = input.floor;
+  const params = resolvePositioningParams(overrides);
+  const language: "zh" | "en" = input.language?.toLowerCase().startsWith("zh")
+    ? "zh"
+    : input.language
+      ? "en"
+      : detectKgLanguage(input.query);
+  const allLibrarySubjects = listLibrarySubjects();
+  const curriculumRoute = resolveCurriculumRoute({
+    query: input.query,
+    learnerContext: input.curriculumContext,
+    selectedGraphId: input.graphId,
+  });
+
+  if (curriculumRoute.kind === "clarify") {
+    const candidates = curriculumRoute.graphIds.map((graphId) => ({
+      graphId,
+      subject: getKnowledgeGraphSubjectLabel(graphId, language),
+      bestSimilarity: 1,
+    }));
+    const diagnostics = buildDiagnostics(0, candidates);
+    return {
+      result: safeDefault({
+        candidates,
+        librarySubjects: allLibrarySubjects,
+        hitTopicIdsByGraph: new Map(),
+        language,
+        diagnostics,
+        params,
+      }),
+      search: makeEmptyKnowledgeGraphSearchResponse(input),
+    };
+  }
+
+  if (curriculumRoute.kind === "uncovered") {
+    const curriculum = curriculumRoute.context.system
+      ? CURRICULUM_SYSTEM_LABELS[curriculumRoute.context.system]
+      : "the confirmed curriculum";
+    return {
+      result: {
+        branch: "out_of_library",
+        graphId: "",
+        params,
+        freeformTopic: `${input.query.trim()} (${curriculum})`,
+        diagnostics: buildDiagnostics(0, []),
+      },
+      search: makeEmptyKnowledgeGraphSearchResponse(input),
+    };
+  }
+
+  const enforcedGraphIds = input.graphId
+    ? [input.graphId]
+    : curriculumRoute.kind === "restricted"
+      ? curriculumRoute.graphIds
+      : null;
+  const searchInput = enforcedGraphIds?.length === 1
+    ? { ...input, graphId: enforcedGraphIds[0] }
+    : input;
+
   // Distinguish KG coverage miss from KG infrastructure failure. A broken KG
   // (missing table, dead DB, dead embedding provider) must fail loudly instead
   // of silently rerouting every goal into the freeform gate / gen_* graphs.
   // Only kg_schema_missing may degrade, and only behind the explicit dev flag.
   let search: KnowledgeGraphSearchResponse;
   try {
-    search = await (deps.searchKnowledgeGraphNodes ?? searchKnowledgeGraphNodes)(input);
+    search = await (deps.searchKnowledgeGraphNodes ?? searchKnowledgeGraphNodes)(searchInput);
   } catch (error) {
     const kind = classifyKnowledgeGraphFailure(error);
     if (kind === "kg_schema_missing" && allowKgInfraFallback()) {
       console.warn("[kg] degraded fallback enabled: kg_schema_missing -> freeform gate", error);
-      search = makeEmptyKnowledgeGraphSearchResponse(input);
+      search = makeEmptyKnowledgeGraphSearchResponse(searchInput);
     } else {
       throw new KnowledgeGraphUnavailableError(kind, error);
     }
   }
-  const overrides: Partial<PositioningParams> = {};
-  if (input.floor !== undefined) overrides.floor = input.floor;
-  const params = resolvePositioningParams(overrides);
-  const language: KgLanguage = input.language?.toLowerCase().startsWith("zh")
-    ? "zh"
-    : input.language
-      ? "en"
-      : detectKgLanguage(input.query);
-  const librarySubjects = listLibrarySubjects();
+  if (enforcedGraphIds && enforcedGraphIds.length > 1) {
+    const allowed = new Set(enforcedGraphIds);
+    search = { ...search, results: search.results.filter((result) => allowed.has(result.graphId)) };
+  }
+  const librarySubjects = enforcedGraphIds
+    ? allLibrarySubjects.filter((subject) => enforcedGraphIds.includes(subject.graphId))
+    : allLibrarySubjects;
 
   const maxSimilarity = search.results.length ? Math.max(...search.results.map((r) => r.similarity)) : 0;
 
@@ -239,8 +306,15 @@ export async function positionLearningGoal(
   const candidates = buildGraphCandidates(search.results, undefined, search.encodedQuery.coreQuery).map(
     (c): GraphCandidateLite => ({ graphId: c.graphId, subject: c.subject, bestSimilarity: c.bestSimilarity }),
   );
-  const explicitGraphIds = findExplicitSubjectGraphIds(input.query);
-  const primarySubjectGraphId = findPrimarySubjectGraphId(input.query);
+  const explicitGraphIds = findExplicitSubjectGraphIds(input.query).filter(
+    (graphId) => !enforcedGraphIds || enforcedGraphIds.includes(graphId),
+  );
+  const inferredPrimarySubjectGraphId = findPrimarySubjectGraphId(input.query);
+  const primarySubjectGraphId = enforcedGraphIds?.length === 1
+    ? enforcedGraphIds[0]
+    : inferredPrimarySubjectGraphId && (!enforcedGraphIds || enforcedGraphIds.includes(inferredPrimarySubjectGraphId))
+      ? inferredPrimarySubjectGraphId
+      : null;
 
   // Margin: if the top subject clearly dominates, position inside it alone;
   // otherwise hand the top-N graphs to Stage 2 to pick + position in one call.

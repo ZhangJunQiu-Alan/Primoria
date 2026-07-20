@@ -2,16 +2,19 @@ import { after, NextResponse } from "next/server";
 import { z } from "zod";
 
 import { requireAuthUser } from "@/lib/auth/guard";
+import { resolveLearnerCurriculumContext } from "@/lib/knowledge-graph/curriculum-routing";
 import { logKnowledgeGraphError, toSafeKnowledgeGraphError } from "@/lib/knowledge-graph/errors";
 import { createServerTiming } from "@/lib/observability/server-timing";
-import { syncOnboardingFact } from "@/lib/learner-facts/store";
+import { listActiveFacts, syncOnboardingFact } from "@/lib/learner-facts/store";
 import {
   OnboardingCourseBuildError,
 } from "@/lib/learner-profile/onboarding-course-build";
 import { buildOnboardingCourseIfReady } from "@/lib/learner-profile/onboarding-course-readiness";
+import { curriculumContextFromProfile } from "@/lib/learner-profile/education-context";
 import { resolveOnboardingGoalAnchor } from "@/lib/learner-profile/onboarding-positioning";
 import {
   getLearnerOnboardingState,
+  getLearnerProfile,
   isLearningGoalPositioningAttemptPending,
   saveLearningGoal,
   saveLearningGoalClarification,
@@ -37,7 +40,16 @@ async function positionLearningGoalInBackground(ownerId: string, learningGoal: s
   const timing = createServerTiming();
 
   try {
-    const resolution = await timing.time("resolve_anchor", () => resolveOnboardingGoalAnchor(learningGoal));
+    const [learnerProfile, facts] = await timing.time("load_curriculum_context", () =>
+      Promise.all([getLearnerProfile(ownerId), listActiveFacts(ownerId)]),
+    );
+    const confirmedContext = curriculumContextFromProfile(learnerProfile);
+    const curriculumContext = confirmedContext === undefined
+      ? resolveLearnerCurriculumContext(facts)
+      : confirmedContext;
+    const resolution = await timing.time("resolve_anchor", () =>
+      resolveOnboardingGoalAnchor(learningGoal, { curriculumContext }),
+    );
 
     if (resolution.kind === "clarify") {
       await timing.time("save_clarify", () =>

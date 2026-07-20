@@ -1,5 +1,30 @@
-export const KNOWLEDGE_BACKGROUNDS = ["high_school", "undergraduate", "graduate"] as const;
+export const KNOWLEDGE_BACKGROUNDS = ["middle_school", "high_school", "undergraduate", "graduate"] as const;
 export type KnowledgeBackground = (typeof KNOWLEDGE_BACKGROUNDS)[number];
+
+export const EDUCATION_STAGES = [
+  "middle_school",
+  "high_school",
+  "undergraduate",
+  "graduate",
+  "professional",
+  "other",
+] as const;
+export type EducationStage = (typeof EDUCATION_STAGES)[number];
+
+export const EDUCATION_CURRICULA = [
+  "mainland_china_junior_secondary",
+  "mainland_china_senior_high",
+  "singapore_lower_secondary",
+  "singapore_secondary_g2_g3",
+  "singapore_h2",
+  "cambridge_international_a_level",
+  "course_specific",
+  "self_directed",
+] as const;
+export type EducationCurriculum = (typeof EDUCATION_CURRICULA)[number];
+
+export const EDUCATION_CONTEXT_SOURCES = ["confirmed_suggestion", "user_selected"] as const;
+export type EducationContextSource = (typeof EDUCATION_CONTEXT_SOURCES)[number];
 
 export const TUTOR_STYLES = ["socratic", "feynman", "euclid"] as const;
 export type TutorStyle = (typeof TUTOR_STYLES)[number];
@@ -67,6 +92,10 @@ export type LearnerProfile = {
   factsIntakeJobId: string | null;
   factsIntakeMessage: string | null;
   factsIntakeUpdatedAt: string | null;
+  educationStage: EducationStage | null;
+  curriculumSystem: EducationCurriculum | null;
+  educationContextSource: EducationContextSource | null;
+  educationContextConfirmedAt: string | null;
   knowledgeBackground: KnowledgeBackground | null;
   knowledgeBackgroundSkippedAt: string | null;
   tutorStyle: TutorStyle | null;
@@ -87,12 +116,26 @@ export function isKnowledgeBackground(value: unknown): value is KnowledgeBackgro
   return typeof value === "string" && (KNOWLEDGE_BACKGROUNDS as readonly string[]).includes(value);
 }
 
+export function isEducationStage(value: unknown): value is EducationStage {
+  return typeof value === "string" && (EDUCATION_STAGES as readonly string[]).includes(value);
+}
+
+export function isEducationCurriculum(value: unknown): value is EducationCurriculum {
+  return typeof value === "string" && (EDUCATION_CURRICULA as readonly string[]).includes(value);
+}
+
+export function isEducationContextSource(value: unknown): value is EducationContextSource {
+  return typeof value === "string" && (EDUCATION_CONTEXT_SOURCES as readonly string[]).includes(value);
+}
+
 export function isTutorStyle(value: unknown): value is TutorStyle {
   return typeof value === "string" && (TUTOR_STYLES as readonly string[]).includes(value);
 }
 
 export function knowledgeBackgroundLabel(value: KnowledgeBackground | null | undefined) {
   switch (value) {
+    case "middle_school":
+      return "Middle school";
     case "high_school":
       return "High school";
     case "undergraduate":
@@ -119,6 +162,8 @@ export function tutorStyleLabel(value: TutorStyle | null | undefined) {
 
 export function knowledgeBackgroundDirective(value: KnowledgeBackground | null | undefined) {
   switch (value) {
+    case "middle_school":
+      return "LEARNER BACKGROUND: Middle school. Use age-appropriate language, concrete examples, and short steps. Introduce notation only after the underlying idea is clear.";
     case "high_school":
       return "LEARNER BACKGROUND: High school. Avoid assuming university-level prerequisites. Teach with concrete intuition, plain language, and short prerequisite refreshers before formal notation.";
     case "undergraduate":

@@ -2,9 +2,13 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { logKnowledgeGraphError, toSafeKnowledgeGraphError } from "@/lib/knowledge-graph/errors";
+import { resolveLearnerCurriculumContext } from "@/lib/knowledge-graph/curriculum-routing";
 import { buildPositioningLog, logPositioning } from "@/lib/knowledge-graph/positioning-log";
 import { planFromPositioning, positionLearningGoal } from "@/lib/knowledge-graph/position-learning-goal";
 import { requireAuthUser } from "@/lib/auth/guard";
+import { listActiveFacts } from "@/lib/learner-facts/store";
+import { curriculumContextFromProfile } from "@/lib/learner-profile/education-context";
+import { getLearnerProfile } from "@/lib/learner-profile/store";
 import { recordLearningEvent } from "@/lib/learning-events/store";
 
 export const runtime = "nodejs";
@@ -24,7 +28,14 @@ export async function POST(request: Request) {
     const { denied, user } = await requireAuthUser();
     if (denied) return denied;
     const body = RequestSchema.parse(await request.json());
-    const { result, search } = await positionLearningGoal(body);
+    const [profile, facts] = user
+      ? await Promise.all([getLearnerProfile(user.id), listActiveFacts(user.id)])
+      : [null, []] as const;
+    const confirmedContext = curriculumContextFromProfile(profile);
+    const curriculumContext = confirmedContext === undefined
+      ? resolveLearnerCurriculumContext(facts)
+      : confirmedContext;
+    const { result, search } = await positionLearningGoal({ ...body, curriculumContext });
     const plan = planFromPositioning(result);
 
     logPositioning(buildPositioningLog({ encodedQuery: search.encodedQuery, search, result }));

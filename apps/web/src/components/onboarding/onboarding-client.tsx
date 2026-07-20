@@ -5,12 +5,25 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
 import {
+  EDUCATION_STAGES,
+  isEducationCurriculum,
+  isEducationStage,
   isTutorStyle,
+  type EducationContextSource,
+  type EducationCurriculum,
+  type EducationStage,
   type GoalPositioningCandidate,
   type LearnerOnboardingState,
   type OnboardingStep,
   type TutorStyle,
 } from "@/lib/learner-profile/types";
+import {
+  curriculumOptionsForStage,
+  EDUCATION_CURRICULUM_LABELS,
+  EDUCATION_STAGE_LABELS,
+  suggestEducationCurriculum,
+  type SuggestedCurriculumRegion,
+} from "@/lib/learner-profile/education-context";
 
 type GoalAnchorSummary = {
   graphSubject: string;
@@ -33,6 +46,7 @@ type OnboardingApiResponse = LearnerOnboardingState & {
 
 type OnboardingClientProps = {
   initialState: LearnerOnboardingState;
+  suggestedRegion?: SuggestedCurriculumRegion;
   debugMode?: boolean;
 };
 
@@ -52,12 +66,6 @@ const GOAL_EXAMPLES = [
   "I want to learn data structures and algorithms",
   "我想弄懂链式法则",
   "Teach me Python from the beginning",
-];
-
-const FACTS_EXAMPLES = [
-  "I study computer science and have taken CS61A and CS61B",
-  "我对算法和大模型架构感兴趣",
-  "I learn best from concrete examples before formal definitions",
 ];
 
 const TUTOR_STYLES: Array<{
@@ -171,6 +179,10 @@ function debugOnboardingResponse(
     factsIntakeJobId: null,
     factsIntakeMessage: null,
     factsIntakeUpdatedAt: null,
+    educationStage: null,
+    curriculumSystem: null,
+    educationContextSource: null,
+    educationContextConfirmedAt: null,
     knowledgeBackground: null,
     knowledgeBackgroundSkippedAt: null,
     tutorStyle: null,
@@ -219,15 +231,23 @@ function debugOnboardingResponse(
   }
 
   if (path.endsWith("/facts")) {
+    const educationStage = isEducationStage(body.educationStage) ? body.educationStage : null;
+    const curriculumSystem = isEducationCurriculum(body.curriculumSystem) ? body.curriculumSystem : null;
     return {
       profile: {
         ...profile,
-        factsIntakeStatus: body.skip ? "skipped" : "completed",
-        factsIntakeJobId: body.skip ? null : "debug-intake-job",
+        factsIntakeStatus: body.text ? "completed" : "skipped",
+        factsIntakeJobId: body.text ? "debug-intake-job" : null,
         factsIntakeMessage: null,
         factsIntakeUpdatedAt: now,
-        knowledgeBackground: null,
-        knowledgeBackgroundSkippedAt: body.skip ? now : null,
+        educationStage,
+        curriculumSystem,
+        educationContextSource: body.educationContextSource === "confirmed_suggestion" ? "confirmed_suggestion" : "user_selected",
+        educationContextConfirmedAt: now,
+        knowledgeBackground: educationStage === "middle_school" || educationStage === "high_school" || educationStage === "undergraduate" || educationStage === "graduate"
+          ? educationStage
+          : null,
+        knowledgeBackgroundSkippedAt: educationStage === "professional" || educationStage === "other" ? now : null,
         onboardingCourseStatus: profile.goalSkippedAt ? null : "ready",
         onboardingCourseMessage: null,
         onboardingCourseUpdatedAt: profile.goalSkippedAt ? null : now,
@@ -258,10 +278,20 @@ function debugOnboardingResponse(
   };
 }
 
-export function OnboardingClient({ initialState, debugMode = false }: OnboardingClientProps) {
+export function OnboardingClient({ initialState, suggestedRegion = "international", debugMode = false }: OnboardingClientProps) {
   const [state, setState] = useState<LearnerOnboardingState>(initialState);
   const [learningGoal, setLearningGoal] = useState(initialState.profile?.learningGoal ?? "");
   const [factsIntroduction, setFactsIntroduction] = useState("");
+  const [educationStage, setEducationStage] = useState<EducationStage | null>(
+    initialState.profile?.educationStage ?? null,
+  );
+  const [curriculumSystem, setCurriculumSystem] = useState<EducationCurriculum | null>(
+    initialState.profile?.curriculumSystem ?? null,
+  );
+  const [educationContextSource, setEducationContextSource] = useState<EducationContextSource | null>(
+    initialState.profile?.educationContextSource ?? null,
+  );
+  const [curriculumMenuOpen, setCurriculumMenuOpen] = useState(false);
   const [style, setStyle] = useState<TutorStyle>(() => normalizeTutorStyle(initialState.profile?.tutorStyle));
   const [anchor, setAnchor] = useState<GoalAnchorSummary | null>(null);
   const [clarify, setClarify] = useState<GoalClarify | null>(null);
@@ -274,6 +304,9 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
   const progress = Math.min(100, ((index + 1) / STEP_ORDER.length) * 100);
   const visual = STEP_VISUALS[step];
   const selectedTutorStyle = TUTOR_STYLES.find((item) => item.id === style) ?? TUTOR_STYLES[1];
+  const curriculumOptions = educationStage
+    ? curriculumOptionsForStage(educationStage, suggestedRegion)
+    : [];
   const visualImage =
     step === "style"
       ? { src: selectedTutorStyle.imageSrc, width: 1024, height: 1536 }
@@ -402,11 +435,42 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
     setState(initialState);
     setLearningGoal(initialState.profile?.learningGoal ?? "");
     setFactsIntroduction("");
+    setEducationStage(initialState.profile?.educationStage ?? null);
+    setCurriculumSystem(initialState.profile?.curriculumSystem ?? null);
+    setEducationContextSource(initialState.profile?.educationContextSource ?? null);
+    setCurriculumMenuOpen(false);
     setStyle(normalizeTutorStyle(initialState.profile?.tutorStyle));
     setAnchor(null);
     setClarify(null);
     setCourseId(null);
     setError("");
+  }
+
+  function chooseEducationStage(nextStage: EducationStage) {
+    const suggestion = suggestEducationCurriculum(nextStage, suggestedRegion);
+    setEducationStage(nextStage);
+    setCurriculumSystem(suggestion);
+    setEducationContextSource(suggestion ? "confirmed_suggestion" : null);
+    setCurriculumMenuOpen(!suggestion);
+  }
+
+  function chooseCurriculum(nextCurriculum: EducationCurriculum) {
+    setCurriculumSystem(nextCurriculum);
+    setEducationContextSource("user_selected");
+    setCurriculumMenuOpen(false);
+  }
+
+  function submitFacts() {
+    if (!educationStage || !curriculumSystem || !educationContextSource) {
+      return Promise.reject(new Error("Choose your learning stage and curriculum before continuing."));
+    }
+    const text = factsIntroduction.trim();
+    return submit("/api/onboarding/facts", {
+      educationStage,
+      curriculumSystem,
+      educationContextSource,
+      ...(text.length >= 2 ? { text } : {}),
+    });
   }
 
   return (
@@ -425,7 +489,7 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
           </header>
 
           {step === "goal" ? (
-            <div className="onboarding-step">
+            <div className="onboarding-step onboarding-step-facts">
               <div className="onboarding-step-copy">
                 <p className="onboarding-kicker">Learning goal</p>
                 <h1>Name the first thing you want to learn.</h1>
@@ -492,38 +556,76 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
               <div className="onboarding-step-copy">
                 <p className="onboarding-kicker">About your learning</p>
                 <h1>Tell Primoria what you already bring.</h1>
-                <p className="onboarding-copy">Share your studies, interests, goals, or learning preferences in your own words.</p>
+                <p className="onboarding-copy">Set the curriculum anchor first, then add anything else Primoria should know.</p>
               </div>
               <div className="onboarding-control-region">
+                <section className="onboarding-education-question" aria-labelledby="education-stage-question">
+                  <div className="onboarding-question-heading">
+                    <span className="onboarding-question-index">Q1</span>
+                    <h2 id="education-stage-question">What is your current learning stage?</h2>
+                    {educationStage ? (
+                      <button
+                        type="button"
+                        className={`onboarding-curriculum-badge ${curriculumSystem ? "selected" : "needs-selection"}`}
+                        aria-expanded={curriculumMenuOpen}
+                        onClick={() => setCurriculumMenuOpen((open) => !open)}
+                      >
+                        {curriculumSystem ? EDUCATION_CURRICULUM_LABELS[curriculumSystem] : "Choose curriculum"}
+                        <span aria-hidden="true">⌄</span>
+                      </button>
+                    ) : null}
+                  </div>
+                  <div className="onboarding-stage-options" role="radiogroup" aria-label="Current learning stage">
+                    {EDUCATION_STAGES.map((stageOption) => (
+                      <button
+                        key={stageOption}
+                        type="button"
+                        role="radio"
+                        aria-checked={educationStage === stageOption}
+                        className={educationStage === stageOption ? "selected" : ""}
+                        onClick={() => chooseEducationStage(stageOption)}
+                      >
+                        <span aria-hidden="true" />
+                        {EDUCATION_STAGE_LABELS[stageOption]}
+                      </button>
+                    ))}
+                  </div>
+                  {educationStage && curriculumMenuOpen ? (
+                    <div className="onboarding-curriculum-menu" role="listbox" aria-label="Curriculum system">
+                      {curriculumOptions.map((option) => (
+                        <button
+                          key={option}
+                          type="button"
+                          role="option"
+                          aria-selected={curriculumSystem === option}
+                          className={curriculumSystem === option ? "selected" : ""}
+                          onClick={() => chooseCurriculum(option)}
+                        >
+                          {EDUCATION_CURRICULUM_LABELS[option]}
+                        </button>
+                      ))}
+                    </div>
+                  ) : null}
+                </section>
                 <textarea
                   value={factsIntroduction}
                   maxLength={2_000}
                   onChange={(event) => setFactsIntroduction(event.target.value)}
                   placeholder="e.g. I study at JCU, I am interested in algorithms and LLM architecture, and I have taken CS61A and CS61B"
-                  rows={5}
+                  rows={3}
                   className="onboarding-goal-input onboarding-facts-input"
                 />
-                <div className="onboarding-example-list" aria-label="Introduction examples">
-                  {FACTS_EXAMPLES.map((example) => (
-                    <button key={example} type="button" onClick={() => setFactsIntroduction(example)}>
-                      {example}
-                    </button>
-                  ))}
-                </div>
               </div>
-              <p className="onboarding-note onboarding-note-empty">Continue immediately; Primoria will organize useful facts in the background.</p>
               <div className="onboarding-actions">
                 <button
                   type="button"
                   className="onboarding-primary"
-                  disabled={busy || factsIntroduction.trim().length < 2}
-                  onClick={() => run(() => submit("/api/onboarding/facts", { text: factsIntroduction }))}
+                  disabled={busy || !educationStage || !curriculumSystem}
+                  onClick={() => run(submitFacts)}
                 >
                   {busy ? "Saving…" : "Continue"}
                 </button>
-                <button type="button" className="onboarding-skip" disabled={busy} onClick={() => run(() => submit("/api/onboarding/facts", { skip: true }))}>
-                  Skip this question
-                </button>
+                <span className="onboarding-optional-note">The note above is optional.</span>
               </div>
             </div>
           ) : null}

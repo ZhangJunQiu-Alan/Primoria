@@ -26,6 +26,10 @@ const DEBUG_ONBOARDING_STATE: LearnerOnboardingState = {
     factsIntakeJobId: null,
     factsIntakeMessage: null,
     factsIntakeUpdatedAt: null,
+    educationStage: null,
+    curriculumSystem: null,
+    educationContextSource: null,
+    educationContextConfirmedAt: null,
     knowledgeBackground: null,
     knowledgeBackgroundSkippedAt: null,
     tutorStyle: null,
@@ -46,7 +50,7 @@ export default function DevOnboardingPage() {
 
   return (
     <main className="app-shell onboarding-app-shell">
-      <OnboardingClient initialState={DEBUG_ONBOARDING_STATE} debugMode />
+      <OnboardingClient initialState={DEBUG_ONBOARDING_STATE} suggestedRegion="singapore" debugMode />
     </main>
   );
 }
