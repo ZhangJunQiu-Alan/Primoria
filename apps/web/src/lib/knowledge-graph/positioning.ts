@@ -299,18 +299,24 @@ export function finalizeStage2(decision: Stage2Decision | null, ctx: FinalizeCon
     targetConceptIds = [];
   } else if (mode === "directed") {
     const topic = getTopic(graphId, startTopicId)!;
-    const earliest = earliestHitOrder(graphId, ctx.hitTopicIdsByGraph.get(graphId));
+    const hitTopicIds = ctx.hitTopicIdsByGraph.get(graphId);
+    const earliest = earliestHitOrder(graphId, hitTopicIds);
+    const selectedTopicWasHit = hitTopicIds?.has(topic.topicId) ?? false;
     // Directed must move past the root and must not skip ahead of the hit region.
-    if (topic.defaultOrder <= root.defaultOrder || topic.defaultOrder > earliest) {
+    // A selected topic that was itself recalled remains valid even if another
+    // noisy retrieval hit happens to have an earlier authored order.
+    if (topic.defaultOrder <= root.defaultOrder || (!selectedTopicWasHit && topic.defaultOrder > earliest)) {
       mode = "subject_start";
       startTopicId = root.topicId;
     }
     targetConceptId = null;
     const hitTopic =
       mode === "directed"
-        ? [...getTopicGraph(graphId).topics]
-            .filter((candidate) => ctx.hitTopicIdsByGraph.get(graphId)?.has(candidate.topicId))
-            .sort((a, b) => a.defaultOrder - b.defaultOrder)[0]
+        ? selectedTopicWasHit
+          ? topic
+          : [...getTopicGraph(graphId).topics]
+              .filter((candidate) => hitTopicIds?.has(candidate.topicId))
+              .sort((a, b) => a.defaultOrder - b.defaultOrder)[0]
         : null;
     targetConceptIds = hitTopic?.conceptIds.map((concept) => concept.conceptId) ?? [];
   } else if (mode === "goal_scoped") {
@@ -320,9 +326,17 @@ export function finalizeStage2(decision: Stage2Decision | null, ctx: FinalizeCon
   } else {
     // specific: keep targetConceptId only if it belongs to the start topic.
     const topic = getTopic(graphId, startTopicId)!;
-    const owns = targetConceptId && topic.conceptIds.some((c) => c.conceptId === targetConceptId);
-    targetConceptId = owns ? targetConceptId : null;
-    targetConceptIds = targetConceptId ? [targetConceptId] : [];
+    const owns = targetConceptId !== null && topic.conceptIds.some((c) => c.conceptId === targetConceptId);
+    if (owns && targetConceptId) {
+      targetConceptIds = [targetConceptId];
+    } else {
+      // A model may correctly identify the topic but omit or mistype the
+      // concept id. Preserve the bounded topic scope instead of expanding from
+      // this topic through the remainder of the authored graph.
+      mode = "directed";
+      targetConceptId = null;
+      targetConceptIds = topic.conceptIds.map((concept) => concept.conceptId);
+    }
   }
 
   return {

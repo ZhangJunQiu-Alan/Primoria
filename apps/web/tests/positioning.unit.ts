@@ -87,7 +87,7 @@ function main() {
   // specific drops a concept owned by a different topic.
   {
     const r = finalizeStage2(positioned({ mode: "specific", startTopicId: LA_T1, targetConceptId: LA_C_OTHER }), ctx());
-    assert(r.mode === "specific" && r.targetConceptId === null, "specific drops foreign concept");
+    assert(r.mode === "directed" && r.targetConceptId === null, "specific with a foreign concept keeps topic scope");
   }
 
   // hallucinated topic id → degrade to subject_start at root.

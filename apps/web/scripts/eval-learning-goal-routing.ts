@@ -3,7 +3,6 @@ import { join } from "node:path";
 import { z } from "zod";
 
 import { buildConceptFrontierOutline } from "../src/lib/knowledge-graph/concept-frontier";
-import { buildGraphCandidates } from "../src/lib/knowledge-graph/graph-router";
 import {
   positionLearningGoal,
   type PositionLearningGoalResult,
@@ -100,7 +99,7 @@ function hash(value: string) {
 
 function resultSummary(output: PositionLearningGoalResult) {
   const { result } = output;
-  const candidates = buildGraphCandidates(output.search.results, 3, output.search.encodedQuery.coreQuery).map(
+  const candidates = result.diagnostics.candidateGraphs.map(
     (candidate) => `${candidate.graphId}:${candidate.bestSimilarity.toFixed(3)}`,
   );
   return {
@@ -211,7 +210,10 @@ function checkExpectation(item: EvalCase, output: PositionLearningGoalResult) {
 
 async function runCase(item: EvalCase) {
   const startedAt = Date.now();
-  const output = await positionLearningGoal({ query: item.input, language: item.language, topK: 30 });
+  const output = await positionLearningGoal(
+    { query: item.input, language: item.language, topK: 30 },
+    { failOnModelError: true },
+  );
   const failures = checkExpectation(item, output);
   return { output, failures, elapsedMs: Date.now() - startedAt };
 }

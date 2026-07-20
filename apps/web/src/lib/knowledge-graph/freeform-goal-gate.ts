@@ -8,6 +8,7 @@ export type FreeformGoalGateInput = {
   query: string;
   language: KgLanguage;
   librarySubjects: LibrarySubject[];
+  failOnModelError?: boolean;
 };
 
 export type FreeformGoalGateInvoker = (input: { system: string; user: string }) => Promise<string>;
@@ -86,11 +87,13 @@ export async function runFreeformGoalGate(
       user: buildUserPrompt(input),
     });
     const decision = parseDecision(text);
+    if (!decision && input.failOnModelError) throw new Error("Freeform goal gate returned an invalid decision");
     if (process.env.KG_POSITION_DEBUG === "1") {
       console.log("[kg-freeform-gate]", { query: input.query, decision });
     }
     return decision;
   } catch (error) {
+    if (input.failOnModelError) throw error;
     console.warn("[kg-freeform-gate] classification failed:", error instanceof Error ? error.message : error);
     return null;
   }

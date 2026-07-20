@@ -43,6 +43,7 @@ import {
   type LearnerCurriculumContext,
 } from "./curriculum-routing";
 import type { CourseContext, CourseContextTopic } from "./course-context";
+import { classifyDeterministicGoal, findExactNamedGoalAnchor } from "./goal-routing-policy";
 
 export type { CourseContext, CourseContextTopic } from "./course-context";
 
@@ -76,6 +77,7 @@ export type PositionLearningGoalDeps = {
   runStage2Positioning?: typeof runStage2Positioning;
   runFreeformGoalGate?: typeof runFreeformGoalGate;
   selectGoalScope?: typeof selectGoalScope;
+  failOnModelError?: boolean;
 };
 
 export type PositioningPlan =
@@ -129,6 +131,7 @@ async function resolveGoalScopedResult(
           query: input.query,
           graphId: result.graphId,
           language,
+          failOnModelError: deps.failOnModelError,
         });
   if (!selection || selection.coverage === "partial") {
     return {
@@ -198,10 +201,26 @@ export async function positionLearningGoal(
       ? "en"
       : detectKgLanguage(input.query);
   const allLibrarySubjects = listLibrarySubjects();
+  const explicitlyNamedGraphIds = findExplicitSubjectGraphIds(input.query);
+  const explicitlyPrimaryGraphId = findPrimarySubjectGraphId(input.query);
+  const deterministicGoal = classifyDeterministicGoal(input.query);
+  if (deterministicGoal?.kind === "out_of_library") {
+    return {
+      result: {
+        branch: "out_of_library",
+        graphId: "",
+        params,
+        freeformTopic: deterministicGoal.topic,
+        diagnostics: buildDiagnostics(0, []),
+      },
+      search: makeEmptyKnowledgeGraphSearchResponse(input),
+    };
+  }
   const curriculumRoute = resolveCurriculumRoute({
     query: input.query,
     learnerContext: input.curriculumContext,
-    selectedGraphId: input.graphId,
+    selectedGraphId:
+      input.graphId ?? explicitlyPrimaryGraphId ?? (explicitlyNamedGraphIds.length === 1 ? explicitlyNamedGraphIds[0] : undefined),
   });
 
   if (curriculumRoute.kind === "clarify") {
@@ -245,6 +264,102 @@ export async function positionLearningGoal(
     : curriculumRoute.kind === "restricted"
       ? curriculumRoute.graphIds
       : null;
+
+  if (!enforcedGraphIds) {
+    const deterministic = deterministicGoal;
+    if (deterministic?.kind === "fallback") {
+      const diagnostics = buildDiagnostics(0, []);
+      return {
+        result: safeDefault({
+          candidates: [],
+          librarySubjects: allLibrarySubjects,
+          hitTopicIdsByGraph: new Map(),
+          language,
+          diagnostics,
+          params,
+        }),
+        search: makeEmptyKnowledgeGraphSearchResponse(input),
+      };
+    }
+    if (deterministic?.kind === "clarify") {
+      const candidates = deterministic.candidateGraphIds.map((graphId) => ({
+        graphId,
+        subject: getKnowledgeGraphSubjectLabel(graphId, language),
+        bestSimilarity: 1,
+      }));
+      const diagnostics = buildDiagnostics(1, candidates);
+      return {
+        result: safeDefault({
+          candidates,
+          librarySubjects: allLibrarySubjects,
+          hitTopicIdsByGraph: new Map(),
+          language,
+          diagnostics,
+          params,
+        }),
+        search: makeEmptyKnowledgeGraphSearchResponse(input),
+      };
+    }
+    if (deterministic?.kind === "positioned") {
+      const topic = getTopicGraph(deterministic.graphId).topics.find(
+        (candidate) => candidate.topicId === deterministic.startTopicId,
+      );
+      if (topic) {
+        const targetConceptIds = deterministic.targetConceptIds ?? topic.conceptIds.map((concept) => concept.conceptId);
+        const diagnostics = buildDiagnostics(1, [{
+          graphId: deterministic.graphId,
+          subject: getKnowledgeGraphSubjectLabel(deterministic.graphId, language),
+          bestSimilarity: 1,
+        }]);
+        return {
+          result: {
+            branch: "positioned",
+            graphId: deterministic.graphId,
+            params,
+            mode: deterministic.mode,
+            diagnostics,
+            learningGoal: deterministic.mode === "goal_scoped" ? input.query.trim() : undefined,
+            ...buildLinearPath(
+              deterministic.graphId,
+              deterministic.startTopicId,
+              null,
+              language,
+              targetConceptIds,
+            ),
+          },
+          search: makeEmptyKnowledgeGraphSearchResponse({ ...input, graphId: deterministic.graphId }),
+        };
+      }
+    }
+  }
+
+  const namedAnchorGraphIds = enforcedGraphIds ?? (explicitlyPrimaryGraphId ? [explicitlyPrimaryGraphId] : explicitlyNamedGraphIds);
+  if (namedAnchorGraphIds.length === 1) {
+    const anchor = findExactNamedGoalAnchor(input.query, namedAnchorGraphIds);
+    if (anchor) {
+      const topic = getTopicGraph(anchor.graphId).topics.find((candidate) => candidate.topicId === anchor.topicId)!;
+      const targetConceptId = anchor.kind === "concept" ? anchor.conceptId : null;
+      const targetConceptIds = anchor.kind === "concept"
+        ? [anchor.conceptId]
+        : topic.conceptIds.map((concept) => concept.conceptId);
+      const diagnostics = buildDiagnostics(1, [{
+        graphId: anchor.graphId,
+        subject: getKnowledgeGraphSubjectLabel(anchor.graphId, language),
+        bestSimilarity: 1,
+      }]);
+      return {
+        result: {
+          branch: "positioned",
+          graphId: anchor.graphId,
+          params,
+          mode: anchor.kind === "concept" ? "specific" : "directed",
+          diagnostics,
+          ...buildLinearPath(anchor.graphId, anchor.topicId, targetConceptId, language, targetConceptIds),
+        },
+        search: makeEmptyKnowledgeGraphSearchResponse({ ...input, graphId: anchor.graphId }),
+      };
+    }
+  }
   const searchInput = enforcedGraphIds?.length === 1
     ? { ...input, graphId: enforcedGraphIds[0] }
     : input;
@@ -292,6 +407,7 @@ export async function positionLearningGoal(
       query: input.query,
       language,
       librarySubjects,
+      failOnModelError: deps.failOnModelError,
     });
     const result = decision ? finalizeStage2(decision, ctx) : safeDefault(ctx);
     if (result.branch === "out_of_library" && !result.freeformTopic) {
@@ -303,13 +419,16 @@ export async function positionLearningGoal(
     return { result, search };
   }
 
-  const candidates = buildGraphCandidates(search.results, undefined, search.encodedQuery.coreQuery).map(
-    (c): GraphCandidateLite => ({ graphId: c.graphId, subject: c.subject, bestSimilarity: c.bestSimilarity }),
-  );
-  const explicitGraphIds = findExplicitSubjectGraphIds(input.query).filter(
+  const allowedGraphIds = enforcedGraphIds ? new Set(enforcedGraphIds) : null;
+  const candidates = buildGraphCandidates(search.results, undefined, search.encodedQuery.coreQuery)
+    .filter((candidate) => !allowedGraphIds || allowedGraphIds.has(candidate.graphId))
+    .map(
+      (c): GraphCandidateLite => ({ graphId: c.graphId, subject: c.subject, bestSimilarity: c.bestSimilarity }),
+    );
+  const explicitGraphIds = explicitlyNamedGraphIds.filter(
     (graphId) => !enforcedGraphIds || enforcedGraphIds.includes(graphId),
   );
-  const inferredPrimarySubjectGraphId = findPrimarySubjectGraphId(input.query);
+  const inferredPrimarySubjectGraphId = explicitlyPrimaryGraphId;
   const primarySubjectGraphId = enforcedGraphIds?.length === 1
     ? enforcedGraphIds[0]
     : inferredPrimarySubjectGraphId && (!enforcedGraphIds || enforcedGraphIds.includes(inferredPrimarySubjectGraphId))
@@ -357,6 +476,7 @@ export async function positionLearningGoal(
       language,
       graphs: selected.map((c) => ({ graphId: c.graphId, subject: c.subject })),
       librarySubjects,
+      failOnModelError: deps.failOnModelError,
     },
     undefined,
   );
