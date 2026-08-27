@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.1",
   "graph_id": "senior_secondary_biology",
   "subject": "Biology",
   "jurisdictions": [
@@ -23,6 +23,11 @@
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "依据中国普通高中生物学 120 条编号成果覆盖审查，新增最小可诊断概念、复用稳定 canonical 组合，并补齐第二类权威证据。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-08-27",
+      "summary_zh": "依据官方课程成果顺序补充 21 条同图前置边（含 0 条硬前置），状态保持 needs_review。"
     }
   ],
   "nodes": [
@@ -3103,6 +3108,384 @@
         {
           "source_id": "src_cn_nhc_assisted_reproduction_ethics_2003",
           "locator": "附件1 行为准则第（十五）项‘禁止克隆人’；附件3 社会公益原则第3项‘不得实施生殖性克隆技术’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_nucleus_genetic_information",
+      "to": "cn_sh_bio_organelle_coordination",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·分子与细胞·1.2.3 为 必修·分子与细胞·1.2.4 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.3），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.4），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_cell_differentiation",
+      "to": "cn_sh_bio_cell_senescence_death",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·分子与细胞·2.3.2 为 必修·分子与细胞·2.3.3 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.23（正文对应内容要求 2.3.2），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.23（正文对应内容要求 2.3.3），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_chromosomal_variation",
+      "to": "cn_sh_bio_genetic_disease_screening",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·遗传与进化·3.3.5 为 必修·遗传与进化·3.3.6 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.5），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.6），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_common_ancestry_fossil_anatomy",
+      "to": "cn_sh_bio_common_ancestry_cell_molecular",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·遗传与进化·4.1.1 为 必修·遗传与进化·4.1.2 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 4.1.1），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 4.1.2），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_autonomic_nervous_regulation",
+      "to": "cn_sh_bio_cortical_higher_activity",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·稳态与调节·1.3.5 为 选择性必修·稳态与调节·1.3.6 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.5），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.6），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_neuroendocrine_coordination",
+      "to": "cn_sh_bio_humoral_respiratory_regulation",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·稳态与调节·1.4.3 为 选择性必修·稳态与调节·1.4.4 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.3），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.4），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_population_characteristics",
+      "to": "cn_sh_bio_population_growth_models",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物与环境·2.1.1 为 选择性必修·生物与环境·2.1.2 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.1），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.2），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_population_limiting_factors",
+      "to": "cn_sh_bio_community_structure",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物与环境·2.1.3 为 选择性必修·生物与环境·2.1.4 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.3），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.4），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_matter_cycles_energy_flow",
+      "to": "cn_sh_bio_ecological_resource_use",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物与环境·2.2.3 为 选择性必修·生物与环境·2.2.4 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.3），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.4），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_ecological_resource_use",
+      "to": "cn_sh_bio_ecological_pyramids",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物与环境·2.2.4 为 选择性必修·生物与环境·2.2.5 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.4），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.5），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_ecological_pyramids",
+      "to": "cn_sh_bio_biomagnification",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物与环境·2.2.5 为 选择性必修·生物与环境·2.2.6 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.5），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.6），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_biomagnification",
+      "to": "cn_sh_bio_ecosystem_information_transfer",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物与环境·2.2.6 为 选择性必修·生物与环境·2.2.7 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.6），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.7），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_ecosystem_information_transfer",
+      "to": "cn_sh_bio_trophic_structure_factors",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物与环境·2.2.7 为 选择性必修·生物与环境·2.2.8 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.7），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.8），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_ecosystem_stability",
+      "to": "cn_sh_bio_ecosystem_disturbances",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物与环境·2.3.1 为 选择性必修·生物与环境·2.3.2 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.1），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.2），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_population_environment_pressure",
+      "to": "cn_sh_bio_global_environmental_change",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物与环境·2.4.1 为 选择性必修·生物与环境·2.4.2 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.1），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.2），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_aseptic_technique",
+      "to": "cn_sh_bio_selective_culture_media",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物技术与工程·3.1.2 为 选择性必修·生物技术与工程·3.1.3 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.3），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_microbial_isolation_methods",
+      "to": "cn_sh_bio_microbial_counting_methods",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物技术与工程·3.1.4 为 选择性必修·生物技术与工程·3.1.5 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.4），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.5），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_traditional_fermentation",
+      "to": "cn_sh_bio_industrial_fermentation",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物技术与工程·3.2.1 为 选择性必修·生物技术与工程·3.2.2 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_animal_cell_culture",
+      "to": "cn_sh_bio_somatic_cell_nuclear_transfer",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物技术与工程·4.2.1 为 选择性必修·生物技术与工程·4.2.2 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.2.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_somatic_cell_nuclear_transfer",
+      "to": "cn_sh_bio_animal_cell_fusion",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物技术与工程·4.2.2 为 选择性必修·生物技术与工程·4.2.3 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.3），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_bio_monoclonal_antibody_production",
+      "to": "cn_sh_bio_stem_cell_applications",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物技术与工程·4.2.4 为 选择性必修·生物技术与工程·4.2.5 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.4），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.5），选择性必修·生物技术与工程"
         }
       ],
       "review_status": "needs_review"

@@ -1,8 +1,9 @@
 {
   "graphId": "singapore_h2_biology",
   "subject": "Biology",
+  "reviewStatus": "needs_review",
   "generatedFrom": "data/knowledge-graphs/source/singapore_h2_biology.json",
-  "generatedAt": "2026-07-19",
+  "generatedAt": "2026-08-27",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -93,7 +94,12 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "sg_h2_biology_topic_genome_regulation_analysis",
+          "hard": false
+        }
+      ],
       "prereqTopics": [
         "sg_h2_biology_topic_cell_life_boundaries"
       ],
@@ -125,8 +131,10 @@
         }
       ],
       "successors": [],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "sg_h2_biology_topic_microbial_genome_change"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "sg_h2_biology_topic_screening_cancer_control",
@@ -252,7 +260,12 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "sg_h2_biology_topic_evolutionary_relationships",
+          "hard": false
+        }
+      ],
       "prereqTopics": [
         "sg_h2_biology_topic_signal_transduction"
       ],
@@ -284,8 +297,10 @@
         }
       ],
       "successors": [],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "sg_h2_biology_topic_receptor_population_evolution"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "sg_h2_biology_topic_adaptive_immunity",
@@ -312,7 +327,12 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "sg_h2_biology_topic_infection_epidemiology",
+          "hard": false
+        }
+      ],
       "prereqTopics": [],
       "isRoot": true
     },
@@ -342,8 +362,10 @@
         }
       ],
       "successors": [],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "sg_h2_biology_topic_adaptive_immunity"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "sg_h2_biology_topic_climate_forcing",
@@ -371,6 +393,10 @@
         }
       ],
       "successors": [
+        {
+          "topicId": "sg_h2_biology_topic_climate_mitigation_resources",
+          "hard": false
+        },
         {
           "topicId": "sg_h2_biology_topic_climate_vectors",
           "hard": false
@@ -404,9 +430,16 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [],
-      "prereqTopics": [],
-      "isRoot": true
+      "successors": [
+        {
+          "topicId": "sg_h2_biology_topic_climate_vectors",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "sg_h2_biology_topic_climate_forcing"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "sg_h2_biology_topic_climate_vectors",
@@ -435,7 +468,8 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "sg_h2_biology_topic_climate_forcing"
+        "sg_h2_biology_topic_climate_forcing",
+        "sg_h2_biology_topic_climate_mitigation_resources"
       ],
       "isRoot": false
     }
@@ -452,6 +486,18 @@
       "to": "sg_h2_biology_vaccination_population_control_tradeoffs",
       "strength": "soft",
       "reason": "评价疫苗群体效果前，需要先理解免疫记忆和初次、二次应答。"
+    },
+    {
+      "from": "sg_h2_biology_anthropogenic_carbon_footprints",
+      "to": "sg_h2_biology_climate_stress_food_supply",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，B.d 为 B.e 的前置要求。"
+    },
+    {
+      "from": "sg_h2_biology_antibody_diversity_mechanisms",
+      "to": "sg_h2_biology_vaccination_population_control_tradeoffs",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，A.d 为 A.e 的前置要求。"
     },
     {
       "from": "sg_h2_biology_basic_reproduction_number",
@@ -484,10 +530,22 @@
       "reason": "判断病毒为何挑战生命定义，需要先明确细胞学说的核心断言。"
     },
     {
+      "from": "sg_h2_biology_climate_stress_food_supply",
+      "to": "sg_h2_biology_climate_ecological_redistribution",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，B.e 为 B.f 的前置要求。"
+    },
+    {
       "from": "sg_h2_biology_climate_system_ecological_impacts",
       "to": "sg_h2_biology_climate_ecological_redistribution",
       "strength": "soft",
       "reason": "分析物种和生态位重新分布，需要先理解升温与极端事件对环境的影响。"
+    },
+    {
+      "from": "sg_h2_biology_climate_system_ecological_impacts",
+      "to": "sg_h2_biology_mangrove_climate_mitigation",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，B.b 为 B.c 的前置要求。"
     },
     {
       "from": "sg_h2_biology_comparative_genome_architecture",
@@ -496,10 +554,22 @@
       "reason": "追踪病毒基因组继承前，需要先区分不同基因组的结构组织。"
     },
     {
+      "from": "sg_h2_biology_epistasis_problem_solving",
+      "to": "sg_h2_biology_genotype_environment_phenotype",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，2.aa 为 2.bb 的前置要求。"
+    },
+    {
       "from": "sg_h2_biology_greenhouse_gas_human_drivers",
       "to": "sg_h2_biology_climate_system_ecological_impacts",
       "strength": "soft",
       "reason": "解释气候系统和生态后果前，需要先建立人为温室气体来源的因果链。"
+    },
+    {
+      "from": "sg_h2_biology_integrated_evolution_evidence",
+      "to": "sg_h2_biology_biological_species_concept_limits",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，4.g 为 4.h 的前置要求。"
     },
     {
       "from": "sg_h2_biology_integrated_evolution_evidence",
@@ -514,6 +584,18 @@
       "reason": "比较两类血糖受体通路前，需要理解激酶与磷酸酶的通用调控作用。"
     },
     {
+      "from": "sg_h2_biology_microevolution_macroevolution_link",
+      "to": "sg_h2_biology_integrated_evolution_evidence",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，4.f 为 4.g 的前置要求。"
+    },
+    {
+      "from": "sg_h2_biology_multilevel_eukaryotic_gene_regulation",
+      "to": "sg_h2_biology_southern_blot_hybridisation",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，2.i 为 2.j 的前置要求。"
+    },
+    {
       "from": "sg_h2_biology_noncoding_genome_elements",
       "to": "sg_h2_biology_multilevel_eukaryotic_gene_regulation",
       "strength": "soft",
@@ -524,6 +606,12 @@
       "to": "sg_h2_biology_multistep_cancer_progression",
       "strength": "soft",
       "reason": "理解癌症多步骤进展，需要先掌握促进和抑制增殖的基因控制。"
+    },
+    {
+      "from": "sg_h2_biology_prokaryotic_horizontal_gene_transfer",
+      "to": "sg_h2_biology_noncoding_genome_elements",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，2.g 为 2.h 的前置要求。"
     },
     {
       "from": "sg_h2_biology_recessive_allele_persistence",
@@ -538,10 +626,34 @@
       "reason": "解释磷酸化级联的放大与终止，需要先理解第二信使如何启动下游通路。"
     },
     {
+      "from": "sg_h2_biology_stem_cell_potency",
+      "to": "sg_h2_biology_stem_cell_normal_functions",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，1.t 为 1.u 的前置要求。"
+    },
+    {
       "from": "sg_h2_biology_temperature_insect_vector_lifecycle",
       "to": "sg_h2_biology_warming_vector_borne_range_shift",
       "strength": "soft",
       "reason": "解释疾病地理范围移动前，需要先理解温度对蚊媒存活和发育的作用。"
+    },
+    {
+      "from": "sg_h2_biology_tropical_biodiversity_resources",
+      "to": "sg_h2_biology_temperature_insect_vector_lifecycle",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，B.g 为 B.h 的前置要求。"
+    },
+    {
+      "from": "sg_h2_biology_vaccination_population_control_tradeoffs",
+      "to": "sg_h2_biology_viral_tissue_pathogenesis",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，A.f 为 A.g 的前置要求。"
+    },
+    {
+      "from": "sg_h2_biology_viral_genome_variation",
+      "to": "sg_h2_biology_prokaryotic_horizontal_gene_transfer",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，2.f 为 2.g 的前置要求。"
     },
     {
       "from": "sg_h2_biology_viral_reproductive_cycles",

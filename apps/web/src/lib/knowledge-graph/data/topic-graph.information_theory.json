@@ -1,8 +1,9 @@
 {
   "graphId": "information_theory",
   "subject": "Information Theory and Entropy",
+  "reviewStatus": "approved",
   "generatedFrom": "data/knowledge-graphs/source/information_theory.json",
-  "generatedAt": "2026-07-19",
+  "generatedAt": "2026-08-27",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {

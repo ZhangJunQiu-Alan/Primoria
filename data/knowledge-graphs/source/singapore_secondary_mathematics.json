@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.1",
   "graph_id": "singapore_secondary_mathematics",
   "subject": "Mathematics",
   "jurisdictions": [
@@ -18,6 +18,11 @@
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "根据 MOE G2/G3 逐成果覆盖审查建立 53 个去重后的最小可诊断概念；每个概念同时保留官方 syllabus 与开放教材证据。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-08-27",
+      "summary_zh": "依据官方课程成果顺序补充 40 条同图前置边（含 1 条硬前置），状态保持 needs_review。"
     }
   ],
   "nodes": [
@@ -2826,6 +2831,726 @@
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §8.4 Range and Standard Deviation, printed pp.873-878"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_personal_finance",
+      "to": "sg_sec_math_motion_data_graphs",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SECONDARY·ALL·01 为 G3·SECONDARY·ALL·02 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.13, g3 secondary all, Personal and household finance"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.14, g3 secondary all, Distance-time and speed-time graphs"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_prime_factorisation",
+      "to": "sg_sec_math_real_number_operations",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·01 为 G3·SEC1·02 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Prime factorisation, HCF, LCM and roots"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Real-number operations and order"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_real_number_operations",
+      "to": "sg_sec_math_approximation_estimation",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·02 为 G3·SEC1·04 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Real-number operations and order"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Approximation and estimation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_approximation_estimation",
+      "to": "sg_sec_math_ratio",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·04 为 G3·SEC1·05 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Approximation and estimation"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Ratios with rational quantities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_ratio",
+      "to": "sg_sec_math_percentage",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·05 为 G3·SEC1·06 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Ratios with rational quantities"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Percentage comparison and change"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_percentage",
+      "to": "sg_sec_math_rate_speed",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·06 为 G3·SEC1·07 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Percentage comparison and change"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Rate and speed"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_rate_speed",
+      "to": "sg_sec_math_algebra_notation_evaluation",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·07 为 G3·SEC1·08 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Rate and speed"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Algebraic notation and evaluation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_algebra_notation_evaluation",
+      "to": "sg_sec_math_algebra_translation",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·08 为 G3·SEC1·09 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Algebraic notation and evaluation"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Translating situations into algebra"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_algebra_translation",
+      "to": "sg_sec_math_nth_term_patterns",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·09 为 G3·SEC1·10 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Translating situations into algebra"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Algebraic nth-term patterns"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_nth_term_patterns",
+      "to": "sg_sec_math_linear_expressions",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·10 为 G3·SEC1·11 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Algebraic nth-term patterns"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Operations on linear expressions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_linear_expressions",
+      "to": "sg_sec_math_coordinate_relationships",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·11 为 G3·SEC1·12 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Operations on linear expressions"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Coordinates and variable relationships"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_polygon_properties",
+      "to": "sg_sec_math_geometric_construction",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·18 为 G3·SEC1·19 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Quadrilaterals and regular polygons"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Geometric construction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_geometric_construction",
+      "to": "sg_sec_math_plane_mensuration",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·19 为 G3·SEC1·20 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Geometric construction"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Area and composite plane figures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_data_collection",
+      "to": "sg_sec_math_statistical_representations",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·22 为 G3·SEC1·23 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Collecting, classifying and tabulating data"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Reading and choosing statistical representations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_scale_proportion",
+      "to": "sg_sec_math_algebra_expansion_identities",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC2·01 为 G3·SEC2·02 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Map scales and proportion"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Expansion and algebraic identities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_algebra_expansion_identities",
+      "to": "sg_sec_math_formula_rearrangement",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC2·02 为 G3·SEC2·03 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Expansion and algebraic identities"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Changing the subject of a formula"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_factorisation",
+      "to": "sg_sec_math_algebraic_fractions_multiply_divide",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC2·04 为 G3·SEC2·05 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Linear and quadratic factorisation"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Multiplying and dividing algebraic fractions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_congruence_similarity_foundations",
+      "to": "sg_sec_math_congruence_similarity_enlargement",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC2·13 为 G3·SEC2·14 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Congruence and similarity foundations"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Enlargement and reduction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_congruence_similarity_enlargement",
+      "to": "sg_sec_math_pythagoras",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC2·14 为 G3·SEC2·15 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Enlargement and reduction"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Pythagoras theorem and converse"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_distribution_diagrams",
+      "to": "sg_sec_math_central_tendency",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC2·18 为 G3·SEC2·19 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Dot plots, histograms and stem-and-leaf diagrams"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Measures of central tendency"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_standard_form",
+      "to": "sg_sec_math_indices",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·01 为 G3·SEC3·4·02 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Standard form"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Indices and their laws"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_tangent_gradient",
+      "to": "sg_sec_math_quadratic_formula_complete_graph",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·06 为 G3·SEC3·4·07 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Estimating curve gradient with a tangent"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Solving quadratic equations by standard methods"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_quadratic_formula_complete_graph",
+      "to": "sg_sec_math_fractional_quadratic_equations",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·07 为 G3·SEC3·4·08 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Solving quadratic equations by standard methods"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Fractional equations reducible to quadratics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_geometric_construction",
+      "to": "sg_sec_math_circle_chord_tangent",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·11 为 G3·SEC3·4·12 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Perpendicular and angle bisectors"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Chord and tangent properties"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_circle_chord_tangent",
+      "to": "sg_sec_math_circle_angles",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·12 为 G3·SEC3·4·13 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Chord and tangent properties"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Circle angle properties"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_spatial_trigonometry",
+      "to": "sg_sec_math_circle_mensuration",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·15 为 G3·SEC3·4·16 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Two- and three-dimensional trigonometric problems"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Arc, sector and segment measures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_cumulative_box",
+      "to": "sg_sec_math_standard_deviation_compare",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·20 为 G3·SEC3·4·21 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Cumulative-frequency and box plots"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Calculating and comparing standard deviation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_standard_deviation_compare",
+      "to": "sg_sec_math_combined_probability",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·21 为 G3·SEC3·4·22 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Calculating and comparing standard deviation"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Combined-event probability representations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_elementary_matrices",
+      "to": "sg_sec_math_congruence_similarity_tests",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·27 为 G3·SEC3·4·28 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Elementary matrix representation and operations"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Triangle congruence, similarity and scale ratios"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_triangle_properties",
+      "to": "sg_sec_math_plane_mensuration",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC1·15 为 G2·SEC1·16 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Triangle properties"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Area and composite plane figures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_scale_proportion",
+      "to": "sg_sec_math_linear_expressions",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC2·01 为 G2·SEC2·02 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Map scales and proportion"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Linear expressions with fractional coefficients"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_linear_expressions",
+      "to": "sg_sec_math_algebra_expansion_identities",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC2·02 为 G2·SEC2·03 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Linear expressions with fractional coefficients"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Expansion and algebraic identities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_linear_fractional_equations",
+      "to": "sg_sec_math_linear_inequalities",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC2·07 为 G2·SEC2·08 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Linear and reducible fractional equations"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Simple linear inequalities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_geometric_construction",
+      "to": "sg_sec_math_congruence_similarity_foundations",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC2·13 为 G2·SEC2·14 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Geometric construction"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Congruence and similarity foundations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_congruence_similarity_foundations",
+      "to": "sg_sec_math_pythagoras",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC2·14 为 G2·SEC2·15 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Congruence and similarity foundations"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Pythagoras theorem and converse"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_tangent_gradient",
+      "to": "sg_sec_math_quadratic_factorisation_solve",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC3·4·05 为 G2·SEC3·4·06 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Estimating curve gradient with a tangent"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Solving quadratic equations by standard methods"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_quadratic_factorisation_solve",
+      "to": "sg_sec_math_fractional_quadratic_equations",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC3·4·06 为 G2·SEC3·4·07 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Solving quadratic equations by standard methods"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Fractional equations reducible to quadratics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_formula_rearrangement",
+      "to": "sg_sec_math_algebraic_fractions_add_subtract",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC3·4·11 为 G2·SEC3·4·12 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Changing the subject and evaluating formulae"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Adding and subtracting algebraic fractions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_algebraic_fractions_add_subtract",
+      "to": "sg_sec_math_congruence_similarity_enlargement",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC3·4·12 为 G2·SEC3·4·13 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Adding and subtracting algebraic fractions"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Scale drawings, enlargement and reduction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_sec_math_congruence_similarity_foundations",
+      "to": "sg_sec_math_right_triangle_trig",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC3·4·28 为 G2·SEC3·4·29 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Congruence and similarity problems"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Trigonometry in right triangles"
         }
       ],
       "review_status": "needs_review"

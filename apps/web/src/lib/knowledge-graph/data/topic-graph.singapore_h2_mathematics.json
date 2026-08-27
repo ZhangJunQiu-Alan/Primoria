@@ -1,8 +1,9 @@
 {
   "graphId": "singapore_h2_mathematics",
   "subject": "Mathematics",
+  "reviewStatus": "needs_review",
   "generatedFrom": "data/knowledge-graphs/source/singapore_h2_mathematics.json",
-  "generatedAt": "2026-07-19",
+  "generatedAt": "2026-08-27",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -323,7 +324,7 @@
       "successors": [
         {
           "topicId": "sg_h2_math_topic_statistical_interpretation",
-          "hard": false
+          "hard": true
         }
       ],
       "prereqTopics": [
@@ -356,7 +357,12 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "sg_h2_math_topic_regression",
+          "hard": true
+        }
+      ],
       "prereqTopics": [
         "sg_h2_math_topic_hypothesis_testing"
       ],
@@ -382,11 +388,19 @@
         }
       ],
       "successors": [],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "sg_h2_math_topic_statistical_interpretation"
+      ],
+      "isRoot": false
     }
   ],
   "conceptEdges": [
+    {
+      "from": "sg_h2_math_complex_extension_roots",
+      "to": "sg_h2_math_complex_mod_arg_conjugate",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，4.1.01 为 4.1.02 的前置要求。"
+    },
     {
       "from": "sg_h2_math_complex_extension_roots",
       "to": "sg_h2_math_conjugate_polynomial_roots",
@@ -398,6 +412,18 @@
       "to": "sg_h2_math_probability_representations",
       "strength": "soft",
       "reason": "使用排列组合构造概率表示需要先能准确计数受限样本空间。"
+    },
+    {
+      "from": "sg_h2_math_formulate_equations",
+      "to": "sg_h2_math_rational_quadratic_inequalities",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，1.3.01 为 1.3.03 的前置要求。"
+    },
+    {
+      "from": "sg_h2_math_hypothesis_test_concepts",
+      "to": "sg_h2_math_one_mean_hypothesis_test",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，6.5.01 为 6.5.02 的前置要求。"
     },
     {
       "from": "sg_h2_math_hypothesis_test_concepts",
@@ -419,6 +445,12 @@
     },
     {
       "from": "sg_h2_math_normal_probabilities_parameters",
+      "to": "sg_h2_math_linear_transform_moments",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，6.3.02 为 6.3.03 的前置要求。"
+    },
+    {
+      "from": "sg_h2_math_normal_probabilities_parameters",
       "to": "sg_h2_math_one_mean_hypothesis_test",
       "strength": "soft",
       "reason": "已知方差总体均值检验需要先能进行正态标准化和反向概率判断。"
@@ -431,9 +463,27 @@
     },
     {
       "from": "sg_h2_math_one_two_tailed_tests",
+      "to": "sg_h2_math_interpret_hypothesis_result",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，6.5.03 为 6.5.04 的前置要求。"
+    },
+    {
+      "from": "sg_h2_math_one_two_tailed_tests",
       "to": "sg_h2_math_one_mean_hypothesis_test",
       "strength": "soft",
       "reason": "执行总体均值检验前需要依据备择假设确定单尾或双尾程序。"
+    },
+    {
+      "from": "sg_h2_math_pmcc_interpretation",
+      "to": "sg_h2_math_least_squares_regression",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，6.6.02 为 6.6.03 的前置要求。"
+    },
+    {
+      "from": "sg_h2_math_recurrence_sequences",
+      "to": "sg_h2_math_series_operations_convergence",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，2.1.02 为 2.1.04 的前置要求。"
     },
     {
       "from": "sg_h2_math_scatter_linear_plausibility",
@@ -458,6 +508,12 @@
       "to": "sg_h2_math_point_line_plane_distance",
       "strength": "soft",
       "reason": "投影和距离算法需要能正确组合与缩放向量。"
+    },
+    {
+      "from": "sg_h2_math_vector_types_magnitude",
+      "to": "sg_h2_math_collinearity_ratio",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，3.1.02 为 3.1.03 的前置要求。"
     }
   ]
 }

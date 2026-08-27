@@ -1,8 +1,9 @@
 {
   "graphId": "singapore_lower_secondary_science",
   "subject": "Science",
+  "reviewStatus": "needs_review",
   "generatedFrom": "data/knowledge-graphs/source/singapore_lower_secondary_science.json",
-  "generatedAt": "2026-07-19",
+  "generatedAt": "2026-08-27",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -391,6 +392,12 @@
       "reason": "用文字方程式表示并分类反应前，需要先理解新物质形成、原子重排和质量守恒。"
     },
     {
+      "from": "sg_lss_science_contraception_mechanisms",
+      "to": "sg_lss_science_sti_consequences_treatment",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，16.K07 为 16.K08 的前置要求。"
+    },
+    {
       "from": "sg_lss_science_digestive_system_structure_process",
       "to": "sg_lss_science_digestion_products_cellular_use",
       "strength": "soft",
@@ -427,6 +434,12 @@
       "reason": "分离混合物前需要先辨认组分、溶液与悬浊液的组成关系。"
     },
     {
+      "from": "sg_lss_science_multicellular_transport_blood_exchange",
+      "to": "sg_lss_science_plant_diffusion_transport",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，15.K04 为 15.K05 的前置要求。"
+    },
+    {
       "from": "sg_lss_science_particle_model_states",
       "to": "sg_lss_science_particle_model_thermal_changes",
       "strength": "soft",
@@ -437,6 +450,12 @@
       "to": "sg_lss_science_separation_principles",
       "strength": "soft",
       "reason": "依据物理性质选择分离方法，需要先能识别和比较相关性质。"
+    },
+    {
+      "from": "sg_lss_science_puberty_menstrual_cycle",
+      "to": "sg_lss_science_contraception_mechanisms",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，16.K06 为 16.K07 的前置要求。"
     },
     {
       "from": "sg_lss_science_ray_model_reflection",
@@ -461,6 +480,12 @@
       "to": "sg_lss_science_puberty_menstrual_cycle",
       "strength": "soft",
       "reason": "描述月经周期中各部分的作用，需要先认识生殖系统结构及基本功能。"
+    },
+    {
+      "from": "sg_lss_science_thermal_expansion_density",
+      "to": "sg_lss_science_heat_transfer_mechanisms",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，10.K02 为 10.K03 的前置要求。"
     },
     {
       "from": "sg_lss_science_typical_cell_structure_function",
