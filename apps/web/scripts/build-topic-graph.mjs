@@ -110,6 +110,10 @@ function buildOne(graphId) {
   const artifact = {
     graphId,
     subject: graph.subject,
+    // Source-level governance state, carried through so the runtime can tell an
+    // approved graph from one that is merely registered. Registration is not
+    // approval: see docs/knowledge-graph/catalog.md.
+    reviewStatus: graph.review_status === "approved" ? "approved" : "needs_review",
     generatedFrom: `data/knowledge-graphs/source/${graphId}.json`,
     generatedAt: new Date().toISOString().slice(0, 10),
     note: "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",

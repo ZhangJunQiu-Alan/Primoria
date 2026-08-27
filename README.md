@@ -225,6 +225,20 @@ against a database without KG tables, set:
 PRIMORIA_ALLOW_KG_INFRA_FALLBACK=1
 ```
 
+Cold-start learning-goal routing anchors to every registered graph by default,
+including the 10 China/Singapore overlay graphs whose source `review_status` is
+still `needs_review`. To restrict routing to source-approved graphs only:
+
+```bash
+# Withhold `needs_review` graphs from cold-start goal routing. They stay
+# registered and directly resolvable, so existing courses keep working.
+PRIMORIA_REQUIRE_APPROVED_KG=1
+```
+
+Leave it unset until those graphs are approved: they are currently the only
+source of China/Singapore curriculum coverage. See
+[`docs/knowledge-graph/catalog.md`](docs/knowledge-graph/catalog.md).
+
 The email/password session system stores `users`, `identities`, and `sessions`
 in Postgres once `DATABASE_URL` is set. Supabase client keys are no longer part
 of the Primoria runtime path.

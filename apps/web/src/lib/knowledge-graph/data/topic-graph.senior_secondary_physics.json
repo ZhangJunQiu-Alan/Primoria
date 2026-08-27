@@ -1,8 +1,9 @@
 {
   "graphId": "senior_secondary_physics",
   "subject": "Physics",
+  "reviewStatus": "needs_review",
   "generatedFrom": "data/knowledge-graphs/source/senior_secondary_physics.json",
-  "generatedAt": "2026-07-19",
+  "generatedAt": "2026-08-27",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -58,7 +59,12 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "cn_sh_physics_topic_force_motion_analysis",
+          "hard": false
+        }
+      ],
       "prereqTopics": [
         "cn_sh_physics_topic_mechanics_models_units"
       ],
@@ -95,8 +101,10 @@
           "hard": false
         }
       ],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "cn_sh_physics_topic_kinematics_common_forces"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "cn_sh_physics_topic_work_energy",
@@ -206,7 +214,12 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "cn_sh_physics_topic_electric_field_applications",
+          "hard": false
+        }
+      ],
       "prereqTopics": [],
       "isRoot": true
     },
@@ -235,9 +248,16 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [],
-      "prereqTopics": [],
-      "isRoot": true
+      "successors": [
+        {
+          "topicId": "cn_sh_physics_topic_capacitors_components",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "cn_sh_physics_topic_electrostatic_models"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "cn_sh_physics_topic_capacitors_components",
@@ -270,8 +290,10 @@
           "hard": false
         }
       ],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "cn_sh_physics_topic_electric_field_applications"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "cn_sh_physics_topic_dc_circuit_analysis",
@@ -685,7 +707,12 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "cn_sh_physics_topic_states_of_matter",
+          "hard": false
+        }
+      ],
       "prereqTopics": [],
       "isRoot": true
     },
@@ -720,8 +747,10 @@
           "hard": false
         }
       ],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "cn_sh_physics_topic_molecular_kinetic_evidence"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "cn_sh_physics_topic_advanced_materials",
@@ -811,6 +840,12 @@
   "conceptEdges": [
     {
       "from": "cn_sh_physics_atomic_nuclear_model",
+      "to": "cn_sh_physics_fundamental_interactions",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.3.2a 为 选择性必修 3·3.3.2b 的前置要求。"
+    },
+    {
+      "from": "cn_sh_physics_atomic_nuclear_model",
       "to": "cn_sh_physics_nuclear_composition_force",
       "strength": "soft",
       "reason": "核力和核组成建立在原子核式结构模型上。"
@@ -822,10 +857,34 @@
       "reason": "分析充放电过程需要先理解电容和储电能力。"
     },
     {
+      "from": "cn_sh_physics_charged_particle_electric_motion",
+      "to": "cn_sh_physics_capacitance",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.1.5b 为 必修 3·3.1.6a 的前置要求。"
+    },
+    {
       "from": "cn_sh_physics_circuit_components",
       "to": "cn_sh_physics_closed_circuit_ohm",
       "strength": "soft",
       "reason": "闭合电路分析需要先识别电源、负载和测量元件的作用。"
+    },
+    {
+      "from": "cn_sh_physics_circuit_components",
+      "to": "cn_sh_physics_resistance_geometry_material",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.2.1a 为 必修 3·3.2.2a 的前置要求。"
+    },
+    {
+      "from": "cn_sh_physics_closed_circuit_ohm",
+      "to": "cn_sh_physics_electrical_work_power",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.2.4a 为 必修 3·3.2.5a 的前置要求。"
+    },
+    {
+      "from": "cn_sh_physics_crystalline_amorphous",
+      "to": "cn_sh_physics_liquid_crystals",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.1.3a 为 选择性必修 3·3.1.3b 的前置要求。"
     },
     {
       "from": "cn_sh_physics_crystalline_amorphous",
@@ -840,16 +899,58 @@
       "reason": "解释离心现象需要先理解速度方向与合力方向不共线时的曲线运动。"
     },
     {
+      "from": "cn_sh_physics_diffusion_brownian",
+      "to": "cn_sh_physics_molecular_speed_distribution",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.1.2a 为 选择性必修 3·3.1.2b 的前置要求。"
+    },
+    {
+      "from": "cn_sh_physics_eddy_currents",
+      "to": "cn_sh_physics_sinusoidal_ac",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 2·2.2.3b 为 选择性必修 2·2.2.4 的前置要求。"
+    },
+    {
+      "from": "cn_sh_physics_electric_field_lines",
+      "to": "cn_sh_physics_electrostatic_applications",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.1.3b 为 必修 3·3.1.4 的前置要求。"
+    },
+    {
+      "from": "cn_sh_physics_electric_potential_quantities",
+      "to": "cn_sh_physics_charged_particle_electric_motion",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.1.5a 为 必修 3·3.1.5b 的前置要求。"
+    },
+    {
       "from": "cn_sh_physics_electrical_work_power",
       "to": "cn_sh_physics_joule_law",
       "strength": "soft",
       "reason": "焦耳热计算建立在电能转化和电功率关系上。"
     },
     {
+      "from": "cn_sh_physics_electromagnetic_field_waves",
+      "to": "cn_sh_physics_electromagnetic_wave_applications",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.3.4 为 必修 3·3.3.5 的前置要求。"
+    },
+    {
       "from": "cn_sh_physics_electromagnetic_oscillation",
       "to": "cn_sh_physics_em_wave_transmission",
       "strength": "soft",
       "reason": "说明电磁波发射需要先理解振荡电荷和电磁振荡。"
+    },
+    {
+      "from": "cn_sh_physics_electrostatic_applications",
+      "to": "cn_sh_physics_electric_potential_quantities",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.1.4 为 必修 3·3.1.5a 的前置要求。"
+    },
+    {
+      "from": "cn_sh_physics_electrostatic_charge_conservation",
+      "to": "cn_sh_physics_point_charge_model",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.1.1 为 必修 3·3.1.2a 的前置要求。"
     },
     {
       "from": "cn_sh_physics_energy_conversion_directionality",
@@ -864,10 +965,64 @@
       "reason": "分析支持力变化前需要能合成竖直方向上的力。"
     },
     {
+      "from": "cn_sh_physics_friction",
+      "to": "cn_sh_physics_force_composition_vectors",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 1·1.2.1c 为 必修 1·1.2.2a 的前置要求。"
+    },
+    {
+      "from": "cn_sh_physics_fundamental_interactions",
+      "to": "cn_sh_physics_nuclear_reaction_equations",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.3.2b 为 选择性必修 3·3.3.2c 的前置要求。"
+    },
+    {
+      "from": "cn_sh_physics_gravitational_potential_energy",
+      "to": "cn_sh_physics_elastic_potential_energy",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 2·2.1.3a 为 必修 2·2.1.3b 的前置要求。"
+    },
+    {
+      "from": "cn_sh_physics_high_voltage_transmission",
+      "to": "cn_sh_physics_generator_motor_energy",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 2·2.2.5b 为 选择性必修 2·2.2.6 的前置要求。"
+    },
+    {
+      "from": "cn_sh_physics_joule_law",
+      "to": "cn_sh_physics_household_electricity_safety",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.2.5b 为 必修 3·3.2.6 的前置要求。"
+    },
+    {
+      "from": "cn_sh_physics_kinetic_energy_theorem",
+      "to": "cn_sh_physics_gravitational_potential_energy",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 2·2.1.2 为 必修 2·2.1.3a 的前置要求。"
+    },
+    {
+      "from": "cn_sh_physics_light_energy_quantisation",
+      "to": "cn_sh_physics_matter_waves_quantisation",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.4.1a 为 选择性必修 3·3.4.1b 的前置要求。"
+    },
+    {
+      "from": "cn_sh_physics_light_polarisation",
+      "to": "cn_sh_physics_laser",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 1·1.3.3b 为 选择性必修 1·1.3.4 的前置要求。"
+    },
+    {
       "from": "cn_sh_physics_light_refraction_law",
       "to": "cn_sh_physics_total_internal_reflection",
       "strength": "soft",
       "reason": "判断全反射临界条件需要先掌握折射定律。"
+    },
+    {
+      "from": "cn_sh_physics_liquid_crystals",
+      "to": "cn_sh_physics_semiconductor_materials",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.1.3b 为 选择性必修 3·3.1.4a 的前置要求。"
     },
     {
       "from": "cn_sh_physics_maxwell_field_theory",
@@ -888,6 +1043,24 @@
       "reason": "理解分子速率分布需要先掌握大量分子无规则运动的统计模型。"
     },
     {
+      "from": "cn_sh_physics_molecular_speed_distribution",
+      "to": "cn_sh_physics_crystalline_amorphous",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.1.2b 为 选择性必修 3·3.1.3a 的前置要求。"
+    },
+    {
+      "from": "cn_sh_physics_newtonian_limits",
+      "to": "cn_sh_physics_relativistic_spacetime",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 2·2.3.1 为 必修 2·2.3.2 的前置要求。"
+    },
+    {
+      "from": "cn_sh_physics_nuclear_composition_force",
+      "to": "cn_sh_physics_fundamental_interactions",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.3.2a 为 选择性必修 3·3.3.2b 的前置要求。"
+    },
+    {
       "from": "cn_sh_physics_nuclear_composition_force",
       "to": "cn_sh_physics_nuclear_reaction_equations",
       "strength": "soft",
@@ -900,16 +1073,52 @@
       "reason": "自由落体建模需要先判断研究对象何时可抽象为质点。"
     },
     {
+      "from": "cn_sh_physics_relativistic_spacetime",
+      "to": "cn_sh_physics_cosmic_evolution",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 2·2.3.2 为 必修 2·2.3.3 的前置要求。"
+    },
+    {
+      "from": "cn_sh_physics_renewable_energy_technologies",
+      "to": "cn_sh_physics_nuclear_energy_intro",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.4.1a 为 必修 3·3.4.1b 的前置要求。"
+    },
+    {
+      "from": "cn_sh_physics_renewable_environment",
+      "to": "cn_sh_physics_pollution_sustainable_development",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.4.3 为 必修 3·3.4.4 的前置要求。"
+    },
+    {
       "from": "cn_sh_physics_resistance_geometry_material",
       "to": "cn_sh_physics_closed_circuit_ohm",
       "strength": "soft",
       "reason": "分析闭合电路电流需要理解外电路电阻的来源和变化。"
     },
     {
+      "from": "cn_sh_physics_self_induction",
+      "to": "cn_sh_physics_eddy_currents",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 2·2.2.3a 为 选择性必修 2·2.2.3b 的前置要求。"
+    },
+    {
+      "from": "cn_sh_physics_semiconductor_materials",
+      "to": "cn_sh_physics_nanomaterials",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.1.4a 为 选择性必修 3·3.1.4b 的前置要求。"
+    },
+    {
       "from": "cn_sh_physics_sensor_conversion",
       "to": "cn_sh_physics_sensor_applications",
       "strength": "soft",
       "reason": "解释传感器应用需要先理解非电学量到电学量的转换链路。"
+    },
+    {
+      "from": "cn_sh_physics_simple_pendulum_period",
+      "to": "cn_sh_physics_forced_vibration",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 1·1.2.2a 为 选择性必修 1·1.2.3a 的前置要求。"
     },
     {
       "from": "cn_sh_physics_total_internal_reflection",
