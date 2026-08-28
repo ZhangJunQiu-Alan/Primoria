@@ -6,7 +6,7 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { setTimeout as delay } from "node:timers/promises";
-import { chromium } from "playwright";
+import * as playwright from "playwright";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,6 +16,12 @@ const PORT = process.env.PORT || "3117";
 const BASE = `http://localhost:${PORT}`;
 const ROUTE = `${BASE}/qa/widget-renderer`;
 const READY_TIMEOUT_MS = 90_000;
+const browserName = process.env.REGRESSION_BROWSER || "chromium";
+const browserType = playwright[browserName];
+
+if (!browserType || typeof browserType.launch !== "function") {
+  throw new Error(`Unsupported REGRESSION_BROWSER: ${browserName}`);
+}
 
 function log(...args) {
   process.stdout.write(`[widget-renderer.e2e] ${args.join(" ")}\n`);
@@ -58,11 +64,19 @@ async function main() {
     await waitForServer();
     log("server ready:", ROUTE);
 
-    browser = await chromium.launch({ headless: true });
+    browser = await browserType.launch({ headless: true });
     const context = await browser.newContext({
       acceptDownloads: true,
-      permissions: ["clipboard-read", "clipboard-write"],
+      ...(browserName === "chromium" ? { permissions: ["clipboard-read", "clipboard-write"] } : {}),
     });
+    if (browserName !== "chromium") {
+      await context.addInitScript(() => {
+        Object.defineProperty(navigator, "clipboard", {
+          configurable: true,
+          value: { writeText: async (text) => { window.__widgetClipboardText = text; } },
+        });
+      });
+    }
     await context.route("**/api/telemetry/visualization", (route) => route.fulfill({ status: 204 }));
     await context.addCookies([{ name: "primoria_session", value: "widget-renderer-e2e", url: BASE }]);
     const page = await context.newPage();
@@ -146,7 +160,9 @@ async function main() {
 
     await page.getByTestId("export-menu-streaming-fixture").click();
     await page.getByTestId("copy-standalone-streaming-fixture").click();
-    const clipboardText = await page.evaluate(() => navigator.clipboard.readText());
+    const clipboardText = browserName === "chromium"
+      ? await page.evaluate(() => navigator.clipboard.readText())
+      : await page.evaluate(() => window.__widgetClipboardText);
     assert(clipboardText.startsWith("<!DOCTYPE html>"), "copy exports standalone HTML");
     assert(clipboardText.includes("Streaming fixture"), "copied standalone HTML includes widget title");
 

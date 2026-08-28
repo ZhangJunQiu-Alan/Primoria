@@ -1,6 +1,7 @@
 import type { LearningProgressJobSummary } from "./learning-progress-jobs";
 import type { LearningDecision } from "./learning-progress-decider";
-import { formatMessage, type I18nDictionary } from "@/lib/i18n/dictionaries";
+import type { I18nDictionary } from "@/lib/i18n/dictionaries";
+import { formatMessage } from "@/lib/i18n/format";
 
 type CourseLabels = I18nDictionary["course"];
 

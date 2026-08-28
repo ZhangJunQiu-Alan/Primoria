@@ -6,7 +6,7 @@ import { BoltIcon, BookIcon, CalendarIcon, ChartIcon, FlameIcon, StarIcon } from
 import { getCurrentUserForRsc, isAuthEnabled } from "@/lib/auth/session";
 import { getProfileStats } from "@/lib/profile/stats";
 import { getDictionaryForUser } from "@/lib/i18n/server";
-import { formatMessage } from "@/lib/i18n/dictionaries";
+import { formatMessage } from "@/lib/i18n/format";
 import { getGamificationProfile } from "@/lib/gamification/store";
 import { GamificationHub } from "@/components/profile/gamification-hub";
 

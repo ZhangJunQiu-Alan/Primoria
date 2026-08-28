@@ -1,11 +1,11 @@
 import { randomBytes } from "node:crypto";
-import { and, eq, inArray, isNull } from "drizzle-orm";
+import { and, desc, eq, inArray, isNull } from "drizzle-orm";
 import type { Course, ImageBlock, Lesson } from "./types";
 import { courseToRow, getCourse, lessonToRow } from "./store";
 import { getDb } from "../db/client";
-import { courses as coursesTable, courseShareLinks, lessons as lessonsTable, mediaAssets } from "../db/schema";
+import { courses as coursesTable, courseShareLinks, courseShareVersions, lessons as lessonsTable, mediaAssets } from "../db/schema";
 
-/** Sanitized course copy stored in course_share_links.snapshot. */
+/** Sanitized course copy stored in course_share_versions.snapshot. */
 export type CourseShareSnapshot = {
   course: Course;
   sharedAt: number;
@@ -13,6 +13,8 @@ export type CourseShareSnapshot = {
 
 export type CourseShareLink = {
   id: string;
+  versionId: string;
+  version: number;
   token: string;
   courseId: string;
   sharePath: string;
@@ -76,80 +78,114 @@ async function listGlobalAssetIds(course: Course): Promise<Set<string>> {
   return new Set(rows.map((row) => row.id));
 }
 
-function rowToShareLink(row: typeof courseShareLinks.$inferSelect): CourseShareLink {
+function rowToShareLink(
+  share: typeof courseShareLinks.$inferSelect,
+  version: typeof courseShareVersions.$inferSelect,
+): CourseShareLink {
   return {
-    id: row.id,
-    token: row.token,
-    courseId: row.courseId,
-    sharePath: sharePathForToken(row.token),
-    revokedAt: row.revokedAt?.getTime() ?? null,
-    createdAt: row.createdAt.getTime(),
-    updatedAt: row.updatedAt.getTime(),
+    id: share.id,
+    versionId: version.id,
+    version: version.version,
+    token: version.token,
+    courseId: share.courseId,
+    sharePath: sharePathForToken(version.token),
+    revokedAt: version.revokedAt?.getTime() ?? null,
+    createdAt: share.createdAt.getTime(),
+    updatedAt: version.createdAt.getTime(),
   };
 }
 
 export async function getShareForCourse(courseId: string, ownerId: string): Promise<CourseShareLink | null> {
   const rows = await getDb()
-    .select()
+    .select({ share: courseShareLinks, version: courseShareVersions })
     .from(courseShareLinks)
+    .innerJoin(courseShareVersions, eq(courseShareVersions.shareId, courseShareLinks.id))
     .where(and(eq(courseShareLinks.courseId, courseId), eq(courseShareLinks.ownerId, ownerId)))
+    .orderBy(desc(courseShareVersions.version))
     .limit(1);
-  return rows[0] ? rowToShareLink(rows[0]) : null;
+  return rows[0] ? rowToShareLink(rows[0].share, rows[0].version) : null;
 }
 
-/** Enables sharing for a course, or refreshes the snapshot if already shared.
- * Re-enabling after a revoke mints a new token so revoked links stay dead. */
+/** Publishes an immutable share version. Refreshing or re-enabling revokes the
+ * prior capability token and inserts a new snapshot row in the same series. */
 export async function upsertShare(courseId: string, ownerId: string): Promise<CourseShareLink | null> {
   const course = await getCourse(courseId, ownerId);
   if (!course) return null;
   const snapshot = buildShareSnapshot(course, await listGlobalAssetIds(course));
 
-  const db = getDb();
-  const now = new Date();
-  const existingRows = await db
-    .select()
-    .from(courseShareLinks)
-    .where(and(eq(courseShareLinks.courseId, courseId), eq(courseShareLinks.ownerId, ownerId)))
-    .limit(1);
-  const existing = existingRows[0];
+  return getDb().transaction(async (tx) => {
+    const now = new Date();
+    await tx
+      .insert(courseShareLinks)
+      .values({ id: randomId("shr"), courseId, ownerId, createdAt: now, updatedAt: now })
+      .onConflictDoNothing({ target: courseShareLinks.courseId });
 
-  if (existing) {
-    const token = existing.revokedAt ? createShareToken() : existing.token;
-    const rows = await db
-      .update(courseShareLinks)
-      .set({ token, snapshot, revokedAt: null, updatedAt: now })
-      .where(eq(courseShareLinks.id, existing.id))
+    const shareRows = await tx
+      .select()
+      .from(courseShareLinks)
+      .where(and(eq(courseShareLinks.courseId, courseId), eq(courseShareLinks.ownerId, ownerId)))
+      .limit(1)
+      .for("update");
+    const share = shareRows[0];
+    if (!share) return null;
+
+    const versionRows = await tx
+      .select()
+      .from(courseShareVersions)
+      .where(eq(courseShareVersions.shareId, share.id))
+      .orderBy(desc(courseShareVersions.version))
+      .limit(1);
+    const latest = versionRows[0];
+    if (latest && !latest.revokedAt) {
+      await tx
+        .update(courseShareVersions)
+        .set({ revokedAt: now })
+        .where(eq(courseShareVersions.id, latest.id));
+    }
+
+    const rows = await tx
+      .insert(courseShareVersions)
+      .values({
+        id: randomId("shv"),
+        shareId: share.id,
+        version: (latest?.version ?? 0) + 1,
+        token: createShareToken(),
+        snapshot,
+        revokedAt: null,
+        createdAt: now,
+      })
       .returning();
-    return rowToShareLink(rows[0]);
-  }
-
-  const rows = await db
-    .insert(courseShareLinks)
-    .values({
-      id: randomId("shr"),
-      token: createShareToken(),
-      courseId,
-      ownerId,
-      snapshot,
-      revokedAt: null,
-      createdAt: now,
-      updatedAt: now,
-    })
-    .returning();
-  return rowToShareLink(rows[0]);
+    await tx.update(courseShareLinks).set({ updatedAt: now }).where(eq(courseShareLinks.id, share.id));
+    return rowToShareLink(share, rows[0]);
+  });
 }
 
 export async function revokeShare(courseId: string, ownerId: string): Promise<boolean> {
-  const rows = await getDb()
-    .update(courseShareLinks)
-    .set({ revokedAt: new Date(), updatedAt: new Date() })
-    .where(and(eq(courseShareLinks.courseId, courseId), eq(courseShareLinks.ownerId, ownerId), isNull(courseShareLinks.revokedAt)))
-    .returning({ id: courseShareLinks.id });
-  return rows.length > 0;
+  return getDb().transaction(async (tx) => {
+    const shares = await tx
+      .select({ id: courseShareLinks.id })
+      .from(courseShareLinks)
+      .where(and(eq(courseShareLinks.courseId, courseId), eq(courseShareLinks.ownerId, ownerId)))
+      .limit(1)
+      .for("update");
+    if (!shares[0]) return false;
+    const now = new Date();
+    const rows = await tx
+      .update(courseShareVersions)
+      .set({ revokedAt: now })
+      .where(and(eq(courseShareVersions.shareId, shares[0].id), isNull(courseShareVersions.revokedAt)))
+      .returning({ id: courseShareVersions.id });
+    if (rows.length > 0) {
+      await tx.update(courseShareLinks).set({ updatedAt: now }).where(eq(courseShareLinks.id, shares[0].id));
+    }
+    return rows.length > 0;
+  });
 }
 
 export type ActiveShare = {
   id: string;
+  versionId: string;
+  version: number;
   courseId: string;
   snapshot: CourseShareSnapshot;
   updatedAt: number;
@@ -158,17 +194,20 @@ export type ActiveShare = {
 export async function getActiveShareByToken(token: string): Promise<ActiveShare | null> {
   if (!token) return null;
   const rows = await getDb()
-    .select()
-    .from(courseShareLinks)
-    .where(and(eq(courseShareLinks.token, token), isNull(courseShareLinks.revokedAt)))
+    .select({ share: courseShareLinks, version: courseShareVersions })
+    .from(courseShareVersions)
+    .innerJoin(courseShareLinks, eq(courseShareLinks.id, courseShareVersions.shareId))
+    .where(and(eq(courseShareVersions.token, token), isNull(courseShareVersions.revokedAt)))
     .limit(1);
   const row = rows[0];
   if (!row) return null;
   return {
-    id: row.id,
-    courseId: row.courseId,
-    snapshot: row.snapshot as CourseShareSnapshot,
-    updatedAt: row.updatedAt.getTime(),
+    id: row.share.id,
+    versionId: row.version.id,
+    version: row.version.version,
+    courseId: row.share.courseId,
+    snapshot: row.version.snapshot as CourseShareSnapshot,
+    updatedAt: row.version.createdAt.getTime(),
   };
 }
 

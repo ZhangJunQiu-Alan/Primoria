@@ -48,6 +48,16 @@ pnpm --filter @primoria/web import:local-data <email>
 ### Tests (Vitest)
 
 ```bash
+# Complete deterministic regression before declaring a feature complete
+# Requires local PostgreSQL/pgvector and Playwright Chromium
+pnpm test:regression
+
+# Individual layers; DB/browser commands clone and remove isolated test DBs
+pnpm test:regression:fast
+pnpm test:regression:build
+pnpm test:regression:db
+pnpm test:regression:browser
+
 # All unit tests (vitest; legacy tests/*.unit.ts scripts run via the
 # tests/legacy-units.spec.ts bridge as tsx child processes)
 pnpm --filter @primoria/web test
@@ -75,6 +85,12 @@ node --check apps/agent/src/graph.mjs
 ```
 
 Write new Web tests as native Vitest `tests/*.spec.ts` files; do not add new self-executing Web `*.unit.ts` scripts. Agent tests remain plain ESM under `apps/agent/tests/` and run through package scripts. CI (`.github/workflows/ci.yml`) runs typecheck, lint, and unit tests on every PR.
+
+Regression scope, approved decisions, verification evidence, and external gate
+blockers are recorded in `docs/integration-regression-testing.md`. Changes to a
+critical learner journey, persisted side effect, protocol, auth boundary, KG
+positioning, or sharing must add/update its regression coverage. Never report a
+guarded or externally blocked gate as passing.
 
 ## Architecture
 

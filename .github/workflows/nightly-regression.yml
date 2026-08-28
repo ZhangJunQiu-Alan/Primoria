@@ -1,0 +1,109 @@
+name: Nightly regression
+
+on:
+  schedule:
+    - cron: "0 18 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nightly-regression-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  deterministic:
+    name: Nightly deterministic regression
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_DB: primoria_nightly_test
+          POSTGRES_USER: primoria
+          POSTGRES_PASSWORD: primoria_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U primoria -d primoria_nightly_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://primoria:primoria_ci@127.0.0.1:5432/primoria_nightly_test
+      DATABASE_SSL: disable
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test:regression:fast
+      - run: pnpm test:regression:db
+
+  browser:
+    name: Browser regression (${{ matrix.browser }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_DB: primoria_browser_test
+          POSTGRES_USER: primoria
+          POSTGRES_PASSWORD: primoria_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U primoria -d primoria_browser_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://primoria:primoria_ci@127.0.0.1:5432/primoria_browser_test
+      DATABASE_SSL: disable
+      REGRESSION_BROWSER: ${{ matrix.browser }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Install ${{ matrix.browser }}
+        run: pnpm exec playwright install --with-deps ${{ matrix.browser }}
+      - run: pnpm test:regression:browser
+      - name: Upload browser failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightly-${{ matrix.browser }}-failure-artifacts
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 14
+
+  production-compose:
+    name: Production Compose through Caddy
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Production topology smoke
+        run: node scripts/run-production-compose-smoke.mjs
+      - name: Upload Compose failure logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-compose-failure-logs
+          path: test-results/production-compose.log
+          if-no-files-found: ignore
+          retention-days: 14

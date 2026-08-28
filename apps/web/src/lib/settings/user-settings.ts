@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { getDb, hasDatabaseUrl } from "../db/client";
 import { userSettings } from "../db/schema";
-import { isUiLanguage, type UiLanguage } from "../i18n/dictionaries";
+import { isUiLanguage, type UiLanguage } from "../i18n/languages";
 
 export const CONTENT_LANGUAGES = ["auto", "zh", "en"] as const;
 export type ContentLanguage = (typeof CONTENT_LANGUAGES)[number];

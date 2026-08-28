@@ -1,15 +1,9 @@
 "use client";
 
 import { createContext, useCallback, useContext, useMemo, useState, useTransition } from "react";
-import {
-  dictionaries,
-  formatMessage,
-  getDictionary,
-  isUiLanguage,
-  UI_LANGUAGE_COOKIE,
-  type I18nDictionary,
-  type UiLanguage,
-} from "./dictionaries";
+import { formatMessage } from "./format";
+import type { I18nDictionary } from "./dictionaries";
+import { UI_LANGUAGE_COOKIE, type UiLanguage } from "./languages";
 
 type I18nContextValue = {
   language: UiLanguage;
@@ -18,12 +12,7 @@ type I18nContextValue = {
   saving: boolean;
 };
 
-const I18nContext = createContext<I18nContextValue>({
-  language: "zh",
-  dictionary: dictionaries.zh,
-  setLanguage: () => undefined,
-  saving: false,
-});
+const I18nContext = createContext<I18nContextValue | null>(null);
 
 function setLanguageCookie(language: UiLanguage) {
   document.cookie = `${UI_LANGUAGE_COOKIE}=${language}; path=/; max-age=31536000; samesite=lax`;
@@ -31,19 +20,19 @@ function setLanguageCookie(language: UiLanguage) {
 
 export function I18nProvider({
   initialLanguage,
+  initialDictionary,
   children,
 }: {
   initialLanguage: UiLanguage;
+  initialDictionary: I18nDictionary;
   children: React.ReactNode;
 }) {
-  const [language, setLanguageState] = useState<UiLanguage>(isUiLanguage(initialLanguage) ? initialLanguage : "zh");
+  const [language] = useState<UiLanguage>(initialLanguage);
   const [saving, startTransition] = useTransition();
 
   const setLanguage = useCallback(
     (next: UiLanguage) => {
       if (next === language) return;
-      const previous = language;
-      setLanguageState(next);
       setLanguageCookie(next);
       startTransition(async () => {
         try {
@@ -53,9 +42,9 @@ export function I18nProvider({
             body: JSON.stringify({ uiLanguage: next }),
           });
           if (!response.ok) throw new Error("save failed");
+          window.location.reload();
         } catch {
-          setLanguageState(previous);
-          setLanguageCookie(previous);
+          setLanguageCookie(language);
         }
       });
     },
@@ -65,18 +54,22 @@ export function I18nProvider({
   const value = useMemo<I18nContextValue>(
     () => ({
       language,
-      dictionary: getDictionary(language),
+      dictionary: initialDictionary,
       setLanguage,
       saving,
     }),
-    [language, saving, setLanguage],
+    [initialDictionary, language, saving, setLanguage],
   );
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
 }
 
 export function useI18n() {
-  return useContext(I18nContext);
+  const value = useContext(I18nContext);
+  const testValue = (globalThis as typeof globalThis & { __PRIMORIA_TEST_I18N__?: I18nContextValue })
+    .__PRIMORIA_TEST_I18N__;
+  if (!value && !testValue) throw new Error("useI18n must be used within I18nProvider");
+  return value ?? testValue!;
 }
 
 export function useT() {

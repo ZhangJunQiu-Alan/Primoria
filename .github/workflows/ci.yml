@@ -154,6 +154,9 @@ jobs:
       DATABASE_URL: postgresql://primoria:primoria_ci@127.0.0.1:5432/primoria_browser_test
       DATABASE_SSL: disable
       CI_LEARNING_SMOKE: "1"
+      CI_ONBOARDING_SMOKE: "1"
+      CI_TUTOR_RUNTIME_SMOKE: "1"
+      CI_SHARE_SMOKE: "1"
       PRIMORIA_DISABLE_OUTLINE_ENRICHMENT: "1"
     steps:
       - uses: actions/checkout@v4
@@ -174,16 +177,35 @@ jobs:
       - name: Bootstrap schemas
         run: pnpm db:bootstrap
 
+      - name: Seed all knowledge graphs
+        run: pnpm --filter @primoria/web db:seed:kg-all
+
       - name: Seed deterministic learning path
         run: pnpm --filter @primoria/web exec tsx scripts/seed-ci-learning-smoke.ts
 
       - name: Login-to-course-completion smoke
         run: pnpm test:learning-path:e2e
 
+      - name: Seed deterministic onboarding account
+        run: pnpm --filter @primoria/web exec tsx scripts/seed-ci-onboarding.ts
+
+      - name: Login-to-onboarding-to-course-outline smoke
+        run: pnpm test:onboarding:e2e
+
+      - name: Seed deterministic Tutor runtime user
+        run: pnpm --filter @primoria/web exec tsx scripts/seed-ci-tutor-runtime.ts
+
+      - name: Browser-to-Web-to-Agent Tutor smoke
+        run: pnpm test:tutor-runtime:e2e
+
+      - name: Seed deterministic course-share accounts
+        run: pnpm --filter @primoria/web exec tsx scripts/seed-ci-course-share.ts
+
+      - name: Share-to-anonymous-preview-to-import smoke
+        run: pnpm test:course-share:e2e
+
       - name: Widget renderer E2E
         run: pnpm test:widget:e2e
-        env:
-          NEXT_DIST_DIR: .next-widget-e2e
 
       - name: Upload browser failure artifacts
         if: failure()
@@ -192,3 +214,16 @@ jobs:
           name: browser-failure-artifacts
           path: test-results/
           if-no-files-found: ignore
+          retention-days: 14
+
+  regression:
+    name: Regression gate
+    if: always()
+    needs: [fast-checks, bundle-budget, database-integration, browser-integration]
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Require every regression layer
+        env:
+          RESULTS: ${{ join(needs.*.result, ',') }}
+        run: test "$RESULTS" = "success,success,success,success"

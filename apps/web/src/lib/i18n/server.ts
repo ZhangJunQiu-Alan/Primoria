@@ -3,12 +3,9 @@ import { getCurrentUserForRsc } from "@/lib/auth/session";
 import { getUserPreferences } from "@/lib/settings/user-settings";
 import {
   getDictionary,
-  isUiLanguage,
-  languageFromAcceptLanguage,
-  UI_LANGUAGE_COOKIE,
   type I18nDictionary,
-  type UiLanguage,
 } from "./dictionaries";
+import { isUiLanguage, languageFromAcceptLanguage, UI_LANGUAGE_COOKIE, type UiLanguage } from "./languages";
 
 export async function resolveUiLanguage(userId?: string | null): Promise<UiLanguage> {
   if (userId) {

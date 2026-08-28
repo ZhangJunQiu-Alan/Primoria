@@ -38,6 +38,7 @@ use the priority order below and verify behavior against the code.
 
 - [`deployment-preflight.md`](deployment-preflight.md) — production release, privileges, verification, rollback, and recovery.
 - [`dependency-security.md`](dependency-security.md) — production audit policy, overrides, and accepted non-blocking findings.
+- [`integration-regression-testing.md`](integration-regression-testing.md) — approved critical-journey regression architecture, deterministic test data, CI layers, and release gates.
 - [`issue-taxonomy-and-roadmap.md`](issue-taxonomy-and-roadmap.md) — issue labels and current implementation slices.
 
 ## Future product vision

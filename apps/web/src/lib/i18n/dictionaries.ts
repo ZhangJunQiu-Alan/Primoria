@@ -1,16 +1,6 @@
-export const UI_LANGUAGES = ["zh", "en"] as const;
-export type UiLanguage = (typeof UI_LANGUAGES)[number];
+import type { UiLanguage } from "./languages";
 
-export const UI_LANGUAGE_COOKIE = "primoria_ui_language";
-
-export function isUiLanguage(value: unknown): value is UiLanguage {
-  return typeof value === "string" && (UI_LANGUAGES as readonly string[]).includes(value);
-}
-
-export function languageFromAcceptLanguage(value: string | null | undefined): UiLanguage {
-  if (!value) return "zh";
-  return value.toLowerCase().split(",").some((part) => part.trim().startsWith("zh")) ? "zh" : "en";
-}
+export type { UiLanguage } from "./languages";
 
 export const dictionaries = {
   zh: {
@@ -622,6 +612,95 @@ export const dictionaries = {
       openApp: "打开 Primoria",
       emptyLesson: "这节 lesson 还没有内容。",
     },
+    account: {
+      title: "账户设置",
+      currentEmail: "当前邮箱：",
+      profileSection: "个人资料",
+      displayNamePlaceholder: "昵称",
+      saving: "保存中…",
+      save: "保存资料",
+      saveSuccess: "资料已保存。",
+      saveFailed: "保存失败，请重试。",
+    },
+    onboarding: {
+      back: "返回",
+      goalKicker: "学习目标",
+      goalTitle: "输入你最想学的第一件事。",
+      goalCopy: "可以使用宽泛的学科或具体主题。Primoria 会把它定位到知识图谱上。",
+      goalPlaceholder: "例如：我想学数据结构与算法",
+      goalExamples: [
+        "我想学数据结构与算法",
+        "我想弄懂链式法则",
+        "从零开始教我 Python",
+      ],
+      locating: "定位中…",
+      continue: "继续",
+      skipQuestion: "跳过此问题",
+      goalNote: "学习目标将被匹配到知识图谱。",
+      factsKicker: "关于你的学习背景",
+      factsTitle: "告诉 Primoria 你已掌握的基础。",
+      factsCopy: "先设定课程体系锚点，再补充 Primoria 需要了解的其他背景。",
+      factsQ1: "你当前处于哪个学习阶段？",
+      chooseCurriculum: "选择课程体系",
+      factsPlaceholder: "例如：我就读于 JCU，对算法和大模型架构感兴趣，修过 CS61A 和 CS61B",
+      saving: "保存中…",
+      factsOptionalNote: "上面的补充说明是可选的。",
+      factsStageRequired: "请在继续之前选择你的学习阶段和课程体系。",
+      styleKicker: "Tutor 风格",
+      styleTitle: "选择 Tutor 与你协同思考的方式。",
+      styleCopy: "此偏好仅影响对话，不影响课程大纲和 Lesson 内容结构。",
+      styleNote: "Tutor 风格仅影响对话交互。",
+      finish: "完成",
+      visuals: {
+        goal: { title: "定位第一个锚点", body: "宽泛目标从学科根节点开始；精确目标从匹配主题开始。" },
+        facts: { title: "构建初始背景", body: "分享你学过的科目、感兴趣的方向及偏好的学习方式。" },
+        style: { title: "选择 Tutor 语气", body: "仅雕塑对话风格，课程结构保持原样。" },
+        done: { title: "打开课程大纲", body: "课程路径已准备就绪，可以在你的学习空间中继续。" },
+      },
+      stages: {
+        middle_school: "初中",
+        high_school: "高中",
+        undergraduate: "大学",
+        graduate: "研究生",
+        professional: "在职/专业人士",
+        other: "其他",
+      },
+      curricula: {
+        mainland_china_junior_secondary: "中国初中",
+        mainland_china_senior_high: "中国高中",
+        singapore_lower_secondary: "新加坡初中 (Lower Sec)",
+        singapore_secondary_g2_g3: "新加坡 G2 / G3",
+        singapore_h2: "新加坡 H2",
+        cambridge_international_a_level: "A Level",
+        course_specific: "特定课程",
+        self_directed: "自主学习",
+      },
+      styles: {
+        socratic: { title: "苏格拉底式", person: "苏格拉底", meta: "回答前先抛出引导性问题" },
+        feynman: { title: "理查德·费曼式", person: "理查德·费曼", meta: "直觉与比喻优先" },
+        euclid: { title: "欧几里得式", person: "欧几里得", meta: "严谨的定义与结构" },
+      },
+      completion: {
+        openOutline: "打开课程大纲",
+        enterWorkspace: "进入工作区",
+        kicker: {
+          chooseSubject: "选择学科",
+          preparingPath: "正在准备学习路径",
+          personalizing: "正在个性化",
+          courseFailed: "课程准备失败",
+          preparingCourse: "正在准备课程",
+          complete: "入门设置完成",
+        },
+        h1: {
+          chooseSubject: "Primoria 应该从哪个学科开始？",
+          preparingPath: "正在为你准备学习路径。",
+          personalizing: "你的课程将在后台准备。",
+          courseFailed: "暂时无法为你准备课程。",
+          preparingCourse: "你的课程正在准备中。",
+          complete: "你的学习空间已准备就绪。",
+        },
+      },
+    },
   },
   en: {
     metadata: {
@@ -1232,6 +1311,95 @@ export const dictionaries = {
       openApp: "Open Primoria",
       emptyLesson: "This lesson has no content yet.",
     },
+    account: {
+      title: "Account settings",
+      currentEmail: "Current email: ",
+      profileSection: "Profile",
+      displayNamePlaceholder: "Display name",
+      saving: "Saving…",
+      save: "Save profile",
+      saveSuccess: "Profile saved.",
+      saveFailed: "Save failed. Please try again.",
+    },
+    onboarding: {
+      back: "Back",
+      goalKicker: "Learning goal",
+      goalTitle: "Name the first thing you want to learn.",
+      goalCopy: "Use a broad subject or a specific topic. Primoria will place it on the knowledge graph.",
+      goalPlaceholder: "e.g. I want to learn data structures and algorithms",
+      goalExamples: [
+        "I want to learn data structures and algorithms",
+        "I want to understand the chain rule",
+        "Teach me Python from the beginning",
+      ],
+      locating: "Locating…",
+      continue: "Continue",
+      skipQuestion: "Skip this question",
+      goalNote: "Learning goal will be matched to the knowledge graph.",
+      factsKicker: "About your learning",
+      factsTitle: "Tell Primoria what you already bring.",
+      factsCopy: "Set the curriculum anchor first, then add anything else Primoria should know.",
+      factsQ1: "What is your current learning stage?",
+      chooseCurriculum: "Choose curriculum",
+      factsPlaceholder: "e.g. I study at JCU, I am interested in algorithms and LLM architecture, and I have taken CS61A and CS61B",
+      saving: "Saving…",
+      factsOptionalNote: "The note above is optional.",
+      factsStageRequired: "Choose your learning stage and curriculum before continuing.",
+      styleKicker: "Tutor style",
+      styleTitle: "Choose how the tutor should think with you.",
+      styleCopy: "This preference applies to chat, not to the course outline or lesson content.",
+      styleNote: "Tutor style affects dialogue only.",
+      finish: "Finish",
+      visuals: {
+        goal: { title: "Locate the first anchor", body: "A broad goal starts at the subject root; a precise goal starts at the matched topic." },
+        facts: { title: "Build your starting context", body: "Share what you have studied, what interests you, and how you like to learn." },
+        style: { title: "Choose the tutor voice", body: "This shapes dialogue only. Lesson generation keeps its own structure." },
+        done: { title: "Open the outline", body: "The course path is ready to continue in your learning space." },
+      },
+      stages: {
+        middle_school: "Middle school",
+        high_school: "High school",
+        undergraduate: "University",
+        graduate: "Graduate",
+        professional: "Professional",
+        other: "Other",
+      },
+      curricula: {
+        mainland_china_junior_secondary: "China junior high",
+        mainland_china_senior_high: "China senior high",
+        singapore_lower_secondary: "SG Lower Secondary",
+        singapore_secondary_g2_g3: "SG G2 / G3",
+        singapore_h2: "Singapore H2",
+        cambridge_international_a_level: "A Level",
+        course_specific: "Course-specific",
+        self_directed: "Self-directed",
+      },
+      styles: {
+        socratic: { title: "Socratic", person: "Socrates", meta: "Guiding questions before answers" },
+        feynman: { title: "Feynman", person: "Richard Feynman", meta: "Intuition and analogies first" },
+        euclid: { title: "Euclid", person: "Euclid", meta: "Precise definitions and structure" },
+      },
+      completion: {
+        openOutline: "Open course outline",
+        enterWorkspace: "Enter workspace",
+        kicker: {
+          chooseSubject: "Choose a subject",
+          preparingPath: "Preparing path",
+          personalizing: "Personalizing",
+          courseFailed: "Course preparation failed",
+          preparingCourse: "Preparing course",
+          complete: "Onboarding complete",
+        },
+        h1: {
+          chooseSubject: "Which subject should Primoria start from?",
+          preparingPath: "Your learning path is being prepared.",
+          personalizing: "Your course will be prepared in the background.",
+          courseFailed: "We couldn't prepare your course.",
+          preparingCourse: "Your course is being prepared.",
+          complete: "Your learning space is ready.",
+        },
+      },
+    },
   },
 } as const;
 
@@ -1239,8 +1407,4 @@ export type I18nDictionary = (typeof dictionaries)[UiLanguage];
 
 export function getDictionary(language: UiLanguage): I18nDictionary {
   return dictionaries[language];
-}
-
-export function formatMessage(template: string, values: Record<string, string | number | null | undefined> = {}) {
-  return template.replace(/\{(\w+)\}/g, (_match, key: string) => String(values[key] ?? ""));
 }

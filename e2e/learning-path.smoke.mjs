@@ -5,7 +5,7 @@ import { mkdir } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
-import { chromium } from "playwright";
+import * as playwright from "playwright";
 
 const requireFromWeb = createRequire(new URL("../apps/web/package.json", import.meta.url));
 const postgres = requireFromWeb("postgres");
@@ -17,6 +17,12 @@ const LESSON_ID = "lsn_ci_learning_smoke";
 const EMAIL = "ci-learning-smoke@example.com";
 const PASSWORD = "CiLearningSmoke123!";
 const screenshotPath = path.resolve("test-results/learning-path-failure.png");
+const browserName = process.env.REGRESSION_BROWSER || "chromium";
+const browserType = playwright[browserName];
+
+if (!browserType || typeof browserType.launch !== "function") {
+  throw new Error(`Unsupported REGRESSION_BROWSER: ${browserName}`);
+}
 
 const databaseName = process.env.DATABASE_URL
   ? new URL(process.env.DATABASE_URL).pathname.replace(/^\//, "")
@@ -108,7 +114,7 @@ async function verifyRecommendationResolved() {
 
 const server = spawn("pnpm", ["--filter", "@primoria/web", "dev"], {
   cwd: process.cwd(),
-  env: { ...process.env, PORT, NEXT_DIST_DIR: process.env.NEXT_DIST_DIR || ".next-learning-smoke" },
+  env: { ...process.env, PORT },
   stdio: ["ignore", "pipe", "pipe"],
   detached: process.platform !== "win32",
 });
@@ -128,7 +134,7 @@ let browser;
 let page;
 try {
   await waitForServer(server);
-  browser = await chromium.launch({ headless: true });
+  browser = await browserType.launch({ headless: true });
   page = await browser.newPage();
   const pageErrors = [];
   page.on("pageerror", (error) => pageErrors.push(error.message));
@@ -160,8 +166,17 @@ try {
 
   await verifyPersistence();
   await page.locator(".learning-progress-popup-card").waitFor({ timeout: 30_000 });
-  await page.locator(".learning-progress-popup-card button").click();
-  await page.waitForURL((url) => url.pathname === "/" || url.pathname === "/onboarding", { timeout: 20_000 });
+  const [confirmation] = await Promise.all([
+    page.waitForResponse(
+      (candidate) => candidate.url().includes(`/api/courses/${COURSE_ID}/learning-progress/`)
+        && candidate.request().method() === "POST",
+      { timeout: 60_000 },
+    ),
+    page.locator(".learning-progress-popup-card button").click(),
+  ]);
+  assert(confirmation.ok(), `course completion confirmation should succeed (got ${confirmation.status()})`);
+  await page.waitForURL((url) => url.pathname === "/", { waitUntil: "domcontentloaded", timeout: 60_000 });
+  await page.locator(".onboarding-goal-input").waitFor({ state: "visible", timeout: 30_000 });
   await verifyRecommendationResolved();
   assert(pageErrors.length === 0, `unexpected page errors: ${pageErrors.join(" | ")}`);
   process.stdout.write("[learning-path.smoke] ALL CHECKS PASSED\n");

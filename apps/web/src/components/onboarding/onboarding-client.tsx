@@ -19,11 +19,10 @@ import {
 } from "@/lib/learner-profile/types";
 import {
   curriculumOptionsForStage,
-  EDUCATION_CURRICULUM_LABELS,
-  EDUCATION_STAGE_LABELS,
   suggestEducationCurriculum,
   type SuggestedCurriculumRegion,
 } from "@/lib/learner-profile/education-context";
+import { useT } from "@/lib/i18n/client";
 
 type GoalAnchorSummary = {
   graphSubject: string;
@@ -62,71 +61,27 @@ type OnboardingVisual = {
 const STEP_ORDER: OnboardingStep[] = ["goal", "facts", "style"];
 const DEFAULT_TUTOR_STYLE: TutorStyle = "feynman";
 
-const GOAL_EXAMPLES = [
-  "I want to learn data structures and algorithms",
-  "我想弄懂链式法则",
-  "Teach me Python from the beginning",
-];
-
-const TUTOR_STYLES: Array<{
-  id: TutorStyle;
-  title: string;
-  person: string;
-  meta: string;
-  imageSrc: string;
-}> = [
-  {
-    id: "socratic",
-    title: "Socratic",
-    person: "Socrates",
-    meta: "Guiding questions before answers",
-    imageSrc: "/onboarding/tutors/socratic.webp",
-  },
-  {
-    id: "feynman",
-    title: "Feynman",
-    person: "Richard Feynman",
-    meta: "Intuition and analogies first",
-    imageSrc: "/onboarding/tutors/feynman.webp",
-  },
-  {
-    id: "euclid",
-    title: "Euclid",
-    person: "Euclid",
-    meta: "Precise definitions and structure",
-    imageSrc: "/onboarding/tutors/euclid.webp",
-  },
-];
-
-const STEP_VISUALS: Record<OnboardingStep, OnboardingVisual> = {
+const STEP_VISUALS: Record<OnboardingStep, { src: string; mark: string; width: number; height: number }> = {
   goal: {
     src: "/onboarding/goal-map.svg",
-    title: "Locate the first anchor",
-    body: "A broad goal starts at the subject root; a precise goal starts at the matched topic.",
     mark: "01",
     width: 720,
     height: 840,
   },
   facts: {
     src: "/onboarding/background-layers.svg",
-    title: "Build your starting context",
-    body: "Share what you have studied, what interests you, and how you like to learn.",
     mark: "02",
     width: 720,
     height: 840,
   },
   style: {
     src: "/onboarding/tutor-atelier.svg",
-    title: "Choose the tutor voice",
-    body: "This shapes dialogue only. Lesson generation keeps its own structure.",
     mark: "03",
     width: 720,
     height: 840,
   },
   done: {
     src: "/onboarding/course-ready.svg",
-    title: "Open the outline",
-    body: "The course path is ready to continue in your learning space.",
     mark: "04",
     width: 720,
     height: 840,
@@ -279,6 +234,7 @@ function debugOnboardingResponse(
 }
 
 export function OnboardingClient({ initialState, suggestedRegion = "international", debugMode = false }: OnboardingClientProps) {
+  const t = useT();
   const [state, setState] = useState<LearnerOnboardingState>(initialState);
   const [learningGoal, setLearningGoal] = useState(initialState.profile?.learningGoal ?? "");
   const [factsIntroduction, setFactsIntroduction] = useState("");
@@ -299,11 +255,40 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
+  const tutorStylesList = useMemo<Array<{
+    id: TutorStyle;
+    title: string;
+    person: string;
+    meta: string;
+    imageSrc: string;
+  }>>(() => [
+    {
+      id: "socratic",
+      ...t.onboarding.styles.socratic,
+      imageSrc: "/onboarding/tutors/socratic.webp",
+    },
+    {
+      id: "feynman",
+      ...t.onboarding.styles.feynman,
+      imageSrc: "/onboarding/tutors/feynman.webp",
+    },
+    {
+      id: "euclid",
+      ...t.onboarding.styles.euclid,
+      imageSrc: "/onboarding/tutors/euclid.webp",
+    },
+  ], [t.onboarding.styles]);
+
   const step = state.nextStep;
   const index = stepIndex(step);
   const progress = Math.min(100, ((index + 1) / STEP_ORDER.length) * 100);
-  const visual = STEP_VISUALS[step];
-  const selectedTutorStyle = TUTOR_STYLES.find((item) => item.id === style) ?? TUTOR_STYLES[1];
+  const visualMeta = t.onboarding.visuals[step];
+  const visual = {
+    ...STEP_VISUALS[step],
+    title: visualMeta.title,
+    body: visualMeta.body,
+  };
+  const selectedTutorStyle = tutorStylesList.find((item) => item.id === style) ?? tutorStylesList[1];
   const curriculumOptions = educationStage
     ? curriculumOptionsForStage(educationStage, suggestedRegion)
     : [];
@@ -321,7 +306,7 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
   const courseWaiting = courseStatus === "pending" || courseStatus === "building";
   const courseReady = courseStatus === "ready" && Boolean(courseId);
   const completionHref = courseReady ? `/course/${encodeURIComponent(courseId!)}/outline` : "/";
-  const completionLabel = courseReady ? "Open course outline" : "Enter workspace";
+  const completionLabel = courseReady ? t.onboarding.completion.openOutline : t.onboarding.completion.enterWorkspace;
   const finalClarify =
     clarify ??
     (goalStatus === "clarify" && state.profile?.goalPositioningCandidates.length
@@ -341,7 +326,7 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const images = TUTOR_STYLES.map(({ imageSrc }) => {
+    const images = tutorStylesList.map(({ imageSrc }) => {
       const image = new window.Image();
       image.decoding = "async";
       image.src = imageSrc;
@@ -353,7 +338,7 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
         image.onerror = null;
       });
     };
-  }, []);
+  }, [tutorStylesList]);
 
   useEffect(() => {
     if (debugMode || step !== "done" || (goalStatus !== "pending" && !courseWaiting)) return;
@@ -462,7 +447,7 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
 
   function submitFacts() {
     if (!educationStage || !curriculumSystem || !educationContextSource) {
-      return Promise.reject(new Error("Choose your learning stage and curriculum before continuing."));
+      return Promise.reject(new Error(t.onboarding.factsStageRequired));
     }
     const text = factsIntroduction.trim();
     return submit("/api/onboarding/facts", {
@@ -478,7 +463,7 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
       <section className="onboarding-panel" aria-live="polite">
         <div className="onboarding-form-pane">
           <header className="onboarding-topbar">
-            <button type="button" className="onboarding-back" onClick={goBack} disabled={index <= 0 || busy} aria-label="Back">
+            <button type="button" className="onboarding-back" onClick={goBack} disabled={index <= 0 || busy} aria-label={t.onboarding.back}>
               ←
             </button>
             <span className="onboarding-brand">Primoria</span>
@@ -491,9 +476,9 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
           {step === "goal" ? (
             <div className="onboarding-step onboarding-step-facts">
               <div className="onboarding-step-copy">
-                <p className="onboarding-kicker">Learning goal</p>
-                <h1>Name the first thing you want to learn.</h1>
-                <p className="onboarding-copy">Use a broad subject or a specific topic. Primoria will place it on the knowledge graph.</p>
+                <p className="onboarding-kicker">{t.onboarding.goalKicker}</p>
+                <h1>{t.onboarding.goalTitle}</h1>
+                <p className="onboarding-copy">{t.onboarding.goalCopy}</p>
               </div>
               <div className="onboarding-control-region">
                 <textarea
@@ -502,7 +487,7 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
                     setLearningGoal(event.target.value);
                     if (clarify) setClarify(null);
                   }}
-                  placeholder="e.g. I want to learn data structures and algorithms"
+                  placeholder={t.onboarding.goalPlaceholder}
                   rows={4}
                   className="onboarding-goal-input"
                 />
@@ -524,7 +509,7 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
                   </div>
                 ) : (
                   <div className="onboarding-example-list" aria-label="Goal examples">
-                    {GOAL_EXAMPLES.map((example) => (
+                    {t.onboarding.goalExamples.map((example) => (
                       <button key={example} type="button" onClick={() => setLearningGoal(example)}>
                         {example}
                       </button>
@@ -533,7 +518,7 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
                 )}
               </div>
               <p className={`onboarding-note ${goalSummary ? "" : "onboarding-note-empty"}`}>
-                {goalSummary || "Learning goal will be matched to the knowledge graph."}
+                {goalSummary || t.onboarding.goalNote}
               </p>
               <div className="onboarding-actions">
                 <button
@@ -542,10 +527,10 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
                   disabled={busy || !learningGoal.trim()}
                   onClick={() => run(() => submit("/api/onboarding/goal", { learningGoal }))}
                 >
-                  {busy ? "Locating…" : "Continue"}
+                  {busy ? t.onboarding.locating : t.onboarding.continue}
                 </button>
                 <button type="button" className="onboarding-skip" disabled={busy} onClick={() => run(() => submit("/api/onboarding/goal", { skip: true }))}>
-                  Skip this question
+                  {t.onboarding.skipQuestion}
                 </button>
               </div>
             </div>
@@ -554,15 +539,15 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
           {step === "facts" ? (
             <div className="onboarding-step">
               <div className="onboarding-step-copy">
-                <p className="onboarding-kicker">About your learning</p>
-                <h1>Tell Primoria what you already bring.</h1>
-                <p className="onboarding-copy">Set the curriculum anchor first, then add anything else Primoria should know.</p>
+                <p className="onboarding-kicker">{t.onboarding.factsKicker}</p>
+                <h1>{t.onboarding.factsTitle}</h1>
+                <p className="onboarding-copy">{t.onboarding.factsCopy}</p>
               </div>
               <div className="onboarding-control-region">
                 <section className="onboarding-education-question" aria-labelledby="education-stage-question">
                   <div className="onboarding-question-heading">
                     <span className="onboarding-question-index">Q1</span>
-                    <h2 id="education-stage-question">What is your current learning stage?</h2>
+                    <h2 id="education-stage-question">{t.onboarding.factsQ1}</h2>
                     {educationStage ? (
                       <button
                         type="button"
@@ -570,7 +555,7 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
                         aria-expanded={curriculumMenuOpen}
                         onClick={() => setCurriculumMenuOpen((open) => !open)}
                       >
-                        {curriculumSystem ? EDUCATION_CURRICULUM_LABELS[curriculumSystem] : "Choose curriculum"}
+                        {curriculumSystem ? t.onboarding.curricula[curriculumSystem] : t.onboarding.chooseCurriculum}
                         <span aria-hidden="true">⌄</span>
                       </button>
                     ) : null}
@@ -586,7 +571,7 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
                         onClick={() => chooseEducationStage(stageOption)}
                       >
                         <span aria-hidden="true" />
-                        {EDUCATION_STAGE_LABELS[stageOption]}
+                        {t.onboarding.stages[stageOption]}
                       </button>
                     ))}
                   </div>
@@ -601,7 +586,7 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
                           className={curriculumSystem === option ? "selected" : ""}
                           onClick={() => chooseCurriculum(option)}
                         >
-                          {EDUCATION_CURRICULUM_LABELS[option]}
+                          {t.onboarding.curricula[option]}
                         </button>
                       ))}
                     </div>
@@ -611,7 +596,7 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
                   value={factsIntroduction}
                   maxLength={2_000}
                   onChange={(event) => setFactsIntroduction(event.target.value)}
-                  placeholder="e.g. I study at JCU, I am interested in algorithms and LLM architecture, and I have taken CS61A and CS61B"
+                  placeholder={t.onboarding.factsPlaceholder}
                   rows={3}
                   className="onboarding-goal-input onboarding-facts-input"
                 />
@@ -623,9 +608,9 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
                   disabled={busy || !educationStage || !curriculumSystem}
                   onClick={() => run(submitFacts)}
                 >
-                  {busy ? "Saving…" : "Continue"}
+                  {busy ? t.onboarding.saving : t.onboarding.continue}
                 </button>
-                <span className="onboarding-optional-note">The note above is optional.</span>
+                <span className="onboarding-optional-note">{t.onboarding.factsOptionalNote}</span>
               </div>
             </div>
           ) : null}
@@ -633,13 +618,13 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
           {step === "style" ? (
             <div className="onboarding-step">
               <div className="onboarding-step-copy">
-                <p className="onboarding-kicker">Tutor style</p>
-                <h1>Choose how the tutor should think with you.</h1>
-                <p className="onboarding-copy">This preference applies to chat, not to the course outline or lesson content.</p>
+                <p className="onboarding-kicker">{t.onboarding.styleKicker}</p>
+                <h1>{t.onboarding.styleTitle}</h1>
+                <p className="onboarding-copy">{t.onboarding.styleCopy}</p>
               </div>
               <div className="onboarding-control-region">
                 <div className="onboarding-choice-list tutor-style-list">
-                  {TUTOR_STYLES.map((item) => (
+                  {tutorStylesList.map((item) => (
                     <button
                       key={item.id}
                       type="button"
@@ -653,7 +638,7 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
                   ))}
                 </div>
               </div>
-              <p className="onboarding-note onboarding-note-empty">Tutor style affects dialogue only.</p>
+              <p className="onboarding-note onboarding-note-empty">{t.onboarding.styleNote}</p>
               <div className="onboarding-actions">
                 <button
                   type="button"
@@ -661,10 +646,10 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
                   disabled={busy || !isTutorStyle(style)}
                   onClick={() => run(() => submit("/api/onboarding/style", { tutorStyle: style }))}
                 >
-                  {busy ? "Saving…" : "Finish"}
+                  {busy ? t.onboarding.saving : t.onboarding.finish}
                 </button>
                 <button type="button" className="onboarding-skip" disabled={busy} onClick={() => run(() => submit("/api/onboarding/style", { skip: true }))}>
-                  Skip this question
+                  {t.onboarding.skipQuestion}
                 </button>
               </div>
             </div>
@@ -675,33 +660,29 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
               <div className="onboarding-step-copy">
                 <p className="onboarding-kicker">
                   {finalClarify
-                    ? "Choose a subject"
+                    ? t.onboarding.completion.kicker.chooseSubject
                     : goalStatus === "pending"
-                      ? "Preparing path"
+                      ? t.onboarding.completion.kicker.preparingPath
                       : factsWaiting
-                        ? "Personalizing"
+                        ? t.onboarding.completion.kicker.personalizing
                       : courseFailed
-                        ? "Course preparation failed"
+                        ? t.onboarding.completion.kicker.courseFailed
                         : courseWaiting
-                          ? "Preparing course"
-                          : "Onboarding complete"}
+                          ? t.onboarding.completion.kicker.preparingCourse
+                          : t.onboarding.completion.kicker.complete}
                 </p>
                 <h1>
                   {finalClarify
-                    ? "Which subject should Primoria start from?"
+                    ? t.onboarding.completion.h1.chooseSubject
                     : goalStatus === "pending"
-                      ? "Your learning path is being prepared."
+                      ? t.onboarding.completion.h1.preparingPath
                       : factsWaiting
-                        ? "Your course will be prepared in the background."
+                        ? t.onboarding.completion.h1.personalizing
                       : courseFailed
-                        ? "We couldn't prepare your course."
+                        ? t.onboarding.completion.h1.courseFailed
                         : courseWaiting
-                          ? "Your course is being prepared."
-                      : goalStatus === "failed"
-                        ? "Your workspace is ready."
-                        : courseReady
-                          ? "Your learning path is ready."
-                          : "Your workspace is ready."}
+                          ? t.onboarding.completion.h1.preparingCourse
+                          : t.onboarding.completion.h1.complete}
                 </h1>
                 <p className="onboarding-copy">
                   {finalClarify

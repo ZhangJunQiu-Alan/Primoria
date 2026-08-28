@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "if [ -f .env ]; then set -a; . ./.env; set +a; fi; pnpm db:migrate && node --watch src/server.mjs",
-    "start": "node src/server.mjs",
+    "start": "if [ -f .env ]; then set -a; . ./.env; set +a; fi; node src/server.mjs",
     "db:migrate": "node src/runtime/migrate.mjs",
     "runs:admin": "node src/runtime/admin.mjs",
     "typecheck": "tsc --noEmit",
@@ -16,9 +16,10 @@
     "test:internal-auth": "node tests/internal-auth.unit.mjs",
     "test:interactive-routing-contract": "node tests/interactive-routing-contract.unit.mjs",
     "test:runtime-worker": "node tests/runtime-worker.unit.mjs",
+    "test:scripted-model": "node --test tests/scripted-openai-server.unit.mjs",
     "test:graph-e2e": "node tests/graph-invoke.e2e.mjs",
     "test:runtime:db": "node tests/runtime-store.db.mjs && node tests/runtime-server.db.e2e.mjs",
-    "test": "pnpm test:course-store && pnpm test:context-trim && pnpm test:agui-events && pnpm test:interactive-tool && pnpm test:internal-auth && pnpm test:interactive-routing-contract && pnpm test:runtime-worker",
+    "test": "pnpm test:course-store && pnpm test:context-trim && pnpm test:agui-events && pnpm test:interactive-tool && pnpm test:internal-auth && pnpm test:interactive-routing-contract && pnpm test:runtime-worker && pnpm test:scripted-model",
     "test:integration": "pnpm test:graph-e2e"
   },
   "dependencies": {

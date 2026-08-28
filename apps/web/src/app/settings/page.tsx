@@ -8,7 +8,7 @@ import { getCurrentUserForRsc, isAuthEnabled } from "@/lib/auth/session";
 import { listActiveFacts } from "@/lib/learner-facts/store";
 import { getUserPreferences } from "@/lib/settings/user-settings";
 import { getDictionaryForUser } from "@/lib/i18n/server";
-import { formatMessage } from "@/lib/i18n/dictionaries";
+import { formatMessage } from "@/lib/i18n/format";
 
 export const dynamic = "force-dynamic";
 
