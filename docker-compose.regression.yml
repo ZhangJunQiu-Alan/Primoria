@@ -1,0 +1,33 @@
+services:
+  postgres:
+    ports: !override
+      - "127.0.0.1:${PRIMORIA_SMOKE_POSTGRES_PORT:-55432}:5432"
+
+  regression-seed:
+    image: primoria-worker
+    restart: "no"
+    environment:
+      DATABASE_URL: postgresql://primoria_migrator:${POSTGRES_MIGRATOR_PASSWORD}@postgres:5432/primoria
+      DATABASE_SSL: disable
+      CI_COMPOSE_SMOKE: "1"
+      KG_EMBEDDING_MODEL_VERSION: "ci:compose-smoke:1536"
+    command:
+      - /bin/sh
+      - -c
+      - pnpm --filter @primoria/web db:seed:kg-all && node apps/web/scripts/seed-ci-compose-embeddings.mjs
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  web:
+    environment:
+      KG_EMBEDDING_MODEL_VERSION: "ci:compose-smoke:1536"
+    depends_on:
+      regression-seed:
+        condition: service_completed_successfully
+      agent:
+        condition: service_healthy
+
+  caddy:
+    ports: !override
+      - "127.0.0.1:${PRIMORIA_SMOKE_HTTP_PORT:-18080}:80"

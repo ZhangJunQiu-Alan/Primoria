@@ -2,12 +2,14 @@
 
 import {
   dictionaries,
-  formatMessage,
   getDictionary,
+} from "../src/lib/i18n/dictionaries.ts";
+import { formatMessage } from "../src/lib/i18n/format.ts";
+import {
   isUiLanguage,
   languageFromAcceptLanguage,
   UI_LANGUAGES,
-} from "../src/lib/i18n/dictionaries.ts";
+} from "../src/lib/i18n/languages.ts";
 import { getTutorToolDisplay } from "../src/lib/ai/tutor-tool-display.ts";
 
 function assert(condition: unknown, message: string): asserts condition {

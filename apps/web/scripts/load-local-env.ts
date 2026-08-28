@@ -14,6 +14,7 @@ function isProviderKey(key: string) {
 }
 
 export function loadLocalEnv() {
+  if (process.env.PRIMORIA_DISABLE_LOCAL_ENV === "1") return;
   const envFile = join(process.cwd(), ".env.local");
   if (!existsSync(envFile)) return;
 

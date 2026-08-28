@@ -10,6 +10,7 @@ export default defineConfig({
   test: {
     environment: "node",
     include: ["tests/**/*.spec.ts"],
+    setupFiles: ["./tests/setup.ts"],
     // Legacy self-executing scripts run as child processes (see
     // tests/legacy-units.spec.ts); each needs room for a tsx boot.
     testTimeout: 120_000,

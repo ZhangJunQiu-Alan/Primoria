@@ -4,7 +4,7 @@ import { getOptionalAuthUser } from "@/lib/auth/guard";
 import { isAuthEnabled } from "@/lib/auth/session";
 import { CONTENT_LANGUAGES, getUserPreferences, isValidTimeZone, saveUserPreferences } from "@/lib/settings/user-settings";
 import { resolveUiLanguage } from "@/lib/i18n/server";
-import { UI_LANGUAGES, UI_LANGUAGE_COOKIE } from "@/lib/i18n/dictionaries";
+import { UI_LANGUAGES, UI_LANGUAGE_COOKIE } from "@/lib/i18n/languages";
 
 const PreferencesSchema = z.object({
   contentLanguage: z.enum(CONTENT_LANGUAGES).optional(),

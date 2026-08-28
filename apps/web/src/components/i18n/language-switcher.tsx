@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
 import { useI18n, useT } from "@/lib/i18n/client";
-import type { UiLanguage } from "@/lib/i18n/dictionaries";
+import type { UiLanguage } from "@/lib/i18n/languages";
 
 export function LanguageSwitcher({ className = "" }: { className?: string }) {
   const { language, setLanguage, saving } = useI18n();

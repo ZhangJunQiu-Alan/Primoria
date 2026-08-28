@@ -5,7 +5,9 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { GamificationProfile } from "@/lib/gamification/store";
 import type { AchievementCategory, AchievementCode } from "@/lib/gamification/catalog";
-import { formatMessage, type I18nDictionary, type UiLanguage } from "@/lib/i18n/dictionaries";
+import type { I18nDictionary } from "@/lib/i18n/dictionaries";
+import { formatMessage } from "@/lib/i18n/format";
+import type { UiLanguage } from "@/lib/i18n/languages";
 
 type Filter = "all" | AchievementCategory;
 type GameCopy = I18nDictionary["profile"]["game"];

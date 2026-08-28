@@ -201,7 +201,7 @@ export function safeDefault(ctx: FinalizeContext): PositioningResult {
         graphId: candidates[0].graphId,
         params: ctx.params,
         candidates,
-        message: defaultClarifyMessage(candidates),
+        message: defaultClarifyMessage(candidates, ctx.language),
         diagnostics: ctx.diagnostics,
       };
     }
@@ -258,7 +258,7 @@ export function finalizeStage2(decision: Stage2Decision | null, ctx: FinalizeCon
         : ctx.candidates;
     const candidates = subjectChips(base);
     if (candidates.length < 2) return safeDefault(ctx); // nothing to choose between
-    const message = decision.message?.trim() || defaultClarifyMessage(candidates);
+    const message = decision.message?.trim() || defaultClarifyMessage(candidates, ctx.language);
     return {
       branch: "clarify_subject",
       graphId: candidates[0].graphId,
@@ -349,7 +349,9 @@ export function finalizeStage2(decision: Stage2Decision | null, ctx: FinalizeCon
   };
 }
 
-function defaultClarifyMessage(candidates: SubjectCandidate[]): string {
+function defaultClarifyMessage(candidates: SubjectCandidate[], language?: string | null): string {
   const names = candidates.map((c) => c.subject).join(" / ");
-  return `这个方向有几个学科都沾边,你想从哪个开始?\n${names}`;
+  return language?.startsWith("zh")
+    ? `这个方向有几个学科都沾边，你想从哪个开始？\n${names}`
+    : `A few subjects match your goal. Pick where to start:\n${names}`;
 }

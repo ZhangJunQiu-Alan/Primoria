@@ -213,26 +213,45 @@ export const courses = pgTable(
   }),
 );
 
-/** Public share links for courses. `snapshot` is an immutable, sanitized copy
- * of the course (progress stripped, only global media referenced) taken when
- * sharing was enabled or last refreshed; the public /share/[token] page reads
- * only this table, never the live course. Revoking sets revoked_at; re-enabling
- * mints a new token so old links stay dead. */
+/** Stable series identity for public course shares. Immutable snapshots and
+ * capability tokens live in course_share_versions. */
 export const courseShareLinks = pgTable(
   "course_share_links",
   {
     id: text("id").primaryKey(),
-    token: text("token").notNull(),
     courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
     ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
-    snapshot: jsonb("snapshot").notNull(),
-    revokedAt: timestamp("revoked_at", { withTimezone: true }),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull(),
   },
   (table) => ({
-    tokenUnique: uniqueIndex("course_share_links_token_uidx").on(table.token),
     courseUnique: uniqueIndex("course_share_links_course_uidx").on(table.courseId),
+    ownerIdx: index("course_share_links_owner_idx").on(table.ownerId),
+  }),
+);
+
+/** Immutable, sanitized versions within a course-share series. At most one
+ * version per series is active; publishing a refresh revokes the prior token
+ * and inserts a new row instead of overwriting its snapshot. */
+export const courseShareVersions = pgTable(
+  "course_share_versions",
+  {
+    id: text("id").primaryKey(),
+    shareId: text("share_id").notNull().references(() => courseShareLinks.id, { onDelete: "cascade" }),
+    version: integer("version").notNull(),
+    token: text("token").notNull(),
+    snapshot: jsonb("snapshot").notNull(),
+    revokedAt: timestamp("revoked_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
+  },
+  (table) => ({
+    tokenUnique: uniqueIndex("course_share_versions_token_uidx").on(table.token),
+    shareVersionUnique: uniqueIndex("course_share_versions_share_version_uidx").on(table.shareId, table.version),
+    oneActiveVersion: uniqueIndex("course_share_versions_one_active_uidx")
+      .on(table.shareId)
+      .where(sql`${table.revokedAt} IS NULL`),
+    shareCreatedIdx: index("course_share_versions_share_created_idx").on(table.shareId, table.createdAt),
+    versionCheck: check("course_share_versions_version_check", sql`${table.version} >= 1`),
   }),
 );
 

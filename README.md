@@ -407,13 +407,22 @@ Legacy self-executing `tests/*.unit.ts` scripts are executed through the `tests/
 Database-backed and E2E suites remain separate from `pnpm test`, but CI runs them in dedicated jobs:
 
 ```bash
-# All seven DB-backed tests. TEST_DATABASE_URL must be an isolated database
+# All DB-backed suites. TEST_DATABASE_URL must be an isolated database
 # whose name contains "test" and must differ from DATABASE_URL.
 pnpm test:db
 
 # Browser E2E suites start their own isolated Next dev servers.
 pnpm test:learning-path:e2e
+pnpm test:onboarding:e2e
+pnpm test:tutor-runtime:e2e
+pnpm test:course-share:e2e
 pnpm test:widget:e2e
+
+# Full deterministic regression gate (fast + build/budgets + isolated DB/browser)
+pnpm test:regression
+
+# Nightly/release topology gate; requires a working Docker daemon.
+pnpm test:regression:compose
 
 # Agent package and offline real-graph checks
 node --check apps/agent/src/graph.mjs
@@ -432,7 +441,12 @@ pnpm --filter @primoria/web build
 pnpm --filter @primoria/web bundle:check
 ```
 
-The learning-path smoke requires `CI_LEARNING_SMOKE=1` and a test `DATABASE_URL`; seed it first with `pnpm --filter @primoria/web exec tsx scripts/seed-ci-learning-smoke.ts`. It exercises real sign-in, course rendering, quiz grading, lesson completion, and progress/extractor job persistence without calling an external model.
+The learning-path smoke requires `CI_LEARNING_SMOKE=1` and a test `DATABASE_URL`; seed it first with `pnpm --filter @primoria/web exec tsx scripts/seed-ci-learning-smoke.ts`. It exercises real sign-in, course rendering, quiz grading, lesson completion, and progress/extractor job persistence without calling an external model. The onboarding smoke uses an isolated account, explicit KG anchor, real lesson-generation worker, and local scripted Planner/Writer model to verify the path through a readable generated first lesson.
+
+For routine feature completion, prefer `pnpm test:regression`: it manages isolated
+database clones, seeds, and all five browser scenarios. Approved scope, local
+prerequisites, verification records, and external release blockers are in
+[`docs/integration-regression-testing.md`](docs/integration-regression-testing.md).
 
 ## Deployment (Single Server)
 
@@ -700,11 +714,20 @@ completion queues both mastery/diagnosis work and an idempotent Extractor job;
 Settings can queue the same direct-write intake and still lets the learner edit
 or dismiss every active fact.
 
-Course sharing uses immutable, sanitized snapshots in `course_share_links`.
-Public links never read live course rows, revocation rotates the token, and
-imports are idempotent per learner.
+Course sharing keeps stable series metadata in `course_share_links` and
+immutable, sanitized snapshots plus capability tokens in
+`course_share_versions`. Public links never read live course rows; publishing a
+refresh atomically revokes the prior token and inserts a new version. Existing
+imports stay independent, and imports are idempotent per learner and share
+series.
 
-The main persistence tables include `courses`, `lessons`, `lesson_generation_jobs`, `lesson_generation_checkpoints`, `learning_events`, `learning_progress_jobs`, `user_concept_mastery`, `learner_profiles`, `learner_facts`, `extractor_jobs`, `profile_fact_intake_jobs`, `player_progress`, `xp_awards`, `daily_quest_completions`, and `achievement_unlocks`.
+The main persistence tables include `courses`, `lessons`, `course_share_links`,
+`course_share_versions`, `lesson_generation_jobs`,
+`lesson_generation_checkpoints`, `learning_events`,
+`learning_progress_jobs`, `user_concept_mastery`, `learner_profiles`,
+`learner_facts`, `extractor_jobs`, `profile_fact_intake_jobs`,
+`player_progress`, `xp_awards`, `daily_quest_completions`, and
+`achievement_unlocks`.
 
 ### Personal Progression and Guild Profile
 

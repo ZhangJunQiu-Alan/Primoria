@@ -299,9 +299,13 @@ cross-subject, vague-adjustment, off-catalog, and chat behavior.
 
 ### 3.9 Course sharing and media assets
 
-Course share links store immutable sanitized snapshots. Public share pages and
-imports read the snapshot, not live owner rows. Revoking and re-enabling a share
-creates a new token; imports are idempotent per learner.
+Course share links provide a stable series identity; immutable sanitized
+snapshots and capability tokens are stored as version rows. Public share pages
+and imports read a stored version, not live owner rows. Publishing a refresh or
+re-enabling a revoked share creates a new version and token while the prior
+token stays revoked. Existing imported courses do not change, and imports are
+idempotent per learner and share series. Synchronizing an existing import to a
+new share version is not a current capability.
 
 Generated lesson images use a global cache keyed by user-agnostic brief
 semantics. Learner facts must never enter image briefs. `owner_id` remains a

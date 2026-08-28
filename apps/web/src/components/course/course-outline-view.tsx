@@ -9,7 +9,8 @@ import type { LessonGenerationJobSummary } from "@/lib/courses/lesson-generation
 import { isLessonGenerationActive, lessonGenerationStageLabel } from "@/lib/courses/lesson-generation-labels";
 import type { Course, Lesson } from "@/lib/courses/types";
 import { useT, msg } from "@/lib/i18n/client";
-import { formatMessage, type I18nDictionary } from "@/lib/i18n/dictionaries";
+import type { I18nDictionary } from "@/lib/i18n/dictionaries";
+import { formatMessage } from "@/lib/i18n/format";
 
 type CourseOutlineViewProps = {
   course: Course;

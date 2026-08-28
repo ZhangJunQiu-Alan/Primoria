@@ -19,6 +19,7 @@
 # Dependencies and build outputs
 node_modules/
 .pnpm-home/
+/scratch/.pnpm/
 .next/
 .next-*/
 apps/web/next-env.d.ts
