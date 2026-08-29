@@ -357,6 +357,15 @@ pnpm --filter @primoria/web test:interactive-routing
 
 # Run the same routing fixture against the configured real model
 pnpm --filter @primoria/web eval:interactive-routing
+
+# Validate the Stage 0 Tutor answer-quality fixture without model calls
+pnpm eval:tutor:validate
+
+# Verify the 60-case Chinese TutorBench and its human-review document are in sync
+pnpm eval:tutor:zh:check
+
+# Explicitly opt in to the configured real-model Tutor baseline
+PRIMORIA_TUTOR_BENCH_LIVE=1 pnpm eval:tutor -- --live
 ```
 
 ## Tests and Verification
