@@ -62,6 +62,9 @@ jobs:
       - name: Agent graph integration
         run: pnpm test:agent:integration
 
+      - name: Tutor answer-quality fixtures
+        run: pnpm eval:tutor:validate && pnpm eval:tutor:zh:check
+
   bundle-budget:
     runs-on: ubuntu-latest
     timeout-minutes: 25

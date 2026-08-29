@@ -383,6 +383,15 @@ pnpm test:learning-goal-routing
 
 # Run selected learning-goal cases against the configured real model
 pnpm eval:learning-goal-routing --case=<case-id>
+
+# Validate the Stage 0 Tutor answer-quality fixture without model calls
+pnpm eval:tutor:validate
+
+# Verify the 60-case Chinese TutorBench and its human-review document are in sync
+pnpm eval:tutor:zh:check
+
+# Explicitly opt in to the configured real-model Tutor baseline
+PRIMORIA_TUTOR_BENCH_LIVE=1 pnpm eval:tutor -- --live
 ```
 
 The permanent fixture contains 1,718 bilingual cases across all 31 runtime
