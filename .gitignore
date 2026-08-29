@@ -28,6 +28,7 @@ build/
 .cache/
 test-results/
 .primoria-courses.json
+.eval-results/
 
 # LangGraph API
 .langgraph_api

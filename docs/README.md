@@ -38,6 +38,8 @@ use the priority order below and verify behavior against the code.
 - [`deployment-preflight.md`](deployment-preflight.md) — production release, privileges, verification, rollback, and recovery.
 - [`dependency-security.md`](dependency-security.md) — production audit policy, overrides, and accepted non-blocking findings.
 - [`issue-taxonomy-and-roadmap.md`](issue-taxonomy-and-roadmap.md) — issue labels and current implementation slices.
+- [`tutor-benchmark.md`](tutor-benchmark.md) — Stage 0 Tutor answer-quality fixture, deterministic scoring contract, live-call lock, and report format.
+- [`Primoria中文TutorBench-v1-审阅稿.md`](Primoria中文TutorBench-v1-审阅稿.md) — 20 个中文学习者画像与 60 个来源约束任务的逐条人工审阅稿。
 
 ## Design references
 
