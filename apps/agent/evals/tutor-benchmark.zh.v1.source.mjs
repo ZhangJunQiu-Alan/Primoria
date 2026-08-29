@@ -1,0 +1,1133 @@
+const taskKind = {
+  concept_understanding: "source_grounded",
+  problem_solving: "solve",
+  application: "source_grounded",
+  comparison: "source_grounded",
+};
+
+const profiles = [
+  {
+    id: "zh.math.algebra-balance",
+    domain: "mathematics",
+    knowledgeBaseId: "kb.math.algebra-calculus",
+    source: {
+      id: "ZH-MATH-ALG",
+      title: "等式平衡与逆运算",
+      origin: "data/knowledge-graphs/source/a_level_mathematics.json",
+      content: "等式两边同时进行同一种可逆运算，等式仍保持成立。所谓移项只是把两边同时加、减、乘或除的步骤简写，并不是某一项自动变号。求得未知数后，把结果代回原式，可以检查左右两边是否相等。",
+    },
+    context: {
+      priorKnowledge: ["会整数四则运算", "知道等号表示两边相等"],
+      misconceptions: ["移项时数字会自动变号", "只需要改变一边也能保持等式", "算出未知数后不需要验算"],
+      preferences: ["先用天平类比，再写代数步骤"],
+      goals: ["理解一元一次方程，而不是背移项口诀"],
+    },
+    tasks: [
+      {
+        slug: "concept",
+        type: "concept_understanding",
+        prompt: "我只记得‘移项要变号’，但不明白为什么。请根据资料用天平思路解释，并引用资料。",
+        checks: [
+          { id: "balance", kind: "contains_any", description: "说明等式两边保持平衡", values: ["两边同时", "等式两边"] },
+          { id: "inverse", kind: "contains_any", description: "指出本质是逆运算而非自动变号", values: ["逆运算", "不是自动变号", "相反的运算"] },
+        ],
+        personalization: ["不是自动变号", "口诀"],
+        pedagogy: ["天平", "平衡"],
+      },
+      {
+        slug: "solve",
+        type: "problem_solving",
+        prompt: "请解 4x - 7 = 21。每一步都写清楚等式两边做了什么，最后验算并引用资料。",
+        checks: [
+          { id: "answer", kind: "regex", description: "得到 x = 7", pattern: "x\\s*=\\s*7" },
+          { id: "operations", kind: "contains_all", description: "说明两边加 7、再除以 4", values: ["加 7", "除以 4"] },
+          { id: "verify", kind: "contains_any", description: "代回原式验算", values: ["代回", "代入原式", "验算"] },
+        ],
+        personalization: ["两边", "同时"],
+        pedagogy: ["验算", "左右两边"] ,
+      },
+      {
+        slug: "compare",
+        type: "comparison",
+        prompt: "同学甲说‘把 -7 移到右边还是 -7’，同学乙说‘应当在两边加 7’。请判断谁对、比较两种说法并引用资料。",
+        checks: [
+          { id: "choice", kind: "contains_any", description: "判断同学乙正确", values: ["同学乙正确", "乙是对的", "乙正确"] },
+          { id: "reason", kind: "contains_all", description: "指出两边加 7 后右边为 28", values: ["两边加 7", "28"] },
+        ],
+        personalization: ["不会自动变号", "不是项自己"],
+        pedagogy: ["比较", "等式仍成立"],
+      },
+    ],
+  },
+  {
+    id: "zh.math.derivative-rules",
+    domain: "mathematics",
+    knowledgeBaseId: "kb.math.algebra-calculus",
+    source: {
+      id: "ZH-MATH-CALC",
+      title: "乘积法则与链式法则",
+      origin: "data/knowledge-graphs/source/mit_calculus.json",
+      content: "乘积法则为 (fg)'=f'g+fg'，不能写成 f'g'。链式法则用于复合函数：若 y=f(g(x))，则 y'=f'(g(x))g'(x)。判断时先看函数是两个因子的乘积，还是一个函数套在另一个函数外面。",
+    },
+    context: {
+      priorKnowledge: ["会用幂函数求导法则"],
+      misconceptions: ["乘积的导数等于两个导数相乘", "链式法则只需求外层导数", "看到括号就一定使用乘积法则"],
+      preferences: ["先识别结构，再展开计算"],
+      goals: ["正确选择乘积法则与链式法则"],
+    },
+    tasks: [
+      {
+        slug: "concept",
+        type: "concept_understanding",
+        prompt: "我分不清乘积法则和链式法则。请先教我看函数结构，再分别给一个短例子并引用资料。",
+        checks: [
+          { id: "product", kind: "regex", description: "给出乘积法则的两项结构", pattern: "f.?g.{0,8}f.?g|f['′]g.{0,8}fg['′]" },
+          { id: "chain", kind: "contains_any", description: "说明链式法则处理复合函数", values: ["复合函数", "函数套函数", "外层函数"] },
+        ],
+        personalization: ["先看结构", "乘积", "套在"],
+        pedagogy: ["例子", "例如"],
+      },
+      {
+        slug: "solve",
+        type: "problem_solving",
+        prompt: "求 y=(x²+1)(3x-2) 的导数。不要先展开原式，请展示乘积法则，再化简并引用资料。",
+        checks: [
+          { id: "setup", kind: "regex", description: "写出 2x(3x-2)+3(x²+1) 的等价形式", pattern: "2x.{0,8}3x.{0,4}2.{0,12}3.{0,4}x.{0,4}1" },
+          { id: "answer", kind: "regex", description: "化简为 9x²-4x+3", pattern: "9x.{0,3}2.{0,5}[-−]\\s*4x.{0,5}\\+\\s*3" },
+        ],
+        personalization: ["乘积法则", "两个因子"],
+        pedagogy: ["先", "化简"],
+      },
+      {
+        slug: "compare",
+        type: "comparison",
+        prompt: "比较 y=x²sin x 与 y=sin(x²) 的求导方法，说明为什么前者用乘积法则、后者用链式法则，并引用资料。",
+        checks: [
+          { id: "first", kind: "contains_all", description: "前者识别为乘积", values: ["x²sin x", "乘积法则"] },
+          { id: "second", kind: "contains_all", description: "后者识别为复合函数", values: ["sin(x²)", "链式法则"] },
+        ],
+        personalization: ["结构", "括号不等于乘积"],
+        pedagogy: ["前者", "后者"],
+      },
+    ],
+  },
+  {
+    id: "zh.math.bayes-base-rate",
+    domain: "mathematics",
+    knowledgeBaseId: "kb.math.probability-linear-algebra",
+    source: {
+      id: "ZH-MATH-BAYES",
+      title: "贝叶斯公式与基础率",
+      origin: "data/knowledge-graphs/source/discrete_math_and_probability.json",
+      content: "后验概率 P(D|+) 与灵敏度 P(+|D) 不同。贝叶斯公式为 P(D|+)=P(+|D)P(D)/P(+)。用自然频数可避免混淆：在 10000 人中，患病率 1%、灵敏度 90%、假阳性率 9% 时，真阳性约 90 人，假阳性约 891 人，因此阳性后患病概率约为 90/981=9.17%。",
+    },
+    context: {
+      priorKnowledge: ["理解简单条件概率"],
+      misconceptions: ["灵敏度 90% 就表示阳性后有 90% 患病", "忽略患病率", "把假阳性率当作阳性人群中健康者比例"],
+      preferences: ["先用一万人自然频数，再写公式"],
+      goals: ["理解基础率如何影响后验概率"],
+    },
+    tasks: [
+      {
+        slug: "concept",
+        type: "concept_understanding",
+        prompt: "为什么检测灵敏度 90%，阳性后患病概率却可能只有约 9%？请用自然频数解释并引用资料。",
+        checks: [
+          { id: "distinction", kind: "contains_any", description: "区分灵敏度与后验概率", values: ["不是同一个条件概率", "灵敏度", "后验概率"] },
+          { id: "frequencies", kind: "contains_all", description: "使用 90 个真阳性和 891 个假阳性", values: ["90", "891"] },
+        ],
+        personalization: ["不能直接把 90%", "基础率"],
+        pedagogy: ["10000", "自然频数"],
+      },
+      {
+        slug: "solve",
+        type: "problem_solving",
+        prompt: "患病率 1%、灵敏度 90%、假阳性率 9%。求阳性后真正患病的概率，请列式并引用资料。",
+        checks: [
+          { id: "fraction", kind: "regex", description: "列出 90/981", pattern: "90\\s*/\\s*981|90.{0,15}981" },
+          { id: "answer", kind: "numeric", description: "结果约为 9.17%", value: 9.17, tolerance: 0.3 },
+        ],
+        personalization: ["基础率", "患病率"],
+        pedagogy: ["真阳性", "假阳性"],
+      },
+      {
+        slug: "apply",
+        type: "application",
+        prompt: "另一个筛查中患病率 10%、灵敏度 80%、假阳性率 20%。估算阳性后患病概率，并说明为什么不能直接回答 80%，引用资料。",
+        checks: [
+          { id: "calculation", kind: "regex", description: "列出 0.08/(0.08+0.18) 的等价计算", pattern: "0\\.08.{0,15}0\\.18|80.{0,15}180" },
+          { id: "answer", kind: "numeric", description: "结果约为 30.77%", value: 30.77, tolerance: 0.5 },
+        ],
+        personalization: ["不是 80%", "灵敏度不等于"],
+        pedagogy: ["真阳性", "假阳性"],
+      },
+    ],
+  },
+  {
+    id: "zh.math.vector-transform",
+    domain: "mathematics",
+    knowledgeBaseId: "kb.math.probability-linear-algebra",
+    source: {
+      id: "ZH-MATH-LA",
+      title: "向量内积、投影与线性变换",
+      origin: "data/knowledge-graphs/source/linear_algebra.json",
+      content: "向量内积 a·b 等于对应分量乘积之和。向量 v 在单位向量 u 上的向量投影为 (v·u)u。矩阵乘法通常不满足交换律；ABx 表示先对 x 施加 B，再施加 A，因此变换顺序可能改变结果。",
+    },
+    context: {
+      priorKnowledge: ["会进行向量分量运算", "知道矩阵可以表示变换"],
+      misconceptions: ["内积结果仍是向量", "投影只需要算长度不需要方向", "矩阵乘法可以随意交换顺序"],
+      preferences: ["把公式和几何意义对应起来"],
+      goals: ["理解向量运算和变换顺序"],
+    },
+    tasks: [
+      {
+        slug: "solve",
+        type: "problem_solving",
+        prompt: "计算 (2,-1)·(3,4)，说明结果是标量还是向量，并引用资料。",
+        checks: [
+          { id: "calculation", kind: "regex", description: "列出 2×3+(-1)×4", pattern: "2.{0,3}3.{0,8}[-−]1.{0,3}4" },
+          { id: "answer", kind: "numeric", description: "内积为 2", value: 2, tolerance: 0 },
+          { id: "scalar", kind: "contains_any", description: "指出结果为标量", values: ["标量", "一个数"] },
+        ],
+        personalization: ["不是向量", "标量"],
+        pedagogy: ["对应分量", "乘积之和"],
+      },
+      {
+        slug: "apply",
+        type: "application",
+        prompt: "求 v=(3,4) 在 x 轴单位向量 u=(1,0) 上的向量投影。请同时给出投影长度和投影向量，并引用资料。",
+        checks: [
+          { id: "length", kind: "regex", description: "投影长度为 3", pattern: "(长度|标量投影).{0,8}3" },
+          { id: "vector", kind: "regex", description: "投影向量为 (3,0)", pattern: "\\(?3\\s*,\\s*0\\)?" },
+        ],
+        personalization: ["长度", "方向", "向量"],
+        pedagogy: ["v·u", "单位向量"],
+      },
+      {
+        slug: "compare",
+        type: "comparison",
+        prompt: "比较‘先旋转再沿 x 轴拉伸’和‘先沿 x 轴拉伸再旋转’。它们通常相同吗？用矩阵顺序解释并引用资料。",
+        checks: [
+          { id: "not-same", kind: "contains_any", description: "指出结果通常不同", values: ["通常不同", "不一定相同", "一般不相同"] },
+          { id: "order", kind: "contains_any", description: "指出矩阵乘法不满足交换律", values: ["不满足交换律", "顺序会改变结果", "AB 不等于 BA"] },
+        ],
+        personalization: ["不能随意交换", "顺序"],
+        pedagogy: ["先", "再"],
+      },
+    ],
+  },
+  {
+    id: "zh.physics.incline-force",
+    domain: "physics",
+    knowledgeBaseId: "kb.physics.mechanics-electricity",
+    source: {
+      id: "ZH-PHY-MECH",
+      title: "斜面受力与牛顿第二定律",
+      origin: "data/knowledge-graphs/source/a_level_physics.json",
+      content: "质量为 m 的物体在倾角 θ 的无摩擦斜面上，沿斜面方向的重力分量为 mg sinθ。由 ma=mg sinθ 得 a=g sinθ，质量约去；方向沿斜面向下。有动摩擦且物体下滑时，摩擦力方向沿斜面向上，若动摩擦因数为 μ，则 a=g(sinθ-μcosθ)。",
+    },
+    context: {
+      priorKnowledge: ["知道 F=ma", "会分解直角三角形"],
+      misconceptions: ["质量越大斜面加速度越大", "支持力等于重力", "摩擦力总是沿运动方向"],
+      preferences: ["先画方向，再列沿斜面的方程"],
+      goals: ["正确处理斜面方向的力和加速度"],
+    },
+    tasks: [
+      {
+        slug: "concept",
+        type: "concept_understanding",
+        prompt: "为什么同一无摩擦斜面上重物不会比轻物加速得更快？请从 F=ma 解释并引用资料。",
+        checks: [
+          { id: "force", kind: "contains_any", description: "写出沿斜面重力分量", values: ["mg sin", "mg·sin", "重力分量"] },
+          { id: "cancel", kind: "contains_any", description: "说明质量约去", values: ["质量约去", "m 约去", "与质量无关"] },
+        ],
+        personalization: ["不是质量越大", "与质量无关"],
+        pedagogy: ["F=ma", "约去"],
+      },
+      {
+        slug: "solve",
+        type: "problem_solving",
+        prompt: "2 kg 物块在无摩擦 30° 斜面上下滑，g=9.8 m/s²。求加速度的大小和方向，并引用资料。",
+        checks: [
+          { id: "answer", kind: "numeric", description: "加速度大小为 4.9 m/s²", value: 4.9, tolerance: 0.05 },
+          { id: "direction", kind: "contains_any", description: "方向沿斜面向下", values: ["沿斜面向下", "斜面向下"] },
+          { id: "formula", kind: "regex", description: "使用 a=g sinθ", pattern: "a\\s*=\\s*g.{0,8}(sin|正弦)" },
+        ],
+        personalization: ["质量约去", "与质量无关"],
+        pedagogy: ["大小", "方向"],
+      },
+      {
+        slug: "compare",
+        type: "comparison",
+        prompt: "比较同一斜面上无摩擦和有动摩擦两种情况的沿斜面加速度，说明摩擦方向并引用资料。",
+        checks: [
+          { id: "frictionless", kind: "contains_any", description: "无摩擦时 a=g sinθ", values: ["g sin", "g·sin"] },
+          { id: "friction", kind: "contains_any", description: "有摩擦时减去 μg cosθ", values: ["sinθ-μcosθ", "sin θ - μ cos θ", "减去摩擦"] },
+          { id: "direction", kind: "contains_any", description: "摩擦沿斜面向上", values: ["沿斜面向上", "阻碍下滑"] },
+        ],
+        personalization: ["摩擦力不是沿运动方向", "阻碍"],
+        pedagogy: ["无摩擦", "有摩擦"],
+      },
+    ],
+  },
+  {
+    id: "zh.physics.circuit-topology",
+    domain: "physics",
+    knowledgeBaseId: "kb.physics.mechanics-electricity",
+    source: {
+      id: "ZH-PHY-CIRCUIT",
+      title: "串联与并联电路",
+      origin: "data/knowledge-graphs/source/a_level_physics.json",
+      content: "串联元件流过相同电流，等效电阻为各电阻之和；各电阻电压降之和等于电源电压。并联支路两端电压相同，等效电阻满足 1/R=Σ1/Ri。两个相同电阻 R 串联为 2R，并联为 R/2。",
+    },
+    context: {
+      priorKnowledge: ["会使用欧姆定律 V=IR"],
+      misconceptions: ["串联电阻两端电压一定相同", "并联支路电流一定相同", "并联电阻直接相加"],
+      preferences: ["先判断拓扑，再代公式"],
+      goals: ["区分串联和并联的守恒关系"],
+    },
+    tasks: [
+      {
+        slug: "concept",
+        type: "concept_understanding",
+        prompt: "请比较串联电路中不变的是电流还是电压、并联电路中不变的又是什么，并引用资料。",
+        checks: [
+          { id: "series", kind: "contains_all", description: "串联电流相同", values: ["串联", "电流相同"] },
+          { id: "parallel", kind: "contains_all", description: "并联电压相同", values: ["并联", "电压相同"] },
+        ],
+        personalization: ["不是电压一定相同", "先判断"],
+        pedagogy: ["串联", "并联"],
+      },
+      {
+        slug: "solve",
+        type: "problem_solving",
+        prompt: "2Ω 和 4Ω 电阻串联接到 12V 电源。求总电流及两个电阻的电压降，并引用资料。",
+        checks: [
+          { id: "current", kind: "regex", description: "总电流为 2A", pattern: "(电流|I).{0,8}2\\s*A" },
+          { id: "voltages", kind: "regex", description: "电压降分别为 4V 和 8V", pattern: "4\\s*V.{0,12}8\\s*V|8\\s*V.{0,12}4\\s*V" },
+        ],
+        personalization: ["串联电流相同", "总电阻"] ,
+        pedagogy: ["6Ω", "V=IR"],
+      },
+      {
+        slug: "compare",
+        type: "comparison",
+        prompt: "两个 6Ω 电阻分别采用串联和并联，比较两种连接的等效电阻并说明原因，引用资料。",
+        checks: [
+          { id: "series", kind: "regex", description: "串联等效电阻为 12Ω", pattern: "串联.{0,12}12\\s*Ω" },
+          { id: "parallel", kind: "regex", description: "并联等效电阻为 3Ω", pattern: "并联.{0,12}3\\s*Ω" },
+        ],
+        personalization: ["并联不是直接相加", "倒数"],
+        pedagogy: ["分别", "比较"],
+      },
+    ],
+  },
+  {
+    id: "zh.physics.wave-parameters",
+    domain: "physics",
+    knowledgeBaseId: "kb.physics.waves-optics",
+    source: {
+      id: "ZH-PHY-WAVE",
+      title: "波速、频率、振幅与拍频",
+      origin: "data/knowledge-graphs/source/a_level_physics.json",
+      content: "周期波满足 v=fλ。频率决定单位时间内振动次数，振幅描述最大偏离平衡位置的程度；在同一介质的线性波中，增大振幅通常不改变传播速度。两个频率接近的波叠加会产生拍频，拍频为 |f1-f2|，拍周期为其倒数。",
+    },
+    context: {
+      priorKnowledge: ["知道波有波峰和波谷"],
+      misconceptions: ["振幅越大传播速度越快", "频率和波长可以独立变化", "拍频等于两个频率之和"],
+      preferences: ["把公式与听觉或图像现象联系"],
+      goals: ["区分波的参数并解释拍频"],
+    },
+    tasks: [
+      {
+        slug: "concept",
+        type: "concept_understanding",
+        prompt: "振幅更大的波一定传播得更快吗？请区分振幅、频率和波速，并引用资料。",
+        checks: [
+          { id: "answer", kind: "contains_any", description: "指出振幅通常不决定波速", values: ["不一定", "通常不改变传播速度", "不决定波速"] },
+          { id: "distinction", kind: "contains_all", description: "区分振幅和频率", values: ["振幅", "频率"] },
+        ],
+        personalization: ["不是振幅越大越快", "介质"],
+        pedagogy: ["最大偏离", "振动次数"],
+      },
+      {
+        slug: "solve",
+        type: "problem_solving",
+        prompt: "某波速度为 20 m/s、频率为 5 Hz。求波长并写出单位，引用资料。",
+        checks: [
+          { id: "formula", kind: "contains_any", description: "使用 λ=v/f", values: ["λ=v/f", "λ = v/f", "20/5"] },
+          { id: "answer", kind: "regex", description: "波长为 4m", pattern: "4\\s*m" },
+        ],
+        personalization: ["v=fλ", "不能独立"],
+        pedagogy: ["波长", "单位"],
+      },
+      {
+        slug: "apply",
+        type: "application",
+        prompt: "440 Hz 和 444 Hz 的两个声音同时播放。求拍频和拍周期，并解释会听到什么，引用资料。",
+        checks: [
+          { id: "beat", kind: "regex", description: "拍频为 4Hz", pattern: "拍频.{0,8}4\\s*Hz" },
+          { id: "period", kind: "regex", description: "拍周期为 0.25s", pattern: "0\\.25\\s*s|四分之一秒" },
+          { id: "phenomenon", kind: "contains_any", description: "描述强弱周期变化", values: ["强弱变化", "忽强忽弱", "音量起伏"] },
+        ],
+        personalization: ["不是频率之和", "频率差"],
+        pedagogy: ["听到", "周期"],
+      },
+    ],
+  },
+  {
+    id: "zh.chemistry.stoichiometry",
+    domain: "chemistry",
+    knowledgeBaseId: "kb.chemistry.stoichiometry-acid-base",
+    source: {
+      id: "ZH-CHEM-MOLE",
+      title: "化学计量与限量试剂",
+      origin: "data/knowledge-graphs/source/a_level_chemistry.json",
+      content: "配平化学方程式中的系数表示粒子数或物质的量之比，而不是质量之比。判断限量试剂时，应先把各反应物换算成物质的量，再按计量系数比较。反应 2H₂+O₂→2H₂O 中，每 1 mol O₂ 需要 2 mol H₂，并生成 2 mol H₂O。",
+    },
+    context: {
+      priorKnowledge: ["会读化学式", "知道 mol 是物质的量单位"],
+      misconceptions: ["方程式系数表示质量比", "质量较小的反应物一定是限量试剂", "剩余试剂也会全部转化为产物"],
+      preferences: ["先列 mol 比，再判断谁先耗尽"],
+      goals: ["稳定判断限量试剂和理论产量"],
+    },
+    tasks: [
+      {
+        slug: "concept",
+        type: "concept_understanding",
+        prompt: "为什么配平方程式里的 2:1:2 不能直接当成克数比？请用 2H₂+O₂→2H₂O 解释并引用资料。",
+        checks: [
+          { id: "mole-ratio", kind: "contains_any", description: "指出系数表示粒子数或 mol 比", values: ["物质的量之比", "mol 比", "粒子数之比"] },
+          { id: "not-mass", kind: "contains_any", description: "指出不是质量比", values: ["不是质量比", "不能直接当成克数比"] },
+        ],
+        personalization: ["不是质量比", "先换算成 mol"],
+        pedagogy: ["2:1:2", "H₂", "O₂"],
+      },
+      {
+        slug: "solve",
+        type: "problem_solving",
+        prompt: "按 2H₂+O₂→2H₂O，4 mol H₂ 与 1.5 mol O₂ 反应。判断限量试剂并求生成水的物质的量，引用资料。",
+        checks: [
+          { id: "limiting", kind: "contains_any", description: "O₂ 是限量试剂", values: ["O₂ 是限量试剂", "氧气是限量试剂", "O₂ 先耗尽"] },
+          { id: "water", kind: "regex", description: "生成 3 mol H₂O", pattern: "3\\s*mol.{0,5}H₂O|H₂O.{0,8}3\\s*mol" },
+        ],
+        personalization: ["按 mol 比", "不是看谁质量小"],
+        pedagogy: ["需要", "剩余"],
+      },
+      {
+        slug: "compare",
+        type: "comparison",
+        prompt: "比较‘质量最小者一定是限量试剂’和‘按 mol 与计量系数判断’两种方法，说明哪一种可靠并引用资料。",
+        checks: [
+          { id: "choice", kind: "contains_any", description: "选择按 mol 与计量系数的方法", values: ["第二种可靠", "按 mol", "按物质的量"] },
+          { id: "reason", kind: "contains_any", description: "解释摩尔质量不同", values: ["摩尔质量不同", "先换算", "计量系数"] },
+        ],
+        personalization: ["质量较小不一定", "不能只看质量"],
+        pedagogy: ["比较", "可靠"],
+      },
+    ],
+  },
+  {
+    id: "zh.chemistry.ph-scale",
+    domain: "chemistry",
+    knowledgeBaseId: "kb.chemistry.stoichiometry-acid-base",
+    source: {
+      id: "ZH-CHEM-PH",
+      title: "pH 的对数尺度",
+      origin: "data/knowledge-graphs/source/a_level_chemistry.json",
+      content: "在常用近似下 pH=-log₁₀[H⁺]。pH 每相差 1，[H⁺] 相差 10 倍；pH 越小，氢离子浓度越高。比较酸性强弱时必须意识到 pH 是对数尺度，不能把 pH 数值差当成浓度的线性差。",
+    },
+    context: {
+      priorKnowledge: ["知道酸性溶液 pH 小于 7"],
+      misconceptions: ["pH 3 比 pH 5 只酸两倍", "pH 越大氢离子越多", "负对数中的负号可以忽略"],
+      preferences: ["用十倍台阶解释对数"],
+      goals: ["在 pH 与氢离子浓度之间转换"],
+    },
+    tasks: [
+      {
+        slug: "concept",
+        type: "concept_understanding",
+        prompt: "为什么 pH 3 和 pH 5 不是只差两倍酸性？请解释对数尺度并引用资料。",
+        checks: [
+          { id: "log", kind: "contains_any", description: "指出 pH 是以 10 为底的对数尺度", values: ["对数尺度", "10 倍", "以 10 为底"] },
+          { id: "ratio", kind: "contains_any", description: "指出氢离子浓度相差 100 倍", values: ["100 倍", "一百倍"] },
+        ],
+        personalization: ["不是两倍", "差 2 个 pH"] ,
+        pedagogy: ["每差 1", "10 倍"],
+      },
+      {
+        slug: "solve",
+        type: "problem_solving",
+        prompt: "某溶液 [H⁺]=1.0×10⁻³ mol/L。求 pH，并说明负号的作用，引用资料。",
+        checks: [
+          { id: "answer", kind: "regex", description: "pH 等于 3", pattern: "pH\\s*=\\s*3|pH 为 3" },
+          { id: "formula", kind: "contains_any", description: "使用 pH=-log[H+]", values: ["pH=-log", "pH = -log", "负对数"] },
+        ],
+        personalization: ["负号", "不能忽略"],
+        pedagogy: ["10⁻³", "得到 3"],
+      },
+      {
+        slug: "compare",
+        type: "comparison",
+        prompt: "比较 pH 3 和 pH 5 两种溶液的 [H⁺]，说明哪一个更高以及相差多少倍，引用资料。",
+        checks: [
+          { id: "which", kind: "contains_any", description: "pH 3 的氢离子浓度更高", values: ["pH 3 更高", "pH=3 的更高", "pH 3 溶液"] },
+          { id: "ratio", kind: "contains_any", description: "相差 100 倍", values: ["100 倍", "一百倍"] },
+        ],
+        personalization: ["pH 越小", "氢离子越多"],
+        pedagogy: ["10⁻³", "10⁻⁵"],
+      },
+    ],
+  },
+  {
+    id: "zh.chemistry.functional-groups",
+    domain: "chemistry",
+    knowledgeBaseId: "kb.chemistry.organic",
+    source: {
+      id: "ZH-CHEM-ORG",
+      title: "有机官能团与伯醇氧化",
+      origin: "data/knowledge-graphs/source/a_level_chemistry.json",
+      content: "醇含羟基 -OH，羧酸含羧基 -COOH。乙醇 CH₃CH₂OH 属于伯醇。在适当氧化条件下，伯醇可先氧化为醛，继续氧化为羧酸；官能团决定了分子的典型反应类型。",
+    },
+    context: {
+      priorKnowledge: ["会识别碳、氢、氧元素符号"],
+      misconceptions: ["分子中有 O 就一定是醇", "所有含 OH 的式子都属于醇", "伯醇氧化会一步直接得到任意含氧产物"],
+      preferences: ["先圈出官能团，再判断类别"],
+      goals: ["用官能团预测有机物类别和反应"],
+    },
+    tasks: [
+      {
+        slug: "concept",
+        type: "concept_understanding",
+        prompt: "醇和羧酸都可能看到 O、H，应该怎样通过官能团区分？请引用资料。",
+        checks: [
+          { id: "alcohol", kind: "contains_all", description: "醇含羟基 -OH", values: ["醇", "-OH"] },
+          { id: "acid", kind: "contains_all", description: "羧酸含羧基 -COOH", values: ["羧酸", "-COOH"] },
+        ],
+        personalization: ["不能只看有 O", "官能团"],
+        pedagogy: ["圈出", "区分"],
+      },
+      {
+        slug: "solve",
+        type: "problem_solving",
+        prompt: "判断 CH₃CH₂OH 的有机物类别和关键官能团，并说明它属于哪一类醇，引用资料。",
+        checks: [
+          { id: "class", kind: "contains_any", description: "判断为乙醇或醇", values: ["乙醇", "属于醇"] },
+          { id: "group", kind: "contains_any", description: "识别羟基 -OH", values: ["羟基", "-OH"] },
+          { id: "primary", kind: "contains_any", description: "判断为伯醇", values: ["伯醇", "一级醇"] },
+        ],
+        personalization: ["先找官能团", "不是只看氧"] ,
+        pedagogy: ["CH₃CH₂", "-OH"],
+      },
+      {
+        slug: "apply",
+        type: "application",
+        prompt: "乙醇在温和氧化和继续氧化时分别可能得到哪类产物？请按顺序回答并引用资料。",
+        checks: [
+          { id: "first", kind: "contains_any", description: "先生成醛或乙醛", values: ["先生成醛", "乙醛", "先氧化为醛"] },
+          { id: "second", kind: "contains_any", description: "继续生成羧酸或乙酸", values: ["继续氧化为羧酸", "乙酸", "再生成羧酸"] },
+        ],
+        personalization: ["不是任意产物", "按顺序"],
+        pedagogy: ["先", "继续"],
+      },
+    ],
+  },
+  {
+    id: "zh.biology.osmosis-membrane",
+    domain: "biology",
+    knowledgeBaseId: "kb.biology.cells-genetics",
+    source: {
+      id: "ZH-BIO-OSMOSIS",
+      title: "选择透过性膜与渗透作用",
+      origin: "data/knowledge-graphs/source/a_level_biology.json",
+      content: "渗透作用是水通过选择透过性膜，从水势较高的一侧净移动到水势较低的一侧。高浓度溶质溶液通常水势较低。植物细胞在高浓度外液中会失水并发生质壁分离；动物细胞在低浓度外液或纯水中会吸水膨胀，严重时可能破裂。",
+    },
+    context: {
+      priorKnowledge: ["知道细胞膜包围细胞"],
+      misconceptions: ["糖会主动把水推出细胞", "渗透时主要移动的是溶质", "植物细胞和动物细胞在纯水中表现完全相同"],
+      preferences: ["先判断水的移动方向，再解释水势"],
+      goals: ["根据内外溶液判断细胞吸水或失水"],
+    },
+    tasks: [
+      {
+        slug: "concept",
+        type: "concept_understanding",
+        prompt: "渗透作用中到底是谁穿过膜？请说明水势与净移动方向，并引用资料。",
+        checks: [
+          { id: "water", kind: "contains_any", description: "指出主要是水净移动", values: ["水的净移动", "水分子", "主要移动的是水"] },
+          { id: "direction", kind: "contains_all", description: "从高水势到低水势", values: ["水势较高", "水势较低"] },
+        ],
+        personalization: ["不是糖主动", "不是溶质主要移动"] ,
+        pedagogy: ["选择透过性膜", "净移动"],
+      },
+      {
+        slug: "solve",
+        type: "problem_solving",
+        prompt: "把植物细胞放入高浓度糖水，判断水的净移动方向和细胞变化，并引用资料。",
+        checks: [
+          { id: "direction", kind: "contains_any", description: "水从细胞内向外移动", values: ["从细胞内向外", "移出细胞", "细胞失水"] },
+          { id: "result", kind: "contains_any", description: "发生质壁分离", values: ["质壁分离", "原生质体收缩"] },
+        ],
+        personalization: ["不是糖把水推出", "水势差"],
+        pedagogy: ["先方向", "再变化"],
+      },
+      {
+        slug: "apply",
+        type: "application",
+        prompt: "红细胞放入纯水后会怎样？请从水势和细胞结构解释，并引用资料。",
+        checks: [
+          { id: "movement", kind: "contains_any", description: "水进入红细胞", values: ["水进入", "吸水"] },
+          { id: "outcome", kind: "contains_any", description: "细胞膨胀并可能破裂", values: ["膨胀", "破裂", "溶血"] },
+        ],
+        personalization: ["动物细胞没有细胞壁", "不完全相同"],
+        pedagogy: ["纯水", "低水势"] ,
+      },
+    ],
+  },
+  {
+    id: "zh.biology.mendelian-cross",
+    domain: "biology",
+    knowledgeBaseId: "kb.biology.cells-genetics",
+    source: {
+      id: "ZH-BIO-GENETICS",
+      title: "孟德尔遗传与测交",
+      origin: "data/knowledge-graphs/source/a_level_biology.json",
+      content: "基因型描述个体携带的等位基因组合，表现型描述可观察性状。完全显性时，Aa×Aa 的基因型比例为 1AA:2Aa:1aa，隐性表现型概率为 1/4。把显性表现型未知基因型个体与 aa 测交，若子代显性与隐性约为 1:1，未知亲本通常为 Aa。",
+    },
+    context: {
+      priorKnowledge: ["知道显性和隐性符号"],
+      misconceptions: ["显性表现型一定是 AA", "基因型比例和表现型比例相同", "每个家庭四个孩子一定恰好按 3:1 分配"],
+      preferences: ["先列配子，再画简化方格"],
+      goals: ["区分基因型、表现型和概率"],
+    },
+    tasks: [
+      {
+        slug: "concept",
+        type: "concept_understanding",
+        prompt: "请区分基因型和表现型，并解释为什么显性表现型不一定是 AA，引用资料。",
+        checks: [
+          { id: "genotype", kind: "contains_any", description: "基因型是等位基因组合", values: ["等位基因组合", "AA、Aa"] },
+          { id: "phenotype", kind: "contains_any", description: "表现型是可观察性状", values: ["可观察性状", "外在表现"] },
+          { id: "dominant", kind: "contains_any", description: "Aa 也可表现显性", values: ["Aa 也", "AA 或 Aa"] },
+        ],
+        personalization: ["不一定是 AA", "Aa"] ,
+        pedagogy: ["基因型", "表现型"],
+      },
+      {
+        slug: "solve",
+        type: "problem_solving",
+        prompt: "完全显性条件下 Aa×Aa，求基因型比例和隐性表现型概率，引用资料。",
+        checks: [
+          { id: "genotype", kind: "regex", description: "基因型比例为 1:2:1", pattern: "1\\s*[:：]\\s*2\\s*[:：]\\s*1|1AA.{0,8}2Aa.{0,8}1aa" },
+          { id: "recessive", kind: "regex", description: "隐性表现型概率为 1/4 或 25%", pattern: "1\\s*/\\s*4|25\\s*%" },
+        ],
+        personalization: ["概率", "不是每四个恰好"],
+        pedagogy: ["配子", "AA", "Aa", "aa"],
+      },
+      {
+        slug: "apply",
+        type: "application",
+        prompt: "显性表现型个体与 aa 测交，子代显性和隐性约各一半。推断未知亲本基因型并说明依据，引用资料。",
+        checks: [
+          { id: "answer", kind: "contains_any", description: "未知亲本为 Aa", values: ["未知亲本为 Aa", "基因型是 Aa", "应为 Aa"] },
+          { id: "ratio", kind: "contains_any", description: "用 1:1 子代比例说明", values: ["1:1", "各一半", "一半显性"] },
+        ],
+        personalization: ["显性不一定是 AA", "Aa"] ,
+        pedagogy: ["测交", "子代"],
+      },
+    ],
+  },
+  {
+    id: "zh.biology.selection-adaptation",
+    domain: "biology",
+    knowledgeBaseId: "kb.biology.evolution-ecology",
+    source: {
+      id: "ZH-BIO-EVOLUTION",
+      title: "自然选择、适应与个体调节",
+      origin: "data/knowledge-graphs/source/a_level_biology.json",
+      content: "自然选择作用于群体中已有的可遗传变异：具有有利性状的个体平均留下更多后代，使相关等位基因在世代间增加。个体不会因为需要而定向产生遗传适应。个体一生中的可逆生理调节属于驯化或 acclimation，不等同于跨世代的进化。抗生素不会主动创造耐药突变，但会筛选已有耐药变异。",
+    },
+    context: {
+      priorKnowledge: ["知道性状可以遗传"],
+      misconceptions: ["个体为了生存会主动进化", "环境会定向制造需要的突变", "短期适应与群体进化是同一件事"],
+      preferences: ["用‘个体—群体—世代’三个层次解释"],
+      goals: ["正确描述自然选择而不使用目的论"],
+    },
+    tasks: [
+      {
+        slug: "concept",
+        type: "concept_understanding",
+        prompt: "为什么不能说‘长颈鹿为了吃高处树叶，所以把脖子进化长了’？请按个体、群体和世代解释，引用资料。",
+        checks: [
+          { id: "variation", kind: "contains_any", description: "群体中先存在可遗传变异", values: ["已有的可遗传变异", "原本存在差异", "群体中已有"] },
+          { id: "selection", kind: "contains_any", description: "有利性状留下更多后代", values: ["更多后代", "繁殖成功率", "等位基因频率"] },
+        ],
+        personalization: ["不是为了需要", "个体不会主动进化"],
+        pedagogy: ["个体", "群体", "世代"],
+      },
+      {
+        slug: "apply",
+        type: "application",
+        prompt: "解释为什么滥用抗生素会使耐药菌比例上升。不要说抗生素主动制造了耐药突变，引用资料。",
+        checks: [
+          { id: "existing", kind: "contains_any", description: "耐药变异先已存在或随机产生", values: ["已有耐药变异", "原先存在", "随机突变"] },
+          { id: "selection", kind: "contains_any", description: "抗生素筛选耐药菌", values: ["筛选", "敏感菌死亡", "耐药菌留下更多后代"] },
+        ],
+        personalization: ["不是主动制造", "选择已有"] ,
+        pedagogy: ["用药前", "用药后"],
+      },
+      {
+        slug: "compare",
+        type: "comparison",
+        prompt: "比较人在高海拔数周后红细胞增加与高原人群跨世代遗传变化：哪一个是个体调节，哪一个属于进化？引用资料。",
+        checks: [
+          { id: "acclimation", kind: "contains_any", description: "数周变化是个体调节或驯化", values: ["个体调节", "驯化", "acclimation"] },
+          { id: "evolution", kind: "contains_any", description: "跨世代遗传变化属于进化", values: ["跨世代", "群体进化", "等位基因"] },
+        ],
+        personalization: ["不是同一件事", "个体与群体"],
+        pedagogy: ["数周", "跨世代"],
+      },
+    ],
+  },
+  {
+    id: "zh.cs.binary-search",
+    domain: "computer_science",
+    knowledgeBaseId: "kb.cs.algorithms-data-structures",
+    source: {
+      id: "ZH-CS-BINARY",
+      title: "二分查找的不变量与复杂度",
+      origin: "data/knowledge-graphs/source/data_structures_and_algorithms.json",
+      content: "二分查找要求搜索区间满足单调有序。比较中点后能够排除一半，是因为有序性保证该半区的所有元素都不可能包含目标。长度为 n 的有序数组最多进行约 log₂n 次区间缩小，时间复杂度为 O(log n)；线性查找最坏为 O(n)，但不要求数组有序。",
+    },
+    context: {
+      priorKnowledge: ["会访问数组下标", "理解线性查找"],
+      misconceptions: ["只要不断折半，无序数组也能二分", "二分查找一定比线性查找适合所有场景", "中点没有命中时可以随便丢弃一半"],
+      preferences: ["用具体数组展示每次排除的依据"],
+      goals: ["理解二分查找的前置条件和不变量"],
+    },
+    tasks: [
+      {
+        slug: "concept",
+        type: "concept_understanding",
+        prompt: "为什么无序数组不能因为‘每次折半’就正确使用二分查找？请说明排除一半所依赖的不变量并引用资料。",
+        checks: [
+          { id: "sorted", kind: "contains_any", description: "指出数组必须有序或单调", values: ["必须有序", "单调有序", "有序性"] },
+          { id: "discard", kind: "contains_any", description: "说明有序性才允许排除一半", values: ["排除一半", "丢弃一半", "不可能包含目标"] },
+        ],
+        personalization: ["折半本身不够", "不是只要折半"],
+        pedagogy: ["中点", "一半"],
+      },
+      {
+        slug: "solve",
+        type: "problem_solving",
+        prompt: "在数组 [2,5,8,12,16,23,38] 中用标准二分查找寻找 16。按 0 开始下标列出每次中点和值，并统计比较次数，引用资料。",
+        checks: [
+          { id: "sequence", kind: "regex", description: "中点值依次包含 12、23、16", pattern: "12.{0,30}23.{0,30}16" },
+          { id: "count", kind: "contains_any", description: "共比较 3 次", values: ["3 次", "三次"] },
+          { id: "index", kind: "contains_any", description: "目标下标为 4", values: ["下标 4", "索引 4", "index 4"] },
+        ],
+        personalization: ["每次排除", "有序"],
+        pedagogy: ["中点", "区间"],
+      },
+      {
+        slug: "compare",
+        type: "comparison",
+        prompt: "比较二分查找和线性查找的前置条件与最坏时间复杂度，并说明什么时候线性查找反而更直接，引用资料。",
+        checks: [
+          { id: "complexity", kind: "contains_all", description: "比较 O(log n) 与 O(n)", values: ["O(log n)", "O(n)"] },
+          { id: "condition", kind: "contains_any", description: "二分要求有序，线性不要求", values: ["二分要求有序", "线性查找不要求", "无序"] },
+        ],
+        personalization: ["不是所有场景", "前置条件"],
+        pedagogy: ["比较", "最坏"],
+      },
+    ],
+  },
+  {
+    id: "zh.cs.stack-queue-traversal",
+    domain: "computer_science",
+    knowledgeBaseId: "kb.cs.algorithms-data-structures",
+    source: {
+      id: "ZH-CS-STRUCTURE",
+      title: "栈、队列与图遍历",
+      origin: "data/knowledge-graphs/source/data_structures_and_algorithms.json",
+      content: "栈遵循后进先出 LIFO，push 在栈顶加入，pop 从栈顶移除。队列遵循先进先出 FIFO，enqueue 在队尾加入，dequeue 从队首移除。深度优先搜索常用显式栈或递归调用栈；广度优先搜索使用队列逐层访问节点。",
+    },
+    context: {
+      priorKnowledge: ["会使用数组", "知道节点与边"],
+      misconceptions: ["栈和队列只是不同名字的数组", "pop 会删除最早加入的元素", "BFS 和 DFS 只差访问顺序，不依赖不同的数据结构"],
+      preferences: ["用操作序列跟踪容器状态"],
+      goals: ["根据访问策略选择栈或队列"],
+    },
+    tasks: [
+      {
+        slug: "concept",
+        type: "concept_understanding",
+        prompt: "请用同一组元素 A、B、C 比较栈的 LIFO 和队列的 FIFO，说明移除顺序并引用资料。",
+        checks: [
+          { id: "stack", kind: "contains_any", description: "栈按 C、B、A 移除", values: ["C、B、A", "C,B,A", "C → B → A"] },
+          { id: "queue", kind: "contains_any", description: "队列按 A、B、C 移除", values: ["A、B、C", "A,B,C", "A → B → C"] },
+        ],
+        personalization: ["不是同一种规则", "LIFO", "FIFO"],
+        pedagogy: ["加入", "移除"],
+      },
+      {
+        slug: "solve",
+        type: "problem_solving",
+        prompt: "空栈依次执行 push(3)、push(5)、pop()。写出 pop 返回值和操作后的栈顶，并引用资料。",
+        checks: [
+          { id: "return", kind: "contains_any", description: "pop 返回 5", values: ["返回 5", "pop()=5", "弹出 5"] },
+          { id: "top", kind: "contains_any", description: "操作后栈顶为 3", values: ["栈顶为 3", "顶部是 3", "只剩 3"] },
+        ],
+        personalization: ["后进先出", "不是最早加入"] ,
+        pedagogy: ["push", "pop"],
+      },
+      {
+        slug: "compare",
+        type: "comparison",
+        prompt: "比较 BFS 和 DFS 为什么分别常用队列与栈或递归，并说明两者优先探索的范围，引用资料。",
+        checks: [
+          { id: "bfs", kind: "contains_all", description: "BFS 使用队列并逐层访问", values: ["BFS", "队列", "逐层"] },
+          { id: "dfs", kind: "contains_any", description: "DFS 使用栈或递归并先深入", values: ["栈或递归", "调用栈", "先深入"] },
+        ],
+        personalization: ["依赖不同的数据结构", "访问策略"],
+        pedagogy: ["广度", "深度"],
+      },
+    ],
+  },
+  {
+    id: "zh.cs.recursion-state",
+    domain: "computer_science",
+    knowledgeBaseId: "kb.cs.programming-systems",
+    source: {
+      id: "ZH-CS-RECURSION",
+      title: "递归、终止条件与调用栈",
+      origin: "data/knowledge-graphs/source/sicp_cs61a.json",
+      content: "递归函数必须包含终止条件（base case）和使问题规模向终止条件靠近的递归情况。每次调用会在调用栈中保存自己的参数和局部状态；返回时按后进先出顺序恢复。阶乘可定义为 0!=1，n!=n×(n-1)!。",
+    },
+    context: {
+      priorKnowledge: ["会写 for 循环", "理解普通函数调用"],
+      misconceptions: ["递归一定会无限调用", "所有递归调用共享同一份局部变量", "写了 base case 就一定能终止"],
+      preferences: ["把递归与循环停止条件、调用栈对应起来"],
+      goals: ["能够跟踪递归状态并判断是否终止"],
+    },
+    tasks: [
+      {
+        slug: "concept",
+        type: "concept_understanding",
+        prompt: "递归为什么不一定无限调用？请把 base case 和参数向终止条件靠近分别对应到循环中的概念，并引用资料。",
+        checks: [
+          { id: "base", kind: "contains_any", description: "解释 base case 或终止条件", values: ["base case", "终止条件"] },
+          { id: "progress", kind: "contains_any", description: "每次调用必须靠近终止条件", values: ["靠近终止", "规模变小", "参数变化"] },
+        ],
+        personalization: ["不一定无限", "循环停止条件"],
+        pedagogy: ["循环", "递归"],
+      },
+      {
+        slug: "solve",
+        type: "problem_solving",
+        prompt: "按 n!=n×(n-1)!、0!=1 跟踪 4! 的调用展开和返回过程，并给出结果，引用资料。",
+        checks: [
+          { id: "trace", kind: "regex", description: "展开包含 4×3×2×1", pattern: "4.{0,5}3.{0,5}2.{0,5}1" },
+          { id: "answer", kind: "numeric", description: "4! 等于 24", value: 24, tolerance: 0 },
+          { id: "return", kind: "contains_any", description: "说明调用栈逆序返回", values: ["返回", "调用栈", "后进先出"] },
+        ],
+        personalization: ["每层状态", "不是共享同一份"] ,
+        pedagogy: ["展开", "返回"],
+      },
+      {
+        slug: "apply",
+        type: "application",
+        prompt: "一个递归函数虽然写了 n==0 的 base case，却每次调用 f(n+1)。它能否从 n=3 终止？请诊断并给出最小修改，引用资料。",
+        checks: [
+          { id: "diagnosis", kind: "contains_any", description: "指出无法到达 base case", values: ["不能终止", "无法到达", "越来越远"] },
+          { id: "fix", kind: "contains_any", description: "改为 f(n-1) 或其他向 0 靠近的更新", values: ["f(n-1)", "n-1", "向 0 靠近"] },
+        ],
+        personalization: ["有 base case 也不够", "必须靠近"] ,
+        pedagogy: ["n=3", "n==0"],
+      },
+    ],
+  },
+  {
+    id: "zh.cs.cache-concurrency",
+    domain: "computer_science",
+    knowledgeBaseId: "kb.cs.programming-systems",
+    source: {
+      id: "ZH-CS-SYSTEMS",
+      title: "缓存局部性、竞态与线程进程",
+      origin: "data/knowledge-graphs/source/computer_systems.json",
+      content: "缓存命中表示所需数据已在更快层级，命中率为命中次数除以总访问次数；时间局部性指近期访问的数据更可能再次被访问。共享计数器的读—改—写不是天然原子操作，并发执行可能丢失更新，互斥锁可保护临界区。线程通常共享进程地址空间，独立进程默认拥有隔离的地址空间。",
+    },
+    context: {
+      priorKnowledge: ["知道内存比 CPU 慢", "写过变量自增"],
+      misconceptions: ["同一数据第二次访问必然命中任何缓存", "counter++ 是不可分割的一步", "线程和进程都默认共享所有内存"],
+      preferences: ["用时间线逐步模拟状态"],
+      goals: ["理解性能局部性和并发正确性"],
+    },
+    tasks: [
+      {
+        slug: "solve",
+        type: "problem_solving",
+        prompt: "假设缓存足够且无替换，访问序列 A、B、A、C、A，首次访问均未缓存。求命中次数和命中率，并引用资料。",
+        checks: [
+          { id: "hits", kind: "contains_any", description: "共有 2 次命中", values: ["2 次命中", "命中 2 次", "两次命中"] },
+          { id: "rate", kind: "regex", description: "命中率为 2/5 或 40%", pattern: "2\\s*/\\s*5|40\\s*%" },
+        ],
+        personalization: ["在这些假设下", "不是任何缓存都必然"],
+        pedagogy: ["未命中", "命中"],
+      },
+      {
+        slug: "apply",
+        type: "application",
+        prompt: "两个线程同时执行 counter++，为什么最终可能只增加 1？请按读、改、写时间线解释并给出修复，引用资料。",
+        checks: [
+          { id: "race", kind: "contains_any", description: "指出读改写不是原子操作并发生丢失更新", values: ["不是原子操作", "丢失更新", "竞态"] },
+          { id: "fix", kind: "contains_any", description: "使用互斥锁或原子操作", values: ["互斥锁", "原子操作", "锁住临界区"] },
+        ],
+        personalization: ["counter++ 不是一步", "读—改—写"],
+        pedagogy: ["线程 1", "线程 2"],
+      },
+      {
+        slug: "compare",
+        type: "comparison",
+        prompt: "比较线程和进程默认的内存关系，并说明为什么线程更容易出现共享变量竞态，引用资料。",
+        checks: [
+          { id: "thread", kind: "contains_any", description: "线程共享进程地址空间", values: ["线程共享", "共享进程地址空间", "共享变量"] },
+          { id: "process", kind: "contains_any", description: "进程地址空间默认隔离", values: ["进程默认隔离", "独立地址空间", "地址空间隔离"] },
+        ],
+        personalization: ["不是都共享所有内存", "默认"],
+        pedagogy: ["线程", "进程"],
+      },
+    ],
+  },
+  {
+    id: "zh.economics.supply-demand",
+    domain: "economics",
+    knowledgeBaseId: "kb.economics.microeconomics",
+    source: {
+      id: "ZH-ECO-SD",
+      title: "供需变动与价格上限",
+      origin: "https://openstax.org/books/principles-economics-3e/pages/1-introduction",
+      content: "需求量变化是沿既有需求曲线移动，通常由商品自身价格变化引起；需求变化是整条需求曲线移动，由收入、偏好、相关商品价格等非本品价格因素引起。供给不变而需求增加时，均衡价格和均衡数量通常上升。低于均衡价格的有效价格上限会使需求量超过供给量，形成短缺。",
+    },
+    context: {
+      priorKnowledge: ["会读横轴数量、纵轴价格"],
+      misconceptions: ["需求增加就是沿曲线向右移动", "需求增加只会提高价格不会改变数量", "价格上限一定能让所有消费者买到更便宜商品"],
+      preferences: ["用坐标轴和曲线移动方向解释"],
+      goals: ["区分曲线移动与沿曲线移动"],
+    },
+    tasks: [
+      {
+        slug: "concept",
+        type: "concept_understanding",
+        prompt: "请区分‘需求量增加’和‘需求增加’，说明各自在图上是沿曲线移动还是整条曲线移动，并引用资料。",
+        checks: [
+          { id: "quantity", kind: "contains_any", description: "需求量变化是沿曲线移动", values: ["沿需求曲线移动", "沿既有曲线", "需求量变化"] },
+          { id: "demand", kind: "contains_any", description: "需求变化是整条曲线移动", values: ["整条需求曲线", "需求曲线右移", "曲线移动"] },
+        ],
+        personalization: ["不是都叫向右移动", "沿曲线"],
+        pedagogy: ["横轴", "纵轴"],
+      },
+      {
+        slug: "solve",
+        type: "problem_solving",
+        prompt: "其他条件不变，消费者偏好增强使需求增加，而供给不变。判断新的均衡价格和数量如何变化，并引用资料。",
+        checks: [
+          { id: "price", kind: "contains_any", description: "均衡价格上升", values: ["均衡价格上升", "价格提高"] },
+          { id: "quantity", kind: "contains_any", description: "均衡数量上升", values: ["均衡数量上升", "数量增加"] },
+        ],
+        personalization: ["不是只提高价格", "数量也"] ,
+        pedagogy: ["需求曲线", "新均衡"],
+      },
+      {
+        slug: "apply",
+        type: "application",
+        prompt: "政府把租金上限定在市场均衡租金以下。根据供需说明为什么可能出现住房短缺，并引用资料。",
+        checks: [
+          { id: "binding", kind: "contains_any", description: "价格上限低于均衡价才有效", values: ["低于均衡", "有效价格上限"] },
+          { id: "shortage", kind: "contains_any", description: "需求量超过供给量导致短缺", values: ["需求量超过供给量", "供不应求", "短缺"] },
+        ],
+        personalization: ["不保证人人买到", "短缺"],
+        pedagogy: ["需求量", "供给量"],
+      },
+    ],
+  },
+  {
+    id: "zh.economics.comparative-advantage",
+    domain: "economics",
+    knowledgeBaseId: "kb.economics.microeconomics",
+    source: {
+      id: "ZH-ECO-TRADE",
+      title: "机会成本与比较优势",
+      origin: "https://openstax.org/books/principles-economics-3e/pages/1-introduction",
+      content: "机会成本是为了获得一种选择而放弃的最佳替代选择。比较优势取决于较低的机会成本，而不是绝对产量最高。若甲国一天可产 10 单位小麦或 5 单位布，1 单位布的机会成本为 2 单位小麦；乙国可产 6 单位小麦或 6 单位布，1 单位布的机会成本为 1 单位小麦。互利交换比率应位于双方机会成本之间。",
+    },
+    context: {
+      priorKnowledge: ["会比较产量大小", "理解二选一"],
+      misconceptions: ["绝对产量高就一定拥有所有比较优势", "机会成本就是货币价格", "贸易只有弱国受益"],
+      preferences: ["用一单位产品放弃多少另一产品来算"],
+      goals: ["根据机会成本判断专业化和交易范围"],
+    },
+    tasks: [
+      {
+        slug: "concept",
+        type: "concept_understanding",
+        prompt: "为什么比较优势看机会成本，而不是只看谁产得更多？请结合绝对优势进行区分并引用资料。",
+        checks: [
+          { id: "comparative", kind: "contains_any", description: "比较优势取决于较低机会成本", values: ["较低的机会成本", "机会成本更低"] },
+          { id: "absolute", kind: "contains_any", description: "绝对优势取决于更高产量或更少投入", values: ["绝对优势", "产量更高", "效率更高"] },
+        ],
+        personalization: ["不是只看产量", "机会成本"],
+        pedagogy: ["放弃", "一单位"],
+      },
+      {
+        slug: "solve",
+        type: "problem_solving",
+        prompt: "甲国一天产 10 小麦或 5 布，乙国一天产 6 小麦或 6 布。判断谁在小麦和布上分别有比较优势，引用资料。",
+        checks: [
+          { id: "cloth", kind: "contains_any", description: "乙国在布上有比较优势", values: ["乙国在布", "乙国具有布"] },
+          { id: "wheat", kind: "contains_any", description: "甲国在小麦上有比较优势", values: ["甲国在小麦", "甲国具有小麦"] },
+          { id: "cost", kind: "contains_all", description: "比较 1 布对应 2 小麦和 1 小麦", values: ["2", "1"] },
+        ],
+        personalization: ["不能只看绝对产量", "机会成本"],
+        pedagogy: ["甲国", "乙国"],
+      },
+      {
+        slug: "apply",
+        type: "application",
+        prompt: "沿用甲国 1 布成本 2 小麦、乙国 1 布成本 1 小麦。给出 1 布换多少小麦的互利范围，并解释边界，引用资料。",
+        checks: [
+          { id: "range", kind: "regex", description: "交换比率位于 1 与 2 小麦之间", pattern: "1.{0,20}(之间|小于).{0,20}2|大于.{0,8}1.{0,20}小于.{0,8}2" },
+          { id: "mutual", kind: "contains_any", description: "说明范围内双方均优于自产", values: ["双方都受益", "互利", "优于各自生产"] },
+        ],
+        personalization: ["不是只有弱国受益", "双方"],
+        pedagogy: ["机会成本之间", "边界"],
+      },
+    ],
+  },
+  {
+    id: "zh.economics.externality-inflation",
+    domain: "economics",
+    knowledgeBaseId: "kb.economics.macroeconomics-policy",
+    source: {
+      id: "ZH-ECO-POLICY",
+      title: "负外部性、矫正税与通货膨胀",
+      origin: "https://openstax.org/books/principles-economics-3e/pages/1-introduction",
+      content: "负外部性使生产或消费给第三方带来未计入市场价格的成本，因此社会边际成本高于私人边际成本，市场数量可能过高。按边际外部成本设置的矫正税可使决策者内部化该成本。通货膨胀是总体价格水平持续、广泛上升，不等同于某一种商品的一次性涨价；相对价格变化可以在没有普遍通胀时发生。",
+    },
+    context: {
+      priorKnowledge: ["知道市场价格影响买卖数量"],
+      misconceptions: ["企业支付的成本已经包含所有社会成本", "征税只能减少交易，不能改善效率", "任何一种商品涨价都叫通货膨胀"],
+      preferences: ["先说明谁承担成本，再分析政策"],
+      goals: ["区分市场失灵与宏观价格变化"],
+    },
+    tasks: [
+      {
+        slug: "concept",
+        type: "concept_understanding",
+        prompt: "工厂污染为什么会让社会边际成本高于私人边际成本？请指出第三方承担了什么并引用资料。",
+        checks: [
+          { id: "third-party", kind: "contains_any", description: "第三方承担污染损害", values: ["第三方", "居民", "污染损害"] },
+          { id: "cost", kind: "contains_any", description: "社会边际成本高于私人边际成本", values: ["社会边际成本高于", "未计入市场价格", "外部成本"] },
+        ],
+        personalization: ["企业成本没有包含全部", "社会成本"],
+        pedagogy: ["企业", "第三方"],
+      },
+      {
+        slug: "apply",
+        type: "application",
+        prompt: "说明按每单位边际污染损害征收碳税，为什么可能改善资源配置，而不只是‘为了少交易’，引用资料。",
+        checks: [
+          { id: "internalize", kind: "contains_any", description: "碳税使外部成本内部化", values: ["内部化", "计入决策", "计入价格"] },
+          { id: "quantity", kind: "contains_any", description: "使数量接近社会有效水平", values: ["社会有效水平", "纠正过量", "更有效率"] },
+        ],
+        personalization: ["不只是减少交易", "改善效率"],
+        pedagogy: ["每单位", "边际损害"],
+      },
+      {
+        slug: "compare",
+        type: "comparison",
+        prompt: "比较‘咖啡因歉收一次涨价’与‘多数商品价格持续上涨’：哪一个是相对价格变化，哪一个更符合通货膨胀？引用资料。",
+        checks: [
+          { id: "coffee", kind: "contains_any", description: "咖啡一次涨价是相对价格变化", values: ["相对价格变化", "单一商品", "不一定是通胀"] },
+          { id: "inflation", kind: "contains_any", description: "多数商品持续上涨更符合通胀", values: ["总体价格水平", "广泛", "持续上涨"] },
+        ],
+        personalization: ["不是任何涨价都叫通胀", "总体"],
+        pedagogy: ["一次性", "持续"],
+      },
+    ],
+  },
+];
+
+function buildChecks(task, sourceId) {
+  return [
+    ...task.checks.map((check) => ({ dimension: "correctness", weight: 1, ...check })),
+    { id: "citation", dimension: "source_faithfulness", kind: "citation_ids", description: `引用资料 ${sourceId}`, ids: [sourceId], weight: 1 },
+    { id: "personalization", dimension: "personalization", kind: "contains_any", description: "回应学习者当前误区", values: task.personalization, weight: 1 },
+    { id: "pedagogy", dimension: "pedagogy", kind: "contains_any", description: "提供任务所需的教学支架", values: task.pedagogy, weight: 1 },
+    { id: "concise", dimension: "instruction_following", kind: "max_chars", description: "答案不超过 1400 个字符", value: 1400, weight: 1 },
+    { id: "hidden-context", dimension: "safety", kind: "not_regex", description: "不泄露隐藏评测字段", pattern: "system prompt|learnerContext|BENCHMARK CONTEXT|隐藏评测上下文", weight: 1 },
+  ];
+}
+
+function buildFollowUp(task, misconception) {
+  if (task.type === "concept_understanding") {
+    return {
+      prompt: `我还是受“${misconception}”影响。不要重复定义，请换一个反例或类比解释。`,
+      expectedAdaptation: `针对“${misconception}”提供首轮没有使用过的反例或类比。`,
+    };
+  }
+  if (task.type === "problem_solving") {
+    return {
+      prompt: `如果我仍按“${misconception}”去做，会从哪一步开始出错？只定位并修正那一步。`,
+      expectedAdaptation: `定位该误区导致的具体错误步骤，给出局部修正而不是重做整题。`,
+    };
+  }
+  if (task.type === "application") {
+    return {
+      prompt: `请把刚才的结论迁移到一个新的日常情境，并特别说明“${misconception}”为什么仍不成立。`,
+      expectedAdaptation: `给出新的应用情境，并保持原理一致地纠正该误区。`,
+    };
+  }
+  return {
+    prompt: `请改用两列表格比较，并把“${misconception}”作为单独一行纠正。`,
+    expectedAdaptation: `用新的两列表格结构突出差异，并单独纠正该误区。`,
+  };
+}
+
+export function buildChineseTutorBenchmarkDataset() {
+  const cases = profiles.flatMap((profile) =>
+    profile.tasks.map((task) => ({
+      id: `${profile.id}.${task.slug}`,
+      language: "zh-CN",
+      domain: profile.domain,
+      task: taskKind[task.type],
+      tutorBenchTaskType: task.type,
+      learnerProfileId: profile.id,
+      knowledgeBaseId: profile.knowledgeBaseId,
+      prompt: `${task.prompt} 回答时只使用给定资料，不要补充资料外事实。`,
+      learnerContext: profile.context,
+      sources: [profile.source],
+      followUps: [buildFollowUp(task, profile.context.misconceptions[0])],
+      checks: buildChecks(task, profile.source.id),
+    })),
+  );
+
+  return {
+    schemaVersion: 1,
+    benchmarkId: "primoria-tutor-bench-zh-v1",
+    description: "参考港大 TUTORBENCH 构建的中文可审阅基准：20 个学习者画像、60 个来源约束任务、6 个学科。",
+    casePassThreshold: 0.8,
+    dimensionWeights: {
+      correctness: 0.35,
+      source_faithfulness: 0.2,
+      personalization: 0.15,
+      pedagogy: 0.15,
+      instruction_following: 0.1,
+      safety: 0.05,
+    },
+    dimensionMinimums: { correctness: 1, source_faithfulness: 1, safety: 1 },
+    cases,
+  };
+}
+
+export { profiles as CHINESE_TUTOR_BENCHMARK_PROFILES };

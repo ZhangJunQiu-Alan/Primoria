@@ -15,11 +15,16 @@
     "test:interactive-tool": "node tests/interactive-tool.unit.mjs",
     "test:internal-auth": "node tests/internal-auth.unit.mjs",
     "test:interactive-routing-contract": "node tests/interactive-routing-contract.unit.mjs",
+    "test:tutor-benchmark": "node tests/tutor-benchmark.unit.mjs",
     "test:runtime-worker": "node tests/runtime-worker.unit.mjs",
     "test:scripted-model": "node --test tests/scripted-openai-server.unit.mjs",
     "test:graph-e2e": "node tests/graph-invoke.e2e.mjs",
     "test:runtime:db": "node tests/runtime-store.db.mjs && node tests/runtime-server.db.e2e.mjs",
-    "test": "pnpm test:course-store && pnpm test:context-trim && pnpm test:agui-events && pnpm test:interactive-tool && pnpm test:internal-auth && pnpm test:interactive-routing-contract && pnpm test:runtime-worker && pnpm test:scripted-model",
+    "test": "pnpm test:course-store && pnpm test:context-trim && pnpm test:agui-events && pnpm test:interactive-tool && pnpm test:internal-auth && pnpm test:interactive-routing-contract && pnpm test:tutor-benchmark && pnpm test:runtime-worker && pnpm test:scripted-model",
+    "eval:tutor:validate": "node scripts/run-tutor-benchmark.mjs --validate-only",
+    "eval:tutor": "if [ -f .env ]; then set -a; . ./.env; set +a; fi; node scripts/run-tutor-benchmark.mjs",
+    "eval:tutor:zh:build": "node scripts/build-chinese-tutor-benchmark.mjs",
+    "eval:tutor:zh:check": "node scripts/build-chinese-tutor-benchmark.mjs --check",
     "test:integration": "pnpm test:graph-e2e"
   },
   "dependencies": {
