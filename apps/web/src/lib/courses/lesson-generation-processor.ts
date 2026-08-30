@@ -1,7 +1,8 @@
 import type { CourseBlock } from "./types";
 import type { TutorProviderSettings } from "../ai/types";
 import { planLesson, repairLessonPlan, type LessonPlannerInvoke } from "../ai/course-generation/lesson-planner";
-import { compileLessonPlanIr, type CompiledLessonPlan } from "../ai/course-generation/lesson-plan-compiler";
+import { compileLessonPlanIr, type CompiledLessonPlan, type MethodArmOptions } from "../ai/course-generation/lesson-plan-compiler";
+import { recordLearningEvent } from "../learning-events/store";
 import {
   batchBlockJobs,
   batchCheckpointKey,
@@ -102,6 +103,43 @@ function isRepairablePlanError(error: unknown): error is IrParseError | Coverage
   return error instanceof IrParseError || error instanceof CoverageError;
 }
 
+/** Randomized delivery-form assignment is opt-in and off by default — the arm
+ * changes what a learner is actually taught, so it must never switch on
+ * implicitly. The seed is the lesson id because the plan is recompiled from the
+ * stored raw IR on retry and checkpoint recovery; a fresh draw at that point
+ * would split one learner across both arms of the same slot. */
+function methodArmOptions(ctx: LessonGenerationContext): MethodArmOptions {
+  return { enabled: process.env.PRIMORIA_METHOD_ARMS === "1", seed: ctx.lesson.id };
+}
+
+/** Write the assignment before the learner sees the lesson, so an arm can never
+ * be attributed after its outcome is known. One row per (block, concept) joins
+ * straight onto `quiz.submit`. Ids are deterministic, so the repeated compiles
+ * on retry and recovery insert exactly once. Best-effort: a missing assignment
+ * row costs one case of analysis coverage and must not fail the lesson. */
+async function recordMethodArms(
+  target: { ownerId: string; courseId: string; lessonId: string },
+  plan: CompiledLessonPlan,
+): Promise<void> {
+  for (const arm of plan.methodArms) {
+    for (const conceptId of arm.conceptIds) {
+      await recordLearningEvent({
+        type: "plan.method_arm",
+        id: `arm_${target.lessonId}__${arm.blockOrder}__${conceptId}`,
+        ownerId: target.ownerId,
+        courseId: target.courseId,
+        lessonId: target.lessonId,
+        conceptId,
+        factor: arm.factor,
+        role: arm.role,
+        blockOrder: arm.blockOrder,
+        planned: arm.planned,
+        delivered: arm.delivered,
+      });
+    }
+  }
+}
+
 async function mapLimit<T>(items: T[], limit: number, fn: (item: T) => Promise<void>): Promise<void> {
   let cursor = 0;
   async function worker() {
@@ -129,6 +167,7 @@ export async function processLessonGenerationJob(
   assertFenced(await store.updateStage(fence, { stage: "planning", progressCompleted: 0, progressTotal: 0 }));
 
   const plan = await loadOrCreatePlan(fence, ctx, store, settings, options.plannerInvoke);
+  await recordMethodArms({ ownerId, courseId, lessonId }, plan);
   const batches = batchBlockJobs(plan.jobs);
   // progress_total = number of batches + validation + saving (doc §9.2).
   const progressTotal = batches.length + 2;
@@ -195,7 +234,10 @@ async function loadOrCreatePlan(
     try {
       const payload = planCp.payload as PlanCheckpointPayload;
       // Recompile from the stored raw IR so the running compiler is authoritative.
-      return compileLessonPlanIr(payload.rawIr, ctx.kg, { contextHint: ctx.course.topic });
+      return compileLessonPlanIr(payload.rawIr, ctx.kg, {
+        contextHint: ctx.course.topic,
+        methodArms: methodArmOptions(ctx),
+      });
     } catch {
       // Stored plan is incompatible with the current compiler — drop it and the
       // dependent batches, then plan fresh in this same attempt (doc §9.2).
@@ -207,11 +249,11 @@ async function loadOrCreatePlan(
     let rawIr = await planLesson(ctx.kg, { contextHint: ctx.course.topic, settings, invoke: plannerInvoke });
     let compiled: CompiledLessonPlan;
     try {
-      compiled = compileLessonPlanIr(rawIr, ctx.kg, { contextHint: ctx.course.topic });
+      compiled = compileLessonPlanIr(rawIr, ctx.kg, { contextHint: ctx.course.topic, methodArms: methodArmOptions(ctx) });
     } catch (error) {
       if (!isRepairablePlanError(error)) throw error;
       rawIr = await repairLessonPlan(ctx.kg, rawIr, error, { contextHint: ctx.course.topic, settings, invoke: plannerInvoke });
-      compiled = compileLessonPlanIr(rawIr, ctx.kg, { contextHint: ctx.course.topic });
+      compiled = compileLessonPlanIr(rawIr, ctx.kg, { contextHint: ctx.course.topic, methodArms: methodArmOptions(ctx) });
     }
     const payload: PlanCheckpointPayload = { rawIr, compiledPlan: compiled };
     assertFenced(await store.upsertCheckpoint(fence, { checkpointKey: PLAN_KEY, kind: "plan", payload, versions: CURRENT_CHECKPOINT_VERSIONS }));
