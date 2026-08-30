@@ -1,8 +1,9 @@
 {
   "graphId": "senior_secondary_mathematics",
   "subject": "Mathematics",
+  "reviewStatus": "needs_review",
   "generatedFrom": "data/knowledge-graphs/source/senior_secondary_mathematics.json",
-  "generatedAt": "2026-07-19",
+  "generatedAt": "2026-08-27",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -64,7 +65,12 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "cn_sh_math_topic_inequalities_and_optimisation",
+          "hard": false
+        }
+      ],
       "prereqTopics": [
         "cn_sh_math_topic_set_foundations"
       ],
@@ -90,8 +96,10 @@
         }
       ],
       "successors": [],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "cn_sh_math_topic_sets_and_logic"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "cn_sh_math_topic_function_representations",
@@ -115,7 +123,7 @@
       "successors": [
         {
           "topicId": "cn_sh_math_topic_function_qualitative_properties",
-          "hard": false
+          "hard": true
         },
         {
           "topicId": "cn_sh_math_topic_elementary_function_behaviour",
@@ -150,7 +158,12 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "cn_sh_math_topic_elementary_function_behaviour",
+          "hard": false
+        }
+      ],
       "prereqTopics": [
         "cn_sh_math_topic_function_representations"
       ],
@@ -183,7 +196,8 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "cn_sh_math_topic_function_representations"
+        "cn_sh_math_topic_function_representations",
+        "cn_sh_math_topic_function_qualitative_properties"
       ],
       "isRoot": false
     },
@@ -209,7 +223,7 @@
       "successors": [
         {
           "topicId": "cn_sh_math_topic_function_modelling",
-          "hard": false
+          "hard": true
         }
       ],
       "prereqTopics": [],
@@ -316,7 +330,12 @@
           "defaultOrder": 2
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "cn_sh_math_topic_complex_foundations",
+          "hard": false
+        }
+      ],
       "prereqTopics": [
         "cn_sh_math_topic_plane_vector_foundations"
       ],
@@ -350,11 +369,13 @@
       "successors": [
         {
           "topicId": "cn_sh_math_topic_complex_operations",
-          "hard": false
+          "hard": true
         }
       ],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "cn_sh_math_topic_vector_triangle_applications"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "cn_sh_math_topic_complex_operations",
@@ -375,7 +396,12 @@
           "defaultOrder": 2
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "cn_sh_math_topic_solid_structures",
+          "hard": false
+        }
+      ],
       "prereqTopics": [
         "cn_sh_math_topic_complex_foundations"
       ],
@@ -406,9 +432,16 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [],
-      "prereqTopics": [],
-      "isRoot": true
+      "successors": [
+        {
+          "topicId": "cn_sh_math_topic_spatial_relations",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "cn_sh_math_topic_complex_operations"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "cn_sh_math_topic_spatial_relations",
@@ -441,8 +474,10 @@
           "hard": false
         }
       ],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "cn_sh_math_topic_solid_structures"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "cn_sh_math_topic_spatial_criteria_and_proof",
@@ -764,7 +799,12 @@
           "defaultOrder": 2
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "cn_sh_math_topic_categorical_association",
+          "hard": false
+        }
+      ],
       "prereqTopics": [],
       "isRoot": true
     },
@@ -788,8 +828,10 @@
         }
       ],
       "successors": [],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "cn_sh_math_topic_quantitative_association"
+      ],
+      "isRoot": false
     }
   ],
   "conceptEdges": [
@@ -836,6 +878,24 @@
       "reason": "选择函数模型需要先能区分常见模型的增长规律。"
     },
     {
+      "from": "cn_sh_math_compare_growth_rates",
+      "to": "cn_sh_math_interpret_model_parameters",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题二.23 为 必修·主题二.24 的前置要求。"
+    },
+    {
+      "from": "cn_sh_math_complex_addition_geometry",
+      "to": "cn_sh_math_solid_structures",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.10 为 必修·主题三.11 的前置要求。"
+    },
+    {
+      "from": "cn_sh_math_complex_algebraic_representation",
+      "to": "cn_sh_math_complex_addition_geometry",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.09 为 必修·主题三.10 的前置要求。"
+    },
+    {
       "from": "cn_sh_math_complex_algebraic_representation",
       "to": "cn_sh_math_complex_argand_representation",
       "strength": "soft",
@@ -854,16 +914,40 @@
       "reason": "解释复数加减的几何意义需要先掌握复平面的点和向量表示。"
     },
     {
+      "from": "cn_sh_math_complex_argand_representation",
+      "to": "cn_sh_math_complex_arithmetic",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.09 为 必修·主题三.10 的前置要求。"
+    },
+    {
       "from": "cn_sh_math_complex_arithmetic",
       "to": "cn_sh_math_complex_addition_geometry",
       "strength": "soft",
       "reason": "把加减运算解释为向量运算需要先能完成复数加减。"
     },
     {
+      "from": "cn_sh_math_complex_arithmetic",
+      "to": "cn_sh_math_solid_structures",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.10 为 必修·主题三.11 的前置要求。"
+    },
+    {
       "from": "cn_sh_math_complex_introduction",
       "to": "cn_sh_math_complex_algebraic_representation",
       "strength": "soft",
       "reason": "复数的代数表示和相等关系建立在数系扩充与复数定义之上。"
+    },
+    {
+      "from": "cn_sh_math_complex_introduction",
+      "to": "cn_sh_math_complex_argand_representation",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.08 为 必修·主题三.09 的前置要求。"
+    },
+    {
+      "from": "cn_sh_math_conic_context",
+      "to": "cn_sh_math_ellipse",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·主题二.16 为 选择性必修·主题二.17 的前置要求。"
     },
     {
       "from": "cn_sh_math_contingency_table",
@@ -884,10 +968,52 @@
       "reason": "实施分层抽样前必须明确总体结构、样本和数据来源。"
     },
     {
+      "from": "cn_sh_math_distribution_percentiles",
+      "to": "cn_sh_math_statistical_inference_uncertainty",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题四.13 为 必修·主题四.14 的前置要求。"
+    },
+    {
+      "from": "cn_sh_math_ellipse",
+      "to": "cn_sh_math_hyperbola",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·主题二.17 为 选择性必修·主题二.18 的前置要求。"
+    },
+    {
+      "from": "cn_sh_math_ellipse",
+      "to": "cn_sh_math_parabola",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·主题二.17 为 选择性必修·主题二.18 的前置要求。"
+    },
+    {
+      "from": "cn_sh_math_function_extrema",
+      "to": "cn_sh_math_function_parity",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题二.04 为 必修·主题二.05 的前置要求。"
+    },
+    {
       "from": "cn_sh_math_function_monotonicity",
       "to": "cn_sh_math_function_extrema",
       "strength": "soft",
       "reason": "由函数变化趋势识别区间或全局最大值和最小值。"
+    },
+    {
+      "from": "cn_sh_math_function_monotonicity",
+      "to": "cn_sh_math_function_parity",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题二.04 为 必修·主题二.05 的前置要求。"
+    },
+    {
+      "from": "cn_sh_math_function_parity",
+      "to": "cn_sh_math_function_periodicity",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题二.05 为 必修·主题二.06 的前置要求。"
+    },
+    {
+      "from": "cn_sh_math_function_periodicity",
+      "to": "cn_sh_math_power_functions",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题二.06 为 必修·主题二.07 的前置要求。"
     },
     {
       "from": "cn_sh_math_function_representations",
@@ -944,10 +1070,52 @@
       "reason": "比较对数与其他函数增长速度需要先理解对数函数图像和单调性。"
     },
     {
+      "from": "cn_sh_math_logical_conditions",
+      "to": "cn_sh_math_quantifiers_negation",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题一.05 为 必修·主题一.06 的前置要求。"
+    },
+    {
+      "from": "cn_sh_math_oblique_drawings",
+      "to": "cn_sh_math_spatial_axioms",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.13 为 必修·主题三.14 的前置要求。"
+    },
+    {
+      "from": "cn_sh_math_piecewise_functions",
+      "to": "cn_sh_math_function_extrema",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题二.03 为 必修·主题二.04 的前置要求。"
+    },
+    {
+      "from": "cn_sh_math_piecewise_functions",
+      "to": "cn_sh_math_function_monotonicity",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题二.03 为 必修·主题二.04 的前置要求。"
+    },
+    {
       "from": "cn_sh_math_plane_vector_basis_coordinates",
       "to": "cn_sh_math_vector_applications",
       "strength": "soft",
       "reason": "向量解决平面问题需要先能建立基底和坐标表示。"
+    },
+    {
+      "from": "cn_sh_math_power_functions",
+      "to": "cn_sh_math_real_exponents_laws",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题二.07 为 必修·主题二.08 的前置要求。"
+    },
+    {
+      "from": "cn_sh_math_quantifiers_negation",
+      "to": "cn_sh_math_inequality_properties",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题一.06 为 必修·主题一.07 的前置要求。"
+    },
+    {
+      "from": "cn_sh_math_regression_prediction_limits",
+      "to": "cn_sh_math_contingency_table",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·主题三.17 为 选择性必修·主题三.18 的前置要求。"
     },
     {
       "from": "cn_sh_math_sample_correlation",
@@ -992,6 +1160,18 @@
       "reason": "选择抽样方案需要理解简单随机抽样的适用条件和限制。"
     },
     {
+      "from": "cn_sh_math_simple_random_sampling",
+      "to": "cn_sh_math_stratified_sampling",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题四.07 为 必修·主题四.08 的前置要求。"
+    },
+    {
+      "from": "cn_sh_math_sine_cosine_laws",
+      "to": "cn_sh_math_complex_introduction",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.07 为 必修·主题三.08 的前置要求。"
+    },
+    {
       "from": "cn_sh_math_solid_structures",
       "to": "cn_sh_math_oblique_drawings",
       "strength": "soft",
@@ -1004,6 +1184,12 @@
       "reason": "表面积和体积计算需要先识别几何体结构及组成。"
     },
     {
+      "from": "cn_sh_math_solid_surface_volume",
+      "to": "cn_sh_math_oblique_drawings",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.12 为 必修·主题三.13 的前置要求。"
+    },
+    {
       "from": "cn_sh_math_spatial_axioms",
       "to": "cn_sh_math_spatial_parallel_criteria",
       "strength": "soft",
@@ -1011,9 +1197,21 @@
     },
     {
       "from": "cn_sh_math_spatial_axioms",
+      "to": "cn_sh_math_spatial_parallel_properties",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.14 为 必修·主题三.15 的前置要求。"
+    },
+    {
+      "from": "cn_sh_math_spatial_axioms",
       "to": "cn_sh_math_spatial_perpendicular_criteria",
       "strength": "soft",
       "reason": "空间垂直判定建立在点、线、面基本事实和位置关系上。"
+    },
+    {
+      "from": "cn_sh_math_spatial_axioms",
+      "to": "cn_sh_math_spatial_perpendicular_properties",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.14 为 必修·主题三.15 的前置要求。"
     },
     {
       "from": "cn_sh_math_spatial_coordinates_distance",
@@ -1034,6 +1232,18 @@
       "reason": "证明空间位置关系命题还需要能正确使用平行性质定理。"
     },
     {
+      "from": "cn_sh_math_spatial_parallel_properties",
+      "to": "cn_sh_math_spatial_parallel_criteria",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.15 为 必修·主题三.16 的前置要求。"
+    },
+    {
+      "from": "cn_sh_math_spatial_parallel_properties",
+      "to": "cn_sh_math_spatial_perpendicular_criteria",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.15 为 必修·主题三.16 的前置要求。"
+    },
+    {
       "from": "cn_sh_math_spatial_perpendicular_criteria",
       "to": "cn_sh_math_solid_geometry_proofs",
       "strength": "soft",
@@ -1044,6 +1254,18 @@
       "to": "cn_sh_math_solid_geometry_proofs",
       "strength": "soft",
       "reason": "证明空间位置关系命题还需要能正确使用垂直性质定理。"
+    },
+    {
+      "from": "cn_sh_math_spatial_perpendicular_properties",
+      "to": "cn_sh_math_spatial_parallel_criteria",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.15 为 必修·主题三.16 的前置要求。"
+    },
+    {
+      "from": "cn_sh_math_spatial_perpendicular_properties",
+      "to": "cn_sh_math_spatial_perpendicular_criteria",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.15 为 必修·主题三.16 的前置要求。"
     },
     {
       "from": "cn_sh_math_spatial_vector_basis",
@@ -1058,16 +1280,34 @@
       "reason": "选择抽样方案需要理解分层抽样的适用条件和限制。"
     },
     {
+      "from": "cn_sh_math_trig_product_sum_half_angle",
+      "to": "cn_sh_math_trig_modelling",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题二.18 为 必修·主题二.19 的前置要求。"
+    },
+    {
       "from": "cn_sh_math_trig_reduction_formulas",
       "to": "cn_sh_math_trig_product_sum_half_angle",
       "strength": "soft",
       "reason": "积和与半角变换建立在基本诱导及和差、倍角关系之上。"
     },
     {
+      "from": "cn_sh_math_vector_applications",
+      "to": "cn_sh_math_sine_cosine_laws",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.06 为 必修·主题三.07 的前置要求。"
+    },
+    {
       "from": "cn_sh_math_vector_projection",
       "to": "cn_sh_math_vector_applications",
       "strength": "soft",
       "reason": "力学和几何中的分解应用依赖向量投影。"
+    },
+    {
+      "from": "cn_sh_math_venn_diagrams",
+      "to": "cn_sh_math_logical_conditions",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题一.04 为 必修·主题一.05 的前置要求。"
     }
   ]
 }

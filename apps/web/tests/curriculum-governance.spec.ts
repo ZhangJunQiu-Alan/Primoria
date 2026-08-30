@@ -155,6 +155,10 @@ const singaporeLowerSecondaryScience = readJson<Graph>(
   resolve(repoRoot, "data/knowledge-graphs/source/singapore_lower_secondary_science.json"),
 );
 
+// Edge counts include the prerequisite edges derived from official syllabus
+// outcome order by scripts/derive-overlay-prereq-edges.mjs. Those edges are
+// review_status: needs_review and inert at runtime until a reviewer approves
+// them; they still belong to the authored corpus these assertions guard.
 describe("curriculum governance", () => {
   it("covers only the approved jurisdictions and keeps all proposals pending", () => {
     expect(new Set(frameworks.map((framework) => framework.jurisdiction))).toEqual(
@@ -287,7 +291,7 @@ describe("curriculum governance", () => {
     expect(practiceSet?.items).toHaveLength(14);
     expect(seniorSecondaryPhysics.nodes.filter((node) => node.kind === "concept")).toHaveLength(73);
     expect(seniorSecondaryPhysics.nodes.filter((node) => node.kind === "topic")).toHaveLength(28);
-    expect(seniorSecondaryPhysics.edges).toHaveLength(18);
+    expect(seniorSecondaryPhysics.edges).toHaveLength(48);
     expect(seniorSecondaryPhysics.edges.every((edge) => edge.reason.length > 0)).toBe(true);
     expect(
       seniorSecondaryPhysics.nodes
@@ -349,7 +353,7 @@ describe("curriculum governance", () => {
     expect(practiceSet?.items).toHaveLength(30);
     expect(seniorSecondaryChemistry.nodes.filter((node) => node.kind === "concept")).toHaveLength(49);
     expect(seniorSecondaryChemistry.nodes.filter((node) => node.kind === "topic")).toHaveLength(17);
-    expect(seniorSecondaryChemistry.edges).toHaveLength(16);
+    expect(seniorSecondaryChemistry.edges).toHaveLength(34);
     expect(seniorSecondaryChemistry.edges.every((edge) => edge.reason.length > 0)).toBe(true);
     expect(
       seniorSecondaryChemistry.nodes
@@ -394,7 +398,7 @@ describe("curriculum governance", () => {
     expect(practiceSet?.items).toHaveLength(2);
     expect(seniorSecondaryBiology.nodes.filter((node) => node.kind === "concept")).toHaveLength(75);
     expect(seniorSecondaryBiology.nodes.filter((node) => node.kind === "topic")).toHaveLength(26);
-    expect(seniorSecondaryBiology.edges).toHaveLength(29);
+    expect(seniorSecondaryBiology.edges).toHaveLength(50);
     expect(seniorSecondaryBiology.edges.every((edge) => edge.reason.length > 0)).toBe(true);
 
     const mappings = new Map(mappingSet?.mappings.map((mapping) => [mapping.requirement_id, mapping] as const));
@@ -448,7 +452,7 @@ describe("curriculum governance", () => {
     expect(practiceSet?.items).toHaveLength(6);
     expect(singaporeH2Mathematics.nodes.filter((node) => node.kind === "concept")).toHaveLength(33);
     expect(singaporeH2Mathematics.nodes.filter((node) => node.kind === "topic")).toHaveLength(14);
-    expect(singaporeH2Mathematics.edges).toHaveLength(12);
+    expect(singaporeH2Mathematics.edges).toHaveLength(20);
     expect(singaporeH2Mathematics.edges.every((edge) => edge.reason.length > 0)).toBe(true);
 
     const practiceRequirementIds = new Set(practiceSet?.items.flatMap((item) => item.requirement_ids));
@@ -521,7 +525,7 @@ describe("curriculum governance", () => {
     const concepts = singaporeLowerSecondaryScience.nodes.filter((node) => node.kind === "concept");
     expect(concepts).toHaveLength(32);
     expect(singaporeLowerSecondaryScience.nodes.filter((node) => node.kind === "topic")).toHaveLength(15);
-    expect(singaporeLowerSecondaryScience.edges).toHaveLength(15);
+    expect(singaporeLowerSecondaryScience.edges).toHaveLength(19);
     expect(singaporeLowerSecondaryScience.edges.every((edge) => edge.reason.length > 0)).toBe(true);
     expect(
       concepts.every((concept) => {
@@ -578,7 +582,7 @@ describe("curriculum governance", () => {
     const concepts = singaporeH2Physics.nodes.filter((node) => node.kind === "concept");
     expect(concepts).toHaveLength(8);
     expect(singaporeH2Physics.nodes.filter((node) => node.kind === "topic")).toHaveLength(3);
-    expect(singaporeH2Physics.edges).toHaveLength(2);
+    expect(singaporeH2Physics.edges).toHaveLength(4);
     expect(singaporeH2Physics.edges.every((edge) => edge.reason.length > 0)).toBe(true);
     expect(
       concepts.every((concept) => {
@@ -635,7 +639,7 @@ describe("curriculum governance", () => {
     const concepts = singaporeH2Chemistry.nodes.filter((node) => node.kind === "concept");
     expect(concepts).toHaveLength(18);
     expect(singaporeH2Chemistry.nodes.filter((node) => node.kind === "topic")).toHaveLength(7);
-    expect(singaporeH2Chemistry.edges).toHaveLength(5);
+    expect(singaporeH2Chemistry.edges).toHaveLength(6);
     expect(singaporeH2Chemistry.edges.every((edge) => edge.reason.length > 0)).toBe(true);
     expect(
       concepts.every((concept) => {
@@ -698,7 +702,7 @@ describe("curriculum governance", () => {
     const concepts = singaporeH2Biology.nodes.filter((node) => node.kind === "concept");
     expect(concepts).toHaveLength(42);
     expect(singaporeH2Biology.nodes.filter((node) => node.kind === "topic")).toHaveLength(14);
-    expect(singaporeH2Biology.edges).toHaveLength(18);
+    expect(singaporeH2Biology.edges).toHaveLength(31);
     expect(singaporeH2Biology.edges.every((edge) => edge.reason.length > 0)).toBe(true);
     expect(
       concepts.every((concept) => {
@@ -768,7 +772,7 @@ describe("curriculum governance", () => {
     expect(practiceSet?.items).toHaveLength(10);
     expect(singaporeSecondaryMathematics.nodes.filter((node) => node.kind === "concept")).toHaveLength(53);
     expect(singaporeSecondaryMathematics.nodes.filter((node) => node.kind === "topic")).toHaveLength(18);
-    expect(singaporeSecondaryMathematics.edges).toHaveLength(18);
+    expect(singaporeSecondaryMathematics.edges).toHaveLength(58);
 
     expect(
       mappings.get("req_sg_sec_math_2020_g3_sec1_prime_factorisation")?.canonical_ids,

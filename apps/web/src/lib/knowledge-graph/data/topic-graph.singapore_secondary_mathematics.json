@@ -1,8 +1,9 @@
 {
   "graphId": "singapore_secondary_mathematics",
   "subject": "Mathematics",
+  "reviewStatus": "needs_review",
   "generatedFrom": "data/knowledge-graphs/source/singapore_secondary_mathematics.json",
-  "generatedAt": "2026-07-19",
+  "generatedAt": "2026-08-27",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -30,7 +31,12 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "sg_sec_math_topic_ratio_percentage",
+          "hard": false
+        }
+      ],
       "prereqTopics": [],
       "isRoot": true
     },
@@ -63,10 +69,20 @@
         {
           "topicId": "sg_sec_math_topic_quantitative_contexts",
           "hard": false
+        },
+        {
+          "topicId": "sg_sec_math_topic_linear_foundations",
+          "hard": false
+        },
+        {
+          "topicId": "sg_sec_math_topic_expansion_factorisation",
+          "hard": false
         }
       ],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "sg_sec_math_topic_number_structure"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "sg_sec_math_topic_quantitative_contexts",
@@ -93,7 +109,12 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "sg_sec_math_topic_algebra_language",
+          "hard": false
+        }
+      ],
       "prereqTopics": [
         "sg_sec_math_topic_ratio_percentage"
       ],
@@ -130,8 +151,10 @@
           "hard": false
         }
       ],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "sg_sec_math_topic_quantitative_contexts"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "sg_sec_math_topic_linear_foundations",
@@ -160,11 +183,16 @@
       ],
       "successors": [
         {
+          "topicId": "sg_sec_math_topic_expansion_factorisation",
+          "hard": false
+        },
+        {
           "topicId": "sg_sec_math_topic_representations_constraints",
           "hard": false
         }
       ],
       "prereqTopics": [
+        "sg_sec_math_topic_ratio_percentage",
         "sg_sec_math_topic_algebra_language"
       ],
       "isRoot": false
@@ -194,9 +222,17 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [],
-      "prereqTopics": [],
-      "isRoot": true
+      "successors": [
+        {
+          "topicId": "sg_sec_math_topic_algebraic_fractions",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "sg_sec_math_topic_ratio_percentage",
+        "sg_sec_math_topic_linear_foundations"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "sg_sec_math_topic_algebraic_fractions",
@@ -217,9 +253,16 @@
           "defaultOrder": 2
         }
       ],
-      "successors": [],
-      "prereqTopics": [],
-      "isRoot": true
+      "successors": [
+        {
+          "topicId": "sg_sec_math_topic_construction_similarity",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "sg_sec_math_topic_expansion_factorisation"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "sg_sec_math_topic_representations_constraints",
@@ -246,7 +289,12 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "sg_sec_math_topic_triangle_similarity_trig",
+          "hard": false
+        }
+      ],
       "prereqTopics": [
         "sg_sec_math_topic_linear_foundations"
       ],
@@ -277,7 +325,12 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "sg_sec_math_topic_quadratic_equations",
+          "hard": false
+        }
+      ],
       "prereqTopics": [],
       "isRoot": true
     },
@@ -307,8 +360,10 @@
         }
       ],
       "successors": [],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "sg_sec_math_topic_indices_gradient"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "sg_sec_math_topic_elementary_geometry",
@@ -335,7 +390,16 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "sg_sec_math_topic_construction_similarity",
+          "hard": false
+        },
+        {
+          "topicId": "sg_sec_math_topic_triangle_reasoning",
+          "hard": false
+        }
+      ],
       "prereqTopics": [],
       "isRoot": true
     },
@@ -366,12 +430,23 @@
       ],
       "successors": [
         {
+          "topicId": "sg_sec_math_topic_triangle_reasoning",
+          "hard": false
+        },
+        {
           "topicId": "sg_sec_math_topic_triangle_similarity_trig",
+          "hard": false
+        },
+        {
+          "topicId": "sg_sec_math_topic_circle_geometry",
           "hard": false
         }
       ],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "sg_sec_math_topic_algebraic_fractions",
+        "sg_sec_math_topic_elementary_geometry"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "sg_sec_math_topic_triangle_reasoning",
@@ -404,8 +479,11 @@
           "hard": false
         }
       ],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "sg_sec_math_topic_elementary_geometry",
+        "sg_sec_math_topic_construction_similarity"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "sg_sec_math_topic_triangle_similarity_trig",
@@ -432,8 +510,14 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "sg_sec_math_topic_circle_geometry",
+          "hard": false
+        }
+      ],
       "prereqTopics": [
+        "sg_sec_math_topic_representations_constraints",
         "sg_sec_math_topic_construction_similarity",
         "sg_sec_math_topic_triangle_reasoning"
       ],
@@ -465,8 +549,11 @@
         }
       ],
       "successors": [],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "sg_sec_math_topic_construction_similarity",
+        "sg_sec_math_topic_triangle_similarity_trig"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "sg_sec_math_topic_data_foundations",
@@ -571,10 +658,34 @@
       "reason": "把恒等式反向用于因式分解需要先能正确展开并识别结构。"
     },
     {
+      "from": "sg_sec_math_algebra_expansion_identities",
+      "to": "sg_sec_math_formula_rearrangement",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC2·02 为 G3·SEC2·03 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_algebra_notation_evaluation",
+      "to": "sg_sec_math_algebra_translation",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·08 为 G3·SEC1·09 的前置要求。"
+    },
+    {
       "from": "sg_sec_math_algebra_notation_evaluation",
       "to": "sg_sec_math_linear_expressions",
       "strength": "soft",
       "reason": "一次式化简依赖对代数记号和代入意义的理解。"
+    },
+    {
+      "from": "sg_sec_math_algebra_translation",
+      "to": "sg_sec_math_nth_term_patterns",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·09 为 G3·SEC1·10 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_algebraic_fractions_add_subtract",
+      "to": "sg_sec_math_congruence_similarity_enlargement",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC3·4·12 为 G2·SEC3·4·13 的前置要求。"
     },
     {
       "from": "sg_sec_math_algebraic_fractions_multiply_divide",
@@ -589,10 +700,34 @@
       "reason": "三角形角关系和分类需要先能识别并计算基本角关系。"
     },
     {
+      "from": "sg_sec_math_approximation_estimation",
+      "to": "sg_sec_math_ratio",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·04 为 G3·SEC1·05 的前置要求。"
+    },
+    {
       "from": "sg_sec_math_central_tendency",
       "to": "sg_sec_math_standard_deviation_compare",
       "strength": "soft",
       "reason": "联合比较中心与离散程度需要先会计算并选择集中趋势指标。"
+    },
+    {
+      "from": "sg_sec_math_circle_chord_tangent",
+      "to": "sg_sec_math_circle_angles",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·12 为 G3·SEC3·4·13 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_congruence_similarity_enlargement",
+      "to": "sg_sec_math_pythagoras",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC2·14 为 G3·SEC2·15 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_congruence_similarity_foundations",
+      "to": "sg_sec_math_congruence_similarity_enlargement",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC2·13 为 G3·SEC2·14 的前置要求。"
     },
     {
       "from": "sg_sec_math_congruence_similarity_foundations",
@@ -601,10 +736,94 @@
       "reason": "使用判定条件和尺度比前需要理解对应角边及比例关系。"
     },
     {
+      "from": "sg_sec_math_congruence_similarity_foundations",
+      "to": "sg_sec_math_pythagoras",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC2·14 为 G2·SEC2·15 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_congruence_similarity_foundations",
+      "to": "sg_sec_math_right_triangle_trig",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC3·4·28 为 G2·SEC3·4·29 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_cumulative_box",
+      "to": "sg_sec_math_standard_deviation_compare",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·20 为 G3·SEC3·4·21 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_data_collection",
+      "to": "sg_sec_math_statistical_representations",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·22 为 G3·SEC1·23 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_distribution_diagrams",
+      "to": "sg_sec_math_central_tendency",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC2·18 为 G3·SEC2·19 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_elementary_matrices",
+      "to": "sg_sec_math_congruence_similarity_tests",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·27 为 G3·SEC3·4·28 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_factorisation",
+      "to": "sg_sec_math_algebraic_fractions_multiply_divide",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC2·04 为 G3·SEC2·05 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_formula_rearrangement",
+      "to": "sg_sec_math_algebraic_fractions_add_subtract",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC3·4·11 为 G2·SEC3·4·12 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_geometric_construction",
+      "to": "sg_sec_math_circle_chord_tangent",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·11 为 G3·SEC3·4·12 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_geometric_construction",
+      "to": "sg_sec_math_congruence_similarity_foundations",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC2·13 为 G2·SEC2·14 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_geometric_construction",
+      "to": "sg_sec_math_plane_mensuration",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·19 为 G3·SEC1·20 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_linear_expressions",
+      "to": "sg_sec_math_algebra_expansion_identities",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC2·02 为 G2·SEC2·03 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_linear_expressions",
+      "to": "sg_sec_math_coordinate_relationships",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·11 为 G3·SEC1·12 的前置要求。"
+    },
+    {
       "from": "sg_sec_math_linear_expressions",
       "to": "sg_sec_math_linear_integer_equations",
       "strength": "soft",
       "reason": "移项和保持等式需要先能正确展开与合并一次式。"
+    },
+    {
+      "from": "sg_sec_math_linear_fractional_equations",
+      "to": "sg_sec_math_linear_inequalities",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC2·07 为 G2·SEC2·08 的前置要求。"
     },
     {
       "from": "sg_sec_math_linear_integer_equations",
@@ -619,16 +838,58 @@
       "reason": "一元一次不等式求解复用一次方程的等价变形，并增加乘除负数时反向规则。"
     },
     {
+      "from": "sg_sec_math_nth_term_patterns",
+      "to": "sg_sec_math_linear_expressions",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·10 为 G3·SEC1·11 的前置要求。"
+    },
+    {
       "from": "sg_sec_math_percentage",
       "to": "sg_sec_math_personal_finance",
       "strength": "soft",
       "reason": "利息、税费和分期付款的数量关系需要百分数变化基础。"
     },
     {
+      "from": "sg_sec_math_percentage",
+      "to": "sg_sec_math_rate_speed",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·06 为 G3·SEC1·07 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_personal_finance",
+      "to": "sg_sec_math_motion_data_graphs",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SECONDARY·ALL·01 为 G3·SECONDARY·ALL·02 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_polygon_properties",
+      "to": "sg_sec_math_geometric_construction",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·18 为 G3·SEC1·19 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_prime_factorisation",
+      "to": "sg_sec_math_real_number_operations",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·01 为 G3·SEC1·02 的前置要求。"
+    },
+    {
       "from": "sg_sec_math_pythagoras",
       "to": "sg_sec_math_right_triangle_trig",
       "strength": "soft",
       "reason": "直角三角形三角计算需要先能识别直角结构并处理边长关系。"
+    },
+    {
+      "from": "sg_sec_math_quadratic_factorisation_solve",
+      "to": "sg_sec_math_fractional_quadratic_equations",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC3·4·06 为 G2·SEC3·4·07 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_quadratic_formula_complete_graph",
+      "to": "sg_sec_math_fractional_quadratic_equations",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·07 为 G3·SEC3·4·08 的前置要求。"
     },
     {
       "from": "sg_sec_math_quartiles_spread",
@@ -638,9 +899,21 @@
     },
     {
       "from": "sg_sec_math_rate_speed",
+      "to": "sg_sec_math_algebra_notation_evaluation",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·07 为 G3·SEC1·08 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_rate_speed",
       "to": "sg_sec_math_motion_data_graphs",
       "strength": "soft",
       "reason": "解释路程—时间和速度—时间图像需要先理解路程、时间、速度与单位。"
+    },
+    {
+      "from": "sg_sec_math_ratio",
+      "to": "sg_sec_math_percentage",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·05 为 G3·SEC1·06 的前置要求。"
     },
     {
       "from": "sg_sec_math_ratio",
@@ -649,16 +922,70 @@
       "reason": "比例尺和正反比例需要先能解释、化简并按比推理。"
     },
     {
+      "from": "sg_sec_math_real_number_operations",
+      "to": "sg_sec_math_approximation_estimation",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·02 为 G3·SEC1·04 的前置要求。"
+    },
+    {
       "from": "sg_sec_math_right_triangle_trig",
       "to": "sg_sec_math_triangle_trigonometry",
       "strength": "soft",
       "reason": "正弦定理、余弦定理与三角形面积公式建立在正弦余弦比的含义上。"
     },
     {
+      "from": "sg_sec_math_scale_proportion",
+      "to": "sg_sec_math_algebra_expansion_identities",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC2·01 为 G3·SEC2·02 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_scale_proportion",
+      "to": "sg_sec_math_linear_expressions",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC2·01 为 G2·SEC2·02 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_spatial_trigonometry",
+      "to": "sg_sec_math_circle_mensuration",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·15 为 G3·SEC3·4·16 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_standard_deviation_compare",
+      "to": "sg_sec_math_combined_probability",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·21 为 G3·SEC3·4·22 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_standard_form",
+      "to": "sg_sec_math_indices",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·01 为 G3·SEC3·4·02 的前置要求。"
+    },
+    {
       "from": "sg_sec_math_statistical_representations",
       "to": "sg_sec_math_misleading_diagrams",
       "strength": "soft",
       "reason": "识别误导性图表需要先理解各统计表示的正常编码与用途。"
+    },
+    {
+      "from": "sg_sec_math_tangent_gradient",
+      "to": "sg_sec_math_quadratic_factorisation_solve",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC3·4·05 为 G2·SEC3·4·06 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_tangent_gradient",
+      "to": "sg_sec_math_quadratic_formula_complete_graph",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·06 为 G3·SEC3·4·07 的前置要求。"
+    },
+    {
+      "from": "sg_sec_math_triangle_properties",
+      "to": "sg_sec_math_plane_mensuration",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC1·15 为 G2·SEC1·16 的前置要求。"
     },
     {
       "from": "sg_sec_math_triangle_properties",

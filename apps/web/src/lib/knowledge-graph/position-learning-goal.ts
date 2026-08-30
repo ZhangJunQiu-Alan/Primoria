@@ -35,7 +35,7 @@ import {
   hasGoalScopeModifier,
 } from "./subject-aliases";
 import { detectKgLanguage, type KgLanguage } from "./display-name";
-import { getTopicGraph, listTopicGraphIds } from "./topic-graph";
+import { getTopicGraph, listRoutableTopicGraphIds } from "./topic-graph";
 import { selectDeterministicGoalTargets } from "./cross-subject-edges";
 import {
   CURRICULUM_SYSTEM_LABELS,
@@ -92,7 +92,9 @@ function resultTopicId(r: KnowledgeGraphSearchResult): string | null {
 
 function listLibrarySubjects(): Array<{ graphId: string; subject: string }> {
   const out: Array<{ graphId: string; subject: string }> = [];
-  for (const graphId of listTopicGraphIds()) {
+  // Routable ids only: a `needs_review` graph stays registered and directly
+  // resolvable, but is not offered as a cold-start anchor when the gate is on.
+  for (const graphId of listRoutableTopicGraphIds()) {
     try {
       out.push({ graphId, subject: getKnowledgeGraphSubjectLabel(graphId, "en") });
     } catch {

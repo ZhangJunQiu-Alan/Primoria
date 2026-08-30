@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.1",
   "graph_id": "singapore_lower_secondary_science",
   "subject": "Science",
   "jurisdictions": [
@@ -20,6 +20,11 @@
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "根据 MOE 159 条学习成果审查建立 32 个最小可诊断概念；每个概念同时登记官方课程与开放学科教材证据。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-08-27",
+      "summary_zh": "依据官方课程成果顺序补充 4 条同图前置边（含 0 条硬前置），状态保持 needs_review。"
     }
   ],
   "nodes": [
@@ -1400,6 +1405,66 @@
         {
           "source_id": "src_openstax_biology_2e_2018",
           "locator": "OpenStax Biology 2e §43.5, Human Pregnancy and Birth, Contraception and Birth Control"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_lss_science_thermal_expansion_density",
+      "to": "sg_lss_science_heat_transfer_mechanisms",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，10.K02 为 10.K03 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_lss_science_multicellular_transport_blood_exchange",
+      "to": "sg_lss_science_plant_diffusion_transport",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，15.K04 为 15.K05 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.49, topic 15 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_lss_science_puberty_menstrual_cycle",
+      "to": "sg_lss_science_contraception_mechanisms",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，16.K06 为 16.K07 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        },
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.51, topic 16 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_lss_science_contraception_mechanisms",
+      "to": "sg_lss_science_sti_consequences_treatment",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，16.K07 为 16.K08 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.51, topic 16 learning outcomes"
         }
       ],
       "review_status": "needs_review"

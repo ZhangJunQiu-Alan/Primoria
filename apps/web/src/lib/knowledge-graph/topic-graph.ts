@@ -57,9 +57,17 @@ export type ConceptPrerequisiteEdge = {
   reason?: string;
 };
 
+/** Source-level governance state carried into the runtime artifact. Registration
+ * in TOPIC_GRAPHS is not approval — see docs/knowledge-graph/catalog.md. */
+export type GraphReviewStatus = "approved" | "needs_review";
+
 export type TopicGraph = {
   graphId: string;
   subject: string;
+  /** Governance state of the source graph. Absent on older artifacts built before
+   * this field existed; treat absent as "approved" so behavior never silently
+   * narrows on a stale build. */
+  reviewStatus?: GraphReviewStatus;
   topics: TopicNode[];
   // Concept-grain prereq DAG, kept alongside the topic DAG for the concept
   // frontier outline builder. Present on library artifacts; absent on generated
@@ -76,6 +84,43 @@ export { DEFAULT_TOPIC_GRAPH_ID } from "./data/topic-graphs.generated";
 
 export function listTopicGraphIds(): string[] {
   return Object.keys(TOPIC_GRAPHS);
+}
+
+/** Governance state of a registered graph. Absent on artifacts built before the
+ * field existed, which is treated as approved so a stale build never silently
+ * removes a graph from routing. */
+export function getTopicGraphReviewStatus(graphId: string): GraphReviewStatus {
+  return TOPIC_GRAPHS[graphId]?.reviewStatus === "needs_review" ? "needs_review" : "approved";
+}
+
+/**
+ * Whether cold-start goal routing may anchor to `needs_review` graphs.
+ *
+ * Defaults to permissive. The 10 China/Singapore graphs are currently the only
+ * source of that curriculum coverage, and they are overlay supplements whose
+ * cross-graph prerequisite edges are not authored yet, so excluding them today
+ * would remove the coverage rather than improve it. Set
+ * `PRIMORIA_REQUIRE_APPROVED_KG=1` once those edges land and the graphs are
+ * approved, to make registration stop implying routability.
+ */
+export function requiresApprovedGraphsForRouting(): boolean {
+  return process.env.PRIMORIA_REQUIRE_APPROVED_KG === "1";
+}
+
+/**
+ * Graph ids eligible to be *anchored to* by cold-start learning-goal routing.
+ *
+ * Distinct from `listTopicGraphIds()`, which stays the full registry: an
+ * existing course, an explicit graph id, or a direct lookup must keep resolving
+ * even when its graph is gated out of new routing.
+ */
+export function listRoutableTopicGraphIds(): string[] {
+  const ids = listTopicGraphIds();
+  if (!requiresApprovedGraphsForRouting()) return ids;
+  const approved = ids.filter((id) => getTopicGraphReviewStatus(id) === "approved");
+  // Never hand routing an empty library: if every graph is unapproved the gate
+  // would turn a coverage question into a hard outage.
+  return approved.length > 0 ? approved : ids;
 }
 
 export function getTopicGraph(graphId: string = DEFAULT_TOPIC_GRAPH_ID): TopicGraph {
