@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.1",
   "graph_id": "senior_secondary_physics",
   "subject": "Physics",
   "jurisdictions": [
@@ -19,6 +19,11 @@
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "依据中国普通高中物理成果级覆盖审查，新增最小可诊断概念、复用稳定 canonical alias，并补齐第二类权威证据。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-08-27",
+      "summary_zh": "依据官方课程成果顺序补充 30 条同图前置边（含 2 条硬前置），状态保持 needs_review。"
     }
   ],
   "nodes": [
@@ -2853,6 +2858,502 @@
         {
           "source_id": "src_openstax_college_physics_2e_2022",
           "locator": "Web §7.9 World Energy Use; renewable/nonrenewable resources, sustainability and environmental effects"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_friction",
+      "to": "cn_sh_physics_force_composition_vectors",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 1·1.2.1c 为 必修 1·1.2.2a 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.21（正文对应内容要求 1.2.1），必修 1"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.21（正文对应内容要求 1.2.2），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_kinetic_energy_theorem",
+      "to": "cn_sh_physics_gravitational_potential_energy",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 2·2.1.2 为 必修 2·2.1.3a 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.23（正文对应内容要求 2.1.2），必修 2"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.23（正文对应内容要求 2.1.3），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_gravitational_potential_energy",
+      "to": "cn_sh_physics_elastic_potential_energy",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 2·2.1.3a 为 必修 2·2.1.3b 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.23（正文对应内容要求 2.1.3），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_newtonian_limits",
+      "to": "cn_sh_physics_relativistic_spacetime",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 2·2.3.1 为 必修 2·2.3.2 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.25（正文对应内容要求 2.3.1），必修 2"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.25（正文对应内容要求 2.3.2），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_relativistic_spacetime",
+      "to": "cn_sh_physics_cosmic_evolution",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 2·2.3.2 为 必修 2·2.3.3 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.25（正文对应内容要求 2.3.2），必修 2"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.25（正文对应内容要求 2.3.3），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_electrostatic_charge_conservation",
+      "to": "cn_sh_physics_point_charge_model",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.1.1 为 必修 3·3.1.2a 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.1），必修 3"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.2），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_electric_field_lines",
+      "to": "cn_sh_physics_electrostatic_applications",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.1.3b 为 必修 3·3.1.4 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.3），必修 3"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.4），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_electrostatic_applications",
+      "to": "cn_sh_physics_electric_potential_quantities",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.1.4 为 必修 3·3.1.5a 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.4），必修 3"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.5），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_electric_potential_quantities",
+      "to": "cn_sh_physics_charged_particle_electric_motion",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.1.5a 为 必修 3·3.1.5b 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.5），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_charged_particle_electric_motion",
+      "to": "cn_sh_physics_capacitance",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.1.5b 为 必修 3·3.1.6a 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.5），必修 3"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.6），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_circuit_components",
+      "to": "cn_sh_physics_resistance_geometry_material",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.2.1a 为 必修 3·3.2.2a 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.1），必修 3"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.2），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_closed_circuit_ohm",
+      "to": "cn_sh_physics_electrical_work_power",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.2.4a 为 必修 3·3.2.5a 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.4），必修 3"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.5），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_joule_law",
+      "to": "cn_sh_physics_household_electricity_safety",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.2.5b 为 必修 3·3.2.6 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.5），必修 3"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.29（正文对应内容要求 3.2.6），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_electromagnetic_field_waves",
+      "to": "cn_sh_physics_electromagnetic_wave_applications",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.3.4 为 必修 3·3.3.5 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.3.4），必修 3"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.3.5），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_renewable_energy_technologies",
+      "to": "cn_sh_physics_nuclear_energy_intro",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.4.1a 为 必修 3·3.4.1b 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.1），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_renewable_environment",
+      "to": "cn_sh_physics_pollution_sustainable_development",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.4.3 为 必修 3·3.4.4 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.3），必修 3"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.4），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_simple_pendulum_period",
+      "to": "cn_sh_physics_forced_vibration",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 1·1.2.2a 为 选择性必修 1·1.2.3a 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.2），选择性必修 1"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.3），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_light_polarisation",
+      "to": "cn_sh_physics_laser",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 1·1.3.3b 为 选择性必修 1·1.3.4 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.3），选择性必修 1"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.4），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_self_induction",
+      "to": "cn_sh_physics_eddy_currents",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 2·2.2.3a 为 选择性必修 2·2.2.3b 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.3），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_eddy_currents",
+      "to": "cn_sh_physics_sinusoidal_ac",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 2·2.2.3b 为 选择性必修 2·2.2.4 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.3），选择性必修 2"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.4），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_high_voltage_transmission",
+      "to": "cn_sh_physics_generator_motor_energy",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 2·2.2.5b 为 选择性必修 2·2.2.6 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.5），选择性必修 2"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.6），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_diffusion_brownian",
+      "to": "cn_sh_physics_molecular_speed_distribution",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.1.2a 为 选择性必修 3·3.1.2b 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.2），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_molecular_speed_distribution",
+      "to": "cn_sh_physics_crystalline_amorphous",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.1.2b 为 选择性必修 3·3.1.3a 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.2），选择性必修 3"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.3），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_crystalline_amorphous",
+      "to": "cn_sh_physics_liquid_crystals",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.1.3a 为 选择性必修 3·3.1.3b 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.3），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_liquid_crystals",
+      "to": "cn_sh_physics_semiconductor_materials",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.1.3b 为 选择性必修 3·3.1.4a 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.3），选择性必修 3"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.4），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_semiconductor_materials",
+      "to": "cn_sh_physics_nanomaterials",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.1.4a 为 选择性必修 3·3.1.4b 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.4），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_atomic_nuclear_model",
+      "to": "cn_sh_physics_fundamental_interactions",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.3.2a 为 选择性必修 3·3.3.2b 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.2），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_nuclear_composition_force",
+      "to": "cn_sh_physics_fundamental_interactions",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.3.2a 为 选择性必修 3·3.3.2b 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.2），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_fundamental_interactions",
+      "to": "cn_sh_physics_nuclear_reaction_equations",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.3.2b 为 选择性必修 3·3.3.2c 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.2），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_physics_light_energy_quantisation",
+      "to": "cn_sh_physics_matter_waves_quantisation",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.4.1a 为 选择性必修 3·3.4.1b 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.4.1），选择性必修 3"
         }
       ],
       "review_status": "needs_review"

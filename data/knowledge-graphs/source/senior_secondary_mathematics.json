@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.1",
   "graph_id": "senior_secondary_mathematics",
   "subject": "Mathematics",
   "jurisdictions": [
@@ -26,6 +26,11 @@
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "根据中国普通高中数学成果级覆盖审查，新增最小可诊断概念、复用 canonical alias，并补齐双类权威证据。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-08-27",
+      "summary_zh": "依据官方课程成果顺序补充 33 条同图前置边（含 12 条硬前置），状态保持 needs_review。"
     }
   ],
   "nodes": [
@@ -3186,6 +3191,496 @@
         {
           "source_id": "src_openstax_introductory_statistics_2e_2026",
           "locator": "PDF §11.3 Test of Independence, pp.574-577"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_venn_diagrams",
+      "to": "cn_sh_math_logical_conditions",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题一.04 为 必修·主题一.05 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23（正文p.15），必修主题一·1‘集合’"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23-24（正文p.15-16），必修主题一·2‘常用逻辑用语’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_logical_conditions",
+      "to": "cn_sh_math_quantifiers_negation",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题一.05 为 必修·主题一.06 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23-24（正文p.15-16），必修主题一·2‘常用逻辑用语’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_quantifiers_negation",
+      "to": "cn_sh_math_inequality_properties",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题一.06 为 必修·主题一.07 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.23-24（正文p.15-16），必修主题一·2‘常用逻辑用语’"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.24（正文p.16），必修主题一·3‘相等关系与不等关系’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_piecewise_functions",
+      "to": "cn_sh_math_function_monotonicity",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题二.03 为 必修·主题二.04 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_piecewise_functions",
+      "to": "cn_sh_math_function_extrema",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题二.03 为 必修·主题二.04 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_function_monotonicity",
+      "to": "cn_sh_math_function_parity",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题二.04 为 必修·主题二.05 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_function_extrema",
+      "to": "cn_sh_math_function_parity",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题二.04 为 必修·主题二.05 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_function_parity",
+      "to": "cn_sh_math_function_periodicity",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题二.05 为 必修·主题二.06 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_function_periodicity",
+      "to": "cn_sh_math_power_functions",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题二.06 为 必修·主题二.07 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27-28（正文p.19-20），必修主题二·2‘幂函数、指数函数、对数函数’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_power_functions",
+      "to": "cn_sh_math_real_exponents_laws",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题二.07 为 必修·主题二.08 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.27-28（正文p.19-20），必修主题二·2‘幂函数、指数函数、对数函数’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_trig_product_sum_half_angle",
+      "to": "cn_sh_math_trig_modelling",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题二.18 为 必修·主题二.19 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_compare_growth_rates",
+      "to": "cn_sh_math_interpret_model_parameters",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题二.23 为 必修·主题二.24 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.30-31（正文p.22-23），必修主题二·4‘函数应用’·函数与数学模型"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_vector_applications",
+      "to": "cn_sh_math_sine_cosine_laws",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.06 为 必修·主题三.07 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_sine_cosine_laws",
+      "to": "cn_sh_math_complex_introduction",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.07 为 必修·主题三.08 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_complex_introduction",
+      "to": "cn_sh_math_complex_argand_representation",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.08 为 必修·主题三.09 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_complex_argand_representation",
+      "to": "cn_sh_math_complex_arithmetic",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.09 为 必修·主题三.10 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_complex_algebraic_representation",
+      "to": "cn_sh_math_complex_addition_geometry",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.09 为 必修·主题三.10 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_complex_arithmetic",
+      "to": "cn_sh_math_solid_structures",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.10 为 必修·主题三.11 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_complex_addition_geometry",
+      "to": "cn_sh_math_solid_structures",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.10 为 必修·主题三.11 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_solid_surface_volume",
+      "to": "cn_sh_math_oblique_drawings",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.12 为 必修·主题三.13 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_oblique_drawings",
+      "to": "cn_sh_math_spatial_axioms",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.13 为 必修·主题三.14 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_spatial_axioms",
+      "to": "cn_sh_math_spatial_parallel_properties",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.14 为 必修·主题三.15 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_spatial_axioms",
+      "to": "cn_sh_math_spatial_perpendicular_properties",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.14 为 必修·主题三.15 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_spatial_parallel_properties",
+      "to": "cn_sh_math_spatial_parallel_criteria",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.15 为 必修·主题三.16 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_spatial_perpendicular_properties",
+      "to": "cn_sh_math_spatial_parallel_criteria",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.15 为 必修·主题三.16 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_spatial_parallel_properties",
+      "to": "cn_sh_math_spatial_perpendicular_criteria",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.15 为 必修·主题三.16 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_spatial_perpendicular_properties",
+      "to": "cn_sh_math_spatial_perpendicular_criteria",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题三.15 为 必修·主题三.16 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_simple_random_sampling",
+      "to": "cn_sh_math_stratified_sampling",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题四.07 为 必修·主题四.08 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_distribution_percentiles",
+      "to": "cn_sh_math_statistical_inference_uncertainty",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·主题四.13 为 必修·主题四.14 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.41（正文p.33），必修主题四‘概率与统计’学业要求"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_conic_context",
+      "to": "cn_sh_math_ellipse",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·主题二.16 为 选择性必修·主题二.17 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.52-53（正文p.44-45），选择性必修主题二·2‘平面解析几何’·圆锥曲线与方程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_ellipse",
+      "to": "cn_sh_math_parabola",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·主题二.17 为 选择性必修·主题二.18 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.52-53（正文p.44-45），选择性必修主题二·2‘平面解析几何’·圆锥曲线与方程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_ellipse",
+      "to": "cn_sh_math_hyperbola",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·主题二.17 为 选择性必修·主题二.18 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.52-53（正文p.44-45），选择性必修主题二·2‘平面解析几何’·圆锥曲线与方程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_math_regression_prediction_limits",
+      "to": "cn_sh_math_contingency_table",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·主题三.17 为 选择性必修·主题三.18 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
         }
       ],
       "review_status": "needs_review"

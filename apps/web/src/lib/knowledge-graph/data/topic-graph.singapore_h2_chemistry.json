@@ -1,8 +1,9 @@
 {
   "graphId": "singapore_h2_chemistry",
   "subject": "Chemistry",
+  "reviewStatus": "needs_review",
   "generatedFrom": "data/knowledge-graphs/source/singapore_h2_chemistry.json",
-  "generatedAt": "2026-07-19",
+  "generatedAt": "2026-08-27",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -235,6 +236,12 @@
       "to": "sg_h2_chemistry_electrode_potential_concentration_trends",
       "strength": "soft",
       "reason": "讨论浓度改变电极电势前，需要先区分标准态数值与非标准实际条件。"
+    },
+    {
+      "from": "sg_h2_chemistry_titration_curves_indicator_selection",
+      "to": "sg_h2_chemistry_ocean_carbonate_buffer_acidification",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，10_1.e 为 10_1.f 的前置要求。"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.1",
   "graph_id": "singapore_h2_biology",
   "subject": "Biology",
   "jurisdictions": [
@@ -18,6 +18,11 @@
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "根据 SEAB 101 项内容成果的逐项覆盖审查，建立 42 个机制级缺口概念；每个概念同时登记官方课程和开放教材证据。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-08-27",
+      "summary_zh": "依据官方课程成果顺序补充 13 条同图前置边（含 0 条硬前置），状态保持 needs_review。"
     }
   ],
   "nodes": [
@@ -1891,6 +1896,240 @@
         {
           "source_id": "src_openstax_microbiology_2016",
           "locator": "OpenStax Microbiology §§16.3 and 25.3, Modes of Disease Transmission; vector-borne infections"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_stem_cell_potency",
+      "to": "sg_h2_biology_stem_cell_normal_functions",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，1.t 为 1.u 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (t)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (u)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_viral_genome_variation",
+      "to": "sg_h2_biology_prokaryotic_horizontal_gene_transfer",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，2.f 为 2.g 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (f)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_prokaryotic_horizontal_gene_transfer",
+      "to": "sg_h2_biology_noncoding_genome_elements",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，2.g 为 2.h 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (g)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_multilevel_eukaryotic_gene_regulation",
+      "to": "sg_h2_biology_southern_blot_hybridisation",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，2.i 为 2.j 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (i)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_epistasis_problem_solving",
+      "to": "sg_h2_biology_genotype_environment_phenotype",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，2.aa 为 2.bb 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (aa)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (bb)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_microevolution_macroevolution_link",
+      "to": "sg_h2_biology_integrated_evolution_evidence",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，4.f 为 4.g 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (f)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_integrated_evolution_evidence",
+      "to": "sg_h2_biology_biological_species_concept_limits",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，4.g 为 4.h 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (g)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_antibody_diversity_mechanisms",
+      "to": "sg_h2_biology_vaccination_population_control_tradeoffs",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，A.d 为 A.e 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (d)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_vaccination_population_control_tradeoffs",
+      "to": "sg_h2_biology_viral_tissue_pathogenesis",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，A.f 为 A.g 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (f)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_climate_system_ecological_impacts",
+      "to": "sg_h2_biology_mangrove_climate_mitigation",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，B.b 为 B.c 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (b)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_anthropogenic_carbon_footprints",
+      "to": "sg_h2_biology_climate_stress_food_supply",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，B.d 为 B.e 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (d)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_climate_stress_food_supply",
+      "to": "sg_h2_biology_climate_ecological_redistribution",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，B.e 为 B.f 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (e)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_biology_tropical_biodiversity_resources",
+      "to": "sg_h2_biology_temperature_insect_vector_lifecycle",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，B.g 为 B.h 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (g)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (h)"
         }
       ],
       "review_status": "needs_review"

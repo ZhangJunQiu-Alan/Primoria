@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.1",
   "graph_id": "singapore_h2_physics",
   "subject": "Physics",
   "jurisdictions": [
@@ -18,6 +18,11 @@
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "根据 SEAB 205 条物理内容要求的逐项覆盖审查，建立 8 个缺口概念；每个概念同时登记官方课程和开放教材证据。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-08-27",
+      "summary_zh": "依据官方课程成果顺序补充 2 条同图前置边（含 0 条硬前置），状态保持 needs_review。"
     }
   ],
   "nodes": [
@@ -380,6 +385,42 @@
         {
           "source_id": "src_sg_seab_h2_physics_9478_2026",
           "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (o)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_physics_wavefunction_probability_superposition",
+      "to": "sg_h2_physics_heisenberg_position_momentum_uncertainty",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，19.g 为 19.h 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (g)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_physics_heisenberg_position_momentum_uncertainty",
+      "to": "sg_h2_physics_infinite_square_well_states",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，19.h 为 19.i 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (h)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (i)"
         }
       ],
       "review_status": "needs_review"

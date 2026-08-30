@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.1",
   "graph_id": "singapore_h2_chemistry",
   "subject": "Chemistry",
   "jurisdictions": [
@@ -17,6 +17,11 @@
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "根据 SEAB 194 项化学学习成果的逐项覆盖审查，建立 18 个缺口概念；每个概念同时登记官方课程和开放教材证据。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-08-27",
+      "summary_zh": "依据官方课程成果顺序补充 1 条同图前置边（含 0 条硬前置），状态保持 needs_review。"
     }
   ],
   "nodes": [
@@ -783,6 +788,24 @@
         {
           "source_id": "src_openstax_chemistry_2e_2019",
           "locator": "OpenStax Chemistry 2e §17.4, Potential, Free Energy, and Equilibrium, nonstandard conditions and the Nernst equation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_chemistry_titration_curves_indicator_selection",
+      "to": "sg_h2_chemistry_ocean_carbonate_buffer_acidification",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，10_1.e 为 10_1.f 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (e)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (f)"
         }
       ],
       "review_status": "needs_review"

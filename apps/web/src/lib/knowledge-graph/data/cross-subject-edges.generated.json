@@ -1,5 +1,5 @@
 {
-  "contentVersion": "1.1.0",
+  "contentVersion": "1.1.1",
   "generatedFrom": "data/knowledge-graphs/source/cross_subject_edges.json",
   "note": "Approved cross-subject prerequisite edges used for deterministic learning-goal scope selection.",
   "edges": [

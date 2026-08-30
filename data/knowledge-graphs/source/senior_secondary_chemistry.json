@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.1",
   "graph_id": "senior_secondary_chemistry",
   "subject": "Chemistry",
   "jurisdictions": [
@@ -18,6 +18,11 @@
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "依据中国普通高中化学成果级覆盖审查，新增最小可诊断概念、复用稳定 canonical 组合，并补齐第二类权威证据。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-08-27",
+      "summary_zh": "依据官方课程成果顺序补充 18 条同图前置边（含 0 条硬前置），状态保持 needs_review。"
     }
   ],
   "nodes": [
@@ -1951,6 +1956,294 @@
         {
           "source_id": "src_openstax_organic_chemistry_2023",
           "locator": "Web Chapter 31 Synthetic Polymers"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.59（正文对应内容要求 3.3），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_substance_classification_conversion",
+      "to": "cn_sh_chem_element_valence_conversion",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·2.1a 为 必修·2.1b 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.22（正文对应内容要求 2.1），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_oxidising_reducing_agents",
+      "to": "cn_sh_chem_electrolyte_ionisation",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·2.2b 为 必修·2.3a 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.2），必修"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_common_ion_tests",
+      "to": "cn_sh_chem_sodium_compounds",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·2.3c 为 必修·2.4a 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.3），必修"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_sodium_compounds",
+      "to": "cn_sh_chem_iron_compounds",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·2.4a 为 必修·2.4b 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_nitrogen_compounds",
+      "to": "cn_sh_chem_sulfur_compounds",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·2.5b 为 必修·2.5c 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.5），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_sulfur_compounds",
+      "to": "cn_sh_chem_inorganic_conversion_pathways",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·2.5c 为 必修·2.6a 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.5），必修"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.6），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_organic_synthesis_value",
+      "to": "cn_sh_chem_intro_macromolecule_applications",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·4.3a 为 必修·4.3b 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.29（正文对应内容要求 4.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_chemistry_sustainable_development",
+      "to": "cn_sh_chem_green_chemistry_principles",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·5.1a 为 必修·5.1b 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.31（正文对应内容要求 5.1），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_green_chemistry_principles",
+      "to": "cn_sh_chem_chemistry_materials",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·5.1b 为 必修·5.2a 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.31（正文对应内容要求 5.1），必修"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.2），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_chemistry_materials",
+      "to": "cn_sh_chem_chemistry_health",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·5.2a 为 必修·5.2b 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.2），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_fossil_resource_utilisation",
+      "to": "cn_sh_chem_energy_resource_systems",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·5.3a 为 必修·5.3b 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_energy_resource_systems",
+      "to": "cn_sh_chem_pollutant_detection_treatment",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·5.3b 为 必修·5.4a 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.3），必修"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_clean_production_circularity",
+      "to": "cn_sh_chem_chemical_rules_safe_use",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，必修·5.4b 为 必修·5.5a 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.4），必修"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.5），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_water_ionisation_ph",
+      "to": "cn_sh_chem_salt_hydrolysis",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·化学反应原理·3.2b 为 选择性必修·化学反应原理·3.3a 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.41（正文对应内容要求 3.2），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.42（正文对应内容要求 3.3），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_transitional_mixed_crystals",
+      "to": "cn_sh_chem_aggregation_state_materials",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·物质结构与性质·2.4b 为 选择性必修·物质结构与性质·2.4c 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.48（正文对应内容要求 2.4），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_spectroscopy_xrd_methods",
+      "to": "cn_sh_chem_structure_guided_material_design",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·物质结构与性质·3.2a 为 选择性必修·物质结构与性质·3.3a 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.51（正文对应内容要求 3.2），选择性必修·物质结构与性质"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.51（正文对应内容要求 3.3），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_structure_guided_material_design",
+      "to": "cn_sh_chem_structure_methods_life_science",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·物质结构与性质·3.3a 为 选择性必修·物质结构与性质·3.3b 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.51（正文对应内容要求 3.3），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "cn_sh_chem_dna_rna",
+      "to": "cn_sh_chem_synthetic_polymers_materials",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·有机化学基础·3.2c 为 选择性必修·有机化学基础·3.3a 的前置要求。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.59（正文对应内容要求 3.2），选择性必修·有机化学基础"
         },
         {
           "source_id": "src_cn_moe_senior_high_chemistry_2020",
