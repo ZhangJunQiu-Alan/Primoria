@@ -10,9 +10,11 @@ import {
   type DecodedBlockPlan,
   type GeneratableBlockType,
 } from "./lesson-plan-ir";
+import { assignMethodArms, type MethodArmAssignment, type MethodArmOptions } from "./method-arms";
 import type { PedagogicalRole } from "@/lib/courses/types";
 
 export { isCodeEligibleLessonContext };
+export type { MethodArmAssignment, MethodArmOptions };
 
 // Deterministic LessonPlan compiler. Pure: no LLM, no DB, no guessing. It takes
 // the planner's raw compact IR plus the KG context and either returns a fully
@@ -68,11 +70,18 @@ export type CompiledLessonPlan = {
   /** KG concept ids in default order — the authoritative coverage target. */
   conceptIds: string[];
   jobs: BlockGenerationJob[];
+  /** Randomized delivery-form assignments for this lesson, empty when the
+   * experiment is off or the rewritten plan failed re-validation. Carries the
+   * control arm too, so the analysis can tell control from never-eligible. */
+  methodArms: MethodArmAssignment[];
 };
 
 export type CompileLessonPlanOptions = {
   /** Prior user/chat context; used only for code-block eligibility checks. */
   contextHint?: string | null;
+  /** Randomized delivery-form assignment. Omitted or disabled leaves the
+   * planner's own choices untouched and yields no assignments. */
+  methodArms?: MethodArmOptions;
 };
 
 const MIN_MINUTES = 3;
@@ -99,18 +108,41 @@ export function compileLessonPlanIr(
   const decoded = decodeLessonPlanIr(rawIr);
   const concepts = orderedConceptIds(kg);
   const conceptSet = new Set(concepts);
-  const blocks = decoded.blocks;
+  const planned = decoded.blocks;
 
-  validateQuantity(blocks, concepts.length);
-  validateOrdering(blocks);
-  validateConceptLegality(blocks, conceptSet);
-  validateLessonComposition(blocks, concepts);
-  validateWriterInstructions(blocks);
-  validateMediaRules(blocks);
-  validateImageRules(blocks);
-  validateCodeEligibility(blocks, kg, options.contextHint);
-  validateConceptCoverage(blocks, concepts);
-  validateQuizCoverage(blocks, concepts);
+  const validate = (candidate: DecodedBlockPlan[]): void => {
+    validateQuantity(candidate, concepts.length);
+    validateOrdering(candidate);
+    validateConceptLegality(candidate, conceptSet);
+    validateLessonComposition(candidate, concepts);
+    validateWriterInstructions(candidate);
+    validateMediaRules(candidate);
+    validateImageRules(candidate);
+    validateCodeEligibility(candidate, kg, options.contextHint);
+    validateConceptCoverage(candidate, concepts);
+    validateQuizCoverage(candidate, concepts);
+  };
+
+  // The planner's own plan is authoritative: it must pass on its own before any
+  // arm is drawn, so a randomization bug can never mask a real planning failure.
+  validate(planned);
+
+  // Re-validate the rewritten plan and fall back to the planner's choices if the
+  // swap disturbed anything. Randomization must never be able to produce an
+  // invalid lesson, so structural integrity always outranks the experiment.
+  let blocks = planned;
+  let methodArms: MethodArmAssignment[] = [];
+  if (options.methodArms?.enabled) {
+    const assigned = assignMethodArms(planned, options.methodArms);
+    try {
+      validate(assigned.blocks);
+      blocks = assigned.blocks;
+      methodArms = assigned.assignments;
+    } catch {
+      blocks = planned;
+      methodArms = [];
+    }
+  }
 
   const jobs: BlockGenerationJob[] = blocks.map((block, index) => ({
     jobId: `b${block.order}`,
@@ -133,6 +165,7 @@ export function compileLessonPlanIr(
     estimatedMinutes: clampMinutes(decoded.estimatedMinutes),
     conceptIds: concepts,
     jobs,
+    methodArms,
   };
 }
 

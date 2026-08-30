@@ -99,6 +99,25 @@ export type LearningEvent =
       sourceQuery: string;
     }
   | {
+      // One randomized delivery-form assignment, written when the lesson plan is
+      // compiled — before the learner sees anything, so the arm cannot be chosen
+      // after the fact. One row per (block, concept) so it joins straight onto
+      // `quiz.submit` by lessonId + conceptId. `planned` is what the planner
+      // wanted and `delivered` is what the learner received; rows where the two
+      // agree are the control arm and must stay in the analysis.
+      type: "plan.method_arm";
+      ownerId: string;
+      id?: string;
+      courseId: string;
+      lessonId: string;
+      conceptId: string;
+      factor: string;
+      role: string;
+      blockOrder: number;
+      planned: string;
+      delivered: string;
+    }
+  | {
       // Visualization telemetry: one row per rendered (or failed) visualization.
       // This is the expansion signal for the interactive-component catalog —
       // `sandbox` rows are catalog misses, `interactive` rows are catalog hits.
@@ -191,6 +210,20 @@ export function toRow(event: LearningEvent): LearningEventRow {
         graphId: event.graphId,
         conceptId: event.conceptId,
         payload: { from: event.from, to: event.to },
+      };
+    case "plan.method_arm":
+      return {
+        ...base,
+        courseId: event.courseId,
+        lessonId: event.lessonId,
+        conceptId: event.conceptId,
+        payload: {
+          factor: event.factor,
+          role: event.role,
+          block_order: event.blockOrder,
+          planned: event.planned,
+          delivered: event.delivered,
+        },
       };
     case "course.generated":
       return {
