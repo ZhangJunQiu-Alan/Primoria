@@ -10,10 +10,11 @@
  * palette, stroke weights, and type stay defined in one place.
  *
  * Layout constraint, measured from the rendered page at both breakpoints rather
- * than guessed. Desktop: caption down to y≈38, status card over x 225→766,
- * y 326→489, leaving y 55→315. Mobile (≤720px) the overlays grow: caption
- * x 83→543 y 15→115, status card y 359→619, leaving y 120→355. Content that
- * must read at both sizes therefore lives in the intersection, y 120→315.
+ * than guessed. The caption overlays the top of the stage — to y≈38 on desktop,
+ * y≈115 on mobile, where it is taller. Below that the stage is clear to y 520.
+ * Content therefore starts below y≈120 to read at both sizes. The four
+ * compositions below are authored around y 130-320 and shifted down by
+ * STAGE_OFFSET to sit centred in that space.
  *
  * Gradients are per-visual and uniquely identified. The shared
  * `landingPathGradient` is aimed along the Lesson path (74,390 → 590,96), and
@@ -23,6 +24,11 @@
  */
 
 const SHARED_VIEWBOX = "0 0 720 520";
+
+/** Vertical shift that centres a composition authored around y 130-320 in the
+    space left below the caption. Applied as one transform so the drawings keep
+    readable coordinates. */
+const STAGE_OFFSET = "translate(0 90)";
 
 function Grid() {
   return (
@@ -69,6 +75,7 @@ function GoalVisual() {
     >
       <Grid />
 
+      <g transform={STAGE_OFFSET}>
       {/* The typed goal */}
       <rect
         x="64"
@@ -92,6 +99,7 @@ function GoalVisual() {
       <circle className="landing-map-node small" cx="592" cy="146" r="26" />
       <circle className="landing-map-node small" cx="616" cy="218" r="26" />
       <circle className="landing-map-node small" cx="588" cy="290" r="26" />
+      </g>
     </svg>
   );
 }
@@ -107,6 +115,7 @@ function KgVisual() {
     >
       <Grid />
 
+      <g transform={STAGE_OFFSET}>
       <path className="landing-map-edge" d="M104 276H196" />
       <path className="landing-map-edge" d="M244 262C296 242 318 232 330 218" />
       <path className="landing-map-edge faint" d="M402 192C456 172 510 156 560 148" />
@@ -133,6 +142,7 @@ function KgVisual() {
       <text x="516" y="202" fontSize="18">
         6 ahead
       </text>
+      </g>
     </svg>
   );
 }
@@ -189,6 +199,7 @@ function VisualVisual() {
       <StrokeGradient id="landingCurveGradient" x1={118} y1={300} x2={624} y2={164} />
       <Grid />
 
+      <g transform={STAGE_OFFSET}>
       {/* Axes */}
       <path className="landing-map-edge" d="M118 300H628" strokeWidth="5" />
       <path className="landing-map-edge" d="M118 300V140" strokeWidth="5" />
@@ -219,6 +230,7 @@ function VisualVisual() {
       <text x="92" y="222" fontSize="18" transform="rotate(-90 92 222)" textAnchor="middle">
         O₂ output
       </text>
+      </g>
     </svg>
   );
 }
@@ -235,6 +247,7 @@ function FeedbackVisual() {
     >
       <Grid />
 
+      <g transform={STAGE_OFFSET}>
       {answers.map((correct, index) => {
         const x = 96 + index * 116;
         return (
@@ -285,6 +298,7 @@ function FeedbackVisual() {
         strokeWidth="3"
       />
       <rect x="96" y="284" width="342" height="34" rx="17" fill="rgba(255, 229, 143, 0.9)" />
+      </g>
     </svg>
   );
 }
