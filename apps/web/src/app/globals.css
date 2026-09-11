@@ -7836,14 +7836,32 @@ cpk-web-inspector {
 }
 
 .landing-hero-actions {
+  /* Stacked CTAs of identical width. `align-items: stretch` overrides the
+     shared `align-items: center` above so both buttons take the group's full
+     width, and `width: fit-content` shrink-wraps the group to its widest label
+     — which keeps it left-aligned with the headline and subtitle rather than
+     spanning the whole copy column. */
+  align-items: stretch;
+  flex-direction: column;
+  flex-wrap: nowrap;
   gap: 10px;
-  margin-top: 8px;
+  width: fit-content;
+  min-width: 264px;
+  max-width: 100%;
+  margin-top: 18px;
 }
 
 .landing-cta {
+  /* Blockified as a flex item either way; declaring it explicitly makes
+     min-height reliable and centers the label now that the button is wider
+     than its text. */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-height: 52px;
   padding: 15px 22px;
   font-size: 14px;
+  text-align: center;
   transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
 }
 
@@ -7915,20 +7933,51 @@ cpk-web-inspector {
   backdrop-filter: blur(16px);
 }
 
-.landing-flow-preview span {
+.landing-flow-preview button {
   min-height: 46px;
   display: grid;
   place-items: center;
+  border: 0;
   border-radius: 17px;
   background: rgba(23, 19, 15, 0.045);
   color: rgba(23, 19, 15, 0.62);
+  font: inherit;
   font-size: 12px;
   font-weight: 850;
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease;
 }
 
-.landing-flow-preview span:nth-child(3) {
+.landing-flow-preview button:hover {
+  background: rgba(23, 19, 15, 0.09);
+  color: var(--landing-ink);
+}
+
+.landing-flow-preview button:focus-visible {
+  outline: 2px solid var(--landing-ink);
+  outline-offset: 2px;
+}
+
+.landing-flow-preview button[aria-selected="true"] {
   background: #17130f;
   color: #fffdf8;
+}
+
+/* Wraps the caption and status as one tab panel. `inset: 0` gives the panel a
+   box that exactly covers the stage, so both children keep positioning against
+   the same box they did before and their coordinates are unchanged. It is
+   click-through so the map underneath stays unobstructed. */
+.landing-flow-panel {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.landing-flow-panel:focus-visible {
+  outline: 2px solid var(--landing-ink);
+  outline-offset: -4px;
+  border-radius: inherit;
 }
 
 .landing-map-caption {
@@ -7941,8 +7990,7 @@ cpk-web-inspector {
   gap: 10px;
 }
 
-.landing-map-caption span,
-.landing-map-status span {
+.landing-map-caption span {
   color: #8a6220;
   font-size: 12px;
   font-weight: 900;
@@ -7989,6 +8037,28 @@ cpk-web-inspector {
   animation: landing-path-draw 1700ms 360ms ease forwards;
 }
 
+/* Draw-on for stage visuals. Paths carry pathLength="1", so one keyframe works
+   for any real path length instead of hand-tuning stroke-dasharray per shape. */
+/* Stroke colour is set per element, not here: a gradient must span the shape it
+   paints, so each stage visual supplies its own. Painting a curve with the
+   Lesson path's gradient renders it invisible.
+   The dash length is a plain over-estimate of the real path length, matching
+   `.landing-map-path` above; raise it if a longer path ever uses this class. */
+.landing-map-draw {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 620;
+  stroke-dashoffset: 620;
+  animation: landing-draw-normalized 1200ms 200ms ease forwards;
+}
+
+@keyframes landing-draw-normalized {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 .landing-map-node {
   fill: rgba(255, 253, 248, 0.78);
   stroke: rgba(23, 19, 15, 0.16);
@@ -8013,33 +8083,6 @@ cpk-web-inspector {
   fill: rgba(23, 19, 15, 0.66);
   font-size: 21px;
   font-weight: 850;
-}
-
-.landing-map-status {
-  position: absolute;
-  right: clamp(18px, 3vw, 36px);
-  bottom: clamp(18px, 3vw, 36px);
-  z-index: 2;
-  width: min(430px, calc(100% - 36px));
-  display: grid;
-  gap: 8px;
-  padding: 20px 22px;
-  border-left: 3px solid var(--landing-gold);
-  background: linear-gradient(90deg, rgba(255, 250, 240, 0.92), rgba(255, 250, 240, 0.54));
-  backdrop-filter: blur(16px);
-}
-
-.landing-map-status strong {
-  color: rgba(23, 19, 15, 0.76);
-  font-size: 15px;
-  line-height: 1.45;
-}
-
-.landing-map-status small {
-  color: rgba(23, 19, 15, 0.56);
-  font-size: 12px;
-  font-weight: 760;
-  line-height: 1.45;
 }
 
 .landing-section {
@@ -8378,6 +8421,10 @@ cpk-web-inspector {
   .landing-hero-actions {
     align-items: stretch;
     flex-direction: column;
+    /* Override the desktop shrink-wrap: on narrow screens the group should span
+       the full column so the buttons below can reach 100%. */
+    width: 100%;
+    min-width: 0;
   }
 
   .landing-cta,
@@ -8402,7 +8449,7 @@ cpk-web-inspector {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .landing-flow-preview span {
+  .landing-flow-preview button {
     min-height: 36px;
     font-size: 11px;
   }
@@ -8420,13 +8467,6 @@ cpk-web-inspector {
     inset: auto -30% 14% -18%;
     width: 138%;
     height: 56%;
-  }
-
-  .landing-map-status {
-    right: 18px;
-    left: 18px;
-    bottom: 18px;
-    width: auto;
   }
 
   .landing-section-heading h2 {
@@ -8459,6 +8499,7 @@ cpk-web-inspector {
 @media (prefers-reduced-motion: reduce) {
   .landing-map-stage,
   .landing-map-path,
+  .landing-map-draw,
   .landing-workflow-line::before,
   .landing-cta,
   .landing-final-cta a {
@@ -8466,7 +8507,8 @@ cpk-web-inspector {
     transition: none;
   }
 
-  .landing-map-path {
+  .landing-map-path,
+  .landing-map-draw {
     stroke-dashoffset: 0;
   }
 }
