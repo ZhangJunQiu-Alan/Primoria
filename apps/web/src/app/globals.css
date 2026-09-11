@@ -7836,14 +7836,32 @@ cpk-web-inspector {
 }
 
 .landing-hero-actions {
+  /* Stacked CTAs of identical width. `align-items: stretch` overrides the
+     shared `align-items: center` above so both buttons take the group's full
+     width, and `width: fit-content` shrink-wraps the group to its widest label
+     — which keeps it left-aligned with the headline and subtitle rather than
+     spanning the whole copy column. */
+  align-items: stretch;
+  flex-direction: column;
+  flex-wrap: nowrap;
   gap: 10px;
-  margin-top: 8px;
+  width: fit-content;
+  min-width: 264px;
+  max-width: 100%;
+  margin-top: 18px;
 }
 
 .landing-cta {
+  /* Blockified as a flex item either way; declaring it explicitly makes
+     min-height reliable and centers the label now that the button is wider
+     than its text. */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-height: 52px;
   padding: 15px 22px;
   font-size: 14px;
+  text-align: center;
   transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
 }
 
@@ -8378,6 +8396,10 @@ cpk-web-inspector {
   .landing-hero-actions {
     align-items: stretch;
     flex-direction: column;
+    /* Override the desktop shrink-wrap: on narrow screens the group should span
+       the full column so the buttons below can reach 100%. */
+    width: 100%;
+    min-width: 0;
   }
 
   .landing-cta,
