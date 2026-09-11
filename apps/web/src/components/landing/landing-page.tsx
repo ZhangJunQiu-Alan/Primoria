@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRef, useState } from "react";
+import { FlowStageVisual } from "@/components/landing/flow-stage-visual";
 import { LanguageSwitcher } from "@/components/i18n/language-switcher";
 import { PUBLIC_LANDING_PATH } from "@/lib/auth/routes";
 import { useT } from "@/lib/i18n/client";
@@ -104,29 +105,7 @@ export function LandingPage() {
                 </button>
               ))}
             </div>
-            <svg className="landing-map-svg" viewBox="0 0 720 520" role="img" aria-label="Knowledge graph, lesson path, and visualization preview">
-              <defs>
-                <linearGradient id="landingPathGradient" x1="74" y1="390" x2="590" y2="96" gradientUnits="userSpaceOnUse">
-                  <stop stopColor="#c8881a" />
-                  <stop offset="0.48" stopColor="#ef7358" />
-                  <stop offset="1" stopColor="#17130f" />
-                </linearGradient>
-              </defs>
-              <path className="landing-map-gridline" d="M80 96H642M80 202H642M80 308H642M80 414H642" />
-              <path className="landing-map-gridline" d="M160 62V452M280 62V452M400 62V452M520 62V452" />
-              <path className="landing-map-edge faint" d="M144 384C214 242 290 184 390 205" />
-              <path className="landing-map-edge faint" d="M390 205C452 132 522 112 606 150" />
-              <path className="landing-map-edge faint" d="M390 205C424 298 500 356 596 390" />
-              <path className="landing-map-path" d="M144 384C226 318 284 258 390 205C475 162 530 126 606 150" />
-              <circle className="landing-map-node muted" cx="144" cy="384" r="44" />
-              <circle className="landing-map-node active" cx="390" cy="205" r="64" />
-              <circle className="landing-map-node next" cx="606" cy="150" r="42" />
-              <circle className="landing-map-node small" cx="596" cy="390" r="34" />
-              <circle className="landing-map-node small warm" cx="268" cy="160" r="28" />
-              <text x="118" y="391">Goal</text>
-              <text x="344" y="213">Light</text>
-              <text x="576" y="157">Next</text>
-            </svg>
+            <FlowStageVisual key={stage.id} stageId={stage.id} />
             <div
               className="landing-flow-panel"
               id="landing-flow-panel"
