@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useRef, useState } from "react";
+import { FlowStageVisual } from "@/components/landing/flow-stage-visual";
 import { LanguageSwitcher } from "@/components/i18n/language-switcher";
 import { PUBLIC_LANDING_PATH } from "@/lib/auth/routes";
 import { useT } from "@/lib/i18n/client";
@@ -18,8 +20,30 @@ const subjectGroups = [
   "Discrete Math",
 ];
 
+/** Index of the stage shown before the visitor picks one (the generated lesson). */
+const DEFAULT_FLOW_STAGE = 2;
+
 export function LandingPage() {
   const t = useT();
+  const flowStages = t.landing.flowStages;
+  const [activeStage, setActiveStage] = useState(DEFAULT_FLOW_STAGE);
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const stage = flowStages[activeStage] ?? flowStages[DEFAULT_FLOW_STAGE];
+
+  // Roving-tabindex keyboard support for the tablist: arrows move between
+  // stages, Home/End jump to the ends, and focus follows selection.
+  const onTabKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
+    const lastIndex = flowStages.length - 1;
+    let next: number | null = null;
+    if (event.key === "ArrowRight" || event.key === "ArrowDown") next = index === lastIndex ? 0 : index + 1;
+    else if (event.key === "ArrowLeft" || event.key === "ArrowUp") next = index === 0 ? lastIndex : index - 1;
+    else if (event.key === "Home") next = 0;
+    else if (event.key === "End") next = lastIndex;
+    if (next === null) return;
+    event.preventDefault();
+    setActiveStage(next);
+    tabRefs.current[next]?.focus();
+  };
 
   return (
     <main className="landing-shell">
@@ -61,42 +85,38 @@ export function LandingPage() {
 
         <div className="landing-hero-visual" aria-label="Primoria adaptive learning map preview">
             <div className="landing-map-stage">
-              <div className="landing-flow-preview" aria-label="Learning generation flow">
-              {t.landing.flow.map((item) => (
-                <span key={item}>{item}</span>
+              <div className="landing-flow-preview" role="tablist" aria-label={t.landing.flowLabel}>
+              {flowStages.map((item, index) => (
+                <button
+                  key={item.id}
+                  ref={(node) => {
+                    tabRefs.current[index] = node;
+                  }}
+                  type="button"
+                  role="tab"
+                  id={`landing-flow-tab-${item.id}`}
+                  aria-controls="landing-flow-panel"
+                  aria-selected={index === activeStage}
+                  tabIndex={index === activeStage ? 0 : -1}
+                  onClick={() => setActiveStage(index)}
+                  onKeyDown={(event) => onTabKeyDown(event, index)}
+                >
+                  {item.label}
+                </button>
               ))}
             </div>
-            <div className="landing-map-caption">
-              <span>{t.landing.mapKicker}</span>
-              <strong>{t.landing.mapTitle}</strong>
-            </div>
-            <svg className="landing-map-svg" viewBox="0 0 720 520" role="img" aria-label="Knowledge graph, lesson path, and visualization preview">
-              <defs>
-                <linearGradient id="landingPathGradient" x1="74" y1="390" x2="590" y2="96" gradientUnits="userSpaceOnUse">
-                  <stop stopColor="#c8881a" />
-                  <stop offset="0.48" stopColor="#ef7358" />
-                  <stop offset="1" stopColor="#17130f" />
-                </linearGradient>
-              </defs>
-              <path className="landing-map-gridline" d="M80 96H642M80 202H642M80 308H642M80 414H642" />
-              <path className="landing-map-gridline" d="M160 62V452M280 62V452M400 62V452M520 62V452" />
-              <path className="landing-map-edge faint" d="M144 384C214 242 290 184 390 205" />
-              <path className="landing-map-edge faint" d="M390 205C452 132 522 112 606 150" />
-              <path className="landing-map-edge faint" d="M390 205C424 298 500 356 596 390" />
-              <path className="landing-map-path" d="M144 384C226 318 284 258 390 205C475 162 530 126 606 150" />
-              <circle className="landing-map-node muted" cx="144" cy="384" r="44" />
-              <circle className="landing-map-node active" cx="390" cy="205" r="64" />
-              <circle className="landing-map-node next" cx="606" cy="150" r="42" />
-              <circle className="landing-map-node small" cx="596" cy="390" r="34" />
-              <circle className="landing-map-node small warm" cx="268" cy="160" r="28" />
-              <text x="118" y="391">Goal</text>
-              <text x="344" y="213">Light</text>
-              <text x="576" y="157">Next</text>
-            </svg>
-            <div className="landing-map-status" aria-label="Generated lesson preview">
-              <span>{t.landing.visualKicker}</span>
-              <strong>{t.landing.visualCopy}</strong>
-              <small>{t.landing.visualNote}</small>
+            <FlowStageVisual key={stage.id} stageId={stage.id} />
+            <div
+              className="landing-flow-panel"
+              id="landing-flow-panel"
+              role="tabpanel"
+              aria-labelledby={`landing-flow-tab-${stage.id}`}
+              tabIndex={0}
+            >
+              <div className="landing-map-caption">
+                <span>{stage.kicker}</span>
+                <strong>{stage.title}</strong>
+              </div>
             </div>
           </div>
         </div>
