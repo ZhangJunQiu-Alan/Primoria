@@ -8038,6 +8038,28 @@ cpk-web-inspector {
   animation: landing-path-draw 1700ms 360ms ease forwards;
 }
 
+/* Draw-on for stage visuals. Paths carry pathLength="1", so one keyframe works
+   for any real path length instead of hand-tuning stroke-dasharray per shape. */
+/* Stroke colour is set per element, not here: a gradient must span the shape it
+   paints, so each stage visual supplies its own. Painting a curve with the
+   Lesson path's gradient renders it invisible.
+   The dash length is a plain over-estimate of the real path length, matching
+   `.landing-map-path` above; raise it if a longer path ever uses this class. */
+.landing-map-draw {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 620;
+  stroke-dashoffset: 620;
+  animation: landing-draw-normalized 1200ms 200ms ease forwards;
+}
+
+@keyframes landing-draw-normalized {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 .landing-map-node {
   fill: rgba(255, 253, 248, 0.78);
   stroke: rgba(23, 19, 15, 0.16);
@@ -8512,6 +8534,7 @@ cpk-web-inspector {
 @media (prefers-reduced-motion: reduce) {
   .landing-map-stage,
   .landing-map-path,
+  .landing-map-draw,
   .landing-workflow-line::before,
   .landing-cta,
   .landing-final-cta a {
@@ -8519,7 +8542,8 @@ cpk-web-inspector {
     transition: none;
   }
 
-  .landing-map-path {
+  .landing-map-path,
+  .landing-map-draw {
     stroke-dashoffset: 0;
   }
 }
