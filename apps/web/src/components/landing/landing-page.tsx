@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRef, useState } from "react";
 import { LanguageSwitcher } from "@/components/i18n/language-switcher";
 import { PUBLIC_LANDING_PATH } from "@/lib/auth/routes";
 import { useT } from "@/lib/i18n/client";
@@ -18,8 +19,30 @@ const subjectGroups = [
   "Discrete Math",
 ];
 
+/** Index of the stage shown before the visitor picks one (the generated lesson). */
+const DEFAULT_FLOW_STAGE = 2;
+
 export function LandingPage() {
   const t = useT();
+  const flowStages = t.landing.flowStages;
+  const [activeStage, setActiveStage] = useState(DEFAULT_FLOW_STAGE);
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const stage = flowStages[activeStage] ?? flowStages[DEFAULT_FLOW_STAGE];
+
+  // Roving-tabindex keyboard support for the tablist: arrows move between
+  // stages, Home/End jump to the ends, and focus follows selection.
+  const onTabKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
+    const lastIndex = flowStages.length - 1;
+    let next: number | null = null;
+    if (event.key === "ArrowRight" || event.key === "ArrowDown") next = index === lastIndex ? 0 : index + 1;
+    else if (event.key === "ArrowLeft" || event.key === "ArrowUp") next = index === 0 ? lastIndex : index - 1;
+    else if (event.key === "Home") next = 0;
+    else if (event.key === "End") next = lastIndex;
+    if (next === null) return;
+    event.preventDefault();
+    setActiveStage(next);
+    tabRefs.current[next]?.focus();
+  };
 
   return (
     <main className="landing-shell">
@@ -61,14 +84,25 @@ export function LandingPage() {
 
         <div className="landing-hero-visual" aria-label="Primoria adaptive learning map preview">
             <div className="landing-map-stage">
-              <div className="landing-flow-preview" aria-label="Learning generation flow">
-              {t.landing.flow.map((item) => (
-                <span key={item}>{item}</span>
+              <div className="landing-flow-preview" role="tablist" aria-label={t.landing.flowLabel}>
+              {flowStages.map((item, index) => (
+                <button
+                  key={item.id}
+                  ref={(node) => {
+                    tabRefs.current[index] = node;
+                  }}
+                  type="button"
+                  role="tab"
+                  id={`landing-flow-tab-${item.id}`}
+                  aria-controls="landing-flow-panel"
+                  aria-selected={index === activeStage}
+                  tabIndex={index === activeStage ? 0 : -1}
+                  onClick={() => setActiveStage(index)}
+                  onKeyDown={(event) => onTabKeyDown(event, index)}
+                >
+                  {item.label}
+                </button>
               ))}
-            </div>
-            <div className="landing-map-caption">
-              <span>{t.landing.mapKicker}</span>
-              <strong>{t.landing.mapTitle}</strong>
             </div>
             <svg className="landing-map-svg" viewBox="0 0 720 520" role="img" aria-label="Knowledge graph, lesson path, and visualization preview">
               <defs>
@@ -93,10 +127,22 @@ export function LandingPage() {
               <text x="344" y="213">Light</text>
               <text x="576" y="157">Next</text>
             </svg>
-            <div className="landing-map-status" aria-label="Generated lesson preview">
-              <span>{t.landing.visualKicker}</span>
-              <strong>{t.landing.visualCopy}</strong>
-              <small>{t.landing.visualNote}</small>
+            <div
+              className="landing-flow-panel"
+              id="landing-flow-panel"
+              role="tabpanel"
+              aria-labelledby={`landing-flow-tab-${stage.id}`}
+              tabIndex={0}
+            >
+              <div className="landing-map-caption">
+                <span>{stage.kicker}</span>
+                <strong>{stage.title}</strong>
+              </div>
+              <div className="landing-map-status">
+                <span>{stage.statusKicker}</span>
+                <strong>{stage.statusCopy}</strong>
+                <small>{stage.statusNote}</small>
+              </div>
             </div>
           </div>
         </div>
