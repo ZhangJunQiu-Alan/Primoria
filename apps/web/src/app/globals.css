@@ -7933,20 +7933,51 @@ cpk-web-inspector {
   backdrop-filter: blur(16px);
 }
 
-.landing-flow-preview span {
+.landing-flow-preview button {
   min-height: 46px;
   display: grid;
   place-items: center;
+  border: 0;
   border-radius: 17px;
   background: rgba(23, 19, 15, 0.045);
   color: rgba(23, 19, 15, 0.62);
+  font: inherit;
   font-size: 12px;
   font-weight: 850;
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease;
 }
 
-.landing-flow-preview span:nth-child(3) {
+.landing-flow-preview button:hover {
+  background: rgba(23, 19, 15, 0.09);
+  color: var(--landing-ink);
+}
+
+.landing-flow-preview button:focus-visible {
+  outline: 2px solid var(--landing-ink);
+  outline-offset: 2px;
+}
+
+.landing-flow-preview button[aria-selected="true"] {
   background: #17130f;
   color: #fffdf8;
+}
+
+/* Wraps the caption and status as one tab panel. `inset: 0` gives the panel a
+   box that exactly covers the stage, so both children keep positioning against
+   the same box they did before and their coordinates are unchanged. It is
+   click-through so the map underneath stays unobstructed. */
+.landing-flow-panel {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.landing-flow-panel:focus-visible {
+  outline: 2px solid var(--landing-ink);
+  outline-offset: -4px;
+  border-radius: inherit;
 }
 
 .landing-map-caption {
@@ -8424,7 +8455,7 @@ cpk-web-inspector {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .landing-flow-preview span {
+  .landing-flow-preview button {
     min-height: 36px;
     font-size: 11px;
   }
