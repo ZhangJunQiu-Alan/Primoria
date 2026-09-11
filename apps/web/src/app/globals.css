@@ -7990,8 +7990,7 @@ cpk-web-inspector {
   gap: 10px;
 }
 
-.landing-map-caption span,
-.landing-map-status span {
+.landing-map-caption span {
   color: #8a6220;
   font-size: 12px;
   font-weight: 900;
@@ -8084,33 +8083,6 @@ cpk-web-inspector {
   fill: rgba(23, 19, 15, 0.66);
   font-size: 21px;
   font-weight: 850;
-}
-
-.landing-map-status {
-  position: absolute;
-  right: clamp(18px, 3vw, 36px);
-  bottom: clamp(18px, 3vw, 36px);
-  z-index: 2;
-  width: min(430px, calc(100% - 36px));
-  display: grid;
-  gap: 8px;
-  padding: 20px 22px;
-  border-left: 3px solid var(--landing-gold);
-  background: linear-gradient(90deg, rgba(255, 250, 240, 0.92), rgba(255, 250, 240, 0.54));
-  backdrop-filter: blur(16px);
-}
-
-.landing-map-status strong {
-  color: rgba(23, 19, 15, 0.76);
-  font-size: 15px;
-  line-height: 1.45;
-}
-
-.landing-map-status small {
-  color: rgba(23, 19, 15, 0.56);
-  font-size: 12px;
-  font-weight: 760;
-  line-height: 1.45;
 }
 
 .landing-section {
@@ -8495,13 +8467,6 @@ cpk-web-inspector {
     inset: auto -30% 14% -18%;
     width: 138%;
     height: 56%;
-  }
-
-  .landing-map-status {
-    right: 18px;
-    left: 18px;
-    bottom: 18px;
-    width: auto;
   }
 
   .landing-section-heading h2 {

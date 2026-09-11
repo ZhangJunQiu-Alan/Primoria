@@ -117,11 +117,6 @@ export function LandingPage() {
                 <span>{stage.kicker}</span>
                 <strong>{stage.title}</strong>
               </div>
-              <div className="landing-map-status">
-                <span>{stage.statusKicker}</span>
-                <strong>{stage.statusCopy}</strong>
-                <small>{stage.statusNote}</small>
-              </div>
             </div>
           </div>
         </div>
