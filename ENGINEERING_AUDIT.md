@@ -1,746 +1,748 @@
-# 1. Executive Summary
+# 1. 执行摘要
 
-**Assessment: the architecture is appropriate, but this revision should not yet receive approval for an unrestricted production launch.** The main risks are concrete authorization, concurrent-write, persistence, and recovery defects. They can be addressed within the current architecture; a rewrite or migration to distributed infrastructure would make the immediate work harder.
+> 翻译说明：本中文版于 2026-10-01 翻译，保留原报告基于 2026-09-26 审计及指定代码版本得出的结论、证据和验证限制。本次翻译不代表对当前代码重新开展审计。
 
-Primoria is a personalized learning application with an AI Tutor, knowledge-graph positioning, generated courses, interactive teaching components, quizzes, mastery tracking, learner facts, progression rewards, and course sharing. It already has substantial production engineering: server-side sessions, shared contracts, durable PostgreSQL job queues, lease fencing, immutable share versions, migration ownership, regression layers, container hardening, and backup/restore tooling.
+**评估结论：现有架构合理，但这一版本尚不应获准面向所有用户正式上线。** 主要风险是明确存在的授权、并发写入、持久化和故障恢复缺陷。这些问题可以在现有架构内解决；重写系统或迁移到分布式基础设施，会增加当前整改工作的难度。
 
-The most consequential findings are: cross-owner chat updates; stale course saves that can overwrite progress or delete newly inserted lessons; executable lesson code running with the application's origin privileges; incomplete production environment forwarding; Agent runs stranded after a rapid restart; and unbounded admission to expensive AI work. Generated courses also reach a static-only graph lookup during post-quiz progression, and streamed chat history can persist only an early fragment.
+Primoria 是一款个性化学习应用，包含 AI 导师、知识图谱定位、课程生成、交互式教学组件、测验、掌握度跟踪、学习者事实、成长奖励和课程分享。项目已经具备较多生产工程基础：服务端会话、共享接口契约、持久化 PostgreSQL 任务队列、租约隔离保护、不可变分享版本、明确的数据库迁移归属、分层回归测试、容器加固，以及备份和恢复工具。
 
-This report contains **17 findings: 10 P1 and 7 P2**. One P1 is conditional on enabling internal analytics. No P0 or exposed production secret was established. Severity reflects demonstrated code paths and realistic conditions, not a claim that every scenario was reproduced against a running deployment.
+影响最大的发现包括：跨用户修改聊天记录；使用旧课程快照保存时可能覆盖进度或删除刚插入的课时；可执行课时代码拥有应用同源权限；生产环境变量传递不完整；Agent 快速重启后可能遗留无法继续的运行任务；以及高成本 AI 工作缺少任务接收配额。此外，生成式课程在测验后的进度处理中会调用仅支持静态图谱的查询逻辑，而流式聊天记录可能只保存回答的早期片段。
 
-**Scope and evidence.** Audit date: **2026-09-26**, Asia/Singapore. Revision: `127fd070b54dc20b03192660b02cbea1852b1825`. The working tree was clean at inspection. Inventory: 1,009 tracked files, 682 TypeScript/TSX/ESM/SQL files under application and package directories, 46 API route files, 111 native Web test specification files, and 47 legacy Web unit scripts. Critical paths and representative modules were read; this is not a line-by-line proof of every file.
+本报告共有 **17 项发现：10 项 P1、7 项 P2**。其中一项 P1 仅在启用内部分析功能时成立。没有确认 P0 问题，也没有发现已泄露的生产密钥。严重程度基于已查明的代码路径和现实触发条件，并不表示已在运行中的部署上复现了每一种情景。
 
-**Execution limits.** Dependencies are absent in the root, Web, and Agent workspaces. The available runtime is Node 24.19.0 with pnpm 11.19.0; the repository pins pnpm 10.28.1. No packages were installed. No database, browser, provider, deployment, or destructive tests were run. Section 14 records the limited checks that did run and the gates that remain unverified. Historical passing results in repository documents are not presented as passing results for this audit.
+**范围与证据。** 审计日期：**2026-09-26**，时区为 Asia/Singapore。审计版本：`127fd070b54dc20b03192660b02cbea1852b1825`。检查开始时工作区干净。仓库包含 1,009 个受 Git 跟踪的文件；应用和包目录下有 682 个 TypeScript、TSX、ESM 或 SQL 文件；另有 46 个 API 路由文件、111 个原生 Web 测试规范文件，以及 47 个旧版 Web 单元测试脚本。审计阅读了关键路径和有代表性的模块，并非对每个文件逐行证明其正确性。
 
-**Audit-only outcome.** This report is the only repository file created. Application code, configuration, dependencies, schemas, migrations, tests, and deployment state were not changed. No commit or push was performed.
+**执行限制。** 审计时，根目录、Web 和 Agent 工作区均未安装依赖。可用运行环境为 Node 24.19.0 和 pnpm 11.19.0，而仓库固定使用 pnpm 10.28.1。审计未安装任何包，也未运行数据库、浏览器、模型服务商、部署或破坏性测试。第 14 节列出了实际执行的有限检查，以及仍未验证的检查门槛。仓库文档中的历史通过记录，不视为本次审计的通过结果。
 
-# 2. Current System Architecture
+**仅审计阶段的产出。** 原审计阶段只新增了本报告，没有修改应用代码、配置、依赖、数据库结构、迁移、测试或部署状态，也没有执行 commit 或 push。
+
+# 2. 当前系统架构
 
 ```text
-Browser: Next.js / React application
-  |  HttpOnly session cookie; JSON APIs; CopilotKit streaming UI
+浏览器：Next.js / React 应用
+  |  HttpOnly 会话 Cookie；JSON API；CopilotKit 流式界面
   v
-Caddy: public HTTPS endpoint
+Caddy：公网 HTTPS 入口
   |
   v
-Next.js Web server
-  |-- authentication, ownership checks, onboarding and learner settings
-  |-- knowledge-graph positioning and course orchestration
-  |-- catalog component configuration and shared-course publication/import
-  |-- App/Auth/Course/KG reads and writes through PostgreSQL
+Next.js Web 服务
+  |-- 身份认证、所属用户检查、新用户引导和学习者设置
+  |-- 知识图谱定位和课程编排
+  |-- 目录组件配置、共享课程发布与导入
+  |-- 通过 PostgreSQL 读写 App/Auth/Course/KG 数据
   |
   |  /api/copilotkit -> PrimoriaHttpAgent
-  |  internal authenticated AG-UI request
+  |  经过内部认证的 AG-UI 请求
   v
-Node Agent -> LangGraph / deepagents -> configured model provider
-  |-- tutor tools and shared artifact contracts
-  |-- durable runs, events, leases, cancellation and checkpoints
+Node Agent -> LangGraph / deepagents -> 配置的模型服务商
+  |-- 导师工具和共享产物契约
+  |-- 持久化运行记录、事件、租约、取消状态和检查点
   v
 PostgreSQL + pgvector
-  |-- public application/auth/course/KG schemas and data
-  |-- isolated agent_runtime schema
-  |-- durable lesson, learning-progress, extractor and profile-intake jobs
+  |-- public 中的应用、认证、课程、KG 数据结构和数据
+  |-- 隔离的 agent_runtime schema
+  |-- 持久化课时、学习进度、事实提取和个人资料录入任务
   ^
-  |  claim / lease / execute / publish
-Web-owned workers: lesson generation, learning progress, extractor
+  |  领取 / 租约 / 执行 / 发布
+由 Web 负责的 Worker：课时生成、学习进度、事实提取
 
-External services:
-  chat model; KG embedding provider; optional image generation / Mem0;
-  Tencent SES password-reset email; optional Turnstile;
-  browser visualization/Pyodide CDNs; COS backup storage
+外部服务：
+  对话模型；KG 嵌入服务商；可选的图像生成 / Mem0；
+  腾讯云 SES 密码重置邮件；可选的 Turnstile；
+  浏览器可视化 / Pyodide CDN；COS 备份存储
 ```
 
-| Area | Actual implementation |
+| 领域 | 实际实现 |
 |---|---|
-| Frontend | Next.js 16 App Router, React 19, TypeScript, application CSS, CopilotKit, registered React interactive components, structured renderers, and sandboxed HTML widgets. |
-| Backend | Next route handlers and server-side libraries. Plain ESM Node Agent is a separate internal process. Three worker processes handle durable background work. |
-| Database | PostgreSQL 16 with pgvector; Drizzle and the `postgres` driver for application data; separate KG SQL ownership and Agent runtime migrations/checkpoints. |
-| Authentication | Email/password identities, salted password hashes, opaque server-side sessions, hashed session tokens, expiry, logout, and password reset. OAuth callback scaffolding is not an implemented OAuth product flow. |
-| Contracts | Shared artifact schemas, widget dependency allowlist, and compact interactive catalog in `packages/contracts`. Agent code does not depend on Web implementation modules. |
-| AI | Server environment credentials for OpenAI-compatible or Anthropic-compatible providers; no BYOK path. Utility/content tiers are distinct. KG embeddings have separate configuration. |
-| Deployment | Single-host Compose: PostgreSQL, migration/grant jobs, Web, Agent, three workers, and Caddy. Only Caddy is public; PostgreSQL has a loopback administration binding. |
-| Build/test | pnpm workspace and lockfile; TypeScript, ESLint, Vitest plus a legacy test bridge, Agent ESM tests, DB integration suites, Playwright journeys, bundle budgets, and Compose smoke tooling. |
+| 前端 | Next.js 16 App Router、React 19、TypeScript、应用 CSS、CopilotKit、已注册的 React 交互组件、结构化渲染器，以及沙箱化 HTML 小组件。 |
+| 后端 | Next 路由处理函数与服务端库。纯 ESM Node Agent 是独立的内部进程。三个 Worker 进程处理持久化后台任务。 |
+| 数据库 | PostgreSQL 16 加 pgvector；应用数据使用 Drizzle 和 `postgres` 驱动；KG SQL 与 Agent 运行时迁移、检查点分别有明确归属。 |
+| 身份认证 | 邮箱/密码身份、加盐密码哈希、不透明的服务端会话、哈希后的会话令牌、过期机制、退出登录和密码重置。OAuth 回调脚手架不代表已经实现完整的 OAuth 产品流程。 |
+| 接口契约 | `packages/contracts` 中的共享产物 schema、小组件依赖允许列表和精简交互组件目录。Agent 代码不依赖 Web 实现模块。 |
+| AI | 通过服务端环境变量配置 OpenAI-compatible 或 Anthropic-compatible 服务商凭据；没有 BYOK（用户自带密钥）路径。工具/内容模型层级相互区分，KG 嵌入使用独立配置。 |
+| 部署 | 单机 Compose：PostgreSQL、迁移/授权任务、Web、Agent、三个 Worker 和 Caddy。只有 Caddy 对公网开放；PostgreSQL 的管理端口绑定回环地址。 |
+| 构建与测试 | pnpm 工作区和锁文件；TypeScript、ESLint、Vitest 与旧版测试桥接、Agent ESM 测试、数据库集成测试、Playwright 用户流程、构建产物体积预算，以及 Compose 冒烟测试工具。 |
 
-The principal learner flow is signup/login, confirmed curriculum and goal intake, KG positioning, exact-scope course reuse or creation, concept-frontier outline generation, asynchronous lesson materialization, quiz evidence, rules-based mastery, and a next-step/remediation decision. Facts extraction runs separately. XP is an append-only reward ledger, not a mastery score.
+核心学习流程为：注册/登录，确认课程体系并录入目标，KG 定位，按精确范围复用或创建课程，生成概念前沿大纲，异步生成并落库课时，收集测验证据，按规则计算掌握度，再决定下一步或补强学习。事实提取独立执行。XP 使用仅追加的奖励账本记录，不代表掌握度分数。
 
-The Tutor path is browser CopilotKit → Web API → internal Agent. Catalog interactive tools signal the browser, which calls the authenticated Web configuration endpoint; the Agent does not own component configuration. Specialized artifacts and sandbox widgets cover other visualization needs.
+导师调用路径为：浏览器 CopilotKit → Web API → 内部 Agent。目录交互工具向浏览器发送信号，再由浏览器调用经过认证的 Web 配置端点；组件配置不由 Agent 负责。专用产物和沙箱小组件满足其他可视化需求。
 
-The runtime catalog contains 31 graphs. Runtime registration and source approval differ: ten China/Singapore graphs remain `needs_review`. Current code includes an optional `PRIMORIA_REQUIRE_APPROVED_KG` routing filter, defaulting to permissive behavior; registration is not proof of approval. Source, curriculum mapping, pedagogy approval, and runtime import must remain distinct.
+运行时目录包含 31 个图谱。运行时注册与源数据审批是不同状态：其中十个中国/新加坡图谱仍为 `needs_review`。当前代码提供可选的 `PRIMORIA_REQUIRE_APPROVED_KG` 路由过滤开关，默认允许未审批图谱参与；已注册不能证明已获批准。源数据审批、课程映射审批、教学知识审批和运行时导入必须继续分别管理。
 
-Sharing now uses a link parent and immutable `course_share_versions`. Public access and import operate on sanitized stored snapshots. This is more precise than older descriptions that mention only `course_share_links`.
+分享功能现在使用分享链接父记录和不可变的 `course_share_versions`。公开访问和导入都基于已清理的存储快照。这一描述比仅提及 `course_share_links` 的旧文档更准确。
 
-# 3. Production Readiness
+# 3. 生产就绪度
 
-## Must fix before production
+## 上线前必须修复
 
-- **F01–F03:** close cross-owner chat writes, protect course updates against stale aggregate replacement, and isolate untrusted executable lesson code from authenticated application APIs.
-- **F04:** make the production environment contract match the selected authentication/email/model features. The documented Compose path currently omits required values.
-- **F05–F08:** make rapid-restart recovery continuous, enforce admission limits for expensive work, persist complete chat history, and support generated graphs through post-lesson progression.
-- **F17:** complete the documented release evidence and external authorization gates. A passing deterministic fixture check does not close a blocked real-model or embedding-snapshot gate.
-- **F15, if analytics is enabled:** require a trusted operator identity. Keeping analytics disabled is an appropriate launch mitigation until that condition is met.
+- **F01–F03：** 阻止跨用户写入聊天记录，防止旧聚合快照覆盖课程更新，并将不可信的可执行课时代码与经过认证的应用 API 隔离。
+- **F04：** 确保生产环境配置契约与启用的认证、邮件、模型功能一致。文档中的 Compose 部署路径目前缺少必要变量。
+- **F05–F08：** 持续恢复快速重启后遗留的任务，为高成本工作设置接收限制，保存完整聊天历史，并让生成式图谱贯穿课后进度处理流程。
+- **F17：** 完成文档要求的发布证据和外部授权门槛。确定性测试数据检查通过，不等于已关闭受阻的真实模型或嵌入快照检查项。
+- **启用分析功能时的 F15：** 必须使用可信的运维人员身份。在满足这一条件前，保持分析功能关闭是合理的上线缓解措施。
 
-## Strongly recommended before production
+## 强烈建议上线前完成
 
-- **F09:** move production off the end-of-life Node 20 line and align the tested runtime.
-- **F10–F12:** enforce atomic reset-token consumption, separate worker liveness from job duration, and preserve supported image attachments through the Tutor protocol.
-- **F16:** stop sending raw learner goals to general operational logs by default.
-- Obtain release-candidate evidence for real HTTPS signup/login/reset, selected provider connectivity, restore success, queue recovery, and failure alerts. Their absence is an evidence gap, not proof that an external deployment is currently misconfigured.
+- **F09：** 生产环境迁离已经结束支持的 Node 20，并与测试使用的运行环境保持一致。
+- **F10–F12：** 保证密码重置令牌原子消费，将 Worker 存活检查与任务耗时解耦，并在整个导师协议链路中保留受支持的图片附件。
+- **F16：** 默认停止将学习者的原始目标文本写入普通运维日志。
+- 为发布候选版本取得真实 HTTPS 注册/登录/重置流程、所选服务商连通性、恢复成功、队列恢复和故障告警的证据。缺少这些证据表示验证不足，不能直接证明外部部署当前配置错误。
 
-## Safe to address after launch
+## 可以上线后处理
 
-- **F13:** remediation failure UI, provided the launch scope accepts a refresh workaround and the issue is tracked promptly. Fix before launch if this journey is a launch acceptance criterion.
-- **F14:** summary overfetch and pagination, with conservative initial course/history limits and monitoring.
-- Narrow component extraction, dependency footprint work, end-to-end trace enrichment, and measured performance tuning. These should follow behavioral fixes rather than become prerequisites for a rewrite.
+- **F13：** 补强课时生成失败的界面体验，前提是上线范围接受刷新页面作为临时绕过方式，并及时跟踪问题。如果该流程属于上线验收标准，则应提前修复。
+- **F14：** 摘要查询过量取数和分页问题；初期需采用保守的课程/历史记录数量限制并监控。
+- 小范围组件拆分、依赖体积优化、端到端追踪信息补充，以及基于测量的性能调优。这些工作应跟随行为缺陷修复推进，不应变成重写系统的前置条件。
 
-The recommendations describe future remediation. No feature was disabled, gate waived, or product scope changed during this audit.
+这些建议描述的是后续整改工作。原审计期间没有关闭功能、豁免检查门槛或变更产品范围。
 
-# 4. Top Engineering Risks
+# 4. 主要工程风险
 
-| ID | Severity | Risk | Principal impact |
+| 编号 | 严重程度 | 风险 | 主要影响 |
 |---|---|---|---|
-| F01 | P1 | Chat upserts authorize insertion but not conflict updates | Another user's chat data can be overwritten when its identifier is known. |
-| F02 | P1 | Whole-course replacement after an unlocked read | Progress/content can revert; concurrently added lessons can be deleted. |
-| F03 | P1 | Runnable lesson code shares the application origin | Malicious runnable content can act with the learner's authenticated browser privileges. |
-| F04 | P1 | Production environment values are not forwarded | Password reset fails, IP throttling is absent, selected providers can fail. |
-| F05 | P1 | Agent stale-run recovery executes only at startup | A rapid restart can leave a run permanently marked running. |
-| F06 | P1 | Expensive AI work lacks general admission budgets | One account can consume queue capacity, storage, and provider spend. |
-| F07 | P1 | History records an assistant message only once | Reload can restore a fragment or lose a message after a transient failure. |
-| F08 | P1 | Progression resolves only static topic graphs | Generated courses fail after quiz completion. |
-| F15 | P1, conditional | Internal analytics trusts an unverified email string | A first registrant can claim an unused allowlisted operator address. |
-| F17 | P1 | Required release gates remain explicitly incomplete | Critical model/routing behavior and deployment readiness lack required signoff evidence. |
-| F09 | P2 | Production Node 20 is end-of-life | Unsupported runtime and CI/production drift. |
-| F10 | P2 | Reset token validation and consumption are not atomic | One reset token can succeed concurrently more than once. |
-| F11 | P2 | Busy workers stop refreshing liveness | Healthy long jobs can make readiness fail. |
-| F12 | P2 | Multimodal input is flattened to text | Tutor answers without receiving the learner's image. |
-| F13 | P2 | Remediation dialog recognizes success only | Terminal generation failures leave an uncloseable waiting state. |
-| F14 | P2 | Summary and history reads are unbounded | Course JSON and old chat content produce avoidable latency/memory use. |
-| F16 | P2 | Raw learning goals enter console logs | Personal learner disclosures spread into operational log storage. |
+| F01 | P1 | 聊天 upsert 对插入进行了授权，却未约束冲突更新 | 知道其他用户记录的标识符后，就可能覆盖其聊天数据。 |
+| F02 | P1 | 在未加锁读取后替换整份课程 | 进度或内容可能回退；并发新增的课时可能被删除。 |
+| F03 | P1 | 可执行课时代码与应用同源 | 恶意可执行内容可以利用学习者已登录浏览器的权限执行操作。 |
+| F04 | P1 | 生产环境变量没有传入容器 | 密码重置失败，IP 限流缺失，所选模型服务商可能无法使用。 |
+| F05 | P1 | Agent 只在启动时恢复过期运行任务 | 快速重启后，运行任务可能永久停留在运行中状态。 |
+| F06 | P1 | 高成本 AI 工作缺少通用接收配额 | 一个账户即可占用队列容量、存储空间和模型服务预算。 |
+| F07 | P1 | 历史记录只保存一次助手消息 | 刷新后可能只恢复一个片段，或因瞬时失败丢失消息。 |
+| F08 | P1 | 学习进度处理只解析静态主题图谱 | 生成式课程在完成测验后处理失败。 |
+| F15 | P1，有条件 | 内部分析信任未经验证的邮箱字符串 | 抢先注册者可以占用尚未注册的允许列表运维邮箱。 |
+| F17 | P1 | 必需的发布检查门槛仍明确处于未完成状态 | 关键模型/路由行为和部署就绪度缺少所需的批准证据。 |
+| F09 | P2 | 生产 Node 20 已结束支持 | 使用不受支持的运行时，且 CI 与生产环境存在差异。 |
+| F10 | P2 | 重置令牌校验与消费不具备原子性 | 同一个重置令牌可能在并发请求中多次成功使用。 |
+| F11 | P2 | Worker 忙碌时停止刷新存活状态 | 正常执行的长任务也可能导致就绪检查失败。 |
+| F12 | P2 | 多模态输入被压平成纯文本 | 导师在未收到学习者图片的情况下作答。 |
+| F13 | P2 | 补强学习对话框只识别成功状态 | 生成任务最终失败后，界面仍处于无法关闭的等待状态。 |
+| F14 | P2 | 摘要和历史记录读取没有数量上限 | 课程 JSON 和旧聊天内容带来本可避免的延迟与内存开销。 |
+| F16 | P2 | 原始学习目标进入控制台日志 | 学习者披露的个人信息扩散到运维日志存储中。 |
 
-The first three deserve the earliest review because they affect trust boundaries and durable data. Findings below state their exact conditions and limitations.
+前三项应最先审查，因为它们影响信任边界和持久化数据。下文逐项说明准确的触发条件和结论限制。
 
-# 5. Architecture Review
+# 5. 架构审查
 
-The current modular monolith plus a dedicated Agent and database-backed workers is a sound fit. Web ownership of application writes, explicit cross-runtime contracts, and worker separation are useful boundaries. There is no demonstrated requirement for microservices, Kafka, Kubernetes, Redis, or CQRS.
+当前采用模块化单体、专用 Agent 和数据库支持的 Worker，适合项目现阶段。Web 负责应用写入、明确的跨运行时契约，以及 Worker 分离，都是有价值的边界。目前没有证据表明项目需要微服务、Kafka、Kubernetes、Redis 或 CQRS。
 
-The unsafe boundaries are narrower: a repository upsert omits authorization on its update branch; a generic aggregate persistence API is used for unrelated mutations; history persistence is tied to a transient UI effect; and graph resolution differs between lesson generation and progression. These are repairable seams within the existing design.
+存在问题的是更具体的边界：数据访问层的 upsert 在更新分支漏掉授权；通用聚合持久化 API 被用于互不相关的变更；历史持久化依赖短暂的 UI effect；课时生成与学习进度处理使用了不同的图谱解析方式。这些都能在现有设计内修复。
 
-The Agent's database ownership is primarily enforced by code and schema organization. The production runtime role is shared across services and receives broad runtime DML grants. Separate least-privilege service roles would reduce blast radius later, but the immediate access-control defects should be corrected first. Removing runtime DDL privileges was a useful existing improvement.
+Agent 的数据库访问归属主要由代码和 schema 组织方式约束。生产运行时角色在各服务间共享，并获得较广泛的数据操作（DML）权限。后续拆分为遵循最小权限原则的服务角色，有助于缩小故障或入侵的影响范围，但应先修复眼前的访问控制缺陷。现有移除运行时 DDL 权限的改进值得保留。
 
-## F08 — Generated graphs cannot complete the normal learning-progress pipeline
+## F08 — 生成式图谱无法完成正常的学习进度处理流程
 
-**Severity:** P1
+**严重程度：** P1
 
-**Category:** Bug / Architecture / Reliability
+**类别：** 缺陷 / 架构 / 可靠性
 
-**Location:** [learning-progress-processor.ts](D:/Github/Primoria/apps/web/src/lib/courses/learning-progress-processor.ts:64), [topic-graph.ts](D:/Github/Primoria/apps/web/src/lib/knowledge-graph/topic-graph.ts:126), and [lesson-generation-context.ts](D:/Github/Primoria/apps/web/src/lib/courses/lesson-generation-context.ts:180).
+**位置：** [learning-progress-processor.ts](D:/Github/Primoria/apps/web/src/lib/courses/learning-progress-processor.ts:64)、[topic-graph.ts](D:/Github/Primoria/apps/web/src/lib/knowledge-graph/topic-graph.ts:126) 和 [lesson-generation-context.ts](D:/Github/Primoria/apps/web/src/lib/courses/lesson-generation-context.ts:180)。
 
-**Evidence:** `processLearningProgressJob` calls synchronous `getTopic(graphId, topicId)` before mastery processing. That function calls `getTopicGraph`, which reads only the compiled `TOPIC_GRAPHS` registry and throws for an unknown graph. Generated `gen_*` graphs are persisted separately. Lesson generation explicitly falls back to `getGeneratedGraphById`; progression does not. The decider also uses static graph helpers. This is a source-confirmed mismatch; no database-backed generated-course journey was executed in this audit.
+**证据：** `processLearningProgressJob` 在处理掌握度之前同步调用 `getTopic(graphId, topicId)`。该函数调用 `getTopicGraph`，后者只读取编译生成的 `TOPIC_GRAPHS` 注册表，遇到未知图谱会抛出异常。生成式 `gen_*` 图谱被单独持久化。课时生成会显式回退到 `getGeneratedGraphById`，学习进度处理则不会。决策器也使用静态图谱辅助函数。这是源码确认的实现不一致；本次审计没有执行基于数据库的生成式课程完整流程。
 
-**Why it matters:** Generated courses are an intentional supported outcome of healthy KG coverage misses. Their materialization and their post-quiz progression currently resolve graph identity differently.
+**影响：** 在 KG 基础设施正常、但知识库无法覆盖目标时，生成式课程是产品有意支持的结果。然而，其课时生成和测验后的进度处理目前采用不同方式解析图谱身份。
 
-**Realistic failure scenario:** A learner creates a course outside the source catalog, reads its generated lesson, and submits the quiz. The progress worker throws on the generated graph ID before computing mastery and next-step/course-completion decisions. Quiz submission itself can already have succeeded.
+**现实故障情景：** 学习者创建了不在源图谱目录中的课程，阅读生成的课时并提交测验。进度 Worker 在计算掌握度、下一步或课程完成决策前，就因生成式图谱 ID 抛出异常。测验提交本身此时可能已经成功。
 
-**Recommended solution:** Resolve a persisted or static graph at the orchestration boundary using one shared graph-resolution contract, and pass resolved graph data into deterministic progression logic. Cover generated courses from quiz evidence through remediation/next-step and completion; preserve KG infrastructure-failure distinctions.
+**建议方案：** 在编排边界使用统一的图谱解析契约，解析持久化图谱或静态图谱，再将解析后的数据传入确定性的进度逻辑。测试应覆盖生成式课程从测验证据、补强/下一步到课程完成的流程，并保留 KG 基础设施故障与覆盖缺失的区分。
 
-**Estimated effort:** Medium
+**预计工作量：** 中
 
-**When to fix:** Before production
+**修复时机：** 上线前
 
-# 6. Code Quality Review
+# 6. 代码质量审查
 
-The codebase generally has meaningful domain names, typed schemas, explicit owner parameters, and explanations of non-obvious race/retry decisions. Shared runtime Zod schemas plus declaration drift tests are a pragmatic solution for the ESM/TypeScript split. Generated data and dictionaries account for some large files and should not be confused with oversized business logic.
+整体上，代码使用了有意义的领域命名、类型化 schema、显式所属用户参数，并对不直观的竞态和重试决策作出解释。共享运行时 Zod schema 配合类型声明一致性测试，是应对 ESM/TypeScript 分离的务实方案。部分大文件是生成数据或字典，不应将其与过度庞大的业务逻辑混为一谈。
 
-The more difficult areas to modify safely are the course store and generation pipeline, Tutor UI/history adapter, large lesson/block renderers, and worker lifecycle code. Their risk comes from interacting responsibilities and failure states, not line count alone. The course detail component, for example, contains navigation, recommendation resolution, polling, and modal behavior; F13 shows an actual missing terminal state there.
+难以安全修改的区域主要是课程存储与生成流水线、导师界面/历史适配器、大型课时/内容块渲染器，以及 Worker 生命周期代码。风险来自职责相互影响和故障状态的组合，而不只是代码行数。例如，课程详情组件同时包含导航、推荐处理、轮询和弹窗行为；F13 说明这里确实遗漏了一个终态。
 
-Three patterns merit focused remediation:
+以下三种模式值得重点整改：
 
-- Broad read-modify-save helpers obscure the mutation being authorized and protected (F02).
-- Loose `any` protocol handling and text conversion hide loss of structured input (F12).
-- Best-effort catch blocks are appropriate for nonessential enrichment, but inappropriate as the only durability behavior for chat history (F07).
+- 范围过大的“读取—修改—保存”辅助函数，掩盖了究竟在授权和保护哪项变更（F02）。
+- 宽松的 `any` 协议处理和文本转换，掩盖了结构化输入的丢失（F12）。
+- 尽力而为的异常捕获适合非关键内容增强，但不适合作为聊天历史唯一的持久化机制（F07）。
 
-No circular-dependency or unused-package elimination was proven by a complete dependency graph. No cleanup recommendation here assumes that a package or module is dead merely because one search did not find it. Extract small domain boundaries when fixing these behaviors; defer sweeping file splits and stylistic rewrites.
+本次没有通过完整依赖图证明循环依赖问题，也没有完成可删除未使用包的证明。这里的清理建议不会仅因为一次搜索没有命中，就认定某个包或模块已无用途。修复这些行为时，可以提取小范围领域边界；大规模文件拆分和风格重写应推迟。
 
-# 7. Frontend Review
+# 7. 前端审查
 
-The application has deliberate loading/empty states, code-edit dirty-state protection, reusable focus handling, server-authoritative mutations, and route-specific UI. Those are good foundations. Browser responsiveness, screen-reader behavior, and visual layouts were not exercised in this audit; source inspection does not establish WCAG conformance or Core Web Vitals.
+应用已经设计了加载与空状态、代码编辑未保存状态保护、可复用的焦点管理、以服务端为准的变更操作，以及适配不同路由的界面。这些都是良好基础。本次审计没有实际检查浏览器响应表现、屏幕阅读器行为或视觉布局；阅读源码不能证明符合 WCAG，也不能证明核心网页指标达标。
 
-The main frontend risks concern persistence and asynchronous state transitions rather than a need for a different state-management library.
+前端主要风险集中在持久化与异步状态切换，并没有体现出更换状态管理库的必要性。
 
-## F07 — Chat history can persist only the first streamed fragment and silently miss writes
+## F07 — 聊天历史可能只保存首个流式片段，并静默漏写消息
 
-**Severity:** P1
+**严重程度：** P1
 
-**Category:** Bug / Reliability
+**类别：** 缺陷 / 可靠性
 
-**Location:** [copilot-chat-surface.tsx](D:/Github/Primoria/apps/web/src/components/tutor/copilot-chat-surface.tsx:463) and [copilot-thread-history.ts](D:/Github/Primoria/apps/web/src/lib/copilot-thread-history.ts:173).
+**位置：** [copilot-chat-surface.tsx](D:/Github/Primoria/apps/web/src/components/tutor/copilot-chat-surface.tsx:463) 和 [copilot-thread-history.ts](D:/Github/Primoria/apps/web/src/lib/copilot-thread-history.ts:173)。
 
-**Evidence:** `CopilotThreadHistoryRecorder` observes `OnMessagesChanged`, takes the first nonempty content for each message ID, adds the ID to `recordedMessagesRef`, and starts an unawaited persistence request. Later content with that ID is skipped. The persistence helpers ignore HTTP success/failure status and swallow network errors. Restore uses the chat-message repository; durable Agent events are not a replacement for this product-history path. The exact streaming timing needs a browser regression, but the recorder has no final-content update or acknowledgement path.
+**证据：** `CopilotThreadHistoryRecorder` 监听 `OnMessagesChanged`，取得每个消息 ID 的首段非空内容，将 ID 加入 `recordedMessagesRef`，然后发起一个未等待完成的持久化请求。后续相同 ID 的内容会被跳过。持久化辅助函数忽略 HTTP 成功/失败状态，并吞掉网络错误。历史恢复读取聊天消息存储；Agent 的持久化事件并没有替代这条产品历史恢复路径。具体流式时序仍需浏览器回归测试，但记录器中确实没有最终内容更新或保存确认路径。
 
-**Why it matters:** A stream changing content under a stable message ID is normal. A one-time snapshot does not provide message durability, and a failed request is treated as permanently recorded by the mounted component.
+**影响：** 流式输出在同一消息 ID 下不断更新内容是正常行为。一次性快照无法保证消息完整持久化；请求失败后，已挂载的组件仍会将消息视为已经保存。
 
-**Realistic failure scenario:** An answer first emits a short phrase and later finishes several paragraphs. The phrase is saved; the remainder is skipped. Refresh restores the phrase. Alternatively, a 500 response or connection loss leaves no message and no visible retry state.
+**现实故障情景：** 回答先输出一个短语，随后完成几段正文。短语被保存，后续内容被跳过，刷新后只能恢复短语。另一种情况是收到 500 响应或连接中断，消息没有保存，界面也没有可见的重试状态。
 
-**Recommended solution:** Persist finalized messages from a durable source, or upsert evolving content with an explicit completion/acknowledgement policy and bounded retries. Keep message identifiers idempotent. Test delayed multi-chunk output, reload, failed saves, and resumed history.
+**建议方案：** 从持久化来源保存已完成的消息，或在内容变化时持续 upsert，并明确完成、保存确认和有界重试策略。消息标识符应保持幂等。测试延迟分块输出、刷新、保存失败和历史恢复。
 
-**Estimated effort:** Medium
+**预计工作量：** 中
 
-**When to fix:** Before production
+**修复时机：** 上线前
 
-## F12 — Supported image attachments are lost before reaching the model
+## F12 — 受支持的图片附件在到达模型前丢失
 
-**Severity:** P2
+**严重程度：** P2
 
-**Category:** Bug / Reliability
+**类别：** 缺陷 / 可靠性
 
-**Location:** [copilot-attachments.ts](D:/Github/Primoria/apps/web/src/lib/ai/copilot-attachments.ts:112), [Copilot API](D:/Github/Primoria/apps/web/src/app/api/copilotkit/route.ts:88), and [runner.mjs](D:/Github/Primoria/apps/agent/src/runtime/runner.mjs:10).
+**位置：** [copilot-attachments.ts](D:/Github/Primoria/apps/web/src/lib/ai/copilot-attachments.ts:112)、[Copilot API](D:/Github/Primoria/apps/web/src/app/api/copilotkit/route.ts:88) 和 [runner.mjs](D:/Github/Primoria/apps/agent/src/runtime/runner.mjs:10)。
 
-**Evidence:** The attachment normalizer produces `image_url` content parts and checks vision capability. Web context injection can flatten structured content; independently, Agent `contentToText` always retains only strings or `.text`. `toLangChainMessages` creates a text-only `HumanMessage`. A read-only probe of the actual converter, with message-class imports stubbed, converted text plus a synthetic image into text plus a newline; the image was absent.
+**证据：** 附件标准化逻辑会生成 `image_url` 内容项，并检查模型的视觉能力。Web 注入上下文时可能将结构化内容压平成文本；除此之外，Agent 的 `contentToText` 始终只保留字符串或 `.text`。`toLangChainMessages` 因而创建纯文本 `HumanMessage`。对实际转换函数执行的只读探针以桩对象替代消息类导入，将“文本加合成图片”转换成了“文本加换行符”，图片不在结果中。
 
-**Why it matters:** The UI can accept an image for a vision-capable model while the transport adapter removes it. This creates misleading answers rather than a clear unsupported-input error.
+**影响：** 界面可以为视觉模型接收图片，但传输适配器随后将图片删除。结果是模型给出可能误导用户的回答，而不是明确提示不支持该输入。
 
-**Realistic failure scenario:** A learner attaches a geometry diagram and asks for an explanation. The model sees the question but never the diagram.
+**现实故障情景：** 学习者上传几何图并要求解释，模型看到了问题，却从未收到图像。
 
-**Recommended solution:** Preserve typed multimodal parts through context injection, AG-UI validation, and model-message conversion. Define history behavior for attachments explicitly. Assert the actual provider request contains the image using a scripted vision-provider integration test.
+**建议方案：** 在上下文注入、AG-UI 校验和模型消息转换的整个流程中保留带类型的多模态内容项。明确附件在历史记录中的处理方式。使用脚本化视觉服务商的集成测试，断言真正发送给模型服务商的请求中包含图片。
 
-**Estimated effort:** Medium
+**预计工作量：** 中
 
-**When to fix:** Before production for advertised image support
+**修复时机：** 若对外宣称支持图片输入，应在上线前修复
 
-## F13 — Failed remediation generation leaves a waiting dialog without an exit
+## F13 — 补强课时生成失败后，对话框持续等待且无法退出
 
-**Severity:** P2
+**严重程度：** P2
 
-**Category:** Bug / Reliability
+**类别：** 缺陷 / 可靠性
 
-**Location:** [course-detail-client.tsx](D:/Github/Primoria/apps/web/src/components/course/course-detail-client.tsx:150), `LearningProgressPopup`.
+**位置：** [course-detail-client.tsx](D:/Github/Primoria/apps/web/src/components/course/course-detail-client.tsx:150) 中的 `LearningProgressPopup`。
 
-**Evidence:** While `generatingLessonId` is set, polling only clears it when the lesson becomes `generated`. Non-success HTTP responses are ignored. Terminal job failure is not inspected. The generating dialog contains no close/retry action, and its Escape handler is explicitly absent. Interval cleanup exists; terminal-state handling does not.
+**证据：** 设置 `generatingLessonId` 后，轮询只有在课时变为 `generated` 时才清除该状态。非成功 HTTP 响应会被忽略，也不检查任务是否已最终失败。生成中的对话框没有关闭或重试操作，并且明确未配置 Escape 处理函数。代码有定时器清理，却没有终态处理。
 
-**Why it matters:** A durable background failure becomes an indefinite foreground wait. Accessibility is also affected because a modal has no actionable exit in this state.
+**影响：** 后台已经确定的失败变成了前台无限期等待。这也影响无障碍使用，因为弹窗在该状态下没有可操作的退出方式。
 
-**Realistic failure scenario:** The learner accepts remediation, the provider fails permanently, and the job exhausts its attempts. The dialog continues polling until the learner reloads or leaves through browser controls.
+**现实故障情景：** 学习者接受补强学习后，模型服务持续失败，任务耗尽重试次数。对话框仍不断轮询，直到用户刷新页面或通过浏览器控件离开。
 
-**Recommended solution:** Observe the generation job's terminal state, expose a safe exit and appropriate retry, handle expired sessions explicitly, and cancel obsolete requests. Keep an elapsed-wait explanation distinct from a failed job.
+**建议方案：** 观察生成任务的终态，提供安全退出和合适的重试操作，显式处理会话过期，并取消已失效的请求。区分“等待时间较长”的说明与“任务已经失败”的状态。
 
-**Estimated effort:** Small
+**预计工作量：** 小
 
-**When to fix:** Soon after launch, or before launch if remediation is a required acceptance journey
+**修复时机：** 上线后尽快处理；若补强学习是必需的验收流程，则应上线前完成
 
-# 8. Backend / API Review
+# 8. 后端 / API 审查
 
-Route handlers usually delegate to domain libraries and authenticate server-side. Course ownership and share-import idempotency are substantial existing controls. JSON/Zod validation is common, but error handling is inconsistent: for example, thread routes use throwing `parse` without mapping malformed input to a stable 400 response. That is secondary to the authorization flaw in the same path.
+路由处理函数通常将业务委托给领域库，并在服务端认证。课程归属检查和分享导入幂等性，是现有的重要控制措施。JSON/Zod 校验较常见，但错误处理不统一：例如，聊天路由使用会抛出异常的 `parse`，却没有将格式错误输入映射为稳定的 400 响应。相较于同一路径上的授权缺陷，这属于次要问题。
 
-Existing lesson jobs use database claims and leases; interactive-component generation has an especially useful owner-based budget with concurrency, timeout, and idempotency controls. That implementation is a precedent for the wider AI surface.
+现有课时任务使用数据库领取机制和租约。交互组件生成还具备按所属用户设置的配额，以及并发、超时和幂等控制，尤其值得借鉴。它可以作为更广泛 AI 接口的实现范例。
 
-## F06 — Concurrency limits do not bound admission or spending on expensive AI work
+## F06 — 并发限制不能约束高成本 AI 任务的接收量和费用
 
-**Severity:** P1
+**严重程度：** P1
 
-**Category:** Security / Performance / Reliability
+**类别：** 安全 / 性能 / 可靠性
 
-**Location:** [Copilot API](D:/Github/Primoria/apps/web/src/app/api/copilotkit/route.ts:252), [Agent run store](D:/Github/Primoria/apps/agent/src/runtime/run-store.mjs:34), [course creation API](D:/Github/Primoria/apps/web/src/app/api/learning/course/route.ts:57), and [interactive request budget](D:/Github/Primoria/apps/web/src/lib/interactive/request-budget.ts) for comparison.
+**位置：** [Copilot API](D:/Github/Primoria/apps/web/src/app/api/copilotkit/route.ts:252)、[Agent 运行记录存储](D:/Github/Primoria/apps/agent/src/runtime/run-store.mjs:34)、[课程创建 API](D:/Github/Primoria/apps/web/src/app/api/learning/course/route.ts:57)；可对照现有的[交互组件请求配额](D:/Github/Primoria/apps/web/src/lib/interactive/request-budget.ts)。
 
-**Evidence:** New Agent run IDs are durably inserted without an owner/global pending-run budget. Claims are globally ordered and concurrency defaults to two. Authentication does not limit admitted work. Course creation/positioning can perform model work and create jobs for distinct requests without the general budget used by interactive components. Web JSON normalization reads the body before the Agent's later body-size check; no equivalent early bound was found on this Web path. No repository-provided external admission control closes these gaps.
+**证据：** 新 Agent 运行 ID 会直接持久化插入，没有按所属用户或全局设置待处理运行任务配额。任务按全局顺序领取，默认并发数为二。身份认证不会限制已接收工作量。课程创建/定位可以针对不同请求调用模型并创建任务，却没有采用交互组件已有的通用配额。Web 的 JSON 标准化逻辑先读取请求体，Agent 随后才检查大小；在这条 Web 路径上未找到同等的前置限制。仓库也未提供能够弥补这些缺口的外部任务接收控制。
 
-**Why it matters:** Limiting simultaneous execution protects only active work. It does not bound queued payload storage, queue waiting time, cumulative provider cost, or fairness between owners. Session authorization alone does not prevent account-based resource abuse.
+**影响：** 限制同时执行的数量，只能保护正在执行的工作，不能限制排队载荷的存储量、等待时间、累计模型费用，也不能保证不同用户之间的公平性。仅有会话授权无法防止账户级资源滥用。
 
-**Realistic failure scenario:** One valid account sends many new run IDs or distinct learning goals. Other learners wait behind its work, PostgreSQL retains queued inputs, and provider charges continue as jobs drain. This can happen with very few users.
+**现实故障情景：** 一个有效账户发送大量新运行 ID 或不同学习目标。其他学习者排在其任务后面等待，PostgreSQL 保留所有排队输入，队列逐步执行时持续产生模型费用。用户总数很少时也可能发生。
 
-**Recommended solution:** Apply per-owner and global admission budgets before expensive parsing/provider work or queue insertion; bound pending work, request bytes/history, execution deadlines, and retry budgets. Return explicit backpressure, preserve idempotency, and add provider-spend alerts. Extend the existing PostgreSQL budget approach before adding another queue technology.
+**建议方案：** 在高成本解析、模型调用或入队之前，应用按用户和全局设置的任务接收配额；限制待处理工作量、请求字节数/历史长度、执行截止时间和重试预算。明确返回背压响应，保留幂等性，并增加模型支出告警。在引入其他队列技术之前，优先扩展现有 PostgreSQL 配额方案。
 
-**Estimated effort:** Medium
+**预计工作量：** 中
 
-**When to fix:** Before production
+**修复时机：** 上线前
 
-# 9. Database Review
+# 9. 数据库审查
 
-The schema expresses ownership, relationships, queue state, and important uniqueness constraints. Owner-plus-course-scope reuse, reward dedupe keys, share-import uniqueness, and immutable share versions are appropriate database-enforced invariants. Transactions are used for significant writes. Migration responsibilities are explicit.
+数据库结构表达了归属、关系、队列状态和关键唯一性约束。按用户与课程范围复用、奖励去重键、分享导入唯一性和不可变分享版本，都是适合由数据库保证的不变量。重要写入使用事务，迁移职责也有明确划分。
 
-Transactions alone do not make an earlier read safe against concurrent changes. The highest-impact database defect is the generic course save. The principal query concern is overfetch, not a demonstrated N+1 problem. No production `EXPLAIN`, cardinality distribution, lock-wait measurement, or index-usage statistics were available; blanket index recommendations would be speculative.
+但仅使用事务，并不能保证此前的读取不受并发变更影响。影响最大的数据库缺陷是通用课程保存逻辑。查询方面主要担忧是过量取数，并未证实存在 N+1 问题。本次没有生产环境 `EXPLAIN`、数据基数分布、锁等待测量或索引使用统计，因此泛泛建议增加索引会缺乏依据。
 
-## F02 — A stale course snapshot can overwrite independent writes and delete new lessons
+## F02 — 旧课程快照可能覆盖独立写入并删除新课时
 
-**Severity:** P1
+**严重程度：** P1
 
-**Category:** Database / Bug / Reliability
+**类别：** 数据库 / 缺陷 / 可靠性
 
-**Location:** [store.ts mutation callers](D:/Github/Primoria/apps/web/src/lib/courses/store.ts:71) and [saveCourseToDb](D:/Github/Primoria/apps/web/src/lib/courses/store.ts:335).
+**位置：** [store.ts 中的变更调用方](D:/Github/Primoria/apps/web/src/lib/courses/store.ts:71) 和 [saveCourseToDb](D:/Github/Primoria/apps/web/src/lib/courses/store.ts:335)。
 
-**Evidence:** Code edits, block mutations, archive, and unarchive read a whole course and later call `saveCourse`. The transaction upserts course fields and all snapshot lesson fields, including blocks, status, progress, title, and version. Version is written without an expected-version predicate. It then deletes every lesson absent from the snapshot's `keepIds`. The initial read is outside this transaction. The description field has a dedicated protection, but other fields and the lesson set do not share that protection.
+**证据：** 代码编辑、内容块修改、归档和取消归档都会读取整个课程，随后调用 `saveCourse`。事务对课程字段和快照中的全部课时字段进行 upsert，包括内容块、状态、进度、标题和版本。写入版本号时没有检查预期版本。随后，它会删除所有未出现在快照 `keepIds` 中的课时。最初的读取在事务之外。描述字段有专门保护，但其他字段和课时集合没有同样的保护。
 
-**Why it matters:** Atomic replacement can still be a lost update. The final delete treats an incomplete old snapshot as authority over newly inserted rows; lesson deletion can also cascade to job/checkpoint children.
+**影响：** 原子替换仍可能导致更新丢失。最后的删除操作把不完整的旧快照当作新插入记录的权威来源；删除课时还可能级联删除子任务和检查点。
 
-**Realistic failure scenario:** A code-save request reads a course while a worker generates another lesson or a recommendation inserts remediation. The worker commits; the code-save commits its older aggregate. New content/progress is reverted, or the remediation lesson and its dependent records are removed. Archive can trigger the same class of race.
+**现实故障情景：** 保存代码的请求读取课程时，Worker 正在生成另一个课时，或推荐流程正在插入补强课时。Worker 先提交，代码保存随后提交较旧的聚合快照。新内容或进度被回退，或者补强课时及其关联记录被删除。归档操作也能触发同类竞态。
 
-**Recommended solution:** Use narrow owner-scoped updates for the intended field or block, with optimistic versions or an appropriate shared lock. Reserve full aggregate replacement for operations that genuinely require it, and coordinate lesson-set replacement with inserts. Add deterministic competing-transaction tests for publish, progress, code edit, archive, and remediation insertion.
+**建议方案：** 对目标字段或内容块使用范围明确、受所属用户约束的更新，并结合乐观版本检查或合适的共享锁。只有确实需要整体替换的操作才使用完整聚合替换，并协调课时集合替换与插入。为发布、进度、代码编辑、归档和补强课时插入添加可确定复现的并发事务测试。
 
-**Estimated effort:** Medium
+**预计工作量：** 中
 
-**When to fix:** Before production
+**修复时机：** 上线前
 
-## F14 — Summary and history endpoints load unbounded data
+## F14 — 摘要与历史端点无上限地加载数据
 
-**Severity:** P2
+**严重程度：** P2
 
-**Category:** Performance / Database
+**类别：** 性能 / 数据库
 
-**Location:** [listCourseSummariesFromDb](D:/Github/Primoria/apps/web/src/lib/courses/store.ts:408) and [thread-repository.ts](D:/Github/Primoria/apps/web/src/lib/copilot/thread-repository.ts:16).
+**位置：** [listCourseSummariesFromDb](D:/Github/Primoria/apps/web/src/lib/courses/store.ts:408) 和 [thread-repository.ts](D:/Github/Primoria/apps/web/src/lib/copilot/thread-repository.ts:16)。
 
-**Evidence:** Course summaries select every matching course and all columns of all its lessons, including full `blocks` JSON, then construct summaries in application memory. This is two bulk queries rather than N+1, but payload grows with all lesson content. Thread and message lists also have no cursor/limit. Polling and navigation can repeat large course reads.
+**证据：** 课程摘要会查询所有匹配课程及其全部课时的所有列，包括完整 `blocks` JSON，再在应用内存中构造摘要。这是两次批量查询，而非 N+1，但载荷会随全部课时内容增长。聊天和消息列表也没有游标或数量限制。轮询和导航可能重复执行大体量课程读取。
 
-**Why it matters:** A compact UI response can still require large database transfer, allocation, and serialization work. Per-owner growth can cause a problem before the service has many users.
+**影响：** 即使给界面的响应很小，生成响应仍可能需要大量数据库传输、内存分配和序列化。单个用户的数据增长，就可能在总用户量尚小时造成问题。
 
-**Realistic failure scenario:** A frequent learner accumulates hundreds of generated lessons and long chats. Opening the library or restoring history fetches far more data than is initially visible; concurrent users amplify memory pressure and database bandwidth.
+**现实故障情景：** 高频学习者积累了数百个生成课时和很长的聊天历史。打开课程库或恢复聊天时，系统读取远多于首屏所需的数据；并发用户进一步放大内存压力和数据库带宽消耗。
 
-**Recommended solution:** Select only summary fields and aggregate counts/status in the database, paginate course/history lists, and fetch lesson blocks on demand. Measure query bytes and latency before introducing caches or speculative indexes.
+**建议方案：** 只选择摘要所需字段，在数据库中聚合数量与状态，为课程/历史列表分页，并按需读取课时内容块。引入缓存或推测性索引前，先测量查询字节数和延迟。
 
-**Estimated effort:** Medium
+**预计工作量：** 中
 
-**When to fix:** Soon after launch; earlier if initial cohorts import large libraries
+**修复时机：** 上线后尽快处理；若初期用户会导入大型课程库，则应提前
 
-# 10. Security Review
+# 10. 安全审查
 
-The strongest existing controls are server-side authentication, origin checks on state-changing traffic, opaque session cookies, parameterized database access, internal Agent authentication, widget sandboxing, bounded widget dependencies, sanitized share snapshots, and production container hardening. Browser route hiding is not the primary authorization mechanism.
+现有较强的控制包括：服务端认证、状态变更请求的来源检查、不透明会话 Cookie、参数化数据库访问、内部 Agent 认证、小组件沙箱、受限小组件依赖、已清理的分享快照，以及生产容器加固。隐藏浏览器路由不是主要授权机制。
 
-The audit considered broken object authorization, resource consumption, CSRF, script execution, unsafe upload handling, injection, and secret exposure. It did not establish a SQL-injection, shell-injection, path-traversal, or arbitrary backend-URL fetch exploit in the reviewed paths. This is a bounded inspection result, not a penetration-test certification. Attachments have count/size checks, but parsing large or compressed documents still belongs inside the resource-admission work in F06.
+本次审计考虑了对象级授权失效、资源消耗、CSRF、脚本执行、不安全上传处理、注入和密钥泄露。在所审阅的路径中，没有确认 SQL 注入、Shell 注入、路径穿越或任意后端 URL 请求的可利用链。这只是限定范围的检查结果，不是渗透测试认证。附件已有数量/大小检查，但大型或压缩文档的解析仍应纳入 F06 的资源接收控制。
 
-A limited pattern scan of **976 tracked text files** found no PEM private keys or the selected GitHub/AWS/OpenAI credential patterns. Tracked environment files were examples. The scan did not inspect all Git history, external secret stores, or untracked private environment files, and does not prove the repository is secret-free. No secret values are included in this report.
+对 **976 个受跟踪文本文件**进行的有限模式扫描，没有发现 PEM 私钥或所选 GitHub/AWS/OpenAI 凭据模式。受跟踪的环境文件均为示例。扫描没有覆盖全部 Git 历史、外部密钥存储或未跟踪的私有环境文件，因此不能证明仓库绝无密钥泄露。本报告不包含任何密钥值。
 
-## F03 — The code runner is an execution worker, not an account-privilege sandbox
+## F03 — 代码运行器是执行 Worker，并非隔离账户权限的沙箱
 
-**Severity:** P1
+**严重程度：** P1
 
-**Category:** Security / Architecture
+**类别：** 安全 / 架构
 
-**Location:** [code-runner/index.ts](D:/Github/Primoria/apps/web/src/lib/code-runner/index.ts:28), [worker.ts](D:/Github/Primoria/apps/web/src/lib/code-runner/worker.ts:17), and [next.config.ts](D:/Github/Primoria/apps/web/next.config.ts:9).
+**位置：** [code-runner/index.ts](D:/Github/Primoria/apps/web/src/lib/code-runner/index.ts:28)、[worker.ts](D:/Github/Primoria/apps/web/src/lib/code-runner/worker.ts:17) 和 [next.config.ts](D:/Github/Primoria/apps/web/next.config.ts:9)。
 
-**Evidence:** The page creates a same-origin Worker. JavaScript source is passed to `AsyncFunction` with only `console` replaced. Python uses unrestricted `exec` in Pyodide with only `input` replaced. No separate origin or credentialless API boundary is established. Workers can use network APIs; same-origin requests normally include same-origin credentials. Pyodide exposes JavaScript through its `js` bridge. These platform properties are documented in [MDN's worker guide](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers), [MDN's credentials reference](https://developer.mozilla.org/en-US/docs/Web/API/Request/credentials), and [Pyodide 0.26.4's interoperability documentation](https://pyodide.org/en/0.26.4/usage/type-conversions.html).
+**证据：** 页面创建同源 Worker。JavaScript 源码传入 `AsyncFunction`，只替换了 `console`。Python 在 Pyodide 中使用不受限制的 `exec`，只替换了 `input`。系统没有建立独立源，也没有建立不携带身份凭据的 API 边界。Worker 可以调用网络 API；同源请求通常会携带同源凭据。Pyodide 通过 `js` 桥接暴露 JavaScript。这些平台行为见 [MDN Worker 指南](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)、[MDN 凭据参考](https://developer.mozilla.org/en-US/docs/Web/API/Request/credentials) 和 [Pyodide 0.26.4 互操作文档](https://pyodide.org/en/0.26.4/usage/type-conversions.html)。
 
-**Why it matters:** Moving code off the UI thread limits UI blocking; it does not remove the browser session's origin authority. HttpOnly prevents directly reading a cookie, but does not prevent authenticated requests. Course code can originate from generated or imported content. A user Run action is required; this is not automatic execution or server remote-code execution.
+**影响：** 将代码移出 UI 线程可以减轻界面阻塞，却不会移除浏览器会话的同源权限。HttpOnly 能阻止直接读取 Cookie，但不能阻止经过认证的请求。课程代码可能来自生成或导入内容。该风险需要用户点击“运行”；它不是自动执行，也不是服务端远程代码执行。
 
-**Realistic failure scenario:** A learner imports a malicious runnable lesson and clicks Run. If execution is available, the code requests same-origin course APIs with the learner's session and performs an unauthorized-by-the-learner action, such as deleting content or publishing a share. Origin/CSRF checks see same-origin traffic. The actual production-browser exploit chain was not executed.
+**现实故障情景：** 学习者导入恶意的可运行课时并点击“运行”。如果代码能够执行，它就可以使用学习者会话请求同源课程 API，执行未经学习者授权的操作，例如删除内容或发布分享。来源/CSRF 检查看到的是同源流量。本次没有执行实际生产浏览器中的完整利用链。
 
-**Recommended solution:** Execute untrusted lesson code in an origin isolated from authenticated APIs, using a tightly bounded message protocol and network capabilities. Retain execution/load watchdogs. Verify isolation with a production-build browser test. The production CSP omits JavaScript `unsafe-eval`, so the current JavaScript runner may instead fail under CSP; enabling it application-wide would not be a safe fix. Test Python and JavaScript separately under actual response headers.
+**建议方案：** 在与认证 API 隔离的源中执行不可信课时代码，严格限制消息协议和网络能力。保留执行/加载超时看门狗。使用生产构建的浏览器测试验证隔离。生产 CSP 未包含 JavaScript `unsafe-eval`，因此当前 JavaScript 运行器也可能直接被 CSP 阻止；在整个应用中开启它并不是安全修复。应在实际响应头下分别测试 Python 和 JavaScript。
 
-**Estimated effort:** Medium
+**预计工作量：** 中
 
-**When to fix:** Before production exposure of runnable generated/shared code
+**修复时机：** 在生产环境向用户开放可执行的生成/共享代码之前
 
-The existing HTML-widget iframe has a different and stronger boundary: `allow-scripts` without same-origin privileges, dependency validation, and message source/channel checks. F03 should not be used as a reason to discard that design.
+现有 HTML 小组件 iframe 使用的是不同且更强的边界：允许 `allow-scripts`，但没有同源权限，同时执行依赖校验和消息来源/通道检查。不应以 F03 为由废弃这一设计。
 
-# 11. Authentication & Authorization Review
+# 11. 身份认证与授权审查
 
-Sessions are server-side, use hashed opaque tokens, expire, and are represented by HttpOnly/SameSite cookies with production Secure settings. Password verification uses salted hashing and timing-safe comparison. Signup handles duplicate identity conflicts. Password reset hashes its token and revokes sessions after changing the password. DB failures are generally distinguished from signed-out state. These are useful controls.
+会话由服务端管理，使用经哈希存储的不透明令牌，具备过期机制，并通过 HttpOnly/SameSite Cookie 表示，在生产环境设置 Secure。密码验证采用加盐哈希和防计时攻击比较。注册流程处理重复身份冲突。密码重置会哈希令牌，并在修改密码后撤销会话。数据库故障通常与未登录状态区分处理。这些都是有价值的控制。
 
-There is no completed email-verification challenge in the signup path, despite setting `verifiedAt`. Ordinary self-service signup does not automatically require an enterprise identity system, but treating the supplied email as an operator credential is unsafe. The production IP-rate-limit omission is covered by F04.
+尽管注册流程设置了 `verifiedAt`，却没有完成邮箱所有权验证。普通自助注册不必自动升级为企业身份系统，但把用户填写的邮箱直接当作运维权限凭据是不安全的。生产 IP 限流配置遗漏见 F04。
 
-## F01 — Chat conflict updates do not enforce the authenticated owner's scope
+## F01 — 聊天记录的冲突更新未强制约束到已认证用户
 
-**Severity:** P1
+**严重程度：** P1
 
-**Category:** Security / Database
+**类别：** 安全 / 数据库
 
-**Location:** [thread-repository.ts](D:/Github/Primoria/apps/web/src/lib/copilot/thread-repository.ts:35), [thread POST route](D:/Github/Primoria/apps/web/src/app/api/copilot-threads/route.ts:23), and [message POST route](D:/Github/Primoria/apps/web/src/app/api/copilot-threads/[id]/messages/route.ts:28).
+**位置：** [thread-repository.ts](D:/Github/Primoria/apps/web/src/lib/copilot/thread-repository.ts:35)、[聊天 POST 路由](D:/Github/Primoria/apps/web/src/app/api/copilot-threads/route.ts:23) 和 [消息 POST 路由](D:/Github/Primoria/apps/web/src/app/api/copilot-threads/[id]/messages/route.ts:28)。
 
-**Evidence:** Both POST routes accept caller-supplied IDs. Inserts include the authenticated owner, but `onConflictDoUpdate` targets globally unique thread/message IDs and updates fields without an owner predicate. `upsertCopilotMessage` first upserts its parent thread without establishing ownership. Read paths do filter by owner; those checks do not authorize the update branch.
+**证据：** 两个 POST 路由均接受调用者提供的 ID。插入时包含已认证的所属用户，但 `onConflictDoUpdate` 以全局唯一的聊天/消息 ID 为目标，更新字段时没有所属用户条件。`upsertCopilotMessage` 在确认归属之前，先对父聊天记录执行 upsert。读取路径确实按所属用户过滤，但这些检查并没有为更新分支提供授权约束。
 
-**Why it matters:** Knowing another object's ID must not confer write access. Random identifiers reduce guessing but are not an authorization boundary. The message-parent relationship can also become inconsistent with owner metadata.
+**影响：** 知道另一个对象的 ID，不应因此获得写入权限。随机标识符能降低猜测成功率，却不是授权边界。消息与父聊天的关系也可能和所属用户元数据不一致。
 
-**Realistic failure scenario:** An authenticated user who obtains a victim thread ID overwrites its title/preview; with a victim message ID, the user can overwrite its content/role/metadata. This report establishes a write-isolation flaw, not a demonstrated cross-owner read leak or an unauthenticated exploit.
+**现实故障情景：** 已认证用户获得受害者的聊天 ID 后，覆盖该聊天的标题或预览；获得消息 ID 后，可覆盖内容、角色和元数据。本报告确认的是写入隔离缺陷，并没有证明存在跨用户读取泄露或未认证利用。
 
-**Recommended solution:** Enforce owner scope on both insert and conflict paths, verify parent ownership before message creation, and make the relevant ownership invariant atomic. Reject conflicting foreign identifiers. Add a two-user database/API test covering new IDs, foreign threads, foreign message conflicts, and idempotent same-owner retries.
+**建议方案：** 插入和冲突更新路径都必须强制检查所属用户；创建消息前验证父记录归属，并以原子方式保证相关归属不变量。拒绝与他人记录冲突的标识符。增加双用户数据库/API 测试，覆盖新 ID、他人聊天、他人消息冲突，以及同一用户的幂等重试。
 
-**Estimated effort:** Small
+**预计工作量：** 小
 
-**When to fix:** Before production
+**修复时机：** 上线前
 
-## F10 — A password-reset token can be consumed successfully by concurrent requests
+## F10 — 同一密码重置令牌可能被并发请求多次成功消费
 
-**Severity:** P2
+**严重程度：** P2
 
-**Category:** Security / Database
+**类别：** 安全 / 数据库
 
-**Location:** [password-reset.ts](D:/Github/Primoria/apps/web/src/lib/auth/password-reset.ts:77), `confirmPasswordReset`.
+**位置：** [password-reset.ts](D:/Github/Primoria/apps/web/src/lib/auth/password-reset.ts:77) 中的 `confirmPasswordReset`。
 
-**Evidence:** Validity and `consumedAt IS NULL` are checked outside the write transaction. Password hashing introduces an asynchronous gap. The transaction then changes the password, deletes sessions, and marks the token consumed by ID without a conditional unconsumed/expiry check or row-lock revalidation.
+**证据：** 有效性与 `consumedAt IS NULL` 在写事务之外检查。密码哈希引入异步间隔。随后事务修改密码、删除会话，并按 ID 将令牌标记为已消费，却没有再次检查“未消费且未过期”的条件，也没有通过行锁重新验证。
 
-**Why it matters:** Token consumption is intended to be single-use. Two callers can validate the same token before either transaction consumes it; both can report success and the later password wins.
+**影响：** 重置令牌应只能使用一次。两个调用者可能在任一事务消费令牌前都通过校验，最终两个请求都返回成功，而后写入的密码覆盖先前密码。
 
-**Realistic failure scenario:** Two overlapping submissions of one valid reset link set different passwords. The first success screen no longer reflects the account's password. Exploitation requires possession of a valid token; this is not arbitrary account takeover.
+**现实故障情景：** 同一个有效重置链接的两次重叠提交分别设置不同密码。第一个成功页面显示的结果已不再对应账户当前密码。利用这一问题需要持有有效令牌，并不意味着可任意接管账户。
 
-**Recommended solution:** Atomically claim/consume a still-valid token inside the password-change transaction and require that claim to succeed. Ensure failures roll back the claim. Add a real two-request concurrency test, including an expired or superseded token.
+**建议方案：** 在修改密码的事务内，原子领取/消费仍然有效的令牌，并要求该操作成功后才能继续。确保失败时回滚令牌消费。增加真实的双请求并发测试，同时覆盖已过期或被新令牌替代的情况。
 
-**Estimated effort:** Small
+**预计工作量：** 小
 
-**When to fix:** Before production
+**修复时机：** 上线前
 
-## F15 — Email allowlisting is not a trusted operator identity with current signup
+## F15 — 当前注册流程下，邮箱允许列表不能代表可信运维身份
 
-**Severity:** P1, conditional on enabling production internal analytics
+**严重程度：** P1，仅在生产环境启用内部分析功能时成立
 
-**Category:** Security
+**类别：** 安全
 
-**Location:** [accounts.ts](D:/Github/Primoria/apps/web/src/lib/auth/accounts.ts:22) and [internal-access.ts](D:/Github/Primoria/apps/web/src/lib/telemetry/internal-access.ts:3).
+**位置：** [accounts.ts](D:/Github/Primoria/apps/web/src/lib/auth/accounts.ts:22) 和 [internal-access.ts](D:/Github/Primoria/apps/web/src/lib/telemetry/internal-access.ts:3)。
 
-**Evidence:** Signup accepts an email string, creates the identity, sets `verifiedAt` immediately, and creates a session without proving mailbox ownership. Production analytics authorizes an authenticated user by feature flag plus matching `user.email` against `PRIMORIA_INTERNAL_EMAILS`.
+**证据：** 注册接受邮箱字符串、创建身份、立即设置 `verifiedAt`，并在未证明邮箱所有权的情况下创建会话。生产分析功能通过开关和 `user.email` 是否命中 `PRIMORIA_INTERNAL_EMAILS`，为已认证用户授予访问权限。
 
-**Why it matters:** A self-asserted email must not become an administrative permission. The default disabled flag is a meaningful mitigation and should remain closed until a trusted operator path exists.
+**影响：** 用户自行声明的邮箱不应转化为管理权限。默认关闭功能是有效缓解措施，在建立可信运维身份路径前应保持关闭。
 
-**Realistic failure scenario:** Before an operator registers, someone registers the operator's unused allowlisted address. If analytics is enabled, that account satisfies the gate and gains cross-user operational analytics access. This does not bypass the password of an already registered operator account.
+**现实故障情景：** 运维人员注册前，其他人抢先注册其尚未使用、但已加入允许列表的邮箱。如果分析功能已经启用，该账户就能通过检查，访问跨用户的运维分析。这并不意味着可以绕过已经注册的运维账户密码。
 
-**Recommended solution:** Use a provisioned immutable operator identity/permission, or verify mailbox control before granting the allowlisted privilege. Do not rely on the current `verifiedAt` value as evidence of verification. Test the first-registrant scenario.
+**建议方案：** 使用预先配置、不可变的运维用户身份/权限，或者在授予允许列表权限前验证邮箱控制权。不能将当前的 `verifiedAt` 值当作已经验证的证据。测试抢先注册者场景。
 
-**Estimated effort:** Medium
+**预计工作量：** 中
 
-**When to fix:** Before production enablement of internal analytics; leaving it disabled is an acceptable interim mitigation
+**修复时机：** 在生产环境启用内部分析之前；暂时保持关闭是可接受的缓解措施
 
-# 12. Performance Review
+# 12. 性能审查
 
-**No production latency, throughput, memory, Core Web Vitals, or query-plan benchmark was measured.** The findings are code-derived risks. Historical bundle results recorded on 2026-08-28 belong to that verification record, not this audit's revision.
+**本次没有测量生产延迟、吞吐量、内存、核心网页指标或查询计划基准。** 以下结论是根据代码推导的风险。2026-08-28 记录的历史构建体积结果，只属于当时的验证记录，不代表本次审计版本的结果。
 
-| Area | Assessment | When it matters |
+| 领域 | 评估 | 何时值得关注 |
 |---|---|---|
-| AI admission and queueing | Likely first capacity/cost bottleneck; two Agent execution slots do not cap waiting work (F06). | Even 10 users if one submits aggressively; more visible with 100 active learners. |
-| Course summary overfetch | Source-confirmed unnecessary database payload; latency magnitude unmeasured (F14). | Heavy individual libraries; likely more material at 1,000–10,000 active users. |
-| Chat histories and serialized inputs | Unbounded retained/read content amplifies memory, storage, and provider context cost. | Long-lived users and growing run volume. |
-| Event/checkpoint writes | Durable streaming naturally creates write volume; no current throughput failure established. | Investigate under measured 1,000+ active-user workloads before tuning event batching. |
-| Lesson worker capacity | Provider latency and bounded worker slots determine time-to-first-lesson. | Bursty cohort onboarding, independent of total registered-user count. |
-| Browser bundles | Bundle-budget CI and deferred external visualization runtimes are useful. No current bundle build ran. | Slow devices/networks and first use of large renderers/Pyodide. |
-| Polling | Whole-course polling during generation multiplies work; F13 also lacks a terminal error path. | Long generations and many simultaneously open learner sessions. |
-| Visualization CDNs | Cold-load latency and availability are external dependencies, not an established local CPU bottleneck. | Regions with unreliable CDN access; measure before changing delivery. |
+| AI 任务接收和排队 | 很可能最先成为容量/成本瓶颈；两个 Agent 执行槽位不能限制等待任务量（F06）。 | 即使只有 10 个用户，只要有人密集提交就可能发生；100 个活跃学习者时更明显。 |
+| 课程摘要过量取数 | 源码确认存在不必要的数据库载荷，尚未测量延迟幅度（F14）。 | 单个用户拥有大型课程库时；1,000–10,000 个活跃用户时可能更显著。 |
+| 聊天历史和序列化输入 | 无上限保留/读取内容，会放大内存、存储和模型上下文成本。 | 长期用户积累较多历史、运行任务量增长时。 |
+| 事件/检查点写入 | 持久化流式输出自然产生较多写入，尚未确认当前存在吞吐故障。 | 在测量到 1,000 个以上活跃用户工作负载后，再研究是否调整事件批处理。 |
+| 课时 Worker 容量 | 模型服务延迟和有限 Worker 槽位决定首课等待时间。 | 大批用户集中进入引导流程时，与累计注册用户数无直接关系。 |
+| 浏览器构建产物 | CI 体积预算和延后加载外部可视化运行时具有价值。本次未执行构建。 | 低性能设备、慢网络，以及首次使用大型渲染器或 Pyodide 时。 |
+| 轮询 | 生成期间轮询整份课程会放大工作量；F13 还缺少最终错误处理路径。 | 生成时间较长、多个学习会话同时打开时。 |
+| 可视化 CDN | 冷加载延迟和可用性属于外部依赖问题，尚未确认是本地 CPU 瓶颈。 | CDN 访问不稳定的地区；应先测量再调整资源分发方案。 |
 
-The next useful measurements are admitted/running/queued work by owner, oldest queue age, provider duration and token counts, database response bytes, course-summary p95, first-lesson latency, and client LCP/INP/CLS on realistic devices. Capacity should be expressed in simultaneous active journeys and request mix, not guessed from registered-user counts.
+下一步有价值的测量包括：按用户统计已接收/运行中/排队工作量、最老任务等待时间、模型调用耗时和 token 数、数据库响应字节数、课程摘要 p95 延迟、首课等待时间，以及真实设备上的 LCP/INP/CLS。容量应以同时活跃的用户流程及请求类型组合表达，而不是根据注册人数猜测。
 
-Do not add cache layers until correctness and invalidation requirements are clear. Narrow summary queries and bounded admission are lower-risk improvements than distributed caching.
+在明确正确性和缓存失效要求之前，不应增加缓存层。缩小摘要查询范围、限制接收工作量，比引入分布式缓存风险更低。
 
-# 13. Reliability Review
+# 13. 可靠性审查
 
-Several failure policies are already careful: KG infrastructure failures do not silently become generated courses; mastery-read failure falls back to a cold outline; outline enrichment is best effort behind a write fence; workers use durable jobs and lease tokens; and Agent retry is restricted once user-visible/tool output exists. Preserve those decisions.
+已有多项谨慎的故障策略：KG 基础设施故障不会静默转成生成式课程；读取掌握度失败时采用冷启动大纲；大纲增强在写入保护条件下尽力执行；Worker 使用持久化任务和租约令牌；一旦出现用户可见输出或工具输出，Agent 就限制自动重试。这些决策应保留。
 
-The highest risks are uncovered transitions: reads racing writes (F02), network failure during history persistence (F07), generated-graph resolution (F08), and terminal failures that the UI never consumes (F13).
+主要风险集中在未覆盖的状态转换：读写竞态（F02）、历史持久化时网络失败（F07）、生成式图谱解析（F08），以及界面未处理的最终失败（F13）。
 
-## F05 — Rapid Agent restart can strand runs whose leases expire after startup
+## F05 — Agent 快速重启后，启动之后才过期的租约可能使任务永久搁置
 
-**Severity:** P1
+**严重程度：** P1
 
-**Category:** Reliability
+**类别：** 可靠性
 
-**Location:** [runner.mjs](D:/Github/Primoria/apps/agent/src/runtime/runner.mjs:163) and [run-store.mjs](D:/Github/Primoria/apps/agent/src/runtime/run-store.mjs:249).
+**位置：** [runner.mjs](D:/Github/Primoria/apps/agent/src/runtime/runner.mjs:163) 和 [run-store.mjs](D:/Github/Primoria/apps/agent/src/runtime/run-store.mjs:249)。
 
-**Evidence:** Worker startup calls `recoverStaleRuns()` once. Recovery selects only `running` rows whose leases have already expired. Subsequent loops call `claimNext`, which only claims queued rows; they do not recover expired running rows. Shutdown deliberately leaves interrupted leases intact. A source-extracted probe with a stub store observed one recovery call while multiple claim polls continued. It is not a PostgreSQL crash test.
+**证据：** Worker 启动时只调用一次 `recoverStaleRuns()`。恢复逻辑仅选取租约已经过期的 `running` 记录。后续循环调用的 `claimNext` 只领取排队记录，不会恢复已过期的运行中记录。关闭时还会有意保留被中断的租约。以桩存储替代实际数据库、从源码提取执行的探针表明，多次领取轮询期间只发生一次恢复调用。这不是 PostgreSQL 崩溃测试。
 
-**Why it matters:** A restart before the previous lease expires is normal with process supervisors. The row is valid-looking during the startup scan and becomes abandoned later, without another scan to transition it.
+**影响：** 在旧租约过期前重启，是进程管理器下的正常情形。记录在启动扫描时看起来仍有效，稍后才成为遗留任务，但此时没有下一轮扫描来推进其状态。
 
-**Realistic failure scenario:** The Agent crashes just after renewing a 30-second lease and restarts within a few seconds. The run remains `running` after expiry indefinitely. Readiness can still pass, the client can keep waiting, and terminal-only retention pruning does not resolve the row. A manual recovery command exists but is not automatic recovery.
+**现实故障情景：** Agent 刚续期一个 30 秒租约就崩溃，并在数秒内重启。租约过期后，该任务仍无限期保持 `running`。就绪检查可能继续通过，客户端可能持续等待，仅清理终态记录的保留策略也不会处理它。虽然有手工恢复命令，但这不等于自动恢复。
 
-**Recommended solution:** Periodically perform bounded stale-run recovery or integrate it into the claim lifecycle. Preserve lease fencing and the rule against replaying persisted side effects. Expose stale-running counts and test crash/restart before expiry followed by time advancing past expiry.
+**建议方案：** 定期执行有界的过期运行任务恢复，或将恢复纳入领取生命周期。保留租约隔离保护，以及不得重放已持久化副作用的规则。暴露过期运行任务数量，并测试“租约过期前崩溃并重启，随后时间推进至过期后”的场景。
 
-**Estimated effort:** Small
+**预计工作量：** 小
 
-**When to fix:** Before production
+**修复时机：** 上线前
 
-## F11 — Worker health becomes stale while healthy jobs are running
+## F11 — Worker 正常处理任务时，健康状态却会过期
 
-**Severity:** P2
+**严重程度：** P2
 
-**Category:** Reliability / DevOps
+**类别：** 可靠性 / DevOps
 
-**Location:** [lesson worker](D:/Github/Primoria/apps/web/src/workers/lesson-generation-worker.ts:148), [extractor worker](D:/Github/Primoria/apps/web/src/workers/extractor-worker.ts:252), [worker-health.ts](D:/Github/Primoria/apps/web/src/lib/courses/worker-health.ts:9), and [Compose worker healthcheck](D:/Github/Primoria/docker-compose.prod.yml:229).
+**位置：** [课时 Worker](D:/Github/Primoria/apps/web/src/workers/lesson-generation-worker.ts:148)、[事实提取 Worker](D:/Github/Primoria/apps/web/src/workers/extractor-worker.ts:252)、[worker-health.ts](D:/Github/Primoria/apps/web/src/lib/courses/worker-health.ts:9) 和 [Compose Worker 健康检查](D:/Github/Primoria/docker-compose.prod.yml:229)。
 
-**Evidence:** Process health is refreshed in claim loops before awaiting job processing. It is not refreshed independently during that processing. Lease renewal is a separate mechanism. Both the ready-file check and default DB worker-staleness threshold use 30 seconds, while legitimate model/planner calls can exceed that duration. If all lesson slots, or the single extractor loop, are busy, process health stops advancing.
+**证据：** 进程健康状态在领取循环中刷新，然后等待任务处理；处理期间没有独立刷新。租约续期是另一套机制。就绪文件检查和数据库默认 Worker 过期阈值均为 30 秒，但正常的模型/规划调用可能超过这个时间。如果所有课时槽位，或单个事实提取循环，都在忙碌，进程健康状态就不再更新。
 
-**Why it matters:** Work duration is being mistaken for process death. Aggregate Web readiness treats stale workers as unready, potentially disrupting release startup or an external readiness monitor despite progressing work.
+**影响：** 系统把任务耗时误判成进程死亡。Web 汇总就绪检查将过期 Worker 视为未就绪，即使任务仍在推进，也可能影响发布启动或外部就绪监控。
 
-**Realistic failure scenario:** Two lessons are generating slowly, or Facts extraction takes more than 30 seconds. Readiness returns unhealthy until the loop returns. Docker Compose does not itself restart a container merely because its healthcheck fails, but dependent startup and external routing/monitoring can still be affected.
+**现实故障情景：** 两个课时生成较慢，或者 Facts 提取超过 30 秒。循环返回前，就绪检查持续报告不健康。Docker Compose 本身不会仅因健康检查失败就重启容器，但依赖它的启动流程，以及外部路由/监控，仍可能受到影响。
 
-**Recommended solution:** Refresh process liveness on an independent bounded heartbeat and observe job leases/queue age separately. Test a slow successful job, genuine worker death, and a stuck provider call under production health thresholds.
+**建议方案：** 使用独立、有界的心跳刷新进程存活状态，另行观察任务租约和排队时间。在生产健康阈值下测试耗时较长但成功的任务、真正的 Worker 死亡，以及卡住的模型调用。
 
-**Estimated effort:** Small
+**预计工作量：** 小
 
-**When to fix:** Before production
+**修复时机：** 上线前
 
-| Failure assumption | Current behavior / remaining concern |
+| 假定故障 | 当前行为 / 剩余问题 |
 |---|---|
-| Database unavailable | Auth and KG paths have deliberate failures; queue claims cannot proceed. Verify reconnect/recovery under actual runtime configuration. |
-| Provider fails before output | Agent bounded retry is appropriate; persistent overload still needs F06. |
-| Provider fails after output/tool effects | Explicit failed run avoids replaying side effects; retain that policy. |
-| Browser disconnects or refreshes | Agent events persist, but product chat restoration is undermined by F07. |
-| Duplicate share import or reward | Database uniqueness/idempotency is useful and should remain. |
-| Duplicate reset confirmation | Atomicity gap in F10. |
-| Concurrent edits/generation | Aggregate replacement gap in F02. |
-| Generated course completes a quiz | Static graph resolution gap in F08. |
-| Remediation fails terminally | Missing visible failure/exit in F13. |
+| 数据库不可用 | 认证与 KG 路径有明确失败处理；队列无法继续领取。应在实际运行配置下验证重连和恢复。 |
+| 模型服务在输出前失败 | Agent 的有界重试是合理的；持续过载仍需 F06 处理。 |
+| 模型服务在输出/工具副作用后失败 | 显式标记运行失败，避免重放副作用；应保留该策略。 |
+| 浏览器断开或刷新 | Agent 事件会持久化，但 F07 削弱了产品聊天历史恢复。 |
+| 重复导入分享或发放奖励 | 数据库唯一性/幂等机制有效，应保留。 |
+| 重复确认密码重置 | 存在 F10 的原子性缺口。 |
+| 并发编辑/生成 | 存在 F02 的聚合替换缺口。 |
+| 生成式课程完成测验 | 存在 F08 的静态图谱解析缺口。 |
+| 补强课时生成最终失败 | F13 缺少可见错误和退出操作。 |
 
-# 14. Testing Review
+# 14. 测试审查
 
-The repository already goes well beyond a minimal unit suite: Vitest, a bridge for legacy scripts, shared-contract checks, auth-boundary assertions, DB queue/progression/share tests, Agent lifecycle tests, scripted-provider browser journeys, multi-browser nightly coverage, bundle checks, and a production-Compose smoke runner. Existing tests should be extended around the exact failure boundaries, not replaced or diluted.
+仓库已经远超最低限度的单元测试：包含 Vitest、旧版脚本桥接、共享契约检查、认证边界断言、数据库队列/进度/分享测试、Agent 生命周期测试、脚本化模型服务支持的浏览器流程、多浏览器夜间测试、构建体积检查，以及生产 Compose 冒烟测试工具。应围绕具体故障边界扩展现有测试，而不是替换或削弱它们。
 
-Some tests inspect source strings, which is useful for preventing accidental architectural drift but insufficient for authorization or transaction semantics. For example, finding an auth guard in a route does not prove its conflict update is owner-scoped; checking reset-token source structure does not prove single-use consumption under concurrent requests.
+部分测试通过检查源码字符串工作，有助于防止意外架构偏移，但不足以验证授权或事务语义。例如，在路由里找到认证 guard，不代表其冲突更新受所属用户约束；检查重置令牌代码结构，也不能证明并发请求下只会消费一次。
 
-## Checks executed in this audit
+## 本次审计实际执行的检查
 
-| Check | Result | What it establishes |
+| 检查 | 结果 | 能够证明的范围 |
 |---|---|---|
-| `node --check` across all 37 tracked Agent `.mjs` files | Passed | Parseable ESM syntax only; imports and runtime behavior were not loaded. |
-| `node scripts/validate-visualization-catalog.mjs` | Passed | 19 implemented catalog entries and registry coverage validated. |
-| Agent `internal-auth.unit.mjs` | Passed | Existing isolated internal-auth checks. |
-| Agent `course-store-schema.unit.mjs` | Passed | Existing bounded course-read schema checks. |
-| Web `auth-password-reset-static.unit.ts`, run from Web using local Node | Passed | Static source assertions only; no email or concurrent DB reset. |
-| Web `code-block-runner.unit.ts`, same method | Passed | Language normalization checks; no Worker/Pyodide security validation. |
-| Source-extracted Agent converter/worker probe with import stubs | Reproduced image loss; one recovery call across repeated claim polls | Narrow function behavior; not a full Agent integration test. |
-| Limited tracked-file secret-pattern scan | No matches for selected patterns across 976 text files | Limited scan only; no assurance about Git history or external/untracked secrets. |
-| `node scripts/audit-prod-bulk.mjs --audit-level high` | **Failed to execute: `spawnSync pnpm ENOENT`** | No vulnerability result. Do not interpret this as a clean audit or a discovered package advisory. |
-| Full typecheck, lint, unit, build, DB, browser, Compose and live-provider gates | **Not run / unverified** | Dependencies absent; no installation, DB mutations, or external execution were authorized in this audit-only phase. |
+| 对全部 37 个受跟踪 Agent `.mjs` 文件执行 `node --check` | 通过 | 仅证明 ESM 语法可解析；未加载导入，也未验证运行时行为。 |
+| `node scripts/validate-visualization-catalog.mjs` | 通过 | 验证了 19 个已实现目录条目和注册表覆盖。 |
+| Agent `internal-auth.unit.mjs` | 通过 | 现有隔离的内部认证检查。 |
+| Agent `course-store-schema.unit.mjs` | 通过 | 现有受限课程读取 schema 检查。 |
+| 在 Web 目录使用本机 Node 运行 `auth-password-reset-static.unit.ts` | 通过 | 仅为源码静态断言；未测试邮件或并发数据库重置。 |
+| 以同样方式运行 Web `code-block-runner.unit.ts` | 通过 | 语言标准化检查；未验证 Worker/Pyodide 安全性。 |
+| 从 Agent 源码提取转换器/Worker，并以桩替代导入的探针 | 复现图片丢失；重复领取轮询期间仅调用一次恢复 | 仅验证局部函数行为，不是完整 Agent 集成测试。 |
+| 对受跟踪文件进行有限密钥模式扫描 | 在 976 个文本文件中未命中所选模式 | 仅为有限扫描；不能保证 Git 历史或外部/未跟踪文件不存在密钥。 |
+| `node scripts/audit-prod-bulk.mjs --audit-level high` | **执行失败：`spawnSync pnpm ENOENT`** | 没有得到漏洞结果。不能解释为审计干净，也不能解释为发现了包漏洞公告。 |
+| 完整类型检查、lint、单元测试、构建、数据库、浏览器、Compose 和真实模型服务检查 | **未运行 / 未验证** | 缺少依赖；仅审计阶段没有授权安装依赖、修改数据库或执行外部操作。 |
 
-The local pnpm major differs from the pinned version and reports that the root `pnpm.overrides` field is ignored under that local version. Use the repository-pinned toolchain for subsequent verification; do not update the lockfile or dismiss overrides to make this audit environment pass.
+本机 pnpm 主版本与仓库固定版本不同，并提示在该本机版本下会忽略根目录 `pnpm.overrides` 字段。后续验证应使用仓库固定的工具链；不要为了让本次审计环境通过，就更新锁文件或忽略 overrides。
 
-## Highest-value behavioral tests
+## 最有价值的行为测试
 
-| Priority | Behavior to test | Findings addressed |
+| 优先级 | 应验证的行为 | 对应发现 |
 |---|---|---|
-| Critical | Two users attempt foreign thread/message insert and conflict update; owner data remains unchanged. | F01 |
-| Critical | Deliberately interleave block save/archive with lesson publish, quiz progress, enrichment and remediation insert. | F02 |
-| Critical | Production-build runnable Python/JS attempts authenticated API access from the execution context; it must be denied. | F03 |
-| Critical | Render production service environment with synthetic values and assert selected provider/email/IP-limit contracts; then controlled login/reset smoke. | F04 |
-| Critical | Restart Agent before lease expiry, advance past expiry, and verify output-aware recovery without operator intervention. | F05 |
-| Critical | One owner floods distinct requests; queue/storage/spend budgets hold and another owner can make progress. | F06 |
-| Critical | Delayed multi-chunk assistant reply plus a failed persistence request, then reload and restore complete acknowledged history. | F07 |
-| Critical | Generated `gen_*` course: materialize, submit quiz, update mastery, resolve next/remediation, finish course. | F08 |
-| Valuable | Concurrent confirmation of one reset token; exactly one succeeds. | F10 |
-| Valuable | Busy but healthy workers remain ready; dead or expired workers do not. | F11 |
-| Valuable | Vision request reaches a scripted provider with the actual image part intact. | F12 |
-| Valuable | Permanent remediation error and expired session show retry/exit without endless modal polling. | F13 |
-| Valuable | First registrant of an unused allowlisted email cannot become an operator. | F15 |
-| Valuable | Operational logs omit learner free text by default. | F16 |
-| Growth | Summary payload/query bytes and history pagination stay bounded with large owner libraries. | F14 |
+| 关键 | 两个用户尝试对他人的聊天/消息执行插入和冲突更新，原所属用户的数据必须保持不变。 | F01 |
+| 关键 | 刻意交错执行内容块保存/归档与课时发布、测验进度、内容增强和补强课时插入。 | F02 |
+| 关键 | 生产构建下，可运行 Python/JS 从执行上下文尝试访问认证 API，必须被拒绝。 | F03 |
+| 关键 | 使用合成变量渲染生产服务环境，断言所选服务商、邮件和 IP 限流配置契约，再执行受控登录/重置冒烟测试。 | F04 |
+| 关键 | 在租约过期前重启 Agent，将时间推进到过期后，验证无需运维干预、且能依据已有输出决定是否恢复。 | F05 |
+| 关键 | 一个用户密集发送不同请求时，队列/存储/费用配额仍有效，另一个用户仍能推进任务。 | F06 |
+| 关键 | 延迟分块输出助手回答，并让一次持久化请求失败；刷新后仍恢复完整、已确认保存的历史。 | F07 |
+| 关键 | 生成式 `gen_*` 课程：生成并落库、提交测验、更新掌握度、处理下一步/补强、完成课程。 | F08 |
+| 有价值 | 并发确认同一个重置令牌，必须恰好只有一次成功。 | F10 |
+| 有价值 | 忙碌但健康的 Worker 保持就绪，已死亡或过期的 Worker 不应被判为就绪。 | F11 |
+| 有价值 | 视觉请求到达脚本化服务商时，真实图片内容项保持完整。 | F12 |
+| 有价值 | 补强生成永久失败或会话过期时，显示重试/退出操作，不再无限轮询弹窗。 | F13 |
+| 有价值 | 抢先注册尚未使用的允许列表邮箱者，不能成为运维人员。 | F15 |
+| 有价值 | 运维日志默认不包含学习者自由文本。 | F16 |
+| 增长阶段 | 用户拥有大型课程库时，摘要载荷/查询字节数和历史分页仍保持有界。 | F14 |
 
-There is no payment flow in the reviewed product, so payment test recommendations would be irrelevant. New Web tests should follow the repository's native Vitest policy; use DB/browser layers where mocks cannot establish the invariant.
+所审阅的产品没有支付流程，因此支付测试建议与本项目无关。新增 Web 测试应遵循仓库的原生 Vitest 规范；当 mock 无法证明某项不变量时，应使用数据库或浏览器测试层。
 
-## F17 — The repository's required external release gates remain incomplete
+## F17 — 仓库要求的外部发布检查门槛仍未完成
 
-**Severity:** P1
+**严重程度：** P1
 
-**Category:** Testing / DevOps
+**类别：** 测试 / DevOps
 
-**Location:** [integration-regression-testing.md](D:/Github/Primoria/docs/integration-regression-testing.md:66), [.github/workflows/ci.yml](D:/Github/Primoria/.github/workflows/ci.yml), and [nightly-regression.yml](D:/Github/Primoria/.github/workflows/nightly-regression.yml).
+**位置：** [integration-regression-testing.md](D:/Github/Primoria/docs/integration-regression-testing.md:66)、[.github/workflows/ci.yml](D:/Github/Primoria/.github/workflows/ci.yml) 和 [nightly-regression.yml](D:/Github/Primoria/.github/workflows/nightly-regression.yml)。
 
-**Evidence:** The current regression document explicitly distinguishes implemented deterministic tests from planned formal snapshot publication/download and 100-case nightly / 1,718-case release real-model gates. The named `embedding-snapshot-authorization.json` record is absent in this checkout. Current workflows do not implement those planned live gates. The document also records earlier missing Compose/branch-protection evidence. Their present remote status was not queried and must not be inferred from that older record.
+**证据：** 当前回归文档明确区分了已经实现的确定性测试，以及计划中的正式快照发布/下载、每夜 100 例和发布前 1,718 例真实模型检查。本地检出版本缺少指定的 `embedding-snapshot-authorization.json` 授权记录。当前工作流也没有实现这些计划中的真实模型检查。文档还记录了此前缺少 Compose/分支保护证据。本次没有查询它们当前的远端状态，不能根据旧记录推断现状。
 
-**Why it matters:** The permanent corpus and synthetic/scripted checks guard important policies, but do not establish actual provider routing quality or authorized fixed-vector coverage. The repository itself defines these as release requirements.
+**影响：** 永久测试语料和合成/脚本化检查保护了重要策略，但不能证明实际模型服务的路由质量，也不能证明已获授权的固定向量覆盖。仓库自身已经将这些列为发布要求。
 
-**Realistic failure scenario:** A deterministic green build is treated as full readiness, while a changed model misroutes school curriculum or goal scope, or production topology has never received an accepted passing run. Existing tests can stay green because they do not run the missing evaluation.
+**现实故障情景：** 团队把确定性测试全部通过当作已经完全就绪，但变更后的模型错误路由学校课程体系或学习目标范围，或者生产拓扑尚未取得获认可的通过记录。现有测试仍可能保持通过，因为它们没有执行缺失的评估。
 
-**Recommended solution:** Obtain the explicitly required authorization evidence, reviewed vectors and scored baseline; implement and execute the documented gates; retain artifact identity and actual release-candidate results. Confirm remote branch protection and Compose evidence. Do not fabricate approvals, publish unauthorized artifacts, reduce the 1,718-case floor, or weaken gold policies. Any launch-scope exception needs an explicit product decision outside this audit.
+**建议方案：** 取得明确要求的授权证据、已审核向量和评分基线；实现并执行文档规定的检查；保留产物标识和实际发布候选版本结果。确认远端分支保护和 Compose 证据。不得伪造批准、发布未授权产物、减少 1,718 个用例下限，或削弱标准判定策略。任何上线范围例外，都需要在本次审计之外明确作出产品决策。
 
-**Estimated effort:** Large, including external dependencies
+**预计工作量：** 大，包含外部依赖
 
-**When to fix:** Before production under the current release contract
+**修复时机：** 按当前发布契约，应在上线前完成
 
-# 15. DevOps & Deployment Review
+# 15. DevOps 与部署审查
 
-The production topology is appropriately simple. Migration and runtime responsibilities are separated; the Agent waits for checkpoint schema initialization and runtime grants; Web waits for Agent readiness. Runtime processes run as non-root with read-only filesystems, dropped capabilities, and no-new-privileges. Internal services are not publicly published. These are valuable controls.
+生产拓扑保持了合理的简洁性。迁移与运行时职责分离；Agent 等待检查点 schema 初始化和运行时授权完成；Web 等待 Agent 就绪。运行时进程使用非 root 用户、只读文件系统、移除能力权限，并启用 no-new-privileges。内部服务不发布到公网。这些都是有效控制。
 
-Compose is a deployment description, not proof of a running staging environment. The repository contains a synthetic-provider topology smoke, backup/restore scripts, and runbooks. This audit did not verify a live host, TLS certificate, scheduler, backup object, alert receiver, external CI result, or provider account.
+Compose 是部署描述，不能证明实际预发布环境已经运行。仓库包含使用合成模型服务的拓扑冒烟测试、备份/恢复脚本和操作手册。本次审计未验证真实主机、TLS 证书、调度器、备份对象、告警接收端、外部 CI 结果或模型服务账户。
 
-## F04 — Production Compose does not pass several required runtime settings
+## F04 — 生产 Compose 没有传递若干必需运行时设置
 
-**Severity:** P1
+**严重程度：** P1
 
-**Category:** DevOps / Security / Reliability
+**类别：** DevOps / 安全 / 可靠性
 
-**Location:** [docker-compose.prod.yml](D:/Github/Primoria/docker-compose.prod.yml:87), [tencent-ses.ts](D:/Github/Primoria/apps/web/src/lib/email/tencent-ses.ts:40), [rate-limit.ts](D:/Github/Primoria/apps/web/src/lib/auth/rate-limit.ts:49), and [model.ts](D:/Github/Primoria/apps/web/src/lib/ai/deepagent/model.ts:70).
+**位置：** [docker-compose.prod.yml](D:/Github/Primoria/docker-compose.prod.yml:87)、[tencent-ses.ts](D:/Github/Primoria/apps/web/src/lib/email/tencent-ses.ts:40)、[rate-limit.ts](D:/Github/Primoria/apps/web/src/lib/auth/rate-limit.ts:49) 和 [model.ts](D:/Github/Primoria/apps/web/src/lib/ai/deepagent/model.ts:70)。
 
-**Evidence:** Services enumerate `environment` and do not use an environment file to inject the example wholesale. Web receives SES secret ID/key but not `TENCENT_SES_FROM_EMAIL` or `TENCENT_SES_PASSWORD_RESET_TEMPLATE_ID`, both required by `isTencentSesConfigured`. It receives none of the auth client-IP header settings; the default is no trusted header, producing only account-based limit keys. AI services receive `AI_PROVIDER` and OpenAI variables but omit Anthropic credentials/settings. Other capability/tier settings also differ across services. Compose's `.env` interpolation does not automatically put every variable inside containers, as explained by [Docker's environment documentation](https://docs.docker.com/compose/how-tos/environment-variables/set-environment-variables/).
+**证据：** 各服务显式列出 `environment`，没有通过环境文件将示例配置整体注入。Web 收到了 SES secret ID/key，却没有收到 `TENCENT_SES_FROM_EMAIL` 和 `TENCENT_SES_PASSWORD_RESET_TEMPLATE_ID`，而 `isTencentSesConfigured` 要求这两项存在。认证客户端 IP 请求头相关设置均未传入；默认不信任任何该类请求头，因此只生成按账户计数的限流键。AI 服务收到了 `AI_PROVIDER` 和 OpenAI 变量，却缺少 Anthropic 凭据/设置。其他功能和模型层级配置在服务之间也不一致。Compose 的 `.env` 插值不会自动将全部变量放进容器，详见 [Docker 环境变量文档](https://docs.docker.com/compose/how-tos/environment-variables/set-environment-variables/)。
 
-**Why it matters:** Following the example environment setup can look complete while the running service cannot see essential values. The problem is both functionality and protection drift.
+**影响：** 按示例完成环境设置后，配置看起来可能已经齐全，但实际服务仍看不到关键值。这同时造成了功能失效与防护偏差。
 
-**Realistic failure scenario:** Password-reset requests return service unavailable despite completed SES values in the host `.env`. Authentication attempts across many email addresses avoid the intended IP bucket. Selecting `anthropic-compatible` leaves model construction without its key and can prevent AI services from working.
+**现实故障情景：** 主机 `.env` 已填好 SES 值，密码重置请求却返回服务不可用。攻击者针对多个邮箱发起认证尝试，绕过预期的 IP 计数限制。选择 `anthropic-compatible` 后，构建模型时缺少密钥，可能使 AI 服务无法工作。
 
-**Recommended solution:** Define and validate an explicit per-service environment contract for enabled capabilities, including trusted proxy/IP behavior. Check it with nonsecret sentinel values in production-topology tests, then verify selected services. Pass only required secrets to each service rather than exposing the entire environment indiscriminately.
+**建议方案：** 为每个服务定义并验证启用功能所需的显式环境配置契约，包括可信代理/IP 行为。先在生产拓扑测试中使用不含秘密的哨兵值检查，再验证所选真实服务。每个服务只接收其所需的秘密，避免不加区分地暴露全部环境变量。
 
-**Estimated effort:** Small
+**预计工作量：** 小
 
-**When to fix:** Before production
+**修复时机：** 上线前
 
-## F09 — Production uses an end-of-life Node release and differs from CI
+## F09 — 生产环境使用已结束支持的 Node 版本，且与 CI 不一致
 
-**Severity:** P2
+**严重程度：** P2
 
-**Category:** DevOps / Security
+**类别：** DevOps / 安全
 
-**Location:** [app.Dockerfile](D:/Github/Primoria/docker/app.Dockerfile:6) and [CI runtime](D:/Github/Primoria/.github/workflows/ci.yml:26).
+**位置：** [app.Dockerfile](D:/Github/Primoria/docker/app.Dockerfile:6) 和 [CI 运行环境](D:/Github/Primoria/.github/workflows/ci.yml:26)。
 
-**Evidence:** Both Docker base/runtime stages use `node:20-bookworm-slim`; CI uses Node 22. The official schedule records Node 20 end-of-life as **2026-04-30**, before this audit's 2026-09-26 date. See the [Node.js release schedule](https://github.com/nodejs/Release/blob/main/README.md). This is a support-lifecycle finding, not an asserted exploitable CVE.
+**证据：** Docker 基础阶段和运行时阶段均使用 `node:20-bookworm-slim`，CI 则使用 Node 22。官方计划记录 Node 20 于 **2026-04-30** 结束支持，早于本报告的 2026-09-26 审计日期。参见 [Node.js 发布计划](https://github.com/nodejs/Release/blob/main/README.md)。这是支持生命周期问题，并不等于已经确认可利用的 CVE。
 
-**Why it matters:** Production is on an unsupported runtime line, and normal CI exercises a different major. Container rebuilds alone do not move to a maintained Node major.
+**影响：** 生产环境运行在不再受支持的版本线上，常规 CI 却测试另一个主版本。仅重新构建容器不会自动迁移到仍受维护的 Node 主版本。
 
-**Realistic failure scenario:** A runtime security fix lands only on supported releases, or a runtime-specific behavior succeeds in CI but fails in the production image. The team discovers the mismatch during an incident or deployment.
+**现实故障情景：** 某个运行时安全修复仅在受支持版本发布；或者某项与运行时相关的行为在 CI 成功，却在生产镜像中失败。团队直到事故或部署过程中才发现不一致。
 
-**Recommended solution:** Select a maintained LTS major, align CI/build/runtime expectations, and run the actual production image through Web, Agent, native dependency, and worker smoke tests. Keep pnpm pinned and rebuild reproducibly.
+**建议方案：** 选择受维护的 LTS 主版本，统一 CI、构建和运行时预期，并使用真实生产镜像完成 Web、Agent、原生依赖和 Worker 冒烟测试。保持 pnpm 固定版本和可重复构建。
 
-**Estimated effort:** Small
+**预计工作量：** 小
 
-**When to fix:** Before production
+**修复时机：** 上线前
 
-## Dependencies and configuration
+## 依赖与配置
 
-The lockfile, frozen installs, production audit gate, and targeted overrides are useful supply-chain controls. Main dependencies have concrete roles: Next/React for the app, CopilotKit/AG-UI for Tutor integration, LangChain/deepagents for orchestration, Drizzle for data access, and schema libraries for contracts. Multiple Zod versions in the transitive tree are not automatically a defect. Browser visualization libraries are deliberately loaded from a shared allowlist rather than all bundled as application dependencies.
+锁文件、冻结安装、生产依赖审计门槛和定向 overrides，都是有效的供应链控制。主要依赖各有明确作用：Next/React 支撑应用，CopilotKit/AG-UI 集成导师，LangChain/deepagents 提供编排，Drizzle 负责数据访问，schema 库定义接口契约。传递依赖树中出现多个 Zod 版本，并不自动构成缺陷。浏览器可视化库有意通过共享允许列表加载，而非全部打包为应用依赖。
 
-The optional memory package brings a sizable provider ecosystem through `mem0ai`; no measured bundle/runtime benefit from replacing it was established. Keep optional integrations disabled unless needed, and measure installed production/image reachability before removing packages. No maintained/unmaintained package claim is made from version numbers alone. The production vulnerability scan did not complete, so dependency security remains unverified.
+可选记忆包通过 `mem0ai` 引入较大的服务商依赖生态；本次没有测量并证明替换它能改善构建体积或运行时表现。不需要的可选集成应保持关闭；删除包之前，应测量其生产安装/镜像体积和实际可达使用路径。不能仅凭版本号认定某个包受到维护或已经弃用。生产漏洞扫描未完成，因此依赖安全性仍未验证。
 
-Server credentials remain server-side; no BYOK/client-secret path should be added. Public app URL and Turnstile site key are intentional browser configuration. The HTTP-only Caddy mode is documented for pre-domain testing; release signoff must use the intended HTTPS domain and production secure cookies.
+服务端凭据应继续留在服务端，不应新增 BYOK/客户端秘密路径。公开应用 URL 和 Turnstile site key 属于有意提供给浏览器的配置。Caddy 的纯 HTTP 模式在文档中用于域名配置前的测试；正式发布验收必须使用目标 HTTPS 域名和生产安全 Cookie。
 
-## Partial deployments, migration and rollback
+## 部分部署失败、迁移与回滚
 
-One-shot migration dependencies provide fail-closed startup for a new deployment, but cannot undo a migration that has already committed. The course-share versioning migration removes legacy columns after conversion. That is not compatible with arbitrary old application images, so image-only rollback must be checked against the actual schema transition.
+一次性迁移依赖可以让新部署在前置步骤失败时停止启动，却无法撤销已经提交的迁移。课程分享版本化迁移会在转换后移除旧列，因此不能假定任意旧应用镜像都与新结构兼容。仅回滚镜像之前，必须检查实际 schema 变更。
 
-Use the existing preflight/runbook to record the prior image/revision, take and verify the pre-deploy backup, define the maintenance window, and specify whether recovery is a forward fix or a database restore. Do not assume a rolling mixed-version deployment is safe across that migration. Database restoration can lose writes after the backup and needs an explicit operational decision.
+使用现有预检清单和操作手册记录上一版本镜像/代码版本，创建并验证部署前备份，明确维护窗口，并指定恢复方案是向前修复还是数据库还原。不能假定跨越该迁移的混合版本滚动部署是安全的。数据库还原可能丢失备份之后的写入，必须作出明确的运维决策。
 
-Backup tooling uses PostgreSQL dumps, off-host COS storage, checksums, and an isolated restore drill. The documented daily/weekly schedule and RPO/RTO are targets, not measured guarantees from this audit. Before launch, retain a successful restore record and evidence the actual scheduler and alert path are active. A single host remains a shared failure domain; that can be acceptable for a bounded initial launch with realistic recovery expectations.
+备份工具使用 PostgreSQL 转储、异机 COS 存储、校验和，以及隔离恢复演练。文档中的每日/每周计划和 RPO/RTO 是目标，并非本次审计测得的保证。上线前应保留成功恢复记录，并证明实际调度器和告警路径已启用。单台主机仍是共同故障域；若初期上线规模受控且恢复预期合理，这可以接受。
 
-# 16. Observability Review
+# 16. 可观测性审查
 
-Useful observability already exists: JSON worker lifecycle logs, job/run identifiers, request-ID propagation, LLM duration/token/cache-use logs, queue-age checks, worker heartbeat state, Agent administration commands, and persisted run events. These are enough to build a small actionable operational view.
+已有有价值的可观测性能力：JSON Worker 生命周期日志、任务/运行标识符、请求 ID 传递、LLM 耗时/token/缓存使用日志、队列等待时长检查、Worker 心跳状态、Agent 管理命令，以及持久化运行事件。这些足以支撑一个小而实用的运维视图。
 
-The gaps are practical: Agent readiness can miss abandoned running rows (F05); worker readiness can falsely fail (F11); chat save errors disappear (F07); and LLM usage logs do not enforce a spend ceiling (F06). Request, Agent run, course/job, and provider-call identifiers should be connected for the affected workflows. The reviewed Compose file does not establish log rotation or an alert destination; these may be host-managed and were not verified.
+缺口都很具体：Agent 就绪检查可能漏掉被遗留的运行中记录（F05）；Worker 就绪检查可能误报失败（F11）；聊天保存错误会消失（F07）；LLM 使用日志也不能强制限制支出（F06）。应把相关流程的请求、Agent 运行、课程/任务和模型调用标识符关联起来。所审阅的 Compose 文件没有确定日志轮转或告警目的地；这些可能由主机侧管理，但本次未验证。
 
-Start with alerts for stale/oldest work, terminal job failure rates, provider error/latency spikes, unusual admitted work or token use, disk capacity, failed backups, and restore-drill age. A large tracing platform is unnecessary before those signals work.
+应先为过期任务/最老任务、任务最终失败率、模型服务错误或延迟激增、异常接收工作量或 token 消耗、磁盘容量、备份失败，以及距离上次恢复演练的时间设置告警。在这些信号真正有效之前，没有必要引入庞大的追踪平台。
 
-## F16 — KG positioning logs include raw learner free text
+## F16 — KG 定位日志包含学习者原始自由文本
 
-**Severity:** P2
+**严重程度：** P2
 
-**Category:** Security / Maintainability
+**类别：** 安全 / 可维护性
 
-**Location:** [positioning-log.ts](D:/Github/Primoria/apps/web/src/lib/knowledge-graph/positioning-log.ts:30) and [position API](D:/Github/Primoria/apps/web/src/app/api/knowledge-graph/position/route.ts:41).
+**位置：** [positioning-log.ts](D:/Github/Primoria/apps/web/src/lib/knowledge-graph/positioning-log.ts:30) 和 [定位 API](D:/Github/Primoria/apps/web/src/app/api/knowledge-graph/position/route.ts:41)。
 
-**Evidence:** `buildPositioningLog` includes `rawQuery` and `coreQuery`; the position API passes it to `logPositioning`, which serializes the full record to `console.log`. There is no content-redaction or diagnostic opt-in at that call site. This observation concerns code, not an inspected production log dataset.
+**证据：** `buildPositioningLog` 包含 `rawQuery` 和 `coreQuery`；定位 API 将其传给 `logPositioning`，后者把整条记录序列化到 `console.log`。调用点没有文本脱敏，也没有要求显式开启诊断模式。该结论来自代码检查，不是对生产日志数据集的检查。
 
-**Why it matters:** Learning goals can include school context, personal struggles, names, or other disclosures. General console ingestion creates additional copies and access paths outside the intended learner-data controls.
+**影响：** 学习目标可能包含学校背景、个人困难、姓名或其他披露。普通控制台日志采集会在原定学习者数据控制范围之外，产生更多副本和访问路径。
 
-**Realistic failure scenario:** A learner describes a personal difficulty in a goal. It appears in operational logs exported to a support/logging system with broader access or longer retention than the application record.
+**现实故障情景：** 学习者在目标中描述个人困难。该文本进入运维日志，随后被导出到访问范围更广、或保留时间比应用记录更长的支持/日志系统。
 
-**Recommended solution:** Default to structured routing diagnostics without raw learner text. If content sampling is needed for authorized evaluation, separate it from operational logs with explicit access, retention, and redaction rules. Verify the default log payload in tests.
+**建议方案：** 默认只记录结构化路由诊断，不记录学习者原文。如果经授权的评估需要文本采样，应与普通运维日志分离，并明确访问、保留和脱敏规则。通过测试验证默认日志载荷。
 
-**Estimated effort:** Small
+**预计工作量：** 小
 
-**When to fix:** Before production
+**修复时机：** 上线前
 
-# 17. Scalability Review
+# 17. 可扩展性审查
 
-Registered-user totals are not capacity measurements. These are planning ranges under increasing simultaneous use, not throughput claims.
+累计注册用户数不是容量测量。下表是在同时使用量增加时的规划区间，不是吞吐能力承诺。
 
-| Approximate scale | Most likely pressure | Appropriate response |
+| 大致规模 | 最可能的压力 | 合适的应对方式 |
 |---|---|---|
-| 10 users | F01/F02 correctness defects already matter; one account can overwhelm AI admission. | Fix correctness and admission first; retain the single-host design. |
-| 100 users | Bursty Tutor/lesson demand exceeds a few provider-bound execution slots; fairness and waiting experience dominate. | Measure active/queued work, enforce budgets, tune bounded concurrency to provider/DB capacity. |
-| 1,000 users | Provider throughput/cost, worker backlog, connection budgets, and large owner histories become material. | Add worker capacity using existing lease semantics; optimize F14; load-test realistic request mixes. |
-| 10,000 users | Shared-host CPU/RAM/disk, durable event/checkpoint volume, logs/media, and database I/O become likely constraints. | Separate measured bottlenecks, enforce retention, consider a dedicated database and independent Web/worker scaling. |
-| 100,000 users | High availability, independent deployment capacity, tenant fairness, operational staffing, and recovery objectives become architectural requirements. | Plan horizontally replicated stateless services, appropriately operated PostgreSQL, object/CDN delivery, and robust admission/observability. |
-| 1,000,000 users | Provider economics and partitioning of workload/data lifecycles become major system concerns. | Reassess from measured distributions and business SLAs; current code alone cannot justify a concrete architecture at this scale. |
+| 10 个用户 | F01/F02 正确性缺陷已经可能产生影响；一个账户就可能压垮 AI 任务接收能力。 | 先修复正确性和任务接收限制，保留单机设计。 |
+| 100 个用户 | 突发导师/课时需求超过少量、受模型服务限制的执行槽位，公平性和等待体验成为主要问题。 | 测量活跃/排队工作量，执行配额，并按服务商和数据库容量调整有界并发。 |
+| 1,000 个用户 | 模型服务吞吐/费用、Worker 积压、连接预算和大型用户历史变得重要。 | 利用现有租约机制增加 Worker 容量，优化 F14，并按真实请求组合压测。 |
+| 10,000 个用户 | 共享主机 CPU/RAM/磁盘、持久化事件/检查点规模、日志/媒体和数据库 I/O 可能成为约束。 | 拆分已经测得的瓶颈，执行保留策略，考虑独立数据库以及 Web/Worker 分别扩容。 |
+| 100,000 个用户 | 高可用、独立部署容量、租户公平性、运维人员配置和恢复目标成为架构要求。 | 规划横向复制的无状态服务、妥善运维的 PostgreSQL、对象存储/CDN 分发，以及健全的任务接收控制和可观测性。 |
+| 1,000,000 个用户 | 模型服务成本结构，以及工作负载/数据生命周期的划分，成为主要系统问题。 | 根据实际分布和业务 SLA 重新评估；仅凭当前代码无法论证该规模下的具体架构。 |
 
-**Probable first bottleneck:** external-model latency and cost combined with global small worker capacity and unbounded admission. **Probable second bottleneck:** database/storage work from persisted runs, course payloads, histories, and aggregate mutation patterns. CPU and network conditions may change their order; no benchmark establishes a hard threshold.
+**最可能的首个瓶颈：** 外部模型延迟和费用，加上全局较小的 Worker 容量，以及没有上限的任务接收。**最可能的第二个瓶颈：** 持久化运行记录、课程载荷、历史和聚合更新模式带来的数据库/存储工作。CPU 和网络条件可能改变顺序；目前没有基准测试能确定硬性阈值。
 
-What scales naturally: stateless HTTP handlers, separate workers, database claims with `SKIP LOCKED` and fencing, immutable snapshots, server-owned rewards, and shared pure contracts. What eventually needs operational change: the single-host failure domain, database availability/backups, aggregate connection budgets, long-lived SSE connection handling, media/log retention, and provider quotas.
+天然具备扩展基础的部分包括：无状态 HTTP 处理、独立 Worker、带 `SKIP LOCKED` 和写入隔离保护的数据库领取机制、不可变快照、服务端负责的奖励，以及共享纯函数契约。最终需要调整运维方式的部分包括：单机故障域、数据库可用性/备份、总连接预算、长连接 SSE 处理、媒体/日志保留，以及模型服务配额。
 
-Do not build multi-region replication, sharding, Kafka, or Kubernetes for a hypothetical million users now. The valuable near-term work remains correctness, bounded work, failure visibility, and a measured capacity baseline.
+不要现在就为假设中的百万用户构建多地域复制、分片、Kafka 或 Kubernetes。近期最有价值的工作仍是正确性、有界工作量、可见的失败状态，以及经测量的容量基线。
 
-# 18. Technical Debt
+# 18. 技术债
 
-| Class | Actual examples | Treatment |
+| 类型 | 实际例子 | 处理方式 |
 |---|---|---|
-| Dangerous debt | Unscoped conflict writes (F01); aggregate stale saves (F02); code execution boundary (F03); split graph resolution (F08); UI-only history durability (F07). | Repair with explicit invariants and targeted regression tests before expanding these surfaces. |
-| Dangerous operational debt | Environment drift (F04), one-shot recovery (F05), unbounded admitted work (F06), incomplete release contract (F17). | Close before unrestricted production use; capture release evidence. |
-| Normal debt | Large Tutor/course components, legacy test bridge, optional integration footprint, repeated polling, broad runtime DB role, incomplete end-to-end correlation. | Address during nearby work or measured operational need. Do not turn them into a rewrite project. |
-| Growth debt | Full-content summary reads (F14), history paging, retention/capacity tuning, single-host availability. | Address at explicit data-volume or service-level thresholds. |
-| Cosmetic debt | Naming preferences, file ordering, formatting, choice of equivalent libraries. | No audit finding; defer unless it aids a concrete behavioral change. |
+| 危险技术债 | 未约束归属的冲突写入（F01）、旧聚合快照保存（F02）、代码执行边界（F03）、分裂的图谱解析方式（F08）、仅依赖 UI 的历史持久化（F07）。 | 在扩大相关功能前，以明确不变量和针对性回归测试修复。 |
+| 危险运维债 | 环境配置偏差（F04）、一次性恢复（F05）、无上限接收工作（F06）、未完成的发布契约（F17）。 | 面向所有用户正式上线前关闭这些问题，并保留发布证据。 |
+| 常规技术债 | 大型导师/课程组件、旧版测试桥接、可选集成依赖体积、重复轮询、较宽泛的运行时数据库角色、端到端关联不完整。 | 在相关工作或测得的运维需要出现时处理，不要演变成重写项目。 |
+| 增长型技术债 | 摘要读取完整内容（F14）、历史分页、保留/容量调优、单机可用性。 | 在明确的数据规模或服务水平阈值下处理。 |
+| 表面性技术债 | 命名偏好、文件排序、格式、等价库之间的选择。 | 不列为审计问题；除非有助于具体行为变更，否则推迟。 |
 
-The legacy `.unit.ts` bridge is a migration mechanism, not a reason to delete coverage. Preserve the permanent bilingual learning-goal corpus, current gold policies, catalog sync checks, and separate mastery/facts/progression semantics.
+旧版 `.unit.ts` 桥接是迁移机制，不是删除覆盖的理由。应保留永久双语学习目标语料、当前标准判定策略、目录同步检查，以及掌握度/事实/成长体系之间的语义分离。
 
-# 19. Things That Are Already Well Engineered
+# 19. 已有的良好工程设计
 
-- **Appropriate deployment shape.** A modular application, internal Agent, PostgreSQL, and bounded workers are a maintainable starting point. Keep this architecture unless measured requirements demand more.
-- **Cross-runtime contracts.** Shared artifact schemas, an allowlisted dependency source, and catalog synchronization tests reduce Web/Agent drift. Preserve the plain-ESM Agent boundary.
-- **Domain separation.** Mastery is evidence-driven, facts describe the learner, and XP records effort/completion. Combining these would weaken product correctness.
-- **Deterministic course scope and outline.** Exact owner/scope reuse, concept-frontier grouping, stable authored ordering, and cold fallback on mastery-read failure are thoughtful decisions.
-- **Explicit infrastructure failures.** KG coverage miss is distinguished from unavailable infrastructure, avoiding silent scope changes when the database/provider fails.
-- **Durable work and side-effect awareness.** PostgreSQL claims, lease tokens, checkpoints, cancellation, and output-aware retry policies are a strong foundation. Fix F05/F11 without discarding them.
-- **Fenced optional enrichment.** Best-effort title/description enrichment behind equality checks is appropriate; it should remain separate from authoritative user edits.
-- **Reward idempotency.** Unique append-only XP awards and transactionally applied totals are substantially safer than client-authored rewards.
-- **Immutable sanitized sharing.** Versioned snapshots, explicit revocation, owner isolation, and repeat-import controls are the right sharing model.
-- **HTML-widget isolation.** Sandboxed iframes, source/channel validation, dependency control, and restricted bridges should be retained. They are distinct from the code runner defect.
-- **Production foundations.** Server-side sessions, internal Agent authentication, runtime/migrator role separation, non-root hardened containers, backup/restore tooling, and migration preflight are meaningful engineering work.
-- **Regression intent and honesty.** Broad deterministic layers, scripted integration tests, bundle budgets, and documentation explicitly marking external blockers provide a useful foundation. Keep blocked gates visibly blocked.
+- **合理的部署形态。** 模块化应用、内部 Agent、PostgreSQL 和有界 Worker 是易维护的起点。除非实测需求提出更高要求，否则应保留当前架构。
+- **跨运行时契约。** 共享产物 schema、单一依赖允许列表和目录同步测试，降低了 Web/Agent 偏移风险。应保留纯 ESM Agent 边界。
+- **领域分离。** 掌握度基于证据，事实描述学习者，XP 记录投入与完成。把这些合并会削弱产品正确性。
+- **确定性的课程范围与大纲。** 精确的用户/范围复用、概念前沿分组、稳定的编排顺序，以及掌握度读取失败时的冷启动回退，都是经过考虑的设计。
+- **明确的基础设施故障处理。** 区分 KG 覆盖缺失与基础设施不可用，避免数据库或模型服务失败时静默改变课程范围。
+- **持久化任务与副作用意识。** PostgreSQL 领取、租约令牌、检查点、取消机制和基于已有输出的重试策略，构成坚实基础。修复 F05/F11 时应保留这些机制。
+- **带写入保护的可选内容增强。** 通过相等条件保护、尽力执行的标题/描述增强是合理的，应继续与权威用户编辑分离。
+- **奖励幂等性。** 唯一、仅追加的 XP 奖励记录和事务更新总值，明显比客户端自行写入奖励更安全。
+- **不可变且经过清理的分享。** 版本化快照、显式撤销、所属用户隔离和重复导入控制，是正确的分享模型。
+- **HTML 小组件隔离。** 沙箱 iframe、来源/通道验证、依赖控制和受限桥接应保留。这些与代码运行器缺陷不同。
+- **生产基础。** 服务端会话、内部 Agent 认证、运行时/迁移角色分离、非 root 加固容器、备份/恢复工具和迁移预检，都是有意义的工程投入。
+- **明确且诚实的回归验证。** 广泛的确定性测试层、脚本化集成测试、体积预算，以及明确标记外部阻塞项的文档，提供了良好基础。受阻检查应继续清晰显示为受阻。
 
-These parts are currently appropriate and should not be rewritten without a concrete reason.
+这些部分目前是合理的，没有具体原因不应重写。
 
-# 20. Recommended Engineering Roadmap
+# 20. 建议的工程路线图
 
-## Phase 1 — Production Blockers
+## 阶段 1 — 生产上线阻塞项
 
-1. **Protect durable data and trust boundaries:** fix F01 and F02; isolate F03 before runnable generated/shared code reaches production. Add two-user and concurrent-transaction tests alongside the changes.
-2. **Repair critical learner lifecycle failures:** fix F05, F07, and F08 with restart, delayed-stream/reload, and generated-course end-to-end tests.
-3. **Make the deployed system match its contract:** fix F04, align the maintained runtime in F09, and resolve F10/F11. Validate a production image using synthetic configuration first, then authorized real service checks.
-4. **Bound production exposure:** implement F06 admission budgets, remove default raw-goal logging in F16, and leave internal analytics disabled until F15 is resolved or a trusted operator provisioning path is in place.
-5. **Close release evidence:** satisfy F17, run the full deterministic regression on the release candidate, verify actual selected-provider and HTTPS auth/reset journeys, and retain backup/restore and rollout/rollback evidence. Preserve every permanent routing case and gold policy.
+1. **保护持久化数据和信任边界：** 修复 F01、F02；在向生产用户提供可运行的生成/共享代码前解决 F03 隔离问题。随代码变更增加双用户和并发事务测试。
+2. **修复关键学习生命周期故障：** 解决 F05、F07、F08，并增加重启、延迟流式输出/刷新，以及生成式课程端到端测试。
+3. **让实际部署符合配置契约：** 修复 F04，按 F09 统一到受维护的运行时，解决 F10/F11。先使用合成配置验证生产镜像，再执行经授权的真实服务检查。
+4. **限制生产环境风险敞口：** 实现 F06 的任务接收配额，移除 F16 中默认记录原始目标文本的行为；在 F15 修复或建立可信运维身份配置路径之前，保持内部分析关闭。
+5. **补齐发布证据：** 满足 F17，在发布候选版本运行完整确定性回归，验证实际所选模型服务以及 HTTPS 认证/重置流程，并保留备份/恢复和发布/回滚证据。保留所有永久路由用例及其标准判定策略。
 
-For an initial launch that advertises image input, F12 is also part of this phase. No feature-scope reduction is assumed or approved by this report.
+如果初次上线对外宣称支持图片输入，F12 也属于本阶段。本报告不默认或批准任何功能范围缩减。
 
-## Phase 2 — High-Value Improvements
+## 阶段 2 — 高价值改进
 
-- Fix the remediation failure experience (F13) and add visible handling for session expiry during long operations.
-- Remove summary overfetch and introduce bounded history/course paging (F14).
-- Connect request/run/job/provider identifiers; turn existing logs and health data into a small set of actionable alerts.
-- Extract narrow graph-resolution, course-mutation, and history-persistence boundaries while fixing their behaviors. Keep unrelated component structure stable.
+- 修复补强生成失败的用户体验（F13），并在长时间操作期间显式处理会话过期。
+- 消除摘要过量取数，为历史/课程提供有界分页（F14）。
+- 关联请求/运行/任务/模型调用标识符，将现有日志和健康数据转化为少量可操作告警。
+- 修复相关行为时，提取范围明确的图谱解析、课程变更和历史持久化边界。保持无关组件结构稳定。
 
-## Phase 3 — Growth Improvements
+## 阶段 3 — 增长阶段改进
 
-- Establish a repeatable load profile covering onboarding bursts, simultaneous Tutor streams, quiz completion, and large libraries.
-- Tune worker concurrency and aggregate database pools against measured provider limits and database capacity.
-- Introduce independent service/database capacity, retention policies, media delivery changes, and stronger availability only when operational objectives justify them.
-- Revisit service-specific DB privileges and dependency/image footprint as attack surface and team size grow.
+- 建立可重复的负载模型，覆盖引导流程突发流量、并行导师流式会话、测验完成和大型课程库。
+- 根据测得的模型服务限制和数据库容量，调整 Worker 并发及数据库总连接池预算。
+- 只有运维目标确有要求时，再引入独立服务/数据库容量、保留策略、媒体分发调整和更强可用性。
+- 随攻击面和团队规模增长，重新评估各服务数据库权限，以及依赖/镜像体积。
 
-## Phase 4 — Optional Engineering Polish
+## 阶段 4 — 可选工程完善
 
-- Gradually migrate remaining legacy tests when touched, preserving behavior and coverage.
-- Split large presentation components where that demonstrably clarifies ownership or testability.
-- Consolidate minor error-response conventions and improve developer-toolchain diagnostics.
-- Defer naming/style cleanup and fashionable infrastructure changes.
+- 修改相关代码时逐步迁移剩余旧版测试，保留行为与覆盖范围。
+- 仅在能明确职责或改善可测试性时拆分大型展示组件。
+- 统一小范围错误响应约定，改善开发工具链诊断。
+- 推迟命名/风格清理，以及仅因流行而引入的基础设施变更。
 
-# Final Questions
+# 最终问题
 
-## 1. Is there anything that could cause data loss?
+## 1. 是否存在可能造成数据丢失的问题？
 
-Yes. F02 can overwrite generated content/progress and delete lessons inserted after a stale read, including dependent job/checkpoint data. F07 can lose the complete product-visible chat record or retain only a stream fragment. F01 allows a user with another record's identifier to overwrite that record. Backup restoration also has its normal post-backup write-loss tradeoff; no current restore was executed.
+存在。F02 可能覆盖生成内容/进度，并删除旧快照读取后新增的课时及其关联任务/检查点。F07 可能使产品可见的聊天记录不完整，或仅保留流式片段。F01 允许持有其他记录标识符的用户覆盖该记录。备份还原也存在正常的权衡：备份之后的写入可能丢失；本次没有实际执行恢复。
 
-## 2. Is there anything that could realistically cause a security breach?
+## 2. 是否存在现实中可能导致安全事件的问题？
 
-Yes. The strongest paths are cross-owner chat writes (F01), same-origin privileges for untrusted runnable code (F03), and unverified-email operator access if analytics is enabled (F15). F04 weakens intended IP throttling; F06 exposes service resources and spend; F16 unnecessarily spreads learner free text into logs. No production exploit or exposed secret was demonstrated.
+存在。最明确的路径是跨用户聊天写入（F01）、不可信可运行代码的同源权限（F03），以及启用分析功能后通过未经验证的邮箱获取运维访问权限（F15）。F04 削弱预期的 IP 限流；F06 使服务资源和费用面临滥用；F16 将学习者自由文本不必要地扩散到日志。本次没有演示生产环境利用，也没有确认已泄露秘密。
 
-## 3. Is there anything that could cause major downtime?
+## 3. 是否存在可能造成重大停机的问题？
 
-Yes. Selecting a provider whose credentials are not forwarded can disable AI services (F04); unbounded admitted work can exhaust practical capacity (F06); a host/database failure affects the single-server stack. F11 can falsely fail readiness. F05 causes stuck individual runs while health may remain green, rather than necessarily taking the whole service down. Actual recovery time remains unmeasured.
+存在。选择了凭据未传入容器的模型服务商，可能使 AI 服务不可用（F04）；无上限接收工作可能耗尽实际容量（F06）；主机或数据库故障会影响整个单机栈。F11 可能导致就绪检查误报失败。F05 会让个别运行任务卡住，而健康状态仍可能正常，并不一定使整个服务停机。实际恢复时间尚未测量。
 
-## 4. What is most likely to break first as usage grows?
+## 4. 使用量增长时，最可能先出问题的是什么？
 
-AI queue waiting time, fairness, and provider cost are the leading risks. Database transfer/storage and worker backlog follow as histories, course blocks, events, and checkpoints accumulate. Correctness bugs can occur before any scale threshold is reached.
+AI 队列等待时间、公平性和模型服务费用是首要风险。随着聊天历史、课程内容块、事件和检查点积累，数据库传输/存储与 Worker 积压问题会随之出现。正确性缺陷则可能在达到任何规模阈值之前发生。
 
-## 5. Which areas of the codebase would concern a senior engineer most?
+## 5. 哪些代码区域最值得资深工程师担忧？
 
-The generic course persistence API; chat upsert authorization; code execution origin boundary; Tutor history/protocol conversion; Agent recovery lifecycle; generated-graph progression; and production environment/release-gate drift. These need precise invariants and tests more than broad refactoring.
+通用课程持久化 API、聊天 upsert 授权、代码执行同源边界、导师历史/协议转换、Agent 恢复生命周期、生成式图谱进度处理，以及生产配置/发布门槛偏差。这些区域更需要精确的不变量和测试，而非宽泛重构。
 
-## 6. Which areas are already well engineered and should not be rewritten?
+## 6. 哪些部分已经设计良好，不应重写？
 
-The modular monolith/worker topology, shared contracts, catalog routing, widget sandbox, deterministic concept-frontier outline, mastery/facts/XP separation, immutable share snapshots, durable lease-based jobs, output-aware Agent retry, hardened runtime containers, and layered regression structure.
+模块化单体/Worker 拓扑、共享契约、目录路由、小组件沙箱、确定性概念前沿大纲、掌握度/事实/XP 分离、不可变分享快照、持久化租约任务、基于已有输出的 Agent 重试、加固运行时容器，以及分层回归结构。
 
-## 7. What are the five highest-ROI engineering improvements?
+## 7. 投入产出比最高的五项工程改进是什么？
 
-1. Close ownership and mutation invariants: F01 plus narrowly scoped, concurrency-safe course writes in F02.
-2. Isolate runnable code from account privileges: F03.
-3. Repair durable learner workflows: F05, F07, and F08 with focused lifecycle tests.
-4. Make production configuration and health reliable: F04, F09–F11, with the actual production image tested.
-5. Bound AI admission and make release approval evidence-based: F06 and F17, using existing PostgreSQL and regression infrastructure.
+1. 补齐归属与变更不变量：修复 F01，并将 F02 的课程写入收窄为并发安全的局部更新。
+2. 将可运行代码与账户权限隔离：F03。
+3. 修复学习流程的持久化与恢复：围绕 F05、F07、F08 增加针对性生命周期测试。
+4. 让生产配置和健康检查可靠：F04、F09–F11，并测试真实生产镜像。
+5. 限制 AI 任务接收量，让发布审批以证据为依据：利用现有 PostgreSQL 和回归基础设施解决 F06、F17。
 
-## 8. If this were your responsibility in a real company, what would you fix before allowing the product to launch?
+## 8. 如果在真实公司由你负责，上线前会要求修复什么？
 
-I would require the Phase 1 trust-boundary, data-integrity, recovery, history, generated-course, configuration, and admission fixes; a maintained runtime; atomic reset consumption; and reliable worker health. I would keep analytics closed until operator identity is trustworthy, remove raw learner text from operational logs, and require image-path correction if image input is advertised. I would then require passing release-candidate regression, the documented authorized routing gates, production-image auth/provider smoke, and a demonstrated restore/rollback plan. I would approve a bounded launch after that evidence, without requiring a new architecture or speculative scale infrastructure.
+我会要求完成阶段 1 的信任边界、数据完整性、恢复、历史记录、生成式课程、配置和任务接收限制修复；使用受维护的运行时；保证密码重置令牌原子消费；并让 Worker 健康检查可靠。在运维身份可信之前，我会保持分析功能关闭，从运维日志移除学习者原文；如果对外宣称支持图片输入，还必须修复图片链路。之后，我会要求发布候选版本回归通过、文档规定的授权路由检查完成、生产镜像认证/模型服务冒烟测试通过，并演示恢复/回滚方案。有了这些证据，我会批准规模受控的上线，而不要求更换架构或提前建设假想规模的基础设施。
