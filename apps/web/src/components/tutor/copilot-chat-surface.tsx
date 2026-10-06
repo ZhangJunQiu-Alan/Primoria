@@ -26,7 +26,8 @@ import {
 } from "@copilotkit/react-core/v2";
 import { CourseMarkdown } from "@/components/course/course-markdown";
 import { sanitizeCopilotAssistantText } from "@/hooks/use-primoria-copilot";
-import { useT } from "@/lib/i18n/client";
+import { useI18n, useT } from "@/lib/i18n/client";
+import { HomeSummarySection } from "./home-summary";
 import {
   ensureThreadSummary,
   hydrateThreadMessagesFromServer,
@@ -406,13 +407,17 @@ function PrimoriaMainWelcomeScreen({
   suggestionView?: React.ReactNode;
 }) {
   const t = useT();
+  const { language } = useI18n();
+  const today = new Date().toLocaleDateString(language === "zh" ? "zh-CN" : "en-US", { month: "long", day: "numeric", weekday: "long" });
   return (
     <div data-testid="copilot-welcome-screen" className="primoria-main-welcome">
       <div className="primoria-main-welcome-card">
+        <span className="primoria-main-date">{today}</span>
         <h1>{t.tutor.heroTitle}</h1>
         <p>{t.tutor.heroSubtitle}</p>
         <div className="primoria-main-input">{input}</div>
         <div className="primoria-main-suggestions">{suggestionView}</div>
+        <HomeSummarySection />
       </div>
     </div>
   );

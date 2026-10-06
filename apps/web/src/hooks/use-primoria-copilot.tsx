@@ -793,7 +793,7 @@ function CourseGenerationNotice({
         </div>
         <div className="course-generation-notice-actions">
           <a className="ghost-btn" href={courseHref}>打开课程</a>
-          <a className="soft-btn" href="/library">查看学习库</a>
+          <a className="soft-btn" href="/library">查看课程库</a>
         </div>
       </div>
     </article>

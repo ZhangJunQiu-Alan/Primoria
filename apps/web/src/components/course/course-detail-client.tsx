@@ -5,6 +5,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { BlockRenderer } from "./block-renderer";
+import { CourseLessonAside, type LessonPlayerSummary } from "./course-lesson-aside";
+import type { LessonConceptView } from "@/lib/courses/lesson-concepts";
 import type { CourseAISelectedTextContext } from "./course-ai-assistant-panel";
 import { useLessonGenerationJobs } from "@/hooks/use-lesson-generation-jobs";
 import { useDialogFocus } from "@/hooks/use-dialog-focus";
@@ -18,7 +20,7 @@ import { useT, msg } from "@/lib/i18n/client";
 
 const MIN_SIDEBAR_WIDTH = 320;
 const MAX_SIDEBAR_WIDTH = 620;
-const DEFAULT_SIDEBAR_WIDTH = 410;
+const DEFAULT_SIDEBAR_WIDTH = 340;
 const SIDEBAR_WIDTH_KEY = "primoria:course-ai-sidebar-width";
 
 const CourseAIAssistantPanel = dynamic(
@@ -363,11 +365,22 @@ function CourseAICollapsedRail({
           onFocus={onPreload}
           aria-label={t.expandSidebar}
         >
-          AI
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M4 5h16v11H9l-5 4z" />
+          </svg>
+          <span>{t.tutorTitle}</span>
         </button>
       </div>
     </aside>
   );
+}
+
+const MAX_LABELLED_STEPS = 10;
+const TUTOR_PANEL_OPEN_QUERY = "(min-width: 1280px)";
+
+function stepLabel(block: CourseBlock, t: ReturnType<typeof useT>["course"]) {
+  const role = block.pedagogicalRole;
+  return role ? t.stepRoles[role] : t.stepTypes[block.type] ?? block.type;
 }
 
 export function CourseDetailClient({
@@ -375,11 +388,15 @@ export function CourseDetailClient({
   initialLessonId = null,
   initialLessonJobs = [],
   copilotEnabled,
+  lessonConcepts = {},
+  player = null,
 }: {
   initialCourse: Course;
   initialLessonId?: string | null;
   initialLessonJobs?: LessonGenerationJobSummary[];
   copilotEnabled: boolean;
+  lessonConcepts?: Record<string, LessonConceptView[]>;
+  player?: LessonPlayerSummary | null;
 }) {
   const t = useT().course;
   const router = useRouter();
@@ -395,6 +412,17 @@ export function CourseDetailClient({
   const [aiPanelLoaded, setAiPanelLoaded] = useState(false);
   const [sidebarWidth, setSidebarWidth] = useState(DEFAULT_SIDEBAR_WIDTH);
   const activeBlockRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    // The tutor panel is part of the desktop lesson layout; narrow screens keep
+    // the collapsed rail so the reader card stays usable.
+    if (!window.matchMedia(TUTOR_PANEL_OPEN_QUERY).matches) return;
+    const frame = window.requestAnimationFrame(() => {
+      setAiPanelLoaded(true);
+      setSidebarCollapsed(false);
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
 
   useEffect(() => {
     const saved = window.localStorage.getItem(SIDEBAR_WIDTH_KEY);
@@ -634,6 +662,9 @@ export function CourseDetailClient({
         : t.continueLabel
     : t.continueLabel;
   const lessonTitle = currentLesson?.title ?? course.title;
+  const currentLessonNumber = currentLesson
+    ? [...course.lessons].sort((a, b) => a.sortKey - b.sortKey).findIndex((lesson) => lesson.id === currentLesson.id) + 1
+    : 0;
 
   function openAIPanel() {
     preloadCourseAIPanel();
@@ -651,23 +682,38 @@ export function CourseDetailClient({
       className={`course-detail-layout${sidebarCollapsed ? " sidebar-collapsed" : ""}`}
       style={sidebarCollapsed ? undefined : { ["--course-sidebar-width" as string]: `${sidebarWidth}px` }}
     >
+      <CourseLessonAside course={course} concepts={currentLessonId ? lessonConcepts[currentLessonId] ?? [] : []} player={player} />
       <div className="course-detail-main">
         <div className="course-reader">
           <header className="course-reader-topbar">
             <Link href={`/course/${course.id}/outline`} className="course-reader-close" aria-label={t.readerClose}>
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
                 <path d="M5 5l14 14" />
                 <path d="M19 5L5 19" />
               </svg>
             </Link>
-            <h1>{lessonTitle}</h1>
+            <div className="course-reader-heading">
+              {currentLessonNumber > 0 ? <span>{msg(t.lessonNumber, { number: currentLessonNumber })}</span> : null}
+              <h1>{lessonTitle}</h1>
+            </div>
             <div className="course-reader-progress" aria-label={t.lessonStatus}>
-              <span><i style={{ width: `${readerProgress}%` }} /></span>
               <strong>{currentStep}/{totalSteps}</strong>
               {currentLessonJobActive && totalSteps > 0 ? (
                 <em className="course-reader-streaming" aria-live="polite">{t.generatingLesson}</em>
               ) : null}
             </div>
+            {totalSteps > 0 ? (
+              <ol className="course-reader-steps" aria-hidden="true">
+                {blocks.map((block, index) => (
+                  <li key={block.id} className={index < currentStep ? "done" : undefined}>
+                    <i />
+                    {totalSteps <= MAX_LABELLED_STEPS ? (
+                      <span className={index === currentStepIndex ? "current" : undefined}>{stepLabel(block, t)}</span>
+                    ) : null}
+                  </li>
+                ))}
+              </ol>
+            ) : null}
           </header>
 
           <main className="course-reader-stage" aria-live="polite">

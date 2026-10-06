@@ -78,7 +78,7 @@ function main() {
   assert(!courseAi.includes("t.noSelectedBlock"), "Course Tutor no longer renders a visible no-selection context state");
   assert(courseAi.includes("buildCourseContext(course, visibleBlocks, selectedBlock, selectedTextContext)"), "Course Tutor still receives hidden selected-block and selected-text context");
   assert(courseAi.includes("<strong>{t.tutorTitle}</strong>") && dictionaries.en.course.tutorTitle === "Course Tutor", "Course Tutor is the visible sidebar title");
-  assert(courseAi.includes("placeholder={t.composerPlaceholder}") && dictionaries.zh.course.composerPlaceholder === "Ask More, Know You More", "Course Tutor input uses the updated placeholder");
+  assert(courseAi.includes("placeholder={t.composerPlaceholder}") && dictionaries.zh.course.composerPlaceholder === "关于这一步的问题…", "Course Tutor input uses the updated placeholder");
   assert(!courseAi.includes("Course Copilot"), "Course Tutor code has no old visible Course Copilot copy");
   assert(!courseAi.includes("Ask about this course"), "Course Tutor sidebar does not repeat the old generic subtitle");
   assert(!courseAi.includes("text block · 点击下方建议或直接提问"), "Course Tutor context strip omits block-type helper copy");
@@ -112,10 +112,11 @@ function main() {
   assert(styles.includes(".app-shell.course-app-shell"), "course lesson shell removes the global nav column");
   assert(styles.includes("width: calc(100vw - var(--course-sidebar-width))"), "course workspace width only reserves space for the Tutor sidebar");
   assert(styles.includes(".course-reader {\n  width: 100%;\n  height: 100vh;"), "course detail renders as a full-height reader");
-  assert(styles.includes("grid-template-rows: 96px minmax(0, 1fr) 118px"), "course reader reserves top progress, content, and bottom controls");
+  assert(styles.includes("grid-template-rows: auto minmax(0, 1fr) auto"), "course reader reserves top progress, content, and bottom controls");
+  assert(styles.includes("width: min(880px, 100%);\n  height: min(600px, 100%);"), "reader card keeps a fixed size so long content scrolls inside it");
   assert(styles.includes(".course-reader-card .course-block"), "reader card keeps BlockRenderer responsible for the block body");
   assert(styles.includes("@keyframes course-reader-card-in"), "reader step changes have a restrained entrance transition");
-  assert(styles.includes("padding: clamp(28px, 3.4vw, 48px)"), "reader content starts at a normal distance from the card edge");
+  assert(styles.includes("padding: clamp(28px, 3.4vw, 44px) clamp(28px, 4vw, 48px)"), "reader content starts at a normal distance from the card edge");
   assert(!styles.includes("radial-gradient(circle at 44% 100%"), "reader controls share the same continuous background as the stage");
   assert(styles.includes(".course-ai-sidebar.collapsed .course-ai-collapse"), "collapsed AI rail has dedicated affordance styling");
   assert(styles.includes("cursor: pointer;"), "collapsed AI rail signals that the whole strip can be opened");

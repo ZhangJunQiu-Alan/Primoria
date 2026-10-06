@@ -23,18 +23,28 @@ type NavTab = {
   description: string;
   href: string;
   icon: React.ReactNode;
-  disabled?: boolean;
+};
+
+const ICON_PROPS = {
+  width: 18,
+  height: 18,
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 1.6,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
 };
 
 const TABS: NavTab[] = [
   {
     id: "messages",
-    label: "Messages",
+    label: "Tutor",
     description: "Tutor messages and generated widgets.",
     href: "/",
     icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+      <svg {...ICON_PROPS}>
+        <path d="M4 5h16v11H9l-5 4z" />
       </svg>
     ),
   },
@@ -44,23 +54,30 @@ const TABS: NavTab[] = [
     description: "Courses saved by the tutor.",
     href: "/library",
     icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+      <svg {...ICON_PROPS}>
+        <path d="M5 4h4v16H5zM10 4h4v16h-4zM15.5 4.5l3.8 1-3.6 14.5-3.8-1z" />
       </svg>
     ),
   },
   {
-    id: "workspace",
-    label: "Workspace",
-    description: "Workspace tools are coming soon.",
-    href: "#",
-    disabled: true,
+    id: "stats",
+    label: "Stats",
+    description: "Learning statistics.",
+    href: "/stats",
     icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="4" width="18" height="16" rx="2" />
-        <path d="M3 9h18" />
-        <path d="M9 4v16" />
+      <svg {...ICON_PROPS}>
+        <path d="M4 20V10M10 20V4M16 20v-7M22 20H2" />
+      </svg>
+    ),
+  },
+  {
+    id: "weekly",
+    label: "Weekly report",
+    description: "This week in review.",
+    href: "/weekly-report",
+    icon: (
+      <svg {...ICON_PROPS}>
+        <path d="M4 4h16v16H4zM4 9h16M9 9v11" />
       </svg>
     ),
   },
@@ -190,10 +207,11 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
 
   const accountInitial = (user?.displayName ?? user?.email ?? "U").slice(0, 1).toUpperCase();
   const accountName = user?.displayName ?? t.nav.learner;
-  const tabCopy: Record<string, { label: string; description: string }> = {
-    messages: { label: t.nav.tutor, description: t.nav.tutorDescription },
-    library: { label: t.nav.library, description: t.nav.libraryDescription },
-    workspace: { label: t.nav.workspace, description: t.nav.workspaceDescription },
+  const tabCopy: Record<string, string> = {
+    messages: t.nav.tutor,
+    library: t.nav.library,
+    stats: t.nav.stats,
+    weekly: t.nav.weeklyReport,
   };
 
   function startNewChat() {
@@ -210,167 +228,141 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
     router.push("/");
   }
 
-  function renderTab(tab: NavTab, variant: "rail" | "sidebar") {
-    const copy = tabCopy[tab.id] ?? { label: tab.label, description: tab.description };
-    const active = isActive(pathname, tab.href);
-    const className = `nav-tab${active ? " active" : ""}${tab.disabled ? " disabled" : ""}${variant === "sidebar" ? " nav-sidebar-tab" : ""}`;
-    const inner = (
-      <>
-        <span className="nav-tab-icon" aria-hidden="true">{tab.icon}</span>
-        <span className="nav-tab-copy">
-          <strong>{copy.label}</strong>
-          <span>{copy.description}</span>
-        </span>
-      </>
-    );
-    if (tab.disabled) {
-      return (
-        <button
-          key={tab.id}
-          type="button"
-          className={className}
-          disabled
-          title={`${copy.label} · ${t.nav.comingSoon}`}
-        >
-          {inner}
-        </button>
-      );
-    }
-    return (
-      <Link key={tab.id} href={tab.href} className={className} title={copy.label} onClick={() => {
-        setAccountOpen(false);
-        if (variant === "sidebar") setSidebarOpen(false);
-      }}>
-        {inner}
-      </Link>
-    );
-  }
-
   return (
     <aside className="nav-rail" aria-label={t.nav.aria}>
-      <button
-        type="button"
-        className="nav-brand nav-brand-trigger"
-        aria-label={sidebarOpen ? t.nav.closeSidebar : t.nav.openSidebar}
-        aria-expanded={sidebarOpen}
-        aria-controls="primary-sidebar"
-        ref={sidebarTriggerRef}
-        onClick={() => setSidebarOpen((open) => !open)}
-      >
-        <div className="brand-symbol" aria-hidden="true" />
-        <span className="nav-brand-text">Primoria</span>
-      </button>
-      <nav className="nav-tabs" aria-label={t.nav.aria}>
-        {TABS.map((tab) => renderTab(tab, "rail"))}
-      </nav>
-      <div className="nav-account">
-        {authEnabled === null ? (
-          <span className="nav-account-hint">{t.nav.checkingWorkspace}</span>
-        ) : !authEnabled ? (
-          <span className="nav-account-hint">{t.nav.localJsonMode}</span>
-        ) : user ? (
-          <div className="nav-account-user" ref={accountRootRef}>
-            <button
-              type="button"
-              className="nav-account-trigger"
-              aria-label={`${t.nav.accountMenu}: ${accountName}`}
-              aria-expanded={accountOpen}
-              aria-controls="nav-account-menu"
-              onClick={() => setAccountOpen((current) => !current)}
-            >
-              <span className="nav-account-avatar" aria-hidden="true">{accountInitial}</span>
-            </button>
-            {accountOpen ? (
-              <div id="nav-account-menu" className="nav-account-menu" role="menu">
-                <Link className="nav-account-menu-item" href="/profile" role="menuitem" onClick={() => setAccountOpen(false)}>
-                  <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <circle cx="12" cy="8" r="4" />
-                    <path d="M4 21a8 8 0 0 1 16 0" />
-                  </svg>
-                  <span>{t.common.profile}</span>
-                </Link>
-                <Link className="nav-account-menu-item" href="/settings" role="menuitem" onClick={() => setAccountOpen(false)}>
-                  <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <circle cx="12" cy="12" r="3" />
-                    <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.6-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1A2 2 0 1 1 7.1 4.2l.1.1a1.7 1.7 0 0 0 1.9.3h.1a1.7 1.7 0 0 0 1-1.6V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.6h.1a1.7 1.7 0 0 0 1.9-.3l.1-.1A2 2 0 1 1 20.1 7l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.6 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z" />
-                  </svg>
-                  <span>{t.common.settings}</span>
-                </Link>
-                <button
-                  type="button"
-                  className="nav-account-menu-item danger nav-account-signout"
-                  onClick={signOut}
-                  role="menuitem"
-                  disabled={signingOut}
-                >
-                  <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M10 17 15 12l-5-5" />
-                    <path d="M15 12H3" />
-                    <path d="M14 4h5a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-5" />
-                  </svg>
-                  {signingOut ? t.nav.signingOut : t.common.signOut}
-                </button>
-              </div>
-            ) : null}
-          </div>
-        ) : (
-          <>
-            <Link className="nav-account-link" href="/auth/sign-in">{t.common.signIn}</Link>
-            <Link className="nav-account-link primary" href="/auth/sign-up">{t.common.signUp}</Link>
-          </>
-        )}
+      <div className="nav-rail-head">
+        <Link href="/" className="nav-brand" onClick={() => setSidebarOpen(false)}>Primoria</Link>
+        <button
+          type="button"
+          className="nav-menu-toggle"
+          aria-label={sidebarOpen ? t.nav.closeSidebar : t.nav.openSidebar}
+          aria-expanded={sidebarOpen}
+          aria-controls="primary-sidebar"
+          ref={sidebarTriggerRef}
+          onClick={() => setSidebarOpen((open) => !open)}
+        >
+          <svg {...ICON_PROPS} aria-hidden="true">
+            {sidebarOpen ? <path d="M6 6l12 12M18 6 6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
+          </svg>
+        </button>
       </div>
-      {sidebarOpen ? (
-        <div id="primary-sidebar" className="nav-sidebar-panel" role="dialog" aria-modal="false" aria-label={t.nav.aria} ref={sidebarRef}>
-          <header className="nav-sidebar-head">
-            <div className="nav-sidebar-brand">
-              <div className="brand-symbol" aria-hidden="true" />
-              <strong>Primoria</strong>
+
+      <div id="primary-sidebar" className={`nav-panel${sidebarOpen ? " open" : ""}`} ref={sidebarRef}>
+        <button type="button" className="nav-new-chat" onClick={startNewChat}>
+          <svg {...ICON_PROPS} strokeWidth={2} aria-hidden="true">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+          <span>{t.nav.newChat}</span>
+        </button>
+
+        <nav className="nav-tabs" aria-label={t.nav.aria}>
+          {TABS.map((tab) => {
+            const active = isActive(pathname, tab.href);
+            return (
+              <Link
+                key={tab.id}
+                href={tab.href}
+                className={`nav-tab${active ? " active" : ""}`}
+                aria-current={active ? "page" : undefined}
+                onClick={() => {
+                  setAccountOpen(false);
+                  setSidebarOpen(false);
+                }}
+              >
+                <span className="nav-tab-icon" aria-hidden="true">{tab.icon}</span>
+                <span>{tabCopy[tab.id] ?? tab.label}</span>
+              </Link>
+            );
+          })}
+        </nav>
+
+        <section className="nav-sidebar-section" aria-label={t.nav.recentChats}>
+          <span className="nav-sidebar-section-title">{t.nav.recentChats}</span>
+          {sessions.length > 0 ? (
+            <div className="nav-sidebar-thread-list">
+              {sessions.map((session) => {
+                const active = session.id === currentThreadId && pathname === "/";
+                return (
+                  <button
+                    key={session.id}
+                    type="button"
+                    className={`nav-sidebar-thread${active ? " active" : ""}`}
+                    aria-current={active ? "true" : undefined}
+                    title={session.title || t.tutor.tutorChat}
+                    onClick={() => selectThread(session.id)}
+                  >
+                    {session.title || t.tutor.tutorChat}
+                  </button>
+                );
+              })}
             </div>
-            <button type="button" className="nav-sidebar-close" onClick={() => setSidebarOpen(false)} aria-label={t.nav.closeSidebar}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="m15 18-6-6 6-6" />
-              </svg>
-            </button>
-          </header>
+          ) : (
+            <p className="nav-sidebar-empty">{t.tutor.noRecent}</p>
+          )}
+        </section>
 
-          <button type="button" className="nav-sidebar-new-chat" onClick={startNewChat}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
-              <path d="M12 5v14" />
-              <path d="M5 12h14" />
-            </svg>
-            <span>{t.nav.newChat}</span>
-          </button>
-
-          <nav className="nav-sidebar-tabs" aria-label={t.nav.aria}>
-            {TABS.map((tab) => renderTab(tab, "sidebar"))}
-          </nav>
-
-          <section className="nav-sidebar-section" aria-label={t.tutor.recent}>
-            <span className="nav-sidebar-section-title">{t.tutor.recent}</span>
-            {sessions.length > 0 ? (
-              <div className="nav-sidebar-thread-list">
-                {sessions.map((session) => {
-                  const active = session.id === currentThreadId;
-                  return (
-                    <button
-                      key={session.id}
-                      type="button"
-                      className={`nav-sidebar-thread${active ? " active" : ""}`}
-                      onClick={() => selectThread(session.id)}
-                    >
-                      <strong>{session.title || t.tutor.tutorChat}</strong>
-                      <span>{session.messageCount} {t.tutor.messages} · {active ? t.tutor.live : new Date(session.updatedAt).toLocaleDateString()}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            ) : (
-              <p className="nav-sidebar-empty">{t.tutor.noRecent}</p>
-            )}
-          </section>
+        <div className="nav-account">
+          {authEnabled === null ? (
+            <span className="nav-account-hint">{t.nav.checkingWorkspace}</span>
+          ) : !authEnabled ? (
+            <span className="nav-account-hint">{t.nav.localJsonMode}</span>
+          ) : user ? (
+            <div className="nav-account-user" ref={accountRootRef}>
+              <button
+                type="button"
+                className="nav-account-trigger"
+                aria-label={`${t.nav.accountMenu}: ${accountName}`}
+                aria-expanded={accountOpen}
+                aria-controls="nav-account-menu"
+                onClick={() => setAccountOpen((current) => !current)}
+              >
+                <span className="nav-account-avatar" aria-hidden="true">{accountInitial}</span>
+                <span className="nav-account-name">{accountName}</span>
+                <svg {...ICON_PROPS} width={14} height={14} aria-hidden="true">
+                  <path d="M7 15l5-5 5 5" />
+                </svg>
+              </button>
+              {accountOpen ? (
+                <div id="nav-account-menu" className="nav-account-menu" role="menu">
+                  <Link className="nav-account-menu-item" href="/profile" role="menuitem" onClick={() => setAccountOpen(false)}>
+                    <svg {...ICON_PROPS} aria-hidden="true">
+                      <circle cx="12" cy="8" r="4" />
+                      <path d="M4 21a8 8 0 0 1 16 0" />
+                    </svg>
+                    <span>{t.common.profile}</span>
+                  </Link>
+                  <Link className="nav-account-menu-item" href="/settings" role="menuitem" onClick={() => setAccountOpen(false)}>
+                    <svg {...ICON_PROPS} aria-hidden="true">
+                      <circle cx="12" cy="12" r="3" />
+                      <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.6-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1A2 2 0 1 1 7.1 4.2l.1.1a1.7 1.7 0 0 0 1.9.3h.1a1.7 1.7 0 0 0 1-1.6V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.6h.1a1.7 1.7 0 0 0 1.9-.3l.1-.1A2 2 0 1 1 20.1 7l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.6 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z" />
+                    </svg>
+                    <span>{t.common.settings}</span>
+                  </Link>
+                  <button
+                    type="button"
+                    className="nav-account-menu-item danger"
+                    onClick={signOut}
+                    role="menuitem"
+                    disabled={signingOut}
+                  >
+                    <svg {...ICON_PROPS} aria-hidden="true">
+                      <path d="M10 17 15 12l-5-5" />
+                      <path d="M15 12H3" />
+                      <path d="M14 4h5a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-5" />
+                    </svg>
+                    {signingOut ? t.nav.signingOut : t.common.signOut}
+                  </button>
+                </div>
+              ) : null}
+            </div>
+          ) : (
+            <div className="nav-account-links">
+              <Link className="nav-account-link" href="/auth/sign-in">{t.common.signIn}</Link>
+              <Link className="nav-account-link primary" href="/auth/sign-up">{t.common.signUp}</Link>
+            </div>
+          )}
         </div>
-      ) : null}
+      </div>
     </aside>
   );
 }
