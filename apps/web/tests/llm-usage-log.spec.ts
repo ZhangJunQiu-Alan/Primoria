@@ -56,13 +56,17 @@ describe("llm usage logging", () => {
     console.log = (...args: unknown[]) => { lines.push(args.map(String).join(" ")); };
     try {
       const model = createTutorModel({ model: "deepseek-chat" });
-      const result = await model.invoke([{ role: "user", content: "hi" }]);
-      expect(String(result.content)).toBe("ok");
+      const stream = await model.stream([{ role: "user", content: "hi" }]);
+      let content = "";
+      for await (const chunk of stream) content += String(chunk.content);
+      expect(content).toBe("ok");
     } finally {
       console.log = original;
     }
 
-    const usageLine = lines.find((line) => line.includes('"llm usage"'));
+    const usageLines = lines.filter((line) => line.includes('"llm usage"'));
+    expect(usageLines).toHaveLength(1);
+    const usageLine = usageLines[0];
     expect(usageLine, `usage line missing in: ${JSON.stringify(lines)}`).toBeDefined();
     const parsed = JSON.parse(usageLine!) as Record<string, unknown>;
     expect(parsed.source).toBe("tutor-model");

@@ -580,8 +580,8 @@ function CourseRow({
     <tr className={jobActive ? "library-row-generating" : jobFailed ? "library-row-failed" : undefined}>
       <td data-label={t.library.name}>
         <div className="library-course-name">
-          <CourseThumb title={course.title} pending={jobActive} />
           <div className="library-course-copy">
+            {course.topic && course.topic !== course.title ? <span className="library-course-topic">{course.topic}</span> : null}
             <Link href={`/course/${course.id}`} className="library-course-title">{course.title}</Link>
           </div>
         </div>
@@ -799,7 +799,6 @@ function JobRow({ job }: { job: LessonGenerationJobSummary }) {
     <tr className={jobActive ? "library-row-generating" : jobFailed ? "library-row-failed" : undefined}>
       <td data-label={t.library.name}>
         <div className="library-course-name">
-          <CourseThumb title={t.library.buildingCourse} pending={jobActive} />
           <div className="library-course-copy">
             <Link href={`/course/${job.courseId}`} className="library-course-title">{t.library.buildingCourse}</Link>
           </div>
@@ -854,7 +853,6 @@ function PendingBuildRow({ build }: { build: PendingCourseBuild }) {
     <tr className={copy.failed ? "library-row-failed" : "library-row-generating"}>
       <td data-label={t.library.name}>
         <div className="library-course-name">
-          <CourseThumb title={title} pending={!copy.failed} />
           <div className="library-course-copy">
             <Link href={href} className="library-course-title">{title}</Link>
           </div>
@@ -1011,15 +1009,25 @@ function StatusPill({ tone, children }: { tone: "idle" | "active" | "done" | "pl
   return <span className={`library-status-pill library-status-${tone}`}>{children}</span>;
 }
 
+const MAX_PROGRESS_SEGMENTS = 16;
+
 function ProgressMeter({ completed, total, muted = false }: { completed: number; total: number; muted?: boolean }) {
   const safeTotal = Math.max(total, 1);
   const width = Math.min(100, Math.round((completed / safeTotal) * 100));
   return (
     <div className={`library-progress${muted ? " muted" : ""}`}>
+      {total > 0 && total <= MAX_PROGRESS_SEGMENTS ? (
+        <div className="library-progress-segments" aria-hidden="true">
+          {Array.from({ length: total }, (_, index) => (
+            <i key={index} className={index < completed ? "done" : undefined} />
+          ))}
+        </div>
+      ) : (
+        <div aria-hidden="true">
+          <i style={{ width: `${width}%` }} />
+        </div>
+      )}
       <span>{completed}/{total}</span>
-      <div aria-hidden="true">
-        <i style={{ width: `${width}%` }} />
-      </div>
     </div>
   );
 }

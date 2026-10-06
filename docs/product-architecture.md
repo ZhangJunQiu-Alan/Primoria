@@ -184,6 +184,11 @@ Drizzle owns App/Auth/Course schema, versioned Web SQL owns KG/pgvector, and
 `apps/agent/db/migrations` owns `agent_runtime`. `pnpm db:bootstrap` applies all
 three owners idempotently; KG content and embeddings are imported separately.
 
+The selected database is managed Supabase PostgreSQL; use
+`docker-compose.supabase.yml` and [the managed deployment runbook](supabase-deployment.md).
+Application services remain server-hosted and authentication remains Web-owned.
+The following self-hosted topology is an alternative.
+
 Production is a single-server Docker Compose stack containing PostgreSQL,
 one-shot migration jobs, Web, Agent, three workers, and Caddy. Only Caddy is
 public. `agent-migrate` initializes the LangGraph checkpoint schema before Agent

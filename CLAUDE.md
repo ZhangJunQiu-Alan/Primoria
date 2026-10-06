@@ -256,7 +256,7 @@ Public routes are defined once in `apps/web/src/lib/auth/routes.ts` and shared b
 
 ORM: Drizzle + `postgres` driver. Drizzle owns App/Auth/Course schema; versioned Web SQL owns KG/pgvector; `apps/agent/db/migrations/` owns only `agent_runtime`. `pnpm db:bootstrap` applies all three owners idempotently. KG source data and embeddings are imported separately with `pnpm db:initialize:kg`. Core App tables include users, identities, sessions, rate limits, courses, lessons, lesson/progress/extractor jobs, `profile_fact_intake_jobs`, learning events, mastery, learner profiles/facts, `player_progress`, `xp_awards`, `daily_quest_completions`, `achievement_unlocks`, chat messages, media assets, and settings.
 
-Local development uses the Docker Compose PostgreSQL service (`pgvector/pgvector:pg16`) bound to `127.0.0.1:5432`. The old `127.0.0.1:15432` Tencent Cloud SSH tunnel is a remote-database fallback only, not the default local path. Supabase runtime helpers have been removed; do not add new Supabase URL/anon-key paths unless the database/auth strategy is intentionally changed.
+The selected shared database is managed Supabase PostgreSQL in the existing Primoria Singapore project. Root commands load the ignored `.env.supabase` through `scripts/with-database-env.mjs`, with separate migration/runtime roles and verified TLS. Supabase hosts the database only; authentication remains Web-owned and no browser Supabase SDK/anon key is used. Explicit environment connections take priority. Docker PostgreSQL on `127.0.0.1:5432` remains the offline and isolated regression option. See `docs/supabase-deployment.md`.
 
 ### Model provider
 
@@ -271,7 +271,7 @@ KG embeddings are configured separately through `KG_EMBEDDING_PROVIDER`. Current
 
 ### Deployment
 
-Production is a single-server Docker Compose stack (`docker-compose.prod.yml`): postgres, App/KG and Agent-runtime migration jobs, web, the self-hosted Node/AG-UI agent, three workers, and Caddy. `agent-migrate` initializes the LangGraph checkpoint schema before Agent startup. Web waits for Agent readiness; Agent shutdown drains active runs. Only Caddy is public; port 2024 must never be published. Full runbook: README "Deployment (Single Server)"; credential timing, preflight gates, rollback, and commit/push handoff: `docs/deployment-preflight.md`. Do not request deployment credentials, deploy, commit, or push until the user explicitly asks.
+The selected deployment topology is `docker-compose.supabase.yml`: managed Supabase PostgreSQL plus an application server running migration jobs, web, the self-hosted Node/AG-UI agent, three workers, and Caddy. `docker-compose.prod.yml` remains the explicit self-hosted database alternative. `agent-migrate` initializes the LangGraph checkpoint schema before Agent startup. Web waits for Agent readiness; Agent shutdown drains active runs. Only Caddy is public; port 2024 must never be published. Full runbook: README "Deployment (Single Server)"; credential timing, preflight gates, rollback, and commit/push handoff: `docs/deployment-preflight.md`. Do not request deployment credentials, deploy, commit, or push until the user explicitly asks.
 
 The internal visualization analytics page is `/internal/visualization-analytics`.
 Production access fails closed unless `PRIMORIA_ENABLE_INTERNAL_ANALYTICS=1`
