@@ -113,7 +113,13 @@ ANTHROPIC_MODEL=your-model
 
 Primoria persistence is Postgres-first. Courses, lessons, auth/session data, chat history, lesson jobs, learning events, concept mastery, learner facts, personal progression, achievements, and media assets are stored in Postgres.
 
-Local development defaults to the Docker Compose database in this repository.
+The selected shared database is Supabase PostgreSQL. See
+[`docs/supabase-deployment.md`](docs/supabase-deployment.md) for connection,
+role, TLS and deployment instructions. With the private `.env.supabase` file,
+root `pnpm dev`, `pnpm start` and database commands select that database.
+Explicit environment connections still override this for isolated tests.
+
+Offline local development can use the Docker Compose database in this repository.
 It runs `pgvector/pgvector:pg16`, creates the `primoria` database, creates the
 `primoria_app` user, and binds Postgres to `127.0.0.1:5432`. `pnpm db:bootstrap`
 enables the `vector` extension and installs all schemas.
@@ -472,6 +478,10 @@ prerequisites, verification records, and external release blockers are in
 [`docs/integration-regression-testing.md`](docs/integration-regression-testing.md).
 
 ## Deployment (Single Server)
+
+For the selected Supabase database, use `docker-compose.supabase.yml` and
+[`docs/supabase-deployment.md`](docs/supabase-deployment.md). The instructions
+below describe the self-hosted PostgreSQL alternative.
 
 Deployment credentials, preflight gates, privilege verification, rollback, and
 the deferred commit/push handoff are tracked in

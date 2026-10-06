@@ -10,11 +10,12 @@ describe("database bootstrap and production Docker contract", () => {
     const rootPackage = JSON.parse(readRepoFile("package.json")) as { scripts: Record<string, string> };
     const webPackage = JSON.parse(readRepoFile("apps/web/package.json")) as { scripts: Record<string, string> };
 
-    expect(rootPackage.scripts["db:bootstrap"]).toContain("@primoria/web db:bootstrap");
+    expect(rootPackage.scripts["db:bootstrap"]).toContain("with-database-env.mjs migration");
+    expect(rootPackage.scripts["db:bootstrap:schemas"]).toContain("@primoria/web db:bootstrap");
     expect(webPackage.scripts["db:bootstrap"]).toBe("tsx scripts/bootstrap-database.ts");
     expect(webPackage.scripts["db:migrate:auth"]).toBeUndefined();
     expect(webPackage.scripts["db:migrate:courses"]).toBeUndefined();
-    expect(existsSync(resolve(repoRoot, "supabase"))).toBe(false);
+    expect(existsSync(resolve(repoRoot, "supabase/migrations"))).toBe(false);
   });
 
   it("includes KG migrations in the image and runs bootstrap before services", () => {

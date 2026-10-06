@@ -177,7 +177,7 @@ async function rawAnthropicJson(
 export async function invokeJson(args: InvokeJsonArgs): Promise<unknown> {
   const { system, user, schema, schemaName = "result", timeoutMs = 90_000 } = args;
   const settings = resolveProviderSettings(args.settings ?? {});
-  const model = createTutorModel(args.settings ?? {}, { maxTokens: args.maxTokens });
+  const model = createTutorModel(args.settings ?? {}, { streaming: false, maxTokens: args.maxTokens });
 
   const deadlineAt = Date.now() + timeoutMs;
   const controller = new AbortController();
