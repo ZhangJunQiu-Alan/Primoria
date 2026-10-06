@@ -1,0 +1,10 @@
+{
+  "name": "@primoria/fast-glob-tinyglobby",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Promise-only stand-in for fast-glob, backed by tinyglobby, so deepagents does not pull in the unpatched braces package.",
+  "main": "index.js",
+  "dependencies": {
+    "tinyglobby": "0.2.17"
+  }
+}
