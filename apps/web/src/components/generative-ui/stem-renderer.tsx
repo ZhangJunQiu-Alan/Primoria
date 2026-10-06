@@ -25,6 +25,9 @@ export function StemRenderer({
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const shellSubjectRef = useRef<string | null>(null);
   const codeExecutedRef = useRef(false);
+  // Code is delivered by postMessage, so it must wait for the shell's
+  // stem-ready; a message posted earlier lands on the pre-srcdoc window.
+  const shellReadyRef = useRef(false);
   const [height, setHeight] = useState(500);
   const [error, setError] = useState<{ message: string; stack: string; key: string } | null>(null);
 
@@ -39,7 +42,7 @@ export function StemRenderer({
 
   const executeCode = useCallback(() => {
     const iframe = iframeRef.current;
-    if (!iframe?.contentWindow || codeExecutedRef.current) return;
+    if (!iframe?.contentWindow || !shellReadyRef.current || codeExecutedRef.current) return;
     if (!validation.ok) {
       setError({ message: validation.reason, stack: "", key: runKey });
       return;
@@ -53,7 +56,10 @@ export function StemRenderer({
       if (!iframeRef.current || e.source !== iframeRef.current.contentWindow) return;
       const { type } = e.data ?? {};
 
-      if (type === "stem-ready" && isComplete) executeCode();
+      if (type === "stem-ready") {
+        shellReadyRef.current = true;
+        if (isComplete) executeCode();
+      }
 
       if (type === "widget-resize" && typeof e.data.height === "number") {
         setHeight(Math.max(200, Math.min(e.data.height, 2000)));
@@ -80,6 +86,7 @@ export function StemRenderer({
     if (!isComplete || !iframe) return;
     if (shellSubjectRef.current !== subject) {
       shellSubjectRef.current = subject;
+      shellReadyRef.current = false;
       codeExecutedRef.current = false;
       iframe.srcdoc = assembleStemIframeShell(subject, title);
       return;
