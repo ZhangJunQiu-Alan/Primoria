@@ -21,6 +21,8 @@ COPY apps/web/package.json ./apps/web/package.json
 COPY apps/agent/package.json ./apps/agent/package.json
 COPY packages/contracts/package.json ./packages/contracts/package.json
 COPY packages/memory/package.json ./packages/memory/package.json
+COPY packages/micromatch-picomatch/package.json ./packages/micromatch-picomatch/package.json
+COPY packages/fast-glob-tinyglobby/package.json ./packages/fast-glob-tinyglobby/package.json
 RUN pnpm install --frozen-lockfile
 COPY . .
 

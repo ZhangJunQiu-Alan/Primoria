@@ -1,0 +1,10 @@
+{
+  "name": "@primoria/micromatch-picomatch",
+  "version": "0.1.0",
+  "private": true,
+  "description": "isMatch-only stand-in for micromatch, backed by picomatch, so deepagents does not pull in the unpatched braces package.",
+  "main": "index.js",
+  "dependencies": {
+    "picomatch": "2.3.2"
+  }
+}
