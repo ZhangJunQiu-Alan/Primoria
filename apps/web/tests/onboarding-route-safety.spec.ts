@@ -48,6 +48,11 @@ vi.mock("@/lib/auth/guard", () => ({
   requireAuthUser: mockState.requireAuthUser,
 }));
 
+vi.mock("@/lib/learner-facts/store", () => ({
+  listActiveFacts: vi.fn().mockResolvedValue([]),
+  syncOnboardingFact: vi.fn().mockResolvedValue(undefined),
+}));
+
 vi.mock("@/lib/learner-profile/onboarding-course", () => ({
   buildOnboardingCourse: mockState.buildOnboardingCourse,
 }));

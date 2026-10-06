@@ -9,6 +9,8 @@ test-results
 !.env.production.example
 **/*.log
 .DS_Store
+.cache
+supabase/.temp
 temple
 e2e
 docker-compose.yml

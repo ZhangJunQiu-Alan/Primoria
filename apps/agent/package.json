@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "if [ -f .env ]; then set -a; . ./.env; set +a; fi; pnpm db:migrate && node --watch src/server.mjs",
-    "start": "if [ -f .env ]; then set -a; . ./.env; set +a; fi; node src/server.mjs",
+    "dev": "if [ -f .env ]; then node --env-file=.env --watch src/server.mjs; else node --watch src/server.mjs; fi",
+    "start": "if [ -f .env ]; then node --env-file=.env src/server.mjs; else node src/server.mjs; fi",
     "db:migrate": "node src/runtime/migrate.mjs",
     "runs:admin": "node src/runtime/admin.mjs",
     "typecheck": "tsc --noEmit",

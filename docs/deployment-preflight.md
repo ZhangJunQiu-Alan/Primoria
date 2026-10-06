@@ -1,5 +1,12 @@
 # Production Deployment Preflight
 
+For the selected managed Supabase database topology, follow
+[`supabase-deployment.md`](supabase-deployment.md) and
+`docker-compose.supabase.yml`. Database provisioning, roles, credentials and
+backup steps below describe the self-hosted alternative; they are not cloud
+verification evidence. Application health, auth, TLS and release gates still
+apply to both topologies.
+
 This is the release handoff for the single-server production stack. Do not put
 real credentials in this repository, commit messages, issue text, or logs.
 It reflects the modular-monolith-plus stack as of July 2026.

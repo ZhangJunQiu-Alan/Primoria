@@ -83,7 +83,7 @@ describe("invokeJson deadline contract", () => {
 
     await invokeJson({ system: "s", user: "u", maxTokens: 8192 });
 
-    expect(mockState.createTutorModel).toHaveBeenCalledWith({}, { maxTokens: 8192 });
+    expect(mockState.createTutorModel).toHaveBeenCalledWith({}, { streaming: false, maxTokens: 8192 });
   });
 
   it("gives the fallback only the remaining budget, not a fresh timeout", async () => {

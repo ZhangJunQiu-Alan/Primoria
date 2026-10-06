@@ -10,6 +10,41 @@ Scope owner: Primoria project owner
 
 ## Implementation status
 
+### 2026-09-29 managed database cutover
+
+The owner authorized resetting all old Primoria cloud test data. Supabase
+`rygafvlzzkvqhhenajzi` now contains the current KG/Drizzle/Agent schemas and all
+31 runtime graphs. The cloud connection uses separate migration/runtime roles,
+Session pooling and certificate-verified TLS. Runtime Data API grants remain
+closed. See [the deployment record](supabase-deployment.md).
+
+Verified against Supabase: signup/login/session persistence; Web DB/KG/vector,
+Agent and worker health; vector retrieval; Agent run persistence, cancellation,
+owner isolation and checkpoint round-trip; runtime DDL denied; anonymous Data
+API reads denied. Temporary verification accounts and Agent rows were removed.
+The connection/bootstrap regression has 12 passing assertions, including
+explicit test-DB precedence and migration-credential isolation. Production
+build/bundle budgets and managed Compose configuration validation passed.
+
+The first run exposed unmocked onboarding persistence and a streaming usage
+fixture that invoked the one-shot model API. Both fixtures now isolate their
+intended paths. The full fast suite passed (593 Web tests; 17 intentionally
+skipped), and the isolated database layer passed on its follow-up run.
+
+The browser onboarding gate exposed a real lesson-pipeline delay: one-shot
+JSON requests used streaming model invocation, whose SDK token estimation
+could stall after the response. Structured lesson requests now explicitly use
+non-streaming invocation; all seven deadline/cancellation tests pass, and the
+browser onboarding gate publishes and renders the generated first lesson.
+The final `pnpm test:regression` run passed with exit code 0 on September 29:
+typecheck/lint, Web and Agent tests, routing/catalog/KG validation, production
+build and bundle budgets, isolated database suites, and all five browser
+journeys (learning path, onboarding, Tutor runtime, sharing and widgets).
+The Web unit layer reports 593 passed and 17 intentionally skipped; guarded
+cases are not counted as passes. Test databases were removed by the runner.
+Public application deployment, managed backup/restore verification, mail and
+external release gates remain unverified.
+
 Implemented on 2026-08-27:
 
 - `pnpm test:regression:fast`, `pnpm test:regression:db`,

@@ -1,0 +1,247 @@
+# Application services with a managed Supabase PostgreSQL database.
+# Initialize roles/schema first: docs/supabase-deployment.md
+# docker compose --env-file .env --env-file .env.supabase -f docker-compose.supabase.yml up -d --build
+
+x-db-env: &db-env
+  DATABASE_URL: ${DATABASE_URL:?set Supabase runtime DATABASE_URL}
+  DATABASE_SSL: verify-full
+  NODE_EXTRA_CA_CERTS: /app/docker/certs/supabase-prod-ca-2021.crt
+
+x-migration-db-env: &migration-db-env
+  DATABASE_URL: ${DATABASE_MIGRATION_URL:?set Supabase DATABASE_MIGRATION_URL}
+  DATABASE_SSL: verify-full
+  NODE_EXTRA_CA_CERTS: /app/docker/certs/supabase-prod-ca-2021.crt
+
+x-runtime-hardening: &runtime-hardening
+  read_only: true
+  cap_drop: ["ALL"]
+  security_opt: ["no-new-privileges:true"]
+  init: true
+  tmpfs:
+    - /tmp:size=64m,mode=1777
+
+services:
+  # One-shot: applies both KG schema migrations and Drizzle app migrations
+  # before app processes start. Data/embedding seeds remain an explicit
+  # first-deploy operation and never block a normal release.
+  migrate:
+    build:
+      context: .
+      dockerfile: docker/app.Dockerfile
+      target: worker
+    image: primoria-worker
+    restart: "no"
+    environment:
+      <<: *migration-db-env
+      KG_EMBEDDING_PROVIDER: ${KG_EMBEDDING_PROVIDER:-minimax}
+      KG_EMBEDDING_BASE_URL: ${KG_EMBEDDING_BASE_URL:-}
+      KG_EMBEDDING_API_KEY: ${KG_EMBEDDING_API_KEY:-}
+      KG_EMBEDDING_MODEL_VERSION: ${KG_EMBEDDING_MODEL_VERSION:-}
+      OPENAI_EMBEDDING_MODEL: ${OPENAI_EMBEDDING_MODEL:-}
+      MINIMAX_API_KEY: ${MINIMAX_API_KEY:-}
+      MINIMAX_GROUP_ID: ${MINIMAX_GROUP_ID:-}
+      MINIMAX_EMBEDDING_BASE_URL: ${MINIMAX_EMBEDDING_BASE_URL:-}
+      MINIMAX_EMBEDDING_MODEL: ${MINIMAX_EMBEDDING_MODEL:-}
+    command: ["pnpm", "--filter", "@primoria/web", "db:bootstrap"]
+
+  web:
+    <<: *runtime-hardening
+    build:
+      context: .
+      dockerfile: docker/app.Dockerfile
+      target: web
+      args:
+        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-}
+        NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${NEXT_PUBLIC_TURNSTILE_SITE_KEY:-}
+    image: primoria-web
+    restart: unless-stopped
+    environment:
+      <<: *db-env
+      PRIMORIA_AGENT_URL: http://agent:2024
+      PRIMORIA_AGENT_INTERNAL_SECRET: ${PRIMORIA_AGENT_INTERNAL_SECRET:?set PRIMORIA_AGENT_INTERNAL_SECRET in .env}
+      DATABASE_POOL_MAX: "3"
+      APP_BASE_URL: ${APP_BASE_URL:?set APP_BASE_URL in .env}
+      KG_EMBEDDING_PROVIDER: ${KG_EMBEDDING_PROVIDER:-minimax}
+      KG_EMBEDDING_BASE_URL: ${KG_EMBEDDING_BASE_URL:-}
+      KG_EMBEDDING_API_KEY: ${KG_EMBEDDING_API_KEY:-}
+      KG_EMBEDDING_MODEL_VERSION: ${KG_EMBEDDING_MODEL_VERSION:-}
+      OPENAI_EMBEDDING_MODEL: ${OPENAI_EMBEDDING_MODEL:-}
+      MINIMAX_API_KEY: ${MINIMAX_API_KEY:-}
+      MINIMAX_GROUP_ID: ${MINIMAX_GROUP_ID:-}
+      MINIMAX_EMBEDDING_BASE_URL: ${MINIMAX_EMBEDDING_BASE_URL:-}
+      MINIMAX_EMBEDDING_MODEL: ${MINIMAX_EMBEDDING_MODEL:-}
+      AI_PROVIDER: ${AI_PROVIDER:-openai-compatible}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-}
+      AI_MODEL_FAST: ${AI_MODEL_FAST:-}
+      AI_MODEL_CONTENT: ${AI_MODEL_CONTENT:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      GEMINI_IMAGE_MODEL: ${GEMINI_IMAGE_MODEL:-}
+      PRIMORIA_ENABLE_INTERNAL_ANALYTICS: ${PRIMORIA_ENABLE_INTERNAL_ANALYTICS:-0}
+      PRIMORIA_INTERNAL_EMAILS: ${PRIMORIA_INTERNAL_EMAILS:-}
+      INTERACTIVE_COMPONENT_RATE_LIMIT_WINDOW_SECONDS: ${INTERACTIVE_COMPONENT_RATE_LIMIT_WINDOW_SECONDS:-60}
+      INTERACTIVE_COMPONENT_RATE_LIMIT_MAX: ${INTERACTIVE_COMPONENT_RATE_LIMIT_MAX:-20}
+      INTERACTIVE_COMPONENT_CONCURRENCY_MAX: ${INTERACTIVE_COMPONENT_CONCURRENCY_MAX:-2}
+      INTERACTIVE_COMPONENT_REQUEST_TIMEOUT_SECONDS: ${INTERACTIVE_COMPONENT_REQUEST_TIMEOUT_SECONDS:-45}
+      INTERACTIVE_COMPONENT_IDEMPOTENCY_TTL_SECONDS: ${INTERACTIVE_COMPONENT_IDEMPOTENCY_TTL_SECONDS:-600}
+      VISUALIZATION_TELEMETRY_RETENTION_DAYS: ${VISUALIZATION_TELEMETRY_RETENTION_DAYS:-90}
+      EMAIL_PROVIDER: ${EMAIL_PROVIDER:-}
+      TENCENT_SES_SECRET_ID: ${TENCENT_SES_SECRET_ID:-}
+      TENCENT_SES_SECRET_KEY: ${TENCENT_SES_SECRET_KEY:-}
+      PRIMORIA_HEALTH_WORKER_STALE_SECONDS: ${PRIMORIA_HEALTH_WORKER_STALE_SECONDS:-30}
+    expose:
+      - "3000"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health/ready').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      agent:
+        condition: service_healthy
+
+  agent-migrate:
+    build:
+      context: .
+      dockerfile: docker/app.Dockerfile
+      target: agent
+    image: primoria-agent
+    restart: "no"
+    environment:
+      <<: *migration-db-env
+    command: ["pnpm", "--filter", "@primoria/agent", "db:migrate"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  agent:
+    <<: *runtime-hardening
+    build:
+      context: .
+      dockerfile: docker/app.Dockerfile
+      target: agent
+    image: primoria-agent
+    restart: unless-stopped
+    environment:
+      <<: *db-env
+      PRIMORIA_AGENT_INTERNAL_SECRET: ${PRIMORIA_AGENT_INTERNAL_SECRET:?set PRIMORIA_AGENT_INTERNAL_SECRET in .env}
+      AGENT_RUN_CONCURRENCY: ${AGENT_RUN_CONCURRENCY:-2}
+      AGENT_RUN_MAX_ATTEMPTS: ${AGENT_RUN_MAX_ATTEMPTS:-2}
+      AGENT_RUN_LEASE_MS: ${AGENT_RUN_LEASE_MS:-30000}
+      AGENT_SHUTDOWN_GRACE_MS: ${AGENT_SHUTDOWN_GRACE_MS:-30000}
+      AGENT_RUN_RETENTION_DAYS: ${AGENT_RUN_RETENTION_DAYS:-30}
+      AGENT_RUN_PRUNE_INTERVAL_HOURS: ${AGENT_RUN_PRUNE_INTERVAL_HOURS:-24}
+      AI_PROVIDER: ${AI_PROVIDER:-openai-compatible}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-}
+    stop_grace_period: 40s
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:2024/health/ready').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+    depends_on:
+      agent-migrate:
+        condition: service_completed_successfully
+
+  worker-lesson-generation:
+    <<: *runtime-hardening
+    build:
+      context: .
+      dockerfile: docker/app.Dockerfile
+      target: worker
+    image: primoria-worker
+    restart: unless-stopped
+    environment:
+      <<: *db-env
+      DATABASE_POOL_MAX: "3"
+      AI_PROVIDER: ${AI_PROVIDER:-openai-compatible}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-}
+      AI_MODEL_FAST: ${AI_MODEL_FAST:-}
+      AI_MODEL_CONTENT: ${AI_MODEL_CONTENT:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      GEMINI_IMAGE_MODEL: ${GEMINI_IMAGE_MODEL:-}
+    command: ["pnpm", "--filter", "@primoria/web", "worker:lesson-generation"]
+    healthcheck: &worker-healthcheck
+      test: ["CMD", "node", "-e", "require('fs').stat('/tmp/primoria-worker-ready',(e,s)=>{if(e||Date.now()-s.mtimeMs>30000)process.exit(1)})"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
+    depends_on:
+      agent-migrate:
+        condition: service_completed_successfully
+
+  worker-learning-progress:
+    <<: *runtime-hardening
+    build:
+      context: .
+      dockerfile: docker/app.Dockerfile
+      target: worker
+    image: primoria-worker
+    restart: unless-stopped
+    environment:
+      <<: *db-env
+      DATABASE_POOL_MAX: "3"
+    command: ["pnpm", "--filter", "@primoria/web", "worker:learning-progress"]
+    healthcheck: *worker-healthcheck
+    depends_on:
+      agent-migrate:
+        condition: service_completed_successfully
+
+  worker-extractor:
+    <<: *runtime-hardening
+    build:
+      context: .
+      dockerfile: docker/app.Dockerfile
+      target: worker
+    image: primoria-worker
+    restart: unless-stopped
+    environment:
+      <<: *db-env
+      DATABASE_POOL_MAX: "3"
+      AI_PROVIDER: ${AI_PROVIDER:-openai-compatible}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-}
+    command: ["pnpm", "--filter", "@primoria/web", "worker:extractor"]
+    healthcheck: *worker-healthcheck
+    depends_on:
+      agent-migrate:
+        condition: service_completed_successfully
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      # Set PRIMORIA_DOMAIN to your domain for automatic HTTPS; leave it unset
+      # to serve plain HTTP on port 80 (IP-only access, pre-domain testing).
+      PRIMORIA_DOMAIN: ${PRIMORIA_DOMAIN:-:80}
+    volumes:
+      - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - primoria-caddy-data:/data
+      - primoria-caddy-config:/config
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--spider", "http://127.0.0.1/api/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 20s
+    depends_on:
+      web:
+        condition: service_healthy
+
+volumes:
+  primoria-caddy-data:
+  primoria-caddy-config:
