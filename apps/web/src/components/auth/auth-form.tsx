@@ -88,38 +88,7 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
 
   return (
     <div className="auth-panel">
-      <div className="auth-hero" aria-hidden="true">
-        <svg className="auth-hero-map" viewBox="0 0 640 900" preserveAspectRatio="xMidYMid slice">
-          <path d="M0 150H640M0 300H640M0 450H640M0 600H640M0 750H640M128 0V900M256 0V900M384 0V900M512 0V900" stroke="#f6f3ec" strokeOpacity="0.06" />
-          <g transform="translate(60 150)">
-            <path d="M90 700C170 640 230 560 320 520" stroke="#c8881a" strokeWidth="5" fill="none" strokeLinecap="round" />
-            <path d="M320 520C410 480 470 400 560 380" stroke="#d9603f" strokeWidth="5" fill="none" strokeLinecap="round" />
-            <path d="M320 520C360 600 440 640 540 660M320 520C300 440 320 380 380 330" stroke="#f6f3ec" strokeOpacity="0.18" strokeWidth="2" strokeDasharray="6 8" fill="none" />
-            <circle cx="90" cy="700" r="16" fill="#c8881a" />
-            <circle cx="320" cy="520" r="44" fill="#d9603f" opacity="0.18" />
-            <circle cx="320" cy="520" r="26" fill="#f6f3ec" />
-            <circle cx="560" cy="380" r="18" fill="none" stroke="#d9603f" strokeWidth="4" />
-          </g>
-        </svg>
-        <span className="auth-hero-brand">{t.common.brand}</span>
-        <div className="auth-hero-copy">
-          <strong>{heroTitle}</strong>
-          <p>{heroCopy}</p>
-          <ul className="auth-hero-list">
-            {t.auth.benefits.map((item) => (
-              <li key={item}>
-                <span>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M5 12l5 5 9-10" />
-                  </svg>
-                </span>
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <small>{t.auth.privacyNote}</small>
-      </div>
+      <AuthHero title={heroTitle} copy={heroCopy} />
 
       <form className="auth-card" onSubmit={submitAppDb}>
         <nav className="auth-mode-switch" aria-label={`${t.auth.signIn} / ${t.auth.createAccount}`}>
@@ -215,6 +184,44 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
           </p>
         </div>
       </form>
+    </div>
+  );
+}
+
+export function AuthHero({ title, copy }: { title: string; copy: string }) {
+  const t = useT();
+  return (
+    <div className="auth-hero" aria-hidden="true">
+      <svg className="auth-hero-map" viewBox="0 0 640 900" preserveAspectRatio="xMidYMid slice">
+        <path d="M0 150H640M0 300H640M0 450H640M0 600H640M0 750H640M128 0V900M256 0V900M384 0V900M512 0V900" stroke="#f6f3ec" strokeOpacity="0.06" />
+        <g transform="translate(60 150)">
+          <path d="M90 700C170 640 230 560 320 520" stroke="#c8881a" strokeWidth="5" fill="none" strokeLinecap="round" />
+          <path d="M320 520C410 480 470 400 560 380" stroke="#d9603f" strokeWidth="5" fill="none" strokeLinecap="round" />
+          <path d="M320 520C360 600 440 640 540 660M320 520C300 440 320 380 380 330" stroke="#f6f3ec" strokeOpacity="0.18" strokeWidth="2" strokeDasharray="6 8" fill="none" />
+          <circle cx="90" cy="700" r="16" fill="#c8881a" />
+          <circle cx="320" cy="520" r="44" fill="#d9603f" opacity="0.18" />
+          <circle cx="320" cy="520" r="26" fill="#f6f3ec" />
+          <circle cx="560" cy="380" r="18" fill="none" stroke="#d9603f" strokeWidth="4" />
+        </g>
+      </svg>
+      <span className="auth-hero-brand">{t.common.brand}</span>
+      <div className="auth-hero-copy">
+        <strong>{title}</strong>
+        <p>{copy}</p>
+        <ul className="auth-hero-list">
+          {t.auth.benefits.map((item) => (
+            <li key={item}>
+              <span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12l5 5 9-10" />
+                </svg>
+              </span>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <small>{t.auth.privacyNote}</small>
     </div>
   );
 }
