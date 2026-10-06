@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { AuthUser } from "@/lib/auth/types";
 import { TutorNavRail } from "./nav-rail";
+import { HomeSummaryProvider, type HomeSummary } from "./home-summary";
 import { useT } from "@/lib/i18n/client";
 
 const TutorChatWithProvider = dynamic(
@@ -34,7 +35,13 @@ type AuthState = {
   loaded: boolean;
 };
 
-export function TutorWorkspaceClient({ initialAuthState }: { initialAuthState: AuthState }) {
+export function TutorWorkspaceClient({
+  initialAuthState,
+  homeSummary = null,
+}: {
+  initialAuthState: AuthState;
+  homeSummary?: HomeSummary | null;
+}) {
   const [authState, setAuthState] = useState<AuthState>(initialAuthState);
 
   useEffect(() => {
@@ -66,7 +73,9 @@ export function TutorWorkspaceClient({ initialAuthState }: { initialAuthState: A
         ) : authRequired ? (
           <AuthRequiredPanel />
         ) : (
-          <TutorChatWithProvider />
+          <HomeSummaryProvider value={homeSummary}>
+            <TutorChatWithProvider />
+          </HomeSummaryProvider>
         )}
       </section>
     </>

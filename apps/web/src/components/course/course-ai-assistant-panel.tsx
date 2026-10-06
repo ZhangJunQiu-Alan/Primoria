@@ -521,19 +521,22 @@ function CourseAIAssistantPanelInner({
         </>
       ) : null}
       <div className="course-ai-sidebar-header">
+        {!collapsed ? (
+          <div className="course-ai-titleblock">
+            <strong>{t.tutorTitle}</strong>
+          </div>
+        ) : null}
         <button
           type="button"
           className="course-ai-collapse"
           onClick={() => onCollapsedChange(!collapsed)}
           aria-label={collapsed ? t.expandSidebar : t.collapseSidebar}
         >
-          {collapsed ? "AI" : "->"}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="16" rx="2" />
+            <path d="M15 4v16" />
+          </svg>
         </button>
-        {!collapsed ? (
-          <div className="course-ai-titleblock">
-            <strong>{t.tutorTitle}</strong>
-          </div>
-        ) : null}
       </div>
       {!collapsed ? (
         <>

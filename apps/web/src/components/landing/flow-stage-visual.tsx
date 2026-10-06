@@ -1,304 +1,173 @@
 /**
- * One map illustration per hero flow stage.
+ * One map illustration per hero flow stage. Each stage draws the thing its
+ * caption describes: the typed goal, its place on the concept graph, the
+ * generated path, the manipulable visual, and the quiz evidence.
  *
- * The hero previously drew a single knowledge-graph map for every stage, so the
- * feedback copy sat over a picture of a graph. Each stage now draws the thing it
- * is actually describing.
- *
- * All five reuse the existing map classes (`landing-map-node`,
- * `landing-map-edge`, `landing-map-gridline`, `landing-map-svg text`) so the
- * palette, stroke weights, and type stay defined in one place.
- *
- * Layout constraint, measured from the rendered page at both breakpoints rather
- * than guessed. The caption overlays the top of the stage — to y≈38 on desktop,
- * y≈115 on mobile, where it is taller. Below that the stage is clear to y 520.
- * Content therefore starts below y≈120 to read at both sizes. The four
- * compositions below are authored around y 130-320 and shifted down by
- * STAGE_OFFSET to sit centred in that space.
- *
- * Gradients are per-visual and uniquely identified. The shared
- * `landingPathGradient` is aimed along the Lesson path (74,390 → 590,96), and
- * painting a differently shaped stroke with it renders that stroke invisible —
- * verified in the browser, though the exact mechanism was not pinned down. Each
- * drawn curve therefore carries a gradient spanning its own extent.
+ * The caption overlays the top of the stage, so every composition sits below
+ * y≈120 in the shared 640×480 viewBox. Copy comes from the dictionary so the
+ * drawings follow the interface language.
  */
+import type { I18nDictionary } from "@/lib/i18n/dictionaries";
 
-const SHARED_VIEWBOX = "0 0 720 520";
+type VisualLabels = I18nDictionary["landing"]["visualLabels"];
 
-/** Vertical shift that centres a composition authored around y 130-320 in the
-    space left below the caption. Applied as one transform so the drawings keep
-    readable coordinates. */
-const STAGE_OFFSET = "translate(0 90)";
+const VIEWBOX = "0 0 640 480";
+
+const INK = "#1a1814";
+const PINE = "#1e4d40";
+const AMBER = "#c8881a";
+const AMBER_INK = "#8a5c0e";
+const CORAL = "#d9603f";
+const MUTED = "#6b655c";
+const LINE = "#d5cdbf";
+const PANEL = "#fffefb";
 
 function Grid() {
   return (
-    <>
-      <path className="landing-map-gridline" d="M80 96H642M80 202H642M80 308H642M80 414H642" />
-      <path className="landing-map-gridline" d="M160 62V452M280 62V452M400 62V452M520 62V452" />
-    </>
+    <path
+      className="landing-map-gridline"
+      d="M0 120H640M0 220H640M0 320H640M0 420H640M110 0V480M230 0V480M350 0V480M470 0V480M590 0V480"
+    />
   );
 }
 
-/** A gradient spanning one specific stroke, so it never renders past its stops. */
-function StrokeGradient({
-  id,
-  x1,
-  y1,
-  x2,
-  y2,
-}: {
-  id: string;
-  x1: number;
-  y1: number;
-  x2: number;
-  y2: number;
+function Label({ x, y, children, anchor = "start", fill = MUTED, size = 14, weight }: {
+  x: number;
+  y: number;
+  children: React.ReactNode;
+  anchor?: "start" | "middle" | "end";
+  fill?: string;
+  size?: number;
+  weight?: number;
 }) {
   return (
-    <defs>
-      <linearGradient id={id} x1={x1} y1={y1} x2={x2} y2={y2} gradientUnits="userSpaceOnUse">
-        <stop stopColor="#c8881a" />
-        <stop offset="0.48" stopColor="#ef7358" />
-        <stop offset="1" stopColor="#17130f" />
-      </linearGradient>
-    </defs>
+    <text x={x} y={y} textAnchor={anchor} fill={fill} fontSize={size} fontWeight={weight}>
+      {children}
+    </text>
   );
 }
 
-/** Goal — a goal typed in plain language, not yet resolved to anything. */
-function GoalVisual() {
+function GoalVisual({ labels }: { labels: VisualLabels }) {
+  const [first, second, third] = labels.goalOptions;
   return (
-    <svg
-      className="landing-map-svg"
-      viewBox={SHARED_VIEWBOX}
-      role="img"
-      aria-label="A learning goal typed in plain language, with three unresolved directions leading from it"
-    >
+    <svg className="landing-map-svg" viewBox={VIEWBOX} role="img" aria-label={labels.goalText}>
       <Grid />
-
-      <g transform={STAGE_OFFSET}>
-      {/* The typed goal */}
-      <rect
-        x="64"
-        y="170"
-        width="404"
-        height="96"
-        rx="48"
-        fill="rgba(255, 253, 248, 0.94)"
-        stroke="rgba(23, 19, 15, 0.16)"
-        strokeWidth="4"
-      />
-      <text x="104" y="230" fontSize="26">
-        photosynthesis
-      </text>
-      <rect x="368" y="196" width="4" height="44" rx="2" fill="rgba(23, 19, 15, 0.45)" />
-
-      {/* Directions it could resolve into — none chosen yet */}
-      <path className="landing-map-edge faint" d="M468 218C524 206 548 176 574 152" />
-      <path className="landing-map-edge faint" d="M468 218H586" />
-      <path className="landing-map-edge faint" d="M468 218C524 230 548 260 572 284" />
-      <circle className="landing-map-node small" cx="592" cy="146" r="26" />
-      <circle className="landing-map-node small" cx="616" cy="218" r="26" />
-      <circle className="landing-map-node small" cx="588" cy="290" r="26" />
-      </g>
+      <rect x="44" y="222" width="360" height="72" rx="36" fill={PANEL} stroke="#e3cfa6" strokeWidth="6" opacity="0.6" />
+      <rect x="48" y="226" width="352" height="64" rx="32" fill={PANEL} stroke={INK} strokeOpacity="0.16" strokeWidth="2" />
+      <Label x={78} y={265} fill={INK} size={19}>{labels.goalText}</Label>
+      <rect className="landing-goal-cursor" x="370" y="244" width="3" height="28" rx="1.5" fill={AMBER} />
+      <path className="landing-map-edge faint" d="M400 258C456 244 480 196 512 176" />
+      <path className="landing-map-edge faint" d="M400 258H520" />
+      <path className="landing-map-edge faint" d="M400 258C456 272 480 320 512 340" />
+      <circle cx="534" cy="166" r="20" fill="#fbeed3" stroke={AMBER} strokeWidth="2.5" />
+      <circle cx="546" cy="258" r="20" fill="#dcede3" stroke={PINE} strokeWidth="2.5" />
+      <circle cx="534" cy="350" r="20" fill="#f9e3ea" stroke={CORAL} strokeWidth="2.5" />
+      <Label x={562} y={171}>{first}</Label>
+      <Label x={574} y={263}>{second}</Label>
+      <Label x={562} y={355}>{third}</Label>
     </svg>
   );
 }
 
-/** KG — the goal positioned against the concept graph. */
-function KgVisual() {
+function KgVisual({ labels }: { labels: VisualLabels }) {
   return (
-    <svg
-      className="landing-map-svg"
-      viewBox={SHARED_VIEWBOX}
-      role="img"
-      aria-label="The goal matched into a concept graph, with two prerequisite concepts mastered and six still ahead"
-    >
+    <svg className="landing-map-svg" viewBox={VIEWBOX} role="img" aria-label={`${labels.mastered} · ${labels.start} · ${labels.ahead}`}>
       <Grid />
-
-      <g transform={STAGE_OFFSET}>
-      <path className="landing-map-edge" d="M104 276H196" />
-      <path className="landing-map-edge" d="M244 262C296 242 318 232 330 218" />
-      <path className="landing-map-edge faint" d="M402 192C456 172 510 156 560 148" />
-      <path className="landing-map-edge faint" d="M404 224C458 244 512 264 566 282" />
-      <path className="landing-map-edge faint" d="M388 160C404 152 424 146 448 142" />
-
-      {/* Mastered */}
-      <circle className="landing-map-node next" cx="104" cy="276" r="32" />
-      <circle className="landing-map-node next" cx="212" cy="262" r="32" />
-      <text x="62" y="318" fontSize="18">
-        Mastered
-      </text>
-
-      {/* Entry point */}
-      <circle className="landing-map-node active" cx="358" cy="206" r="50" />
-      <text x="318" y="214" fontSize="19">
-        Start
-      </text>
-
-      {/* Still ahead */}
-      <circle className="landing-map-node small" cx="580" cy="142" r="26" />
-      <circle className="landing-map-node small" cx="586" cy="292" r="26" />
-      <circle className="landing-map-node small" cx="468" cy="136" r="26" />
-      <text x="516" y="202" fontSize="18">
-        6 ahead
-      </text>
-      </g>
+      <path d="M92 330L192 300M192 300L318 252" stroke={PINE} strokeWidth="4" strokeLinecap="round" fill="none" />
+      <path className="landing-map-edge faint" d="M360 232C410 206 450 190 494 176M362 270C414 298 456 318 500 336M352 214C366 188 380 172 400 160M500 336L586 300" />
+      <circle className="landing-map-halo" cx="330" cy="250" r="64" fill={CORAL} opacity="0.25" />
+      <circle cx="92" cy="330" r="24" fill={PINE} />
+      <circle cx="192" cy="300" r="24" fill={PINE} />
+      <path d="M82 330l7 7 13-14M182 300l7 7 13-14" stroke="#f6f3ec" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="330" cy="250" r="42" fill={PANEL} stroke={CORAL} strokeWidth="4" />
+      <Label x={330} y={256} anchor="middle" fill={INK} size={16} weight={500}>{labels.entryConcept}</Label>
+      <circle cx="414" cy="154" r="16" fill={PANEL} stroke="#b9b0a1" strokeWidth="2" />
+      <circle cx="510" cy="172" r="18" fill={PANEL} stroke="#b9b0a1" strokeWidth="2" />
+      <circle cx="514" cy="340" r="18" fill={PANEL} stroke="#b9b0a1" strokeWidth="2" />
+      <circle cx="598" cy="296" r="16" fill={PANEL} stroke="#b9b0a1" strokeWidth="2" />
+      <Label x={70} y={378} fill={PINE}>{labels.mastered}</Label>
+      <Label x={300} y={320} fill={CORAL}>{labels.start}</Label>
+      <Label x={490} y={250}>{labels.ahead}</Label>
     </svg>
   );
 }
 
-/** Lesson — the ordered path through the concepts of this lesson. */
-function LessonVisual() {
+function LessonVisual({ labels }: { labels: VisualLabels }) {
   return (
-    <svg
-      className="landing-map-svg"
-      viewBox={SHARED_VIEWBOX}
-      role="img"
-      aria-label="A generated lesson path running from the goal through the current concept to the next one"
-    >
-      <defs>
-        <linearGradient
-          id="landingPathGradient"
-          x1="74"
-          y1="390"
-          x2="590"
-          y2="96"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#c8881a" />
-          <stop offset="0.48" stopColor="#ef7358" />
-          <stop offset="1" stopColor="#17130f" />
-        </linearGradient>
-      </defs>
+    <svg className="landing-map-svg" viewBox={VIEWBOX} role="img" aria-label={`${labels.goal} → ${labels.entryConcept} → ${labels.nextConcept}`}>
       <Grid />
-      <path className="landing-map-edge faint" d="M144 384C214 242 290 184 390 205" />
-      <path className="landing-map-edge faint" d="M390 205C452 132 522 112 606 150" />
-      <path className="landing-map-edge faint" d="M390 205C424 298 500 356 596 390" />
-      <path className="landing-map-path" d="M144 384C226 318 284 258 390 205C475 162 530 126 606 150" />
-      <circle className="landing-map-node muted" cx="144" cy="384" r="44" />
-      <circle className="landing-map-node active" cx="390" cy="205" r="64" />
-      <circle className="landing-map-node next" cx="606" cy="150" r="42" />
-      <circle className="landing-map-node small" cx="596" cy="390" r="34" />
-      <circle className="landing-map-node small warm" cx="268" cy="160" r="28" />
-      <text x="118" y="391">Goal</text>
-      <text x="344" y="213">Light</text>
-      <text x="576" y="157">Next</text>
+      <path className="landing-map-edge faint" d="M330 262C366 338 440 380 540 396M330 262C380 220 420 226 470 250" />
+      <path className="landing-map-draw" pathLength={1} d="M96 400C170 350 240 300 330 262" stroke={AMBER} strokeWidth="7" fill="none" strokeLinecap="round" />
+      <path className="landing-map-draw" pathLength={1} d="M330 262C418 222 470 168 548 182" stroke={CORAL} strokeWidth="7" fill="none" strokeLinecap="round" />
+      <circle cx="96" cy="400" r="30" fill="#fbeed3" stroke={AMBER} strokeWidth="3" />
+      <circle className="landing-map-halo" cx="330" cy="262" r="70" fill={CORAL} opacity="0.22" />
+      <circle cx="330" cy="262" r="48" fill={PINE} />
+      <circle cx="548" cy="182" r="34" fill={PANEL} stroke={CORAL} strokeWidth="4" />
+      <circle cx="540" cy="396" r="22" fill={PANEL} stroke={LINE} strokeWidth="2" />
+      <circle cx="470" cy="250" r="16" fill={PANEL} stroke={LINE} strokeWidth="2" />
+      <Label x={96} y={405} anchor="middle" fill={AMBER_INK}>{labels.goal}</Label>
+      <Label x={330} y={268} anchor="middle" fill="#f6f3ec" size={16} weight={500}>{labels.entryConcept}</Label>
+      <Label x={548} y={187} anchor="middle" fill={INK} size={13}>{labels.nextConcept}</Label>
+      <Label x={548} y={240} anchor="middle" fill={CORAL} size={12}>{labels.next}</Label>
     </svg>
   );
 }
 
-/** Visual — the saturating rate curve the learner can actually manipulate. */
-function VisualVisual() {
+function VisualVisual({ labels }: { labels: VisualLabels }) {
   return (
-    <svg
-      className="landing-map-svg"
-      viewBox={SHARED_VIEWBOX}
-      role="img"
-      aria-label="Oxygen output plotted against light intensity: the curve rises then flattens once another factor becomes limiting"
-    >
-      <StrokeGradient id="landingCurveGradient" x1={118} y1={300} x2={624} y2={164} />
+    <svg className="landing-map-svg" viewBox={VIEWBOX} role="img" aria-label={`${labels.oxygenOutput} · ${labels.lightIntensity} · ${labels.limitingFactor}`}>
       <Grid />
-
-      <g transform={STAGE_OFFSET}>
-      {/* Axes */}
-      <path className="landing-map-edge" d="M118 300H628" strokeWidth="5" />
-      <path className="landing-map-edge" d="M118 300V140" strokeWidth="5" />
-
-      {/* Where more light stops helping */}
-      <path
-        d="M118 166H616"
-        fill="none"
-        stroke="rgba(23, 19, 15, 0.26)"
-        strokeWidth="3"
-        strokeDasharray="12 12"
-      />
-      <text x="614" y="196" fontSize="17" textAnchor="end">
-        limiting factor
-      </text>
-
-      {/* Steep, then saturating */}
-      <path
-        className="landing-map-draw"
-        stroke="url(#landingCurveGradient)"
-        d="M118 300C196 300 250 232 306 202C372 166 470 168 616 168"
-      />
-      <circle className="landing-map-node active" cx="306" cy="202" r="26" />
-
-      <text x="622" y="290" fontSize="18" textAnchor="end">
-        Light intensity →
-      </text>
-      <text x="92" y="222" fontSize="18" transform="rotate(-90 92 222)" textAnchor="middle">
-        O₂ output
-      </text>
-      </g>
+      <path d="M90 390H590M90 390V140" stroke={INK} strokeWidth="2" strokeLinecap="round" />
+      <path d="M90 190H580" stroke={INK} strokeOpacity="0.3" strokeWidth="2" strokeDasharray="8 8" />
+      <path className="landing-map-draw" pathLength={1} d="M90 390C160 390 210 300 270 250" stroke={AMBER} strokeWidth="6" fill="none" strokeLinecap="round" />
+      <path className="landing-map-draw" pathLength={1} d="M270 250C340 196 440 194 580 194" stroke={CORAL} strokeWidth="6" fill="none" strokeLinecap="round" />
+      <path d="M270 250V390" stroke={PINE} strokeWidth="1.5" strokeDasharray="3 5" />
+      <circle className="landing-map-halo" cx="270" cy="250" r="30" fill={PINE} opacity="0.25" />
+      <circle cx="270" cy="250" r="14" fill={PINE} stroke={PANEL} strokeWidth="4" />
+      <Label x={580} y={178} anchor="end">{labels.limitingFactor}</Label>
+      <Label x={590} y={420} anchor="end">{labels.lightIntensity}</Label>
+      <text x="64" y="270" textAnchor="middle" transform="rotate(-90 64 270)" fill={MUTED} fontSize="14">{labels.oxygenOutput}</text>
+      <rect x="200" y="426" width="140" height="6" rx="3" fill="#e2dcd0" />
+      <rect x="200" y="426" width="62" height="6" rx="3" fill={PINE} />
+      <circle cx="262" cy="429" r="10" fill={PANEL} stroke={PINE} strokeWidth="3" />
     </svg>
   );
 }
 
-/** Feedback — quiz evidence and the concept mastery it moved. */
-function FeedbackVisual() {
+function FeedbackVisual({ labels }: { labels: VisualLabels }) {
   const answers = [true, true, false, true];
   return (
-    <svg
-      className="landing-map-svg"
-      viewBox={SHARED_VIEWBOX}
-      role="img"
-      aria-label="Four quiz answers, three correct and one wrong, above a partly filled mastery bar for limiting factors"
-    >
+    <svg className="landing-map-svg" viewBox={VIEWBOX} role="img" aria-label={`${labels.feedbackConcept} · ${labels.feedbackScore}`}>
       <Grid />
-
-      <g transform={STAGE_OFFSET}>
       {answers.map((correct, index) => {
-        const x = 96 + index * 116;
+        const x = 72 + index * 124;
         return (
-          <g key={x}>
+          <g key={x} className={`landing-feedback-card feedback-${index}`}>
             <rect
               x={x}
-              y="130"
-              width="92"
-              height="92"
-              rx="28"
-              fill={correct ? "rgba(167, 227, 189, 0.72)" : "rgba(255, 229, 143, 0.85)"}
-              stroke={correct ? "rgba(73, 142, 93, 0.34)" : "rgba(201, 136, 26, 0.42)"}
-              strokeWidth="5"
+              y="156"
+              width="96"
+              height="96"
+              rx="22"
+              fill={correct ? "#dcede3" : "#fbeed3"}
+              stroke={correct ? "#2e6b52" : AMBER}
+              strokeOpacity={correct ? 0.4 : 0.6}
+              strokeWidth="3"
             />
             {correct ? (
-              <path
-                d={`M${x + 28} 176l16 16 22-30`}
-                fill="none"
-                stroke="rgba(37, 92, 58, 0.78)"
-                strokeWidth="9"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
+              <path d={`M${x + 28} 204l14 14 26-30`} stroke="#2e6b52" strokeWidth="7" fill="none" strokeLinecap="round" strokeLinejoin="round" />
             ) : (
-              <path
-                d={`M${x + 32} 160l28 28M${x + 60} 160l-28 28`}
-                fill="none"
-                stroke="rgba(150, 96, 12, 0.78)"
-                strokeWidth="9"
-                strokeLinecap="round"
-              />
+              <path d={`M${x + 32} 188l32 32M${x + 64} 188l-32 32`} stroke={AMBER_INK} strokeWidth="7" strokeLinecap="round" />
             )}
           </g>
         );
       })}
-
-      <text x="96" y="266" fontSize="19">
-        Limiting factors
-      </text>
-      <rect
-        x="96"
-        y="284"
-        width="456"
-        height="34"
-        rx="17"
-        fill="rgba(23, 19, 15, 0.06)"
-        stroke="rgba(23, 19, 15, 0.1)"
-        strokeWidth="3"
-      />
-      <rect x="96" y="284" width="342" height="34" rx="17" fill="rgba(255, 229, 143, 0.9)" />
-      </g>
+      <Label x={72} y={316} fill={INK} size={16} weight={500}>{labels.feedbackConcept}</Label>
+      <Label x={540} y={316} anchor="end">{labels.feedbackScore}</Label>
+      <rect x="72" y="332" width="468" height="20" rx="10" fill="#f0ebe1" />
+      <rect className="landing-mastery-fill" x="72" y="332" width="351" height="20" rx="10" fill={AMBER} />
+      <path d="M446 324V360" stroke={INK} strokeWidth="2" strokeDasharray="3 4" />
+      <Label x={72} y={396}>{labels.feedbackNote}</Label>
     </svg>
   );
 }
@@ -313,7 +182,7 @@ const VISUALS = {
 
 export type FlowStageId = keyof typeof VISUALS;
 
-export function FlowStageVisual({ stageId }: { stageId: string }) {
+export function FlowStageVisual({ stageId, labels }: { stageId: string; labels: VisualLabels }) {
   const Visual = VISUALS[stageId as FlowStageId] ?? LessonVisual;
-  return <Visual />;
+  return <Visual labels={labels} />;
 }

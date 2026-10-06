@@ -29,6 +29,12 @@ export default async function LibraryPage() {
     <main className="app-shell">
       <TutorNavRail initialAuthState={{ authEnabled, user }} />
       <section className="workspace library-workspace">
+        {shouldGate ? null : (
+          <header className="library-page-header">
+            <h1>{t.library.pageTitle}</h1>
+            <p>{t.library.courseCount.replace("{count}", String(courses.length))}</p>
+          </header>
+        )}
         {shouldGate ? (
           <div className="library-empty library-auth-empty">
             <span className="course-block-tag">{t.library.privateWorkspace}</span>

@@ -72,8 +72,8 @@ async function main() {
   assert(styles.includes("align-content: center;"), "auth card centers the form group vertically");
   assert(styles.includes(".auth-field-spacer {\n  display: none;"), "sign-in does not reserve an empty display-name row");
   assert(styles.includes("place-items: center"), "auth workspace centers the fixed auth panel");
-  assert(styles.includes("height: min(720px, calc(100dvh - 68px))"), "auth panel has a fixed desktop height");
-  assert(styles.includes("grid-template-columns: minmax(0, 488px) minmax(0, 552px)"), "auth panel has fixed desktop columns");
+  assert(styles.includes(".auth-panel {\n  min-height: 100%;"), "auth panel fills the viewport as a full-bleed split");
+  assert(styles.includes("grid-template-columns: minmax(0, 1fr) minmax(0, 1fr)"), "auth panel splits brand and form evenly on desktop");
   assert(styles.includes(".auth-hero-copy"), "hero content has dedicated stable layout styling");
   assert(styles.includes(".auth-password-control"), "password control has dedicated styling");
   assert(styles.includes(".auth-password-control button svg"), "password visibility icon has dedicated styling");
