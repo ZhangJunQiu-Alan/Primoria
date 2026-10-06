@@ -1,101 +1,123 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
 import { TutorNavRail } from "@/components/tutor/nav-rail";
-import { BoltIcon, BookIcon, CalendarIcon, ClockIcon, FlameIcon, StarIcon } from "@/components/profile/profile-icons";
+import { mondayFirstColumn, mondayFirstWeekdays } from "@/components/profile/weekday";
 import { getCurrentUserForRsc, isAuthEnabled } from "@/lib/auth/session";
 import { formatLearningTime, getProfileStats } from "@/lib/profile/stats";
 import { getDictionaryForUser } from "@/lib/i18n/server";
+import { formatMessage } from "@/lib/i18n/format";
 
 export const dynamic = "force-dynamic";
+
+function activityLevel(activity: number) {
+  if (activity > 3) return "level-3";
+  if (activity > 1) return "level-2";
+  if (activity > 0) return "level-1";
+  return "";
+}
 
 export default async function StatsPage() {
   const authEnabled = isAuthEnabled();
   const user = await getCurrentUserForRsc();
   if (authEnabled && !user) redirect("/auth/sign-in?next=/stats");
-  const [{ dictionary }, stats] = await Promise.all([
-    getDictionaryForUser(user?.id ?? null),
-    getProfileStats({
-      ownerId: user?.id ?? null,
-      displayName: user?.displayName ?? null,
-      email: user?.email ?? null,
-    }),
-  ]);
+  const { language, dictionary } = await getDictionaryForUser(user?.id ?? null);
+  const stats = await getProfileStats({
+    ownerId: user?.id ?? null,
+    displayName: user?.displayName ?? null,
+    email: user?.email ?? null,
+    locale: language,
+  });
   const t = dictionary.stats;
+  const weekdays = mondayFirstWeekdays(language);
+  const leadingBlanks = stats.heatmapDays.length ? mondayFirstColumn(stats.heatmapDays[0].key) : 0;
+  const todayKey = stats.heatmapDays.at(-1)?.key;
+  const dayUnit = stats.streakDays === 1 ? t.day : t.days;
 
   return (
     <main className="app-shell profile-shell">
       <TutorNavRail initialAuthState={{ authEnabled, user }} />
       <section className="profile-detail-workspace">
-        <Link href="/profile" className="profile-back-link">← {t.backProfile}</Link>
-        <h1 className="profile-detail-title">{t.detailed}</h1>
+        <header className="profile-page-header">
+          <h1>{t.detailed}</h1>
+          <p>{t.subtitle}</p>
+        </header>
 
-        <section className="profile-panel activity-panel">
-          <h2>{t.dailyActivity}</h2>
-          <div className="activity-heatmap" aria-label={t.dailyActivity}>
-            <div className="activity-week-labels">
-              {["S", "M", "T", "W", "T", "F", "S"].map((day, index) => <span key={`${day}-${index}`}>{day}</span>)}
-            </div>
-            <div className="activity-grid">
-              {stats.heatmapDays.map((day) => (
-                <span
-                  key={day.key}
-                  className={day.activity > 3 ? "level-3" : day.activity > 1 ? "level-2" : day.activity > 0 ? "level-1" : ""}
-                  title={`${day.key}: ${day.activity}`}
-                />
-              ))}
-            </div>
-          </div>
+        <section className="profile-block" aria-labelledby="stats-today-title">
+          <h2 id="stats-today-title" className="profile-block-title">{t.todaySummary}</h2>
+          <dl className="profile-metric-strip">
+            <Metric label={t.lessonsToday} value={stats.todayLessonsCompleted} />
+            <Metric label={t.questionsToday} value={stats.todayQuestionsPracticed} />
+            <Metric label={t.eventsToday} value={stats.todayActivityEvents} />
+            <Metric label={t.currentStreak} value={stats.streakDays} unit={dayUnit} />
+            <Metric label={t.xpToday} value={stats.todayXp} unit="XP" />
+          </dl>
         </section>
 
-        <ProfileStatSection title={t.todaySummary}>
-          <StatCard icon={<BookIcon />} title={t.lessons} value={stats.todayLessonsCompleted} detail={t.lessonsToday} tone="blue" />
-          <StatCard icon={<BoltIcon />} title={t.questions} value={stats.todayQuestionsPracticed} detail={t.questionsToday} tone="green" />
-          <StatCard icon={<ClockIcon />} title={t.activity} value={stats.todayActivityEvents} detail={t.eventsToday} tone="orange" />
-          <StatCard icon={<FlameIcon />} title={t.currentStreak} value={`${stats.streakDays} ${stats.streakDays === 1 ? t.day : t.days}`} detail={t.keepItUp} tone="flame" />
-          <StatCard icon={<StarIcon />} title={t.xpEarned} value={stats.todayXp} detail={t.xpToday} tone="gold" />
-        </ProfileStatSection>
+        <section className="profile-panel activity-panel" aria-labelledby="stats-activity-title">
+          <div className="activity-calendar">
+            <h2 id="stats-activity-title" className="profile-block-title">{t.dailyActivity}</h2>
+            <div className="activity-heatmap" role="img" aria-label={formatMessage(t.activeOf30, { days: stats.activeDaysLast30 })}>
+              <div className="activity-week-labels" aria-hidden="true">
+                {weekdays.map((day) => <span key={day}>{day}</span>)}
+              </div>
+              <div className="activity-grid" aria-hidden="true">
+                {Array.from({ length: leadingBlanks }, (_, index) => <span key={`pad-${index}`} className="pad" />)}
+                {stats.heatmapDays.map((day) => (
+                  <span
+                    key={day.key}
+                    className={`${activityLevel(day.activity)}${day.key === todayKey ? " today" : ""}`}
+                    title={`${day.key}: ${day.activity}`}
+                  >
+                    {day.day}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+          <aside className="activity-aside">
+            <div>
+              <strong>{stats.activeDaysLast30}<small> / 30</small></strong>
+              <span>{t.activeDaysDetail}</span>
+            </div>
+            <div>
+              <strong>{stats.streakDays}<small> {dayUnit}</small></strong>
+              <span>{t.currentStreak}</span>
+            </div>
+            <div className="activity-legend" aria-hidden="true">
+              <span>{t.less}</span>
+              <i />
+              <i className="level-1" />
+              <i className="level-2" />
+              <i className="level-3" />
+              <span>{t.more}</span>
+            </div>
+          </aside>
+        </section>
 
-        <ProfileStatSection title={t.lifetime}>
-          <StatCard icon={<BookIcon />} title={t.lessonsCompleted} value={stats.lessonsCompleted} detail={t.totalLessonsFinished} tone="blue" />
-          <StatCard icon={<BoltIcon />} title={t.questionsPracticed} value={stats.questionsPracticed} detail={t.totalQuestionsPracticed} tone="green" />
-          <StatCard icon={<CalendarIcon />} title={t.activeLearningDays} value={stats.activeDaysLast30} detail={t.activeDaysDetail} tone="aqua" />
-          <StatCard icon={<ClockIcon />} title={t.plannedLessonTime} value={formatLearningTime(stats.plannedLessonMinutes)} detail={t.plannedMinutesDetail} tone="orange" />
-          <StatCard icon={<StarIcon />} title={t.totalXp} value={stats.xp} detail={t.allTimeXp} tone="gold" />
-        </ProfileStatSection>
+        <section className="profile-block" aria-labelledby="stats-lifetime-title">
+          <h2 id="stats-lifetime-title" className="profile-block-title">{t.lifetime}</h2>
+          <dl className="profile-metric-strip">
+            <Metric label={t.lessonsCompleted} value={stats.lessonsCompleted} detail={t.totalLessonsFinished} />
+            <Metric label={t.questionsPracticed} value={stats.questionsPracticed} detail={t.totalQuestionsPracticed} />
+            <Metric label={t.activeLearningDays} value={stats.activeDaysLast30} detail={t.activeDaysDetail} />
+            <Metric label={t.plannedLessonTime} value={formatLearningTime(stats.plannedLessonMinutes)} detail={t.plannedMinutesDetail} />
+            <Metric label={t.totalXp} value={stats.xp.toLocaleString(language)} detail={t.allTimeXp} />
+          </dl>
+        </section>
       </section>
     </main>
   );
 }
 
-function ProfileStatSection({ title, children }: { title: string; children: ReactNode }) {
+function Metric({ label, value, unit, detail }: { label: string; value: ReactNode; unit?: string; detail?: string }) {
   return (
-    <section className="profile-stat-section">
-      <h2>{title}</h2>
-      <div className="profile-stat-grid">{children}</div>
-    </section>
-  );
-}
-
-function StatCard({
-  icon,
-  title,
-  value,
-  detail,
-  tone,
-}: {
-  icon: ReactNode;
-  title: string;
-  value: ReactNode;
-  detail: string;
-  tone: string;
-}) {
-  return (
-    <article className="profile-stat-card">
-      <span className={`profile-stat-icon ${tone}`}>{icon}</span>
-      <h3>{title}</h3>
-      <strong>{value}</strong>
-      <p>{detail}</p>
-    </article>
+    <div>
+      <dt>{label}</dt>
+      <dd>
+        {value}
+        {unit ? <small> {unit}</small> : null}
+      </dd>
+      {detail ? <dd className="profile-metric-detail">{detail}</dd> : null}
+    </div>
   );
 }

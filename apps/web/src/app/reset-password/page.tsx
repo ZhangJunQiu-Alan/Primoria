@@ -5,8 +5,12 @@ export const dynamic = "force-dynamic";
 
 export default function ResetPasswordPage() {
   return (
-    <Suspense fallback={null}>
-      <ResetPasswordForm />
-    </Suspense>
+    <main className="app-shell auth-shell">
+      <section className="workspace auth-workspace">
+        <Suspense fallback={null}>
+          <ResetPasswordForm />
+        </Suspense>
+      </section>
+    </main>
   );
 }

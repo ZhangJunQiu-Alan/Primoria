@@ -1,26 +1,18 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
+import { msg, useT } from "@/lib/i18n/client";
 import type { FactCategory } from "@/lib/learner-profile/types";
 
 export type LearnerFactView = { id: string; text: string; category: FactCategory };
 
-const CATEGORY_OPTIONS: Array<{ value: FactCategory; label: string }> = [
-  { value: "preference", label: "Learning preference" },
-  { value: "prior_knowledge", label: "Background" },
-  { value: "learning_gap", label: "Learning gap" },
-  { value: "interest", label: "Interest" },
-  { value: "goal", label: "Goal" },
-  { value: "profile_context", label: "Other context" },
-];
+const CATEGORIES: FactCategory[] = ["preference", "prior_knowledge", "learning_gap", "interest", "goal", "profile_context"];
 
 const EMPTY_FORM = { text: "", category: "preference" as FactCategory };
 
-function categoryLabel(category: FactCategory) {
-  return CATEGORY_OPTIONS.find((option) => option.value === category)?.label ?? category;
-}
-
 export function FactsAboutYou({ initialFacts }: { initialFacts: LearnerFactView[] }) {
+  const t = useT().facts;
+  const categoryLabel = (category: FactCategory) => t.categories[category] ?? category;
   const [facts, setFacts] = useState(initialFacts);
   const [form, setForm] = useState(EMPTY_FORM);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -57,13 +49,13 @@ export function FactsAboutYou({ initialFacts }: { initialFacts: LearnerFactView[
             setExtractOpen(false);
           }
         } else if (data.status === "failed") {
-          setError(data.error ?? "Could not extract facts from that text.");
+          setError(data.error ?? t.extractFailed);
         } else if (!cancelled) {
           timer = window.setTimeout(poll, 2_000);
         }
       } catch {
         if (!cancelled) {
-          setError("Could not check fact extraction status.");
+          setError(t.extractStatusFailed);
           timer = window.setTimeout(poll, 2_000);
         }
       }
@@ -73,7 +65,7 @@ export function FactsAboutYou({ initialFacts }: { initialFacts: LearnerFactView[
       cancelled = true;
       if (timer) window.clearTimeout(timer);
     };
-  }, [intakeJobId, intakeStatus]);
+  }, [intakeJobId, intakeStatus, t.extractFailed, t.extractStatusFailed]);
 
   function resetForm() {
     setForm(EMPTY_FORM);
@@ -89,7 +81,7 @@ export function FactsAboutYou({ initialFacts }: { initialFacts: LearnerFactView[
   function submit() {
     const text = form.text.trim();
     if (text.length < 2) {
-      setError("Add a short fact first.");
+      setError(t.addShortFact);
       return;
     }
     setError(null);
@@ -112,7 +104,7 @@ export function FactsAboutYou({ initialFacts }: { initialFacts: LearnerFactView[
         }
         resetForm();
       } catch {
-        setError("Could not save this fact.");
+        setError(t.saveFailed);
       }
     });
   }
@@ -133,7 +125,7 @@ export function FactsAboutYou({ initialFacts }: { initialFacts: LearnerFactView[
         if (editingId === id) resetForm();
       } catch {
         setFacts(previous);
-        setError("Could not remove this fact.");
+        setError(t.removeFailed);
       } finally {
         setPendingId(null);
       }
@@ -143,7 +135,7 @@ export function FactsAboutYou({ initialFacts }: { initialFacts: LearnerFactView[
   function startExtraction() {
     const text = extractText.trim();
     if (text.length < 2) {
-      setError("Add a short introduction first.");
+      setError(t.addShortIntro);
       return;
     }
     setError(null);
@@ -163,40 +155,40 @@ export function FactsAboutYou({ initialFacts }: { initialFacts: LearnerFactView[
         setIntakeJobId(data.jobId);
         setIntakeStatus(data.status);
       } catch (cause) {
-        setError(cause instanceof Error ? cause.message : "Could not start fact extraction.");
+        setError(cause instanceof Error ? cause.message : t.extractStartFailed);
       }
     });
   }
 
   return (
     <div className="facts-manager">
-      <div className="facts-composer" aria-label="Add or edit facts about you">
+      <div className="facts-composer" role="group" aria-label={t.managerAria}>
         <input
           value={form.text}
-          placeholder="e.g., Learns best with analogies before formulas"
+          placeholder={t.placeholder}
           onChange={(event) => setForm((current) => ({ ...current, text: event.target.value }))}
         />
         <div className="facts-composer-row">
           <select
-            aria-label="Fact category"
+            aria-label={t.categoryAria}
             value={form.category}
             onChange={(event) => setForm((current) => ({ ...current, category: event.target.value as FactCategory }))}
           >
-            {CATEGORY_OPTIONS.map((option) => (
-              <option key={option.value} value={option.value}>{option.label}</option>
+            {CATEGORIES.map((category) => (
+              <option key={category} value={category}>{categoryLabel(category)}</option>
             ))}
           </select>
           <button type="button" className="facts-primary-action" disabled={isPending} onClick={submit}>
-            <span aria-hidden="true">{editing ? "✓" : "+"}</span>
-            {editing ? "Save fact" : "Add fact"}
+            {editing ? t.saveFact : t.addFact}
           </button>
           <button
             type="button"
             className="facts-secondary-action"
             disabled={intakeStatus === "queued" || intakeStatus === "running"}
+            title={t.extractTitle}
             onClick={() => setExtractOpen((open) => !open)}
           >
-            {intakeStatus === "queued" || intakeStatus === "running" ? "Extracting…" : "Extract from text"}
+            {intakeStatus === "queued" || intakeStatus === "running" ? t.extracting : t.extract}
           </button>
         </div>
         {extractOpen ? (
@@ -205,7 +197,7 @@ export function FactsAboutYou({ initialFacts }: { initialFacts: LearnerFactView[
               value={extractText}
               maxLength={2_000}
               rows={5}
-              placeholder="Describe your studies, interests, goals, or learning preferences. Primoria will organize useful facts in the background."
+              placeholder={t.extractPlaceholder}
               onChange={(event) => setExtractText(event.target.value)}
             />
             <div className="facts-extract-actions">
@@ -216,28 +208,28 @@ export function FactsAboutYou({ initialFacts }: { initialFacts: LearnerFactView[
                 disabled={isPending || extractText.trim().length < 2}
                 onClick={startExtraction}
               >
-                Start extraction
+                {t.startExtraction}
               </button>
             </div>
           </div>
         ) : null}
         {editing ? (
           <button type="button" className="facts-cancel-edit" onClick={resetForm}>
-            Cancel editing “{editing.text}”
+            {msg(t.cancelEditing, { text: editing.text })}
           </button>
         ) : null}
         {error ? <p className="facts-error">{error}</p> : null}
       </div>
 
       <div className="facts-list-header">
-        <span>{facts.length} {facts.length === 1 ? "fact" : "facts"}</span>
-        <p>These notes personalize future lessons and Tutor answers. Remove anything inaccurate.</p>
+        <span>{msg(facts.length === 1 ? t.factCount : t.factsCount, { count: facts.length })}</span>
+        <p>{t.listCopy}</p>
       </div>
 
       {facts.length === 0 ? (
         <section className="facts-empty-panel">
-          <strong>No saved facts yet.</strong>
-          <p>Add a useful preference, background detail, or goal so Primoria can teach with better context.</p>
+          <strong>{t.emptyTitle}</strong>
+          <p>{t.emptyCopy}</p>
         </section>
       ) : (
         <ul className="facts-list facts-list-editor">
@@ -246,11 +238,11 @@ export function FactsAboutYou({ initialFacts }: { initialFacts: LearnerFactView[
               <span className="facts-category">{categoryLabel(fact.category)}</span>
               <span className="facts-text">{fact.text}</span>
               <span className="facts-actions">
-                <button type="button" aria-label="Edit this fact" disabled={isPending} onClick={() => edit(fact)}>
-                  Edit
+                <button type="button" aria-label={t.editFact} disabled={isPending} onClick={() => edit(fact)}>
+                  {t.edit}
                 </button>
-                <button type="button" aria-label="Remove this fact" disabled={pendingId === fact.id} onClick={() => remove(fact.id)}>
-                  Delete
+                <button type="button" className="danger" aria-label={t.removeFact} disabled={pendingId === fact.id} onClick={() => remove(fact.id)}>
+                  {t.delete}
                 </button>
               </span>
             </li>

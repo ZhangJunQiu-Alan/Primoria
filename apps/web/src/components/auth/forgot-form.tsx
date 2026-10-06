@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { FormEvent } from "react";
 import { useState } from "react";
 
-import { authStyles } from "@/components/auth/styles";
+import { AuthHero } from "@/components/auth/auth-form";
 import { useT } from "@/lib/i18n/client";
 
 export function ForgotForm() {
@@ -36,35 +36,45 @@ export function ForgotForm() {
   }
 
   return (
-    <div style={authStyles.container}>
-      <h1 style={authStyles.title}>{t.auth.forgotPasswordTitle}</h1>
-      <p style={authStyles.label}>{t.auth.forgotPasswordCopy}</p>
+    <div className="auth-panel">
+      <AuthHero title={t.auth.signInHeroTitle} copy={t.auth.signInHeroCopy} />
+      <form className="auth-card" onSubmit={submit}>
+        <div className="auth-heading">
+          <div>
+            <h1>{t.auth.forgotPasswordTitle}</h1>
+            <p>{t.auth.forgotPasswordCopy}</p>
+          </div>
+        </div>
 
-      <form onSubmit={submit} style={authStyles.section}>
-        <label style={authStyles.label} htmlFor="forgot-email">{t.auth.email}</label>
-        <input
-          id="forgot-email"
-          type="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          placeholder="you@example.com"
-          autoComplete="email"
-          inputMode="email"
-          required
-          disabled={pending}
-          style={authStyles.input}
-        />
-        <button type="submit" disabled={pending} style={authStyles.primaryButton}>
+        <div className="auth-fields">
+          <label className="auth-field">
+            <span>{t.auth.email}</span>
+            <input
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="you@example.com"
+              autoComplete="email"
+              inputMode="email"
+              required
+              disabled={pending}
+            />
+          </label>
+        </div>
+
+        {error ? <p className="auth-message error" role="alert">{error}</p> : null}
+        {status ? <p className="auth-message success" role="status">{status}</p> : null}
+
+        <button className="auth-submit" type="submit" disabled={pending}>
           {pending ? t.auth.passwordResetSending : t.auth.sendPasswordResetEmail}
         </button>
+
+        <div className="auth-footer">
+          <p className="auth-switch">
+            <Link href="/login">{t.auth.backToLogin}</Link>
+          </p>
+        </div>
       </form>
-
-      {error ? <p style={authStyles.error} role="alert">{error}</p> : null}
-      {status ? <p style={authStyles.success} role="status">{status}</p> : null}
-
-      <p style={authStyles.footer}>
-        <Link href="/login">{t.auth.backToLogin}</Link>
-      </p>
     </div>
   );
 }

@@ -1,18 +1,19 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { useT } from "@/lib/i18n/client";
 import type { ContentLanguage } from "@/lib/settings/user-settings";
 
-const LANGUAGE_OPTIONS: Array<{ value: ContentLanguage; label: string; note: string }> = [
-  { value: "auto", label: "Auto detect", note: "Follow each learning goal" },
-  { value: "zh", label: "简体中文", note: "Prefer Chinese output" },
-  { value: "en", label: "English", note: "Prefer English output" },
-];
-
 export function ContentLanguageSelect({ initialValue }: { initialValue: ContentLanguage }) {
+  const t = useT();
   const [value, setValue] = useState<ContentLanguage>(initialValue);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+  const options: Array<{ value: ContentLanguage; label: string; note: string }> = [
+    { value: "auto", label: t.language.autoLabel, note: t.language.autoNote },
+    { value: "zh", label: t.common.chinese, note: t.language.zhNote },
+    { value: "en", label: t.common.english, note: t.language.enNote },
+  ];
 
   function update(next: ContentLanguage) {
     const previous = value;
@@ -28,26 +29,29 @@ export function ContentLanguageSelect({ initialValue }: { initialValue: ContentL
         if (!res.ok) throw new Error("save failed");
       } catch {
         setValue(previous);
-        setError("Could not save language preference.");
+        setError(t.language.saveError);
       }
     });
   }
 
   return (
-    <div className="settings-select-wrap">
-      <select
-        aria-label="Content language"
-        value={value}
-        disabled={isPending}
-        onChange={(event) => update(event.target.value as ContentLanguage)}
-      >
-        {LANGUAGE_OPTIONS.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label} · {option.note}
-          </option>
+    <div className="settings-segmented-wrap">
+      <div className="settings-segmented" role="radiogroup" aria-label={t.language.contentTitle}>
+        {options.map((option) => (
+          <button
+            key={option.value}
+            type="button"
+            role="radio"
+            aria-checked={value === option.value}
+            disabled={isPending}
+            onClick={() => update(option.value)}
+          >
+            {option.label}
+          </button>
         ))}
-      </select>
-      {error ? <p className="settings-inline-error">{error}</p> : null}
+      </div>
+      <p className="settings-segmented-note">{options.find((option) => option.value === value)?.note}</p>
+      {error ? <p className="settings-inline-error" role="alert">{error}</p> : null}
     </div>
   );
 }
