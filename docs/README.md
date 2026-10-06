@@ -1,5 +1,7 @@
 # Primoria Documentation Map
 
+Current managed-database deployment: [Supabase deployment](supabase-deployment.md).
+
 This index defines which documents describe the current product and which are
 design references or dated implementation evidence. When documents disagree,
 use the priority order below and verify behavior against the code.

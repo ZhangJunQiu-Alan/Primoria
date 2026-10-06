@@ -56,6 +56,12 @@ export function CourseOutlineView({
     return lesson.status === "generating" || (job ? isLessonGenerationActive(job) : false);
   }).length;
   const readyPercent = lessons.length > 0 ? Math.round((generatedCount / lessons.length) * 100) : 0;
+  const completedCount = lessons.filter((lesson) => lesson.progress === "completed").length;
+  const currentLesson = lessons.find((lesson) => lesson.status === "generated" && lesson.progress !== "completed") ?? null;
+  const currentLessonNumber = currentLesson ? lessons.indexOf(currentLesson) + 1 : 0;
+  const remainingMinutes = lessons
+    .filter((lesson) => lesson.progress !== "completed")
+    .reduce((total, lesson) => total + (lesson.estimatedMinutes ?? 0), 0);
 
   useEffect(() => {
     const justCompleted = [...jobsByLessonId.values()].filter(
@@ -159,27 +165,59 @@ export function CourseOutlineView({
             <span>{t.backLibrary}</span>
           </Link>
           <div className="course-outline-summary-head">
+            <span className="course-outline-eyebrow">
+              {displayCourse.topic && displayCourse.topic !== displayCourse.title ? displayCourse.topic : t.courseSummary}
+            </span>
+            <h1>{displayCourse.title}</h1>
+            {displayCourse.summary ? <p className="course-outline-summary-copy">{displayCourse.summary}</p> : null}
+          </div>
+          <dl className="course-outline-stats">
             <div>
-              <h1>{displayCourse.title}</h1>
-              <div className="course-outline-summary-meta" aria-label={t.ariaSummary}>
-                <span><LessonsIcon />{formatMessage(t.lessonsCount, { count: lessons.length })}</span>
-                <span className="ready"><ReadyIcon />{formatMessage(t.readyCount, { count: generatedCount })}</span>
-                <span className="locked"><LockIcon />{formatMessage(t.lockedCount, { count: lockedCount })}</span>
-                {buildingCount > 0 ? <span className="building"><BuildIcon />{formatMessage(t.buildingCount, { count: buildingCount })}</span> : null}
-              </div>
+              <dt>{t.completedLabel}</dt>
+              <dd>{completedCount}<small> / {lessons.length}</small></dd>
             </div>
-            <span className="course-outline-ready-count">{formatMessage(t.readyCount, { count: `${generatedCount}/${lessons.length}` })}</span>
+            <div>
+              <dt>{remainingMinutes > 0 ? t.remainingLabel : t.remainingLessonsLabel}</dt>
+              <dd>
+                {remainingMinutes > 0 ? remainingMinutes : lessons.length - completedCount}
+                <small> {remainingMinutes > 0 ? t.minutesUnit : t.lessonsUnit}</small>
+              </dd>
+            </div>
+          </dl>
+          <div className="course-outline-readiness">
+            <div className="course-outline-readiness-head">
+              <span>{t.readiness}</span>
+              <span className="course-outline-ready-count">{formatMessage(t.readyCount, { count: `${generatedCount}/${lessons.length}` })}</span>
+            </div>
+            <div
+              className="course-outline-progress"
+              role="progressbar"
+              aria-label={t.readiness}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={readyPercent}
+            >
+              {lessons.map((lesson) => {
+                const job = jobsByLessonId.get(lesson.id);
+                const building = lesson.status === "generating" || (job ? isLessonGenerationActive(job) : false);
+                return <span key={lesson.id} className={lesson.status === "generated" ? "ready" : building ? "building" : undefined} />;
+              })}
+            </div>
+            <div className="course-outline-summary-meta" aria-label={t.ariaSummary}>
+              <span className="ready"><ReadyIcon />{formatMessage(t.readyCount, { count: generatedCount })}</span>
+              {buildingCount > 0 ? <span className="building"><BuildIcon />{formatMessage(t.buildingCount, { count: buildingCount })}</span> : null}
+              <span className="locked"><LockIcon />{formatMessage(t.lockedCount, { count: lockedCount })}</span>
+            </div>
           </div>
-          <div
-            className="course-outline-progress"
-            role="progressbar"
-            aria-label={t.readiness}
-            aria-valuemin={0}
-            aria-valuemax={100}
-            aria-valuenow={readyPercent}
-          >
-            <span style={{ width: `${readyPercent}%` }} />
-          </div>
+          {currentLesson ? (
+            <Link
+              href={`/course/${displayCourse.id}?lessonId=${encodeURIComponent(currentLesson.id)}`}
+              className="course-outline-continue"
+            >
+              {formatMessage(currentLesson.progress === "in_progress" ? t.continueLesson : t.startLesson, { number: currentLessonNumber })}
+              <ArrowRightIcon />
+            </Link>
+          ) : null}
         </header>
       ) : null}
 
@@ -196,6 +234,7 @@ export function CourseOutlineView({
                 job={jobsByLessonId.get(lesson.id)}
                 enqueueError={enqueueError[lesson.id] ?? null}
                 isLast={index === renderedLessons.length - 1}
+                isCurrent={lesson.id === currentLesson?.id}
                 onGenerate={() => void generate(lesson)}
                 onJumpAhead={() => {
                   setJumpError(null);
@@ -282,6 +321,7 @@ function LessonOutlineRow({
   job,
   enqueueError,
   isLast,
+  isCurrent,
   onGenerate,
   onJumpAhead,
   summary,
@@ -294,12 +334,14 @@ function LessonOutlineRow({
   job?: LessonGenerationJobSummary;
   enqueueError: string | null;
   isLast: boolean;
+  isCurrent: boolean;
   onGenerate: () => void;
   onJumpAhead: () => void;
   summary: string;
   t: I18nDictionary["outline"];
 }) {
   const state = lessonState(lesson, job, index, enqueueError, t);
+  const completed = lesson.progress === "completed";
   const isRemediation = lesson.role === "remediation";
   const canGenerate = state.canGenerate;
   const actionHandler = state.actionKind === "jump" ? onJumpAhead : onGenerate;
@@ -307,13 +349,17 @@ function LessonOutlineRow({
   const actionHintId = state.actionHint ? `lesson-action-hint-${lesson.id}` : undefined;
 
   return (
-    <li className={`course-outline-row course-outline-${state.tone}${isRemediation ? " course-outline-remediation" : ""}${isLast ? " last" : ""}`}>
+    <li className={`course-outline-row course-outline-${state.tone}${completed ? " completed" : ""}${isCurrent ? " current" : ""}${isRemediation ? " course-outline-remediation" : ""}${isLast ? " last" : ""}`}>
       <div className="course-outline-node-wrap" aria-hidden="true">
         <div className="course-outline-node">
-          {state.tone === "locked" ? <LockIcon /> : String(index || visibleIndex).padStart(2, "0")}
+          {completed ? <CheckIcon /> : state.tone === "locked" ? <LockIcon /> : String(index || visibleIndex).padStart(2, "0")}
         </div>
       </div>
       <div className="course-outline-main">
+        <span className="course-outline-row-kicker">
+          {formatMessage(t.lessonNumber, { number: index || visibleIndex })}
+          <span>{completed ? t.stateDone : isCurrent ? t.stateCurrent : state.stateLabel}</span>
+        </span>
         <h3>{lesson.title}</h3>
         <p className="course-outline-description">{summary}</p>
         {state.detail ? <p className="course-outline-state-note">{state.detail}</p> : null}
@@ -326,7 +372,7 @@ function LessonOutlineRow({
       </div>
       <div className="course-outline-row-action">
         {lesson.status === "generated" ? (
-          <Link href={`/course/${courseId}?lessonId=${encodeURIComponent(lesson.id)}`} aria-label={msg(t.openLesson, { title: lesson.title })}>{t.open}</Link>
+          <Link href={`/course/${courseId}?lessonId=${encodeURIComponent(lesson.id)}`} aria-label={msg(t.openLesson, { title: lesson.title })}>{completed ? t.review : isCurrent ? t.continue : t.open}</Link>
         ) : (
           <span className="course-outline-action-wrap">
             <button
@@ -359,6 +405,7 @@ function lessonState(
 ): {
   tone: "ready" | "locked" | "building" | "failed";
   actionLabel: string;
+  stateLabel: string;
   actionKind: "open" | "generate" | "jump";
   detail: string | null;
   actionHint: string | null;
@@ -368,6 +415,7 @@ function lessonState(
     return {
       tone: "building",
       actionLabel: t.building,
+      stateLabel: t.stateBuilding,
       actionKind: "generate",
       detail: lessonGenerationStageLabel(job),
       actionHint: null,
@@ -378,6 +426,7 @@ function lessonState(
     return {
       tone: "building",
       actionLabel: t.building,
+      stateLabel: t.stateBuilding,
       actionKind: "generate",
       detail: t.generatingDetail,
       actionHint: null,
@@ -388,6 +437,7 @@ function lessonState(
     return {
       tone: "ready",
       actionLabel: t.open,
+      stateLabel: t.stateReady,
       actionKind: "open",
       detail: null,
       actionHint: null,
@@ -399,6 +449,7 @@ function lessonState(
     return {
       tone: "failed",
       actionLabel: t.retry,
+      stateLabel: t.stateFailed,
       actionKind: "generate",
       detail: failure,
       actionHint: null,
@@ -408,6 +459,7 @@ function lessonState(
   return {
     tone: "locked",
     actionLabel: t.jumpAhead,
+    stateLabel: t.stateLocked,
     actionKind: "jump",
     detail: null,
     actionHint: t.lockedDetail,
@@ -463,6 +515,22 @@ function upsertJob(jobs: LessonGenerationJobSummary[], job: LessonGenerationJobS
   const next = jobs.filter((entry) => entry.lessonId !== job.lessonId);
   next.push(job);
   return next;
+}
+
+function ArrowRightIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M5 12l5 5 9-10" />
+    </svg>
+  );
 }
 
 function ArrowLeftIcon() {

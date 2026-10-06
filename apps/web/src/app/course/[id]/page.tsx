@@ -3,6 +3,9 @@ import { CourseDetailClient } from "@/components/course/course-detail-client";
 import { getCurrentUserForRsc, isAuthEnabled } from "@/lib/auth/session";
 import { getCourse } from "@/lib/courses/store";
 import { listLessonGenerationJobsByCourse } from "@/lib/courses/lesson-generation-jobs";
+import { loadLessonConcepts } from "@/lib/courses/lesson-concepts";
+import { getGamificationProfile } from "@/lib/gamification/store";
+import { resolveUiLanguageForUser } from "@/lib/i18n/server";
 
 export const dynamic = "force-dynamic";
 
@@ -23,6 +26,20 @@ export default async function CoursePage({
   ]);
   if (!course) notFound();
   const copilotEnabled = !isAuthEnabled() || Boolean(user);
+  const [lessonConcepts, player] = await Promise.all([
+    loadLessonConcepts(course, user?.id ?? null),
+    user
+      ? resolveUiLanguageForUser(user.id)
+          .then((language) => getGamificationProfile(user.id, language))
+          .then(({ player }) => ({
+            levelName: player.levelName,
+            totalXp: player.totalXp,
+            nextLevelXp: player.nextLevelXp,
+            nextLevelName: player.nextLevelName,
+          }))
+          .catch(() => null)
+      : Promise.resolve(null),
+  ]);
 
   return (
     <main className="app-shell course-app-shell">
@@ -32,6 +49,8 @@ export default async function CoursePage({
           initialLessonId={requestedLessonId ?? null}
           initialLessonJobs={lessonJobs}
           copilotEnabled={copilotEnabled}
+          lessonConcepts={lessonConcepts}
+          player={player}
         />
       </section>
     </main>
