@@ -2,7 +2,8 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
 import { TutorNavRail } from "@/components/tutor/nav-rail";
-import { BoltIcon, BookIcon, CalendarIcon, StarIcon } from "@/components/profile/profile-icons";
+import { ChevronRightIcon } from "@/components/profile/profile-icons";
+import { mondayFirstWeekdays } from "@/components/profile/weekday";
 import { getCurrentUserForRsc, isAuthEnabled } from "@/lib/auth/session";
 import { getProfileStats } from "@/lib/profile/stats";
 import { getDictionaryForUser } from "@/lib/i18n/server";
@@ -14,80 +15,82 @@ export default async function WeeklyReportPage() {
   const authEnabled = isAuthEnabled();
   const user = await getCurrentUserForRsc();
   if (authEnabled && !user) redirect("/auth/sign-in?next=/weekly-report");
-  const [{ dictionary }, stats] = await Promise.all([
-    getDictionaryForUser(user?.id ?? null),
-    getProfileStats({
-      ownerId: user?.id ?? null,
-      displayName: user?.displayName ?? null,
-      email: user?.email ?? null,
-    }),
-  ]);
+  const { language, dictionary } = await getDictionaryForUser(user?.id ?? null);
+  const stats = await getProfileStats({
+    ownerId: user?.id ?? null,
+    displayName: user?.displayName ?? null,
+    email: user?.email ?? null,
+    locale: language,
+  });
   const t = dictionary.weekly;
+  const weekdays = mondayFirstWeekdays(language);
+  const peak = Math.max(0, ...stats.weekDays.map((day) => day.activity));
+  const peakIndex = peak > 0 ? stats.weekDays.findIndex((day) => day.activity === peak) : -1;
 
   return (
     <main className="app-shell profile-shell">
       <TutorNavRail initialAuthState={{ authEnabled, user }} />
       <section className="profile-detail-workspace">
-        <Link href="/profile" className="profile-back-link">← {t.backProfile}</Link>
-        <header className="profile-detail-header">
-          <h1>{t.title}</h1>
-          <div className="profile-week-switch" aria-label={t.currentWeek}>
-            <span>‹</span>
-            <strong>{stats.weekLabel}</strong>
-            <span>›</span>
+        <header className="profile-page-header has-aside">
+          <div>
+            <h1>{t.title}</h1>
+            <p>{t.subtitle}</p>
           </div>
+          <span className="profile-week-chip" aria-label={t.currentWeek}>{stats.weekLabel}</span>
         </header>
 
-        <section className="weekly-summary-card">
-          <div className="weekly-metrics">
-            <Metric icon={<BookIcon />} value={stats.weeklyLessonsCompleted} label={t.lessonsCompleted} tone="blue" />
-            <Metric icon={<BoltIcon />} value={stats.weeklyQuestionsPracticed} label={t.questionsPracticed} tone="green" />
-            <Metric icon={<CalendarIcon />} value={stats.weeklyActivityEvents} label={t.recordedEvents} tone="aqua" />
-            <Metric icon={<StarIcon />} value={stats.weeklyXp} label={t.xpEarned} tone="gold" />
-            <Metric icon={<span className="profile-lightbulb">C</span>} value={stats.coursesWorkedOn.length} label={t.coursesMetric} tone="blue" />
-          </div>
-          <div className="weekly-active-days">
-            <span>{t.activeDays}</span>
-            <strong>{formatMessage(t.daysActive, { days: stats.activeDaysThisWeek })}</strong>
-            <div><span style={{ width: `${Math.max(4, (stats.activeDaysThisWeek / 7) * 100)}%` }} /></div>
-          </div>
-        </section>
+        <dl className="profile-metric-strip">
+          <Metric label={t.lessonsCompleted} value={stats.weeklyLessonsCompleted} />
+          <Metric label={t.questionsPracticed} value={stats.weeklyQuestionsPracticed} />
+          <Metric label={t.recordedEvents} value={stats.weeklyActivityEvents} />
+          <Metric label={t.xpEarned} value={stats.weeklyXp.toLocaleString(language)} />
+          <Metric label={t.coursesMetric} value={stats.coursesWorkedOn.length} />
+        </dl>
 
-        <section className="profile-panel">
-          <h2>{t.dailyBreakdown}</h2>
-          <div className="weekly-days">
-            {stats.weekDays.map((day) => (
-              <div key={`${day.label}-${day.date}`}>
-                <strong>{day.label}</strong>
-                <span className={day.activity > 0 ? "active" : ""}>{day.activity > 0 ? day.activity : "-"}</span>
-                <em>{day.date}</em>
+        <div className="weekly-grid">
+          <section className="profile-panel weekly-chart-panel" aria-labelledby="weekly-breakdown-title">
+            <h2 id="weekly-breakdown-title" className="profile-block-title">{t.dailyBreakdown}</h2>
+            <div className="weekly-days">
+              {stats.weekDays.map((day, index) => (
+                <div key={`${day.label}-${day.date}`} className={index === peakIndex ? "peak" : day.activity > 0 ? "active" : ""}>
+                  <span className="weekly-bar-value">{day.activity > 0 ? day.activity : ""}</span>
+                  <span className="weekly-bar" aria-hidden="true">
+                    <i style={{ height: peak > 0 && day.activity > 0 ? `${Math.max(6, (day.activity / peak) * 100)}%` : undefined }} />
+                  </span>
+                  <strong>{weekdays[index]}</strong>
+                  <em>{day.date}</em>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <div className="weekly-side">
+            <section className="profile-panel weekly-active-days">
+              <span className="profile-block-title">{t.activeDays}</span>
+              <strong>{formatMessage(t.daysActive, { days: stats.activeDaysThisWeek })}</strong>
+              <div className="weekly-day-segments" aria-hidden="true">
+                {stats.weekDays.map((day) => <i key={`${day.label}-${day.date}`} className={day.activity > 0 ? "on" : ""} />)}
               </div>
-            ))}
+            </section>
+            <section className="profile-panel profile-highlight-card">
+              <span className="profile-block-title">{t.bestDay}</span>
+              <h2>{stats.bestWeekDay?.display ?? t.noActivityYet}</h2>
+              <p>{stats.bestWeekDay?.activity ?? 0} {t.events}</p>
+            </section>
           </div>
-          <div className="weekly-legend">
-            <span><i />{t.noActivity}</span>
-            <span><i className="light" />{t.light}</span>
-            <span><i className="active" />{t.active}</span>
-          </div>
-        </section>
+        </div>
 
-        <section className="profile-highlight-card">
-          <span className="profile-trophy">T</span>
-          <div>
-            <strong>{t.bestDay}</strong>
-            <h2>{stats.bestWeekDay?.display ?? t.noActivityYet}</h2>
-          </div>
-          <p>{stats.bestWeekDay?.activity ?? 0}<span>{t.events}</span></p>
-        </section>
-
-        <section className="profile-panel">
-          <h2>{t.coursesWorkedOn}</h2>
+        <section className="profile-block" aria-labelledby="weekly-courses-title">
+          <h2 id="weekly-courses-title" className="profile-block-title">{t.coursesWorkedOn}</h2>
           <div className="profile-course-stack">
             {stats.coursesWorkedOn.length ? stats.coursesWorkedOn.map((course) => (
               <Link key={course.id} href={`/course/${encodeURIComponent(course.id)}/outline`} className="profile-course-row">
-                <strong>{course.title}</strong>
-                <span>{formatMessage(t.courseRow, { lessons: course.lessons, questions: course.questions, events: course.activityEvents })}</span>
-                <em>{course.activityEvents}</em>
+                <span>
+                  <strong>{course.title}</strong>
+                  <em>{formatMessage(t.courseRow, { lessons: course.lessons, questions: course.questions, events: course.activityEvents })}</em>
+                </span>
+                <span className="profile-course-count">{course.activityEvents}</span>
+                <ChevronRightIcon />
               </Link>
             )) : <p className="profile-empty-copy">{t.noCourses}</p>}
           </div>
@@ -97,12 +100,11 @@ export default async function WeeklyReportPage() {
   );
 }
 
-function Metric({ icon, value, label, tone }: { icon: ReactNode; value: ReactNode; label: string; tone: string }) {
+function Metric({ label, value }: { label: string; value: ReactNode }) {
   return (
-    <div className={`weekly-metric ${tone}`}>
-      <span>{icon}</span>
-      <strong>{value}</strong>
-      <em>{label}</em>
+    <div>
+      <dt>{label}</dt>
+      <dd>{value}</dd>
     </div>
   );
 }

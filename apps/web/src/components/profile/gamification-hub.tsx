@@ -7,6 +7,7 @@ import type { GamificationProfile } from "@/lib/gamification/store";
 import type { AchievementCategory, AchievementCode } from "@/lib/gamification/catalog";
 import type { I18nDictionary } from "@/lib/i18n/dictionaries";
 import { formatMessage } from "@/lib/i18n/format";
+import { CheckIcon } from "@/components/profile/profile-icons";
 import type { UiLanguage } from "@/lib/i18n/languages";
 
 type Filter = "all" | AchievementCategory;
@@ -77,7 +78,6 @@ export function GamificationHub({
       <section className="guild-section guild-questline-section" aria-labelledby="guild-atlas-title">
         <header className="guild-section-header">
           <div>
-            <span className="guild-kicker">Questline</span>
             <h2 id="guild-atlas-title">{copy.questAtlas}</h2>
             <p>{copy.questAtlasCopy}</p>
           </div>
@@ -91,13 +91,16 @@ export function GamificationHub({
               <span>{profile.questline.title}</span>
               <strong>{Math.round((profile.questline.completed / Math.max(profile.questline.total, 1)) * 100)}%</strong>
             </div>
+            <div className="guild-quest-progress" aria-hidden="true">
+              <span style={{ width: `${(profile.questline.completed / Math.max(profile.questline.total, 1)) * 100}%` }} />
+            </div>
             <div className="guild-quest-path">
               {profile.questline.lessons.map((lesson, index) => {
                 const completed = lesson.progress === "completed";
                 const current = !completed && profile.questline?.lessons.slice(0, index).every((entry) => entry.progress === "completed");
                 const content = (
                   <>
-                    <span className="guild-quest-node-index">{String(index + 1).padStart(2, "0")}</span>
+                    <span className="guild-quest-node-index">{completed ? <CheckIcon /> : String(index + 1).padStart(2, "0")}</span>
                     <span className="guild-quest-node-copy">
                       <em>{questRoleLabel(lesson.role, copy)}</em>
                       <strong>{lesson.title}</strong>
@@ -126,7 +129,6 @@ export function GamificationHub({
       <section className="guild-section" aria-labelledby="daily-contracts-title">
         <header className="guild-section-header">
           <div>
-            <span className="guild-kicker">Daily board</span>
             <h2 id="daily-contracts-title">{copy.dailyContracts}</h2>
             <p>{copy.dailyCopy}</p>
           </div>
@@ -135,7 +137,7 @@ export function GamificationHub({
         <div className="guild-daily-grid">
           {profile.quests.map((quest, index) => (
             <article key={quest.code} className={`guild-contract ${quest.completed ? "is-complete" : ""}`}>
-              <span className="guild-contract-number">Contract {String(index + 1).padStart(2, "0")}</span>
+              <span className="guild-contract-number">{quest.completed ? <CheckIcon /> : String(index + 1).padStart(2, "0")}</span>
               <h3>{quest.name}</h3>
               <p>{quest.description}</p>
               <div className="guild-contract-progress" aria-label={`${quest.progress}/${quest.target}`}>
@@ -153,7 +155,6 @@ export function GamificationHub({
       <section className="guild-section guild-achievements-section" aria-labelledby="guild-achievements-title">
         <header className="guild-section-header guild-achievement-header">
           <div>
-            <span className="guild-kicker">Insignia vault</span>
             <h2 id="guild-achievements-title">{copy.achievements}</h2>
             <p>{copy.achievementsCopy}</p>
           </div>
@@ -176,14 +177,14 @@ export function GamificationHub({
             return (
               <article key={achievement.code} className={`guild-badge-card rarity-${achievement.rarity} ${earned ? "is-earned" : "is-locked"}`}>
                 <div className="guild-badge-icon"><BadgeGlyph code={achievement.code} /></div>
-                <span className="guild-badge-rarity">{achievement.rarity}</span>
+                <span className="guild-badge-rarity">{copy.rarity[achievement.rarity]}</span>
                 <h3>{achievement.name}</h3>
                 <p>{achievement.description}</p>
                 {achievement.xpReward > 0 ? <span className="guild-badge-xp">+{achievement.xpReward} XP</span> : null}
                 <footer>
                   {earned
                     ? `${copy.earned} ${new Intl.DateTimeFormat(language).format(new Date(achievement.unlockedAt!))}`
-                    : `◇ ${copy.locked}`}
+                    : copy.locked}
                 </footer>
               </article>
             );

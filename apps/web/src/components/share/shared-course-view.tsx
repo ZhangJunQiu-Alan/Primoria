@@ -82,9 +82,10 @@ export function SharedCourseView({ token, course, signedIn }: { token: string; c
         <nav className="share-lesson-nav" aria-label={t.share.outlineTitle}>
           <h2>{t.share.outlineTitle}</h2>
           <ol>
-            {lessons.map((lesson) => (
+            {lessons.map((lesson, index) => (
               <LessonNavItem
                 key={lesson.id}
+                index={index}
                 lesson={lesson}
                 active={lesson.id === activeLesson?.id}
                 plannedLabel={t.share.plannedLesson}
@@ -112,11 +113,13 @@ export function SharedCourseView({ token, course, signedIn }: { token: string; c
 }
 
 function LessonNavItem({
+  index,
   lesson,
   active,
   plannedLabel,
   onSelect,
 }: {
+  index: number;
   lesson: Lesson;
   active: boolean;
   plannedLabel: string;
@@ -131,6 +134,7 @@ function LessonNavItem({
         onClick={onSelect}
         disabled={!readable}
       >
+        <span className="share-lesson-index">{String(index + 1).padStart(2, "0")}</span>
         <span>{lesson.title}</span>
         {readable ? null : <em>{plannedLabel}</em>}
       </button>

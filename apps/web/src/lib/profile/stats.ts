@@ -99,28 +99,28 @@ function buildHeatmapDays(activeCountByDay: Map<string, number>, today = new Dat
   });
 }
 
-function formatMonthDay(date: Date) {
-  return new Intl.DateTimeFormat("en", { month: "short", day: "numeric" }).format(date);
+function formatMonthDay(date: Date, locale: string) {
+  return new Intl.DateTimeFormat(locale, { month: "short", day: "numeric" }).format(date);
 }
 
-function formatWeekLabel(today = new Date()) {
+function formatWeekLabel(today = new Date(), locale = "en") {
   const start = startOfWeek(today);
   const end = new Date(start.getTime() + 6 * DAY_MS);
-  return `${formatMonthDay(start)} - ${formatMonthDay(end)}`;
+  return `${formatMonthDay(start, locale)} – ${formatMonthDay(end, locale)}`;
 }
 
-function formatWeekDayDisplay(day: { label: string; date: number }, today = new Date()) {
+function formatWeekDayDisplay(day: { label: string; date: number }, today = new Date(), locale = "en") {
   const weekStart = startOfWeek(today);
   const labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const index = labels.indexOf(day.label);
   const date = new Date(weekStart.getTime() + Math.max(0, index) * DAY_MS);
-  return new Intl.DateTimeFormat("en", { weekday: "long", month: "short", day: "numeric" }).format(date);
+  return new Intl.DateTimeFormat(locale, { weekday: "long", month: "short", day: "numeric" }).format(date);
 }
 
-function selectBestWeekDay(weekDays: ProfileStats["weekDays"], today = new Date()) {
+function selectBestWeekDay(weekDays: ProfileStats["weekDays"], today = new Date(), locale = "en") {
   const best = weekDays.reduce((winner, day) => (day.activity > winner.activity ? day : winner), weekDays[0]);
   if (!best || best.activity <= 0) return null;
-  return { display: formatWeekDayDisplay(best, today), activity: best.activity };
+  return { display: formatWeekDayDisplay(best, today, locale), activity: best.activity };
 }
 
 function rowTime(row: { createdAt: Date }) {
@@ -143,7 +143,9 @@ export async function getProfileStats(input: {
   ownerId: string | null;
   displayName: string | null;
   email: string | null;
+  locale?: string;
 }): Promise<ProfileStats> {
+  const locale = input.locale ?? "en";
   const displayName = formatDisplayName(input.displayName, input.email);
   const initial = formatInitial(displayName, input.email);
   const emptyWeekDays = buildWeekDays(new Map());
@@ -171,7 +173,7 @@ export async function getProfileStats(input: {
       weeklyActivityEvents: 0,
       activeDaysThisWeek: 0,
       activeDaysLast30: 0,
-      weekLabel: formatWeekLabel(),
+      weekLabel: formatWeekLabel(new Date(), locale),
       bestWeekDay: null,
       weekDays: emptyWeekDays,
       heatmapDays: emptyHeatmapDays,
@@ -280,8 +282,8 @@ export async function getProfileStats(input: {
     weeklyActivityEvents,
     activeDaysThisWeek: weekActiveDays,
     activeDaysLast30: heatmapDays.filter((day) => day.activity > 0).length,
-    weekLabel: formatWeekLabel(now),
-    bestWeekDay: selectBestWeekDay(weekDays, now),
+    weekLabel: formatWeekLabel(now, locale),
+    bestWeekDay: selectBestWeekDay(weekDays, now, locale),
     weekDays,
     heatmapDays,
     coursesWorkedOn: courses
