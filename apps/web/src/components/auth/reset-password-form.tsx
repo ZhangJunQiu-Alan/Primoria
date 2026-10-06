@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import type { FormEvent } from "react";
 import { useState } from "react";
 
-import { authStyles } from "@/components/auth/styles";
+import { AuthHero } from "@/components/auth/auth-form";
 import { useT } from "@/lib/i18n/client";
 
 export function ResetPasswordForm() {
@@ -17,6 +17,7 @@ export function ResetPasswordForm() {
   const [pending, setPending] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(token ? null : t.auth.passwordResetMissingToken);
+  const locked = pending || !token || Boolean(status);
 
   async function submit(event: FormEvent) {
     event.preventDefault();
@@ -50,46 +51,62 @@ export function ResetPasswordForm() {
   }
 
   return (
-    <div style={authStyles.container}>
-      <h1 style={authStyles.title}>{t.auth.resetPasswordTitle}</h1>
-      <p style={authStyles.label}>{t.auth.resetPasswordCopy}</p>
+    <div className="auth-panel">
+      <AuthHero title={t.auth.signInHeroTitle} copy={t.auth.signInHeroCopy} />
+      <form className="auth-card" onSubmit={submit}>
+        <div className="auth-heading">
+          <div>
+            <h1>{t.auth.resetPasswordTitle}</h1>
+            <p>{t.auth.resetPasswordCopy}</p>
+          </div>
+        </div>
 
-      <form onSubmit={submit} style={authStyles.section}>
-        <label style={authStyles.label} htmlFor="reset-password">{t.auth.newPassword}</label>
-        <input
-          id="reset-password"
-          type="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          minLength={8}
-          autoComplete="new-password"
-          required
-          disabled={pending || !token || Boolean(status)}
-          style={authStyles.input}
-        />
-        <label style={authStyles.label} htmlFor="reset-confirm-password">{t.auth.confirmNewPassword}</label>
-        <input
-          id="reset-confirm-password"
-          type="password"
-          value={confirmPassword}
-          onChange={(event) => setConfirmPassword(event.target.value)}
-          minLength={8}
-          autoComplete="new-password"
-          required
-          disabled={pending || !token || Boolean(status)}
-          style={authStyles.input}
-        />
-        <button type="submit" disabled={pending || !token || Boolean(status)} style={authStyles.primaryButton}>
-          {pending ? t.auth.passwordResetting : t.auth.resetPassword}
-        </button>
+        <div className="auth-fields">
+          <label className="auth-field">
+            <span>{t.auth.newPassword}</span>
+            <input
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              minLength={8}
+              autoComplete="new-password"
+              required
+              disabled={locked}
+            />
+          </label>
+          <label className="auth-field">
+            <span>{t.auth.confirmNewPassword}</span>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(event) => setConfirmPassword(event.target.value)}
+              minLength={8}
+              autoComplete="new-password"
+              required
+              disabled={locked}
+            />
+          </label>
+        </div>
+
+        {error ? <p className="auth-message error" role="alert">{error}</p> : null}
+        {status ? <p className="auth-message success" role="status">{status}</p> : null}
+
+        {status ? (
+          <Link className="auth-submit" href="/login">{t.auth.backToLogin}</Link>
+        ) : (
+          <button className="auth-submit" type="submit" disabled={locked}>
+            {pending ? t.auth.passwordResetting : t.auth.resetPassword}
+          </button>
+        )}
+
+        {status ? null : (
+          <div className="auth-footer">
+            <p className="auth-switch">
+              <Link href="/login">{t.auth.backToLogin}</Link>
+            </p>
+          </div>
+        )}
       </form>
-
-      {error ? <p style={authStyles.error} role="alert">{error}</p> : null}
-      {status ? <p style={authStyles.success} role="status">{status}</p> : null}
-
-      <Link href="/login" style={authStyles.primaryButton}>
-        {t.auth.backToLogin}
-      </Link>
     </div>
   );
 }
