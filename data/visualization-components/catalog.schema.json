@@ -25,7 +25,11 @@
     "scope": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["disciplinePolicy", "selectionUnit", "fallbackPolicy"],
+      "required": [
+        "disciplinePolicy",
+        "selectionUnit",
+        "fallbackPolicy"
+      ],
       "properties": {
         "disciplinePolicy": {
           "const": "all-subjects"
@@ -70,7 +74,10 @@
     "localizedText": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["en", "zh-CN"],
+      "required": [
+        "en",
+        "zh-CN"
+      ],
       "properties": {
         "en": {
           "type": "string",
@@ -87,11 +94,19 @@
     "implementation": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["status", "rendererKey"],
+      "required": [
+        "status",
+        "rendererKey"
+      ],
       "properties": {
         "status": {
           "type": "string",
-          "enum": ["implemented", "prototype", "planned", "deprecated"]
+          "enum": [
+            "implemented",
+            "prototype",
+            "planned",
+            "deprecated"
+          ]
         },
         "rendererKey": {
           "type": "string",
@@ -178,7 +193,13 @@
         "configSchema": {
           "type": "object",
           "additionalProperties": true,
-          "required": ["type", "additionalProperties", "properties", "required", "default"],
+          "required": [
+            "type",
+            "additionalProperties",
+            "properties",
+            "required",
+            "default"
+          ],
           "properties": {
             "$schema": {
               "const": "https://json-schema.org/draft/2020-12/schema"
@@ -227,6 +248,72 @@
           "minItems": 2,
           "items": {
             "$ref": "#/$defs/localizedText"
+          }
+        },
+        "search": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "aliases": {
+              "type": "array",
+              "maxItems": 60,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 240
+              }
+            },
+            "concepts": {
+              "type": "array",
+              "maxItems": 60,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 240
+              }
+            },
+            "stages": {
+              "type": "array",
+              "maxItems": 60,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 240
+              }
+            },
+            "supports": {
+              "type": "array",
+              "maxItems": 60,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 240
+              }
+            },
+            "excludes": {
+              "type": "array",
+              "maxItems": 60,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 240
+              }
+            },
+            "referenceIds": {
+              "type": "array",
+              "maxItems": 60,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 240
+              }
+            }
           }
         }
       }

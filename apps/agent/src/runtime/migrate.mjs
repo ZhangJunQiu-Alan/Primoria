@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { PostgresSaver } from "@langchain/langgraph-checkpoint-postgres";
+import { createAgentCheckpointer } from "./checkpointer.mjs";
 import postgres from "postgres";
 
 const runtimeDir = path.dirname(fileURLToPath(import.meta.url));
@@ -10,8 +10,8 @@ const migrationsDir = path.resolve(runtimeDir, "../../db/migrations");
 
 export async function migrateAgentRuntime(databaseUrl = process.env.DATABASE_URL) {
   if (!databaseUrl) throw new Error("DATABASE_URL is required for Agent runtime migrations");
-  const sql = postgres(databaseUrl, { prepare: false, onnotice: () => {} });
-  const checkpointer = PostgresSaver.fromConnString(databaseUrl, { schema: "agent_runtime" });
+  const sql = postgres(databaseUrl, { max: 1, prepare: false, onnotice: () => {} });
+  const checkpointer = createAgentCheckpointer(databaseUrl);
   try {
     await sql`create schema if not exists agent_runtime`;
     await sql`create table if not exists agent_runtime.schema_migrations (

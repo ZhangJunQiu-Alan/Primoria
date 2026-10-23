@@ -79,6 +79,21 @@ function fixtureCourse(): Course {
 }
 
 describe("course share snapshot", () => {
+  it("preserves validated component versions in immutable snapshots and imported copies", () => {
+    const course = fixtureCourse();
+    course.lessons[0].blocks!.push({ id: "interactive", type: "visual", description: "Observe rays", engine: "interactive", interactive: { componentId: "physics.lens-imaging", configVersion: 1, config: { focalLength: 10 } } });
+    const snapshot = buildShareSnapshot(course, new Set(["asset_global"]));
+    const imported = snapshotToImportedCourse(snapshot);
+    const original = course.lessons[0].blocks!.at(-1)!;
+    if (original.type !== "visual") throw new Error("fixture");
+    original.interactive!.config.focalLength = 20;
+    const shared = snapshot.course.lessons[0].blocks!.at(-1)!;
+    const copied = imported.lessons[0].blocks!.at(-1)!;
+    expect(shared).toMatchObject({ engine: "interactive", interactive: { configVersion: 1, config: { focalLength: 10 } } });
+    if (copied.type !== "visual") throw new Error("fixture");
+    copied.interactive!.config.focalLength = 25;
+    expect(shared).toMatchObject({ interactive: { config: { focalLength: 10 } } });
+  });
   it("strips learner progress and archival state", () => {
     const snapshot = buildShareSnapshot(fixtureCourse(), new Set(["asset_global"]));
 

@@ -7,11 +7,15 @@ import {
   type SelectDecision,
 } from "@/lib/interactive/components/registry";
 import type { CurrentInstance } from "@/lib/interactive/configure";
+import { searchInteractiveComponents } from "@primoria/contracts/artifacts/interactive-search";
 
 export const SELECT_COMPONENT_TIMEOUT_MS = 30_000;
 
 export function buildSelectComponentPrompts(prompt: string, current: CurrentInstance | null) {
-  const catalogLines = COMPONENT_REGISTRY.map(
+  const candidateIds = new Set(searchInteractiveComponents({ query: prompt, limit: 10 }).map((entry) => entry.componentId));
+  if (current) candidateIds.add(current.componentId);
+  const candidates = COMPONENT_REGISTRY.length <= 40 ? COMPONENT_REGISTRY : COMPONENT_REGISTRY.filter((entry) => candidateIds.has(entry.componentId));
+  const catalogLines = candidates.map(
     (entry) => `- ${entry.componentId}(${entry.name}):${entry.catalogDescription}`,
   ).join("\n");
   const system = `你是教学可视化的组件路由器。根据学生的消息,判断是否需要交互可视化组件,以及用哪个。

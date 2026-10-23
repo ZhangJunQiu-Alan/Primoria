@@ -29,7 +29,7 @@ explicitly asks to deploy:
 - Production `APP_BASE_URL` / `NEXT_PUBLIC_APP_URL`.
 - Chat model provider, base URL, server-side API key, default `OPENAI_MODEL`,
   fast routing model `AI_MODEL_FAST`, and optional content model
-  `AI_MODEL_CONTENT`.
+  `AI_MODEL_CONTENT`, plus optional Agent override `AI_MODEL_TUTOR`.
 - Embedding provider credentials. For MiniMax this includes API key and group ID
   when the account requires one.
 - Tencent SES secret ID/key, region, verified sender, approved password-reset

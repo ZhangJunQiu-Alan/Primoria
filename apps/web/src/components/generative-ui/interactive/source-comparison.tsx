@@ -30,7 +30,7 @@ export function SourceComparisonWidget({ config, onChange }: {
   });
   const selectedSource = config.sources.find((source) => source.id === selectedSourceId) ?? config.sources[0];
   return (
-    <section style={{ overflow: "hidden", border: `1px solid ${WIDGET_COLORS.line}`, borderRadius: 10, background: WIDGET_COLORS.surface }} aria-label={t.sourceComparison.aria}>
+    <section data-component-id="humanities.source-comparison" style={{ overflow: "hidden", border: `1px solid ${WIDGET_COLORS.line}`, borderRadius: 10, background: WIDGET_COLORS.surface }} aria-label={t.sourceComparison.aria}>
       <header style={{ padding: "12px 16px", borderBottom: `1px solid ${WIDGET_COLORS.line}`, background: WIDGET_COLORS.surfaceSoft }}>
         <div style={{ fontSize: 13.5, fontWeight: 600 }}>{t.sourceComparison.title}</div>
         <p style={{ margin: "4px 0 0", color: WIDGET_COLORS.muted, fontSize: 12.5 }}>{config.inquiryQuestion}</p>

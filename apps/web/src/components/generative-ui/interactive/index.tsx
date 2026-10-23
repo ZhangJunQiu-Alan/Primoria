@@ -1,111 +1,75 @@
 "use client";
 
-import type { ReactElement } from "react";
-import { AcidBaseTitrationConfigSchema } from "@/lib/interactive/components/acid-base-titration";
-import { AngleMeasureConfigSchema } from "@/lib/interactive/components/angle-measure";
-import { ArgumentMapConfigSchema } from "@/lib/interactive/components/argument-map";
-import { CharacterRelationshipsConfigSchema } from "@/lib/interactive/components/character-relationships";
-import { ClimateComparisonConfigSchema } from "@/lib/interactive/components/climate-comparison";
-import { CloseReadingConfigSchema } from "@/lib/interactive/components/close-reading";
-import { ColorHarmonyConfigSchema } from "@/lib/interactive/components/color-harmony";
-import { ExperimentDesignConfigSchema } from "@/lib/interactive/components/experiment-design";
-import { FunctionExplorerConfigSchema } from "@/lib/interactive/components/function-explorer";
-import { LensImagingConfigSchema } from "@/lib/interactive/components/lens-imaging";
-import { NarrativeArcConfigSchema } from "@/lib/interactive/components/narrative-arc";
-import { PolicyTradeoffConfigSchema } from "@/lib/interactive/components/policy-tradeoff";
-import { ProcessSequenceConfigSchema } from "@/lib/interactive/components/process-sequence";
-import { RhythmPatternConfigSchema } from "@/lib/interactive/components/rhythm-pattern";
-import { SentenceStructureConfigSchema } from "@/lib/interactive/components/sentence-structure";
-import { SourceComparisonConfigSchema } from "@/lib/interactive/components/source-comparison";
-import { SortingStepsConfigSchema } from "@/lib/interactive/components/sorting-steps";
-import { TimelineCausalityConfigSchema } from "@/lib/interactive/components/timeline-causality";
-import { WaveSuperpositionConfigSchema } from "@/lib/interactive/components/wave-superposition";
+import { lazy, Suspense, type ComponentType, type ReactElement } from "react";
 import type { ComponentConfig } from "@/lib/interactive/components/types";
-import { AcidBaseTitrationWidget } from "./acid-base-titration";
-import { AngleMeasureWidget } from "./angle-measure";
-import { ArgumentMapWidget } from "./argument-map";
-import { CharacterRelationshipsWidget } from "./character-relationships";
-import { ClimateComparisonWidget } from "./climate-comparison";
-import { CloseReadingWidget } from "./close-reading";
-import { ColorHarmonyWidget } from "./color-harmony";
-import { ExperimentDesignWidget } from "./experiment-design";
-import { FunctionExplorerWidget } from "./function-explorer";
-import { LensImagingWidget } from "./lens-imaging";
-import { NarrativeArcWidget } from "./narrative-arc";
-import { PolicyTradeoffWidget } from "./policy-tradeoff";
-import { ProcessSequenceWidget } from "./process-sequence";
-import { RhythmPatternWidget } from "./rhythm-pattern";
-import { SentenceStructureWidget } from "./sentence-structure";
-import { SourceComparisonWidget } from "./source-comparison";
-import { SortingStepsWidget } from "./sorting-steps";
-import { TimelineCausalityWidget } from "./timeline-causality";
-import { WaveSuperpositionWidget } from "./wave-superposition";
-
-// componentId → widget renderer. Each entry parses the (server-validated)
-// config back into its own type at the boundary. New components register here
-// and nowhere else on the client.
 
 export type WidgetRenderProps = {
   config: ComponentConfig;
   onChange: (next: ComponentConfig) => void;
 };
 
-export const WIDGETS: Record<string, (props: WidgetRenderProps) => ReactElement> = {
-  "physics.lens-imaging": ({ config, onChange }) => (
-    <LensImagingWidget config={LensImagingConfigSchema.parse(config)} onChange={onChange} />
-  ),
-  "general.timeline-causality": ({ config, onChange }) => (
-    <TimelineCausalityWidget config={TimelineCausalityConfigSchema.parse(config)} onChange={onChange} />
-  ),
-  "humanities.source-comparison": ({ config, onChange }) => (
-    <SourceComparisonWidget config={SourceComparisonConfigSchema.parse(config)} onChange={onChange} />
-  ),
-  "literature.close-reading": ({ config, onChange }) => (
-    <CloseReadingWidget config={CloseReadingConfigSchema.parse(config)} onChange={onChange} />
-  ),
-  "humanities.argument-map": ({ config, onChange }) => (
-    <ArgumentMapWidget config={ArgumentMapConfigSchema.parse(config)} onChange={onChange} />
-  ),
-  "chem.acid-base-titration": ({ config, onChange }) => (
-    <AcidBaseTitrationWidget config={AcidBaseTitrationConfigSchema.parse(config)} onChange={onChange} />
-  ),
-  "physics.wave-superposition": ({ config, onChange }) => (
-    <WaveSuperpositionWidget config={WaveSuperpositionConfigSchema.parse(config)} onChange={onChange} />
-  ),
-  "cs.sorting-steps": ({ config, onChange }) => (
-    <SortingStepsWidget config={SortingStepsConfigSchema.parse(config)} onChange={onChange} />
-  ),
-  "math.function-explorer": ({ config, onChange }) => (
-    <FunctionExplorerWidget config={FunctionExplorerConfigSchema.parse(config)} onChange={onChange} />
-  ),
-  "math.angle-measure": ({ config, onChange }) => (
-    <AngleMeasureWidget config={AngleMeasureConfigSchema.parse(config)} onChange={onChange} />
-  ),
-  "general.process-sequence": ({ config, onChange }) => (
-    <ProcessSequenceWidget config={ProcessSequenceConfigSchema.parse(config)} onChange={onChange} />
-  ),
-  "literature.narrative-arc": ({ config, onChange }) => (
-    <NarrativeArcWidget config={NarrativeArcConfigSchema.parse(config)} onChange={onChange} />
-  ),
-  "literature.character-relationships": ({ config, onChange }) => (
-    <CharacterRelationshipsWidget config={CharacterRelationshipsConfigSchema.parse(config)} onChange={onChange} />
-  ),
-  "language.sentence-structure": ({ config, onChange }) => (
-    <SentenceStructureWidget config={SentenceStructureConfigSchema.parse(config)} onChange={onChange} />
-  ),
-  "social.policy-tradeoff": ({ config, onChange }) => (
-    <PolicyTradeoffWidget config={PolicyTradeoffConfigSchema.parse(config)} onChange={onChange} />
-  ),
-  "geography.climate-comparison": ({ config, onChange }) => (
-    <ClimateComparisonWidget config={ClimateComparisonConfigSchema.parse(config)} onChange={onChange} />
-  ),
-  "arts.color-harmony": ({ config, onChange }) => (
-    <ColorHarmonyWidget config={ColorHarmonyConfigSchema.parse(config)} onChange={onChange} />
-  ),
-  "music.rhythm-pattern": ({ config, onChange }) => (
-    <RhythmPatternWidget config={RhythmPatternConfigSchema.parse(config)} onChange={onChange} />
-  ),
-  "psychology.experiment-design": ({ config, onChange }) => (
-    <ExperimentDesignWidget config={ExperimentDesignConfigSchema.parse(config)} onChange={onChange} />
-  ),
+type Renderer = ComponentType<WidgetRenderProps>;
+const loaders: Record<string, () => Promise<Renderer>> = {
+  "biology.cell-division": () => Promise.all([import("./cell-division"), import("@/lib/interactive/components/cell-division")]).then(([widget, schemas]) => function CellDivisionWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.CellDivisionWidget config={schemas.CellDivisionConfigSchema.parse(config)} onChange={onChange} />; }),
+  "biology.osmosis-lab": () => Promise.all([import("./osmosis-lab"), import("@/lib/interactive/components/osmosis-lab")]).then(([widget, schemas]) => function OsmosisLabWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.OsmosisLabWidget config={schemas.OsmosisLabConfigSchema.parse(config)} onChange={onChange} />; }),
+  "physics.magnetic-motion": () => Promise.all([import("./magnetic-motion"), import("@/lib/interactive/components/magnetic-motion")]).then(([widget, schemas]) => function MagneticMotionWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.MagneticMotionWidget config={schemas.MagneticMotionConfigSchema.parse(config)} onChange={onChange} />; }),
+  "physics.photoelectric-effect": () => Promise.all([import("./photoelectric-effect"), import("@/lib/interactive/components/photoelectric-effect")]).then(([widget, schemas]) => function PhotoelectricEffectWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.PhotoelectricEffectWidget config={schemas.PhotoelectricEffectConfigSchema.parse(config)} onChange={onChange} />; }),
+  "math.linear-system": () => Promise.all([import("./linear-system"), import("@/lib/interactive/components/linear-system")]).then(([widget, schemas]) => function LinearSystemWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.LinearSystemWidget config={schemas.LinearSystemConfigSchema.parse(config)} onChange={onChange} />; }),
+  "math.quadratic-equation": () => Promise.all([import("./quadratic-equation"), import("@/lib/interactive/components/quadratic-equation")]).then(([widget, schemas]) => function QuadraticEquationWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.QuadraticEquationWidget config={schemas.QuadraticEquationConfigSchema.parse(config)} onChange={onChange} />; }),
+  "chem.weak-acid-buffer": () => Promise.all([import("./weak-acid-buffer"), import("@/lib/interactive/components/weak-acid-buffer")]).then(([widget, schemas]) => function WeakAcidBufferWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.WeakAcidBufferWidget config={schemas.WeakAcidBufferConfigSchema.parse(config)} onChange={onChange} />; }),
+  "physics.lever-balance": () => Promise.all([import("./lever-buoyancy"), import("@/lib/interactive/components/lever-buoyancy")]).then(([widget, schemas]) => function LeverBalanceWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.LeverBalanceWidget config={schemas.LeverBalanceConfigSchema.parse(config)} onChange={onChange} />; }),
+  "physics.buoyancy-lab": () => Promise.all([import("./lever-buoyancy"), import("@/lib/interactive/components/lever-buoyancy")]).then(([widget, schemas]) => function BuoyancyLabWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.BuoyancyLabWidget config={schemas.BuoyancyLabConfigSchema.parse(config)} onChange={onChange} />; }),
+  "physics.electric-field": () => Promise.all([import("./electric-field"), import("@/lib/interactive/components/electric-field")]).then(([widget, schemas]) => function ElectricFieldWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.ElectricFieldWidget config={schemas.ElectricFieldConfigSchema.parse(config)} onChange={onChange} />; }),
+  "math.binomial-distribution": () => Promise.all([import("./binomial-distribution"), import("@/lib/interactive/components/binomial-distribution")]).then(([widget, schemas]) => function BinomialDistributionWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.BinomialDistributionWidget config={schemas.BinomialDistributionConfigSchema.parse(config)} onChange={onChange} />; }),
+  "math.trigonometry-circle": () => Promise.all([import("./trigonometry-circle"), import("@/lib/interactive/components/trigonometry-circle")]).then(([widget, schemas]) => function TrigonometryCircleWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.TrigonometryCircleWidget config={schemas.TrigonometryCircleConfigSchema.parse(config)} onChange={onChange} />; }),
+  "chem.chemical-equilibrium": () => Promise.all([import("./chemical-equilibrium"), import("@/lib/interactive/components/chemical-equilibrium")]).then(([widget, schemas]) => function ChemicalEquilibriumWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.ChemicalEquilibriumWidget config={schemas.ChemicalEquilibriumConfigSchema.parse(config)} onChange={onChange} />; }),
+  "chem.molecular-geometry": () => Promise.all([import("./molecular-geometry"), import("@/lib/interactive/components/molecular-geometry")]).then(([widget, schemas]) => function MolecularGeometryWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.MolecularGeometryWidget config={schemas.MolecularGeometryConfigSchema.parse(config)} onChange={onChange} />; }),
+  "physics.oscillation-lab": () => Promise.all([import("./oscillation-lab"), import("@/lib/interactive/components/oscillation-lab")]).then(([widget, schemas]) => function OscillationLabWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.OscillationLabWidget config={schemas.OscillationLabConfigSchema.parse(config)} onChange={onChange} />; }),
+  "chem.reaction-kinetics": () => Promise.all([import("./reaction-kinetics"), import("@/lib/interactive/components/reaction-kinetics")]).then(([widget, schemas]) => function ReactionKineticsWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.ReactionKineticsWidget config={schemas.ReactionKineticsConfigSchema.parse(config)} onChange={onChange} />; }),
+  "chem.ideal-gas": () => Promise.all([import("./ideal-gas"), import("@/lib/interactive/components/ideal-gas")]).then(([widget, schemas]) => function IdealGasWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.IdealGasWidget config={schemas.IdealGasConfigSchema.parse(config)} onChange={onChange} />; }),
+  "geography.earth-seasons": () => Promise.all([import("./earth-seasons"), import("@/lib/interactive/components/earth-seasons")]).then(([widget, schemas]) => function EarthSeasonsWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.EarthSeasonsWidget config={schemas.EarthSeasonsConfigSchema.parse(config)} onChange={onChange} />; }),
+  "math.chicken-rabbit": () => Promise.all([import("./chicken-rabbit"), import("@/lib/interactive/components/chicken-rabbit")]).then(([widget, schemas]) => function ChickenRabbitWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.ChickenRabbitWidget config={schemas.ChickenRabbitConfigSchema.parse(config)} onChange={onChange} />; }),
+  "math.fraction-equivalence": () => Promise.all([import("./fraction-equivalence"), import("@/lib/interactive/components/fraction-equivalence")]).then(([widget, schemas]) => function FractionEquivalenceWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.FractionEquivalenceWidget config={schemas.FractionEquivalenceConfigSchema.parse(config)} onChange={onChange} />; }),
+  "biology.mendelian-genetics": () => Promise.all([import("./mendelian-genetics"), import("@/lib/interactive/components/mendelian-genetics")]).then(([widget, schemas]) => function MendelianGeneticsWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.MendelianGeneticsWidget config={schemas.MendelianGeneticsConfigSchema.parse(config)} onChange={onChange} />; }),
+  "astronomy.moon-phases": () => Promise.all([import("./moon-phases"), import("@/lib/interactive/components/moon-phases")]).then(([widget, schemas]) => function MoonPhasesWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.MoonPhasesWidget config={schemas.MoonPhasesConfigSchema.parse(config)} onChange={onChange} />; }),
+  "physics.circuit-lab": () => Promise.all([import("./circuit-lab"), import("@/lib/interactive/components/circuit-lab")]).then(([widget, schemas]) => function CircuitLabWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.CircuitLabWidget config={schemas.CircuitLabConfigSchema.parse(config)} onChange={onChange} />; }),
+  "physics.projectile-lab": () => Promise.all([import("./projectile-lab"), import("@/lib/interactive/components/projectile-lab")]).then(([widget, schemas]) => function ProjectileLabWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.ProjectileLabWidget config={schemas.ProjectileLabConfigSchema.parse(config)} onChange={onChange} />; }),
+  "physics.refraction-lab": () => Promise.all([import("./refraction-lab"), import("@/lib/interactive/components/refraction-lab")]).then(([widget, schemas]) => function RefractionLabWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.RefractionLabWidget config={schemas.RefractionLabConfigSchema.parse(config)} onChange={onChange} />; }),
+  "math.calculus-lab": () => Promise.all([import("./calculus-lab"), import("@/lib/interactive/components/calculus-lab")]).then(([widget, schemas]) => function CalculusLabWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.CalculusLabWidget config={schemas.CalculusLabConfigSchema.parse(config)} onChange={onChange} />; }),
+  "physics.lens-imaging": () => Promise.all([import("./lens-imaging"), import("@/lib/interactive/components/lens-imaging")]).then(([widget, schemas]) => function LensImagingWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.LensImagingWidget config={schemas.LensImagingConfigSchema.parse(config)} onChange={onChange} />; }),
+  "general.timeline-causality": () => Promise.all([import("./timeline-causality"), import("@/lib/interactive/components/timeline-causality")]).then(([widget, schemas]) => function TimelineCausalityWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.TimelineCausalityWidget config={schemas.TimelineCausalityConfigSchema.parse(config)} onChange={onChange} />; }),
+  "humanities.source-comparison": () => Promise.all([import("./source-comparison"), import("@/lib/interactive/components/source-comparison")]).then(([widget, schemas]) => function SourceComparisonWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.SourceComparisonWidget config={schemas.SourceComparisonConfigSchema.parse(config)} onChange={onChange} />; }),
+  "literature.close-reading": () => Promise.all([import("./close-reading"), import("@/lib/interactive/components/close-reading")]).then(([widget, schemas]) => function CloseReadingWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.CloseReadingWidget config={schemas.CloseReadingConfigSchema.parse(config)} onChange={onChange} />; }),
+  "humanities.argument-map": () => Promise.all([import("./argument-map"), import("@/lib/interactive/components/argument-map")]).then(([widget, schemas]) => function ArgumentMapWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.ArgumentMapWidget config={schemas.ArgumentMapConfigSchema.parse(config)} onChange={onChange} />; }),
+  "chem.acid-base-titration": () => Promise.all([import("./acid-base-titration"), import("@/lib/interactive/components/acid-base-titration")]).then(([widget, schemas]) => function AcidBaseTitrationWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.AcidBaseTitrationWidget config={schemas.AcidBaseTitrationConfigSchema.parse(config)} onChange={onChange} />; }),
+  "physics.wave-superposition": () => Promise.all([import("./wave-superposition"), import("@/lib/interactive/components/wave-superposition")]).then(([widget, schemas]) => function WaveSuperpositionWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.WaveSuperpositionWidget config={schemas.WaveSuperpositionConfigSchema.parse(config)} onChange={onChange} />; }),
+  "cs.sorting-steps": () => Promise.all([import("./sorting-steps"), import("@/lib/interactive/components/sorting-steps")]).then(([widget, schemas]) => function SortingStepsWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.SortingStepsWidget config={schemas.SortingStepsConfigSchema.parse(config)} onChange={onChange} />; }),
+  "math.function-explorer": () => Promise.all([import("./function-explorer"), import("@/lib/interactive/components/function-explorer")]).then(([widget, schemas]) => function FunctionExplorerWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.FunctionExplorerWidget config={schemas.FunctionExplorerConfigSchema.parse(config)} onChange={onChange} />; }),
+  "math.angle-measure": () => Promise.all([import("./angle-measure"), import("@/lib/interactive/components/angle-measure")]).then(([widget, schemas]) => function AngleMeasureWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.AngleMeasureWidget config={schemas.AngleMeasureConfigSchema.parse(config)} onChange={onChange} />; }),
+  "general.process-sequence": () => Promise.all([import("./process-sequence"), import("@/lib/interactive/components/process-sequence")]).then(([widget, schemas]) => function ProcessSequenceWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.ProcessSequenceWidget config={schemas.ProcessSequenceConfigSchema.parse(config)} onChange={onChange} />; }),
+  "literature.narrative-arc": () => Promise.all([import("./narrative-arc"), import("@/lib/interactive/components/narrative-arc")]).then(([widget, schemas]) => function NarrativeArcWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.NarrativeArcWidget config={schemas.NarrativeArcConfigSchema.parse(config)} onChange={onChange} />; }),
+  "literature.character-relationships": () => Promise.all([import("./character-relationships"), import("@/lib/interactive/components/character-relationships")]).then(([widget, schemas]) => function CharacterRelationshipsWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.CharacterRelationshipsWidget config={schemas.CharacterRelationshipsConfigSchema.parse(config)} onChange={onChange} />; }),
+  "language.sentence-structure": () => Promise.all([import("./sentence-structure"), import("@/lib/interactive/components/sentence-structure")]).then(([widget, schemas]) => function SentenceStructureWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.SentenceStructureWidget config={schemas.SentenceStructureConfigSchema.parse(config)} onChange={onChange} />; }),
+  "social.policy-tradeoff": () => Promise.all([import("./policy-tradeoff"), import("@/lib/interactive/components/policy-tradeoff")]).then(([widget, schemas]) => function PolicyTradeoffWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.PolicyTradeoffWidget config={schemas.PolicyTradeoffConfigSchema.parse(config)} onChange={onChange} />; }),
+  "geography.climate-comparison": () => Promise.all([import("./climate-comparison"), import("@/lib/interactive/components/climate-comparison")]).then(([widget, schemas]) => function ClimateComparisonWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.ClimateComparisonWidget config={schemas.ClimateComparisonConfigSchema.parse(config)} onChange={onChange} />; }),
+  "arts.color-harmony": () => Promise.all([import("./color-harmony"), import("@/lib/interactive/components/color-harmony")]).then(([widget, schemas]) => function ColorHarmonyWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.ColorHarmonyWidget config={schemas.ColorHarmonyConfigSchema.parse(config)} onChange={onChange} />; }),
+  "music.rhythm-pattern": () => Promise.all([import("./rhythm-pattern"), import("@/lib/interactive/components/rhythm-pattern")]).then(([widget, schemas]) => function RhythmPatternWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.RhythmPatternWidget config={schemas.RhythmPatternConfigSchema.parse(config)} onChange={onChange} />; }),
+  "psychology.experiment-design": () => Promise.all([import("./experiment-design"), import("@/lib/interactive/components/experiment-design")]).then(([widget, schemas]) => function ExperimentDesignWidgetRenderer({ config, onChange }: WidgetRenderProps) { return <widget.ExperimentDesignWidget config={schemas.ExperimentDesignConfigSchema.parse(config)} onChange={onChange} />; }),
 };
+const loaded = new Map<string, Promise<Renderer>>();
+export function loadInteractiveWidget(componentId: string): Promise<Renderer> {
+  if (!Object.hasOwn(loaders, componentId)) return Promise.reject(new Error("Unknown interactive component"));
+  let pending = loaded.get(componentId);
+  if (!pending) {
+    pending = loaders[componentId]().catch((error) => { loaded.delete(componentId); throw error; });
+    loaded.set(componentId, pending);
+  }
+  return pending;
+}
+
+export const WIDGETS: Record<string, (props: WidgetRenderProps) => ReactElement> = Object.fromEntries(
+  Object.keys(loaders).map((id) => {
+    const Widget = lazy(() => loadInteractiveWidget(id).then((renderer) => ({ default: renderer })));
+    return [id, (props: WidgetRenderProps) => <Suspense fallback={<div role="status" aria-busy="true">…</div>}><Widget {...props} /></Suspense>];
+  }),
+);

@@ -1,0 +1,8 @@
+
+> primoria@ visualization:eval /Users/zhangjunqiu/Documents/Project/Primoria
+> node scripts/with-database-env.mjs runtime pnpm --filter @primoria/web exec tsx scripts/run-visualization-acceptance.ts --fixture artifacts/visualization-acceptance/catalog45-smoke/prompts.json --out artifacts/visualization-acceptance/catalog45-smoke --case viz-02,viz-04
+
+START viz-02: chat
+PASSED viz-02: chem.weak-acid-buffer
+START viz-04: chat
+PASSED viz-04: math.quadratic-equation

@@ -151,7 +151,7 @@ await migrateAgentRuntime(process.env.DATABASE_URL);
 const { startAgentServer } = await import("../apps/agent/src/server.mjs");
 const agentRuntime = await startAgentServer();
 
-const server = spawn("pnpm", ["--filter", "@primoria/web", "dev"], {
+const server = spawn("pnpm", ["--filter", "@primoria/web", process.env.REGRESSION_WEB_MODE === "production" ? "start" : "dev"], {
   cwd: process.cwd(),
   env: { ...runtimeEnv, PORT },
   stdio: ["ignore", "pipe", "pipe"],

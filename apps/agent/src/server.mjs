@@ -1,6 +1,6 @@
 import { createServer } from "node:http";
 import { fileURLToPath } from "node:url";
-import { PostgresSaver } from "@langchain/langgraph-checkpoint-postgres";
+import { createAgentCheckpointer } from "./runtime/checkpointer.mjs";
 import { RunAgentInputSchema } from "@ag-ui/core";
 import { createPrimoriaGraph } from "./graph.mjs";
 import { createRunStore } from "./runtime/run-store.mjs";
@@ -86,7 +86,7 @@ export async function startAgentServer() {
   getAgentInternalToken();
   const store = createRunStore(DATABASE_URL);
   await store.ping();
-  const checkpointer = PostgresSaver.fromConnString(DATABASE_URL, { schema: "agent_runtime" });
+  const checkpointer = createAgentCheckpointer(DATABASE_URL);
   const graph = createPrimoriaGraph({ checkpointer });
   const worker = createRunWorker({
     store,

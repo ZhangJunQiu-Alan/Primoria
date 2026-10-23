@@ -1,0 +1,1 @@
+import{a,b,c,d,e}from"./chunk-T4FOKI7V.js";import"./chunk-FTKDBJEQ.js";import"./chunk-7SZRL6FY.js";export{a as CharacterRelationshipsConfigSchema,b as CharacterRelationshipsPatchSchema,c as DEFAULT_CHARACTER_RELATIONSHIPS_CONFIG,e as characterRelationshipsComponent,d as deriveCharacterRelationships};

@@ -187,15 +187,12 @@ export function LensImagingWidget({ config, onChange }: {
   const sizeLabel = image.none ? "" : Math.abs(image.m) > 1.02 ? t.enlarged : Math.abs(image.m) < 0.98 ? t.reduced : t.sameSize;
 
   return (
-    <div style={{ border: `1px solid ${COLORS.line}`, borderRadius: 8, overflow: "hidden", background: COLORS.surface }}>
+    <div data-component-id="physics.lens-imaging" style={{ border: `1px solid ${COLORS.line}`, borderRadius: 8, overflow: "hidden", background: COLORS.surface }}>
       <div style={{
         display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8,
         padding: "10px 14px", borderBottom: `1px solid ${COLORS.line}`, background: COLORS.surfaceSoft,
       }}>
         <span style={{ fontWeight: 600, fontSize: 13.5 }}>{t.lensTitle}</span>
-        <span style={{ fontFamily: "ui-monospace, SF Mono, Menlo, monospace", fontSize: 11, color: COLORS.muted }}>
-          physics.lens-imaging
-        </span>
       </div>
 
       <svg

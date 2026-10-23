@@ -33,6 +33,7 @@ process.env.AI_PROVIDER = "openai-compatible";
 process.env.OPENAI_API_KEY = "fake";
 process.env.OPENAI_BASE_URL = `http://127.0.0.1:${server.address().port}/v1`;
 process.env.OPENAI_MODEL = "test";
+process.env.AI_MODEL_TUTOR = "deepseek-flash";
 
 const { graph } = await import("../src/graph.mjs");
 const { HumanMessage, AIMessage, ToolMessage } = await import("@langchain/core/messages");
@@ -60,6 +61,7 @@ function assert(condition, message) {
 }
 
 assert(captured.length > 0, "model endpoint was called");
+assert(captured[0].model === "deepseek-flash", "Tutor model overrides the Web/course default");
 const payload = JSON.stringify(captured[0].messages);
 assert(!payload.includes(BIG), "past-turn giant widget html is trimmed from the model request");
 assert(payload.includes("Pendulum"), "compacted summary keeps the widget title");

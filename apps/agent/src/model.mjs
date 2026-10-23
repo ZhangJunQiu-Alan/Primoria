@@ -67,6 +67,7 @@ export function createModel(options = {}) {
   const apiKey =
     provider === "anthropic-compatible" ? process.env.ANTHROPIC_API_KEY : process.env.OPENAI_API_KEY;
   const model =
+    process.env.AI_MODEL_TUTOR?.trim() ||
     (provider === "anthropic-compatible" ? process.env.ANTHROPIC_MODEL : process.env.OPENAI_MODEL) ||
     (provider === "anthropic-compatible" ? "claude-3-5-sonnet-latest" : "gpt-5.4");
   if (!apiKey) throw new Error(`Missing ${provider === "anthropic-compatible" ? "ANTHROPIC" : "OPENAI"}_API_KEY`);

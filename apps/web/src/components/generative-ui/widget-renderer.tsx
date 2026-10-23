@@ -687,6 +687,7 @@ function assembleShell(channel: string, parentOrigin: string) {
     const PRIMORIA_BRIDGE_CHANNEL = ${JSON.stringify(channel)};
     const PRIMORIA_PARENT_ORIGIN = ${JSON.stringify(parentOrigin)};
     ${BRIDGE_JS}
+    postParentMessage({ type: 'primoria-shell-ready' });
   </script>
 </body>
 </html>`;
@@ -732,6 +733,11 @@ export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt, v
       if (event.source !== iframeRef.current?.contentWindow) return;
       if (!event.data || typeof event.data !== "object") return;
       if (event.data.channel !== bridgeChannelRef.current) return;
+
+      if (event.data.type === "primoria-shell-ready") {
+        setLoaded(true);
+        return;
+      }
 
       if (event.data.type === "primoria-widget-resize" && typeof event.data.height === "number" && Number.isFinite(event.data.height)) {
         setHeight(Math.max(90, Math.min(event.data.height, 4000)));
@@ -808,15 +814,6 @@ export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt, v
       if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current);
     };
   }, [safeHtml]);
-
-  useEffect(() => {
-    if (!safeHtml || (loaded && height > 0)) return;
-    const timeout = setTimeout(() => {
-      setLoaded(true);
-      setHeight((current) => (current > 0 ? current : 300));
-    }, 4000);
-    return () => clearTimeout(timeout);
-  }, [safeHtml, loaded, height]);
 
   useEffect(() => {
     const iframe = iframeRef.current;
@@ -898,7 +895,6 @@ export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt, v
           className="widget-frame"
           title={title}
           sandbox={WIDGET_IFRAME_SANDBOX}
-          onLoad={() => setLoaded(true)}
           style={{
             height: showIframe ? (height > 0 ? height : 300) : 0,
             display: safeHtml ? undefined : "none",
@@ -911,7 +907,6 @@ export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt, v
             className="widget-frame"
             title={title}
             sandbox={WIDGET_IFRAME_SANDBOX}
-            onLoad={() => setLoaded(true)}
             style={{
               height: showIframe ? (height > 0 ? height : 300) : 0,
               display: safeHtml ? undefined : "none",

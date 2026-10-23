@@ -1,0 +1,265 @@
+{
+  "batchId": "agent-b-004",
+  "components": [
+    {
+      "componentId": "physics.lever-balance",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/lever-buoyancy.ts",
+      "componentExport": "leverBalanceComponent",
+      "configSchemaExport": "LeverBalanceConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/lever-buoyancy.tsx",
+      "widgetExport": "LeverBalanceWidget",
+      "samples": [
+        {
+          "leftForceN": 30,
+          "rightForceN": 20,
+          "leftArmM": 0.8,
+          "rightArmM": 1.2,
+          "showMoments": true
+        },
+        {
+          "leftForceN": 30,
+          "rightForceN": 10,
+          "leftArmM": 0.8,
+          "rightArmM": 1.2,
+          "showMoments": true
+        },
+        {
+          "leftForceN": 0,
+          "rightForceN": 0,
+          "leftArmM": 0.8,
+          "rightArmM": 1.2,
+          "showMoments": true
+        },
+        {
+          "leftForceN": 30,
+          "rightForceN": 20,
+          "leftArmM": 0.8,
+          "rightArmM": 1.2,
+          "showMoments": false
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-four.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    },
+    {
+      "componentId": "physics.buoyancy-lab",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/lever-buoyancy.ts",
+      "componentExport": "buoyancyLabComponent",
+      "configSchemaExport": "BuoyancyLabConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/lever-buoyancy.tsx",
+      "widgetExport": "BuoyancyLabWidget",
+      "samples": [
+        {
+          "objectDensity": 600,
+          "fluidDensity": 1000,
+          "objectVolumeL": 1,
+          "immersion": 0.8,
+          "gravity": 9.8,
+          "mode": "held"
+        },
+        {
+          "objectDensity": 600,
+          "fluidDensity": 1000,
+          "objectVolumeL": 1,
+          "immersion": 0.8,
+          "gravity": 9.8,
+          "mode": "released"
+        },
+        {
+          "objectDensity": 2000,
+          "fluidDensity": 1000,
+          "objectVolumeL": 1,
+          "immersion": 0.8,
+          "gravity": 9.8,
+          "mode": "released"
+        },
+        {
+          "objectDensity": 600,
+          "fluidDensity": 1000,
+          "objectVolumeL": 1,
+          "immersion": 0,
+          "gravity": 9.8,
+          "mode": "held"
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-four.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    },
+    {
+      "componentId": "physics.electric-field",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/electric-field.ts",
+      "componentExport": "electricFieldComponent",
+      "configSchemaExport": "ElectricFieldConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/electric-field.tsx",
+      "widgetExport": "ElectricFieldWidget",
+      "samples": [
+        {
+          "charge1NC": 2,
+          "charge2NC": -2,
+          "separationM": 1,
+          "probeX": 0,
+          "probeY": 0.5,
+          "view": "field",
+          "showVectors": true
+        },
+        {
+          "charge1NC": 2,
+          "charge2NC": 2,
+          "separationM": 1,
+          "probeX": 0,
+          "probeY": 0,
+          "view": "field",
+          "showVectors": true
+        },
+        {
+          "charge1NC": 2,
+          "charge2NC": -2,
+          "separationM": 1,
+          "probeX": -0.5,
+          "probeY": 0,
+          "view": "field",
+          "showVectors": true
+        },
+        {
+          "charge1NC": 2,
+          "charge2NC": -2,
+          "separationM": 1,
+          "probeX": 0,
+          "probeY": 0.5,
+          "view": "potential",
+          "showVectors": true
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-four.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    },
+    {
+      "componentId": "math.binomial-distribution",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/binomial-distribution.ts",
+      "componentExport": "binomialDistributionComponent",
+      "configSchemaExport": "BinomialDistributionConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/binomial-distribution.tsx",
+      "widgetExport": "BinomialDistributionWidget",
+      "samples": [
+        {
+          "trials": 10,
+          "successProbability": 0.5,
+          "threshold": 5,
+          "event": "exact",
+          "view": "pmf"
+        },
+        {
+          "trials": 10,
+          "successProbability": 0.5,
+          "threshold": 3,
+          "event": "at-least",
+          "view": "pmf"
+        },
+        {
+          "trials": 10,
+          "successProbability": 0,
+          "threshold": 5,
+          "event": "exact",
+          "view": "pmf"
+        },
+        {
+          "trials": 10,
+          "successProbability": 0.5,
+          "threshold": 5,
+          "event": "exact",
+          "view": "cdf"
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-four.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    }
+  ]
+}

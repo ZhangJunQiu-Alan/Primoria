@@ -1053,14 +1053,14 @@ export function usePrimoriaGenerativeUI() {
     parameters: OpenInteractiveComponentArgsSchema,
     render: ({ status, parameters, result }) => {
       if (status !== "complete" || !parameters?.component_id || !parameters?.request) return <></>;
-      let toolResult: { instanceId?: string; targetInstanceId?: string } | null = null;
+      let toolResult: { instanceId?: string; targetInstanceId?: string; request?: string } | null = null;
       try {
-        toolResult = JSON.parse(result) as { instanceId?: string; targetInstanceId?: string };
+        toolResult = JSON.parse(result) as { instanceId?: string; targetInstanceId?: string; request?: string };
       } catch {}
       return (
         <InteractiveComponentCard
           componentId={parameters.component_id}
-          request={parameters.request}
+          request={typeof toolResult?.request === "string" && toolResult.request ? toolResult.request : parameters.request}
           instanceId={toolResult?.instanceId}
           targetInstanceId={toolResult?.targetInstanceId ?? parameters.target_instance_id ?? null}
         />

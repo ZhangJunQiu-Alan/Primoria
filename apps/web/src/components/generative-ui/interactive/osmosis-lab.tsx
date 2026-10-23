@@ -1,0 +1,23 @@
+"use client";
+
+import { computeOsmosis, type OsmosisLabConfig } from "@/lib/interactive/components/osmosis-lab";
+import { WIDGET_COLORS as C } from "./palette";
+import { SegmentedControl, SliderRow } from "./primitives/controls";
+import { SceneFrame, useSceneLocale } from "./primitives/scene-frame";
+
+export function OsmosisLabWidget({ config, onChange }: { config: OsmosisLabConfig; onChange: (next: OsmosisLabConfig) => void }) {
+  const t = useSceneLocale(), r = computeOsmosis(config);
+  const set = <K extends keyof OsmosisLabConfig>(key: K, value: OsmosisLabConfig[K]) => onChange({ ...config, [key]: value });
+  const leftWidth = r.leftVolume / r.totalVolume * 500;
+  return <SceneFrame id="biology.osmosis-lab" title={t("水在动，溶质留在哪里？", "Water moves; where does the solute stay?")} description={t("可移动膜只允许水通过，左右静水压相等。容积宽度按比例变化，粒子图只作定性示意。", "A movable water-permeable membrane keeps hydrostatic pressures equal. Widths show volume; particle drawings are qualitative.")}
+    readouts={[{ label: t("左浓度", "Left concentration"), value: r.leftConcentration.toFixed(3), unit: "M" }, { label: t("右浓度", "Right concentration"), value: r.rightConcentration.toFixed(3), unit: "M" }, { label: t("左/右体积", "Left/right volume"), value: `${r.leftVolume.toFixed(2)} / ${r.rightVolume.toFixed(2)}`, unit: "L" }, { label: "π右 − π左", value: r.pressureDifferenceKPa.toFixed(1), unit: "kPa" }]}
+    controls={<><SliderRow label={t("左初始浓度", "Initial left M")} min={0} max={1} step={0.05} value={config.leftConcentration} onChange={(v) => set("leftConcentration", v)} /><SliderRow label={t("右初始浓度", "Initial right M")} min={0} max={1} step={0.05} value={config.rightConcentration} onChange={(v) => set("rightConcentration", v)} /><SliderRow label={t("左初始体积", "Initial left L")} min={0.2} max={1.8} step={0.1} value={config.initialLeftVolumeL} onChange={(v) => set("initialLeftVolumeL", v)} /><SliderRow label={t("右初始体积", "Initial right L")} min={0.2} max={1.8} step={0.1} value={config.initialRightVolumeL} onChange={(v) => set("initialRightVolumeL", v)} /><SliderRow label={t("温度", "Temperature")} min={273} max={323} step={1} value={config.temperatureK} unit="K" onChange={(v) => set("temperatureK", v)} />{config.mode === "initial" ? <SliderRow label={t("状态进度", "State progress")} min={0} max={1} step={0.01} value={config.progress} onChange={(v) => set("progress", v)} /> : null}<SegmentedControl label={t("观察", "View")} value={config.mode} options={[["initial", t("状态推演", "Explore states")], ["equilibrium", t("最终状态", "Final state")]]} onChange={(v) => set("mode", v)} /></>}
+    explanation={r.limitState ? t("一侧初始为纯水，理想模型会到该侧体积耗尽的极限；这不是有两个有限体积溶液的常规平衡。实际容器壁、压力和膜性质会限制迁移。", "One side begins as pure water, so this ideal model reaches a zero-volume limit, rather than ordinary equilibrium between two finite solutions. Real walls, pressure and membrane properties limit transfer.") : t("非电解质理想溶液 π=cRT。水朝更高溶质浓度一侧净迁移，使浓度差减小；两侧溶质物质的量分别保持不变。状态进度不是计时器，模型未包含细胞壁或静水压差。", "For an ideal nonelectrolyte, π=cRT. Net water transfer toward higher solute concentration reduces the concentration difference; solute amounts on each side remain fixed. Progress is not elapsed time. Cell walls and hydrostatic pressure differences are omitted.")}>
+    <svg viewBox="0 0 680 280" role="img" aria-label={t("可移动选择透过膜与两侧体积", "Movable selective membrane and compartment volumes")} style={{ width: "100%", display: "block" }}>
+      <rect x={90} y={40} width={500} height={170} rx={8} fill={C.series2} fillOpacity={0.06} stroke={C.muted} /><rect x={90} y={40} width={leftWidth} height={170} fill={C.accent} fillOpacity={0.08} /><line x1={90 + leftWidth} x2={90 + leftWidth} y1={40} y2={210} stroke={C.accent} strokeWidth={5} strokeDasharray="6 4" />
+      {[{ count: Math.round(r.molesL * 24), start: 90, width: leftWidth, tone: C.series1 }, { count: Math.round(r.molesR * 24), start: 90 + leftWidth, width: 500 - leftWidth, tone: C.series2 }].map((side, index) => side.width > 12 ? Array.from({ length: side.count }, (_, i) => <circle key={`${index}-${i}`} cx={side.start + 8 + ((i * 0.618034) % 1) * (side.width - 16)} cy={52 + ((i * 0.414214) % 1) * 145} r={3} fill={side.tone} />) : null)}
+      <text x={210} y={242} textAnchor="middle" fontSize={14} fill={C.muted}>{t("左侧溶质", "Left solute")} {r.molesL.toFixed(2)}mol</text><text x={470} y={242} textAnchor="middle" fontSize={14} fill={C.muted}>{t("右侧溶质", "Right solute")} {r.molesR.toFixed(2)}mol</text>
+      {r.direction === 0 ? null : <g><rect x={277} y={105} width={126} height={36} rx={16} fill={C.surface} /><text x={340} y={129} textAnchor="middle" fontSize={22} fill={C.accent}>{r.direction > 0 ? "H₂O →" : "← H₂O"}</text></g>}
+    </svg>
+  </SceneFrame>;
+}

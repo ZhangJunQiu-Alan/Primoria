@@ -1,0 +1,1 @@
+import{a,b,c,d,e}from"./chunk-DHIHRMCO.js";import"./chunk-FTKDBJEQ.js";import"./chunk-7SZRL6FY.js";export{c as DEFAULT_MENDELIAN_GENETICS_CONFIG,a as MendelianGeneticsConfigSchema,b as MendelianGeneticsPatchSchema,d as computeMendelianCross,e as mendelianGeneticsComponent};

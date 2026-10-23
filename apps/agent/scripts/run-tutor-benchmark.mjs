@@ -148,9 +148,9 @@ async function runLive(dataset) {
     process.stdout.write(`${latencyMs}ms\n`);
   }
   const provider = process.env.AI_PROVIDER || "openai-compatible";
-  const modelName = provider === "anthropic-compatible"
+  const modelName = process.env.AI_MODEL_TUTOR?.trim() || (provider === "anthropic-compatible"
     ? process.env.ANTHROPIC_MODEL || "claude-3-5-sonnet-latest"
-    : process.env.OPENAI_MODEL || "gpt-5.4";
+    : process.env.OPENAI_MODEL || "gpt-5.4");
   return {
     schemaVersion: 1,
     benchmarkId: dataset.benchmarkId,

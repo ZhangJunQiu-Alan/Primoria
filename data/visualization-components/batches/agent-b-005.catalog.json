@@ -1,0 +1,583 @@
+{
+  "components": [
+    {
+      "componentId": "biology.cell-division",
+      "version": 1,
+      "name": {
+        "zh-CN": "有丝分裂与减数分裂",
+        "en": "Mitosis and meiosis"
+      },
+      "catalogDescription": {
+        "zh-CN": "染色体与DNA计数、同源分离和姐妹染色单体分离",
+        "en": "Centromere-based chromosome counts, DNA replication, homologs and sister chromatids"
+      },
+      "teachingPurpose": {
+        "zh-CN": "染色体与DNA计数、同源分离和姐妹染色单体分离",
+        "en": "Centromere-based chromosome counts, DNA replication, homologs and sister chromatids"
+      },
+      "primaryAction": "adjust",
+      "disciplineTags": [
+        "biology"
+      ],
+      "capabilityTags": [
+        "cell-division",
+        "mitosis",
+        "meiosis",
+        "chromosome-count"
+      ],
+      "implementation": {
+        "status": "implemented",
+        "rendererKey": "cellDivision"
+      },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "division": {
+            "type": "string",
+            "enum": [
+              "mitosis",
+              "meiosis"
+            ],
+            "default": "mitosis"
+          },
+          "stage": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5,
+            "default": 2
+          },
+          "homologPairs": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3,
+            "default": 2
+          },
+          "showLabels": {
+            "type": "boolean",
+            "default": true
+          }
+        },
+        "required": [
+          "division",
+          "stage",
+          "homologPairs",
+          "showLabels"
+        ],
+        "default": {
+          "division": "mitosis",
+          "stage": 2,
+          "homologPairs": 2,
+          "showLabels": true
+        }
+      },
+      "patchHints": [
+        {
+          "zh-CN": "只修改用户要求的教学参数，其余字段保留。",
+          "en": "Patch only the requested teaching parameters and preserve the rest."
+        },
+        {
+          "zh-CN": "有丝stage0复制前/1复制后/2中期/3后期/4胞质分裂/5子细胞；减数stage0复制前/1复制后/2中期I/3减数I后/4中期II/5减数II后。DNA复制不使染色体数加倍。",
+          "en": "Respect the documented model assumptions and parameter bounds."
+        }
+      ],
+      "fallbackConditions": [
+        {
+          "zh-CN": "本组件不处理：交叉互换、非整倍体、细胞周期动力学。",
+          "en": "Outside this component: 交叉互换, 非整倍体, 细胞周期动力学."
+        }
+      ],
+      "examplePrompts": [
+        {
+          "zh-CN": "DNA复制以后，染色体数为什么没有翻倍？",
+          "en": "Why does DNA replication not double the chromosome count?"
+        },
+        {
+          "zh-CN": "对比减数第一次和第二次分裂分开的是什么",
+          "en": "Compare what separates in meiosis I and meiosis II."
+        }
+      ],
+      "search": {
+        "aliases": [
+          "有丝分裂",
+          "减数分裂",
+          "染色体数",
+          "DNA含量",
+          "姐妹染色单体",
+          "mitosis",
+          "meiosis"
+        ],
+        "concepts": [
+          "cell-division",
+          "mitosis",
+          "meiosis",
+          "chromosome-count"
+        ],
+        "stages": [
+          "junior",
+          "senior"
+        ],
+        "supports": [
+          "离散关键阶段",
+          "染色体与DNA守恒",
+          "同源分离与姐妹分离"
+        ],
+        "excludes": [
+          "交叉互换",
+          "非整倍体",
+          "细胞周期动力学"
+        ],
+        "referenceIds": []
+      }
+    },
+    {
+      "componentId": "biology.osmosis-lab",
+      "version": 1,
+      "name": {
+        "zh-CN": "渗透作用与浓度变化",
+        "en": "Osmosis laboratory"
+      },
+      "catalogDescription": {
+        "zh-CN": "选择透过膜、水迁移、溶质守恒与渗透压",
+        "en": "Selective water transport, solute conservation and osmotic pressure in variable-volume compartments"
+      },
+      "teachingPurpose": {
+        "zh-CN": "选择透过膜、水迁移、溶质守恒与渗透压",
+        "en": "Selective water transport, solute conservation and osmotic pressure in variable-volume compartments"
+      },
+      "primaryAction": "adjust",
+      "disciplineTags": [
+        "biology",
+        "chemistry"
+      ],
+      "capabilityTags": [
+        "osmosis",
+        "selective-permeability",
+        "solute-conservation"
+      ],
+      "implementation": {
+        "status": "implemented",
+        "rendererKey": "osmosisLab"
+      },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "leftConcentration": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "default": 0.2
+          },
+          "rightConcentration": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "default": 0.6
+          },
+          "initialLeftVolumeL": {
+            "type": "number",
+            "minimum": 0.2,
+            "maximum": 1.8,
+            "default": 1
+          },
+          "initialRightVolumeL": {
+            "type": "number",
+            "minimum": 0.2,
+            "maximum": 1.8,
+            "default": 1
+          },
+          "temperatureK": {
+            "type": "number",
+            "minimum": 273,
+            "maximum": 323,
+            "default": 298
+          },
+          "progress": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "default": 0
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "initial",
+              "equilibrium"
+            ],
+            "default": "initial"
+          }
+        },
+        "required": [
+          "leftConcentration",
+          "rightConcentration",
+          "initialLeftVolumeL",
+          "initialRightVolumeL",
+          "temperatureK",
+          "progress",
+          "mode"
+        ],
+        "default": {
+          "leftConcentration": 0.2,
+          "rightConcentration": 0.6,
+          "initialLeftVolumeL": 1,
+          "initialRightVolumeL": 1,
+          "temperatureK": 298,
+          "progress": 0,
+          "mode": "initial"
+        }
+      },
+      "patchHints": [
+        {
+          "zh-CN": "只修改用户要求的教学参数，其余字段保留。",
+          "en": "Patch only the requested teaching parameters and preserve the rest."
+        },
+        {
+          "zh-CN": "水净迁移从低溶质浓度到高溶质浓度；溶质不穿膜，两侧物质的量分别守恒。不能把本模型当作有壁U形管或细胞膨压平衡。",
+          "en": "Respect the documented model assumptions and parameter bounds."
+        }
+      ],
+      "fallbackConditions": [
+        {
+          "zh-CN": "本组件不处理：细胞膨压、固定U形管液柱平衡、真实渗透时间。",
+          "en": "Outside this component: 细胞膨压, 固定U形管液柱平衡, 真实渗透时间."
+        }
+      ],
+      "examplePrompts": [
+        {
+          "zh-CN": "为什么水会往糖水浓的那一侧跑？",
+          "en": "Why does water move toward the more concentrated sugar solution?"
+        },
+        {
+          "zh-CN": "改变两边初始体积，水流到平衡时浓度怎么变？",
+          "en": "Change the initial volumes and compare concentrations at equilibrium."
+        }
+      ],
+      "search": {
+        "aliases": [
+          "渗透作用",
+          "半透膜",
+          "水分迁移",
+          "渗透压",
+          "osmosis"
+        ],
+        "concepts": [
+          "osmosis",
+          "selective-permeability",
+          "solute-conservation"
+        ],
+        "stages": [
+          "junior",
+          "senior"
+        ],
+        "supports": [
+          "只透水的膜",
+          "非电解质溶液",
+          "等静水压可变容积"
+        ],
+        "excludes": [
+          "细胞膨压",
+          "固定U形管液柱平衡",
+          "真实渗透时间"
+        ],
+        "referenceIds": []
+      }
+    },
+    {
+      "componentId": "physics.magnetic-motion",
+      "version": 1,
+      "name": {
+        "zh-CN": "带电粒子磁场运动",
+        "en": "Charged particle in a magnetic field"
+      },
+      "catalogDescription": {
+        "zh-CN": "洛伦兹力、圆周与螺旋轨迹、周期和旋向",
+        "en": "Lorentz force, circular and helical trajectories, gyration periods and charge signs"
+      },
+      "teachingPurpose": {
+        "zh-CN": "洛伦兹力、圆周与螺旋轨迹、周期和旋向",
+        "en": "Lorentz force, circular and helical trajectories, gyration periods and charge signs"
+      },
+      "primaryAction": "adjust",
+      "disciplineTags": [
+        "physics"
+      ],
+      "capabilityTags": [
+        "lorentz-force",
+        "cyclotron-motion",
+        "helical-motion"
+      ],
+      "implementation": {
+        "status": "implemented",
+        "rendererKey": "magneticMotion"
+      },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "particle": {
+            "type": "string",
+            "enum": [
+              "electron",
+              "proton"
+            ],
+            "default": "electron"
+          },
+          "fieldMT": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 10,
+            "default": 1
+          },
+          "speedMillion": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 10,
+            "default": 1
+          },
+          "pitchDeg": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 90,
+            "default": 90
+          },
+          "turns": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 3,
+            "default": 0.75
+          },
+          "view": {
+            "type": "string",
+            "enum": [
+              "transverse",
+              "helix"
+            ],
+            "default": "transverse"
+          },
+          "showVelocity": {
+            "type": "boolean",
+            "default": true
+          }
+        },
+        "required": [
+          "particle",
+          "fieldMT",
+          "speedMillion",
+          "pitchDeg",
+          "turns",
+          "view",
+          "showVelocity"
+        ],
+        "default": {
+          "particle": "electron",
+          "fieldMT": 1,
+          "speedMillion": 1,
+          "pitchDeg": 90,
+          "turns": 0.75,
+          "view": "transverse",
+          "showVelocity": true
+        }
+      },
+      "patchHints": [
+        {
+          "zh-CN": "只修改用户要求的教学参数，其余字段保留。",
+          "en": "Patch only the requested teaching parameters and preserve the rest."
+        },
+        {
+          "zh-CN": "速度平行B时直线运动，垂直时圆周；电子和质子旋向相反但质量也不同。增大B减小周期与半径，磁场不做功。",
+          "en": "Respect the documented model assumptions and parameter bounds."
+        }
+      ],
+      "fallbackConditions": [
+        {
+          "zh-CN": "本组件不处理：电场加速、相对论修正、磁镜与非均匀磁场。",
+          "en": "Outside this component: 电场加速, 相对论修正, 磁镜与非均匀磁场."
+        }
+      ],
+      "examplePrompts": [
+        {
+          "zh-CN": "电子斜着进入磁场为什么会走螺旋线？",
+          "en": "Why does an electron entering a magnetic field obliquely follow a helix?"
+        },
+        {
+          "zh-CN": "把电子换成质子，比较旋向和半径",
+          "en": "Replace the electron with a proton and compare direction and radius."
+        }
+      ],
+      "search": {
+        "aliases": [
+          "洛伦兹力",
+          "带电粒子磁场运动",
+          "回旋周期",
+          "螺旋轨迹",
+          "cyclotron",
+          "Lorentz force"
+        ],
+        "concepts": [
+          "lorentz-force",
+          "cyclotron-motion",
+          "helical-motion"
+        ],
+        "stages": [
+          "senior",
+          "university"
+        ],
+        "supports": [
+          "匀强磁场",
+          "非相对论运动",
+          "平行垂直速度分解"
+        ],
+        "excludes": [
+          "电场加速",
+          "相对论修正",
+          "磁镜与非均匀磁场"
+        ],
+        "referenceIds": []
+      }
+    },
+    {
+      "componentId": "physics.photoelectric-effect",
+      "version": 1,
+      "name": {
+        "zh-CN": "光电效应与截止电压",
+        "en": "Photoelectric effect"
+      },
+      "catalogDescription": {
+        "zh-CN": "光子能量、逸出功、阈频、光子流与遏止电压",
+        "en": "Photon energy, work functions, threshold wavelength, photon flux and stopping voltage"
+      },
+      "teachingPurpose": {
+        "zh-CN": "光子能量、逸出功、阈频、光子流与遏止电压",
+        "en": "Photon energy, work functions, threshold wavelength, photon flux and stopping voltage"
+      },
+      "primaryAction": "adjust",
+      "disciplineTags": [
+        "physics"
+      ],
+      "capabilityTags": [
+        "photoelectric-effect",
+        "photon-energy",
+        "stopping-potential"
+      ],
+      "implementation": {
+        "status": "implemented",
+        "rendererKey": "photoelectricEffect"
+      },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "wavelengthNM": {
+            "type": "number",
+            "minimum": 200,
+            "maximum": 800,
+            "default": 400
+          },
+          "workFunctionEV": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 5,
+            "default": 2
+          },
+          "photonRateTrillion": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10,
+            "default": 1
+          },
+          "voltage": {
+            "type": "number",
+            "minimum": -6,
+            "maximum": 6,
+            "default": -0.5
+          },
+          "view": {
+            "type": "string",
+            "enum": [
+              "current",
+              "energy"
+            ],
+            "default": "energy"
+          },
+          "showThreshold": {
+            "type": "boolean",
+            "default": true
+          }
+        },
+        "required": [
+          "wavelengthNM",
+          "workFunctionEV",
+          "photonRateTrillion",
+          "voltage",
+          "view",
+          "showThreshold"
+        ],
+        "default": {
+          "wavelengthNM": 400,
+          "workFunctionEV": 2,
+          "photonRateTrillion": 1,
+          "voltage": -0.5,
+          "view": "energy",
+          "showThreshold": true
+        }
+      },
+      "patchHints": [
+        {
+          "zh-CN": "只修改用户要求的教学参数，其余字段保留。",
+          "en": "Patch only the requested teaching parameters and preserve the rest."
+        },
+        {
+          "zh-CN": "增大光子流不增加最大动能；缩短波长才增加单光子能量；低于阈频再亮也不能逸出。正阳极电压收集电子，负电压阻碍收集。",
+          "en": "Respect the documented model assumptions and parameter bounds."
+        }
+      ],
+      "fallbackConditions": [
+        {
+          "zh-CN": "本组件不处理：真实金属精确伏安曲线、空间电荷、多光子发射。",
+          "en": "Outside this component: 真实金属精确伏安曲线, 空间电荷, 多光子发射."
+        }
+      ],
+      "examplePrompts": [
+        {
+          "zh-CN": "光不够蓝时，照得再亮能打出电子吗？",
+          "en": "Can brighter light eject electrons when its frequency is below threshold?"
+        },
+        {
+          "zh-CN": "提高光强和缩短波长，分别改变什么？",
+          "en": "Compare increasing photon flux with shortening the wavelength."
+        }
+      ],
+      "search": {
+        "aliases": [
+          "光电效应",
+          "遏止电压",
+          "截止频率",
+          "逸出功",
+          "photoelectric",
+          "stopping potential"
+        ],
+        "concepts": [
+          "photoelectric-effect",
+          "photon-energy",
+          "stopping-potential"
+        ],
+        "stages": [
+          "senior",
+          "university"
+        ],
+        "supports": [
+          "爱因斯坦光电方程",
+          "光子流与饱和电流",
+          "有明确假设的收集曲线"
+        ],
+        "excludes": [
+          "真实金属精确伏安曲线",
+          "空间电荷",
+          "多光子发射"
+        ],
+        "referenceIds": []
+      }
+    }
+  ]
+}

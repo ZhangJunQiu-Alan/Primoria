@@ -125,7 +125,7 @@ plus Chinese manual boundary coverage for every China/Singapore graph. Keep the
 
 Visualization is catalog-first with structured/sandbox fallbacks:
 
-1. When one of the 19 all-subject catalog entries fits, the main model calls
+1. When an implemented entry in the versioned all-subject catalog fits, the main model calls
    `open_interactive_component`. This is a stateless Web-as-brain signal; the
    browser card calls authenticated `POST /api/interactive-component`.
 2. Web generates a full config for create or a minimal patch for adjust,
@@ -264,7 +264,10 @@ The selected shared database is managed Supabase PostgreSQL in the existing Prim
 exclusively from server-side env vars. There is no BYOK. Internal model tiers
 are `AI_MODEL_FAST` for routing/utility work and optional `AI_MODEL_CONTENT` for
 source comparison and causal timelines; the latter falls back to the default
-model, never the fast tier. Supports `openai-compatible` and
+model, never the fast tier. The Agent's optional `AI_MODEL_TUTOR` overrides its
+provider default independently of Web course generation. DeepSeek Web utility
+calls and structured course Block Writer calls disable thinking while preserving the selected model tier; other fast-tier calls use low thinking effort.
+Supports `openai-compatible` and
 `anthropic-compatible`.
 
 KG embeddings are configured separately through `KG_EMBEDDING_PROVIDER`. Current supported embedding providers are `openai-compatible` and `minimax`.

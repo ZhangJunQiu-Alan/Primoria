@@ -1,0 +1,6 @@
+
+> primoria@ audit:prod /Users/zhangjunqiu/Documents/Project/Primoria
+> node scripts/audit-prod-bulk.mjs --audit-level high
+
+[audit:prod] checked 969 packages / 1103 versions via npm bulk advisory endpoint
+[audit:prod] advisories: moderate=2, low=1

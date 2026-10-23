@@ -1,0 +1,141 @@
+{
+  "batchId": "agent-b-007",
+  "components": [
+    {
+      "componentId": "math.linear-system",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/linear-system.ts",
+      "componentExport": "linearSystemComponent",
+      "configSchemaExport": "LinearSystemConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/linear-system.tsx",
+      "widgetExport": "LinearSystemWidget",
+      "samples": [
+        {
+          "a1": 1,
+          "b1": 1,
+          "c1": 6,
+          "a2": 2,
+          "b2": -1,
+          "c2": 3,
+          "view": "graph"
+        },
+        {
+          "a1": 1,
+          "b1": 1,
+          "c1": 6,
+          "a2": 2,
+          "b2": 2,
+          "c2": 6,
+          "view": "elimination"
+        },
+        {
+          "a1": 0,
+          "b1": 0,
+          "c1": 1,
+          "a2": 2,
+          "b2": -1,
+          "c2": 3,
+          "view": "graph"
+        },
+        {
+          "a1": 1,
+          "b1": 1,
+          "c1": 3,
+          "a2": 2,
+          "b2": 2,
+          "c2": 6,
+          "view": "elimination"
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-seven.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    },
+    {
+      "componentId": "math.quadratic-equation",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/quadratic-equation.ts",
+      "componentExport": "quadraticEquationComponent",
+      "configSchemaExport": "QuadraticEquationConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/quadratic-equation.tsx",
+      "widgetExport": "QuadraticEquationWidget",
+      "samples": [
+        {
+          "a": 1,
+          "b": -2,
+          "c": -3,
+          "view": "roots",
+          "showAxis": true,
+          "domain": "real"
+        },
+        {
+          "a": 1,
+          "b": -2,
+          "c": 1,
+          "view": "vertex",
+          "showAxis": true,
+          "domain": "real"
+        },
+        {
+          "a": 0,
+          "b": 0,
+          "c": 1,
+          "view": "roots",
+          "showAxis": true,
+          "domain": "real"
+        },
+        {
+          "a": 1,
+          "b": 0,
+          "c": 1,
+          "view": "roots",
+          "showAxis": true,
+          "domain": "complex"
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-seven.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    }
+  ]
+}

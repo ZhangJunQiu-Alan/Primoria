@@ -1,4 +1,31 @@
+import { cellDivisionComponent } from "./cell-division";
+import { osmosisLabComponent } from "./osmosis-lab";
+import { magneticMotionComponent } from "./magnetic-motion";
+import { photoelectricEffectComponent } from "./photoelectric-effect";
+import { linearSystemComponent } from "./linear-system";
+import { quadraticEquationComponent } from "./quadratic-equation";
+import { weakAcidBufferComponent } from "./weak-acid-buffer";
+import { leverBalanceComponent } from "./lever-buoyancy";
+import { buoyancyLabComponent } from "./lever-buoyancy";
+import { electricFieldComponent } from "./electric-field";
+import { binomialDistributionComponent } from "./binomial-distribution";
+import { trigonometryCircleComponent } from "./trigonometry-circle";
+import { chemicalEquilibriumComponent } from "./chemical-equilibrium";
+import { molecularGeometryComponent } from "./molecular-geometry";
+import { oscillationLabComponent } from "./oscillation-lab";
+import { reactionKineticsComponent } from "./reaction-kinetics";
+import { idealGasComponent } from "./ideal-gas";
+import { earthSeasonsComponent } from "./earth-seasons";
+import { chickenRabbitComponent } from "./chicken-rabbit";
+import { fractionEquivalenceComponent } from "./fraction-equivalence";
+import { mendelianGeneticsComponent } from "./mendelian-genetics";
+import { moonPhasesComponent } from "./moon-phases";
+import { circuitLabComponent } from "./circuit-lab";
+import { projectileLabComponent } from "./projectile-lab";
+import { refractionLabComponent } from "./refraction-lab";
+import { calculusLabComponent } from "./calculus-lab";
 import { z } from "zod";
+import { INTERACTIVE_COMPONENT_CATALOG } from "@primoria/contracts/artifacts/interactive-catalog";
 import { acidBaseTitrationComponent } from "./acid-base-titration";
 import { angleMeasureComponent } from "./angle-measure";
 import { argumentMapComponent } from "./argument-map";
@@ -24,7 +51,33 @@ import type { ImplementedComponent, RegistryEntry } from "./types";
 // versioned JSON catalog, compact Agent catalog, and client widget map under
 // components/generative-ui/interactive.
 
-export const COMPONENT_REGISTRY: RegistryEntry[] = [
+const componentModules: RegistryEntry[] = [
+  cellDivisionComponent,
+  osmosisLabComponent,
+  magneticMotionComponent,
+  photoelectricEffectComponent,
+  linearSystemComponent,
+  quadraticEquationComponent,
+  weakAcidBufferComponent,
+  leverBalanceComponent,
+  buoyancyLabComponent,
+  electricFieldComponent,
+  binomialDistributionComponent,
+  trigonometryCircleComponent,
+  chemicalEquilibriumComponent,
+  molecularGeometryComponent,
+  oscillationLabComponent,
+  reactionKineticsComponent,
+  idealGasComponent,
+  earthSeasonsComponent,
+  chickenRabbitComponent,
+  fractionEquivalenceComponent,
+  mendelianGeneticsComponent,
+  moonPhasesComponent,
+  circuitLabComponent,
+  projectileLabComponent,
+  refractionLabComponent,
+  calculusLabComponent,
   lensImagingComponent,
   timelineCausalityComponent,
   sourceComparisonComponent,
@@ -45,6 +98,11 @@ export const COMPONENT_REGISTRY: RegistryEntry[] = [
   rhythmPatternComponent,
   experimentDesignComponent,
 ];
+
+export const COMPONENT_REGISTRY: RegistryEntry[] = componentModules.map((component) => {
+  const metadata = INTERACTIVE_COMPONENT_CATALOG.find((entry) => entry.componentId === component.componentId);
+  return metadata ? { ...component, name: metadata.name, catalogDescription: metadata.description } : component;
+});
 
 export function getRegistryEntry(componentId: string | null | undefined): RegistryEntry | undefined {
   if (!componentId) return undefined;

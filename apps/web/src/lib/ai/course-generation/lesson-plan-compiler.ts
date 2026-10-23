@@ -12,6 +12,7 @@ import {
 } from "./lesson-plan-ir";
 import { assignMethodArms, type MethodArmAssignment, type MethodArmOptions } from "./method-arms";
 import type { PedagogicalRole } from "@/lib/courses/types";
+import { searchInteractiveComponents } from "@primoria/contracts/artifacts/interactive-search";
 
 export { isCodeEligibleLessonContext };
 export type { MethodArmAssignment, MethodArmOptions };
@@ -24,7 +25,7 @@ export type { MethodArmAssignment, MethodArmOptions };
 /** Concrete rendering engines. The writer NEVER chooses this — it is pinned
  * deterministically from the KG `visual` affordance so the model cannot invent
  * an unknown engine. */
-export type VisualEngine = "html" | "echarts" | "mermaid" | "physics" | "algorithm" | "math_explorer";
+export type VisualEngine = "html" | "echarts" | "mermaid" | "physics" | "algorithm" | "math_explorer" | "interactive";
 
 const AFFORDANCE_TO_ENGINE: Record<ConceptVisual, VisualEngine> = {
   interactive: "html",
@@ -61,6 +62,7 @@ export type BlockGenerationJob = {
   /** Deterministically pinned for `visual` blocks (from the KG affordance); the
    * writer emits only the payload, the compiler injects this engine. */
   engine?: VisualEngine;
+  interactiveCandidates?: string[];
 };
 
 export type CompiledLessonPlan = {
@@ -156,7 +158,13 @@ export function compileLessonPlanIr(
       prev: blocks[index - 1]?.goal,
       next: blocks[index + 1]?.goal,
     },
-    ...(block.type === "visual" ? { engine: resolveVisualEngine(kg, block.conceptIds) } : {}),
+    ...(block.type === "visual" ? {
+      engine: resolveVisualEngine(kg, block.conceptIds),
+      interactiveCandidates: searchInteractiveComponents({
+        query: [block.goal, block.writerInstruction, ...block.conceptIds.map((id) => kg.startTopic.concepts?.find((concept) => concept.conceptId === id)?.name ?? "")].join(" "),
+        limit: 4,
+      }).map((entry) => entry.componentId),
+    } : {}),
   }));
 
   return {

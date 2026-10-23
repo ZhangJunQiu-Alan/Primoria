@@ -1,0 +1,176 @@
+{
+  "components": [
+    {
+      "componentId": "math.parabola-intersections",
+      "version": 1,
+      "name": {
+        "zh-CN": "抛物线求交与拱桥水位",
+        "en": "Parabola-line intersections"
+      },
+      "catalogDescription": {
+        "zh-CN": "水平线或斜线求交、移项判别式、韦达根距与桥孔水位宽度",
+        "en": "Reduced quadratic coefficients, horizontal and oblique intersections, Vieta relations, chord length and bridge water level"
+      },
+      "teachingPurpose": {
+        "zh-CN": "水平线或斜线求交、移项判别式、韦达根距与桥孔水位宽度",
+        "en": "Reduced quadratic coefficients, horizontal and oblique intersections, Vieta relations, chord length and bridge water level"
+      },
+      "primaryAction": "adjust",
+      "disciplineTags": [
+        "math"
+      ],
+      "capabilityTags": [
+        "parabola-intersections",
+        "quadratic-discriminant",
+        "vieta-relations",
+        "chord-length",
+        "bridge-water-level"
+      ],
+      "implementation": {
+        "status": "implemented",
+        "rendererKey": "parabolaIntersections"
+      },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "a": {
+            "type": "number",
+            "minimum": -4,
+            "maximum": 4,
+            "default": 1,
+            "multipleOf": 0.01,
+            "description": "二次项系数 / quadratic coefficient; 0.01 grid"
+          },
+          "b": {
+            "type": "number",
+            "minimum": -12,
+            "maximum": 12,
+            "default": 0,
+            "multipleOf": 0.01,
+            "description": "一次项系数 / linear coefficient; 0.01 grid"
+          },
+          "c": {
+            "type": "number",
+            "minimum": -12,
+            "maximum": 12,
+            "default": -4,
+            "multipleOf": 0.01,
+            "description": "常数项 / constant coefficient; 0.01 grid"
+          },
+          "slope": {
+            "type": "number",
+            "minimum": -4,
+            "maximum": 4,
+            "default": 0,
+            "multipleOf": 0.01,
+            "description": "直线斜率 / line slope; ignored in horizontal and bridge scenes"
+          },
+          "intercept": {
+            "type": "number",
+            "minimum": -12,
+            "maximum": 12,
+            "default": 0,
+            "multipleOf": 0.01,
+            "description": "截线高度或直线截距 / water level or line intercept"
+          },
+          "scene": {
+            "type": "string",
+            "enum": [
+              "horizontal",
+              "line",
+              "bridge"
+            ],
+            "default": "horizontal",
+            "description": "水平求交、直线联立、拱桥示意 / horizontal, line or bridge"
+          },
+          "showDistance": {
+            "type": "boolean",
+            "default": true,
+            "description": "显示水平根距与斜弦长 / show horizontal separation and chord length"
+          }
+        },
+        "required": [
+          "a",
+          "b",
+          "c",
+          "slope",
+          "intercept",
+          "scene",
+          "showDistance"
+        ],
+        "default": {
+          "a": 1,
+          "b": 0,
+          "c": -4,
+          "slope": 0,
+          "intercept": 0,
+          "scene": "horizontal",
+          "showDistance": true
+        }
+      },
+      "patchHints": [
+        {
+          "zh-CN": "只修改用户要求的教学参数，其余字段保留。",
+          "en": "Patch only the requested teaching parameters and preserve the rest."
+        },
+        {
+          "zh-CN": "拱桥示例a=-0.4,b=0,c=9,intercept=3；韦达与根距使用移项后的b-slope与c-intercept，不能继续套用原式b,c。横坐标差与斜弦长度分开。普通ax²+bx+c=0及复根优先用math.quadratic-equation。",
+          "en": "Use reduced coefficients b−slope and c−intercept for the discriminant and Vieta relations. Horizontal root separation differs from the sloping chord. A standard quadratic equation, including complex roots, belongs to math.quadratic-equation."
+        }
+      ],
+      "fallbackConditions": [
+        {
+          "zh-CN": "本组件不处理：船高净空与航行安全判定、任意曲线求交、三维结构分析。",
+          "en": "Vessel headroom or navigation safety, arbitrary curves, or three-dimensional structural analysis."
+        }
+      ],
+      "examplePrompts": [
+        {
+          "zh-CN": "桥下水位上涨，水面处还能有多宽？",
+          "en": "How does the opening width change as the water level rises under a parabolic arch?"
+        },
+        {
+          "zh-CN": "斜线和抛物线求交时，判别式为什么也变了？",
+          "en": "Why must the discriminant change when intersecting a parabola with an oblique line?"
+        }
+      ],
+      "search": {
+        "aliases": [
+          "抛物线与直线求交",
+          "拦截求交",
+          "拱桥通航",
+          "韦达根距",
+          "水位宽度",
+          "parabola-line intersection",
+          "Vieta root separation"
+        ],
+        "concepts": [
+          "parabola-intersections",
+          "quadratic-discriminant",
+          "vieta-relations",
+          "chord-length",
+          "bridge-water-level"
+        ],
+        "stages": [
+          "junior",
+          "senior"
+        ],
+        "supports": [
+          "水平截线与斜线",
+          "移项后的判别式",
+          "水平根距与斜弦长度",
+          "向下抛物线桥孔近似"
+        ],
+        "excludes": [
+          "船高净空与航行安全判定",
+          "任意曲线求交",
+          "三维结构分析"
+        ],
+        "referenceIds": [
+          "shiguang.math.junior.j9a_m03"
+        ]
+      }
+    }
+  ]
+}

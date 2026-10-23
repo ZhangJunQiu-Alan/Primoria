@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { COMPONENT_REGISTRY } from "../src/lib/interactive/components/registry";
 import catalog from "../../../data/visualization-components/catalog.v1.json";
 import { DEFAULT_ACID_BASE_TITRATION_CONFIG } from "../src/lib/interactive/components/acid-base-titration";
 import { DEFAULT_ANGLE_MEASURE_CONFIG } from "../src/lib/interactive/components/angle-measure";
@@ -57,6 +58,9 @@ describe("implemented visualization catalog entries", () => {
       .filter((component) => component.implementation.status === "implemented")
       .map((component) => component.componentId)
       .sort();
-    expect(implementedIds).toEqual([...runtimeDefaults.keys()].sort());
+    expect(implementedIds).toEqual(COMPONENT_REGISTRY.filter((entry) => entry.implemented).map((entry) => entry.componentId).sort());
+    for (const entry of COMPONENT_REGISTRY) {
+      if (entry.implemented) expect(entry.configSchema.parse({}), entry.componentId).toEqual(catalog.components.find((item) => item.componentId === entry.componentId)?.configSchema.default);
+    }
   });
 });

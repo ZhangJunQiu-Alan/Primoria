@@ -217,6 +217,10 @@ export type RenderChatQuizArgs = {
 export type PositionLearningGoalArgs = { query: string; graph_id?: string };
 export type GetCourseCardArgs = { course_id: string };
 export type OpenInteractiveComponentArgs = { component_id: string; request: string; target_instance_id?: string };
+export type SearchInteractiveComponentsArgs = { query: string; discipline?: string; stage?: string; limit?: number };
+export type InteractiveComponentPayload = { componentId: string; configVersion: number; config: Record<string, unknown> };
+export declare const SearchInteractiveComponentsArgsSchema: z.ZodType<SearchInteractiveComponentsArgs>;
+export declare const InteractiveComponentPayloadSchema: z.ZodType<InteractiveComponentPayload>;
 
 export type RenderChartArgs = {
   title: string;

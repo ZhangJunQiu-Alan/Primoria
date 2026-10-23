@@ -1,0 +1,281 @@
+{
+  "schemaVersion": 1,
+  "runId": "visualization-baseline-20261073-82ac1ad7",
+  "seed": 20261073,
+  "frozenAt": "2026-10-22T13:01:26.518Z",
+  "scope": "platform-baseline",
+  "catalogHash": "82ac1ad7783797fc82676d489c6ebcd2433eefaa8dc33594bab41a7f664853d2",
+  "codeRevision": "d64a6fad195769f4946cfcd645746b2acc8f7572",
+  "workingTreeHash": "d0e8064c98cb7f902b61efad6ba7f2c2052f67e72c2351a6f8d3fb51553c2832",
+  "cases": [
+    {
+      "caseId": "viz-01",
+      "prompt": "演示一下理想气体状态与分子运动",
+      "kind": "chat",
+      "language": "zh",
+      "length": "short",
+      "expectedComponentIds": [
+        "chem.ideal-gas"
+      ],
+      "subject": "chemistry",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-02",
+      "prompt": "演示一下弱酸解离与缓冲响应",
+      "kind": "chat",
+      "language": "zh",
+      "length": "short",
+      "expectedComponentIds": [
+        "chem.weak-acid-buffer"
+      ],
+      "subject": "chemistry",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-03",
+      "prompt": "演示一下排序分步",
+      "kind": "chat",
+      "language": "zh",
+      "length": "short",
+      "expectedComponentIds": [
+        "cs.sorting-steps"
+      ],
+      "subject": "computer-science",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-04",
+      "prompt": "演示一下二次方程的根与顶点",
+      "kind": "chat",
+      "language": "zh",
+      "length": "short",
+      "expectedComponentIds": [
+        "math.quadratic-equation"
+      ],
+      "subject": "math",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-05",
+      "prompt": "Show close reading.",
+      "kind": "chat",
+      "language": "en",
+      "length": "short",
+      "expectedComponentIds": [
+        "literature.close-reading"
+      ],
+      "subject": "literature",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-06",
+      "prompt": "逐步演示一项法案如何成为法律。 请保留必要的标注，让我能直接操作并观察变化。",
+      "kind": "chat",
+      "language": "zh",
+      "length": "medium",
+      "expectedComponentIds": [
+        "general.process-sequence"
+      ],
+      "subject": "cross-disciplinary",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-07",
+      "prompt": "画出支持与反对公民不服从的论证结构。 请保留必要的标注，让我能直接操作并观察变化。",
+      "kind": "chat",
+      "language": "zh",
+      "length": "medium",
+      "expectedComponentIds": [
+        "humanities.argument-map"
+      ],
+      "subject": "philosophy",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-08",
+      "prompt": "展示伊丽莎白和达西的关系如何随小说发展而变化。 请保留必要的标注，让我能直接操作并观察变化。",
+      "kind": "chat",
+      "language": "zh",
+      "length": "medium",
+      "expectedComponentIds": [
+        "literature.character-relationships"
+      ],
+      "subject": "literature",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-09",
+      "prompt": "Break this sentence into subject, predicate, and object. Please make the relevant relationships clear and keep the controls usable.",
+      "kind": "chat",
+      "language": "en",
+      "length": "medium",
+      "expectedComponentIds": [
+        "language.sentence-structure"
+      ],
+      "subject": "language",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-10",
+      "prompt": "比较定向住房补贴和普惠住房补贴。 请保留必要的标注，让我能直接操作并观察变化。我有一点基础，但看到图就容易把几个量之间的关系弄混。请把关键变化放在同一个画面里，让我先观察默认情况，再自己调整一个参数。画面上保留必要标注和当前读数，用简短文字指出应该观察哪里；如果模型有适用条件或特殊边界，也请明确显示。",
+      "kind": "chat",
+      "language": "zh",
+      "length": "long",
+      "expectedComponentIds": [
+        "social.policy-tradeoff"
+      ],
+      "subject": "civics",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-11",
+      "prompt": "比较新加坡和北京的气候特征。 请保留必要的标注，让我能直接操作并观察变化。我有一点基础，但看到图就容易把几个量之间的关系弄混。请把关键变化放在同一个画面里，让我先观察默认情况，再自己调整一个参数。画面上保留必要标注和当前读数，用简短文字指出应该观察哪里；如果模型有适用条件或特殊边界，也请明确显示。 Please keep the visualization interactive，并把关键术语同时标出英文。",
+      "kind": "chat",
+      "language": "mixed",
+      "length": "long",
+      "expectedComponentIds": [
+        "geography.climate-comparison"
+      ],
+      "subject": "geography",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-12",
+      "prompt": "展示《麦克白》的叙事弧线。 请保留必要的标注，让我能直接操作并观察变化。我希望通过操作而不是背结论来理解。先选一个直观的例子，展示关键对象和它们之间的关系；控件变化时让图形与解释一起响应。请帮助我区分哪些是输入、哪些是计算结果，并显示边界情况，避免用漂亮动画代替真正的解释。",
+      "kind": "chat",
+      "language": "zh",
+      "length": "long",
+      "expectedComponentIds": [
+        "literature.narrative-arc"
+      ],
+      "subject": "literature",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-13",
+      "prompt": "气体温度改成400K，其他不变",
+      "kind": "adjust",
+      "language": "zh",
+      "length": "short",
+      "expectedComponentIds": [
+        "chem.ideal-gas"
+      ],
+      "subject": "chemistry",
+      "parentCaseId": "viz-01",
+      "parameterAssertions": {
+        "temperatureK": 400
+      },
+      "attempts": []
+    },
+    {
+      "caseId": "viz-14",
+      "prompt": "Keep the scene we just opened. Change one relevant parameter to make the difference easier to see, keeping the other settings.",
+      "kind": "adjust",
+      "language": "en",
+      "length": "medium",
+      "expectedComponentIds": [
+        "chem.weak-acid-buffer"
+      ],
+      "subject": "chemistry",
+      "parentCaseId": "viz-02",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-15",
+      "prompt": "保留刚才那组数，换成选择排序，让我逐步比较它和冒泡排序的差异。",
+      "kind": "adjust",
+      "language": "zh",
+      "length": "medium",
+      "expectedComponentIds": [
+        "cs.sorting-steps"
+      ],
+      "subject": "computer-science",
+      "parentCaseId": "viz-03",
+      "parameterAssertions": {
+        "algorithm": "selection"
+      },
+      "attempts": []
+    },
+    {
+      "caseId": "viz-16",
+      "prompt": "刚才那个图，保持其他设置不变，调整一个关键参数，让前后差别更明显。我希望通过操作而不是背结论来理解。先选一个直观的例子，展示关键对象和它们之间的关系；控件变化时让图形与解释一起响应。请帮助我区分哪些是输入、哪些是计算结果，并显示边界情况，避免用漂亮动画代替真正的解释。 Please keep the visualization interactive，并把关键术语同时标出英文。",
+      "kind": "adjust",
+      "language": "mixed",
+      "length": "long",
+      "expectedComponentIds": [
+        "math.quadratic-equation"
+      ],
+      "subject": "math",
+      "parentCaseId": "viz-04",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-17",
+      "prompt": "请围绕理想气体状态与分子运动生成一节课程，先解释关键概念，再用可直接操作的可视化帮助理解。",
+      "kind": "course",
+      "language": "zh",
+      "length": "medium",
+      "expectedComponentIds": [
+        "chem.ideal-gas"
+      ],
+      "subject": "chemistry",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-18",
+      "prompt": "Create a focused lesson about Weak acid and buffer response. Include a directly visible interactive visualization and explain the relationships it demonstrates.",
+      "kind": "course",
+      "language": "en",
+      "length": "medium",
+      "expectedComponentIds": [
+        "chem.weak-acid-buffer"
+      ],
+      "subject": "chemistry",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-19",
+      "prompt": "请围绕排序分步生成一节课程，先解释关键概念，再用可直接操作的可视化帮助理解。我有一点基础，但看到图就容易把几个量之间的关系弄混。请把关键变化放在同一个画面里，让我先观察默认情况，再自己调整一个参数。画面上保留必要标注和当前读数，用简短文字指出应该观察哪里；如果模型有适用条件或特殊边界，也请明确显示。",
+      "kind": "course",
+      "language": "zh",
+      "length": "long",
+      "expectedComponentIds": [
+        "cs.sorting-steps"
+      ],
+      "subject": "computer-science",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-20",
+      "prompt": "请围绕二次方程的根与顶点生成一节课程，先解释关键概念，再用可直接操作的可视化帮助理解。我希望通过操作而不是背结论来理解。先选一个直观的例子，展示关键对象和它们之间的关系；控件变化时让图形与解释一起响应。请帮助我区分哪些是输入、哪些是计算结果，并显示边界情况，避免用漂亮动画代替真正的解释。",
+      "kind": "course",
+      "language": "zh",
+      "length": "long",
+      "expectedComponentIds": [
+        "math.quadratic-equation"
+      ],
+      "subject": "math",
+      "parameterAssertions": {},
+      "attempts": []
+    }
+  ],
+  "checks": []
+}

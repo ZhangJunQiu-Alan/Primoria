@@ -1,0 +1,323 @@
+{
+  "generatedAt": "2026-10-22T13:35:00.326715+00:00",
+  "scope": "B component QA only; not production model routing, persisted chat/course acceptance, all reference modes or zero-bug certification",
+  "components": 30,
+  "registeredComponents": 26,
+  "pendingComponents": 4,
+  "activeCatalogComponents": 45,
+  "sampleConfigurations": 120,
+  "layoutStates": 720,
+  "poetryModeStates": 72,
+  "existingSelectedLayoutStates": 456,
+  "localBTests": 218,
+  "referenceContractTests": 3,
+  "typeScript": "passed",
+  "sourceEslint": "passed",
+  "referenceCases": 1018,
+  "referenceCapabilities": 2296,
+  "referenceCoverageComplete": false,
+  "files": [
+    {
+      "path": "index.html",
+      "sha256": "2a11a018e3fd50c0e5fbc0e884a65bdf0c4b31aef0512f9ab5a772fe6c6fea3d"
+    },
+    {
+      "path": "preview.js",
+      "sha256": "071cdce1cc59e88ab3c976b428290b22155da71b71cd4f0e392b77120dadc9bd"
+    },
+    {
+      "path": "scenarios.json",
+      "sha256": "c00e2eb95f77ff298dfbffb0a05a99894647517640c879c8deccff526d238b38"
+    },
+    {
+      "path": "evidence/layout-audit.json",
+      "sha256": "f1443a32f4e89c77ecf9d60fcfa701ed7723feb1a4d93b69038de92ad825a84c"
+    },
+    {
+      "path": "evidence/interaction-audit.json",
+      "sha256": "079eb40dfb7b68338b7dbbfe752d9077b9635e2ac8271ce0c408a76a5861de5d"
+    },
+    {
+      "path": "evidence/poetry-mode-audit.json",
+      "sha256": "0364e2670b6f4bcba12dce7d29a8a5e5b029f5bf9ef5af2e831a4fa762828d08"
+    },
+    {
+      "path": "evidence/drag-mobile.json",
+      "sha256": "e363fc149c9b11bded76e5b8fe1e9fdd3793130e5a2d3c873f93ef9d286101a1"
+    },
+    {
+      "path": "evidence/pending-batch-check.json",
+      "sha256": "534290a7cd34b22a90a2538b9231af43f465e9e2d6ba37bb90c42ff30c240110"
+    },
+    {
+      "path": "evidence/closed-circuit-power-desktop.png",
+      "sha256": "d4c78a3fbfc537ba9e4d5240ba855705d29baccedecacd62e49f49fbff360d70"
+    },
+    {
+      "path": "evidence/poetry-autumn-desktop.png",
+      "sha256": "7843235095ee01a8050c5185a66f427567714fdff50ea1b15453655eba1e4f4a"
+    },
+    {
+      "path": "evidence/poetry-quiet-night-desktop.png",
+      "sha256": "b127ab4b770dd90ced5d7043ff6a7054573c606eb689bb410a0cb66cb30ac34f"
+    },
+    {
+      "path": "evidence/quadratic-mobile.png",
+      "sha256": "055c2d3f44f69f9e4d6393c9f499d2505845fb67d9c341975a700a80ae4d4c12"
+    }
+  ],
+  "sourceFiles": [
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/binomial-distribution.tsx",
+      "sha256": "31dc8d76009b5700464a92e27621eecaf9ea1753fe7f6c1e05a2f3e4ebb07da6"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/calculus-lab.tsx",
+      "sha256": "efd9ef41b2c9bd4ea6ca40eea514365c79add4729ffddf6859aff5341d3e2ac1"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/cell-division.tsx",
+      "sha256": "8c8b7eed2f9d446189513e46ef831066c7ba3b3880a085bb7f2bde67adf6cf08"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/chemical-equilibrium.tsx",
+      "sha256": "9f6b4fd64cf5d118e738d752a84a43bfe1897d5d1ae6873853eb96ec62045363"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/chicken-rabbit.tsx",
+      "sha256": "9bd81763f3781ccd78a1821a76478414b736b526e5bb3665891d81e928077114"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/circuit-lab.tsx",
+      "sha256": "f4400478656809c13d03f778689931242537dcae5f87b18b74a0540cb931ef0e"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/closed-circuit.tsx",
+      "sha256": "e19d7ce6465702f363a2ee3c45d03851f08b35725f4f6f43214728bc27b3ba57"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/earth-seasons.tsx",
+      "sha256": "84d78bd847a0df0c0d1af7de3504f665f69c12651d9eb91a4f70cb82a0c2c5e2"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/electric-field.tsx",
+      "sha256": "649784ac16510839d463ffb2c124d2299932b34f66e30f432ea3c8f55e288f67"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/fraction-equivalence.tsx",
+      "sha256": "5fc23bfc06c1eac717fe55302897058f816e0df384a47c5d78f375f9840a0ee5"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/ideal-gas.tsx",
+      "sha256": "b0aab46507e2b60986b8370f9d26353aed66c7c046b5decd6d1c3e27e5d3bf3d"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/lever-buoyancy.tsx",
+      "sha256": "f65d5514b633117394ad0709366a321e3131dbb85d4778d621a1f4ef9cbfba05"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/linear-system.tsx",
+      "sha256": "f619192c31165411a2aab712647f3b262f0b41bd8f7bad7459b31436e533155d"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/magnetic-motion.tsx",
+      "sha256": "de1e6bade353dacb440cf207f46cf53212e1be64244afa32f77f6c41e95bcd8a"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/mendelian-genetics.tsx",
+      "sha256": "3f19f71d4fa18f4344d702f41aa67a01216e81d6c00b86fc9d3952ac5b40447f"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/molecular-geometry.tsx",
+      "sha256": "b2cefa30b76c7db42b2cc3248809afa1dfcad47e753768ca76bce80c35dc26e5"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/moon-phases.tsx",
+      "sha256": "481d276a4ba2cb7506b35815677302aa4e91c3f0cf3009d48cc127d932c31ad9"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/oscillation-lab.tsx",
+      "sha256": "3a387a1ba9dfac02e747af6672097889fec1bfb6b842a500e627631c6b4cd3a1"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/osmosis-lab.tsx",
+      "sha256": "25ba9b49e55110e36f12f9f36cbe057f2ef2c4c4d6929660f4e45584b0af64f4"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/parabola-intersections.tsx",
+      "sha256": "0d736488a0bbf08b63cb1b0e9e46aa4f88471b55f802aaac4f9e3383f18f9d2d"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/photoelectric-effect.tsx",
+      "sha256": "64119eb79f69372e2a1e844b0d3329786455e92a164929c2d1204dc5c82e4c90"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/poetry-imagery.tsx",
+      "sha256": "0d0dd8ef338ded39725e33a275a257ea6a36260094074e4801ff1f1563f34e0f"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/primitives/controls.tsx",
+      "sha256": "26fc4e3717638c1522c825c073beec62443ae9474ac7b7255540b2976b94b06c"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/primitives/scene-frame.tsx",
+      "sha256": "9e9581439a30b412c694dfba2f93b5d45b188ca079c66bc3903fea7dc72aae7d"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/primitives/scene-playback.tsx",
+      "sha256": "557fe7453afe14f2d6421d78d3540c401ca81695459adcf8404de7cb64fc837e"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/primitives/svg-drag-handle.tsx",
+      "sha256": "12dcd04f6fd15265f38daa4428014bac22ac8c7fc1552de28e5aa84feb94d48a"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/primitives/widget-shell.tsx",
+      "sha256": "a5c65fe9fd73d8fe42fadc8058ae4bbd798ab76ebd322779cf7ce050d6164e78"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/projectile-lab.tsx",
+      "sha256": "de953e7e6c4d9521d38e1ebd76a57095707a03c3bcf4e8f943fb2953f9d06fbd"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/quadratic-equation.tsx",
+      "sha256": "42795d43c98a91baf2bd275176a77e618ad420803f96b47252cb5a5b185671da"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/reaction-kinetics.tsx",
+      "sha256": "ff8ac64116f0a7e93e7e6ce4a1ce7bd0666bde86915754e7046fbeb1c65b4418"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/refraction-lab.tsx",
+      "sha256": "313f738bbb01fe0d7a7ee553b320b996dd604bd07ee74c3ec16dc824284bdd68"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/trigonometry-circle.tsx",
+      "sha256": "a63b2d58611561d5d78a88f2e2bb066e926732b90077296d46ee5c2dd5df96cd"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/weak-acid-buffer.tsx",
+      "sha256": "04ddcd897c2b8079acd3c450081ee3a92cb30d48c748afba7d9b1eb21c5b39f9"
+    },
+    {
+      "path": "apps/web/src/components/generative-ui/interactive/wire-resistance.tsx",
+      "sha256": "1cc15c1ffe4978caaec23ca06f6cbe794e6a14260bd4dc361ff23f2747afac3e"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/binomial-distribution.ts",
+      "sha256": "f34145ed5d00fb17f281197da22dff51e805fea788ed1d755a54d1219aa1faf4"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/calculus-lab.ts",
+      "sha256": "098831e7d8000e80ae2fb71c989f030ea43d2b57f8f81b061ec291ad938f7272"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/cell-division.ts",
+      "sha256": "ee5f016dcd6922b42eb712a88415e119b6ef636c935e20972b21b7a28f886852"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/chemical-equilibrium.ts",
+      "sha256": "aae8a580d47e4d4454a153afa56c53f78598cb13142b3d6db0db01b38f7c92db"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/chicken-rabbit.ts",
+      "sha256": "1c7b6bdea1e44e35a6cdb329cee56912dceef869a0848229feac3be2d41f9d3f"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/circuit-lab.ts",
+      "sha256": "b2c09522213e23a56701dbc9cc67a9b47b5d08b514689568b69acbe065fbcb32"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/closed-circuit.ts",
+      "sha256": "07a3f57ea2d04ca394d2f0cf8f9c1e35bc179af9b1c6bd0a7b9fb7b5770ebcaa"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/earth-seasons.ts",
+      "sha256": "1c5fa836ea90e42292b58f52ca1db420deec3e8767adad07df52c7dae931ef7c"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/electric-field.ts",
+      "sha256": "e3815be75b265c00fd0ad0fc194f381235192866d3c608e788cae37a75b3cfcb"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/fraction-equivalence.ts",
+      "sha256": "4a5e46d4d2abd65b1a5d806336933297d0184f88c3ba1b342723a8281079c25e"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/ideal-gas.ts",
+      "sha256": "da52346988a0ad15c2c7b56223c2fa2206854a136b31aa83ae23603a283f49c0"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/lever-buoyancy.ts",
+      "sha256": "86805c6ad68538438cd73a805e1ddcdebf28ba36934534946fb95e8c66bfd66c"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/linear-system.ts",
+      "sha256": "5a97c100a829e1e04286dc200be66db33e7361aafcff620c57e4ad290f47d2b9"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/magnetic-motion.ts",
+      "sha256": "287a43e0b5253de9a8b324688bd08c39aaa1711685878088359e702e1c2c8a62"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/mendelian-genetics.ts",
+      "sha256": "84af512c50747f5bfcb9dccda654822d171da6e9ae496e78c0cc0c6b1bb539aa"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/molecular-geometry.ts",
+      "sha256": "57864fdb16e5a3145490473a2a5d98d796e39c963c6ffc3a9fe7d6b8ec0066a5"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/moon-phases.ts",
+      "sha256": "dd86ecc3c3cefe70588d43eab36da5725bfe4a18dd37685953d4baf174391ac9"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/oscillation-lab.ts",
+      "sha256": "bddee1a8846cd5ccd857ce7fa4f3c5a5642cae09fd7d5ac0b8bcd95665cfd8ce"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/osmosis-lab.ts",
+      "sha256": "edbd7f2645343d503aa07a9dd3ac460d1e585718ab9c56e6cf1cc97e837549e2"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/parabola-intersections.ts",
+      "sha256": "2ac907d0fedcfd4f9a3a94666ded16894a6130c7c95864cf82377aa49aaf92b0"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/photoelectric-effect.ts",
+      "sha256": "64e28fa08babccdaabd5a1bb632307f289ac344330e42aaf659b76b0079f66f8"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/poetry-imagery.ts",
+      "sha256": "1dd703ddca90f12386dcc0144b8d03ddb01af8ce12abd252a350b8ba3ef490c2"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/projectile-lab.ts",
+      "sha256": "afb7ca819de0eb7086cc3383b53392f25dbaf14502f619c4b2f936fbdcf0a04f"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/quadratic-equation.ts",
+      "sha256": "dbc16c829e5ca36986c9d53a92d0b86135971c5170cea8215576bb695759f09b"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/reaction-kinetics.ts",
+      "sha256": "696529c828da123220ba54ebf9a25db4ef0f79fb11cd355286aba0684fa6a134"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/refraction-lab.ts",
+      "sha256": "8ef66f87aad2fbf76f62952ef3c3c003420daef5ac6a5ab197fd335a1cb71211"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/trigonometry-circle.ts",
+      "sha256": "ae4b7aded4f4b47318faa5dc3763a78d909ebcfddc337dbc4bbc5f622a96857a"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/weak-acid-buffer.ts",
+      "sha256": "23c61477858ff3c7cc77994ad4c20d949883e86a1c22b0c408b4df5b4fc71ffb"
+    },
+    {
+      "path": "apps/web/src/lib/interactive/components/wire-resistance.ts",
+      "sha256": "6b23fb1444463111aee75eabb16c9f53801bcb4067f24f783a90b2a0ae58d95e"
+    }
+  ]
+}

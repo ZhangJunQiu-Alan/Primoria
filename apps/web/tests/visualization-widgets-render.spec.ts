@@ -1,7 +1,7 @@
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { WIDGETS } from "../src/components/generative-ui/interactive";
+import { WIDGETS, loadInteractiveWidget } from "../src/components/generative-ui/interactive";
 import { COMPONENT_REGISTRY } from "../src/lib/interactive/components/registry";
 
 describe("visualization widget registry", () => {
@@ -12,8 +12,8 @@ describe("visualization widget registry", () => {
 
   it.each(COMPONENT_REGISTRY.filter((entry) => entry.implemented).map((entry) => [entry.componentId, entry] as const))(
     "renders %s from its default config",
-    (componentId, entry) => {
-      const Renderer = WIDGETS[componentId];
+    async (componentId, entry) => {
+      const Renderer = await loadInteractiveWidget(componentId);
       const config = entry.configSchema.parse({});
       const html = renderToStaticMarkup(createElement(Renderer, { config, onChange: () => undefined }));
       expect(html).toMatch(/^<(section|div)/);

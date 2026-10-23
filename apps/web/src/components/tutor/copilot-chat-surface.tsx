@@ -28,6 +28,7 @@ import { CourseMarkdown } from "@/components/course/course-markdown";
 import { sanitizeCopilotAssistantText } from "@/hooks/use-primoria-copilot";
 import { useI18n, useT } from "@/lib/i18n/client";
 import { HomeSummarySection } from "./home-summary";
+import { completedInteractiveToolIds, interactiveHistoryMetadata, restoreInteractiveHistory } from "@/lib/interactive/chat-history";
 import {
   ensureThreadSummary,
   hydrateThreadMessagesFromServer,
@@ -467,7 +468,8 @@ function messageText(message: { content?: unknown; role?: unknown }) {
 
 function CopilotThreadHistoryRecorder({ threadId, title, courseId, lessonId }: { threadId: string; title?: string; courseId?: string | null; lessonId?: string | null }) {
   const { agent } = useAgent({ agentId: "primoria_tutor", threadId, updates: [UseAgentUpdate.OnMessagesChanged] });
-  const recordedMessagesRef = useRef<Set<string>>(new Set());
+  const recordedMessagesRef = useRef<Map<string, string>>(new Map());
+  const createdAtRef = useRef<Map<string, number>>(new Map());
 
   useEffect(() => {
     if (agent.messages.length === 0) return;
@@ -483,23 +485,30 @@ function CopilotThreadHistoryRecorder({ threadId, title, courseId, lessonId }: {
     });
     void persistThreadSummaryToServer(summary);
 
-    for (const message of agent.messages) {
-      if (message.role !== "user" && message.role !== "assistant") continue;
+    const timer = setTimeout(() => {
+    const completed = completedInteractiveToolIds(agent.messages);
+    for (const [index, message] of agent.messages.entries()) {
+      const metadata = interactiveHistoryMetadata(message, completed);
+      if (!metadata) continue;
       const id = message.id ?? `${message.role}-${messageText(message).slice(0, 32)}`;
-      if (recordedMessagesRef.current.has(id)) continue;
       const content = messageText(message).trim();
-      if (!content) continue;
-      recordedMessagesRef.current.add(id);
+      if (!content && !("interactiveToolCalls" in metadata)) continue;
+      const fingerprint = JSON.stringify({ content, metadata });
+      if (recordedMessagesRef.current.get(id) === fingerprint) continue;
+      recordedMessagesRef.current.set(id, fingerprint);
+      if (!createdAtRef.current.has(id)) createdAtRef.current.set(id, Date.now() + index);
       void persistThreadMessageToServer(threadId, {
         id,
         role: message.role,
         content,
-        metadata: { source: "copilotkit" },
-        createdAt: Date.now(),
+        metadata,
+        createdAt: createdAtRef.current.get(id),
         courseId,
         lessonId,
       });
     }
+    }, 350);
+    return () => clearTimeout(timer);
   }, [agent.messages, threadId, title, courseId, lessonId]);
 
   return null;
@@ -583,11 +592,8 @@ export function PrimoriaCopilotChatSurface({
         const stored = await hydrateThreadMessagesFromServer(resolvedThreadId);
         if (cancelled) return;
 
-        const messages = stored
-          .filter((message) => message.role === "user" || message.role === "assistant")
-          .map((message) => ({
-            id: message.id,
-            role: message.role as "user" | "assistant",
+        const messages = restoreInteractiveHistory(stored).map((message) => ({
+            ...message,
             content: message.role === "assistant"
               ? sanitizeCopilotAssistantText(stripInjectedCourseContext(message.content))
               : stripInjectedCourseContext(message.content),

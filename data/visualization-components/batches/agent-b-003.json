@@ -1,0 +1,195 @@
+{
+  "batchId": "agent-b-003",
+  "components": [
+    {
+      "componentId": "math.trigonometry-circle",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/trigonometry-circle.ts",
+      "componentExport": "trigonometryCircleComponent",
+      "configSchemaExport": "TrigonometryCircleConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/trigonometry-circle.tsx",
+      "widgetExport": "TrigonometryCircleWidget",
+      "samples": [
+        {
+          "angleDeg": 40,
+          "radius": 1,
+          "mode": "circle",
+          "functionType": "sin",
+          "showProjection": true,
+          "showTangent": false
+        },
+        {
+          "angleDeg": 130,
+          "radius": 2,
+          "mode": "circle",
+          "functionType": "sin",
+          "showProjection": true,
+          "showTangent": false
+        },
+        {
+          "angleDeg": 90,
+          "radius": 1,
+          "mode": "circle",
+          "functionType": "tan",
+          "showProjection": true,
+          "showTangent": false
+        },
+        {
+          "angleDeg": 40,
+          "radius": 1,
+          "mode": "graph",
+          "functionType": "tan",
+          "showProjection": true,
+          "showTangent": false
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-three.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    },
+    {
+      "componentId": "chem.chemical-equilibrium",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/chemical-equilibrium.ts",
+      "componentExport": "chemicalEquilibriumComponent",
+      "configSchemaExport": "ChemicalEquilibriumConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/chemical-equilibrium.tsx",
+      "widgetExport": "ChemicalEquilibriumWidget",
+      "samples": [
+        {
+          "forwardRate": 0.2,
+          "reverseRate": 0.1,
+          "initialA": 1,
+          "initialB": 0,
+          "elapsedSeconds": 8,
+          "view": "concentrations",
+          "showEquilibrium": true
+        },
+        {
+          "forwardRate": 0.2,
+          "reverseRate": 0.1,
+          "initialA": 0,
+          "initialB": 1,
+          "elapsedSeconds": 8,
+          "view": "concentrations",
+          "showEquilibrium": true
+        },
+        {
+          "forwardRate": 0.2,
+          "reverseRate": 0.1,
+          "initialA": 0,
+          "initialB": 0,
+          "elapsedSeconds": 8,
+          "view": "concentrations",
+          "showEquilibrium": true
+        },
+        {
+          "forwardRate": 0.2,
+          "reverseRate": 0.1,
+          "initialA": 1,
+          "initialB": 0,
+          "elapsedSeconds": 60,
+          "view": "rates",
+          "showEquilibrium": true
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-three.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    },
+    {
+      "componentId": "chem.molecular-geometry",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/molecular-geometry.ts",
+      "componentExport": "molecularGeometryComponent",
+      "configSchemaExport": "MolecularGeometryConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/molecular-geometry.tsx",
+      "widgetExport": "MolecularGeometryWidget",
+      "samples": [
+        {
+          "molecule": "CH4",
+          "mode": "ball-stick",
+          "showAngles": true
+        },
+        {
+          "molecule": "H2O",
+          "mode": "electron-domains",
+          "showAngles": true
+        },
+        {
+          "molecule": "CO2",
+          "mode": "ball-stick",
+          "showAngles": true
+        },
+        {
+          "molecule": "SF6",
+          "mode": "ball-stick",
+          "showAngles": true
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-three.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    }
+  ]
+}

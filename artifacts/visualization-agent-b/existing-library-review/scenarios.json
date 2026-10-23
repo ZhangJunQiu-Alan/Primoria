@@ -1,0 +1,1788 @@
+{
+  "description": "Existing19 component defaults and selected dimensions; not exhaustive mode acceptance",
+  "components": [
+    {
+      "componentId": "physics.lens-imaging",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/lens-imaging.tsx",
+      "widgetExport": "LensImagingWidget",
+      "samples": [
+        {
+          "lensType": "convex",
+          "focalLength": 10,
+          "objectDistance": 30,
+          "objectHeight": 8,
+          "showRays": true
+        },
+        {
+          "lensType": "concave",
+          "focalLength": 10,
+          "objectDistance": 30,
+          "objectHeight": 8,
+          "showRays": true
+        },
+        {
+          "lensType": "convex",
+          "focalLength": 4,
+          "objectDistance": 30,
+          "objectHeight": 8,
+          "showRays": true
+        },
+        {
+          "lensType": "concave",
+          "focalLength": 10,
+          "objectDistance": 30,
+          "objectHeight": 8,
+          "showRays": true
+        }
+      ]
+    },
+    {
+      "componentId": "chem.acid-base-titration",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/acid-base-titration.tsx",
+      "widgetExport": "AcidBaseTitrationWidget",
+      "samples": [
+        {
+          "acidConcentration": 0.1,
+          "acidVolume": 25,
+          "baseConcentration": 0.1,
+          "addedBaseVolume": 0,
+          "indicator": "phenolphthalein"
+        },
+        {
+          "acidConcentration": 0.1,
+          "acidVolume": 25,
+          "baseConcentration": 0.1,
+          "addedBaseVolume": 0,
+          "indicator": "methyl-orange"
+        },
+        {
+          "acidConcentration": 0.01,
+          "acidVolume": 25,
+          "baseConcentration": 0.1,
+          "addedBaseVolume": 0,
+          "indicator": "phenolphthalein"
+        },
+        {
+          "acidConcentration": 0.1,
+          "acidVolume": 25,
+          "baseConcentration": 0.1,
+          "addedBaseVolume": 0,
+          "indicator": "none"
+        }
+      ]
+    },
+    {
+      "componentId": "physics.wave-superposition",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/wave-superposition.tsx",
+      "widgetExport": "WaveSuperpositionWidget",
+      "samples": [
+        {
+          "amplitude1": 1,
+          "amplitude2": 1,
+          "frequency1": 1,
+          "frequency2": 1,
+          "phaseDiffDeg": 0,
+          "showComponents": true
+        },
+        {
+          "amplitude1": 1,
+          "amplitude2": 1,
+          "frequency1": 1,
+          "frequency2": 1,
+          "phaseDiffDeg": 0,
+          "showComponents": true
+        },
+        {
+          "amplitude1": 0.2,
+          "amplitude2": 1,
+          "frequency1": 1,
+          "frequency2": 1,
+          "phaseDiffDeg": 0,
+          "showComponents": true
+        },
+        {
+          "amplitude1": 1,
+          "amplitude2": 1,
+          "frequency1": 1,
+          "frequency2": 1,
+          "phaseDiffDeg": 0,
+          "showComponents": true
+        }
+      ]
+    },
+    {
+      "componentId": "cs.sorting-steps",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/sorting-steps.tsx",
+      "widgetExport": "SortingStepsWidget",
+      "samples": [
+        {
+          "algorithm": "bubble",
+          "values": [
+            5,
+            2,
+            4,
+            1,
+            8,
+            3
+          ]
+        },
+        {
+          "algorithm": "selection",
+          "values": [
+            5,
+            2,
+            4,
+            1,
+            8,
+            3
+          ]
+        },
+        {
+          "algorithm": "bubble",
+          "values": [
+            5,
+            2,
+            4,
+            1,
+            8,
+            3
+          ]
+        },
+        {
+          "algorithm": "insertion",
+          "values": [
+            5,
+            2,
+            4,
+            1,
+            8,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "math.function-explorer",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/function-explorer.tsx",
+      "widgetExport": "FunctionExplorerWidget",
+      "samples": [
+        {
+          "functionType": "quadratic",
+          "a": 1,
+          "b": 1,
+          "h": 0,
+          "k": 0,
+          "showOriginal": true
+        },
+        {
+          "functionType": "sin",
+          "a": 1,
+          "b": 1,
+          "h": 0,
+          "k": 0,
+          "showOriginal": true
+        },
+        {
+          "functionType": "quadratic",
+          "a": -3,
+          "b": 1,
+          "h": 0,
+          "k": 0,
+          "showOriginal": true
+        },
+        {
+          "functionType": "sqrt",
+          "a": 1,
+          "b": 1,
+          "h": 0,
+          "k": 0,
+          "showOriginal": true
+        }
+      ]
+    },
+    {
+      "componentId": "math.angle-measure",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/angle-measure.tsx",
+      "widgetExport": "AngleMeasureWidget",
+      "samples": [
+        {
+          "angleDeg": 60,
+          "showClassification": true,
+          "showProtractor": false
+        },
+        {
+          "angleDeg": 60,
+          "showClassification": true,
+          "showProtractor": false
+        },
+        {
+          "angleDeg": 0,
+          "showClassification": true,
+          "showProtractor": false
+        },
+        {
+          "angleDeg": 60,
+          "showClassification": true,
+          "showProtractor": false
+        }
+      ]
+    },
+    {
+      "componentId": "general.timeline-causality",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/timeline-causality.tsx",
+      "widgetExport": "TimelineCausalityWidget",
+      "samples": [
+        {
+          "timelineTitle": "A sequence of connected events",
+          "events": [
+            {
+              "id": "event-1",
+              "label": "Initial condition",
+              "dateLabel": "Phase 1",
+              "summary": "The situation before change."
+            },
+            {
+              "id": "event-2",
+              "label": "Turning point",
+              "dateLabel": "Phase 2",
+              "summary": "A change redirects what follows."
+            },
+            {
+              "id": "event-3",
+              "label": "Outcome",
+              "dateLabel": "Phase 3",
+              "summary": "The later consequence."
+            }
+          ],
+          "causalLinks": [
+            {
+              "fromEventId": "event-1",
+              "toEventId": "event-2",
+              "explanation": "The initial condition makes the turning point possible."
+            },
+            {
+              "fromEventId": "event-2",
+              "toEventId": "event-3",
+              "explanation": "The turning point changes the final outcome."
+            }
+          ]
+        },
+        {
+          "timelineTitle": "A sequence of connected events",
+          "events": [
+            {
+              "id": "event-1",
+              "label": "Initial condition",
+              "dateLabel": "Phase 1",
+              "summary": "The situation before change."
+            },
+            {
+              "id": "event-2",
+              "label": "Turning point",
+              "dateLabel": "Phase 2",
+              "summary": "A change redirects what follows."
+            },
+            {
+              "id": "event-3",
+              "label": "Outcome",
+              "dateLabel": "Phase 3",
+              "summary": "The later consequence."
+            }
+          ],
+          "causalLinks": [
+            {
+              "fromEventId": "event-1",
+              "toEventId": "event-2",
+              "explanation": "The initial condition makes the turning point possible."
+            },
+            {
+              "fromEventId": "event-2",
+              "toEventId": "event-3",
+              "explanation": "The turning point changes the final outcome."
+            }
+          ]
+        },
+        {
+          "timelineTitle": "A sequence of connected events",
+          "events": [
+            {
+              "id": "event-1",
+              "label": "Initial condition",
+              "dateLabel": "Phase 1",
+              "summary": "The situation before change."
+            },
+            {
+              "id": "event-2",
+              "label": "Turning point",
+              "dateLabel": "Phase 2",
+              "summary": "A change redirects what follows."
+            },
+            {
+              "id": "event-3",
+              "label": "Outcome",
+              "dateLabel": "Phase 3",
+              "summary": "The later consequence."
+            }
+          ],
+          "causalLinks": [
+            {
+              "fromEventId": "event-1",
+              "toEventId": "event-2",
+              "explanation": "The initial condition makes the turning point possible."
+            },
+            {
+              "fromEventId": "event-2",
+              "toEventId": "event-3",
+              "explanation": "The turning point changes the final outcome."
+            }
+          ]
+        },
+        {
+          "timelineTitle": "A sequence of connected events",
+          "events": [
+            {
+              "id": "event-1",
+              "label": "Initial condition",
+              "dateLabel": "Phase 1",
+              "summary": "The situation before change."
+            },
+            {
+              "id": "event-2",
+              "label": "Turning point",
+              "dateLabel": "Phase 2",
+              "summary": "A change redirects what follows."
+            },
+            {
+              "id": "event-3",
+              "label": "Outcome",
+              "dateLabel": "Phase 3",
+              "summary": "The later consequence."
+            }
+          ],
+          "causalLinks": [
+            {
+              "fromEventId": "event-1",
+              "toEventId": "event-2",
+              "explanation": "The initial condition makes the turning point possible."
+            },
+            {
+              "fromEventId": "event-2",
+              "toEventId": "event-3",
+              "explanation": "The turning point changes the final outcome."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "general.process-sequence",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/process-sequence.tsx",
+      "widgetExport": "ProcessSequenceWidget",
+      "samples": [
+        {
+          "processName": "A multi-step process",
+          "steps": [
+            {
+              "id": "step-1",
+              "label": "Receive input",
+              "input": "Starting material",
+              "change": "Interpret or transform the input",
+              "output": "Intermediate result"
+            },
+            {
+              "id": "step-2",
+              "label": "Produce outcome",
+              "input": "Intermediate result",
+              "change": "Apply the final transformation",
+              "output": "Final outcome"
+            }
+          ],
+          "feedbackLinks": []
+        },
+        {
+          "processName": "A multi-step process",
+          "steps": [
+            {
+              "id": "step-1",
+              "label": "Receive input",
+              "input": "Starting material",
+              "change": "Interpret or transform the input",
+              "output": "Intermediate result"
+            },
+            {
+              "id": "step-2",
+              "label": "Produce outcome",
+              "input": "Intermediate result",
+              "change": "Apply the final transformation",
+              "output": "Final outcome"
+            }
+          ],
+          "feedbackLinks": []
+        },
+        {
+          "processName": "A multi-step process",
+          "steps": [
+            {
+              "id": "step-1",
+              "label": "Receive input",
+              "input": "Starting material",
+              "change": "Interpret or transform the input",
+              "output": "Intermediate result"
+            },
+            {
+              "id": "step-2",
+              "label": "Produce outcome",
+              "input": "Intermediate result",
+              "change": "Apply the final transformation",
+              "output": "Final outcome"
+            }
+          ],
+          "feedbackLinks": []
+        },
+        {
+          "processName": "A multi-step process",
+          "steps": [
+            {
+              "id": "step-1",
+              "label": "Receive input",
+              "input": "Starting material",
+              "change": "Interpret or transform the input",
+              "output": "Intermediate result"
+            },
+            {
+              "id": "step-2",
+              "label": "Produce outcome",
+              "input": "Intermediate result",
+              "change": "Apply the final transformation",
+              "output": "Final outcome"
+            }
+          ],
+          "feedbackLinks": []
+        }
+      ]
+    },
+    {
+      "componentId": "humanities.source-comparison",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/source-comparison.tsx",
+      "widgetExport": "SourceComparisonWidget",
+      "samples": [
+        {
+          "inquiryQuestion": "How do these sources explain the same issue differently?",
+          "sources": [
+            {
+              "id": "source-a",
+              "title": "Source A",
+              "creator": "First observer",
+              "context": "Produced close to the event",
+              "claim": "The change was deliberate.",
+              "evidence": "Direct testimony",
+              "limitation": "Narrow viewpoint"
+            },
+            {
+              "id": "source-b",
+              "title": "Source B",
+              "creator": "Later analyst",
+              "context": "Produced with broader records",
+              "claim": "The change emerged gradually.",
+              "evidence": "Multiple archived records",
+              "limitation": "Written long after the event"
+            }
+          ],
+          "comparisonFocus": "corroboration"
+        },
+        {
+          "inquiryQuestion": "How do these sources explain the same issue differently?",
+          "sources": [
+            {
+              "id": "source-a",
+              "title": "Source A",
+              "creator": "First observer",
+              "context": "Produced close to the event",
+              "claim": "The change was deliberate.",
+              "evidence": "Direct testimony",
+              "limitation": "Narrow viewpoint"
+            },
+            {
+              "id": "source-b",
+              "title": "Source B",
+              "creator": "Later analyst",
+              "context": "Produced with broader records",
+              "claim": "The change emerged gradually.",
+              "evidence": "Multiple archived records",
+              "limitation": "Written long after the event"
+            }
+          ],
+          "comparisonFocus": "provenance"
+        },
+        {
+          "inquiryQuestion": "How do these sources explain the same issue differently?",
+          "sources": [
+            {
+              "id": "source-a",
+              "title": "Source A",
+              "creator": "First observer",
+              "context": "Produced close to the event",
+              "claim": "The change was deliberate.",
+              "evidence": "Direct testimony",
+              "limitation": "Narrow viewpoint"
+            },
+            {
+              "id": "source-b",
+              "title": "Source B",
+              "creator": "Later analyst",
+              "context": "Produced with broader records",
+              "claim": "The change emerged gradually.",
+              "evidence": "Multiple archived records",
+              "limitation": "Written long after the event"
+            }
+          ],
+          "comparisonFocus": "corroboration"
+        },
+        {
+          "inquiryQuestion": "How do these sources explain the same issue differently?",
+          "sources": [
+            {
+              "id": "source-a",
+              "title": "Source A",
+              "creator": "First observer",
+              "context": "Produced close to the event",
+              "claim": "The change was deliberate.",
+              "evidence": "Direct testimony",
+              "limitation": "Narrow viewpoint"
+            },
+            {
+              "id": "source-b",
+              "title": "Source B",
+              "creator": "Later analyst",
+              "context": "Produced with broader records",
+              "claim": "The change emerged gradually.",
+              "evidence": "Multiple archived records",
+              "limitation": "Written long after the event"
+            }
+          ],
+          "comparisonFocus": "limitations"
+        }
+      ]
+    },
+    {
+      "componentId": "humanities.argument-map",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/argument-map.tsx",
+      "widgetExport": "ArgumentMapWidget",
+      "samples": [
+        {
+          "centralClaim": "The proposed conclusion is justified.",
+          "statements": [
+            {
+              "id": "reason-1",
+              "kind": "reason",
+              "text": "A general reason supports the claim."
+            },
+            {
+              "id": "evidence-1",
+              "kind": "evidence",
+              "text": "A concrete example supports the reason."
+            },
+            {
+              "id": "objection-1",
+              "kind": "objection",
+              "text": "An alternative interpretation challenges it."
+            }
+          ],
+          "relations": [
+            {
+              "fromId": "evidence-1",
+              "toId": "reason-1",
+              "relationType": "supports"
+            },
+            {
+              "fromId": "reason-1",
+              "toId": "central-claim",
+              "relationType": "supports"
+            },
+            {
+              "fromId": "objection-1",
+              "toId": "central-claim",
+              "relationType": "challenges"
+            }
+          ]
+        },
+        {
+          "centralClaim": "The proposed conclusion is justified.",
+          "statements": [
+            {
+              "id": "reason-1",
+              "kind": "reason",
+              "text": "A general reason supports the claim."
+            },
+            {
+              "id": "evidence-1",
+              "kind": "evidence",
+              "text": "A concrete example supports the reason."
+            },
+            {
+              "id": "objection-1",
+              "kind": "objection",
+              "text": "An alternative interpretation challenges it."
+            }
+          ],
+          "relations": [
+            {
+              "fromId": "evidence-1",
+              "toId": "reason-1",
+              "relationType": "supports"
+            },
+            {
+              "fromId": "reason-1",
+              "toId": "central-claim",
+              "relationType": "supports"
+            },
+            {
+              "fromId": "objection-1",
+              "toId": "central-claim",
+              "relationType": "challenges"
+            }
+          ]
+        },
+        {
+          "centralClaim": "The proposed conclusion is justified.",
+          "statements": [
+            {
+              "id": "reason-1",
+              "kind": "reason",
+              "text": "A general reason supports the claim."
+            },
+            {
+              "id": "evidence-1",
+              "kind": "evidence",
+              "text": "A concrete example supports the reason."
+            },
+            {
+              "id": "objection-1",
+              "kind": "objection",
+              "text": "An alternative interpretation challenges it."
+            }
+          ],
+          "relations": [
+            {
+              "fromId": "evidence-1",
+              "toId": "reason-1",
+              "relationType": "supports"
+            },
+            {
+              "fromId": "reason-1",
+              "toId": "central-claim",
+              "relationType": "supports"
+            },
+            {
+              "fromId": "objection-1",
+              "toId": "central-claim",
+              "relationType": "challenges"
+            }
+          ]
+        },
+        {
+          "centralClaim": "The proposed conclusion is justified.",
+          "statements": [
+            {
+              "id": "reason-1",
+              "kind": "reason",
+              "text": "A general reason supports the claim."
+            },
+            {
+              "id": "evidence-1",
+              "kind": "evidence",
+              "text": "A concrete example supports the reason."
+            },
+            {
+              "id": "objection-1",
+              "kind": "objection",
+              "text": "An alternative interpretation challenges it."
+            }
+          ],
+          "relations": [
+            {
+              "fromId": "evidence-1",
+              "toId": "reason-1",
+              "relationType": "supports"
+            },
+            {
+              "fromId": "reason-1",
+              "toId": "central-claim",
+              "relationType": "supports"
+            },
+            {
+              "fromId": "objection-1",
+              "toId": "central-claim",
+              "relationType": "challenges"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "literature.narrative-arc",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/narrative-arc.tsx",
+      "widgetExport": "NarrativeArcWidget",
+      "samples": [
+        {
+          "workTitle": "A narrative",
+          "narrativeForm": "five-part",
+          "beats": [
+            {
+              "id": "beat-1",
+              "stage": "Exposition",
+              "event": "The initial situation is established.",
+              "tension": 2,
+              "function": "Introduce the central conditions."
+            },
+            {
+              "id": "beat-2",
+              "stage": "Crisis",
+              "event": "The conflict reaches its decisive point.",
+              "tension": 9,
+              "function": "Force an irreversible choice."
+            },
+            {
+              "id": "beat-3",
+              "stage": "Resolution",
+              "event": "Consequences settle into a new state.",
+              "tension": 3,
+              "function": "Reveal what has changed."
+            }
+          ]
+        },
+        {
+          "workTitle": "A narrative",
+          "narrativeForm": "three-act",
+          "beats": [
+            {
+              "id": "beat-1",
+              "stage": "Exposition",
+              "event": "The initial situation is established.",
+              "tension": 2,
+              "function": "Introduce the central conditions."
+            },
+            {
+              "id": "beat-2",
+              "stage": "Crisis",
+              "event": "The conflict reaches its decisive point.",
+              "tension": 9,
+              "function": "Force an irreversible choice."
+            },
+            {
+              "id": "beat-3",
+              "stage": "Resolution",
+              "event": "Consequences settle into a new state.",
+              "tension": 3,
+              "function": "Reveal what has changed."
+            }
+          ]
+        },
+        {
+          "workTitle": "A narrative",
+          "narrativeForm": "five-part",
+          "beats": [
+            {
+              "id": "beat-1",
+              "stage": "Exposition",
+              "event": "The initial situation is established.",
+              "tension": 2,
+              "function": "Introduce the central conditions."
+            },
+            {
+              "id": "beat-2",
+              "stage": "Crisis",
+              "event": "The conflict reaches its decisive point.",
+              "tension": 9,
+              "function": "Force an irreversible choice."
+            },
+            {
+              "id": "beat-3",
+              "stage": "Resolution",
+              "event": "Consequences settle into a new state.",
+              "tension": 3,
+              "function": "Reveal what has changed."
+            }
+          ]
+        },
+        {
+          "workTitle": "A narrative",
+          "narrativeForm": "episodic",
+          "beats": [
+            {
+              "id": "beat-1",
+              "stage": "Exposition",
+              "event": "The initial situation is established.",
+              "tension": 2,
+              "function": "Introduce the central conditions."
+            },
+            {
+              "id": "beat-2",
+              "stage": "Crisis",
+              "event": "The conflict reaches its decisive point.",
+              "tension": 9,
+              "function": "Force an irreversible choice."
+            },
+            {
+              "id": "beat-3",
+              "stage": "Resolution",
+              "event": "Consequences settle into a new state.",
+              "tension": 3,
+              "function": "Reveal what has changed."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "literature.character-relationships",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/character-relationships.tsx",
+      "widgetExport": "CharacterRelationshipsWidget",
+      "samples": [
+        {
+          "workTitle": "A work with an ensemble cast",
+          "characters": [
+            {
+              "id": "character-a",
+              "name": "Character A",
+              "role": "Protagonist",
+              "goal": "Protect the existing order"
+            },
+            {
+              "id": "character-b",
+              "name": "Character B",
+              "role": "Challenger",
+              "goal": "Change the existing order"
+            }
+          ],
+          "relationships": [
+            {
+              "fromCharacterId": "character-a",
+              "toCharacterId": "character-b",
+              "relationship": "Opposition shaped by mutual dependence",
+              "phase": "Middle"
+            }
+          ],
+          "selectedPhase": "Middle"
+        },
+        {
+          "workTitle": "A work with an ensemble cast",
+          "characters": [
+            {
+              "id": "character-a",
+              "name": "Character A",
+              "role": "Protagonist",
+              "goal": "Protect the existing order"
+            },
+            {
+              "id": "character-b",
+              "name": "Character B",
+              "role": "Challenger",
+              "goal": "Change the existing order"
+            }
+          ],
+          "relationships": [
+            {
+              "fromCharacterId": "character-a",
+              "toCharacterId": "character-b",
+              "relationship": "Opposition shaped by mutual dependence",
+              "phase": "Middle"
+            }
+          ],
+          "selectedPhase": "Middle"
+        },
+        {
+          "workTitle": "A work with an ensemble cast",
+          "characters": [
+            {
+              "id": "character-a",
+              "name": "Character A",
+              "role": "Protagonist",
+              "goal": "Protect the existing order"
+            },
+            {
+              "id": "character-b",
+              "name": "Character B",
+              "role": "Challenger",
+              "goal": "Change the existing order"
+            }
+          ],
+          "relationships": [
+            {
+              "fromCharacterId": "character-a",
+              "toCharacterId": "character-b",
+              "relationship": "Opposition shaped by mutual dependence",
+              "phase": "Middle"
+            }
+          ],
+          "selectedPhase": "Middle"
+        },
+        {
+          "workTitle": "A work with an ensemble cast",
+          "characters": [
+            {
+              "id": "character-a",
+              "name": "Character A",
+              "role": "Protagonist",
+              "goal": "Protect the existing order"
+            },
+            {
+              "id": "character-b",
+              "name": "Character B",
+              "role": "Challenger",
+              "goal": "Change the existing order"
+            }
+          ],
+          "relationships": [
+            {
+              "fromCharacterId": "character-a",
+              "toCharacterId": "character-b",
+              "relationship": "Opposition shaped by mutual dependence",
+              "phase": "Middle"
+            }
+          ],
+          "selectedPhase": "Middle"
+        }
+      ]
+    },
+    {
+      "componentId": "literature.close-reading",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/close-reading.tsx",
+      "widgetExport": "CloseReadingWidget",
+      "samples": [
+        {
+          "passage": "A short passage whose language supports more than one interpretation.",
+          "focus": "diction",
+          "annotations": [
+            {
+              "quote": "more than one interpretation",
+              "focus": "diction",
+              "device": "qualification",
+              "observation": "The wording resists a single fixed reading.",
+              "effect": "It invites the reader to compare plausible meanings."
+            }
+          ]
+        },
+        {
+          "passage": "白日依山尽，\n黄河入海流。\n欲穷千里目，\n更上一层楼。",
+          "focus": "imagery",
+          "annotations": [
+            {
+              "quote": "白日依山尽",
+              "focus": "imagery",
+              "device": "夕照",
+              "observation": "太阳沿山际落下。",
+              "effect": "展开远处的天际线。"
+            },
+            {
+              "quote": "黄河入海流",
+              "focus": "imagery",
+              "device": "流动",
+              "observation": "河水向远方延伸。",
+              "effect": "把眼前景象引向更广阔的空间。"
+            }
+          ]
+        },
+        {
+          "passage": "读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读白日依山尽，黄河入海流。",
+          "focus": "imagery",
+          "annotations": [
+            {
+              "quote": "白日依山尽",
+              "focus": "imagery",
+              "device": "夕照",
+              "observation": "太阳沿山际落下。",
+              "effect": "展开远处的天际线。"
+            },
+            {
+              "quote": "黄河入海流",
+              "focus": "imagery",
+              "device": "流动",
+              "observation": "河水向远方延伸。",
+              "effect": "把眼前景象引向更广阔的空间。"
+            }
+          ]
+        },
+        {
+          "passage": "A short passage whose language supports more than one interpretation.",
+          "focus": "imagery",
+          "annotations": [
+            {
+              "quote": "more than one interpretation",
+              "focus": "diction",
+              "device": "qualification",
+              "observation": "The wording resists a single fixed reading.",
+              "effect": "It invites the reader to compare plausible meanings."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "language.sentence-structure",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/sentence-structure.tsx",
+      "widgetExport": "SentenceStructureWidget",
+      "samples": [
+        {
+          "sentence": "The careful reader notices the contrast.",
+          "languageCode": "en",
+          "phrases": [
+            {
+              "id": "subject",
+              "text": "The careful reader",
+              "role": "subject",
+              "dependsOnId": "predicate"
+            },
+            {
+              "id": "predicate",
+              "text": "notices",
+              "role": "predicate",
+              "dependsOnId": null
+            },
+            {
+              "id": "object",
+              "text": "the contrast",
+              "role": "object",
+              "dependsOnId": "predicate"
+            }
+          ],
+          "targetStructure": "dependency"
+        },
+        {
+          "sentence": "The careful reader notices the contrast.",
+          "languageCode": "zh",
+          "phrases": [
+            {
+              "id": "subject",
+              "text": "The careful reader",
+              "role": "subject",
+              "dependsOnId": "predicate"
+            },
+            {
+              "id": "predicate",
+              "text": "notices",
+              "role": "predicate",
+              "dependsOnId": null
+            },
+            {
+              "id": "object",
+              "text": "the contrast",
+              "role": "object",
+              "dependsOnId": "predicate"
+            }
+          ],
+          "targetStructure": "dependency"
+        },
+        {
+          "sentence": "The careful reader notices the contrast.",
+          "languageCode": "en",
+          "phrases": [
+            {
+              "id": "subject",
+              "text": "The careful reader",
+              "role": "subject",
+              "dependsOnId": "predicate"
+            },
+            {
+              "id": "predicate",
+              "text": "notices",
+              "role": "predicate",
+              "dependsOnId": null
+            },
+            {
+              "id": "object",
+              "text": "the contrast",
+              "role": "object",
+              "dependsOnId": "predicate"
+            }
+          ],
+          "targetStructure": "dependency"
+        },
+        {
+          "sentence": "The careful reader notices the contrast.",
+          "languageCode": "en",
+          "phrases": [
+            {
+              "id": "subject",
+              "text": "The careful reader",
+              "role": "subject",
+              "dependsOnId": "predicate"
+            },
+            {
+              "id": "predicate",
+              "text": "notices",
+              "role": "predicate",
+              "dependsOnId": null
+            },
+            {
+              "id": "object",
+              "text": "the contrast",
+              "role": "object",
+              "dependsOnId": "predicate"
+            }
+          ],
+          "targetStructure": "dependency"
+        }
+      ]
+    },
+    {
+      "componentId": "social.policy-tradeoff",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/policy-tradeoff.tsx",
+      "widgetExport": "PolicyTradeoffWidget",
+      "samples": [
+        {
+          "policyQuestion": "Which policy best balances access, cost, and long-term effects?",
+          "options": [
+            {
+              "id": "option-a",
+              "label": "Targeted intervention",
+              "summary": "Direct resources to the groups with greatest need."
+            },
+            {
+              "id": "option-b",
+              "label": "Universal intervention",
+              "summary": "Provide the same baseline support to everyone."
+            }
+          ],
+          "criteria": [
+            {
+              "id": "access",
+              "label": "Access",
+              "importance": 5
+            },
+            {
+              "id": "cost",
+              "label": "Public cost",
+              "importance": 3
+            },
+            {
+              "id": "durability",
+              "label": "Long-term durability",
+              "importance": 4
+            }
+          ],
+          "stakeholders": [
+            {
+              "id": "residents",
+              "label": "Residents",
+              "priority": "Reliable access"
+            },
+            {
+              "id": "government",
+              "label": "Government",
+              "priority": "Sustainable public spending"
+            }
+          ]
+        },
+        {
+          "policyQuestion": "Which policy best balances access, cost, and long-term effects?",
+          "options": [
+            {
+              "id": "option-a",
+              "label": "Targeted intervention",
+              "summary": "Direct resources to the groups with greatest need."
+            },
+            {
+              "id": "option-b",
+              "label": "Universal intervention",
+              "summary": "Provide the same baseline support to everyone."
+            }
+          ],
+          "criteria": [
+            {
+              "id": "access",
+              "label": "Access",
+              "importance": 5
+            },
+            {
+              "id": "cost",
+              "label": "Public cost",
+              "importance": 3
+            },
+            {
+              "id": "durability",
+              "label": "Long-term durability",
+              "importance": 4
+            }
+          ],
+          "stakeholders": [
+            {
+              "id": "residents",
+              "label": "Residents",
+              "priority": "Reliable access"
+            },
+            {
+              "id": "government",
+              "label": "Government",
+              "priority": "Sustainable public spending"
+            }
+          ]
+        },
+        {
+          "policyQuestion": "Which policy best balances access, cost, and long-term effects?",
+          "options": [
+            {
+              "id": "option-a",
+              "label": "Targeted intervention",
+              "summary": "Direct resources to the groups with greatest need."
+            },
+            {
+              "id": "option-b",
+              "label": "Universal intervention",
+              "summary": "Provide the same baseline support to everyone."
+            }
+          ],
+          "criteria": [
+            {
+              "id": "access",
+              "label": "Access",
+              "importance": 5
+            },
+            {
+              "id": "cost",
+              "label": "Public cost",
+              "importance": 3
+            },
+            {
+              "id": "durability",
+              "label": "Long-term durability",
+              "importance": 4
+            }
+          ],
+          "stakeholders": [
+            {
+              "id": "residents",
+              "label": "Residents",
+              "priority": "Reliable access"
+            },
+            {
+              "id": "government",
+              "label": "Government",
+              "priority": "Sustainable public spending"
+            }
+          ]
+        },
+        {
+          "policyQuestion": "Which policy best balances access, cost, and long-term effects?",
+          "options": [
+            {
+              "id": "option-a",
+              "label": "Targeted intervention",
+              "summary": "Direct resources to the groups with greatest need."
+            },
+            {
+              "id": "option-b",
+              "label": "Universal intervention",
+              "summary": "Provide the same baseline support to everyone."
+            }
+          ],
+          "criteria": [
+            {
+              "id": "access",
+              "label": "Access",
+              "importance": 5
+            },
+            {
+              "id": "cost",
+              "label": "Public cost",
+              "importance": 3
+            },
+            {
+              "id": "durability",
+              "label": "Long-term durability",
+              "importance": 4
+            }
+          ],
+          "stakeholders": [
+            {
+              "id": "residents",
+              "label": "Residents",
+              "priority": "Reliable access"
+            },
+            {
+              "id": "government",
+              "label": "Government",
+              "priority": "Sustainable public spending"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "geography.climate-comparison",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/climate-comparison.tsx",
+      "widgetExport": "ClimateComparisonWidget",
+      "samples": [
+        {
+          "places": [
+            {
+              "name": "Coastal place",
+              "latitudeDeg": 1,
+              "elevationM": 15,
+              "monthlyTemperatureC": [
+                27,
+                27,
+                28,
+                28,
+                28,
+                28,
+                28,
+                28,
+                28,
+                28,
+                27,
+                27
+              ],
+              "monthlyPrecipitationMm": [
+                240,
+                170,
+                190,
+                180,
+                170,
+                160,
+                150,
+                160,
+                180,
+                200,
+                250,
+                260
+              ]
+            },
+            {
+              "name": "Continental place",
+              "latitudeDeg": 40,
+              "elevationM": 300,
+              "monthlyTemperatureC": [
+                -2,
+                1,
+                7,
+                14,
+                20,
+                25,
+                28,
+                27,
+                22,
+                15,
+                7,
+                1
+              ],
+              "monthlyPrecipitationMm": [
+                25,
+                28,
+                35,
+                45,
+                55,
+                65,
+                70,
+                60,
+                48,
+                38,
+                30,
+                26
+              ]
+            }
+          ],
+          "comparisonFocus": "continentality"
+        },
+        {
+          "places": [
+            {
+              "name": "Coastal place",
+              "latitudeDeg": 1,
+              "elevationM": 15,
+              "monthlyTemperatureC": [
+                27,
+                27,
+                28,
+                28,
+                28,
+                28,
+                28,
+                28,
+                28,
+                28,
+                27,
+                27
+              ],
+              "monthlyPrecipitationMm": [
+                240,
+                170,
+                190,
+                180,
+                170,
+                160,
+                150,
+                160,
+                180,
+                200,
+                250,
+                260
+              ]
+            },
+            {
+              "name": "Continental place",
+              "latitudeDeg": 40,
+              "elevationM": 300,
+              "monthlyTemperatureC": [
+                -2,
+                1,
+                7,
+                14,
+                20,
+                25,
+                28,
+                27,
+                22,
+                15,
+                7,
+                1
+              ],
+              "monthlyPrecipitationMm": [
+                25,
+                28,
+                35,
+                45,
+                55,
+                65,
+                70,
+                60,
+                48,
+                38,
+                30,
+                26
+              ]
+            }
+          ],
+          "comparisonFocus": "temperature-range"
+        },
+        {
+          "places": [
+            {
+              "name": "Coastal place",
+              "latitudeDeg": 1,
+              "elevationM": 15,
+              "monthlyTemperatureC": [
+                27,
+                27,
+                28,
+                28,
+                28,
+                28,
+                28,
+                28,
+                28,
+                28,
+                27,
+                27
+              ],
+              "monthlyPrecipitationMm": [
+                240,
+                170,
+                190,
+                180,
+                170,
+                160,
+                150,
+                160,
+                180,
+                200,
+                250,
+                260
+              ]
+            },
+            {
+              "name": "Continental place",
+              "latitudeDeg": 40,
+              "elevationM": 300,
+              "monthlyTemperatureC": [
+                -2,
+                1,
+                7,
+                14,
+                20,
+                25,
+                28,
+                27,
+                22,
+                15,
+                7,
+                1
+              ],
+              "monthlyPrecipitationMm": [
+                25,
+                28,
+                35,
+                45,
+                55,
+                65,
+                70,
+                60,
+                48,
+                38,
+                30,
+                26
+              ]
+            }
+          ],
+          "comparisonFocus": "continentality"
+        },
+        {
+          "places": [
+            {
+              "name": "Coastal place",
+              "latitudeDeg": 1,
+              "elevationM": 15,
+              "monthlyTemperatureC": [
+                27,
+                27,
+                28,
+                28,
+                28,
+                28,
+                28,
+                28,
+                28,
+                28,
+                27,
+                27
+              ],
+              "monthlyPrecipitationMm": [
+                240,
+                170,
+                190,
+                180,
+                170,
+                160,
+                150,
+                160,
+                180,
+                200,
+                250,
+                260
+              ]
+            },
+            {
+              "name": "Continental place",
+              "latitudeDeg": 40,
+              "elevationM": 300,
+              "monthlyTemperatureC": [
+                -2,
+                1,
+                7,
+                14,
+                20,
+                25,
+                28,
+                27,
+                22,
+                15,
+                7,
+                1
+              ],
+              "monthlyPrecipitationMm": [
+                25,
+                28,
+                35,
+                45,
+                55,
+                65,
+                70,
+                60,
+                48,
+                38,
+                30,
+                26
+              ]
+            }
+          ],
+          "comparisonFocus": "continentality"
+        }
+      ]
+    },
+    {
+      "componentId": "arts.color-harmony",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/color-harmony.tsx",
+      "widgetExport": "ColorHarmonyWidget",
+      "samples": [
+        {
+          "baseHueDeg": 30,
+          "harmony": "complementary",
+          "saturationPct": 70,
+          "lightnessPct": 55
+        },
+        {
+          "baseHueDeg": 30,
+          "harmony": "analogous",
+          "saturationPct": 70,
+          "lightnessPct": 55
+        },
+        {
+          "baseHueDeg": 0,
+          "harmony": "complementary",
+          "saturationPct": 70,
+          "lightnessPct": 55
+        },
+        {
+          "baseHueDeg": 30,
+          "harmony": "triadic",
+          "saturationPct": 70,
+          "lightnessPct": 55
+        }
+      ]
+    },
+    {
+      "componentId": "music.rhythm-pattern",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/rhythm-pattern.tsx",
+      "widgetExport": "RhythmPatternWidget",
+      "samples": [
+        {
+          "timeSignature": "4/4",
+          "tempoBpm": 96,
+          "subdivision": "eighth",
+          "steps": [
+            "accent",
+            "rest",
+            "hit",
+            "rest",
+            "hit",
+            "rest",
+            "hit",
+            "rest"
+          ]
+        },
+        {
+          "timeSignature": "2/4",
+          "tempoBpm": 96,
+          "subdivision": "eighth",
+          "steps": [
+            "accent",
+            "rest",
+            "hit",
+            "rest",
+            "hit",
+            "rest",
+            "hit",
+            "rest"
+          ]
+        },
+        {
+          "timeSignature": "4/4",
+          "tempoBpm": 40,
+          "subdivision": "eighth",
+          "steps": [
+            "accent",
+            "rest",
+            "hit",
+            "rest",
+            "hit",
+            "rest",
+            "hit",
+            "rest"
+          ]
+        },
+        {
+          "timeSignature": "4/4",
+          "tempoBpm": 96,
+          "subdivision": "sixteenth",
+          "steps": [
+            "accent",
+            "rest",
+            "hit",
+            "rest",
+            "hit",
+            "rest",
+            "hit",
+            "rest"
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "psychology.experiment-design",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/experiment-design.tsx",
+      "widgetExport": "ExperimentDesignWidget",
+      "samples": [
+        {
+          "hypothesis": "Changing the independent variable affects the measured outcome.",
+          "independentVariable": "Study condition",
+          "dependentVariable": "Measured outcome",
+          "controlVariables": [
+            "Testing time",
+            "Instructions"
+          ],
+          "groups": [
+            {
+              "label": "Control group",
+              "condition": "Baseline condition"
+            },
+            {
+              "label": "Treatment group",
+              "condition": "Changed independent variable"
+            }
+          ],
+          "sampleSize": 40
+        },
+        {
+          "hypothesis": "Changing the independent variable affects the measured outcome.",
+          "independentVariable": "Study condition",
+          "dependentVariable": "Measured outcome",
+          "controlVariables": [
+            "Testing time",
+            "Instructions"
+          ],
+          "groups": [
+            {
+              "label": "Control group",
+              "condition": "Baseline condition"
+            },
+            {
+              "label": "Treatment group",
+              "condition": "Changed independent variable"
+            }
+          ],
+          "sampleSize": 40
+        },
+        {
+          "hypothesis": "Changing the independent variable affects the measured outcome.",
+          "independentVariable": "Study condition",
+          "dependentVariable": "Measured outcome",
+          "controlVariables": [
+            "Testing time",
+            "Instructions"
+          ],
+          "groups": [
+            {
+              "label": "Control group",
+              "condition": "Baseline condition"
+            },
+            {
+              "label": "Treatment group",
+              "condition": "Changed independent variable"
+            }
+          ],
+          "sampleSize": 4
+        },
+        {
+          "hypothesis": "Changing the independent variable affects the measured outcome.",
+          "independentVariable": "Study condition",
+          "dependentVariable": "Measured outcome",
+          "controlVariables": [
+            "Testing time",
+            "Instructions"
+          ],
+          "groups": [
+            {
+              "label": "Control group",
+              "condition": "Baseline condition"
+            },
+            {
+              "label": "Treatment group",
+              "condition": "Changed independent variable"
+            }
+          ],
+          "sampleSize": 40
+        }
+      ]
+    }
+  ]
+}

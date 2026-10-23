@@ -7,6 +7,8 @@ import { deriveTimelineCausality, type TimelineCausalityConfig } from "@/lib/int
 import { WIDGET_COLORS } from "./palette";
 
 const shellStyle: CSSProperties = {
+  containerType: "inline-size",
+  containerName: "primoria-timeline",
   overflow: "hidden",
   border: `1px solid ${WIDGET_COLORS.line}`,
   borderRadius: 10,
@@ -28,26 +30,28 @@ export function TimelineCausalityWidget({ config, onChange }: {
   void onChange;
 
   return (
-    <section style={shellStyle} aria-label={msg(t.timeline.aria, { title: config.timelineTitle })}>
+    <section data-component-id="general.timeline-causality" style={shellStyle} aria-label={msg(t.timeline.aria, { title: config.timelineTitle })}>
+      <style>{`@container primoria-timeline (max-width: 520px){.primoria-timeline-events{grid-template-columns:minmax(0,1fr)!important;min-width:0!important}.primoria-timeline-line{left:23px!important;right:auto!important;top:14px!important;bottom:14px;width:2px;height:auto!important}.primoria-timeline-event{display:grid;grid-template-columns:28px minmax(0,1fr);column-gap:12px;min-height:80px!important}.primoria-timeline-event>span:first-child{grid-row:1 / span 3;margin:0!important}.primoria-timeline-detail{grid-template-columns:minmax(0,1fr)!important}}`}</style>
       <header style={{ padding: "12px 16px", borderBottom: `1px solid ${WIDGET_COLORS.line}`, background: WIDGET_COLORS.surfaceSoft }}>
         <div style={{ fontSize: 13.5, fontWeight: 600 }}>{config.timelineTitle}</div>
         <div style={{ marginTop: 2, color: WIDGET_COLORS.muted, fontSize: 11.5 }}>{t.timeline.subtitle}</div>
       </header>
 
       <div style={{ overflowX: "auto", padding: "24px 18px 18px" }}>
-        <div style={{ position: "relative", display: "grid", gridTemplateColumns: `repeat(${derived.events.length}, minmax(128px, 1fr))`, gap: 12, minWidth: derived.events.length * 140 }}>
-          <div aria-hidden="true" style={{ position: "absolute", top: 25, left: 28, right: 28, height: 2, background: WIDGET_COLORS.line }} />
+        <div className="primoria-timeline-events" style={{ position: "relative", display: "grid", gridTemplateColumns: `repeat(${derived.events.length}, minmax(128px, 1fr))`, gap: 12, minWidth: derived.events.length * 140 }}>
+          <div className="primoria-timeline-line" aria-hidden="true" style={{ position: "absolute", top: 25, left: 28, right: 28, height: 2, background: WIDGET_COLORS.line }} />
           {derived.events.map((event) => {
             const active = event.id === selected.id;
             return (
               <button
                 key={event.id}
+                className="primoria-timeline-event"
                 type="button"
                 onClick={() => setSelectedId(event.id)}
                 aria-pressed={active}
                 style={{
                   position: "relative", minHeight: 116, padding: "0 10px 10px", border: "none", background: "transparent",
-                  color: WIDGET_COLORS.ink, textAlign: "left", cursor: "pointer",
+                  color: WIDGET_COLORS.ink, textAlign: "left", cursor: "pointer", overflowWrap: "anywhere", minWidth: 0,
                 }}
               >
                 <span style={{
@@ -67,7 +71,7 @@ export function TimelineCausalityWidget({ config, onChange }: {
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(220px, .8fr)", gap: 12, padding: "0 16px 16px" }}>
+      <div className="primoria-timeline-detail" style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(220px, .8fr)", gap: 12, padding: "0 16px 16px" }}>
         <div style={{ padding: 14, borderRadius: 8, background: WIDGET_COLORS.accentSoft }}>
           <div style={{ color: WIDGET_COLORS.accent, fontSize: 11.5, fontWeight: 600 }}>{selected.dateLabel} · {selected.label}</div>
           <p style={{ margin: "7px 0 0", color: WIDGET_COLORS.ink, fontSize: 12.5, lineHeight: 1.55 }}>{selected.summary}</p>

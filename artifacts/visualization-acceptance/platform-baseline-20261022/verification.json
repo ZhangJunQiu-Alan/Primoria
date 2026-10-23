@@ -1,0 +1,156 @@
+{
+  "generatedAt": "2026-10-22T13:07:56.304Z",
+  "scope": "Agent A platform and registered catalog integration; not full-reference acceptance",
+  "activeComponents": 45,
+  "activeCatalogHash": "82ac1ad7783797fc82676d489c6ebcd2433eefaa8dc33594bab41a7f664853d2",
+  "fullRegression": {
+    "command": "pnpm test:regression",
+    "exitCode": 0,
+    "webUnit": {
+      "passed": 901,
+      "skipped": 18
+    },
+    "layers": [
+      "Web/Agent typecheck",
+      "Web lint",
+      "Web and Agent unit/integration",
+      "1718 learning-goal routing fixtures",
+      "31 KG validation",
+      "catalog/schema/registry sync",
+      "production build and bundle budgets",
+      "isolated Web/Agent DB",
+      "four production business browser journeys",
+      "widget renderer browser checks",
+      "45 widgets at 390/768/1440 widths"
+    ]
+  },
+  "additionalFocused": {
+    "command": "pnpm --filter @primoria/web exec vitest run tests/interactive-search.spec.ts tests/database-env-lifecycle.spec.ts tests/block-writer-utility.spec.ts",
+    "exitCode": 0,
+    "passed": 21
+  },
+  "fixed20": {
+    "catalogHash": "7e08432e9d721f5eec50db03e9da8bcac7c625ec6e3fcad8edc29204a107c3d1",
+    "executed": 20,
+    "latestPassed": 16,
+    "failures": [
+      {
+        "caseId": "viz-08",
+        "prompt": "把这个句子拆成主语、谓语和宾语。 请保留必要的标注，让我能直接操作并观察变化。",
+        "error": "No expected trusted visualization was produced before the deadline"
+      },
+      {
+        "caseId": "viz-10",
+        "prompt": "比较定向住房补贴和普惠住房补贴。 请保留必要的标注，让我能直接操作并观察变化。我希望通过操作而不是背结论来理解。先选一个直观的例子，展示关键对象和它们之间的关系；控件变化时让图形与解释一起响应。请帮助我区分哪些是输入、哪些是计算结果，并显示边界情况，避免用漂亮动画代替真正的解释。",
+        "error": "No expected trusted visualization was produced before the deadline"
+      },
+      {
+        "caseId": "viz-18",
+        "prompt": "Create a focused lesson about Ideal gases. Include a directly visible interactive visualization and explain the relationships it demonstrates.",
+        "error": "Tutor completed without the expected production catalog/course tool; actual output retained"
+      },
+      {
+        "caseId": "viz-20",
+        "prompt": "请围绕函数变换探索生成一节课程，先解释关键概念，再用可直接操作的可视化帮助理解。我有一点基础，但看到图就容易把几个量之间的关系弄混。请把关键变化放在同一个画面里，让我先观察默认情况，再自己调整一个参数。画面上保留必要标注和当前读数，用简短文字指出应该观察哪里；如果模型有适用条件或特殊边界，也请明确显示。",
+        "error": "Course positioning ended without generation: fallback"
+      }
+    ],
+    "inputsUnchanged": true,
+    "allAttemptsRetained": true
+  },
+  "catalog45Smoke": [
+    {
+      "caseId": "viz-02",
+      "prompt": "演示一下弱酸解离与缓冲响应",
+      "status": "passed",
+      "tools": [
+        "search_interactive_components",
+        "open_interactive_component"
+      ],
+      "component": "chem.weak-acid-buffer"
+    },
+    {
+      "caseId": "viz-04",
+      "prompt": "演示一下二次方程的根与顶点",
+      "status": "passed",
+      "tools": [
+        "search_interactive_components",
+        "open_interactive_component"
+      ],
+      "component": "math.quadratic-equation"
+    }
+  ],
+  "referenceCoverage": {
+    "status": "failed",
+    "frozen": false,
+    "candidateCases": 1018,
+    "sourceCapabilities": 2275,
+    "verifiedCases": 0,
+    "verifiedCapabilities": 0
+  },
+  "remaining": [
+    "Full-reference inventory freeze and verified capability mappings",
+    "Four fixed prompt cases did not produce the required trusted result",
+    "Tutor/planner/worker usage correlation is incomplete; no total token/cost claim",
+    "Later Agent B batches are separate from the current 45-item registry"
+  ],
+  "evidence": {
+    "fullRegression": {
+      "path": "reports/fullRegression.log",
+      "sha256": "23050520a4a1d8d34606704edf6c2bd698108fb50f356ea57059165269f5be06"
+    },
+    "capturedReplay38": {
+      "path": "reports/capturedReplay38.log",
+      "sha256": "53665f047aa1f6122573eea7cd0f57726dd311b18b36a8b233f7399085c5c5d0"
+    },
+    "targeted": {
+      "path": "reports/targeted.log",
+      "sha256": "95465d557a9dbc75979a37273999b6ec216141fba6f932cfb4731d06d70650c6"
+    },
+    "catalog45ModelSmoke": {
+      "path": "reports/catalog45ModelSmoke.log",
+      "sha256": "f9d99d9abe3a4971ec44fff223d57faa29d84bc7b194d924442af0817a14cf1b"
+    },
+    "processLifecycle": {
+      "path": "reports/processLifecycle.log",
+      "sha256": "ff646a433dea546dec51dfaeb8c1d6113ccc584cc373b7902e49b13cadf0be2b"
+    },
+    "replay38": {
+      "path": "reports/replay38-browser-checks.json",
+      "sha256": "49ff24c0e469179dd7b34282b5b9af0fa8546d0267446e2abf98c6d2a2375079"
+    },
+    "replay45": {
+      "path": "reports/replay45-browser-checks.json",
+      "sha256": "552fc5e791515ea7c55ee874dd274be374e07a6ab58cc022eef95714cf94a751"
+    },
+    "finalTypecheck": {
+      "path": "reports/finalTypecheck.log",
+      "sha256": "be122ef3cc4be5f3b31df792b906f14a71afd57546bdc2a53c4f98cdf9d878be"
+    },
+    "finalLint": {
+      "path": "reports/finalLint.log",
+      "sha256": "3b79f630bcad84ea4ce8b4274526650da0343e2c71bdd0da17eae24e0c1b6cad"
+    },
+    "reviewPortal": {
+      "path": "review-portal.png",
+      "sha256": "580321b59182ce038ac753d4eeca3fcd47a2fdabd98486a88a3f82a445743181"
+    }
+  },
+  "finalChecks": {
+    "webTypecheck": {
+      "exitCode": 0
+    },
+    "lint": {
+      "exitCode": 0
+    },
+    "gitDiffCheck": {
+      "exitCode": 0
+    },
+    "runtimeHealth": {
+      "status": "ok",
+      "database": "ok",
+      "agent": "ok",
+      "existingWarning": "extractor:failed=6"
+    }
+  }
+}

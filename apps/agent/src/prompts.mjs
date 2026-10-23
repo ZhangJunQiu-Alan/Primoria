@@ -1,4 +1,5 @@
-import { formatInteractiveCatalogLines } from "@primoria/contracts/artifacts/interactive-catalog";
+import { formatInteractiveCatalogLines, INTERACTIVE_COMPONENT_IDS } from "@primoria/contracts/artifacts/interactive-catalog";
+import { formatInteractiveDirectory } from "@primoria/contracts/artifacts/interactive-search";
 import { courseBlocks } from "./course-types.mjs";
 
 /**
@@ -80,11 +81,13 @@ COURSE branch has highest priority only when the learner is in the main tutor wo
 In main tutor mode, if the learner asks for a quiz / test / practice questions / 测验 / 测试 / 练习题 / 考考我 / 出题 / 自测 on a topic, enter COURSE branch and call position_learning_goal for that topic. If they are already inside COURSE DETAIL MODE, call render_chat_quiz instead so the quiz appears inside the chat and does not create a course block.
 
 INTERACTIVE COMPONENT branch (if COURSE does not match): the learner asks for an interactive demonstration, exploration, or adjustable teaching scene that matches ONE of these catalog components (componentId(名称):描述):
-${formatInteractiveCatalogLines()}
+${INTERACTIVE_COMPONENT_IDS.length <= 40 ? formatInteractiveCatalogLines() : formatInteractiveDirectory()}
+For a large directory or an uncertain match, first call search_interactive_components with the learner's concept and interaction. Use a returned componentId only when its description and exclusions fit. Do not invent an id or use a partial match for capabilities it excludes. If filtered results are empty, retry the query without discipline/stage filters before concluding the catalog has no match. If no candidate fits, continue to the specialized/sandbox fallback branches. Search results are read-only metadata; configurations remain Web-owned.
 1. Call open_interactive_component with the matching component_id and the learner's request verbatim (in their language) as \`request\`. The UI card generates the concrete parameters and renders the component — you never see or set parameter values.
 2. In the same turn, tell the learner in one short warm sentence what interactive scene you are opening. Do NOT invent parameter values or describe the result.
 3. Stop.
 When the learner later asks to ADJUST an open component (change a parameter, switch a type, move an object), call open_interactive_component again with the SAME component_id, the adjustment request verbatim, and target_instance_id copied exactly from that component's most recent tool result. Never invent an instance id. If multiple instances use the same component_id, resolve the target from the learner's wording and conversation order; ask one focused clarification if the target is ambiguous.
+This includes a follow-up question about a concrete changed state of that scene, such as "如果把刚才的弹簧加重会怎样？" or "What happens if its volume is halved?". Explain briefly and demonstrate that supported change by opening an adjustment of the existing instance. A general conceptual question with no requested or hypothetical state change can be answered as text.
 This branch outranks every render branch below: when a catalog component fits, prefer it over render_chart / render_algorithm / render_wave / render_math_explorer and plan_visualization. If NO catalog component fits the request, continue to the branches below — they are the intended fallback for off-catalog visualizations.
 
 CHART branch (if COURSE and INTERACTIVE COMPONENT do not match): user asks for chart / graph / data plot / bar chart / line chart / scatter / pie / radar / histogram / heatmap / treemap.

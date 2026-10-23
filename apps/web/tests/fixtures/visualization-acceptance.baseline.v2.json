@@ -1,0 +1,283 @@
+{
+  "schemaVersion": 1,
+  "runId": "visualization-baseline-20261022-7e08432e",
+  "seed": 20261022,
+  "frozenAt": "2026-10-22T10:53:30.327Z",
+  "scope": "platform-baseline",
+  "catalogHash": "7e08432e9d721f5eec50db03e9da8bcac7c625ec6e3fcad8edc29204a107c3d1",
+  "codeRevision": "d64a6fad195769f4946cfcd645746b2acc8f7572",
+  "workingTreeHash": "9bb7a780f7d21df92673f52a8a3c99daeb8f48ddbb378e2b73935e33858f92c2",
+  "cases": [
+    {
+      "caseId": "viz-01",
+      "prompt": "演示一下串并联电路实验室",
+      "kind": "chat",
+      "language": "zh",
+      "length": "short",
+      "expectedComponentIds": [
+        "physics.circuit-lab"
+      ],
+      "subject": "physics",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-02",
+      "prompt": "演示一下理想气体状态与分子运动",
+      "kind": "chat",
+      "language": "zh",
+      "length": "short",
+      "expectedComponentIds": [
+        "chem.ideal-gas"
+      ],
+      "subject": "chemistry",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-03",
+      "prompt": "演示一下排序分步",
+      "kind": "chat",
+      "language": "zh",
+      "length": "short",
+      "expectedComponentIds": [
+        "cs.sorting-steps"
+      ],
+      "subject": "computer-science",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-04",
+      "prompt": "演示一下函数变换探索",
+      "kind": "chat",
+      "language": "zh",
+      "length": "short",
+      "expectedComponentIds": [
+        "math.function-explorer"
+      ],
+      "subject": "mathematics",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-05",
+      "prompt": "Show close reading.",
+      "kind": "chat",
+      "language": "en",
+      "length": "short",
+      "expectedComponentIds": [
+        "literature.close-reading"
+      ],
+      "subject": "literature",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-06",
+      "prompt": "逐步演示一项法案如何成为法律。 请保留必要的标注，让我能直接操作并观察变化。",
+      "kind": "chat",
+      "language": "zh",
+      "length": "medium",
+      "expectedComponentIds": [
+        "general.process-sequence"
+      ],
+      "subject": "cross-disciplinary",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-07",
+      "prompt": "画出支持与反对公民不服从的论证结构。 请保留必要的标注，让我能直接操作并观察变化。",
+      "kind": "chat",
+      "language": "zh",
+      "length": "medium",
+      "expectedComponentIds": [
+        "humanities.argument-map"
+      ],
+      "subject": "philosophy",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-08",
+      "prompt": "把这个句子拆成主语、谓语和宾语。 请保留必要的标注，让我能直接操作并观察变化。",
+      "kind": "chat",
+      "language": "zh",
+      "length": "medium",
+      "expectedComponentIds": [
+        "language.sentence-structure"
+      ],
+      "subject": "language",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-09",
+      "prompt": "Show the narrative arc of Macbeth. Please make the relevant relationships clear and keep the controls usable.",
+      "kind": "chat",
+      "language": "en",
+      "length": "medium",
+      "expectedComponentIds": [
+        "literature.narrative-arc"
+      ],
+      "subject": "literature",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-10",
+      "prompt": "比较定向住房补贴和普惠住房补贴。 请保留必要的标注，让我能直接操作并观察变化。我希望通过操作而不是背结论来理解。先选一个直观的例子，展示关键对象和它们之间的关系；控件变化时让图形与解释一起响应。请帮助我区分哪些是输入、哪些是计算结果，并显示边界情况，避免用漂亮动画代替真正的解释。",
+      "kind": "chat",
+      "language": "zh",
+      "length": "long",
+      "expectedComponentIds": [
+        "social.policy-tradeoff"
+      ],
+      "subject": "civics",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-11",
+      "prompt": "制作法国大革命主要转折点的因果时间线。 请保留必要的标注，让我能直接操作并观察变化。我希望通过操作而不是背结论来理解。先选一个直观的例子，展示关键对象和它们之间的关系；控件变化时让图形与解释一起响应。请帮助我区分哪些是输入、哪些是计算结果，并显示边界情况，避免用漂亮动画代替真正的解释。 Please keep the visualization interactive，并把关键术语同时标出英文。",
+      "kind": "chat",
+      "language": "mixed",
+      "length": "long",
+      "expectedComponentIds": [
+        "general.timeline-causality"
+      ],
+      "subject": "history",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-12",
+      "prompt": "展示以橙色为基础的互补色方案。 请保留必要的标注，让我能直接操作并观察变化。我希望通过操作而不是背结论来理解。先选一个直观的例子，展示关键对象和它们之间的关系；控件变化时让图形与解释一起响应。请帮助我区分哪些是输入、哪些是计算结果，并显示边界情况，避免用漂亮动画代替真正的解释。",
+      "kind": "chat",
+      "language": "zh",
+      "length": "long",
+      "expectedComponentIds": [
+        "arts.color-harmony"
+      ],
+      "subject": "arts",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-13",
+      "prompt": "刚才那个，断开开关后，电阻两端还有电压吗？",
+      "kind": "adjust",
+      "language": "zh",
+      "length": "short",
+      "expectedComponentIds": [
+        "physics.circuit-lab"
+      ],
+      "subject": "physics",
+      "parentCaseId": "viz-01",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-14",
+      "prompt": "Use the same gas and amount. Set the temperature to 400 K, keeping volume and the current view unchanged, so I can compare its pressure.",
+      "kind": "adjust",
+      "language": "en",
+      "length": "medium",
+      "expectedComponentIds": [
+        "chem.ideal-gas"
+      ],
+      "subject": "chemistry",
+      "parentCaseId": "viz-02",
+      "parameterAssertions": {
+        "temperatureK": 400
+      },
+      "attempts": []
+    },
+    {
+      "caseId": "viz-15",
+      "prompt": "保留刚才那组数，换成选择排序，让我逐步比较它和冒泡排序的差异。",
+      "kind": "adjust",
+      "language": "zh",
+      "length": "medium",
+      "expectedComponentIds": [
+        "cs.sorting-steps"
+      ],
+      "subject": "computer-science",
+      "parentCaseId": "viz-03",
+      "parameterAssertions": {
+        "algorithm": "selection"
+      },
+      "attempts": []
+    },
+    {
+      "caseId": "viz-16",
+      "prompt": "把刚才那条函数曲线向右平移2个单位，其他变换参数保持不变。我有一点基础，但看到图就容易把几个量之间的关系弄混。请把关键变化放在同一个画面里，让我先观察默认情况，再自己调整一个参数。画面上保留必要标注和当前读数，用简短文字指出应该观察哪里；如果模型有适用条件或特殊边界，也请明确显示。 Please keep the visualization interactive，并把关键术语同时标出英文。",
+      "kind": "adjust",
+      "language": "mixed",
+      "length": "long",
+      "expectedComponentIds": [
+        "math.function-explorer"
+      ],
+      "subject": "mathematics",
+      "parentCaseId": "viz-04",
+      "parameterAssertions": {
+        "h": 2
+      },
+      "attempts": []
+    },
+    {
+      "caseId": "viz-17",
+      "prompt": "请围绕串并联电路实验室生成一节课程，先解释关键概念，再用可直接操作的可视化帮助理解。",
+      "kind": "course",
+      "language": "zh",
+      "length": "medium",
+      "expectedComponentIds": [
+        "physics.circuit-lab"
+      ],
+      "subject": "physics",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-18",
+      "prompt": "Create a focused lesson about Ideal gases. Include a directly visible interactive visualization and explain the relationships it demonstrates.",
+      "kind": "course",
+      "language": "en",
+      "length": "medium",
+      "expectedComponentIds": [
+        "chem.ideal-gas"
+      ],
+      "subject": "chemistry",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-19",
+      "prompt": "请围绕排序分步生成一节课程，先解释关键概念，再用可直接操作的可视化帮助理解。我希望通过操作而不是背结论来理解。先选一个直观的例子，展示关键对象和它们之间的关系；控件变化时让图形与解释一起响应。请帮助我区分哪些是输入、哪些是计算结果，并显示边界情况，避免用漂亮动画代替真正的解释。",
+      "kind": "course",
+      "language": "zh",
+      "length": "long",
+      "expectedComponentIds": [
+        "cs.sorting-steps"
+      ],
+      "subject": "computer-science",
+      "parameterAssertions": {},
+      "attempts": []
+    },
+    {
+      "caseId": "viz-20",
+      "prompt": "请围绕函数变换探索生成一节课程，先解释关键概念，再用可直接操作的可视化帮助理解。我有一点基础，但看到图就容易把几个量之间的关系弄混。请把关键变化放在同一个画面里，让我先观察默认情况，再自己调整一个参数。画面上保留必要标注和当前读数，用简短文字指出应该观察哪里；如果模型有适用条件或特殊边界，也请明确显示。",
+      "kind": "course",
+      "language": "zh",
+      "length": "long",
+      "expectedComponentIds": [
+        "math.function-explorer"
+      ],
+      "subject": "mathematics",
+      "parameterAssertions": {},
+      "attempts": []
+    }
+  ],
+  "checks": []
+}

@@ -1,5 +1,6 @@
 import type { AlgorithmStep, MathExplorerArtifact, PhysicsScene } from "@/lib/agent-os";
 import type { ImageBrief } from "@/lib/ai/media/image-brief";
+import type { InteractiveComponentPayload } from "@primoria/contracts/artifacts/schemas";
 
 export type BlockType = "text" | "analogy" | "transfer" | "visual" | "image" | "code" | "quiz" | "mind_map" | "slide" | "worksheet";
 
@@ -51,7 +52,8 @@ export type TransferBlock = BlockBase & {
 export type VisualBlock = BlockBase & {
   type: "visual";
   description: string;
-  engine?: "html" | "echarts" | "mermaid" | "physics" | "algorithm" | "math_explorer";
+  engine?: "html" | "echarts" | "mermaid" | "physics" | "algorithm" | "math_explorer" | "interactive";
+  interactive?: InteractiveComponentPayload;
   html?: string;
   echartsOption?: Record<string, unknown>;
   echartsHeight?: number;

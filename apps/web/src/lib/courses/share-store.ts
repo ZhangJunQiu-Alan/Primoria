@@ -4,6 +4,7 @@ import type { Course, ImageBlock, Lesson } from "./types";
 import { courseToRow, getCourse, lessonToRow } from "./store";
 import { getDb } from "../db/client";
 import { courses as coursesTable, courseShareLinks, courseShareVersions, lessons as lessonsTable, mediaAssets } from "../db/schema";
+import { parseInteractivePayload } from "../interactive/payload";
 
 /** Sanitized course copy stored in course_share_versions.snapshot. */
 export type CourseShareSnapshot = {
@@ -50,7 +51,10 @@ export function buildShareSnapshot(course: Course, globalAssetIds: Set<string>, 
     triggeredFrom: null,
     blocks: lesson.blocks
       ? lesson.blocks.map((block) => {
-          if (block.type !== "image" || !block.assetId || globalAssetIds.has(block.assetId)) return block;
+          if (block.type === "visual" && block.engine === "interactive") {
+            return { ...structuredClone(block), interactive: parseInteractivePayload(block.interactive) };
+          }
+          if (block.type !== "image" || !block.assetId || globalAssetIds.has(block.assetId)) return structuredClone(block);
           const degraded: ImageBlock = { ...block, assetId: "", imageUrl: "", status: "error" };
           return degraded;
         })
@@ -215,7 +219,12 @@ export async function getActiveShareByToken(token: string): Promise<ActiveShare 
  * course/lesson ids (both are global primary keys), progress reset, version 1.
  * Block ids stay stable — they only live inside the lesson jsonb. */
 export function snapshotToImportedCourse(snapshot: CourseShareSnapshot, now = Date.now()): Course {
-  const source = snapshot.course;
+  const source = structuredClone(snapshot.course);
+  for (const lesson of source.lessons) {
+    for (const block of lesson.blocks ?? []) {
+      if (block.type === "visual" && block.engine === "interactive") block.interactive = parseInteractivePayload(block.interactive);
+    }
+  }
   return {
     ...source,
     id: randomId("crs"),

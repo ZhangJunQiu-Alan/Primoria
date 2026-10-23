@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval'; style-src 'unsafe-inline'; img-src data: blob:; font-src data:; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>定向补贴 vs 普惠补贴：同一笔预算，钱发给谁？</title>
+  <script type="importmap">
+{
+  "imports": {
+    "three": "https://esm.sh/three",
+    "three/": "https://esm.sh/three/",
+    "gsap": "https://esm.sh/gsap",
+    "gsap/": "https://esm.sh/gsap/",
+    "d3": "https://esm.sh/d3",
+    "d3/": "https://esm.sh/d3/",
+    "chart.js": "https://esm.sh/chart.js",
+    "chart.js/": "https://esm.sh/chart.js/",
+    "chart.js/auto": "https://esm.sh/chart.js/auto"
+  }
+}
+</script>
+  
+  <style>
+:root {
+  --color-background-primary: #fffdf8;
+  --color-background-secondary: #f7f3ea;
+  --color-background-tertiary: #efe8dc;
+  --color-background-danger: #fff0ea;
+  --color-text-primary: #17130f;
+  --color-text-secondary: #6f675f;
+  --color-text-danger: #9d3d2d;
+  --color-border-primary: rgba(23, 19, 15, 0.36);
+  --color-border-secondary: rgba(23, 19, 15, 0.22);
+  --color-border-tertiary: rgba(23, 19, 15, 0.12);
+  --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+* { box-sizing: border-box; margin: 0; }
+html, body {
+  min-width: 0;
+  background: #fffdf8;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+body { padding: 18px; }
+button {
+  font: inherit;
+  min-height: 36px;
+  padding: 7px 14px;
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: 999px;
+  background: var(--color-background-primary);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+button:hover { background: var(--color-background-secondary); border-color: var(--color-border-secondary); }
+input, textarea, select {
+  width: 100%;
+  font: inherit;
+  min-height: 36px;
+  padding: 7px 11px;
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: 10px;
+  background: var(--color-background-primary);
+  color: var(--color-text-primary);
+}
+input[type="range"] { accent-color: #ef7358; }
+a { color: #245f9f; }
+svg text.t { font: 400 14px var(--font-sans); fill: var(--color-text-primary); }
+svg text.ts { font: 400 12px var(--font-sans); fill: var(--color-text-secondary); }
+svg text.th { font: 700 14px var(--font-sans); fill: var(--color-text-primary); }
+.primoria-error {
+  margin: 12px 0;
+  padding: 10px 12px;
+  border: 1px solid var(--color-text-danger);
+  border-radius: 12px;
+  background: var(--color-background-danger);
+  color: var(--color-text-danger);
+  font: 13px/1.45 var(--font-sans);
+}
+
+:root {
+  --lo-page: #fbf7ee;
+  --lo-canvas: #ffffff;
+  --lo-border: #e7dfd0;
+  --lo-ink: #29241c;
+  --lo-muted: #6b6357;
+  --lo-grid: #efece4;
+  --lo-stage: #1e4d40;
+  --lo-highlight: #7ed6ae;
+  --series-amber: #a66f10;
+  --series-amber-fill: #fbeed3;
+  --series-pine: #2e6b52;
+  --series-pine-fill: #dcede3;
+  --series-lavender: #6a55c4;
+  --series-lavender-fill: #e6e0f6;
+  --series-rose: #a64d64;
+  --series-rose-fill: #f9e3ea;
+}
+.lo-stage { background: #1e4d40; border-radius: 24px; padding: 32px 24px; text-align: center; }
+.lo-card {
+  background: #fffdf6; color: #29241c;
+  border: 3px solid transparent; border-radius: 10px;
+  padding: 10px 14px; font-weight: 700; font: inherit;
+  box-shadow: 0 4px 0 rgba(16, 49, 42, 0.45); cursor: pointer; user-select: none;
+  transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+}
+.lo-card:hover { transform: translateY(-2px); box-shadow: 0 6px 0 rgba(16, 49, 42, 0.45); }
+.lo-card:focus-visible { outline: 3px solid #7ed6ae; outline-offset: 2px; }
+.lo-selected { border-color: #7ed6ae !important; background: #e2f6ee !important; }
+.lo-drop { border: 2px dashed #7eae9d; border-radius: 10px; min-height: 44px; }
+.lo-btn {
+  background: transparent; border: 1.5px solid #7eae9d; color: #f2faf6;
+  border-radius: 999px; padding: 7px 20px; font-weight: 600; font: inherit; cursor: pointer;
+}
+.lo-btn:hover { border-color: #7ed6ae; color: #ffffff; }
+.lo-correct { border-color: #2e7d4f !important; background: #e3f2e8 !important; }
+.lo-wrong { border-color: #c2452f !important; background: #fbeae6 !important; }
+.lo-disabled {
+  color: #b0a99c !important; background: #f1ede4 !important;
+  box-shadow: none !important; cursor: default; pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lo-card { transition: none; }
+  .lo-card:hover { transform: none; }
+}
+</style>
+  <script>window.PRIMORIA = Object.freeze({
+  page: "#fbf7ee", canvas: "#ffffff", ink: "#29241c", muted: "#6b6357",
+  grid: "#efece4", stage: "#1e4d40", highlight: "#7ed6ae",
+  amber: "#a66f10", amberFill: "#fbeed3",
+  pine: "#2e6b52", pineFill: "#dcede3",
+  lavender: "#6a55c4", lavenderFill: "#e6e0f6",
+  rose: "#a64d64", roseFill: "#f9e3ea",
+  correct: "#2e7d4f", correctFill: "#e3f2e8",
+  wrong: "#c2452f", wrongFill: "#fbeae6"
+});</script>
+  <script>
+    window.sendPrompt = function() {};
+    window.openLink = function(url) { if (url) window.open(url, '_blank', 'noopener,noreferrer'); };
+    
+    function showError(prefix, value) {
+      var box = document.createElement('div');
+      box.className = 'primoria-error';
+      box.textContent = prefix + ': ' + (value || 'unknown error');
+      document.body.prepend(box);
+    }
+    
+    window.addEventListener('error', function(event) { showError('Widget script error', event.message); });
+    window.addEventListener('unhandledrejection', function(event) {
+      var reason = event.reason;
+      showError('Widget promise error', (reason && reason.message) || reason || 'promise rejected');
+    });
+    
+    document.addEventListener('click', function(e) {
+      var a = e.target.closest('a[href]');
+      if (a && /^https?:\/\//.test(a.href)) {
+        e.preventDefault();
+        window.open(a.href, '_blank', 'noopener,noreferrer');
+      }
+    });
+    
+function installThreeOrbitControlsFallback() {
+  var THREE = window.THREE;
+  if (!THREE || THREE.OrbitControls) return;
+
+  function OrbitControls(object, domElement) {
+    this.object = object;
+    this.domElement = domElement || document;
+    this.enabled = true;
+    this.target = new THREE.Vector3();
+    this.enableDamping = false;
+    this.dampingFactor = 0.05;
+    this.rotateSpeed = 1;
+    this.zoomSpeed = 1;
+    this.minDistance = 0;
+    this.maxDistance = Infinity;
+    this.autoRotate = false;
+    this.autoRotateSpeed = 2;
+
+    var scope = this;
+    var listeners = Object.create(null);
+    var spherical = new THREE.Spherical();
+    var offset = new THREE.Vector3();
+    var dragging = false;
+    var startX = 0;
+    var startY = 0;
+
+    function syncFromCamera() {
+      offset.copy(scope.object.position).sub(scope.target);
+      spherical.setFromVector3(offset);
+      if (!isFinite(spherical.radius) || spherical.radius === 0) spherical.radius = 1;
+    }
+
+    function clampAndApply() {
+      spherical.phi = Math.max(0.01, Math.min(Math.PI - 0.01, spherical.phi));
+      spherical.radius = Math.max(scope.minDistance, Math.min(scope.maxDistance, spherical.radius));
+      offset.setFromSpherical(spherical);
+      scope.object.position.copy(scope.target).add(offset);
+      if (typeof scope.object.lookAt === 'function') scope.object.lookAt(scope.target);
+      scope.dispatchEvent({ type: 'change' });
+    }
+
+    function elementSize() {
+      var rect = scope.domElement && scope.domElement.getBoundingClientRect ? scope.domElement.getBoundingClientRect() : null;
+      return {
+        width: Math.max(1, (rect && rect.width) || scope.domElement.clientWidth || window.innerWidth || 1),
+        height: Math.max(1, (rect && rect.height) || scope.domElement.clientHeight || window.innerHeight || 1)
+      };
+    }
+
+    function onPointerDown(event) {
+      if (!scope.enabled) return;
+      dragging = true;
+      startX = event.clientX;
+      startY = event.clientY;
+      syncFromCamera();
+      if (scope.domElement.setPointerCapture && event.pointerId != null) {
+        try { scope.domElement.setPointerCapture(event.pointerId); } catch (_) {}
+      }
+      scope.dispatchEvent({ type: 'start' });
+      if (event.preventDefault) event.preventDefault();
+    }
+
+    function onPointerMove(event) {
+      if (!dragging || !scope.enabled) return;
+      var size = elementSize();
+      var dx = event.clientX - startX;
+      var dy = event.clientY - startY;
+      startX = event.clientX;
+      startY = event.clientY;
+      spherical.theta -= (2 * Math.PI * dx / size.width) * scope.rotateSpeed;
+      spherical.phi -= (2 * Math.PI * dy / size.height) * scope.rotateSpeed;
+      clampAndApply();
+      if (event.preventDefault) event.preventDefault();
+    }
+
+    function onPointerUp(event) {
+      if (!dragging) return;
+      dragging = false;
+      if (scope.domElement.releasePointerCapture && event.pointerId != null) {
+        try { scope.domElement.releasePointerCapture(event.pointerId); } catch (_) {}
+      }
+      scope.dispatchEvent({ type: 'end' });
+    }
+
+    function onWheel(event) {
+      if (!scope.enabled) return;
+      syncFromCamera();
+      var scale = Math.pow(0.95, scope.zoomSpeed);
+      spherical.radius *= event.deltaY < 0 ? scale : 1 / scale;
+      clampAndApply();
+      if (event.preventDefault) event.preventDefault();
+    }
+
+    this.addEventListener = function(type, listener) {
+      if (!listeners[type]) listeners[type] = [];
+      if (listeners[type].indexOf(listener) === -1) listeners[type].push(listener);
+    };
+    this.removeEventListener = function(type, listener) {
+      var list = listeners[type];
+      if (!list) return;
+      var index = list.indexOf(listener);
+      if (index !== -1) list.splice(index, 1);
+    };
+    this.dispatchEvent = function(event) {
+      var list = listeners[event.type];
+      if (!list) return;
+      list.slice().forEach(function(listener) { listener.call(scope, event); });
+    };
+    this.update = function() {
+      syncFromCamera();
+      if (this.autoRotate) spherical.theta -= (2 * Math.PI / 3600) * this.autoRotateSpeed;
+      clampAndApply();
+      return true;
+    };
+    this.dispose = function() {
+      if (!scope.domElement || !scope.domElement.removeEventListener) return;
+      scope.domElement.removeEventListener('pointerdown', onPointerDown);
+      scope.domElement.removeEventListener('pointermove', onPointerMove);
+      scope.domElement.removeEventListener('pointerup', onPointerUp);
+      scope.domElement.removeEventListener('pointercancel', onPointerUp);
+      scope.domElement.removeEventListener('wheel', onWheel);
+    };
+    this.reset = function() {
+      syncFromCamera();
+      clampAndApply();
+    };
+
+    syncFromCamera();
+    if (this.domElement && this.domElement.addEventListener) {
+      if (this.domElement.style) this.domElement.style.touchAction = 'none';
+      this.domElement.addEventListener('pointerdown', onPointerDown);
+      this.domElement.addEventListener('pointermove', onPointerMove);
+      this.domElement.addEventListener('pointerup', onPointerUp);
+      this.domElement.addEventListener('pointercancel', onPointerUp);
+      this.domElement.addEventListener('wheel', onWheel, { passive: false });
+    }
+  }
+
+  THREE.OrbitControls = OrbitControls;
+}
+
+window.__primoriaInstallThreeOrbitControls = installThreeOrbitControlsFallback;
+installThreeOrbitControlsFallback();
+
+  </script>
+</head>
+<body>
+  <main id="content">
+    <div style="max-width:790px;margin:0 auto;display:flex;flex-direction:column;gap:10px">
+  <style>
+    .num{font-variant-numeric:tabular-nums}
+    .sl{width:100%;margin:0 0 4px}
+    .lb{font-size:12px;color:var(--lo-muted);margin-top:2px}
+  </style>
+  <div>
+    <div class="th" style="font-size:16px">定向住房补贴 vs 普惠住房补贴</div>
+    <div class="ts">同一个城市、同一笔预算：100 万户分成 5 组各 20 万户，月收入 1.5 / 2.5 / 4 / 6 / 12 千元。拖动滑块，看钱最后落在谁手里。</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div class="lo-card" style="padding:10px 12px">
+      <div class="ts" style="margin-bottom:4px"><b>① 输入 · 你调的</b></div>
+      <div class="lb">月预算 <b class="num" id="Bv">3.0</b> 亿元</div>
+      <input class="sl" id="B" type="range" min="0" max="10" step="0.5" value="3">
+      <div class="lb">定向门槛：收入 ≤ <b class="num" id="Tv">2.5</b> 千元才发</div>
+      <input class="sl" id="T" type="range" min="1.5" max="12" step="0.5" value="2.5">
+      <div class="lb">房东截留率 φ <b class="num" id="Pv">30</b>%</div>
+      <input class="sl" id="P" type="range" min="0" max="0.9" step="0.05" value="0.3">
+      <div class="lb">定向核查成本 <b class="num" id="Cv">100</b> 元/户/月</div>
+      <input class="sl" id="C" type="range" min="0" max="800" step="25" value="100">
+    </div>
+    <div class="lo-card" style="padding:10px 12px">
+      <div class="ts" style="margin-bottom:4px"><b>② 计算结果 · 自动</b></div>
+      <div id="out" class="ts" style="line-height:1.85"></div>
+    </div>
+  </div>
+
+  <div class="lo-stage" style="padding:4px">
+    <svg id="chart" viewBox="0 0 640 288" style="width:100%;display:block"></svg>
+  </div>
+
+  <div class="lo-card" style="padding:10px 12px">
+    <div class="ts" style="margin-bottom:6px"><b>③ 预算去哪了</b> —— 三段之和恒等于预算</div>
+    <div id="sT"></div>
+    <div id="sU" style="margin-top:8px"></div>
+  </div>
+
+  <div id="expl" class="lo-card" style="padding:10px 12px;font-size:13px;line-height:1.75"></div>
+  <div id="bnd" class="lo-card" style="padding:10px 12px;font-size:13px"></div>
+</div>
+<script>
+var INC=[1.5,2.5,4,6,12], NG=20, NT=100, NM=['最低20%','次低20%','中间20%','次高20%','最高20%'];
+var g=function(i){return document.getElementById(i)};
+function f(n){return n>=1000?Math.round(n).toLocaleString():Math.round(n)}
+function S(){
+  var B=+g('B').value, T=+g('T').value, phi=+g('P').value, c=+g('C').value;
+  var k=0; for(var i=0;i<5;i++) if(INC[i]<=T+1e-9) k++;
+  var nE=k*NG, Bt=B*1e8;
+  var admin=Math.min(c*nE*1e4,Bt), avail=Bt-admin;
+  var sT=avail/(nE*1e4), sU=Bt/(NT*1e4);
+  return {B:B,T:T,phi:phi,c:c,k:k,nE:nE,Bt:Bt,admin:admin,avail:avail,sT:sT,sU:sU,netT:(1-phi)*sT,netU:(1-phi)*sU};
+}
+function draw(s){
+  var raw=Math.max(s.netT,s.netU,10), st=Math.pow(10,Math.floor(Math.log10(raw)))/2, ymax=Math.ceil(raw/st)*st;
+  var L=68,R=622,Y0=28,Y1=222,gw=(R-L)/5,h='';
+  h+='<text class="ts" x="8" y="16">每户每月净补贴（元）</text>';
+  if(s.k>0) h+='<rect x="'+L+'" y="'+Y0+'" width="'+(gw*s.k)+'" height="'+(Y1-Y0)+'" style="fill:var(--lo-highlight);opacity:.45"/>';
+  h+='<text class="ts" x="'+(L+6)+'" y="'+(Y0+13)+'" style="font-size:9px">门槛内 '+s.nE+' 万户</text>';
+  for(var i=0;i<=4;i++){
+    var y=Y1-(Y1-Y0)*i/4;
+    h+='<line x1="'+L+'" y1="'+y+'" x2="'+R+'" y2="'+y+'" style="stroke:var(--lo-grid)"/>';
+    h+='<text class="ts" x="'+(L-8)+'" y="'+(y+4)+'" text-anchor="end">'+Math.round(ymax*i/4)+'</text>';
+  }
+  h+='<line x1="'+L+'" y1="'+Y1+'" x2="'+R+'" y2="'+Y1+'" style="stroke:var(--lo-border)"/>';
+  INC.forEach(function(v,i){
+    var cx=L+gw*(i+0.5), hT=(i<s.k?s.netT:0), hU=s.netU;
+    var pH=Math.max(hT/ymax*(Y1-Y0),1), pU=Math.max(hU/ymax*(Y1-Y0),1);
+    h+='<rect class="c-coral" x="'+(cx-23)+'" y="'+(Y1-pH)+'" width="21" height="'+pH+'" rx="2"/>';
+    h+='<rect class="c-blue" x="'+(cx+2)+'" y="'+(Y1-pU)+'" width="21" height="'+pU+'" rx="2"/>';
+    if(hT>0) h+='<text class="ts" x="'+(cx-12.5)+'" y="'+(Y1-pH-4)+'" text-anchor="middle" style="font-size:9px">'+f(hT)+'</text>';
+    h+='<text class="ts" x="'+(cx+12.5)+'" y="'+(Y1-pU-4)+'" text-anchor="middle" style="font-size:9px">'+f(hU)+'</text>';
+    h+='<text class="ts" x="'+cx+'" y="'+(Y1+16)+'" text-anchor="middle">'+NM[i]+'</text>';
+    h+='<text class="ts" x="'+cx+'" y="'+(Y1+30)+'" text-anchor="middle" style="font-size:9px">'+v+'k/月</text>';
+  });
+  h+='<rect class="c-coral" x="'+(R-118)+'" y="7" width="10" height="10" rx="2"/><text class="ts" x="'+(R-104)+'" y="16">定向</text>';
+  h+='<rect class="c-blue" x="'+(R-58)+'" y="7" width="10" height="10" rx="2"/><text class="ts" x="'+(R-44)+'" y="16">普惠</text>';
+  g('chart').innerHTML=h;
+}
+function bar(label,admin,phi,tr,Bt){
+  if(Bt<=0) return '<div class="ts">'+label+'：预算为 0，没有资金可分配</div>';
+  var pc=function(x){return Math.max(0,x/Bt*100)};
+  var n=pc(tr*(1-phi)), r=pc(tr*phi), a=pc(Math.min(admin,Bt));
+  var seg=function(w,col,brd,txt){
+    if(w<=0.2) return '';
+    return '<div style="flex:0 0 '+w+'%;background:'+col+';border-right:1px solid '+brd+';display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--lo-ink);overflow:hidden;white-space:nowrap">'+(w>14?txt:'')+'</div>';
+  };
+  return '<div class="lb" style="margin:0 0 3px">'+label+'</div>'+
+    '<div style="display:flex;height:22px;border:1px solid var(--lo-border);border-radius:4px;overflow:hidden">'+
+    seg(n,'var(--series-pine-fill)','var(--series-pine)','家庭净得')+
+    seg(r,'var(--series-rose-fill)','var(--series-rose)','房东租金')+
+    seg(a,'var(--series-amber-fill)','var(--series-amber)','核查成本')+'</div>';
+}
+function update(){
+  var s=S();
+  g('Bv').textContent=s.B.toFixed(1);
+  g('Tv').textContent=s.T.toFixed(1);
+  g('Pv').textContent=Math.round(s.phi*100);
+  g('Cv').textContent=s.c;
+  var ratio=s.netU>0?(s.netT/s.netU).toFixed(2):'—';
+  g('out').innerHTML=
+    '<div>覆盖户数：<b>定向 '+s.nE+' 万户</b> ｜ 普惠 '+NT+' 万户</div>'+
+    '<div>每户毛补贴：定向 <span class="num">'+f(s.sT)+'</span> ｜ 普惠 <span class="num">'+f(s.sU)+'</span> 元</div>'+
+    '<div>被租金吃掉：定向 <span class="num">'+f(s.sT*s.phi)+'</span> ｜ 普惠 <span class="num">'+f(s.sU*s.phi)+'</span> 元</div>'+
+    '<div>每户净得：<b>定向 <span class="num">'+f(s.netT)+'</span> ｜ 普惠 <span class="num">'+f(s.netU)+'</span> 元</b></div>'+
+    '<div>定向核查成本：<span class="num">'+(s.admin/1e8).toFixed(2)+'</span> 亿元</div>'+
+    '<div>最低收入组受益倍数：<span class="num">'+ratio+'</span> 倍</div>';
+  g('sT').innerHTML=bar('定向：每户发 '+f(s.sT)+' 元 × '+s.nE+' 万户',s.admin,s.phi,s.avail,s.Bt);
+  g('sU').innerHTML=bar('普惠：每户发 '+f(s.sU)+' 元 × 100 万户',0,s.phi,s.Bt,s.Bt);
+  g('expl').innerHTML='同样的 <b><span class="num">'+s.B.toFixed(1)+'</span> 亿元</b> 预算：定向只能发给收入不超过 '+s.T.toFixed(1)+
+    ' 千元的 <b>'+s.nE+' 万户</b>，所以每户能拿到 <span class="num">'+f(s.sT)+'</span> 元；普惠要摊给 100 万户，每户只有 <span class="num">'+f(s.sU)+
+    '</span> 元。房东截留 '+Math.round(s.phi*100)+'% 之后，两类家庭的净得变成 <b><span class="num">'+f(s.netT)+'</span></b> 和 <b><span class="num">'+f(s.netU)+
+    '</span></b> 元。注意一个反直觉的量：核查成本是定向独有的固定开销，它从这个池子里扣，所以门槛定得越窄，每户反而越经得起这笔固定成本。';
+  var b=[];
+  if(s.B===0) b.push('预算 = 0：两方案净补贴都塌到 0，柱状图归零。');
+  if(s.T>=12-1e-9) b.push('门槛 ≥ 12 千元：定向覆盖全部 5 组，此时它已经变成普惠，却还要多付核查成本 —— 所以净得反而低于普惠。');
+  if(s.B>0 && s.admin>=s.Bt-1e-6) b.push('核查成本吃光整个预算：定向可用补贴 = 0，再增加预算要越过这条线才开始真正发钱。');
+  if(s.phi>=0.849) b.push('截留率接近上限 90%：补贴几乎全部变成房东租金，两方案净得都趋近于 0，差别被压缩。');
+  if(!b.length) b.push('当前未触发边界：门槛内 '+s.k+' 组有资格，预算在扣掉核查成本后仍有 <b>'+(s.avail/1e8).toFixed(2)+' 亿元</b> 真正发到家庭。');
+  g('bnd').innerHTML='<div class="ts" style="margin-bottom:3px"><b>④ 边界情况</b></div>'+
+    '<ul style="margin:0;padding-left:18px;line-height:1.65">'+b.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>';
+}
+['B','T','P','C'].forEach(function(id){g(id).addEventListener('input',function(){update();draw(S())})});
+update(); draw(S());
+</script>
+  </main>
+</body>
+</html>

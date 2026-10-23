@@ -1,0 +1,71 @@
+{
+  "batchId": "agent-b-008",
+  "components": [
+    {
+      "componentId": "chem.weak-acid-buffer",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/weak-acid-buffer.ts",
+      "componentExport": "weakAcidBufferComponent",
+      "configSchemaExport": "WeakAcidBufferConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/weak-acid-buffer.tsx",
+      "widgetExport": "WeakAcidBufferWidget",
+      "samples": [
+        {
+          "totalConcentration": 0.1,
+          "pKa": 4.76,
+          "saltFraction": 0.5,
+          "addedBaseMM": 0,
+          "view": "composition",
+          "showCapacity": true
+        },
+        {
+          "totalConcentration": 0.1,
+          "pKa": 4.76,
+          "saltFraction": 0.5,
+          "addedBaseMM": 20,
+          "view": "composition",
+          "showCapacity": true
+        },
+        {
+          "totalConcentration": 0,
+          "pKa": 4.76,
+          "saltFraction": 0.5,
+          "addedBaseMM": 0,
+          "view": "composition",
+          "showCapacity": true
+        },
+        {
+          "totalConcentration": 0.01,
+          "pKa": 4.76,
+          "saltFraction": 0.5,
+          "addedBaseMM": 0,
+          "view": "response",
+          "showCapacity": true
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-weak-acid-buffer.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    }
+  ]
+}

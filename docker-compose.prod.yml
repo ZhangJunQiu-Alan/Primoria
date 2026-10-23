@@ -172,6 +172,7 @@ services:
     environment:
       <<: *db-env
       PRIMORIA_AGENT_INTERNAL_SECRET: ${PRIMORIA_AGENT_INTERNAL_SECRET:?set PRIMORIA_AGENT_INTERNAL_SECRET in .env}
+      AGENT_DATABASE_POOL_MAX: ${AGENT_DATABASE_POOL_MAX:-1}
       AGENT_RUN_CONCURRENCY: ${AGENT_RUN_CONCURRENCY:-2}
       AGENT_RUN_MAX_ATTEMPTS: ${AGENT_RUN_MAX_ATTEMPTS:-2}
       AGENT_RUN_LEASE_MS: ${AGENT_RUN_LEASE_MS:-30000}
@@ -182,6 +183,7 @@ services:
       OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
       OPENAI_MODEL: ${OPENAI_MODEL:-}
+      AI_MODEL_TUTOR: ${AI_MODEL_TUTOR:-}
     stop_grace_period: 40s
     healthcheck:
       test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:2024/health/ready').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]

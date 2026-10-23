@@ -1,0 +1,393 @@
+{
+  "batchId": "agent-b-002",
+  "components": [
+    {
+      "componentId": "math.fraction-equivalence",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/fraction-equivalence.ts",
+      "componentExport": "fractionEquivalenceComponent",
+      "configSchemaExport": "FractionEquivalenceConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/fraction-equivalence.tsx",
+      "widgetExport": "FractionEquivalenceWidget",
+      "samples": [
+        {
+          "numerator": 2,
+          "denominator": 3,
+          "factor": 2,
+          "view": "area",
+          "showDecimal": true
+        },
+        {
+          "numerator": 2,
+          "denominator": 3,
+          "factor": 4,
+          "view": "area",
+          "showDecimal": true
+        },
+        {
+          "numerator": 0,
+          "denominator": 3,
+          "factor": 2,
+          "view": "area",
+          "showDecimal": true
+        },
+        {
+          "numerator": 7,
+          "denominator": 5,
+          "factor": 2,
+          "view": "numberline",
+          "showDecimal": true
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-two.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    },
+    {
+      "componentId": "math.chicken-rabbit",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/chicken-rabbit.ts",
+      "componentExport": "chickenRabbitComponent",
+      "configSchemaExport": "ChickenRabbitConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/chicken-rabbit.tsx",
+      "widgetExport": "ChickenRabbitWidget",
+      "samples": [
+        {
+          "heads": 8,
+          "legs": 22,
+          "view": "animals",
+          "showSteps": true
+        },
+        {
+          "heads": 12,
+          "legs": 36,
+          "view": "animals",
+          "showSteps": true
+        },
+        {
+          "heads": 8,
+          "legs": 23,
+          "view": "animals",
+          "showSteps": true
+        },
+        {
+          "heads": 8,
+          "legs": 22,
+          "view": "equations",
+          "showSteps": true
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-two.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    },
+    {
+      "componentId": "geography.earth-seasons",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/earth-seasons.ts",
+      "componentExport": "earthSeasonsComponent",
+      "configSchemaExport": "EarthSeasonsConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/earth-seasons.tsx",
+      "widgetExport": "EarthSeasonsWidget",
+      "samples": [
+        {
+          "dayOfYear": 172,
+          "latitude": 40,
+          "axialTilt": 23.44,
+          "localHour": 12,
+          "view": "altitude",
+          "showLabels": true
+        },
+        {
+          "dayOfYear": 355,
+          "latitude": 40,
+          "axialTilt": 23.44,
+          "localHour": 12,
+          "view": "altitude",
+          "showLabels": true
+        },
+        {
+          "dayOfYear": 172,
+          "latitude": 90,
+          "axialTilt": 23.44,
+          "localHour": 12,
+          "view": "altitude",
+          "showLabels": true
+        },
+        {
+          "dayOfYear": 172,
+          "latitude": 40,
+          "axialTilt": 0,
+          "localHour": 12,
+          "view": "orbit",
+          "showLabels": true
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-two.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    },
+    {
+      "componentId": "chem.ideal-gas",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/ideal-gas.ts",
+      "componentExport": "idealGasComponent",
+      "configSchemaExport": "IdealGasConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/ideal-gas.tsx",
+      "widgetExport": "IdealGasWidget",
+      "samples": [
+        {
+          "temperatureK": 300,
+          "volumeL": 10,
+          "amountMol": 1,
+          "gas": "nitrogen",
+          "mode": "isothermal"
+        },
+        {
+          "temperatureK": 300,
+          "volumeL": 5,
+          "amountMol": 1,
+          "gas": "nitrogen",
+          "mode": "isothermal"
+        },
+        {
+          "temperatureK": 100,
+          "volumeL": 0.5,
+          "amountMol": 1,
+          "gas": "nitrogen",
+          "mode": "isothermal"
+        },
+        {
+          "temperatureK": 300,
+          "volumeL": 10,
+          "amountMol": 1,
+          "gas": "helium",
+          "mode": "isochoric"
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-two.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    },
+    {
+      "componentId": "chem.reaction-kinetics",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/reaction-kinetics.ts",
+      "componentExport": "reactionKineticsComponent",
+      "configSchemaExport": "ReactionKineticsConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/reaction-kinetics.tsx",
+      "widgetExport": "ReactionKineticsWidget",
+      "samples": [
+        {
+          "order": "first",
+          "initialConcentration": 1,
+          "referenceRate": 0.1,
+          "temperatureK": 298,
+          "activationEnergyKJ": 50,
+          "elapsedSeconds": 5,
+          "showHalfLife": true
+        },
+        {
+          "order": "first",
+          "initialConcentration": 1,
+          "referenceRate": 0.1,
+          "temperatureK": 330,
+          "activationEnergyKJ": 50,
+          "elapsedSeconds": 5,
+          "showHalfLife": true
+        },
+        {
+          "order": "zero",
+          "initialConcentration": 1,
+          "referenceRate": 0.1,
+          "temperatureK": 298,
+          "activationEnergyKJ": 50,
+          "elapsedSeconds": 60,
+          "showHalfLife": true
+        },
+        {
+          "order": "second",
+          "initialConcentration": 1,
+          "referenceRate": 0.1,
+          "temperatureK": 298,
+          "activationEnergyKJ": 50,
+          "elapsedSeconds": 5,
+          "showHalfLife": true
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-two.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    },
+    {
+      "componentId": "physics.oscillation-lab",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/oscillation-lab.ts",
+      "componentExport": "oscillationLabComponent",
+      "configSchemaExport": "OscillationLabConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/oscillation-lab.tsx",
+      "widgetExport": "OscillationLabWidget",
+      "samples": [
+        {
+          "system": "spring",
+          "massKg": 1,
+          "stiffness": 10,
+          "lengthM": 1,
+          "amplitudeM": 0.3,
+          "angleDeg": 15,
+          "elapsedSeconds": 0
+        },
+        {
+          "system": "spring",
+          "massKg": 1,
+          "stiffness": 10,
+          "lengthM": 1,
+          "amplitudeM": 0.3,
+          "angleDeg": 15,
+          "elapsedSeconds": 0.5
+        },
+        {
+          "system": "pendulum",
+          "massKg": 1,
+          "stiffness": 10,
+          "lengthM": 0.2,
+          "amplitudeM": 0.3,
+          "angleDeg": 30,
+          "elapsedSeconds": 20
+        },
+        {
+          "system": "pendulum",
+          "massKg": 1,
+          "stiffness": 10,
+          "lengthM": 1,
+          "amplitudeM": 0.3,
+          "angleDeg": 15,
+          "elapsedSeconds": 0
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-two.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    }
+  ]
+}

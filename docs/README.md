@@ -27,6 +27,12 @@ use the priority order below and verify behavior against the code.
 ## Interactive visualization
 
 - [`交互组件规范.md`](交互组件规范.md) — canonical production component contract, routing flow, file boundaries, and acceptance gates.
+- [`visualization-full-coverage-execution.md`](visualization-full-coverage-execution.md) — active execution contract for reference-site coverage, two coding agents, 20 real-model prompts, and a replay-only acceptance website; full-reference acceptance remains incomplete.
+- [`visualization-interface-contract.md`](visualization-interface-contract.md) — shared component, versioned course payload, reference inventory, and batch handoff contract.
+- [`visualization-agent-a-handoff.md`](visualization-agent-a-handoff.md) — platform implementation progress and current validation limits; not full-reference acceptance.
+- [`visualization-agent-a-validation.md`](visualization-agent-a-validation.md) — dated 45-component platform regression, fixed 20-prompt evidence, offline review entry, and remaining full-reference gates.
+- [`visualization-human-acceptance-checklist.md`](visualization-human-acceptance-checklist.md) — combined human checklist for 20 captured prompts, 49 registered/pending scenes, visual quality, and unresolved acceptance gates.
+- [`visualization-human-acceptance-2026-10-23.md`](visualization-human-acceptance-2026-10-23.md) — user approval and commit/push authorization; preserves unresolved engineering results.
 - [`opengenerative-ui-adaptation.md`](opengenerative-ui-adaptation.md) — renderer patterns adopted by Primoria and remaining future ideas.
 
 ## Knowledge graph

@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { act, createElement, type ReactElement } from "react";
+import { act, createElement, StrictMode, type ReactElement } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -9,8 +9,8 @@ import { I18nProvider } from "../src/lib/i18n/client";
 
 vi.mock("../src/components/generative-ui/interactive", () => ({
   WIDGETS: {
-    "physics.lens-imaging": ({ config }: { config: Record<string, unknown> }) =>
-      createElement("div", { "data-config": JSON.stringify(config) }),
+    "physics.lens-imaging": ({ config, onChange }: { config: Record<string, unknown>; onChange: (next: Record<string, unknown>) => void }) =>
+      createElement("div", { "data-config": JSON.stringify(config) }, createElement("button", { onClick: () => onChange({ ...config, focalLength: Number(config.focalLength) + 1 }) }, "change parameter")),
   },
 }));
 
@@ -86,12 +86,10 @@ describe("InteractiveComponentCard", () => {
     const requests: Array<Record<string, unknown>> = [];
     const configs = [{ focalLength: 10 }, { focalLength: 20 }, { focalLength: 15 }];
     vi.stubGlobal("fetch", vi.fn(async (_url: string, init?: RequestInit) => {
+      if (!init?.method) return new Response(JSON.stringify({ ok: false, error: "not_found" }), { status: 404 });
       const body = JSON.parse(String(init?.body)) as Record<string, unknown>;
       requests.push(body);
-      return {
-        status: 200,
-        json: async () => ({ ok: true, config: configs[requests.length - 1] }),
-      } as Response;
+      return new Response(JSON.stringify({ ok: true, componentId: "physics.lens-imaging", configVersion: 1, revision: 1, config: configs[requests.length - 1] }));
     }));
 
     await mount(createElement(InteractiveComponentCard, {
@@ -116,12 +114,53 @@ describe("InteractiveComponentCard", () => {
     }));
     await waitFor(() => expect(requests).toHaveLength(3));
 
-    expect(requests[0]).toMatchObject({ instanceId: "tool-1", targetInstanceId: null, current: null });
-    expect(requests[1]).toMatchObject({ instanceId: "tool-2", targetInstanceId: null, current: null });
+    expect(requests[0]).toMatchObject({ instanceId: "tool-1", targetInstanceId: null });
+    expect(requests[1]).toMatchObject({ instanceId: "tool-2", targetInstanceId: null });
     expect(requests[2]).toMatchObject({
       instanceId: "tool-3",
       targetInstanceId: "tool-1",
-      current: configs[0],
     });
+    expect(requests.every((request) => !("current" in request))).toBe(true);
+  });
+
+  it("restores saved output without regeneration, including StrictMode effect replay", async () => {
+    const fetchMock = vi.fn(async () => new Response(JSON.stringify({ ok: true, componentId: "physics.lens-imaging", configVersion: 1, revision: 3, config: { focalLength: 13 } })));
+    vi.stubGlobal("fetch", fetchMock);
+    const container = await mount(createElement(StrictMode, null, createElement(InteractiveComponentCard, { componentId: "physics.lens-imaging", request: "saved", instanceId: "saved-tool" })));
+    await waitFor(() => expect(container.querySelector("[data-config]")?.getAttribute("data-config")).toContain('"focalLength":13'));
+    expect(fetchMock.mock.calls.every((call) => (call as unknown[])[1] === undefined || !((call as unknown[])[1] as RequestInit)?.method)).toBe(true);
+  });
+
+  it("does not regenerate when reading an existing output fails", async () => {
+    const fetchMock = vi.fn(async () => new Response(JSON.stringify({ ok: false, error: "db unavailable" }), { status: 503 }));
+    vi.stubGlobal("fetch", fetchMock);
+    const container = await mount(createElement(InteractiveComponentCard, { componentId: "physics.lens-imaging", request: "existing", instanceId: "unavailable-tool" }));
+    await waitFor(() => expect(container.querySelector('[role="alert"]')).not.toBeNull());
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(container.textContent).toContain("Retry");
+  });
+
+  it("keeps local controls immediate and retries a failed save without another model call", async () => {
+    const writes: Array<Record<string, unknown>> = [];
+    vi.stubGlobal("fetch", vi.fn(async (_url: string, init?: RequestInit) => {
+      if (init?.method === "PATCH") {
+        writes.push(JSON.parse(String(init.body)));
+        if (writes.length === 1) return new Response(JSON.stringify({ ok: false }), { status: 503 });
+        return new Response(JSON.stringify({ ok: true, componentId: "physics.lens-imaging", configVersion: 1, revision: 2, config: { focalLength: 11 } }));
+      }
+      if (init?.method === "POST") throw new Error("Unexpected model regeneration");
+      return new Response(JSON.stringify({ ok: true, componentId: "physics.lens-imaging", configVersion: 1, revision: 1, config: { focalLength: 10 } }));
+    }));
+    const container = await mount(createElement(InteractiveComponentCard, { componentId: "physics.lens-imaging", request: "saved", instanceId: "save-retry" }));
+    await waitFor(() => expect(container.querySelector("button")?.textContent).toBe("change parameter"));
+    await act(async () => (container.querySelector("button") as HTMLButtonElement).click());
+    expect(container.querySelector("[data-config]")?.getAttribute("data-config")).toContain('"focalLength":11');
+    await waitFor(() => expect(container.textContent).toContain("Retry save"));
+    const retry = [...container.querySelectorAll("button")].find((button) => button.textContent?.includes("Retry save"))!;
+    await act(async () => retry.click());
+    await waitFor(() => expect(container.querySelector('[role="alert"]')).toBeNull());
+    expect(writes).toHaveLength(2);
+    expect(writes[1]).toEqual(writes[0]);
+    expect(writes[1]).toMatchObject({ instanceId: "save-retry", revision: 1, config: { focalLength: 11 } });
   });
 });

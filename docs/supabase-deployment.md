@@ -27,6 +27,17 @@ Root commands select cloud connections when `.env.supabase` exists. Explicit
 connections take priority, preserving isolated regression databases and CI.
 Direct `pnpm --filter` commands do not load the root connection file: use the
 wrapper above. Local `.env.local` database values remain for offline testing.
+The current session-pool limit observed on October 22 is 15 clients for the
+runtime role. The local cloud file and selected Compose topology use
+`DATABASE_POOL_MAX=1` per Web/worker process. Agent run persistence and the
+LangGraph checkpointer both honor a bounded pool limit (default 1;
+`AGENT_DATABASE_POOL_MAX` overrides the general limit). The existing bounded
+course-card reader adds at most one Agent connection. This budgets seven
+connections across Web, three workers, and the Agent's three clients, leaving
+headroom for acceptance tools. Raising a per-process limit requires checking
+the sum across all processes; the checkpointer no longer silently opens its
+Node PostgreSQL default pool. TLS verification and session pooling stay enabled.
+
 Agent startup respects inherited environment and does not run DDL; root
 `pnpm dev` bootstraps with the migration credential first.
 

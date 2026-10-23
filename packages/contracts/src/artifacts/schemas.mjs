@@ -102,10 +102,25 @@ export const GetCourseCardArgsSchema = z.object({
 // with a component_id IS the catalog selection. Stage-2 (config generation)
 // runs web-side with the learner's session; the tool result is a stateless
 // signal, mirroring position_learning_goal.
+export const SearchInteractiveComponentsArgsSchema = z.object({
+  query: z.string().trim().min(1).max(2000),
+  discipline: z.string().max(80).optional(),
+  stage: z.string().max(80).optional(),
+  limit: z.number().int().min(1).max(10).optional(),
+}).strict();
+
+export const InteractiveComponentPayloadSchema = z.object({
+  componentId: z.string().min(1).max(100),
+  configVersion: z.number().int().positive(),
+  config: z.record(z.unknown()),
+}).strict();
+
 export const OpenInteractiveComponentArgsSchema = z.object({
   component_id: z
     .string()
-    .describe("Catalog componentId, e.g. physics.lens-imaging. Must be one of the ids listed in the system prompt catalog."),
+    .min(1)
+    .max(100)
+    .describe("Catalog componentId, e.g. physics.lens-imaging. Use an id from the compact catalog or read-only search_interactive_components results."),
   request: z
     .string()
     .min(1)
