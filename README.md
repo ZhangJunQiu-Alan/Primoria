@@ -100,7 +100,17 @@ AI_MODEL_FAST=your-fast-model
 # Optional content-quality tier for source comparison and causal timelines.
 # Falls back to OPENAI_MODEL, never AI_MODEL_FAST.
 AI_MODEL_CONTENT=your-quality-model
+# Optional independent Agent/Tutor model; falls back to the provider default.
+AI_MODEL_TUTOR=your-tutor-model
 ```
+
+For direct DeepSeek, the selected split is `OPENAI_MODEL=deepseek-v4-pro`
+for quality-sensitive course content, `AI_MODEL_FAST=deepseek-flash` for Web
+utilities/planning/fact extraction, and `AI_MODEL_TUTOR=deepseek-flash` for the Agent. Use
+`deepseek-flash` rather than the legacy `deepseek-v4-flash` alias. DeepSeek
+utility calls explicitly disable thinking to preserve their short output
+budget; other Web fast-tier calls use low thinking effort. Course-content and
+Agent thinking defaults remain unchanged. Credentials stay server-side.
 
 ```bash
 AI_PROVIDER=anthropic-compatible
@@ -685,12 +695,17 @@ Primoria has two complementary visualization paths:
    `open_interactive_component`; Web performs config generation/patching and
    renders a pre-engineered React component. The catalog, Web registry, widget
    map, and shared Agent routing prior are guarded by sync tests.
+   The current registry has 45 components. Above 40 entries the Tutor reads a
+   discipline directory and retrieves bounded candidates through the read-only
+   `search_interactive_components` tool. Course planners receive candidate
+   capabilities before choosing a mechanism; saved VisualBlocks use the same
+   versioned components as chat.
 2. **Off-catalog fallback:** specialized structured renderers handle known chart,
    diagram, physics, algorithm, math, wave, graph, molecule, and 3D shapes;
    `plan_visualization` + `widgetRenderer` handles the remaining custom HTML
    widget cases in a sandboxed iframe.
 
-HTML widgets execute inside a sandboxed iframe. `apps/web/src/components/generative-ui/widget-renderer.tsx` assembles a standalone document around the fragment, theme CSS, SVG/form helpers, a `window.sendPrompt` bridge, and validated dependencies.
+HTML widgets execute inside a sandboxed iframe. `apps/web/src/components/generative-ui/widget-renderer.tsx` assembles a standalone document around the fragment, theme CSS, SVG/form helpers, a `window.sendPrompt` bridge, and validated dependencies. Content is delivered only after the iframe shell sends its authenticated ready handshake; an initial blank-document load is insufficient.
 
 Widget HTML must be a fragment: no `<!doctype>`, no `<html>`, `<head>`, or `<body>` wrapper, and no `100vh` app-shell layouts.
 
@@ -705,7 +720,7 @@ Lessons are made of blocks rather than one long article. Core generated block ty
 - `text` - explanation, hook, roadmap, summary, and examples.
 - `analogy` - mapping a difficult concept to a familiar structure.
 - `image` - static cognitive anchor generated from an image brief.
-- `visual` - interactive visualization rendered through the sandboxed widget pipeline or specialized renderers.
+- `visual` - a versioned trusted component when supported, otherwise a specialized renderer or sandboxed widget.
 - `quiz` - concept checks that can create learning evidence.
 - `code` - runnable or editable code examples for programming and computational topics.
 - `transfer` - integrated application that connects concepts or domains.

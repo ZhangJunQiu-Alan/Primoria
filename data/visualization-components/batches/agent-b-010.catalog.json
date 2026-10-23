@@ -1,0 +1,339 @@
+{
+  "components": [
+    {
+      "componentId": "physics.wire-resistance",
+      "version": 1,
+      "name": {
+        "zh-CN": "导线电阻与电阻定律",
+        "en": "Wire resistance and resistivity"
+      },
+      "catalogDescription": {
+        "zh-CN": "ρL/A、材料电阻率、长度截面积和线性温度修正",
+        "en": "Uniform-wire resistance, length, area and a prescribed linear temperature correction"
+      },
+      "teachingPurpose": {
+        "zh-CN": "ρL/A、材料电阻率、长度截面积和线性温度修正",
+        "en": "Uniform-wire resistance, length, area and a prescribed linear temperature correction"
+      },
+      "primaryAction": "adjust",
+      "disciplineTags": [
+        "physics"
+      ],
+      "capabilityTags": [
+        "wire-resistance",
+        "resistivity",
+        "cross-sectional-area",
+        "temperature-coefficient"
+      ],
+      "implementation": {
+        "status": "implemented",
+        "rendererKey": "wireResistance"
+      },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "resistivityMicroOhmM": {
+            "type": "number",
+            "minimum": 0.01,
+            "maximum": 2,
+            "default": 0.017,
+            "description": "20°C电阻率，μΩ·m / resistivity at 20°C, micro-ohm metre"
+          },
+          "lengthM": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 20,
+            "default": 5,
+            "description": "均匀导线长度，m / uniform wire length, metres"
+          },
+          "areaMM2": {
+            "type": "number",
+            "minimum": 0.05,
+            "maximum": 10,
+            "default": 1,
+            "description": "横截面积，mm²；不是直径 / cross-sectional area, square millimetres; not diameter"
+          },
+          "temperatureC": {
+            "type": "number",
+            "minimum": -20,
+            "maximum": 150,
+            "default": 20,
+            "description": "外部给定温度，°C / prescribed temperature, Celsius"
+          },
+          "temperatureCoefficient": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 0.006,
+            "default": 0.0039,
+            "description": "20°C附近线性温度系数，/°C / linear temperature coefficient about 20°C, per Celsius"
+          },
+          "view": {
+            "type": "string",
+            "enum": [
+              "geometry",
+              "length",
+              "area",
+              "temperature"
+            ],
+            "default": "geometry",
+            "description": "形状、长度、面积、温度关系 / geometry, length, area or temperature"
+          }
+        },
+        "required": [
+          "resistivityMicroOhmM",
+          "lengthM",
+          "areaMM2",
+          "temperatureC",
+          "temperatureCoefficient",
+          "view"
+        ],
+        "default": {
+          "resistivityMicroOhmM": 0.017,
+          "lengthM": 5,
+          "areaMM2": 1,
+          "temperatureC": 20,
+          "temperatureCoefficient": 0.0039,
+          "view": "geometry"
+        }
+      },
+      "patchHints": [
+        {
+          "zh-CN": "只修改用户要求的教学参数，其余字段保留。",
+          "en": "Patch only the requested teaching parameters and preserve the rest."
+        },
+        {
+          "zh-CN": "比较单变量时保留其他参数；面积是mm²，不是直径。μΩ·m与mm²均含10^-6，读数R以Ω给出。此组件用于电阻定律；电池内阻与负载功率用physics.closed-circuit，理想双电阻串并联用physics.circuit-lab。",
+          "en": "Vary one quantity while preserving others. Area is in mm² and is not diameter. Resistivity is at 20°C in μΩ·m. Use physics.closed-circuit for source resistance and physics.circuit-lab for two ideal resistors."
+        }
+      ],
+      "fallbackConditions": [
+        {
+          "zh-CN": "本组件不处理：电池内阻与负载匹配、真实材料实测数据库、自发热温度求解、热膨胀、非欧姆器件、battery internal resistance、self-heating simulation。",
+          "en": "Battery internal resistance or load matching, empirical material databases, self-heating, thermal expansion or non-ohmic devices."
+        }
+      ],
+      "examplePrompts": [
+        {
+          "zh-CN": "电线拉长一倍和变粗一倍，电阻分别怎么变？",
+          "en": "How do doubling length and doubling area affect wire resistance?"
+        },
+        {
+          "zh-CN": "给我看看ρL/A里面截面积和直径的区别",
+          "en": "Show why cross-sectional area is not the same as diameter in R=ρL/A."
+        }
+      ],
+      "search": {
+        "aliases": [
+          "电阻定律",
+          "导线电阻",
+          "影响电阻大小因素",
+          "长度截面积",
+          "ρL/A",
+          "wire resistance",
+          "resistivity",
+          "resistance law"
+        ],
+        "concepts": [
+          "wire-resistance",
+          "resistivity",
+          "cross-sectional-area",
+          "temperature-coefficient"
+        ],
+        "stages": [
+          "junior",
+          "senior"
+        ],
+        "supports": [
+          "R=ρL/A",
+          "长度正比与面积反比",
+          "圆截面积与直径区别",
+          "给定温度的线性电阻率修正",
+          "uniform ohmic wire",
+          "linear temperature correction"
+        ],
+        "excludes": [
+          "电池内阻与负载匹配",
+          "真实材料实测数据库",
+          "自发热温度求解",
+          "热膨胀",
+          "非欧姆器件",
+          "battery internal resistance",
+          "self-heating simulation"
+        ],
+        "referenceIds": [
+          "shiguang.physics.junior.3149"
+        ]
+      }
+    },
+    {
+      "componentId": "physics.closed-circuit",
+      "version": 1,
+      "name": {
+        "zh-CN": "闭合电路与电源内阻",
+        "en": "Closed circuit and internal resistance"
+      },
+      "catalogDescription": {
+        "zh-CN": "E/(R+r)、路端电压、断路短路、输出功率和最大功率匹配",
+        "en": "EMF, source resistance, terminal voltage, open and short states, power conservation and load matching"
+      },
+      "teachingPurpose": {
+        "zh-CN": "E/(R+r)、路端电压、断路短路、输出功率和最大功率匹配",
+        "en": "EMF, source resistance, terminal voltage, open and short states, power conservation and load matching"
+      },
+      "primaryAction": "adjust",
+      "disciplineTags": [
+        "physics"
+      ],
+      "capabilityTags": [
+        "closed-circuit",
+        "internal-resistance",
+        "terminal-voltage",
+        "maximum-power-transfer",
+        "power-efficiency"
+      ],
+      "implementation": {
+        "status": "implemented",
+        "rendererKey": "closedCircuit"
+      },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "emf": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 24,
+            "default": 6,
+            "multipleOf": 0.01,
+            "description": "恒定电动势E，V / constant source EMF, volts; 0.01 grid"
+          },
+          "internalResistance": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10,
+            "default": 1,
+            "multipleOf": 0.01,
+            "description": "串联内阻r，Ω / series internal resistance, ohms; 0.01 grid"
+          },
+          "loadResistance": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100,
+            "default": 5,
+            "multipleOf": 0.01,
+            "description": "单一等效外电阻R，Ω / single equivalent ohmic load, ohms; 0.01 grid"
+          },
+          "switchClosed": {
+            "type": "boolean",
+            "default": true,
+            "description": "闭合或断开负载回路 / close or open the load circuit"
+          },
+          "view": {
+            "type": "string",
+            "enum": [
+              "circuit",
+              "characteristic",
+              "power"
+            ],
+            "default": "circuit",
+            "description": "电路、U-I特性、负载功率 / circuit, source/load U-I curves or load power"
+          },
+          "showPowerBalance": {
+            "type": "boolean",
+            "default": true,
+            "description": "显示EI=I²R+I²r / show source power and both sinks"
+          }
+        },
+        "required": [
+          "emf",
+          "internalResistance",
+          "loadResistance",
+          "switchClosed",
+          "view",
+          "showPowerBalance"
+        ],
+        "default": {
+          "emf": 6,
+          "internalResistance": 1,
+          "loadResistance": 5,
+          "switchClosed": true,
+          "view": "circuit",
+          "showPowerBalance": true
+        }
+      },
+      "patchHints": [
+        {
+          "zh-CN": "只修改用户要求的教学参数，其余字段保留。",
+          "en": "Patch only the requested teaching parameters and preserve the rest."
+        },
+        {
+          "zh-CN": "最大输出功率在R=r>0，但效率仅50%；高效率不等于最大功率。改变r同时影响U-I斜率和内耗；若r=0，不宣称存在有限的最大输出功率。本组件不做多支路拓扑、电表接法误差、蓄电池化学、自发热温变或RC暂态。",
+          "en": "R=r>0 maximizes load power at 50% efficiency; maximum efficiency is a different question. Open circuit has I=0 and terminal U=E. Ideal r=R=0 with E>0 has no finite steady state, and r=0 has no finite maximum power for E>0."
+        }
+      ],
+      "fallbackConditions": [
+        {
+          "zh-CN": "本组件不处理：多支路拓扑自动求解、电表接法与测量误差、电池化学与容量、RC暂态、温度自发变化、arbitrary circuit topology、battery chemistry and capacity、RC transients。",
+          "en": "Arbitrary multi-branch topology, meter connection errors, battery chemistry or capacity, RC transients or changing temperature."
+        }
+      ],
+      "examplePrompts": [
+        {
+          "zh-CN": "电池有内阻时，电压和功率怎么分？",
+          "en": "How do terminal voltage and power change when a battery has internal resistance?"
+        },
+        {
+          "zh-CN": "最大输出功率是不是效率也最高？给我看图",
+          "en": "Does maximum output power also mean maximum efficiency? Show me a plot."
+        }
+      ],
+      "search": {
+        "aliases": [
+          "闭合电路欧姆定律",
+          "电源内阻",
+          "电池内阻",
+          "路端电压",
+          "功率分配",
+          "最大输出功率",
+          "E/(R+r)",
+          "internal resistance",
+          "terminal voltage",
+          "maximum power transfer"
+        ],
+        "concepts": [
+          "closed-circuit",
+          "internal-resistance",
+          "terminal-voltage",
+          "maximum-power-transfer",
+          "power-efficiency"
+        ],
+        "stages": [
+          "senior"
+        ],
+        "supports": [
+          "恒定电动势与串联内阻",
+          "单一等效欧姆负载",
+          "断路短路与理想短路无有限解",
+          "U-I电源特性和负载线",
+          "最大功率与效率区别",
+          "EMF plus internal resistance",
+          "load matching at R=r"
+        ],
+        "excludes": [
+          "多支路拓扑自动求解",
+          "电表接法与测量误差",
+          "电池化学与容量",
+          "RC暂态",
+          "温度自发变化",
+          "arbitrary circuit topology",
+          "battery chemistry and capacity",
+          "RC transients"
+        ],
+        "referenceIds": [
+          "shiguang.physics.senior.19"
+        ]
+      }
+    }
+  ]
+}

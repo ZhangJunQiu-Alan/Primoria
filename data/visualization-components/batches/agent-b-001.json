@@ -1,0 +1,397 @@
+{
+  "batchId": "agent-b-001",
+  "components": [
+    {
+      "componentId": "math.calculus-lab",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/calculus-lab.ts",
+      "componentExport": "calculusLabComponent",
+      "configSchemaExport": "CalculusLabConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/calculus-lab.tsx",
+      "widgetExport": "CalculusLabWidget",
+      "samples": [
+        {
+          "functionType": "cubic",
+          "mode": "secant",
+          "x0": 1,
+          "deltaX": 0.5,
+          "coefficient": 1,
+          "intervalEnd": 2,
+          "subdivisions": 12
+        },
+        {
+          "functionType": "cubic",
+          "mode": "secant",
+          "x0": 1,
+          "deltaX": 0.02,
+          "coefficient": 1,
+          "intervalEnd": 2,
+          "subdivisions": 12
+        },
+        {
+          "functionType": "absolute",
+          "mode": "secant",
+          "x0": 0,
+          "deltaX": 0,
+          "coefficient": 1,
+          "intervalEnd": 2,
+          "subdivisions": 12
+        },
+        {
+          "functionType": "quadratic",
+          "mode": "integral",
+          "x0": 0,
+          "deltaX": 0.5,
+          "coefficient": 1,
+          "intervalEnd": 1,
+          "subdivisions": 12
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-one.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    },
+    {
+      "componentId": "physics.refraction-lab",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/refraction-lab.ts",
+      "componentExport": "refractionLabComponent",
+      "configSchemaExport": "RefractionLabConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/refraction-lab.tsx",
+      "widgetExport": "RefractionLabWidget",
+      "samples": [
+        {
+          "n1": 1,
+          "n2": 1.5,
+          "incidenceDeg": 45,
+          "mode": "rays",
+          "polarization": "unpolarized",
+          "showAngles": true
+        },
+        {
+          "n1": 1.5,
+          "n2": 1,
+          "incidenceDeg": 60,
+          "mode": "rays",
+          "polarization": "unpolarized",
+          "showAngles": true
+        },
+        {
+          "n1": 1,
+          "n2": 1.5,
+          "incidenceDeg": 0,
+          "mode": "rays",
+          "polarization": "unpolarized",
+          "showAngles": true
+        },
+        {
+          "n1": 1,
+          "n2": 1.5,
+          "incidenceDeg": 45,
+          "mode": "reflectance",
+          "polarization": "p",
+          "showAngles": true
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-one.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    },
+    {
+      "componentId": "physics.projectile-lab",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/projectile-lab.ts",
+      "componentExport": "projectileLabComponent",
+      "configSchemaExport": "ProjectileLabConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/projectile-lab.tsx",
+      "widgetExport": "ProjectileLabWidget",
+      "samples": [
+        {
+          "speed": 20,
+          "angleDeg": 45,
+          "launchHeight": 0,
+          "gravity": 9.8,
+          "drag": 0,
+          "progress": 0.5,
+          "showVelocity": true
+        },
+        {
+          "speed": 20,
+          "angleDeg": 0,
+          "launchHeight": 20,
+          "gravity": 9.8,
+          "drag": 0,
+          "progress": 0.5,
+          "showVelocity": true
+        },
+        {
+          "speed": 20,
+          "angleDeg": 45,
+          "launchHeight": 10,
+          "gravity": 9.8,
+          "drag": 0.4,
+          "progress": 0.5,
+          "showVelocity": true
+        },
+        {
+          "speed": 0,
+          "angleDeg": 45,
+          "launchHeight": 0,
+          "gravity": 9.8,
+          "drag": 0,
+          "progress": 0.5,
+          "showVelocity": true
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-one.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    },
+    {
+      "componentId": "physics.circuit-lab",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/circuit-lab.ts",
+      "componentExport": "circuitLabComponent",
+      "configSchemaExport": "CircuitLabConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/circuit-lab.tsx",
+      "widgetExport": "CircuitLabWidget",
+      "samples": [
+        {
+          "voltage": 6,
+          "resistance1": 100,
+          "resistance2": 200,
+          "topology": "series",
+          "switchClosed": true,
+          "showCurrent": true
+        },
+        {
+          "voltage": 6,
+          "resistance1": 100,
+          "resistance2": 200,
+          "topology": "parallel",
+          "switchClosed": true,
+          "showCurrent": true
+        },
+        {
+          "voltage": 6,
+          "resistance1": 100,
+          "resistance2": 200,
+          "topology": "series",
+          "switchClosed": false,
+          "showCurrent": true
+        },
+        {
+          "voltage": 0,
+          "resistance1": 100,
+          "resistance2": 200,
+          "topology": "series",
+          "switchClosed": true,
+          "showCurrent": true
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-one.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    },
+    {
+      "componentId": "astronomy.moon-phases",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/moon-phases.ts",
+      "componentExport": "moonPhasesComponent",
+      "configSchemaExport": "MoonPhasesConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/moon-phases.tsx",
+      "widgetExport": "MoonPhasesWidget",
+      "samples": [
+        {
+          "day": 7.3826475,
+          "hemisphere": "north",
+          "view": "orbit",
+          "showLabels": true
+        },
+        {
+          "day": 0,
+          "hemisphere": "north",
+          "view": "orbit",
+          "showLabels": true
+        },
+        {
+          "day": 14.765295,
+          "hemisphere": "north",
+          "view": "orbit",
+          "showLabels": true
+        },
+        {
+          "day": 22.1479425,
+          "hemisphere": "south",
+          "view": "appearance",
+          "showLabels": true
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-one.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    },
+    {
+      "componentId": "biology.mendelian-genetics",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/mendelian-genetics.ts",
+      "componentExport": "mendelianGeneticsComponent",
+      "configSchemaExport": "MendelianGeneticsConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/mendelian-genetics.tsx",
+      "widgetExport": "MendelianGeneticsWidget",
+      "samples": [
+        {
+          "parent1": "Aa",
+          "parent2": "Aa",
+          "dominance": "complete",
+          "view": "punnett",
+          "showGametes": true
+        },
+        {
+          "parent1": "Aa",
+          "parent2": "aa",
+          "dominance": "complete",
+          "view": "punnett",
+          "showGametes": true
+        },
+        {
+          "parent1": "AA",
+          "parent2": "aa",
+          "dominance": "complete",
+          "view": "punnett",
+          "showGametes": true
+        },
+        {
+          "parent1": "Aa",
+          "parent2": "Aa",
+          "dominance": "incomplete",
+          "view": "distribution",
+          "showGametes": true
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-one.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    }
+  ]
+}

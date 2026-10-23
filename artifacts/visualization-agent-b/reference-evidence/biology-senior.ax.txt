@@ -1,0 +1,271 @@
+Browser tab: 2, Title: "拾光视界 v12.0 - 生物全景教学系统", URL: "https://www.shiguangtongxue.cn/subjects/biology/app.html?stage=senior".
+1 AXWebArea 拾光视界 v12.0 - 生物全景教学系统, URL: shiguangtongxue.cn/subjects/biology/app.html?stage=senior
+	10 container
+		11 container
+			12 button 生 拾光视界
+				13 text 生
+				14 text 拾光视界
+			15 button 个人中心
+			16 button 订阅中心
+			17 button 退出系统
+			18 text 高中 / 全部单元
+			19 button 全部单元
+			20 button 必修一
+			21 button 必修二
+			22 button 选择性必修一
+			23 button 选择性必修二
+			24 button 选择性必修三
+			25 container
+				26 text 模块单元数量:  38
+			27 container
+				28 button 打开生命系统层次与细胞学说
+					29 container
+						30 text 视觉表现等级  A
+						31 heading 生命系统层次与细胞学说, Value: 3
+							32 text 生命系统层次与细胞学说
+						33 text # 生命系统层次 # 细胞学说 # 分子与细胞学说 打开单元 M 1 M 2 M 3
+				34 button 打开细胞化合物基础
+					35 container
+						36 text 视觉表现等级  B
+						37 heading 细胞化合物基础, Value: 3
+							38 text 细胞化合物基础
+						39 text # 蛋白质 # 核酸 # 糖类 # 脂质 打开单元 M 1 M 2 M 3
+				40 button 打开细胞结构与细胞器观察
+					41 container
+						42 text 视觉表现等级  A
+						43 heading 细胞结构与细胞器观察, Value: 3
+							44 text 细胞结构与细胞器观察
+						45 text # 细胞膜 # 细胞器 # 细胞核 # 叶绿体和线粒体观察 打开单元 M 1 M 2 M 3
+				46 button 打开物质跨膜运输
+					47 container
+						48 text 视觉表现等级  A
+						49 heading 物质跨膜运输, Value: 3
+							50 text 物质跨膜运输
+						51 text # 自由扩散 # 协助扩散 # 主动运输 # 质壁分离与复原 打开单元 M 1 M 2 M 3
+				52 button 打开酶与 ATP
+					53 container
+						54 text 视觉表现等级  A
+						55 heading 酶与 ATP, Value: 3
+							56 text 酶与 ATP
+						57 text # 酶活性 # 温度和 pH 影响 # ATP 打开单元 M 1 M 2 M 3
+				58 button 打开细胞呼吸
+					59 container
+						60 text 视觉表现等级  A
+						61 heading 细胞呼吸, Value: 3
+							62 text 细胞呼吸
+						63 text # 细胞呼吸过程 # 酵母菌呼吸探究 # 能量代谢深度 打开单元 M 1 M 2 M 3
+				64 button 打开光合作用
+					65 container
+						66 text 视觉表现等级  A
+						67 heading 光合作用, Value: 3
+							68 text 光合作用
+						69 text # 叶绿体色素提取 # 光合作用过程 # 影响因素 打开单元 M 1 M 2 M 3
+				70 button 打开细胞增殖
+					71 container
+						72 text 视觉表现等级  A
+						73 heading 细胞增殖, Value: 3
+							74 text 细胞增殖
+						75 text # 细胞周期 # 有丝分裂 # 根尖有丝分裂观察 打开单元 M 1 M 2 M 3
+				76 button 打开细胞生命历程
+					77 container
+						78 text 视觉表现等级  A
+						79 heading 细胞生命历程, Value: 3
+							80 text 细胞生命历程
+						81 text # 细胞分化 # 细胞衰老 # 细胞凋亡 # 癌变 打开单元 M 1 M 2 M 3
+				82 button 打开减数分裂与受精
+					83 container
+						84 text 视觉表现等级  A
+						85 heading 减数分裂与受精, Value: 3
+							86 text 减数分裂与受精
+						87 text # 减数分裂 # 受精作用 # 蝗虫精母细胞装片 打开单元 M 1 M 2 M 3
+				88 button 打开孟德尔遗传规律
+					89 container
+						90 text 视觉表现等级  A
+						91 heading 孟德尔遗传规律, Value: 3
+							92 text 孟德尔遗传规律
+						93 text # 分离定律 # 自由组合定律 # 性状分离比模拟 # 孟德尔遗传定律 打开单元 M 1 M 2 M 3
+				94 button 打开伴性遗传与家系分析
+					95 container
+						96 text 视觉表现等级  B
+						97 heading 伴性遗传与家系分析, Value: 3
+							98 text 伴性遗传与家系分析
+						99 text # 伴性遗传 # 家系分析 打开单元 M 1 M 2 M 3
+				100 button 打开遗传物质证据实验
+					101 container
+						102 text 视觉表现等级  A
+						103 heading 遗传物质证据实验, Value: 3
+							104 text 遗传物质证据实验
+						105 text # 格里菲思实验 # 艾弗里实验 # 噬菌体侵染实验 # 基因的本质与表达 打开单元 M 1 M 2 M 3
+				106 button 打开DNA 结构与复制
+					107 container
+						108 text 视觉表现等级  A
+						109 heading DNA 结构与复制, Value: 3
+							110 text DNA 结构与复制
+						111 text # DNA 双螺旋 # 碱基互补配对 # DNA 复制 打开单元 M 1 M 2 M 3
+				112 button 打开基因表达
+					113 container
+						114 text 视觉表现等级  A
+						115 heading 基因表达, Value: 3
+							116 text 基因表达
+						117 text # 转录 # 翻译 # 中心法则 # 表观遗传 打开单元 M 1 M 2 M 3
+				118 button 打开变异
+					119 container
+						120 text 视觉表现等级  A
+						121 heading 变异, Value: 3
+							122 text 变异
+						123 text # 基因突变 # 基因重组 # 染色体变异 打开单元 M 1 M 2 M 3
+				124 button 打开育种
+					125 container
+						126 text 视觉表现等级  A
+						127 heading 育种, Value: 3
+							128 text 育种
+						129 text # 杂交育种 # 诱变育种 # 单倍体育种 # 多倍体育种 打开单元 M 1 M 2 M 3
+				130 button 打开现代生物进化理论
+					131 container
+						132 text 视觉表现等级  A
+						133 heading 现代生物进化理论, Value: 3
+							134 text 现代生物进化理论
+						135 text # 种群基因频率 # 自然选择 # 隔离与物种形成 # 现代进化理论 打开单元 M 1 M 2 M 3
+				136 button 打开内环境与稳态
+					137 container
+						138 text 视觉表现等级  A
+						139 heading 内环境与稳态, Value: 3
+							140 text 内环境与稳态
+						141 text # 血浆 # 组织液 # 淋巴 # 稳态 打开单元 M 1 M 2 M 3
+				142 button 打开神经调节
+					143 container
+						144 text 视觉表现等级  A
+						145 heading 神经调节, Value: 3
+							146 text 神经调节
+						147 text # 反射弧 # 动作电位 # 突触传递 打开单元 M 1 M 2 M 3
+				148 button 打开体液与激素调节
+					149 container
+						150 text 视觉表现等级  A
+						151 heading 体液与激素调节, Value: 3
+							152 text 体液与激素调节
+						153 text # 血糖调节 # 体温调节 # 水盐平衡 # 激素调节 打开单元 M 1 M 2 M 3
+				154 button 打开免疫调节
+					155 container
+						156 text 视觉表现等级  A
+						157 heading 免疫调节, Value: 3
+							158 text 免疫调节
+						159 text # 免疫系统 # 体液免疫 # 细胞免疫 # 过敏 打开单元 M 1 M 2 M 3
+				160 button 打开植物生命活动调节
+					161 container
+						162 text 视觉表现等级  A
+						163 heading 植物生命活动调节, Value: 3
+							164 text 植物生命活动调节
+						165 text # 生长素 # 植物激素 # 向性运动 # 生长调节剂 打开单元 M 1 M 2 M 3
+				166 button 打开种群数量特征与增长模型
+					167 container
+						168 text 视觉表现等级  A
+						169 heading 种群数量特征与增长模型, Value: 3
+							170 text 种群数量特征与增长模型
+						171 text # 种群密度 # 出生率 # 增长曲线 # 样方法 打开单元 M 1 M 2 M 3
+				172 button 打开群落结构与演替
+					173 container
+						174 text 视觉表现等级  A
+						175 heading 群落结构与演替, Value: 3
+							176 text 群落结构与演替
+						177 text # 垂直分层 # 光照梯度 # 初生演替 # 次生演替 打开单元 M 1 M 2 M 3
+				178 button 打开生态系统结构与生态位
+					179 container
+						180 text 视觉表现等级  A
+						181 heading 生态系统结构与生态位, Value: 3
+							182 text 生态系统结构与生态位
+						183 text # 生态系统组成 # 食物链 # 食物网 # 生态位 打开单元 M 1 M 2 M 3
+				184 button 打开能量流动与物质循环
+					185 container
+						186 text 视觉表现等级  A
+						187 heading 能量流动与物质循环, Value: 3
+							188 text 能量流动与物质循环
+						189 text # 能量流动 # 传递效率 # 同化量去向 # 碳循环 打开单元 M 1 M 2 M 3
+				190 button 打开信息传递与稳定性
+					191 container
+						192 text 视觉表现等级  A
+						193 heading 信息传递与稳定性, Value: 3
+							194 text 信息传递与稳定性
+						195 text # 信息传递 # 稳定性 # 负反馈调节 # 生态工程与保护 打开单元 M 1 M 2 M 3
+				196 button 打开生物多样性与生态工程
+					197 container
+						198 text 视觉表现等级  A
+						199 heading 生物多样性与生态工程, Value: 3
+							200 text 生物多样性与生态工程
+						201 text # 生物多样性价值 # 生态工程 # 生态瓶 打开单元 M 1 M 2 M 3
+				202 button 打开微生物培养与分离
+					203 container
+						204 text 视觉表现等级  A
+						205 heading 微生物培养与分离, Value: 3
+							206 text 微生物培养与分离
+						207 text # 无菌技术 # 培养基 # 平板划线 # 菌落计数 打开单元 M 1 M 2 M 3
+				208 button 打开发酵工程
+					209 container
+						210 text 视觉表现等级  A
+						211 heading 发酵工程, Value: 3
+							212 text 发酵工程
+						213 text # 传统发酵 # 发酵罐 # 发酵工程流程 # 现代生物科技 打开单元 M 1 M 2 M 3
+				214 button 打开植物细胞工程
+					215 container
+						216 text 视觉表现等级  A
+						217 heading 植物细胞工程, Value: 3
+							218 text 植物细胞工程
+						219 text # 组织培养 # 脱分化 # 再分化 # 体细胞杂交 打开单元 M 1 M 2 M 3
+				220 button 打开动物细胞工程
+					221 container
+						222 text 视觉表现等级  A
+						223 heading 动物细胞工程, Value: 3
+							224 text 动物细胞工程
+						225 text # 动物细胞培养 # 细胞融合 # 单克隆抗体 打开单元 M 1 M 2 M 3
+				226 button 打开胚胎工程
+					227 container
+						228 text 视觉表现等级  A
+						229 heading 胚胎工程, Value: 3
+							230 text 胚胎工程
+						231 text # 精子获能 # 早期胚胎 # 胚胎移植 # 胚胎分割 打开单元 M 1 M 2 M 3
+				232 button 打开基因工程
+					233 container
+						234 text 视觉表现等级  A
+						235 heading 基因工程, Value: 3
+							236 text 基因工程
+						237 text # 限制酶 # 连接酶 # 载体 # 基因工程流程 打开单元 M 1 M 2 M 3
+				238 button 打开PCR 与 DNA 检测
+					239 container
+						240 text 视觉表现等级  A
+						241 heading PCR 与 DNA 检测, Value: 3
+							242 text PCR 与 DNA 检测
+						243 text # DNA 粗提取 # PCR # 电泳 打开单元 M 1 M 2 M 3
+				244 button 打开生物技术安全与伦理
+					245 container
+						246 text 视觉表现等级  A
+						247 heading 生物技术安全与伦理, Value: 3
+							248 text 生物技术安全与伦理
+						249 text # 转基因安全 # 克隆伦理 # 生物技术规范 打开单元 M 1 M 2 M 3
+				250 button 打开DNA 凝胶电泳
+					251 container
+						252 text 视觉表现等级  A
+						253 heading DNA 凝胶电泳, Value: 3
+							254 text DNA 凝胶电泳
+						255 text # 电泳 # DNA 鉴定 # 凝胶成像 # 分子生物学 打开单元 M 1 M 2 M 3
+	2 container 先体验生物，再决定是否订阅
+		3 container
+			256 text 拾光视界 · 试用体验
+			4 heading 先体验生物，再决定是否订阅, Value: 2, ID: shg-trial-notice-title
+				257 text 先体验生物，再决定是否订阅
+			5 button 关闭试用提示
+		258 text 试用权益已开启
+		259 text 本次6小时试用期内，生物全部内容免费体验
+		260 text 先完整体验，合适再订阅。试用结束后，可从右上角“订阅中心”继续开通。
+		261 text 本次体验
+		262 text 生物全部内容
+		263 text 剩余体验时间
+		264 text 2小时 41分
+		265 text 遇到使用问题？添加客服微信
+		6 button 18584322518
+		7 button 开始体验
+		8 button 不再提示
+		9 button 查看订阅方案
+	266 container Description: 小拾光学习助手, ID: shgLearningAssistant
+		267 button 打开小拾光萌宠学习助手
+			268 button 点击切换为【橘莉 Jolly · 星光绒绒兽】
+
+The focused UI element is 1 AXWebArea 拾光视界 v12.0 - 生物全景教学系统, URL: shiguangtongxue.cn/subjects/biology/app.html?stage=senior

@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { invokeJson } from "../course-generation/model-json";
+import { fastTierSettings } from "../deepagent/model";
 import type { TutorProviderSettings } from "../types";
 import { FACT_CATEGORIES, type FactCategory, type LearnerFact } from "../../learner-profile/types";
 import type { FactExtractionOp } from "../../learner-facts/store";
@@ -145,7 +146,7 @@ export async function distillFacts(args: {
   settings?: TutorProviderSettings;
 }): Promise<FactExtractionOp[]> {
   const { system, user } = buildDistillPrompt(args.ctx);
-  const raw = await invokeJson({ system, user, schema: DistillResultSchema, schemaName: "learner_facts", settings: args.settings });
+  const raw = await invokeJson({ system, user, schema: DistillResultSchema, schemaName: "learner_facts", settings: fastTierSettings(args.settings) });
   const validEventIds = new Set(args.ctx.events.map((e) => e.id));
   return parseDistillResult(raw, { lessonId: args.lessonId, validEventIds });
 }

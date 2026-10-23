@@ -112,7 +112,7 @@ async function verifyRecommendationResolved() {
   }
 }
 
-const server = spawn("pnpm", ["--filter", "@primoria/web", "dev"], {
+const server = spawn("pnpm", ["--filter", "@primoria/web", process.env.REGRESSION_WEB_MODE === "production" ? "start" : "dev"], {
   cwd: process.cwd(),
   env: { ...process.env, PORT },
   stdio: ["ignore", "pipe", "pipe"],

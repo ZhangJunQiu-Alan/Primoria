@@ -1,0 +1,49 @@
+{
+  "batchId": "agent-b-011",
+  "components": [
+    {
+      "componentId": "chinese.poetry-imagery",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/poetry-imagery.ts",
+      "componentExport": "poetryImageryComponent",
+      "configSchemaExport": "PoetryImageryConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/poetry-imagery.tsx",
+      "widgetExport": "PoetryImageryWidget",
+      "samples": [
+        {
+          "poemId": "autumn-thoughts",
+          "view": "scene",
+          "focus": "imagery",
+          "showTranslation": true
+        },
+        {
+          "poemId": "stork-tower",
+          "view": "evidence",
+          "focus": "structure",
+          "showTranslation": true
+        },
+        {
+          "poemId": "quiet-night",
+          "view": "classify",
+          "focus": "emotion",
+          "showTranslation": true
+        },
+        {
+          "poemId": "autumn-thoughts",
+          "view": "complete",
+          "focus": "imagery",
+          "showTranslation": false
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-poetry-imagery.spec.ts"
+      ],
+      "integrationStatus": "awaiting-agent-a-registration",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    }
+  ]
+}

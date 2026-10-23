@@ -1,0 +1,269 @@
+{
+  "batchId": "agent-b-005",
+  "components": [
+    {
+      "componentId": "biology.cell-division",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/cell-division.ts",
+      "componentExport": "cellDivisionComponent",
+      "configSchemaExport": "CellDivisionConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/cell-division.tsx",
+      "widgetExport": "CellDivisionWidget",
+      "samples": [
+        {
+          "division": "mitosis",
+          "stage": 2,
+          "homologPairs": 2,
+          "showLabels": true
+        },
+        {
+          "division": "meiosis",
+          "stage": 3,
+          "homologPairs": 2,
+          "showLabels": true
+        },
+        {
+          "division": "mitosis",
+          "stage": 3,
+          "homologPairs": 1,
+          "showLabels": true
+        },
+        {
+          "division": "meiosis",
+          "stage": 5,
+          "homologPairs": 2,
+          "showLabels": true
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-five.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    },
+    {
+      "componentId": "biology.osmosis-lab",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/osmosis-lab.ts",
+      "componentExport": "osmosisLabComponent",
+      "configSchemaExport": "OsmosisLabConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/osmosis-lab.tsx",
+      "widgetExport": "OsmosisLabWidget",
+      "samples": [
+        {
+          "leftConcentration": 0.2,
+          "rightConcentration": 0.6,
+          "initialLeftVolumeL": 1,
+          "initialRightVolumeL": 1,
+          "temperatureK": 298,
+          "progress": 0,
+          "mode": "initial"
+        },
+        {
+          "leftConcentration": 0.2,
+          "rightConcentration": 0.6,
+          "initialLeftVolumeL": 1,
+          "initialRightVolumeL": 1,
+          "temperatureK": 298,
+          "progress": 0.5,
+          "mode": "initial"
+        },
+        {
+          "leftConcentration": 0,
+          "rightConcentration": 0.6,
+          "initialLeftVolumeL": 1,
+          "initialRightVolumeL": 1,
+          "temperatureK": 298,
+          "progress": 0,
+          "mode": "equilibrium"
+        },
+        {
+          "leftConcentration": 0.2,
+          "rightConcentration": 0.6,
+          "initialLeftVolumeL": 1,
+          "initialRightVolumeL": 1,
+          "temperatureK": 298,
+          "progress": 0,
+          "mode": "equilibrium"
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-five.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    },
+    {
+      "componentId": "physics.magnetic-motion",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/magnetic-motion.ts",
+      "componentExport": "magneticMotionComponent",
+      "configSchemaExport": "MagneticMotionConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/magnetic-motion.tsx",
+      "widgetExport": "MagneticMotionWidget",
+      "samples": [
+        {
+          "particle": "electron",
+          "fieldMT": 1,
+          "speedMillion": 1,
+          "pitchDeg": 90,
+          "turns": 0.75,
+          "view": "transverse",
+          "showVelocity": true
+        },
+        {
+          "particle": "proton",
+          "fieldMT": 1,
+          "speedMillion": 1,
+          "pitchDeg": 45,
+          "turns": 0.75,
+          "view": "helix",
+          "showVelocity": true
+        },
+        {
+          "particle": "electron",
+          "fieldMT": 1,
+          "speedMillion": 1,
+          "pitchDeg": 0,
+          "turns": 0.75,
+          "view": "helix",
+          "showVelocity": true
+        },
+        {
+          "particle": "electron",
+          "fieldMT": 5,
+          "speedMillion": 1,
+          "pitchDeg": 30,
+          "turns": 0.75,
+          "view": "helix",
+          "showVelocity": true
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-five.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    },
+    {
+      "componentId": "physics.photoelectric-effect",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/photoelectric-effect.ts",
+      "componentExport": "photoelectricEffectComponent",
+      "configSchemaExport": "PhotoelectricEffectConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/photoelectric-effect.tsx",
+      "widgetExport": "PhotoelectricEffectWidget",
+      "samples": [
+        {
+          "wavelengthNM": 400,
+          "workFunctionEV": 2,
+          "photonRateTrillion": 1,
+          "voltage": -0.5,
+          "view": "energy",
+          "showThreshold": true
+        },
+        {
+          "wavelengthNM": 400,
+          "workFunctionEV": 2,
+          "photonRateTrillion": 5,
+          "voltage": -0.5,
+          "view": "energy",
+          "showThreshold": true
+        },
+        {
+          "wavelengthNM": 800,
+          "workFunctionEV": 3,
+          "photonRateTrillion": 1,
+          "voltage": -0.5,
+          "view": "energy",
+          "showThreshold": true
+        },
+        {
+          "wavelengthNM": 400,
+          "workFunctionEV": 2,
+          "photonRateTrillion": 1,
+          "voltage": -2,
+          "view": "current",
+          "showThreshold": true
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-science-batch-five.spec.ts"
+      ],
+      "integrationStatus": "registered-by-agent-a",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "browserVerification": {
+        "viewportWidths": [
+          390,
+          768,
+          1440
+        ],
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "samples": 4,
+        "evidence": "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "scope": "Selected configurations only; not all reference teaching modes"
+      },
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    }
+  ]
+}

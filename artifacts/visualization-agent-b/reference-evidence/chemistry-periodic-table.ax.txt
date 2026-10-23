@@ -1,0 +1,649 @@
+Browser tab: 2, Title: "元素视界 · Chemistry Visual Lab", URL: "https://www.shiguangtongxue.cn/subjects/chemistry/app.html?view=periodic-table".
+1 AXWebArea 元素视界 · Chemistry Visual Lab, URL: shiguangtongxue.cn/subjects/c…
+	2 container
+		3 container
+			4 button ☀, Help: 切换到浅色背景
+			5 button 📋, Help: 元素周期表
+			6 button 🧊, Help: 晶体与晶胞
+			7 button 🧪, Help: 有机结构
+			8 button 🔬, Help: 化学反应沙盒
+			9 button ⚛️, Help: 杂化轨道
+			10 button 🗺, Help: 无机图谱
+			11 button ⚡, Help: 动态原理
+			12 button 🔍, Help: 分析检验
+			13 button 🧮, Help: 化学计算
+			14 button 🛡, Help: 安全演示
+			15 button Description: 展开, Help: 展开侧边栏
+			16 button 🎁, Help: 订阅中心
+			17 button 退出登录
+			18 button Description: 打开个人中心, Help: 个人中心
+			19 container
+				20 container
+					21 text PERIODIC ATLAS
+					22 heading 元素周期表, Value: 1
+						23 text 元素周期表
+					24 button 物质常态
+					25 button 元素分区
+					26 button 族分布
+					27 button 原子半径
+					28 button 电负性
+					29 button 高考热点
+				30 container
+					31 button 氢 H 氢, Help: 氢 (H)
+						32 container
+							33 image 氢
+						34 container
+							35 text H 氢
+					36 button 氦 He 氦, Help: 氦 (He)
+						37 container
+							38 image 氦
+						39 container
+							40 text He 氦
+					41 button 锂 Li 锂, Help: 锂 (Li)
+						42 container
+							43 image 锂
+						44 container
+							45 text Li 锂
+					46 button 铍 Be 铍, Help: 铍 (Be)
+						47 container
+							48 image 铍
+						49 container
+							50 text Be 铍
+					51 button 硼 B 硼, Help: 硼 (B)
+						52 container
+							53 image 硼
+						54 container
+							55 text B 硼
+					56 button 碳 C 碳, Help: 碳 (C)
+						57 container
+							58 image 碳
+						59 container
+							60 text C 碳
+					61 button 氮 N 氮, Help: 氮 (N)
+						62 container
+							63 image 氮
+						64 container
+							65 text N 氮
+					66 button 氧 O 氧, Help: 氧 (O)
+						67 container
+							68 image 氧
+						69 container
+							70 text O 氧
+					71 button 氟 F 氟, Help: 氟 (F)
+						72 container
+							73 image 氟
+						74 container
+							75 text F 氟
+					76 button 氖 Ne 氖, Help: 氖 (Ne)
+						77 container
+							78 image 氖
+						79 container
+							80 text Ne 氖
+					81 button 钠 Na 钠, Help: 钠 (Na)
+						82 container
+							83 image 钠
+						84 container
+							85 text Na 钠
+					86 button 镁 Mg 镁, Help: 镁 (Mg)
+						87 container
+							88 image 镁
+						89 container
+							90 text Mg 镁
+					91 button 铝 Al 铝, Help: 铝 (Al)
+						92 container
+							93 image 铝
+						94 container
+							95 text Al 铝
+					96 button 硅 Si 硅, Help: 硅 (Si)
+						97 container
+							98 image 硅
+						99 container
+							100 text Si 硅
+					101 button 磷 P 磷, Help: 磷 (P)
+						102 container
+							103 image 磷
+						104 container
+							105 text P 磷
+					106 button 硫 S 硫, Help: 硫 (S)
+						107 container
+							108 image 硫
+						109 container
+							110 text S 硫
+					111 button 氯 Cl 氯, Help: 氯 (Cl)
+						112 container
+							113 image 氯
+						114 container
+							115 text Cl 氯
+					116 button 氩 Ar 氩, Help: 氩 (Ar)
+						117 container
+							118 image 氩
+						119 container
+							120 text Ar 氩
+					121 button 钾 K 钾, Help: 钾 (K)
+						122 container
+							123 image 钾
+						124 container
+							125 text K 钾
+					126 button 钙 Ca 钙, Help: 钙 (Ca)
+						127 container
+							128 image 钙
+						129 container
+							130 text Ca 钙
+					131 button 钪 Sc 钪, Help: 钪 (Sc)
+						132 container
+							133 image 钪
+						134 container
+							135 text Sc 钪
+					136 button 钛 Ti 钛, Help: 钛 (Ti)
+						137 container
+							138 image 钛
+						139 container
+							140 text Ti 钛
+					141 button 钒 V 钒, Help: 钒 (V)
+						142 container
+							143 image 钒
+						144 container
+							145 text V 钒
+					146 button 铬 Cr 铬, Help: 铬 (Cr)
+						147 container
+							148 image 铬
+						149 container
+							150 text Cr 铬
+					151 button 锰 Mn 锰, Help: 锰 (Mn)
+						152 container
+							153 image 锰
+						154 container
+							155 text Mn 锰
+					156 button 铁 Fe 铁, Help: 铁 (Fe)
+						157 container
+							158 image 铁
+						159 container
+							160 text Fe 铁
+					161 button 钴 Co 钴, Help: 钴 (Co)
+						162 container
+							163 image 钴
+						164 container
+							165 text Co 钴
+					166 button 镍 Ni 镍, Help: 镍 (Ni)
+						167 container
+							168 image 镍
+						169 container
+							170 text Ni 镍
+					171 button 铜 Cu 铜, Help: 铜 (Cu)
+						172 container
+							173 image 铜
+						174 container
+							175 text Cu 铜
+					176 button 锌 Zn 锌, Help: 锌 (Zn)
+						177 container
+							178 image 锌
+						179 container
+							180 text Zn 锌
+					181 button 镓 Ga 镓, Help: 镓 (Ga)
+						182 container
+							183 image 镓
+						184 container
+							185 text Ga 镓
+					186 button 锗 Ge 锗, Help: 锗 (Ge)
+						187 container
+							188 image 锗
+						189 container
+							190 text Ge 锗
+					191 button 砷 As 砷, Help: 砷 (As)
+						192 container
+							193 image 砷
+						194 container
+							195 text As 砷
+					196 button 硒 Se 硒, Help: 硒 (Se)
+						197 container
+							198 image 硒
+						199 container
+							200 text Se 硒
+					201 button 溴 Br 溴, Help: 溴 (Br)
+						202 container
+							203 image 溴
+						204 container
+							205 text Br 溴
+					206 button 氪 Kr 氪, Help: 氪 (Kr)
+						207 container
+							208 image 氪
+						209 container
+							210 text Kr 氪
+					211 button 铷 Rb 铷, Help: 铷 (Rb)
+						212 container
+							213 image 铷
+						214 container
+							215 text Rb 铷
+					216 button 锶 Sr 锶, Help: 锶 (Sr)
+						217 container
+							218 image 锶
+						219 container
+							220 text Sr 锶
+					221 button 钇 Y 钇, Help: 钇 (Y)
+						222 container
+							223 image 钇
+						224 container
+							225 text Y 钇
+					226 button 锆 Zr 锆, Help: 锆 (Zr)
+						227 container
+							228 image 锆
+						229 container
+							230 text Zr 锆
+					231 button 铌 Nb 铌, Help: 铌 (Nb)
+						232 container
+							233 image 铌
+						234 container
+							235 text Nb 铌
+					236 button 钼 Mo 钼, Help: 钼 (Mo)
+						237 container
+							238 image 钼
+						239 container
+							240 text Mo 钼
+					241 button 锝 Tc 锝, Help: 锝 (Tc)
+						242 container
+							243 image 锝
+						244 container
+							245 text Tc 锝
+					246 button 钌 Ru 钌, Help: 钌 (Ru)
+						247 container
+							248 image 钌
+						249 container
+							250 text Ru 钌
+					251 button 铑 Rh 铑, Help: 铑 (Rh)
+						252 container
+							253 image 铑
+						254 container
+							255 text Rh 铑
+					256 button 钯 Pd 钯, Help: 钯 (Pd)
+						257 container
+							258 image 钯
+						259 container
+							260 text Pd 钯
+					261 button 银 Ag 银, Help: 银 (Ag)
+						262 container
+							263 image 银
+						264 container
+							265 text Ag 银
+					266 button 镉 Cd 镉, Help: 镉 (Cd)
+						267 container
+							268 image 镉
+						269 container
+							270 text Cd 镉
+					271 button 铟 In 铟, Help: 铟 (In)
+						272 container
+							273 image 铟
+						274 container
+							275 text In 铟
+					276 button 锡 Sn 锡, Help: 锡 (Sn)
+						277 container
+							278 image 锡
+						279 container
+							280 text Sn 锡
+					281 button 锑 Sb 锑, Help: 锑 (Sb)
+						282 container
+							283 image 锑
+						284 container
+							285 text Sb 锑
+					286 button 碲 Te 碲, Help: 碲 (Te)
+						287 container
+							288 image 碲
+						289 container
+							290 text Te 碲
+					291 button 碘 I 碘, Help: 碘 (I)
+						292 container
+							293 image 碘
+						294 container
+							295 text I 碘
+					296 button 氙 Xe 氙, Help: 氙 (Xe)
+						297 container
+							298 image 氙
+						299 container
+							300 text Xe 氙
+					301 button 铯 Cs 铯, Help: 铯 (Cs)
+						302 container
+							303 image 铯
+						304 container
+							305 text Cs 铯
+					306 button 钡 Ba 钡, Help: 钡 (Ba)
+						307 container
+							308 image 钡
+						309 container
+							310 text Ba 钡
+					311 button 镧 La 镧, Help: 镧 (La)
+						312 container
+							313 image 镧
+						314 container
+							315 text La 镧
+					316 button 铈 Ce 铈, Help: 铈 (Ce)
+						317 container
+							318 image 铈
+						319 container
+							320 text Ce 铈
+					321 button 镨 Pr 镨, Help: 镨 (Pr)
+						322 container
+							323 image 镨
+						324 container
+							325 text Pr 镨
+					326 button 钕 Nd 钕, Help: 钕 (Nd)
+						327 container
+							328 image 钕
+						329 container
+							330 text Nd 钕
+					331 button 钷 Pm 钷, Help: 钷 (Pm)
+						332 container
+							333 image 钷
+						334 container
+							335 text Pm 钷
+					336 button 钐 Sm 钐, Help: 钐 (Sm)
+						337 container
+							338 image 钐
+						339 container
+							340 text Sm 钐
+					341 button 铕 Eu 铕, Help: 铕 (Eu)
+						342 container
+							343 image 铕
+						344 container
+							345 text Eu 铕
+					346 button 钆 Gd 钆, Help: 钆 (Gd)
+						347 container
+							348 image 钆
+						349 container
+							350 text Gd 钆
+					351 button 铽 Tb 铽, Help: 铽 (Tb)
+						352 container
+							353 image 铽
+						354 container
+							355 text Tb 铽
+					356 button 镝 Dy 镝, Help: 镝 (Dy)
+						357 container
+							358 image 镝
+						359 container
+							360 text Dy 镝
+					361 button 钬 Ho 钬, Help: 钬 (Ho)
+						362 container
+							363 image 钬
+						364 container
+							365 text Ho 钬
+					366 button 铒 Er 铒, Help: 铒 (Er)
+						367 container
+							368 image 铒
+						369 container
+							370 text Er 铒
+					371 button 铥 Tm 铥, Help: 铥 (Tm)
+						372 container
+							373 image 铥
+						374 container
+							375 text Tm 铥
+					376 button 镱 Yb 镱, Help: 镱 (Yb)
+						377 container
+							378 image 镱
+						379 container
+							380 text Yb 镱
+					381 button 镥 Lu 镥, Help: 镥 (Lu)
+						382 container
+							383 image 镥
+						384 container
+							385 text Lu 镥
+					386 button 铪 Hf 铪, Help: 铪 (Hf)
+						387 container
+							388 image 铪
+						389 container
+							390 text Hf 铪
+					391 button 钽 Ta 钽, Help: 钽 (Ta)
+						392 container
+							393 image 钽
+						394 container
+							395 text Ta 钽
+					396 button 钨 W 钨, Help: 钨 (W)
+						397 container
+							398 image 钨
+						399 container
+							400 text W 钨
+					401 button 铼 Re 铼, Help: 铼 (Re)
+						402 container
+							403 image 铼
+						404 container
+							405 text Re 铼
+					406 button 锇 Os 锇, Help: 锇 (Os)
+						407 container
+							408 image 锇
+						409 container
+							410 text Os 锇
+					411 button 铱 Ir 铱, Help: 铱 (Ir)
+						412 container
+							413 image 铱
+						414 container
+							415 text Ir 铱
+					416 button 铂 Pt 铂, Help: 铂 (Pt)
+						417 container
+							418 image 铂
+						419 container
+							420 text Pt 铂
+					421 button 金 Au 金, Help: 金 (Au)
+						422 container
+							423 image 金
+						424 container
+							425 text Au 金
+					426 button 汞 Hg 汞, Help: 汞 (Hg)
+						427 container
+							428 image 汞
+						429 container
+							430 text Hg 汞
+					431 button 铊 Tl 铊, Help: 铊 (Tl)
+						432 container
+							433 image 铊
+						434 container
+							435 text Tl 铊
+					436 button 铅 Pb 铅, Help: 铅 (Pb)
+						437 container
+							438 image 铅
+						439 container
+							440 text Pb 铅
+					441 button 铋 Bi 铋, Help: 铋 (Bi)
+						442 container
+							443 image 铋
+						444 container
+							445 text Bi 铋
+					446 button 钋 Po 钋, Help: 钋 (Po)
+						447 container
+							448 image 钋
+						449 container
+							450 text Po 钋
+					451 button 砹 At 砹, Help: 砹 (At)
+						452 container
+							453 image 砹
+						454 container
+							455 text At 砹
+					456 button 氡 Rn 氡, Help: 氡 (Rn)
+						457 container
+							458 image 氡
+						459 container
+							460 text Rn 氡
+					461 button 钫 Fr 钫, Help: 钫 (Fr)
+						462 container
+							463 image 钫
+						464 container
+							465 text Fr 钫
+					466 button 镭 Ra 镭, Help: 镭 (Ra)
+						467 container
+							468 image 镭
+						469 container
+							470 text Ra 镭
+					471 button 锕 Ac 锕, Help: 锕 (Ac)
+						472 container
+							473 image 锕
+						474 container
+							475 text Ac 锕
+					476 button 钍 Th 钍, Help: 钍 (Th)
+						477 container
+							478 image 钍
+						479 container
+							480 text Th 钍
+					481 button 镤 Pa 镤, Help: 镤 (Pa)
+						482 container
+							483 image 镤
+						484 container
+							485 text Pa 镤
+					486 button 铀 U 铀, Help: 铀 (U)
+						487 container
+							488 image 铀
+						489 container
+							490 text U 铀
+					491 button 镎 Np 镎, Help: 镎 (Np)
+						492 container
+							493 image 镎
+						494 container
+							495 text Np 镎
+					496 button 钚 Pu 钚, Help: 钚 (Pu)
+						497 container
+							498 image 钚
+						499 container
+							500 text Pu 钚
+					501 button 镅 Am 镅, Help: 镅 (Am)
+						502 container
+							503 image 镅
+						504 container
+							505 text Am 镅
+					506 button 锔 Cm 锔, Help: 锔 (Cm)
+						507 container
+							508 image 锔
+						509 container
+							510 text Cm 锔
+					511 button 锫 Bk 锫, Help: 锫 (Bk)
+						512 container
+							513 image 锫
+						514 container
+							515 text Bk 锫
+					516 button 锎 Cf 锎, Help: 锎 (Cf)
+						517 container
+							518 image 锎
+						519 container
+							520 text Cf 锎
+					521 button 锿 Es 锿, Help: 锿 (Es)
+						522 container
+							523 image 锿
+						524 container
+							525 text Es 锿
+					526 button 镄 Fm 镄, Help: 镄 (Fm)
+						527 container
+							528 image 镄
+						529 container
+							530 text Fm 镄
+					531 button 钔 Md 钔, Help: 钔 (Md)
+						532 container
+							533 image 钔
+						534 container
+							535 text Md 钔
+					536 button 锘 No 锘, Help: 锘 (No)
+						537 container
+							538 image 锘
+						539 container
+							540 text No 锘
+					541 button 铹 Lr 铹, Help: 铹 (Lr)
+						542 container
+							543 image 铹
+						544 container
+							545 text Lr 铹
+					546 button 𬬻 Rf 𬬻, Help: 𬬻 (Rf)
+						547 container
+							548 image 𬬻
+						549 container
+							550 text Rf 𬬻
+					551 button 𬭊 Db 𬭊, Help: 𬭊 (Db)
+						552 container
+							553 image 𬭊
+						554 container
+							555 text Db 𬭊
+					556 button 𬭳 Sg 𬭳, Help: 𬭳 (Sg)
+						557 container
+							558 image 𬭳
+						559 container
+							560 text Sg 𬭳
+					561 button 𬭛 Bh 𬭛, Help: 𬭛 (Bh)
+						562 container
+							563 image 𬭛
+						564 container
+							565 text Bh 𬭛
+					566 button 𬭶 Hs 𬭶, Help: 𬭶 (Hs)
+						567 container
+							568 image 𬭶
+						569 container
+							570 text Hs 𬭶
+					571 button 䥑 Mt 䥑, Help: 䥑 (Mt)
+						572 container
+							573 image 䥑
+						574 container
+							575 text Mt 䥑
+					576 button 鐽 Ds 鐽, Help: 鐽 (Ds)
+						577 container
+							578 image 鐽
+						579 container
+							580 text Ds 鐽
+					581 button 錀 Rg 錀, Help: 錀 (Rg)
+						582 container
+							583 image 錀
+						584 container
+							585 text Rg 錀
+					586 button 鎶 Cn 鎶, Help: 鎶 (Cn)
+						587 container
+							588 image 鎶
+						589 container
+							590 text Cn 鎶
+					591 button 鉨 Nh 鉨, Help: 鉨 (Nh)
+						592 container
+							593 image 鉨
+						594 container
+							595 text Nh 鉨
+					596 button 𫓧 Fl 𫓧, Help: 𫓧 (Fl)
+						597 container
+							598 image 𫓧
+						599 container
+							600 text Fl 𫓧
+					601 button 镆 Mc 镆, Help: 镆 (Mc)
+						602 container
+							603 image 镆
+						604 container
+							605 text Mc 镆
+					606 button 𫟷 Lv 𫟷, Help: 𫟷 (Lv)
+						607 container
+							608 image 𫟷
+						609 container
+							610 text Lv 𫟷
+					611 button 鿬 Ts 鿬, Help: 鿬 (Ts)
+						612 container
+							613 image 鿬
+						614 container
+							615 text Ts 鿬
+					616 button 鿫 Og 鿫, Help: 鿫 (Og)
+						617 container
+							618 image 鿫
+						619 container
+							620 text Og 鿫
+		642 text LANDSCAPE FIRST
+		643 text 请横屏打开
+		644 text 当前设备处于竖屏模式。为了保证元素周期表、反应原理和各模块内容的完整布局，请先将设备旋转为横屏后继续使用。
+		645 text 横屏后界面会按统一课堂舞台进行等比缩放，平板、手机和大屏设备都能保持一致的阅读比例与模块结构。
+		646 text 当前宽度  626 px 当前高度  724 px
+	621 container Description: 小拾光学习助手, ID: shgLearningAssistant
+		622 button 打开小拾光萌宠学习助手
+			623 button 点击切换为【橘莉 Jolly · 星光绒绒兽】
+	624 container 先体验化学，再决定是否订阅
+		625 container
+			626 text 拾光视界 · 试用体验
+			627 heading 先体验化学，再决定是否订阅, Value: 2, ID: shg-trial-notice-title
+				628 text 先体验化学，再决定是否订阅
+			629 button 关闭试用提示
+		630 text 试用权益已开启
+		631 text 本次6小时试用期内，化学全部内容免费体验
+		632 text 先完整体验，合适再订阅。试用结束后，可从右上角“订阅中心”继续开通。
+		633 text 本次体验
+		634 text 化学全部内容
+		635 text 剩余体验时间
+		647 text 2小时 13分
+		637 text 遇到使用问题？添加客服微信
+		638 button 18584322518
+		639 button 开始体验
+		640 button 不再提示
+		641 button 查看订阅方案
+
+The focused UI element is 1 AXWebArea 元素视界 · Chemistry Visual Lab, URL: shiguangtongxue.cn/subjects/c…

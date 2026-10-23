@@ -33,7 +33,7 @@
     "eval:tutor": "pnpm --filter @primoria/agent eval:tutor",
     "eval:tutor:zh:build": "pnpm --filter @primoria/agent eval:tutor:zh:build",
     "eval:tutor:zh:check": "pnpm --filter @primoria/agent eval:tutor:zh:check",
-    "catalog:validate": "node scripts/validate-visualization-catalog.mjs",
+    "catalog:validate": "node scripts/build-interactive-catalog.mjs --check && node scripts/validate-visualization-catalog.mjs",
     "agent:runs:status": "pnpm --filter @primoria/agent runs:admin status",
     "agent:runs:inspect": "pnpm --filter @primoria/agent runs:admin inspect",
     "agent:runs:cancel": "pnpm --filter @primoria/agent runs:admin cancel",
@@ -49,9 +49,15 @@
     "test:regression:db": "pnpm --filter @primoria/web test:regression:db:isolated",
     "test:regression:browser": "pnpm --filter @primoria/web test:regression:browser:isolated",
     "test:regression:compose": "node scripts/run-production-compose-smoke.mjs",
-    "test:regression": "pnpm test:regression:fast && pnpm test:regression:build && pnpm -w run --parallel \"/^test:regression:(db|browser)$/\"",
+    "test:regression": "pnpm test:regression:fast && pnpm test:regression:build && pnpm test:regression:db && REGRESSION_WEB_MODE=production pnpm test:regression:browser",
     "test": "pnpm --filter @primoria/web test",
-    "db:bootstrap:schemas": "pnpm --filter @primoria/web db:bootstrap && pnpm --filter @primoria/agent db:migrate"
+    "db:bootstrap:schemas": "pnpm --filter @primoria/web db:bootstrap && pnpm --filter @primoria/agent db:migrate",
+    "catalog:build": "node scripts/build-interactive-catalog.mjs",
+    "catalog:coverage": "node scripts/validate-visualization-coverage.mjs",
+    "visualization:prompts": "pnpm --filter @primoria/web exec tsx scripts/generate-visualization-prompts.ts",
+    "visualization:eval": "node scripts/with-database-env.mjs runtime pnpm --filter @primoria/web exec tsx scripts/run-visualization-acceptance.ts",
+    "visualization:replay": "pnpm --filter @primoria/web exec tsx scripts/export-visualization-replay.ts",
+    "visualization:test:replay": "node e2e/visualization-replay.smoke.mjs"
   },
   "devDependencies": {
     "playwright": "^1.60.0",
@@ -75,7 +81,6 @@
       "browserslist@<4.28.7": "4.29.3",
       "deepagents>fast-glob": "link:./packages/fast-glob-tinyglobby",
       "deepagents>micromatch": "link:./packages/micromatch-picomatch",
-      "dompurify@<3.4.16": "3.4.16",
       "fast-uri@>=3.0.0 <4.0.0": "3.1.8",
       "form-data@>=4.0.0 <4.0.6": "4.0.6",
       "@hono/node-server@>=1.0.0 <1.19.15": "1.19.17",
@@ -97,7 +102,9 @@
       "undici@>=6.0.0 <7.0.0": "6.29.0",
       "undici@>=7.0.0 <8.0.0": "7.30.0",
       "uuid@>=10.0.0 <11.1.1": "11.1.1",
-      "ws@>=8.0.0 <8.21.0": "8.21.0"
+      "ws@>=8.0.0 <8.21.0": "8.21.0",
+      "dompurify@<3.4.17": "3.4.17",
+      "follow-redirects@<1.16.1": "1.16.1"
     }
   }
 }

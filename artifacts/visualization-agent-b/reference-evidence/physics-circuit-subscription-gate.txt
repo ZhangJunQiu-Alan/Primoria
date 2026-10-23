@@ -1,0 +1,40 @@
+Browser tab: 1, Title: "拾光视界 - 统一订阅中心", URL: "https://www.shiguangtongxue.cn/subscription/?subject=physics&return=%2Fsubjects%2Fphysics%2Fsenior%2F".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 23-24, 26-34, 36-54, 61, 79-81
++							83 text 单科开通：
++							84 text 物理
++							85 checkbox 数学 初中 + 高中一体, Value: 0
++							86 checkbox 物理 初中 + 高中一体, Value: 1
++							87 checkbox 化学 初中 + 高中一体, Value: 0
++							88 checkbox 语文 初中 + 高中一体, Value: 0
++							89 checkbox 地理 初中 + 高中一体, Value: 0
++							90 checkbox 生物 初中 + 高中一体, Value: 0
++							91 checkbox 自然科学 小学阶段, Value: 0
++							92 checkbox 小学奥数 小学阶段, Value: 0
++					93 text 为物理选择订阅周期
++						94 checkbox 阶段强化 季卡 ¥119 / 季 活动价 原价 ¥149 90 天有效期, Value: 0
++							95 text 阶段强化
++							96 text 季卡
++							97 text ¥119
++							98 text / 季
++							99 text 活动价
++							100 text 原价 ¥149
++							101 text 90 天有效期
++						102 checkbox 年度推荐 已选中 年卡 ¥399 / 年 365 天有效期, Value: 1
++							103 text 年度推荐
++							104 text 已选中
++							105 text 年卡
++							106 text ¥399
++							107 text / 年
++							108 text 365 天有效期
++						109 checkbox 长期优选 三年卡 ¥999 / 3 年 1095 天有效期, Value: 0
++							110 text 长期优选
++							111 text 三年卡
++							112 text ¥999
++							113 text / 3 年
++							114 text 1095 天有效期
++						115 text ¥3,999
++				116 text 年卡 · 1 门
++				117 text ¥399
++				118 text 支付成功后立即开通物理 365 天权限，订单金额按当前套餐价格结算。
+The focused UI element is 1 AXWebArea 拾光视界 - 统一订阅中心, URL: shiguangtongxue.cn/subscription/?subject=physics&return=%2Fsubjects%2Fphysics%2Fsenior%2F

@@ -15,6 +15,9 @@ import { buildKgContextPrompt, type CourseContext, type CourseContextTopic } fro
 import { PhysicsSceneZodSchema } from "@/lib/ai/visual-schemas";
 import type { ImageBrief } from "@/lib/ai/media/image-brief";
 import { finalizeImageBlocks, makePendingImageBlock } from "@/lib/ai/media/image-builder";
+import { InteractiveComponentPayloadSchema } from "@primoria/contracts/artifacts/schemas";
+import { parseInteractivePayload } from "@/lib/interactive/payload";
+import { getImplementedComponent } from "@/lib/interactive/components/registry";
 
 const TextBlockSchema = z.object({
   type: z.literal("text"),
@@ -43,7 +46,8 @@ const VisualBlockSchema = z.object({
   type: z.literal("visual"),
   title: z.string(),
   description: z.string(),
-  engine: z.enum(["html", "echarts", "mermaid", "physics"]).optional(),
+  engine: z.enum(["html", "echarts", "mermaid", "physics", "interactive"]).optional(),
+  interactive: InteractiveComponentPayloadSchema.optional(),
   html: z.string().optional(),
   echartsOption: z.record(z.unknown()).optional(),
   echartsHeight: z.number().optional(),
@@ -520,13 +524,26 @@ export async function generateBlock(
   const systemPrompt = `${COURSE_SYSTEM_PROMPT}
 
 You are now generating EXACTLY ONE block of type "${input.targetType}" for an existing course. Return only that single block as JSON matching the schema for this type. Do not return a full course.`;
-  const userPrompt = buildSingleBlockPrompt(input);
+  let userPrompt = buildSingleBlockPrompt(input);
+  const trustedSource = input.targetType === "visual" && input.sourceBlock?.type === "visual" && input.sourceBlock.engine === "interactive"
+    ? parseInteractivePayload(input.sourceBlock.interactive)
+    : null;
+  if (trustedSource) {
+    const payload = trustedSource;
+    const component = getImplementedComponent(payload.componentId)!;
+    userPrompt += `\nPreserve the trusted visualization engine. Emit engine="interactive", interactive={componentId:${JSON.stringify(payload.componentId)},configVersion:${payload.configVersion},config:{...}}. Update only the requested semantic parameters, retain other parameters, and update title/description as needed. Never replace this component with HTML.\n${component.schemaDoc}`;
+  }
 
   const raw = await invokeSingleBlock(model, schema, systemPrompt, userPrompt, input.targetType);
   const withType = raw && typeof raw === "object" ? { ...(raw as Record<string, unknown>), type: input.targetType } : raw;
   const normalized = normalizeBlock(withType, input.course.topic);
   if (!normalized || normalized.type !== input.targetType) {
     throw new Error(`Could not generate a usable "${input.targetType}" block.`);
+  }
+  if (trustedSource && (normalized.type !== "visual" || normalized.engine !== "interactive"
+    || normalized.interactive?.componentId !== trustedSource.componentId
+    || normalized.interactive?.configVersion !== trustedSource.configVersion)) {
+    throw new Error("A trusted visualization edit must preserve its component and configuration version.");
   }
   return { id: randomId("blk"), ...normalized };
 }
@@ -770,8 +787,9 @@ function normalizeBlock(block: unknown, topic: string): z.infer<typeof CourseSch
       type: "visual" as const,
       title,
       description: cleanText(obj.description ?? obj.content ?? obj.markdown, `互动观察「${topic}」的关键关系。`).slice(0, 220),
-      engine: engine as "html" | "echarts" | "mermaid" | "physics" | undefined,
+      engine: engine as "html" | "echarts" | "mermaid" | "physics" | "interactive" | undefined,
     };
+    if (engine === "interactive") return { ...base, engine: "interactive", interactive: parseInteractivePayload(obj.interactive) };
     if (engine === "echarts" && obj.echartsOption && typeof obj.echartsOption === "object") {
       return { ...base, echartsOption: obj.echartsOption as Record<string, unknown>, echartsHeight: typeof obj.echartsHeight === "number" ? obj.echartsHeight : undefined };
     }

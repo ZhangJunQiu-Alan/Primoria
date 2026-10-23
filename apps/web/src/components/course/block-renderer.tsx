@@ -33,6 +33,7 @@ import type {
   PhysicsSceneArtifact,
 } from "@/lib/agent-os";
 import { achievementByCode, LEVELS, type AchievementCode, type LevelCode } from "@/lib/gamification/catalog";
+import { InteractiveVisualization } from "@/components/generative-ui/interactive-visualization";
 
 type RendererVariant = "tool" | "course";
 type CodeBlockRunnerProps = {
@@ -236,6 +237,16 @@ function TransferBlockView({ block }: { block: TransferBlock }) {
 }
 
 function VisualBlockView({ block }: { block: VisualBlock }) {
+  if (block.engine === "interactive") {
+    return (
+      <BlockShell kind="visual" title={block.title}>
+        <CourseMarkdown markdown={block.description} className="course-block-text course-visual-caption" />
+        <CourseVisualFrame>
+          {block.interactive ? <InteractiveVisualization payload={block.interactive} /> : <p role="alert">可视化配置缺失 / Visualization configuration is missing.</p>}
+        </CourseVisualFrame>
+      </BlockShell>
+    );
+  }
   if (block.engine === "echarts" && block.echartsOption) {
     return (
       <BlockShell kind="visual" title={block.title}>

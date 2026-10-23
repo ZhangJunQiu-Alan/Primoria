@@ -8,7 +8,7 @@ import { WIDGET_COLORS } from "./palette";
 
 const nodeStyle: CSSProperties = {
   width: "100%", minHeight: 64, padding: "10px 12px", borderRadius: 8, textAlign: "left", cursor: "pointer",
-  fontSize: 12.5, lineHeight: 1.45,
+  fontSize: 12.5, lineHeight: 1.45, overflowWrap: "anywhere", minWidth: 0,
 };
 
 export function ArgumentMapWidget({ config, onChange: _onChange }: {
@@ -24,13 +24,14 @@ export function ArgumentMapWidget({ config, onChange: _onChange }: {
   void _onChange;
 
   return (
-    <section style={{ overflow: "hidden", border: `1px solid ${WIDGET_COLORS.line}`, borderRadius: 10, background: WIDGET_COLORS.surface }} aria-label={t.argumentTitle}>
+    <section data-component-id="humanities.argument-map" style={{ containerType: "inline-size", containerName: "primoria-argument", overflow: "hidden", border: `1px solid ${WIDGET_COLORS.line}`, borderRadius: 10, background: WIDGET_COLORS.surface }} aria-label={t.argumentTitle}>
+      <style>{`@container primoria-argument (max-width: 660px){.primoria-argument-graph{grid-template-columns:minmax(0,1fr)!important}.primoria-argument-arrow{transform:rotate(90deg)}}`}</style>
       <header style={{ padding: "12px 16px", borderBottom: `1px solid ${WIDGET_COLORS.line}`, background: WIDGET_COLORS.surfaceSoft }}>
         <div style={{ fontSize: 13.5, fontWeight: 600 }}>{t.argumentTitle}</div>
         <div style={{ marginTop: 2, color: WIDGET_COLORS.muted, fontSize: 11.5 }}>{t.argumentSubtitle}</div>
       </header>
 
-      <div style={{ display: "grid", gridTemplateColumns: "minmax(160px, 1fr) 42px minmax(190px, 1.1fr) 42px minmax(160px, 1fr)", gap: 8, alignItems: "center", padding: 16 }}>
+      <div className="primoria-argument-graph" style={{ display: "grid", gridTemplateColumns: "minmax(160px, 1fr) 42px minmax(190px, 1.1fr) 42px minmax(160px, 1fr)", gap: 8, alignItems: "center", padding: 16 }}>
         <div style={{ display: "grid", gap: 8 }}>
           <div style={{ color: WIDGET_COLORS.series2, fontSize: 11.5, fontWeight: 600 }}>{t.supportChain}</div>
           {analysis.groups.support.map((statement) => (
@@ -45,7 +46,7 @@ export function ArgumentMapWidget({ config, onChange: _onChange }: {
           ))}
         </div>
 
-        <div aria-hidden="true" style={{ color: WIDGET_COLORS.series2, textAlign: "center", fontSize: 24 }}>→</div>
+        <div className="primoria-argument-arrow" aria-hidden="true" style={{ color: WIDGET_COLORS.series2, textAlign: "center", fontSize: 24 }}>→</div>
 
         <button type="button" aria-pressed={selectedId === "central-claim"} onClick={() => setSelectedId("central-claim")} style={{
           ...nodeStyle, minHeight: 108, border: `2px solid ${WIDGET_COLORS.accent}`,
@@ -56,7 +57,7 @@ export function ArgumentMapWidget({ config, onChange: _onChange }: {
           {config.centralClaim}
         </button>
 
-        <div aria-hidden="true" style={{ color: WIDGET_COLORS.series3, textAlign: "center", fontSize: 24 }}>←</div>
+        <div className="primoria-argument-arrow" aria-hidden="true" style={{ color: WIDGET_COLORS.series3, textAlign: "center", fontSize: 24 }}>←</div>
 
         <div style={{ display: "grid", gap: 8 }}>
           <div style={{ color: WIDGET_COLORS.series3, fontSize: 11.5, fontWeight: 600 }}>{t.challengeResponse}</div>

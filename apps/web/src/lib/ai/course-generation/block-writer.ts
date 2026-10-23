@@ -12,6 +12,8 @@ import {
 } from "../../courses/mermaid-validation";
 import type { GeneratableBlockType } from "./lesson-plan-ir";
 import type { BlockGenerationJob, CompiledLessonPlan, VisualEngine } from "./lesson-plan-compiler";
+import { INTERACTIVE_COMPONENT_CATALOG } from "@primoria/contracts/artifacts/interactive-catalog";
+import { getImplementedComponent } from "@/lib/interactive/components/registry";
 
 // Block Writer: generates each block's core content, batched by concept (2-3
 // blocks) with per-concept quiz plus transfer/summary tasks (Decision 3B). Each
@@ -92,6 +94,7 @@ const FIELD_HINTS: Record<GeneratableBlockType, string> = {
 // Keyed by the pinned engine (not the KG affordance). The writer supplies only
 // the payload; the engine is injected by the compiler.
 const VISUAL_ENGINE_HINTS: Record<VisualEngine, string> = {
+  interactive: `"interactive": {"componentId": the selected candidate ID, "configVersion": its version, "config": the validated semantic parameters}. Never emit HTML or arbitrary code for a trusted component.`,
   html: `"html": a self-contained iframe fragment (no <html>/<head>/<body>, no 100vh) with at least one interactive control (slider/drag/button) that updates the visual live. Example: {"title":"...","description":"...","html":"<div>...<input type=\\"range\\">...<script>...</script></div>"}`,
   physics: `"physicsScene": a Matter.js scene { render:{width,height}, bodies:[...], constraints?:[...], gravity?, walls? }. Example: {"title":"...","description":"...","physicsScene":{"render":{"width":600,"height":400},"bodies":[{"shape":"circle","x":300,"y":50,"r":20}],"gravity":{"x":0,"y":1}}}`,
   algorithm: `"algorithmViz": { "algorithm": name, "steps": [ { "description", "kind":"array|tree|graph|table" — choose ONE kind that fits this algorithm and use the SAME kind on EVERY step, and a state object whose KEY NAME EQUALS the kind (kind "array" -> "array":{...}); the matching state object is REQUIRED on EVERY step or the visualization fails. Shapes: "array":{ "values":[number|string,...] (required), optional "highlights":[{"index","role"}], "pointers":[{"index","label"}], "sortedIndices":[number] }. "tree":{ "nodes":[{ "id"(string), "value"(string/number), "parentId"(string or null for root), "left"(string or null), "right"(string or null) },...] }. "graph":{ "nodes":[{ "id","label","x","y" }], "edges":[{ "from","to" }] }. "table":{ "data":[[number|string|null,...],...] (required), optional "rowLabels":[string], "colLabels":[string] }. Valid "role" values: comparing|swapping|pivot|sorted|current|visited|queued|stacked|path|dependency|result|muted. } ] }. Example: {"title":"...","description":"...","algorithmViz":{"algorithm":"Bubble Sort","steps":[{"description":"compare 5 and 3","kind":"array","array":{"values":[5,3,8],"highlights":[{"index":0,"role":"comparing"},{"index":1,"role":"comparing"}]}}]}}`,
@@ -121,6 +124,14 @@ function describeJob(job: BlockGenerationJob, kg: CourseContext): string {
     // not output, rename, or invent an "engine" — only the payload for this engine.
     fields = `"title","description",${VISUAL_ENGINE_HINTS[job.engine]}. The engine is FIXED to "${job.engine}" by the system — do NOT output an "engine" field and do NOT invent another; provide only the payload key shown above as a sibling of title/description`;
     if (concept?.visualHint) fields += `. Visualize specifically: ${concept.visualHint}`;
+    const candidates = (job.interactiveCandidates ?? []).flatMap((id) => {
+      const component = getImplementedComponent(id);
+      const metadata = INTERACTIVE_COMPONENT_CATALOG.find((entry) => entry.componentId === id);
+      return component && metadata ? [`${id} (configVersion=${metadata.version}): ${metadata.description}\nExclusions: ${metadata.exclusions.flatMap(Object.values).join("; ")}\n${component.schemaDoc}`] : [];
+    });
+    if (candidates.length) {
+      fields += `\nCATALOG FIRST: When a candidate below fully supports the teaching goal, prefer it to the fallback engine above. Emit "title","description","interactive":{"componentId":"...","configVersion":1,"config":{...}}. Do not emit fallback payloads or an engine field in that case. Match the supplied configVersion and schema; use concrete teaching content. If no candidate fits, emit only the fallback payload described above.\n${candidates.join("\n\n")}`;
+    }
   }
   if (job.type === "quiz") {
     // KG-authored per-concept assessment hints: what a good check looks like.
@@ -278,7 +289,7 @@ async function generateBatch(
       .map((f) => `- ${f}`)
       .join(
         "\n",
-      )}\nReminders: put each visual block's payload under its engine-specific key ("mermaidDefinition"/"echartsOption"/"physicsScene"/"algorithmViz"/"mathExplorer"/"html"), never a generic "payload" wrapper; "engine" must be exactly one of html|echarts|mermaid|physics|algorithm|math_explorer; write every number as a JSON number; every quiz question needs its required fields (single: choices+correctId; truefalse: a boolean "correct"; multi: correctIds).`;
+      )}\nReminders: put each visual block's payload under its engine-specific key ("interactive"/"mermaidDefinition"/"echartsOption"/"physicsScene"/"algorithmViz"/"mathExplorer"/"html"), never a generic "payload" wrapper; use a retrieved candidate and its exact configVersion for interactive; write every number as a JSON number; every quiz question needs its required fields (single: choices+correctId; truefalse: a boolean "correct"; multi: correctIds).`;
   }
 
   throw lastError ?? new WriterError(`block batch failed after ${MAX_ATTEMPTS} attempts`);
@@ -325,6 +336,7 @@ function defaultInvoke(settings?: TutorProviderSettings): BlockBatchInvoke {
       system,
       user: repairHint ? `${user}\n\n${repairHint}` : user,
       settings: FAST_TIER_BATCH_KINDS.has(batch.kind) ? fastTierSettings(settings) : settings,
+      utility: true,
       timeoutMs: 120_000,
     });
 }

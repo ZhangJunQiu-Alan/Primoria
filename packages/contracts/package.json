@@ -23,6 +23,18 @@
     "./visual-style": {
       "types": "./src/visual-style.d.ts",
       "default": "./src/visual-style.mjs"
+    },
+    "./artifacts/interactive-search": {
+      "types": "./src/artifacts/interactive-search.d.mts",
+      "default": "./src/artifacts/interactive-search.mjs"
+    },
+    "./artifacts/interactive-versions": {
+      "types": "./src/artifacts/interactive-versions.d.mts",
+      "default": "./src/artifacts/interactive-versions.mjs"
+    },
+    "./artifacts/visualization-reference": {
+      "types": "./src/artifacts/visualization-reference.d.mts",
+      "default": "./src/artifacts/visualization-reference.mjs"
     }
   },
   "dependencies": {

@@ -1,0 +1,120 @@
+Browser tab: 1, Title: "拾光视界 - 初中语文诗词与文言文", URL: "https://www.shiguangtongxue.cn/subjects/chinese/app.html?stage=junior&v=20260924135452".
+1 AXWebArea 拾光视界 - 初中语文诗词与文言文, URL: shiguangtongxue.cn/subjects/chinese/app.html?stage=junior&v=20260924135452
+	2 image
+	3 container
+		4 button 文 拾光视界
+			5 text 文
+			6 text 拾光视界
+		712 button 返回列表
+		713 button 背诵本篇
+		7 button 个人中心
+		8 button 订阅中心
+		9 button 退出系统
+		10 text 初中 / 全部单元
+		714 container 天净沙·秋思交互式课件
+			715 AXWebArea 天净沙·秋思 - 交互式名师精讲, URL: shiguangtongxue.cn/subjects/chinese/visualizations/books/c7a/c7a_m04/index.html
+				716 container Description: 天净沙·秋思交互式名师精讲, ID: lesson-frame
+					717 AXWebArea 名著有声书 - 《天净沙·秋思》中考交互式名师精讲, URL: shiguangtongxue.cn/subjects/chinese/visualizations/books/c7a/c7a_m04/lesson/index.html
+						718 container
+							719 text 阅 名著有声书 中考精讲讲堂 今日目标：深秋意象与中考鉴赏套路
+							720 text 七年级上册 · 元曲
+						721 container
+							722 text 多媒体播放台
+							723 text 准备就绪
+							724 checkbox 📚 互动精学, Help: 节点暂停，可查看讲解并完成随堂练习, Value: 1, ID: btn-playmode-interactive
+							725 checkbox 🎧 自动伴学, Help: 自动播放节点讲解，讲完后自动续播, Value: 0, ID: btn-playmode-guided
+							726 checkbox ▶ 原文纯享, Help: 只播放原文视频，全程无讲解打断, Value: 0, ID: btn-playmode-continuous
+							727 container 本课学习成果
+								728 checkbox 1 听读 待完成, Value: 0
+									729 text 1
+									730 text 听读
+									731 text 待完成
+								732 checkbox 2 证据 待完成, Value: 0
+									733 text 2
+									734 text 证据
+									735 text 待完成
+								736 checkbox 3 表达 待完成, Value: 0
+									737 text 3
+									738 text 表达
+									739 text 待完成
+								740 checkbox 4 巩固 待完成, Value: 0
+									741 text 4
+									742 text 巩固
+									743 text 待完成
+							744 container
+								745 container Description: 画面证据定位, ID: scene-hotspots
+								746 text 00:00
+								747 slider Description: 视频进度, Value: 0, ID: progress-track
+								748 text 00:18
+								749 button Description: 播放课文朗读, Help: 播放/暂停, ID: btn-play-pause
+									750 image play-icon
+								751 button Description: 从头播放, Help: 重新开始, ID: btn-replay
+									752 image
+								753 button Description: 静音, ID: btn-volume-toggle
+									754 image icon-volume-on
+								755 slider (settable, integer) Value: 1, ID: volume-slider
+								756 checkbox 0.8x, Value: 0
+								757 checkbox 1.0x, Value: 1
+								758 checkbox 1.2x, Value: 0
+								759 tab (selected, settable, boolean) 核心讲解, Value: 1, ID: tab-btn-testpoint
+								760 tab (selectable, settable, boolean) 答题训练, Value: 0, ID: tab-btn-quiz
+								761 tab (selectable, settable, boolean) 迁移阅读, Value: 0, ID: tab-btn-mindmap
+								762 tab (selectable, settable, boolean) 错题订正, Value: 0, ID: tab-btn-mistakes
+							763 text 古诗词文本精读
+							764 button 📂 导学大纲, ID: btn-open-syllabus
+							765 checkbox 原文, Value: 0, ID: btn-mode-read
+							766 checkbox 证据图, Value: 1, ID: btn-mode-evidence
+							767 checkbox 默写, Value: 0, ID: btn-mode-dictate
+							811 container ID: evidence-mode-view, Description: 意象证据链 把词语归入最能说明它作用的画面 0 / 12 点击一个词语，再选择下方画面。全部归类后，课件会生成“手法—画面—意境—情感”答题链。 待归类意象 衰败暮色 生命衰飒、秋风与日暮 选择词语后放入这里 温暖归宿 有人烟、可停驻、可归 选择词语后放入这里 羁旅无归 仍在路上、劳顿、远离故乡 选择词语后放入这里 先选择一个意象词语。 重置 核对证据链
+								812 text 意象证据链
+								813 heading 把词语归入最能说明它作用的画面, Value: 2
+									814 text 把词语归入最能说明它作用的画面
+								815 text 0 / 12
+								816 text 点击一个词语，再选择下方画面。全部归类后，课件会生成“手法—画面—意境—情感”答题链。
+								817 container Description: 待归类意象, ID: evidence-bank
+									818 checkbox 枯藤, Value: 0
+									819 checkbox 老树, Value: 0
+									820 checkbox 昏鸦, Value: 0
+									821 checkbox 小桥, Value: 0
+									822 checkbox 流水, Value: 0
+									823 checkbox 人家, Value: 0
+									824 checkbox 古道, Value: 0
+									825 checkbox 西风, Value: 0
+									826 checkbox 瘦马, Value: 0
+									827 checkbox 夕阳, Value: 0
+									828 checkbox 断肠人, Value: 0
+									829 checkbox 天涯, Value: 0
+								830 container evidence-groups
+									831 container
+										832 button 衰败暮色 生命衰飒、秋风与日暮
+											833 text 衰败暮色
+											834 text 生命衰飒、秋风与日暮
+										835 text 选择词语后放入这里
+									836 container
+										837 button 温暖归宿 有人烟、可停驻、可归
+											838 text 温暖归宿
+											839 text 有人烟、可停驻、可归
+										840 text 选择词语后放入这里
+									841 container
+										842 button 羁旅无归 仍在路上、劳顿、远离故乡
+											843 text 羁旅无归
+											844 text 仍在路上、劳顿、远离故乡
+										845 text 选择词语后放入这里
+								846 text 先选择一个意象词语。
+								847 button 重置, ID: btn-evidence-reset
+								848 button 核对证据链, ID: btn-evidence-check
+						801 container learning-modal-overlay
+							802 heading 【标题】, Value: 2, ID: learning-modal-title
+								803 text 【标题】
+							804 container Description: 讲解语音, ID: learning-modal-narration
+								805 checkbox 播放讲解, Value: 0, ID: btn-learning-narration
+									806 text 播放讲解
+								807 text 优先使用系统中文语音
+							808 button 我知道了，继续学习 >, ID: btn-learning-continue
+								809 text 我知道了，继续学习
+								810 text >
+	709 container Description: 小拾光学习助手, ID: shgLearningAssistant
+		710 button 打开小拾光萌宠学习助手
+			711 button 点击切换为【橘莉 Jolly · 星光绒绒兽】
+
+The focused UI element is 811 container ID: evidence-mode-view, Description: 意象证据链 把词语归入最能说明它作用的画面 0 / 12 点击一个词语，再选择下方画面。全部归类后，课件会生成“手法—画面—意境—情感”答题链。 待归类意象 衰败暮色 生命衰飒、秋风与日暮 选择词语后放入这里 温暖归宿 有人烟、可停驻、可归 选择词语后放入这里 羁旅无归 仍在路上、劳顿、远离故乡 选择词语后放入这里 先选择一个意象词语。 重置 核对证据链

@@ -1,0 +1,319 @@
+{
+  "components": [
+    {
+      "componentId": "math.linear-system",
+      "version": 1,
+      "name": {
+        "zh-CN": "二元一次方程组与消元",
+        "en": "Linear equations and elimination"
+      },
+      "catalogDescription": {
+        "zh-CN": "两直线交点、代数消元、平行重合与退化约束",
+        "en": "Two constraints, intersections, exact decimal-grid elimination and degenerate solution sets"
+      },
+      "teachingPurpose": {
+        "zh-CN": "两直线交点、代数消元、平行重合与退化约束",
+        "en": "Two constraints, intersections, exact decimal-grid elimination and degenerate solution sets"
+      },
+      "primaryAction": "adjust",
+      "disciplineTags": [
+        "math"
+      ],
+      "capabilityTags": [
+        "linear-system",
+        "elimination",
+        "line-intersection",
+        "rank"
+      ],
+      "implementation": {
+        "status": "implemented",
+        "rendererKey": "linearSystem"
+      },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "a1": {
+            "type": "number",
+            "minimum": -10,
+            "maximum": 10,
+            "default": 1,
+            "multipleOf": 0.1
+          },
+          "b1": {
+            "type": "number",
+            "minimum": -10,
+            "maximum": 10,
+            "default": 1,
+            "multipleOf": 0.1
+          },
+          "c1": {
+            "type": "number",
+            "minimum": -10,
+            "maximum": 10,
+            "default": 6,
+            "multipleOf": 0.1
+          },
+          "a2": {
+            "type": "number",
+            "minimum": -10,
+            "maximum": 10,
+            "default": 2,
+            "multipleOf": 0.1
+          },
+          "b2": {
+            "type": "number",
+            "minimum": -10,
+            "maximum": 10,
+            "default": -1,
+            "multipleOf": 0.1
+          },
+          "c2": {
+            "type": "number",
+            "minimum": -10,
+            "maximum": 10,
+            "default": 3,
+            "multipleOf": 0.1
+          },
+          "view": {
+            "type": "string",
+            "enum": [
+              "graph",
+              "elimination"
+            ],
+            "default": "graph"
+          }
+        },
+        "required": [
+          "a1",
+          "b1",
+          "c1",
+          "a2",
+          "b2",
+          "c2",
+          "view"
+        ],
+        "default": {
+          "a1": 1,
+          "b1": 1,
+          "c1": 6,
+          "a2": 2,
+          "b2": -1,
+          "c2": 3,
+          "view": "graph"
+        }
+      },
+      "patchHints": [
+        {
+          "zh-CN": "只修改用户要求的教学参数，其余字段保留。",
+          "en": "Patch only the requested teaching parameters and preserve the rest."
+        },
+        {
+          "zh-CN": "只改单个系数时保留其余方程。平行、重合、单条直线、全平面和0=非零的矛盾分别解释；不把行列式为零一概视为无解。",
+          "en": "Respect the documented model assumptions and parameter bounds."
+        }
+      ],
+      "fallbackConditions": [
+        {
+          "zh-CN": "本组件不处理：三元以上方程组、非线性方程组、任意精度符号运算。",
+          "en": "Outside this component: 三元以上方程组, 非线性方程组, 任意精度符号运算."
+        }
+      ],
+      "examplePrompts": [
+        {
+          "zh-CN": "两条直线什么时候没有交点？用消元法一起解释",
+          "en": "Use elimination to explain when two lines have no intersection."
+        },
+        {
+          "zh-CN": "把第二条方程改成第一条的两倍，会怎么样？",
+          "en": "What happens if the second equation becomes twice the first?"
+        }
+      ],
+      "search": {
+        "aliases": [
+          "二元一次方程组",
+          "消元法",
+          "加减消元",
+          "平行与重合",
+          "linear system",
+          "elimination",
+          "simultaneous equations"
+        ],
+        "concepts": [
+          "linear-system",
+          "elimination",
+          "line-intersection",
+          "rank"
+        ],
+        "stages": [
+          "junior",
+          "senior",
+          "university"
+        ],
+        "supports": [
+          "两条二元一次约束",
+          "垂直直线和零系数",
+          "唯一解无穷多解和无解"
+        ],
+        "excludes": [
+          "三元以上方程组",
+          "非线性方程组",
+          "任意精度符号运算"
+        ],
+        "referenceIds": []
+      }
+    },
+    {
+      "componentId": "math.quadratic-equation",
+      "version": 1,
+      "name": {
+        "zh-CN": "二次方程的根与顶点",
+        "en": "Quadratic roots and vertex"
+      },
+      "catalogDescription": {
+        "zh-CN": "判别式、实根复根、配方顶点与一次退化",
+        "en": "Discriminants, real and complex roots, vertex form, and linear or constant degeneracy"
+      },
+      "teachingPurpose": {
+        "zh-CN": "判别式、实根复根、配方顶点与一次退化",
+        "en": "Discriminants, real and complex roots, vertex form, and linear or constant degeneracy"
+      },
+      "primaryAction": "adjust",
+      "disciplineTags": [
+        "math"
+      ],
+      "capabilityTags": [
+        "quadratic-equation",
+        "discriminant",
+        "vertex-form",
+        "complex-roots"
+      ],
+      "implementation": {
+        "status": "implemented",
+        "rendererKey": "quadraticEquation"
+      },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "a": {
+            "type": "number",
+            "minimum": -4,
+            "maximum": 4,
+            "default": 1,
+            "multipleOf": 0.01
+          },
+          "b": {
+            "type": "number",
+            "minimum": -8,
+            "maximum": 8,
+            "default": -2,
+            "multipleOf": 0.01
+          },
+          "c": {
+            "type": "number",
+            "minimum": -8,
+            "maximum": 8,
+            "default": -3,
+            "multipleOf": 0.01
+          },
+          "view": {
+            "type": "string",
+            "enum": [
+              "roots",
+              "vertex"
+            ],
+            "default": "roots"
+          },
+          "showAxis": {
+            "type": "boolean",
+            "default": true
+          },
+          "domain": {
+            "type": "string",
+            "enum": [
+              "real",
+              "complex"
+            ],
+            "default": "real"
+          }
+        },
+        "required": [
+          "a",
+          "b",
+          "c",
+          "view",
+          "showAxis",
+          "domain"
+        ],
+        "default": {
+          "a": 1,
+          "b": -2,
+          "c": -3,
+          "view": "roots",
+          "showAxis": true,
+          "domain": "real"
+        }
+      },
+      "patchHints": [
+        {
+          "zh-CN": "只修改用户要求的教学参数，其余字段保留。",
+          "en": "Patch only the requested teaching parameters and preserve the rest."
+        },
+        {
+          "zh-CN": "改变c观察实根合并并进入复根；配方观察顶点与对称轴。不是任意高次方程求根器，不把a=0继续代入二次求根式。",
+          "en": "Respect the documented model assumptions and parameter bounds."
+        }
+      ],
+      "fallbackConditions": [
+        {
+          "zh-CN": "本组件不处理：任意高次方程、超出范围的系数、符号分式推演。",
+          "en": "Outside this component: 任意高次方程, 超出范围的系数, 符号分式推演."
+        }
+      ],
+      "examplePrompts": [
+        {
+          "zh-CN": "把常数项慢慢调高，两个根怎么消失了？",
+          "en": "Raise the constant term and observe the two real roots merge and disappear."
+        },
+        {
+          "zh-CN": "a等于零的时候还能用求根公式吗？",
+          "en": "Can the quadratic formula still be used when a is zero?"
+        }
+      ],
+      "search": {
+        "aliases": [
+          "一元二次方程",
+          "根的判别式",
+          "配方法",
+          "抛物线零点",
+          "二重根",
+          "quadratic roots",
+          "discriminant",
+          "completing the square"
+        ],
+        "concepts": [
+          "quadratic-equation",
+          "discriminant",
+          "vertex-form",
+          "complex-roots"
+        ],
+        "stages": [
+          "junior",
+          "senior"
+        ],
+        "supports": [
+          "有界十进制系数",
+          "两实根二重根与共轭复根",
+          "a为零的退化"
+        ],
+        "excludes": [
+          "任意高次方程",
+          "超出范围的系数",
+          "符号分式推演"
+        ],
+        "referenceIds": []
+      }
+    }
+  ]
+}

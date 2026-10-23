@@ -1,0 +1,1136 @@
+{
+  "courseId": "crs_qs274k9smvjiluyq",
+  "capturedAt": "2026-10-22T12:30:12.240Z",
+  "source": "owner-scoped persisted generation checkpoints",
+  "checkpoints": [
+    {
+      "kind": "plan",
+      "key": "plan:v2",
+      "payload": {
+        "rawIr": {
+          "v": 2,
+          "blocks": [
+            {
+              "goal": "用反直觉现象激发对电阻成因的好奇",
+              "role": "hook",
+              "type": "T",
+              "order": 1,
+              "conceptIds": [
+                "cn_sh_physics_resistance_geometry_material"
+              ],
+              "writerInstruction": "从一个生活反差开场：同样长的铜导线和电炉丝，为什么一个几乎不热、一个烧红？再追问“把导线拉长一倍会怎样”。只提出问题，不给出公式或定义，留下悬念。"
+            },
+            {
+              "goal": "勾勒三个概念的学习路径",
+              "role": "roadmap",
+              "type": "T",
+              "order": 2,
+              "conceptIds": [
+                "cn_sh_physics_resistance_geometry_material",
+                "cn_sh_physics_closed_circuit_ohm",
+                "cn_sh_physics_electrical_work_power"
+              ],
+              "writerInstruction": "用三个递进问题串起本课：电阻由什么决定→接上电源后电流多大→电流做功有多快。用两三句话说明三者是“元件属性→电路状态→能量转化”的链条，不要提前展开任何公式。"
+            },
+            {
+              "goal": "建立R=ρL/A的物理图像",
+              "role": "explanation",
+              "type": "T",
+              "order": 3,
+              "conceptIds": [
+                "cn_sh_physics_resistance_geometry_material"
+              ],
+              "writerInstruction": "先用水管或道路的拥堵直觉说明“越长越难、越粗越易、材料不同本征阻力不同”，再引入R=ρL/A并解释ρ是电阻率。强调R是导体自身属性，不由电压或电流决定；不要展开温度效应。"
+            },
+            {
+              "goal": "用比例推理计算电阻变化",
+              "role": "example",
+              "type": "T",
+              "order": 4,
+              "conceptIds": [
+                "cn_sh_physics_resistance_geometry_material"
+              ],
+              "writerInstruction": "给一个具体算例：某镍铬丝R=8Ω，将其均匀拉长到2倍且体积不变，求新电阻；引导先判断L变2倍、A变1/2，所以R变4倍。不要重复解释公式来源，重点展示“先判断各量如何变，再代入比例”的思路。"
+            },
+            {
+              "goal": "直观锚定长度、粗细、材料对电阻的影响",
+              "role": "example",
+              "type": "I",
+              "order": 5,
+              "conceptIds": [
+                "cn_sh_physics_resistance_geometry_material"
+              ],
+              "writerInstruction": "生成一张对比图：四根导线并排，分别体现短粗铜线、长细铜线、长细镍铬丝等组合，并标注长度、横截面积和材料。图旁只留一个任务：“按电阻从大到小排序”，不要写出答案。"
+            },
+            {
+              "goal": "操纵ρ、L、A观察电阻实时变化",
+              "role": "deepening",
+              "type": "V",
+              "order": 6,
+              "conceptIds": [
+                "cn_sh_physics_resistance_geometry_material"
+              ],
+              "writerInstruction": "设计一个自定义交互：三个滑块分别控制电阻率ρ、长度L、横截面积A，实时显示R=ρL/A的数值和电阻条长度；先让学习者预测“长度加倍、面积减半”的结果再拖动验证。不要做成静态公式展示。"
+            },
+            {
+              "goal": "检测对几何与材料因素的比例理解",
+              "role": "assessment",
+              "type": "Q",
+              "order": 7,
+              "conceptIds": [
+                "cn_sh_physics_resistance_geometry_material"
+              ],
+              "writerInstruction": "出3道小题：一道判断长度和面积同时变化后的倍数，一道区分电阻率与电阻，一道诊断“电阻与电压成正比”的迷思。每题给出简短解析，干扰项要对应常见错误。"
+            },
+            {
+              "goal": "建立电动势、内阻与路端电压的关系",
+              "role": "explanation",
+              "type": "T",
+              "order": 8,
+              "conceptIds": [
+                "cn_sh_physics_closed_circuit_ohm"
+              ],
+              "writerInstruction": "先区分“部分电路欧姆定律”和“闭合电路”：电源本身有内阻r，电动势E是每库仑电荷获得的能量。推出I=E/(R+r)与路端电压U=E−Ir，并用“电源内部也分走一部分电压”解释U随I增大而降低；不要涉及复杂电路。"
+            },
+            {
+              "goal": "计算电流与路端电压并观察变化趋势",
+              "role": "example",
+              "type": "T",
+              "order": 9,
+              "conceptIds": [
+                "cn_sh_physics_closed_circuit_ohm"
+              ],
+              "writerInstruction": "给E=6V、r=0.5Ω，外阻R先从2.5Ω换成5.5Ω，分别求I和U。重点对比：R增大时I减小而U增大，并顺带说明R趋于无穷时U趋近E。不要重讲公式推导，把篇幅放在趋势解释上。"
+            },
+            {
+              "goal": "静态呈现含内阻的闭合电路与路端电压测量",
+              "role": "example",
+              "type": "I",
+              "order": 10,
+              "conceptIds": [
+                "cn_sh_physics_closed_circuit_ohm"
+              ],
+              "writerInstruction": "画一张清晰的电路示意图：电池虚线框内标E和r，外接电阻R、电流表A与并联在电源两端的电压表V，并标注“路端电压U”。用图强调电压表测的不是电动势，不要加入计算步骤。"
+            },
+            {
+              "goal": "联动调节E、r、R观察I与U的响应",
+              "role": "deepening",
+              "type": "V",
+              "order": 11,
+              "conceptIds": [
+                "cn_sh_physics_closed_circuit_ohm"
+              ],
+              "writerInstruction": "做一个自定义交互（不要使用physics.circuit-lab，它明确排除电池内阻）：滑块调E、r、R，实时显示I=E/(R+r)、U=E−Ir以及U-I关系点；设置检查点：先预测R减小时U如何变，再拖动验证。突出“内阻越大，路端电压跌落越明显”。"
+            },
+            {
+              "goal": "检测闭合电路欧姆定律与路端电压理解",
+              "role": "assessment",
+              "type": "Q",
+              "order": 12,
+              "conceptIds": [
+                "cn_sh_physics_closed_circuit_ohm"
+              ],
+              "writerInstruction": "出3道题：一道直接计算I，一道由U=E−Ir判断r或U的变化，一道诊断“路端电压总等于电动势”的迷思。解析要明确指出内阻分压，不要引入电功率计算。"
+            },
+            {
+              "goal": "区分电功、电功率与焦耳热",
+              "role": "explanation",
+              "type": "T",
+              "order": 13,
+              "conceptIds": [
+                "cn_sh_physics_electrical_work_power"
+              ],
+              "writerInstruction": "从能量转化讲起：W=UIt是电场做功，P=UI是做功快慢；纯电阻中才可写成P=I²R=U²/R，焦耳热Q=I²Rt。用电动机说明非纯电阻时电能同时转化为机械能和热，不能直接用U²/R求热；不要过度展开效率。"
+            },
+            {
+              "goal": "用额定值计算电流、电阻与耗电",
+              "role": "example",
+              "type": "T",
+              "order": 14,
+              "conceptIds": [
+                "cn_sh_physics_electrical_work_power"
+              ],
+              "writerInstruction": "以“220V 1500W”电热水壶为例：求额定电流、电阻和正常工作5分钟消耗的电能，展示P=UI、R=U²/P、W=Pt的选用。再问“若实际电压只有200V，功率还是1500W吗？”点到为止，不重推闭合电路。"
+            },
+            {
+              "goal": "用铭牌与灯泡亮度锚定功率概念",
+              "role": "example",
+              "type": "I",
+              "order": 15,
+              "conceptIds": [
+                "cn_sh_physics_electrical_work_power"
+              ],
+              "writerInstruction": "生成一张生活化图片：电器铭牌特写“220V 1000W”与两只不同功率灯泡的亮度对比，标注“相同电压下，功率越大越亮/越热”。只做视觉锚定，不要在图里写公式推导或计算答案。"
+            },
+            {
+              "goal": "在双电阻电路中观察功率分配与守恒",
+              "role": "deepening",
+              "type": "V",
+              "order": 16,
+              "conceptIds": [
+                "cn_sh_physics_electrical_work_power"
+              ],
+              "writerInstruction": "使用physics.circuit-lab组件：搭建两电阻理想直流电路，用开关切换串联/并联，实时显示各电阻功率和总功率，让学习者验证功率守恒与P=UI。不要涉及电池内阻、短路或交流电，保持在组件支持范围内。"
+            },
+            {
+              "goal": "检测电功、电功率与纯电阻公式的适用条件",
+              "role": "assessment",
+              "type": "Q",
+              "order": 17,
+              "conceptIds": [
+                "cn_sh_physics_electrical_work_power"
+              ],
+              "writerInstruction": "出3道题：一道由铭牌求电流和电阻，一道比较串并联中的功率分配，一道判断电动机电路能否用U²/R求热功率。解析要强调公式适用条件，不要重复闭合电路计算。"
+            },
+            {
+              "goal": "综合设计导线与电源并预测电流和功率",
+              "role": "transfer",
+              "type": "V",
+              "order": 18,
+              "conceptIds": [
+                "cn_sh_physics_resistance_geometry_material",
+                "cn_sh_physics_closed_circuit_ohm",
+                "cn_sh_physics_electrical_work_power"
+              ],
+              "writerInstruction": "设计一个综合挑战式交互：学习者选择导线材料、长度、横截面积得到R，再设定电源E和内阻r，实时算出I、路端电压U和电阻功率P，并观察灯泡亮度/发热变化。要求先预测再运行，最后给出“为什么更换更粗的导线能提高功率”的反思提示；不要使用排除内阻的现成组件。"
+            },
+            {
+              "goal": "用链条图完成元认知收束",
+              "role": "summary",
+              "type": "T",
+              "order": 19,
+              "conceptIds": [
+                "cn_sh_physics_resistance_geometry_material",
+                "cn_sh_physics_closed_circuit_ohm",
+                "cn_sh_physics_electrical_work_power"
+              ],
+              "writerInstruction": "用“R=ρL/A→I=E/(R+r)→P=UI/I²R”一条链总结三个概念，并让学习者自查：能否解释路端电压为何随电流下降、纯电阻与非纯电阻公式为何不同。不要再引入新例题，保持收束性。"
+            }
+          ],
+          "lesson": {
+            "title": "电阻、闭合电路欧姆定律与电功率",
+            "minutes": 45
+          }
+        },
+        "compiledPlan": {
+          "jobs": [
+            {
+              "goal": "用反直觉现象激发对电阻成因的好奇",
+              "type": "text",
+              "jobId": "b1",
+              "order": 1,
+              "conceptIds": [
+                "cn_sh_physics_resistance_geometry_material"
+              ],
+              "neighborGoals": {
+                "next": "勾勒三个概念的学习路径"
+              },
+              "pedagogicalRole": "hook",
+              "writerInstruction": "从一个生活反差开场：同样长的铜导线和电炉丝，为什么一个几乎不热、一个烧红？再追问“把导线拉长一倍会怎样”。只提出问题，不给出公式或定义，留下悬念。"
+            },
+            {
+              "goal": "勾勒三个概念的学习路径",
+              "type": "text",
+              "jobId": "b2",
+              "order": 2,
+              "conceptIds": [
+                "cn_sh_physics_resistance_geometry_material",
+                "cn_sh_physics_closed_circuit_ohm",
+                "cn_sh_physics_electrical_work_power"
+              ],
+              "neighborGoals": {
+                "next": "建立R=ρL/A的物理图像",
+                "prev": "用反直觉现象激发对电阻成因的好奇"
+              },
+              "pedagogicalRole": "roadmap",
+              "writerInstruction": "用三个递进问题串起本课：电阻由什么决定→接上电源后电流多大→电流做功有多快。用两三句话说明三者是“元件属性→电路状态→能量转化”的链条，不要提前展开任何公式。"
+            },
+            {
+              "goal": "建立R=ρL/A的物理图像",
+              "type": "text",
+              "jobId": "b3",
+              "order": 3,
+              "conceptIds": [
+                "cn_sh_physics_resistance_geometry_material"
+              ],
+              "neighborGoals": {
+                "next": "用比例推理计算电阻变化",
+                "prev": "勾勒三个概念的学习路径"
+              },
+              "pedagogicalRole": "explanation",
+              "writerInstruction": "先用水管或道路的拥堵直觉说明“越长越难、越粗越易、材料不同本征阻力不同”，再引入R=ρL/A并解释ρ是电阻率。强调R是导体自身属性，不由电压或电流决定；不要展开温度效应。"
+            },
+            {
+              "goal": "用比例推理计算电阻变化",
+              "type": "text",
+              "jobId": "b4",
+              "order": 4,
+              "conceptIds": [
+                "cn_sh_physics_resistance_geometry_material"
+              ],
+              "neighborGoals": {
+                "next": "直观锚定长度、粗细、材料对电阻的影响",
+                "prev": "建立R=ρL/A的物理图像"
+              },
+              "pedagogicalRole": "example",
+              "writerInstruction": "给一个具体算例：某镍铬丝R=8Ω，将其均匀拉长到2倍且体积不变，求新电阻；引导先判断L变2倍、A变1/2，所以R变4倍。不要重复解释公式来源，重点展示“先判断各量如何变，再代入比例”的思路。"
+            },
+            {
+              "goal": "直观锚定长度、粗细、材料对电阻的影响",
+              "type": "image",
+              "jobId": "b5",
+              "order": 5,
+              "conceptIds": [
+                "cn_sh_physics_resistance_geometry_material"
+              ],
+              "neighborGoals": {
+                "next": "操纵ρ、L、A观察电阻实时变化",
+                "prev": "用比例推理计算电阻变化"
+              },
+              "pedagogicalRole": "example",
+              "writerInstruction": "生成一张对比图：四根导线并排，分别体现短粗铜线、长细铜线、长细镍铬丝等组合，并标注长度、横截面积和材料。图旁只留一个任务：“按电阻从大到小排序”，不要写出答案。"
+            },
+            {
+              "goal": "操纵ρ、L、A观察电阻实时变化",
+              "type": "visual",
+              "jobId": "b6",
+              "order": 6,
+              "engine": "html",
+              "conceptIds": [
+                "cn_sh_physics_resistance_geometry_material"
+              ],
+              "neighborGoals": {
+                "next": "检测对几何与材料因素的比例理解",
+                "prev": "直观锚定长度、粗细、材料对电阻的影响"
+              },
+              "pedagogicalRole": "deepening",
+              "writerInstruction": "设计一个自定义交互：三个滑块分别控制电阻率ρ、长度L、横截面积A，实时显示R=ρL/A的数值和电阻条长度；先让学习者预测“长度加倍、面积减半”的结果再拖动验证。不要做成静态公式展示。",
+              "interactiveCandidates": [
+                "math.calculus-lab",
+                "psychology.experiment-design",
+                "physics.circuit-lab",
+                "astronomy.moon-phases"
+              ]
+            },
+            {
+              "goal": "检测对几何与材料因素的比例理解",
+              "type": "quiz",
+              "jobId": "b7",
+              "order": 7,
+              "conceptIds": [
+                "cn_sh_physics_resistance_geometry_material"
+              ],
+              "neighborGoals": {
+                "next": "建立电动势、内阻与路端电压的关系",
+                "prev": "操纵ρ、L、A观察电阻实时变化"
+              },
+              "pedagogicalRole": "assessment",
+              "writerInstruction": "出3道小题：一道判断长度和面积同时变化后的倍数，一道区分电阻率与电阻，一道诊断“电阻与电压成正比”的迷思。每题给出简短解析，干扰项要对应常见错误。"
+            },
+            {
+              "goal": "建立电动势、内阻与路端电压的关系",
+              "type": "text",
+              "jobId": "b8",
+              "order": 8,
+              "conceptIds": [
+                "cn_sh_physics_closed_circuit_ohm"
+              ],
+              "neighborGoals": {
+                "next": "计算电流与路端电压并观察变化趋势",
+                "prev": "检测对几何与材料因素的比例理解"
+              },
+              "pedagogicalRole": "explanation",
+              "writerInstruction": "先区分“部分电路欧姆定律”和“闭合电路”：电源本身有内阻r，电动势E是每库仑电荷获得的能量。推出I=E/(R+r)与路端电压U=E−Ir，并用“电源内部也分走一部分电压”解释U随I增大而降低；不要涉及复杂电路。"
+            },
+            {
+              "goal": "计算电流与路端电压并观察变化趋势",
+              "type": "text",
+              "jobId": "b9",
+              "order": 9,
+              "conceptIds": [
+                "cn_sh_physics_closed_circuit_ohm"
+              ],
+              "neighborGoals": {
+                "next": "静态呈现含内阻的闭合电路与路端电压测量",
+                "prev": "建立电动势、内阻与路端电压的关系"
+              },
+              "pedagogicalRole": "example",
+              "writerInstruction": "给E=6V、r=0.5Ω，外阻R先从2.5Ω换成5.5Ω，分别求I和U。重点对比：R增大时I减小而U增大，并顺带说明R趋于无穷时U趋近E。不要重讲公式推导，把篇幅放在趋势解释上。"
+            },
+            {
+              "goal": "静态呈现含内阻的闭合电路与路端电压测量",
+              "type": "image",
+              "jobId": "b10",
+              "order": 10,
+              "conceptIds": [
+                "cn_sh_physics_closed_circuit_ohm"
+              ],
+              "neighborGoals": {
+                "next": "联动调节E、r、R观察I与U的响应",
+                "prev": "计算电流与路端电压并观察变化趋势"
+              },
+              "pedagogicalRole": "example",
+              "writerInstruction": "画一张清晰的电路示意图：电池虚线框内标E和r，外接电阻R、电流表A与并联在电源两端的电压表V，并标注“路端电压U”。用图强调电压表测的不是电动势，不要加入计算步骤。"
+            },
+            {
+              "goal": "联动调节E、r、R观察I与U的响应",
+              "type": "visual",
+              "jobId": "b11",
+              "order": 11,
+              "engine": "html",
+              "conceptIds": [
+                "cn_sh_physics_closed_circuit_ohm"
+              ],
+              "neighborGoals": {
+                "next": "检测闭合电路欧姆定律与路端电压理解",
+                "prev": "静态呈现含内阻的闭合电路与路端电压测量"
+              },
+              "pedagogicalRole": "deepening",
+              "writerInstruction": "做一个自定义交互（不要使用physics.circuit-lab，它明确排除电池内阻）：滑块调E、r、R，实时显示I=E/(R+r)、U=E−Ir以及U-I关系点；设置检查点：先预测R减小时U如何变，再拖动验证。突出“内阻越大，路端电压跌落越明显”。",
+              "interactiveCandidates": [
+                "physics.circuit-lab",
+                "math.calculus-lab",
+                "physics.oscillation-lab",
+                "physics.projectile-lab"
+              ]
+            },
+            {
+              "goal": "检测闭合电路欧姆定律与路端电压理解",
+              "type": "quiz",
+              "jobId": "b12",
+              "order": 12,
+              "conceptIds": [
+                "cn_sh_physics_closed_circuit_ohm"
+              ],
+              "neighborGoals": {
+                "next": "区分电功、电功率与焦耳热",
+                "prev": "联动调节E、r、R观察I与U的响应"
+              },
+              "pedagogicalRole": "assessment",
+              "writerInstruction": "出3道题：一道直接计算I，一道由U=E−Ir判断r或U的变化，一道诊断“路端电压总等于电动势”的迷思。解析要明确指出内阻分压，不要引入电功率计算。"
+            },
+            {
+              "goal": "区分电功、电功率与焦耳热",
+              "type": "text",
+              "jobId": "b13",
+              "order": 13,
+              "conceptIds": [
+                "cn_sh_physics_electrical_work_power"
+              ],
+              "neighborGoals": {
+                "next": "用额定值计算电流、电阻与耗电",
+                "prev": "检测闭合电路欧姆定律与路端电压理解"
+              },
+              "pedagogicalRole": "explanation",
+              "writerInstruction": "从能量转化讲起：W=UIt是电场做功，P=UI是做功快慢；纯电阻中才可写成P=I²R=U²/R，焦耳热Q=I²Rt。用电动机说明非纯电阻时电能同时转化为机械能和热，不能直接用U²/R求热；不要过度展开效率。"
+            },
+            {
+              "goal": "用额定值计算电流、电阻与耗电",
+              "type": "text",
+              "jobId": "b14",
+              "order": 14,
+              "conceptIds": [
+                "cn_sh_physics_electrical_work_power"
+              ],
+              "neighborGoals": {
+                "next": "用铭牌与灯泡亮度锚定功率概念",
+                "prev": "区分电功、电功率与焦耳热"
+              },
+              "pedagogicalRole": "example",
+              "writerInstruction": "以“220V 1500W”电热水壶为例：求额定电流、电阻和正常工作5分钟消耗的电能，展示P=UI、R=U²/P、W=Pt的选用。再问“若实际电压只有200V，功率还是1500W吗？”点到为止，不重推闭合电路。"
+            },
+            {
+              "goal": "用铭牌与灯泡亮度锚定功率概念",
+              "type": "image",
+              "jobId": "b15",
+              "order": 15,
+              "conceptIds": [
+                "cn_sh_physics_electrical_work_power"
+              ],
+              "neighborGoals": {
+                "next": "在双电阻电路中观察功率分配与守恒",
+                "prev": "用额定值计算电流、电阻与耗电"
+              },
+              "pedagogicalRole": "example",
+              "writerInstruction": "生成一张生活化图片：电器铭牌特写“220V 1000W”与两只不同功率灯泡的亮度对比，标注“相同电压下，功率越大越亮/越热”。只做视觉锚定，不要在图里写公式推导或计算答案。"
+            },
+            {
+              "goal": "在双电阻电路中观察功率分配与守恒",
+              "type": "visual",
+              "jobId": "b16",
+              "order": 16,
+              "engine": "html",
+              "conceptIds": [
+                "cn_sh_physics_electrical_work_power"
+              ],
+              "neighborGoals": {
+                "next": "检测电功、电功率与纯电阻公式的适用条件",
+                "prev": "用铭牌与灯泡亮度锚定功率概念"
+              },
+              "pedagogicalRole": "deepening",
+              "writerInstruction": "使用physics.circuit-lab组件：搭建两电阻理想直流电路，用开关切换串联/并联，实时显示各电阻功率和总功率，让学习者验证功率守恒与P=UI。不要涉及电池内阻、短路或交流电，保持在组件支持范围内。",
+              "interactiveCandidates": [
+                "physics.circuit-lab",
+                "math.calculus-lab",
+                "physics.projectile-lab",
+                "physics.electric-field"
+              ]
+            },
+            {
+              "goal": "检测电功、电功率与纯电阻公式的适用条件",
+              "type": "quiz",
+              "jobId": "b17",
+              "order": 17,
+              "conceptIds": [
+                "cn_sh_physics_electrical_work_power"
+              ],
+              "neighborGoals": {
+                "next": "综合设计导线与电源并预测电流和功率",
+                "prev": "在双电阻电路中观察功率分配与守恒"
+              },
+              "pedagogicalRole": "assessment",
+              "writerInstruction": "出3道题：一道由铭牌求电流和电阻，一道比较串并联中的功率分配，一道判断电动机电路能否用U²/R求热功率。解析要强调公式适用条件，不要重复闭合电路计算。"
+            },
+            {
+              "goal": "综合设计导线与电源并预测电流和功率",
+              "type": "visual",
+              "jobId": "b18",
+              "order": 18,
+              "engine": "html",
+              "conceptIds": [
+                "cn_sh_physics_resistance_geometry_material",
+                "cn_sh_physics_closed_circuit_ohm",
+                "cn_sh_physics_electrical_work_power"
+              ],
+              "neighborGoals": {
+                "next": "用链条图完成元认知收束",
+                "prev": "检测电功、电功率与纯电阻公式的适用条件"
+              },
+              "pedagogicalRole": "transfer",
+              "writerInstruction": "设计一个综合挑战式交互：学习者选择导线材料、长度、横截面积得到R，再设定电源E和内阻r，实时算出I、路端电压U和电阻功率P，并观察灯泡亮度/发热变化。要求先预测再运行，最后给出“为什么更换更粗的导线能提高功率”的反思提示；不要使用排除内阻的现成组件。",
+              "interactiveCandidates": [
+                "physics.circuit-lab",
+                "math.calculus-lab",
+                "physics.projectile-lab",
+                "physics.refraction-lab"
+              ]
+            },
+            {
+              "goal": "用链条图完成元认知收束",
+              "type": "text",
+              "jobId": "b19",
+              "order": 19,
+              "conceptIds": [
+                "cn_sh_physics_resistance_geometry_material",
+                "cn_sh_physics_closed_circuit_ohm",
+                "cn_sh_physics_electrical_work_power"
+              ],
+              "neighborGoals": {
+                "prev": "综合设计导线与电源并预测电流和功率"
+              },
+              "pedagogicalRole": "summary",
+              "writerInstruction": "用“R=ρL/A→I=E/(R+r)→P=UI/I²R”一条链总结三个概念，并让学习者自查：能否解释路端电压为何随电流下降、纯电阻与非纯电阻公式为何不同。不要再引入新例题，保持收束性。"
+            }
+          ],
+          "title": "电阻、闭合电路欧姆定律与电功率",
+          "irVersion": 2,
+          "conceptIds": [
+            "cn_sh_physics_resistance_geometry_material",
+            "cn_sh_physics_closed_circuit_ohm",
+            "cn_sh_physics_electrical_work_power"
+          ],
+          "methodArms": [],
+          "estimatedMinutes": 45
+        }
+      }
+    },
+    {
+      "kind": "batch",
+      "key": "batch:activation:1-2",
+      "payload": [
+        {
+          "block": {
+            "id": "blk_lsn_xt48uvolmvjiluyq_1",
+            "type": "text",
+            "title": "同样通电，为什么一个安然无恙、一个烧得通红？",
+            "markdown": "先看两个再普通不过的场景。台灯亮着，那根细细的铜导线安静地躺在桌上，你用手摸上去，几乎感觉不到温度；可电炉、电热水壶里的那根电热丝，通电没一会儿就烧得通红，甚至能把一壶水烧开。两者都在“让电流通过”，为什么一个若无其事，一个却热得发亮？\n\n如果“通电就会发热”是普遍规律，那铜导线早该烫手了；如果“发热只是个别现象”，那电炉丝又凭什么能把电能变成热？这个反差背后，一定藏着某个只与导体自身有关的东西——它决定了电流通过时“顺不顺畅”，也决定了能量最终变成了什么。\n\n再把问题往前推一步：假设你手里有一段铜导线，长度刚好够用。现在你把它均匀地拉长一倍，横截面也随之变细，电阻会变成原来的几倍？是两倍吗？如果把它对折起来并联使用，电阻又变成多少？\n\n先别急着算，也先别去找公式。这一课要做的，就是把这个“看不见的阻力”拆开来看：它由什么决定，它怎样影响整个电路里的电流，以及电流克服它做功时，能量究竟去了哪里。",
+            "conceptIds": [
+              "cn_sh_physics_resistance_geometry_material"
+            ],
+            "pedagogicalRole": "hook"
+          },
+          "order": 1
+        },
+        {
+          "block": {
+            "id": "blk_lsn_xt48uvolmvjiluyq_2",
+            "type": "text",
+            "title": "三个问题，一条链条",
+            "markdown": "本课沿着三个层层递进的问题展开。第一个问题：一段导体的电阻由什么决定？是材料，是长短，还是粗细？这个问题问的是元件自身的属性，与接不接电源无关。\n\n第二个问题：把这段导体接进一个有电源、有内阻的闭合电路后，电流究竟有多大？此时讨论的对象从单个元件变成了整个电路的状态，元件属性只是其中一个输入。\n\n第三个问题：电流通过电路时做功有多快？电功率如何分配，电能又转化成了什么形式的能量？这已经把视角推到了能量转化的层面。\n\n三个问题串成一条清晰的链条：元件属性 → 电路状态 → 能量转化。理解了这条链，你就能解释开头那个反差——同样的电流，为什么在不同导体上会写下完全不同的“命运”。",
+            "conceptIds": [
+              "cn_sh_physics_resistance_geometry_material",
+              "cn_sh_physics_closed_circuit_ohm",
+              "cn_sh_physics_electrical_work_power"
+            ],
+            "pedagogicalRole": "roadmap"
+          },
+          "order": 2
+        }
+      ]
+    },
+    {
+      "kind": "batch",
+      "key": "batch:concept:cn_sh_physics_electrical_work_power:16",
+      "payload": [
+        {
+          "block": {
+            "id": "blk_lsn_xt48uvolmvjiluyq_16",
+            "type": "visual",
+            "title": "双电阻电路中的功率分配与守恒",
+            "engine": "interactive",
+            "conceptIds": [
+              "cn_sh_physics_electrical_work_power"
+            ],
+            "description": "在理想直流电路中切换串联与并联，观察两个电阻各自消耗的电功率和电路总功率。先记录串联时两个电阻的功率是否等于总功率；再切到并联，验证总功率始终等于各电阻功率之和，并用 P=UI 理解同一电阻在不同连接方式下的功率变化。",
+            "interactive": {
+              "config": {
+                "voltage": 6,
+                "topology": "series",
+                "resistance1": 100,
+                "resistance2": 200,
+                "showCurrent": true,
+                "switchClosed": true
+              },
+              "componentId": "physics.circuit-lab",
+              "configVersion": 1
+            },
+            "pedagogicalRole": "deepening"
+          },
+          "order": 16
+        }
+      ]
+    },
+    {
+      "kind": "batch",
+      "key": "batch:concept:cn_sh_physics_closed_circuit_ohm:8-9-10",
+      "payload": [
+        {
+          "block": {
+            "id": "blk_lsn_xt48uvolmvjiluyq_8",
+            "type": "text",
+            "title": "闭合电路欧姆定律：电源内阻与路端电压",
+            "markdown": "部分电路欧姆定律描述的是某一段电阻上的电压、电流关系，形式为 $I=\\frac{U}{R}$。但在完整的闭合回路中，电源本身并不是理想的：电源内部存在内阻 $r$，电流通过电源时也会在内阻上产生电压降。电动势 $E$ 表示电源把其他形式能量转化为电能的本领，也就是每库仑电荷通过电源时获得的能量。\n\n当电路中有电流 $I$ 通过时，电源提供的能量一部分用于克服外电路电阻 $R$，另一部分用于克服内阻 $r$。因此有\n$$E = IR + Ir = I(R+r),$$\n整理得闭合电路欧姆定律：\n$$I = \\frac{E}{R+r}.$$\n此时外电路两端的电压称为路端电压 $U$，它等于外阻上的电压：\n$$U = IR = E - Ir.$$\n\n公式 $U=E-Ir$ 清楚表明：路端电压并不等于电动势，而是被电源内阻“分走”了一部分电压 $Ir$。当电流 $I$ 增大时，内阻上的电压降 $Ir$ 也随之增大，所以路端电压 $U$ 会降低；相反，电流减小时，路端电压更接近电动势。若电路断开，电流为零，则 $Ir=0$，此时路端电压等于电动势。",
+            "conceptIds": [
+              "cn_sh_physics_closed_circuit_ohm"
+            ],
+            "pedagogicalRole": "explanation"
+          },
+          "order": 8
+        },
+        {
+          "block": {
+            "id": "blk_lsn_xt48uvolmvjiluyq_9",
+            "type": "text",
+            "title": "电流与路端电压随外阻变化的计算",
+            "markdown": "取电动势 $E=6\\,\\text{V}$，内阻 $r=0.5\\,\\Omega$。当外阻 $R=2.5\\,\\Omega$ 时，闭合电路中的电流为\n$$I=\\frac{E}{R+r}=\\frac{6}{2.5+0.5}=2\\,\\text{A}.$$\n路端电压为\n$$U=E-Ir=6-2\\times 0.5=5\\,\\text{V}.$$\n\n当外阻增大到 $R=5.5\\,\\Omega$ 时，总电阻变为 $5.5+0.5=6\\,\\Omega$，因此电流为\n$$I=\\frac{6}{5.5+0.5}=1\\,\\text{A}.$$\n路端电压为\n$$U=E-Ir=6-1\\times 0.5=5.5\\,\\text{V}.$$\n\n对比两次结果可以看出：外阻 $R$ 增大时，电流 $I$ 减小，但路端电压 $U$ 反而升高。原因是电流减小后，电源内阻上损失的电压 $Ir$ 变小，电源外部得到的电压就更接近电动势。可以推想，当 $R$ 趋于无穷大时，电流趋于零，内阻压降也趋于零，于是路端电压 $U$ 趋近于 $E=6\\,\\text{V}$。",
+            "conceptIds": [
+              "cn_sh_physics_closed_circuit_ohm"
+            ],
+            "pedagogicalRole": "example"
+          },
+          "order": 9
+        },
+        {
+          "block": {
+            "id": "blk_lsn_xt48uvolmvjiluyq_10",
+            "alt": "电路示意图：虚线框内为电源，由电动势和内阻串联组成；外电路有一个电阻，与电流表串联，电压表并联在电源两端。",
+            "type": "image",
+            "brief": {
+              "alt": "电路示意图：虚线框内为电源，由电动势和内阻串联组成；外电路有一个电阻，与电流表串联，电压表并联在电源两端。",
+              "prompt": "Clean line-art educational circuit schematic on a plain white background. A battery is enclosed in a dashed rectangle: inside the dashed rectangle, show a small rectangular resistor symbol in series with an ideal cell symbol made of one long and one short parallel line, connected by simple wires. Outside the dashed rectangle, a single rectangular resistor symbol represents the external resistor. A circular meter symbol is placed in series along one wire; another circular meter symbol is connected in parallel across the two wires exiting the battery, directly across the battery terminals. Use simple black lines, no shading, no color. No text, letters, numbers, labels, equations, or annotations anywhere.",
+              "caption": "观察电压表的连接位置：它并联在电源两端，测得的是路端电压 U；由于电源内阻会分压，这个读数通常小于电动势 E。",
+              "imageKind": "structure_diagram",
+              "conceptIds": [
+                "cn_sh_physics_closed_circuit_ohm"
+              ],
+              "learningGoal": "静态识别含内阻的闭合电路中电流表、电压表的位置，以及电压表测量的是路端电压而非电动势。",
+              "negativePrompt": "text, letters, labels, numbers, equations, annotations, arrows with words, watermarks, complex background"
+            },
+            "title": "含内阻的闭合电路与路端电压测量",
+            "prompt": "Clean line-art educational circuit schematic on a plain white background. A battery is enclosed in a dashed rectangle: inside the dashed rectangle, show a small rectangular resistor symbol in series with an ideal cell symbol made of one long and one short parallel line, connected by simple wires. Outside the dashed rectangle, a single rectangular resistor symbol represents the external resistor. A circular meter symbol is placed in series along one wire; another circular meter symbol is connected in parallel across the two wires exiting the battery, directly across the battery terminals. Use simple black lines, no shading, no color. No text, letters, numbers, labels, equations, or annotations anywhere.",
+            "assetId": "",
+            "caption": "观察电压表的连接位置：它并联在电源两端，测得的是路端电压 U；由于电源内阻会分压，这个读数通常小于电动势 E。",
+            "imageUrl": "",
+            "imageKind": "structure_diagram",
+            "conceptIds": [
+              "cn_sh_physics_closed_circuit_ohm"
+            ],
+            "aspectRatio": "16:9",
+            "pedagogicalRole": "example"
+          },
+          "order": 10
+        }
+      ]
+    },
+    {
+      "kind": "batch",
+      "key": "batch:quiz:7",
+      "payload": [
+        {
+          "block": {
+            "id": "blk_lsn_xt48uvolmvjiluyq_7",
+            "type": "quiz",
+            "title": "小测：电阻的几何与材料因素",
+            "questions": [
+              {
+                "id": "q1",
+                "kind": "single",
+                "choices": [
+                  {
+                    "id": "a",
+                    "text": "$2R$"
+                  },
+                  {
+                    "id": "b",
+                    "text": "$4R$"
+                  },
+                  {
+                    "id": "c",
+                    "text": "$R/2$"
+                  },
+                  {
+                    "id": "d",
+                    "text": "$8R$"
+                  }
+                ],
+                "question": "某段均匀导线的电阻为 $R$。若把它均匀拉长到原来的 2 倍（体积不变），则其电阻变为原来的多少倍？",
+                "conceptId": "cn_sh_physics_resistance_geometry_material",
+                "correctId": "b",
+                "explanation": "体积不变时，长度变为 2 倍，横截面积必变为原来的 $1/2$。由 $R=\\rho\\frac{L}{A}$ 得 $R'=\\rho\\frac{2L}{A/2}=4R$。选 $2R$ 只看到长度变化而漏掉面积减小，是最常见的错误。"
+              },
+              {
+                "id": "q2",
+                "kind": "single",
+                "choices": [
+                  {
+                    "id": "a",
+                    "text": "电阻率与导体的长度成正比、与横截面积成反比"
+                  },
+                  {
+                    "id": "b",
+                    "text": "电阻率只由材料种类和温度决定，与导体的长度、横截面积无关"
+                  },
+                  {
+                    "id": "c",
+                    "text": "电阻率越大的材料做成的导体，电阻一定越大"
+                  },
+                  {
+                    "id": "d",
+                    "text": "电阻率就是电阻，只是单位不同"
+                  }
+                ],
+                "question": "关于电阻率 $\\rho$，下列说法正确的是：",
+                "conceptId": "cn_sh_physics_resistance_geometry_material",
+                "correctId": "b",
+                "explanation": "电阻率 $\\rho$ 是材料的属性，反映材料导电性能的优劣，只与材料种类和温度有关；随长度、面积变化的是电阻 $R$，二者通过 $R=\\rho\\frac{L}{A}$ 联系。若几何尺寸未给定，电阻率大并不意味着电阻大，故 C 错。"
+              },
+              {
+                "id": "q3",
+                "kind": "single",
+                "choices": [
+                  {
+                    "id": "a",
+                    "text": "公式写错了，欧姆定律应为 $R=\\frac{I}{U}$"
+                  },
+                  {
+                    "id": "b",
+                    "text": "结论正确，因为数学上式子确实成立"
+                  },
+                  {
+                    "id": "c",
+                    "text": "$R=\\frac{U}{I}$ 只是电阻的定义式（量度式），电阻由材料、长度、横截面积和温度决定，与 $U$、$I$ 无关"
+                  },
+                  {
+                    "id": "d",
+                    "text": "只有金属导体的电阻与电压成正比"
+                  }
+                ],
+                "question": "有同学根据 $R=\\frac{U}{I}$ 得出结论：“导体的电阻与它两端的电压成正比，与通过它的电流成反比”。这一说法的问题在于：",
+                "conceptId": "cn_sh_physics_resistance_geometry_material",
+                "correctId": "c",
+                "explanation": "对给定导体，$R$ 由 $\\rho$、$L$、$A$（及温度）决定，是导体自身的属性；$R=\\frac{U}{I}$ 只说明可用 $U$ 与 $I$ 的比值来量度 $R$。改变 $U$ 时 $I$ 会成比例变化，比值不变，所以不能说 $R$ 与 $U$ 成正比。"
+              }
+            ],
+            "conceptIds": [
+              "cn_sh_physics_resistance_geometry_material"
+            ],
+            "pedagogicalRole": "assessment"
+          },
+          "order": 7
+        }
+      ]
+    },
+    {
+      "kind": "batch",
+      "key": "batch:concept:cn_sh_physics_resistance_geometry_material:3-4-5",
+      "payload": [
+        {
+          "block": {
+            "id": "blk_lsn_xt48uvolmvjiluyq_3",
+            "type": "text",
+            "title": "把电阻想象成“电荷的拥挤路段”",
+            "markdown": "把电流想象成车流：电荷在导体中定向移动时，会不断与导体内部的晶格“碰撞”，因此受到阻碍。导线越长，电荷要穿过的路段越长，碰撞机会越多，阻碍越大；导线越粗，相当于车道越多、可同时通过的电荷越多，阻碍越小；材料不同，则像路面或管道内壁的粗糙程度不同，即使长度和粗细相同，本征阻碍也不同。\n\n把这些几何和材料因素合起来，导体的电阻可写为\n$$\nR=\\rho\\frac{L}{A}\n$$\n其中 $L$ 是导体长度，$A$ 是横截面积，$\\rho$ 是电阻率。电阻率的单位是欧姆·米（$\\Omega\\cdot m$）。$\\rho$ 只描述材料本身对电流的阻碍能力：$\\rho$ 越大，同样尺寸的导体电阻越大。铜、铝的 $\\rho$ 很小，是常见良导体；镍铬合金的 $\\rho$ 较大，因此常用来做电阻丝。\n\n要特别强调：$R$ 是导体自身的属性，由材料、长度和横截面积决定，不由电压或电流决定。就像一段水管的阻力由管道本身决定，而不由流过的水量决定；导体没有接电源时，它的电阻仍然存在。即使外加电压改变，通过导体的电流会改变，但电阻本身（忽略温度效应）保持不变。$R=U/I$ 可用于测量或定义电阻，但不要理解成电压和电流“决定”了电阻。",
+            "conceptIds": [
+              "cn_sh_physics_resistance_geometry_material"
+            ],
+            "pedagogicalRole": "explanation"
+          },
+          "order": 3
+        },
+        {
+          "block": {
+            "id": "blk_lsn_xt48uvolmvjiluyq_4",
+            "type": "text",
+            "title": "算例：拉长导线后的电阻变化",
+            "markdown": "已知某镍铬丝的电阻 $R_0=8\\,\\Omega$。把它均匀拉长到原来的 2 倍，并保持体积不变，求新的电阻。\n\n先不急着代公式，先判断各量如何变化。材料仍是镍铬，所以 $\\rho$ 不变。均匀拉长到 2 倍，即 $L'=2L$。拉长过程中体积不变，而 $V=AL$，因此\n$$\nA'L'=AL\n$$\n由 $L'=2L$ 可得 $A'=A/2$。也就是说：长度变为原来的 2 倍，横截面积变为原来的 $1/2$。\n\n把这两个变化代入比例：\n$$\n\\frac{R'}{R_0}=\\frac{\\rho L'/A'}{\\rho L/A}=\\frac{L'/L}{A'/A}=\\frac{2}{1/2}=4\n$$\n所以新电阻 $R'=4R_0=4\\times 8\\,\\Omega=32\\,\\Omega$。\n\n这个算例的思路是：先确定 $L$、$A$ 分别怎么变，再求电阻如何变，而不是先重写完整公式。这样处理比例问题更清楚。",
+            "conceptIds": [
+              "cn_sh_physics_resistance_geometry_material"
+            ],
+            "pedagogicalRole": "example"
+          },
+          "order": 4
+        },
+        {
+          "block": {
+            "id": "blk_lsn_xt48uvolmvjiluyq_5",
+            "alt": "四根并排的金属导线，长度、粗细和颜色不同，分别代表短粗铜线、长细铜线、长细镍铬丝和短粗镍铬丝。",
+            "type": "image",
+            "brief": {
+              "alt": "四根并排的金属导线，长度、粗细和颜色不同，分别代表短粗铜线、长细铜线、长细镍铬丝和短粗镍铬丝。",
+              "prompt": "Educational illustration of four straight cylindrical metal wires arranged side by side horizontally on a plain pale background. Each wire is mounted between two simple terminal posts. From left to right: a short thick copper wire with warm reddish color; a long thin copper wire with warm reddish color; a long thin nichrome alloy wire with dull silver-gray color; a short thick nichrome alloy wire with dull silver-gray color. The differences in length and diameter are clearly visible. No text, no labels, no numbers, no arrows, no formulas.",
+              "caption": "观察四根导线：从左到右分别体现短粗铜线、长细铜线、长细镍铬丝、短粗镍铬丝。比较它们的长度、粗细和材料，想一想哪些因素会使电阻更大。任务：按电阻从大到小排序，先不要看答案。",
+              "imageKind": "educational_illustration",
+              "conceptIds": [
+                "cn_sh_physics_resistance_geometry_material"
+              ],
+              "learningGoal": "直观锚定长度、粗细、材料对电阻的影响",
+              "negativePrompt": "text, labels, numbers, arrows, axes, formulas, chemical notation, watermarks, border text"
+            },
+            "title": "四根导线的电阻排序挑战",
+            "prompt": "Educational illustration of four straight cylindrical metal wires arranged side by side horizontally on a plain pale background. Each wire is mounted between two simple terminal posts. From left to right: a short thick copper wire with warm reddish color; a long thin copper wire with warm reddish color; a long thin nichrome alloy wire with dull silver-gray color; a short thick nichrome alloy wire with dull silver-gray color. The differences in length and diameter are clearly visible. No text, no labels, no numbers, no arrows, no formulas.",
+            "assetId": "",
+            "caption": "观察四根导线：从左到右分别体现短粗铜线、长细铜线、长细镍铬丝、短粗镍铬丝。比较它们的长度、粗细和材料，想一想哪些因素会使电阻更大。任务：按电阻从大到小排序，先不要看答案。",
+            "imageUrl": "",
+            "imageKind": "educational_illustration",
+            "conceptIds": [
+              "cn_sh_physics_resistance_geometry_material"
+            ],
+            "aspectRatio": "16:9",
+            "pedagogicalRole": "example"
+          },
+          "order": 5
+        }
+      ]
+    },
+    {
+      "kind": "batch",
+      "key": "batch:quiz:12",
+      "payload": [
+        {
+          "block": {
+            "id": "blk_lsn_xt48uvolmvjiluyq_12",
+            "type": "quiz",
+            "title": "闭合电路欧姆定律检测",
+            "questions": [
+              {
+                "id": "q12_1",
+                "kind": "single",
+                "choices": [
+                  {
+                    "id": "a",
+                    "text": "$2\\,\\text{A}$"
+                  },
+                  {
+                    "id": "b",
+                    "text": "$2.4\\,\\text{A}$"
+                  },
+                  {
+                    "id": "c",
+                    "text": "$12\\,\\text{A}$"
+                  },
+                  {
+                    "id": "d",
+                    "text": "$0.5\\,\\text{A}$"
+                  }
+                ],
+                "question": "某电源电动势 $E=12\\,\\text{V}$，内阻 $r=1\\,\\Omega$，外电阻 $R=5\\,\\Omega$。电路中的电流 $I$ 为多少？",
+                "conceptId": "cn_sh_physics_closed_circuit_ohm",
+                "correctId": "a",
+                "explanation": "闭合电路欧姆定律为 $I=\\frac{E}{R+r}$，不能只用外电阻计算。代入得 $I=\\frac{12}{5+1}=2\\,\\text{A}$。内阻 $r$ 也参与限制电流。"
+              },
+              {
+                "id": "q12_2",
+                "kind": "single",
+                "choices": [
+                  {
+                    "id": "a",
+                    "text": "由 $8\\,\\text{V}$ 变为 $7\\,\\text{V}$，减小 $1\\,\\text{V}$"
+                  },
+                  {
+                    "id": "b",
+                    "text": "由 $9\\,\\text{V}$ 变为 $8\\,\\text{V}$，减小 $1\\,\\text{V}$"
+                  },
+                  {
+                    "id": "c",
+                    "text": "保持 $9\\,\\text{V}$ 不变"
+                  },
+                  {
+                    "id": "d",
+                    "text": "由 $7\\,\\text{V}$ 变为 $8\\,\\text{V}$，增大 $1\\,\\text{V}$"
+                  }
+                ],
+                "question": "某电池电动势 $E=9\\,\\text{V}$，内阻 $r=1\\,\\Omega$。当电路中的电流由 $1\\,\\text{A}$ 增大到 $2\\,\\text{A}$ 时，路端电压 $U$ 如何变化？",
+                "conceptId": "cn_sh_physics_closed_circuit_ohm",
+                "correctId": "a",
+                "explanation": "路端电压 $U=E-Ir$。电流增大时，内阻上的分压 $Ir$ 增大，所以路端电压减小。$I=1\\,\\text{A}$ 时 $U=9-1\\times1=8\\,\\text{V}$；$I=2\\,\\text{A}$ 时 $U=9-2\\times1=7\\,\\text{V}$。"
+              },
+              {
+                "id": "q12_3",
+                "kind": "single",
+                "choices": [
+                  {
+                    "id": "a",
+                    "text": "正确，因为电源电动势不会改变"
+                  },
+                  {
+                    "id": "b",
+                    "text": "错误，因为内阻上会有电压降，路端电压满足 $U=E-Ir$"
+                  },
+                  {
+                    "id": "c",
+                    "text": "错误，因为电动势会全部降在外电阻上"
+                  },
+                  {
+                    "id": "d",
+                    "text": "正确，只有外电阻变化时路端电压才改变"
+                  }
+                ],
+                "question": "有同学认为：“只要电路接通，路端电压就总等于电源电动势。”下列判断正确的是？",
+                "conceptId": "cn_sh_physics_closed_circuit_ohm",
+                "correctId": "b",
+                "explanation": "电源内部有内阻 $r$，电流通过内阻时会产生分压 $Ir$。因此路端电压 $U=E-Ir$，通常小于电动势；只有在开路或内阻可忽略等特殊情况下，路端电压才等于电动势。"
+              }
+            ],
+            "conceptIds": [
+              "cn_sh_physics_closed_circuit_ohm"
+            ],
+            "pedagogicalRole": "assessment"
+          },
+          "order": 12
+        }
+      ]
+    },
+    {
+      "kind": "batch",
+      "key": "batch:quiz:17",
+      "payload": [
+        {
+          "block": {
+            "id": "blk_lsn_xt48uvolmvjiluyq_17",
+            "type": "quiz",
+            "title": "电功、电功率与纯电阻公式的适用条件",
+            "questions": [
+              {
+                "id": "q17_1",
+                "kind": "single",
+                "choices": [
+                  {
+                    "id": "a",
+                    "text": "5 A，44 Ω"
+                  },
+                  {
+                    "id": "b",
+                    "text": "5 A，0.2 Ω"
+                  },
+                  {
+                    "id": "c",
+                    "text": "0.2 A，1100 Ω"
+                  },
+                  {
+                    "id": "d",
+                    "text": "2.2 A，100 Ω"
+                  }
+                ],
+                "question": "某电热水壶的铭牌上标有“220 V　1100 W”字样，它正常工作时通过它的电流和它的电阻分别约为多少？",
+                "conceptId": "cn_sh_physics_electrical_work_power",
+                "correctId": "a",
+                "explanation": "铭牌给出的是额定电压和额定功率。由 P = UI 得 I = P/U = 1100 W ÷ 220 V = 5 A；电热水壶是纯电阻用电器，电能全部转化为内能，因此可以再用 R = U/I = 220 V ÷ 5 A = 44 Ω，或用 R = U²/P = (220 V)² ÷ 1100 W = 44 Ω。选项 b 误把 U/I 与 R 的倒数关系弄反，选项 c、d 的电流算错。注意：能用 U²/P 求电阻，前提是该用电器为纯电阻。"
+              },
+              {
+                "id": "q17_2",
+                "kind": "single",
+                "choices": [
+                  {
+                    "id": "a",
+                    "text": "串联时 1 : 3，并联时 3 : 1"
+                  },
+                  {
+                    "id": "b",
+                    "text": "串联时 3 : 1，并联时 1 : 3"
+                  },
+                  {
+                    "id": "c",
+                    "text": "串联时 1 : 3，并联时 1 : 3"
+                  },
+                  {
+                    "id": "d",
+                    "text": "串联时 1 : 1，并联时 3 : 1"
+                  }
+                ],
+                "question": "把 R₁ = 2 Ω 和 R₂ = 6 Ω 两个电阻分别串联和并联后接在同一电压不变的电源上。两种情况下，R₁ 与 R₂ 消耗的电功率之比 P₁ : P₂ 分别是（不计导线电阻与电源内阻）",
+                "conceptId": "cn_sh_physics_electrical_work_power",
+                "correctId": "a",
+                "explanation": "串联时电流相同，由 P = I²R 知 P ∝ R，所以 P₁ : P₂ = R₁ : R₂ = 2 : 6 = 1 : 3。并联时两电阻两端电压相同，由 P = U²/R 知 P ∝ 1/R，所以 P₁ : P₂ = R₂ : R₁ = 6 : 2 = 3 : 1。可见“哪个电阻功率大”取决于连接方式：串联时大电阻耗电多，并联时小电阻耗电多。关键是从串联电流相同、并联电压相同这两个前提出发，选用 P = I²R 还是 P = U²/R。"
+              },
+              {
+                "id": "q17_3",
+                "kind": "single",
+                "choices": [
+                  {
+                    "id": "a",
+                    "text": "P_热 = U²/r = 144 W，因为电压和电阻都已知"
+                  },
+                  {
+                    "id": "b",
+                    "text": "P_热 = I²r = 4 W，因为 U²/R 只适用于纯电阻电路"
+                  },
+                  {
+                    "id": "c",
+                    "text": "P_热 = UI = 24 W，因为电功率全部转化为内能"
+                  },
+                  {
+                    "id": "d",
+                    "text": "条件不足，无法求出线圈的发热功率"
+                  }
+                ],
+                "question": "一台直流电动机接在电压 U = 12 V 的电源上，正常工作时通过电动机的电流 I = 2 A，电机线圈的电阻 r = 1 Ω，电动机正常转动。关于电动机线圈的发热功率，下列判断正确的是",
+                "conceptId": "cn_sh_physics_electrical_work_power",
+                "correctId": "b",
+                "explanation": "电动机正常转动时是非纯电阻用电器：电能大部分转化为机械能，只有一小部分转化为内能。因此总电功率 P = UI = 24 W，而发热功率只能用焦耳定律 P_热 = I²r = (2 A)² × 1 Ω = 4 W。U²/R 和 UI 都只在纯电阻电路中才等于发热功率；在非纯电阻电路中，U = 12 V 并不全部降在线圈电阻上（还包含反电动势对应的部分），所以 U²/r 求出的是 144 W，毫无物理意义。选项 c 把总电功率误当成热功率。"
+              }
+            ],
+            "conceptIds": [
+              "cn_sh_physics_electrical_work_power"
+            ],
+            "pedagogicalRole": "assessment"
+          },
+          "order": 17
+        }
+      ]
+    },
+    {
+      "kind": "batch",
+      "key": "batch:summary:19",
+      "payload": [
+        {
+          "block": {
+            "id": "blk_lsn_xt48uvolmvjiluyq_19",
+            "type": "text",
+            "title": "链条回顾：从材料到功率",
+            "markdown": "把本课三个概念串成一条因果链：\n\n$$R=\\rho\\frac{L}{A}\\;\\Longrightarrow\\;I=\\frac{E}{R+r}\\;\\Longrightarrow\\;P=UI=I^2R$$\n\n第一环回答“电阻从哪来”：电阻由材料电阻率 $\\rho$ 与几何尺寸 $L$、$A$ 共同决定；第二环回答“电流由谁定”：电源电动势 $E$ 与内阻 $r$ 和外电阻 $R$ 一起决定闭合电路电流；第三环回答“功率如何算”：$P=UI$ 是电功率的普遍形式，而 $P=I^2R$ 在电阻发热意义上同样成立。\n\n沿链条回看，路端电压可写成 $U=E-Ir$。当外电路电流增大时，内阻上的分压 $Ir$ 增大，路端电压随之下降。这正是“闭合电路欧姆定律”把电源内部也纳入考虑后的结果，而不是把电源当成理想恒压源。\n\n功率公式的适用边界也要自查：纯电阻元件把电能全部转化为内能，因此 $P=UI=I^2R=\\frac{U^2}{R}$ 可以互换；非纯电阻元件（如电动机、电解槽）还会把电能转化为机械能或化学能，此时 $P=UI$ 是总电功率，$I^2R$ 只是热功率，不能把 $P=UI$ 直接改写成 $\\frac{U^2}{R}$。请试着不看笔记回答：为什么路端电压会随电流下降？纯电阻与非纯电阻的功率公式为何不同？若改变 $\\rho$、$L$ 或 $A$，你能否沿这条链判断 $R$、$I$、$U$、$P$ 的变化方向？",
+            "conceptIds": [
+              "cn_sh_physics_resistance_geometry_material",
+              "cn_sh_physics_closed_circuit_ohm",
+              "cn_sh_physics_electrical_work_power"
+            ],
+            "pedagogicalRole": "summary"
+          },
+          "order": 19
+        }
+      ]
+    },
+    {
+      "kind": "batch",
+      "key": "batch:concept:cn_sh_physics_electrical_work_power:13-14-15",
+      "payload": [
+        {
+          "block": {
+            "id": "blk_lsn_xt48uvolmvjiluyq_13",
+            "type": "text",
+            "title": "电功、电功率与焦耳热：从能量转化看三个量",
+            "markdown": "电流做功的本质是电能转化为其他形式的能。设一段电路两端电压为 $U$、通过的电流为 $I$、通电时间为 $t$，则电场力做的功为\n$$\nW = UIt\n$$\n电功率表示做功的快慢，定义为 $P = \\frac{W}{t} = UI$。在纯电阻电路中，电能全部转化为内能，欧姆定律 $U = IR$ 成立，因此电功率还可写成\n$$\nP = UI = I^2 R = \\frac{U^2}{R}\n$$\n电流通过电阻产生的焦耳热为 $Q = I^2 R t$。注意 $Q = I^2 R t$ 是电流热效应的普适公式，无论是否纯电阻电路，只要知道通过导体的电流和导体电阻，就可以用它计算电热。\n\n但在非纯电阻电路中，情况不同。以电动机为例，电能一部分转化为机械能，另一部分转化为线圈内能。总功率仍为 $P = UI$，热功率为 $P_Q = I^2 R$，机械功率为 $P_M = UI - I^2 R$。这时加在电动机两端的电压 $U$ 不等于 $IR$，因此不能直接用 $P = \\frac{U^2}{R}$ 或 $Q = \\frac{U^2}{R}t$ 求热。判断是否纯电阻电路，是选用 $U^2/R$ 形式的关键。",
+            "conceptIds": [
+              "cn_sh_physics_electrical_work_power"
+            ],
+            "pedagogicalRole": "explanation"
+          },
+          "order": 13
+        },
+        {
+          "block": {
+            "id": "blk_lsn_xt48uvolmvjiluyq_14",
+            "type": "text",
+            "title": "例题：用“220 V 1500 W”计算电流、电阻和耗电",
+            "markdown": "以一台电热水壶的铭牌“$220\\ \\text{V}\\ 1500\\ \\text{W}$”为例。额定电压 $U_{\\text{额}}=220\\ \\text{V}$，额定功率 $P_{\\text{额}}=1500\\ \\text{W}$。\n\n由 $P=UI$ 求额定电流：\n$$\nI_{\\text{额}}=\\frac{P_{\\text{额}}}{U_{\\text{额}}}=\\frac{1500}{220}\\approx 6.82\\ \\text{A}\n$$\n电热水壶可视为纯电阻，正常工作时的电阻可由 $P=\\frac{U^2}{R}$ 变形得到：\n$$\nR=\\frac{U_{\\text{额}}^2}{P_{\\text{额}}}=\\frac{220^2}{1500}\\approx 32.3\\ \\Omega\n$$\n正常工作 $t=5\\ \\text{min}=300\\ \\text{s}$ 消耗的电能用 $W=Pt$：\n$$\nW=P_{\\text{额}}t=1500\\times 300=4.5\\times 10^5\\ \\text{J}\n$$\n约为 $0.125\\ \\text{kW·h}$。\n\n思考：若实际电压只有 $200\\ \\text{V}$，功率还是 $1500\\ \\text{W}$ 吗？通常不是。若电阻近似不变，可由 $P_{\\text{实际}}=\\frac{U_{\\text{实际}}^2}{R}=\\frac{200^2}{32.3}\\approx 1238\\ \\text{W}$，比额定功率小。实际电阻随温度变化，数值会有偏差。",
+            "conceptIds": [
+              "cn_sh_physics_electrical_work_power"
+            ],
+            "pedagogicalRole": "example"
+          },
+          "order": 14
+        },
+        {
+          "block": {
+            "id": "blk_lsn_xt48uvolmvjiluyq_15",
+            "alt": "电器铭牌特写和两只亮度不同的灯泡，一只明亮一只较暗。",
+            "type": "image",
+            "brief": {
+              "alt": "电器铭牌特写和两只亮度不同的灯泡，一只明亮一只较暗。",
+              "prompt": "A realistic close-up scene of a domestic electric appliance nameplate surface on a metal kettle base, the nameplate area blank and unreadable, next to two incandescent light bulbs glowing at clearly different brightness levels, one bright and one dim, placed on a wooden table against a soft neutral indoor background. Soft natural lighting, shallow depth of field focusing on the nameplate area and the bulbs, no text, no letters, no numbers, no labels, no axes, no formulas, no chemical notation.",
+              "caption": "观察铭牌上的额定值区域和两只灯泡的亮度差异：在相同电压下，额定功率越大的用电器通常越亮或单位时间内放热越多。",
+              "imageKind": "realistic_scene",
+              "conceptIds": [
+                "cn_sh_physics_electrical_work_power"
+              ],
+              "learningGoal": "通过电器铭牌和灯泡亮度差异，直观锚定电功率概念。",
+              "negativePrompt": "text, letters, numbers, labels, annotations, equations, formulas, chemical notation, watermark, logo"
+            },
+            "title": "铭牌与灯泡亮度：功率的直观对比",
+            "prompt": "A realistic close-up scene of a domestic electric appliance nameplate surface on a metal kettle base, the nameplate area blank and unreadable, next to two incandescent light bulbs glowing at clearly different brightness levels, one bright and one dim, placed on a wooden table against a soft neutral indoor background. Soft natural lighting, shallow depth of field focusing on the nameplate area and the bulbs, no text, no letters, no numbers, no labels, no axes, no formulas, no chemical notation.",
+            "assetId": "",
+            "caption": "观察铭牌上的额定值区域和两只灯泡的亮度差异：在相同电压下，额定功率越大的用电器通常越亮或单位时间内放热越多。",
+            "imageUrl": "",
+            "imageKind": "realistic_scene",
+            "conceptIds": [
+              "cn_sh_physics_electrical_work_power"
+            ],
+            "aspectRatio": "16:9",
+            "pedagogicalRole": "example"
+          },
+          "order": 15
+        }
+      ]
+    },
+    {
+      "kind": "batch",
+      "key": "batch:concept:cn_sh_physics_resistance_geometry_material:6",
+      "payload": [
+        {
+          "block": {
+            "id": "blk_lsn_xt48uvolmvjiluyq_6",
+            "html": "<style>\nbody{margin:0;font-family:system-ui,Segoe UI,sans-serif;background:#f8fafc;color:#1e293b;}\n.card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:16px;max-width:420px;}\n.guess{background:#eff6ff;border-left:4px solid #3b82f6;border-radius:8px;padding:10px 12px;margin-bottom:14px;font-size:14px;line-height:1.5;}\n.control{margin:12px 0;}\n.control label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;}\ninput[type=range]{width:100%;}\n.readout{font-size:28px;font-weight:800;color:#0f172a;text-align:center;margin:10px 0 4px;}\n.bar-track{background:#e2e8f0;height:20px;border-radius:999px;overflow:hidden;margin-top:8px;}\n#bar{height:100%;background:linear-gradient(90deg,#f59e0b,#ef4444);border-radius:999px;width:10%;transition:width .12s ease;}\n.legend{display:flex;justify-content:space-between;font-size:11px;color:#64748b;margin-top:4px;}\n.buttons{display:flex;gap:8px;margin-top:14px;}\nbutton{flex:1;padding:9px;border:1px solid #cbd5e1;background:#fff;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;}\nbutton:hover{background:#f1f5f9;}\n</style>\n<div class='card'>\n<div class='guess'>先预测：保持 ρ 不变，若把 L 加倍、把 A 减半，R 会变为原来的几倍？在脑中写下答案，再点下方按钮或拖动滑块验证。</div>\n<div class='control'><label><span>电阻率 ρ</span><span id='rhoVal'>1.70</span></label><input id='rho' type='range' min='0.1' max='2' step='0.05' value='1.7'></div>\n<div class='control'><label><span>长度 L</span><span id='lVal'>10.0</span></label><input id='L' type='range' min='1' max='20' step='0.5' value='10'></div>\n<div class='control'><label><span>横截面积 A</span><span id='aVal'>2.0</span></label><input id='A' type='range' min='0.5' max='10' step='0.5' value='2'></div>\n<div class='readout'>R = <span id='rValue'>8.50</span> <span style='font-size:14px;color:#64748b;'>（相对单位）</span></div>\n<div class='bar-track'><div id='bar'></div></div>\n<div class='legend'><span>R 小</span><span>电阻条长度 ∝ R</span><span>R 大</span></div>\n<div class='buttons'><button id='verifyBtn'>一键设置：L×2，A÷2</button><button id='resetBtn'>重置</button></div>\n</div>\n<script>\nconst rho=document.getElementById('rho');\nconst L=document.getElementById('L');\nconst A=document.getElementById('A');\nconst rhoVal=document.getElementById('rhoVal');\nconst lVal=document.getElementById('lVal');\nconst aVal=document.getElementById('aVal');\nconst rValue=document.getElementById('rValue');\nconst bar=document.getElementById('bar');\nfunction update(){\n const r=parseFloat(rho.value);\n const l=parseFloat(L.value);\n const a=parseFloat(A.value);\n const R=r*l/a;\n rhoVal.textContent=r.toFixed(2);\n lVal.textContent=l.toFixed(1);\n aVal.textContent=a.toFixed(1);\n rValue.textContent=R.toFixed(2);\n const pct=Math.max(5,Math.min(100,R/80*100));\n bar.style.width=pct+'%';\n}\n[rho,L,A].forEach(function(el){el.addEventListener('input',update);});\ndocument.getElementById('verifyBtn').addEventListener('click',function(){\n L.value=Math.min(20,L.value*2);\n A.value=Math.max(0.5,A.value/2);\n update();\n});\ndocument.getElementById('resetBtn').addEventListener('click',function(){\n rho.value=1.7; L.value=10; A.value=2; update();\n});\nupdate();\n</script>",
+            "type": "visual",
+            "title": "电阻的几何与材料探究",
+            "engine": "html",
+            "conceptIds": [
+              "cn_sh_physics_resistance_geometry_material"
+            ],
+            "description": "拖动三个滑块控制 $\\rho$、$L$、$A$，实时观察 $R=\\rho L/A$ 的数值和电阻条长度；先预测“长度加倍、面积减半”的结果，再一键置值验证。",
+            "pedagogicalRole": "deepening"
+          },
+          "order": 6
+        }
+      ]
+    }
+  ]
+}

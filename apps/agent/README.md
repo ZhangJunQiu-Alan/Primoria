@@ -61,7 +61,10 @@ ANTHROPIC_MODEL=your-model
 `DATABASE_URL` is required. Agent-owned runtime tables and checkpoints use the isolated `agent_runtime` schema; bounded course-card reads still use App tables. Course creation remains Web-owned.
 
 Provider credentials are server-owned; there is no client BYOK path. The
-Agent uses its configured default model. Web-only stage-1 utilities may use
+Agent uses `AI_MODEL_TUTOR` when set, otherwise its configured provider default
+(`OPENAI_MODEL` or `ANTHROPIC_MODEL`). For DeepSeek, use
+`AI_MODEL_TUTOR=deepseek-flash`; this keeps Tutor independent of the Web's
+`deepseek-v4-pro` course-generation default. Web-only stage-1 utilities may use
 `AI_MODEL_FAST`, while content-rich interactive configuration may use
 `AI_MODEL_CONTENT`.
 

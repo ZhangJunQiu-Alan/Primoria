@@ -10,6 +10,28 @@ Scope owner: Primoria project owner
 
 ## Implementation status
 
+### 2026-10-22 DeepSeek model selection
+
+Tutor has an independent `AI_MODEL_TUTOR` override (provider-default fallback),
+passed through both production Compose topologies. The selected configuration
+uses `deepseek-flash` for Tutor and Web fast tasks, retaining `deepseek-v4-pro`
+for quality-sensitive course content. Web DeepSeek utilities disable thinking
+within their short token budget; other Web fast-tier requests use low effort.
+Profile intake and lesson fact distillation also use the fast tier, while
+explicit model overrides and all evidence validation remain intact.
+Offline HTTP request tests cover token budget, thinking controls, Pro retention,
+explicit model precedence and non-DeepSeek isolation. The real Agent graph's
+offline integration asserts the Tutor override reaches the model endpoint.
+Final `pnpm test:regression` passed with exit code 0: typecheck/lint, 607 Web
+tests (17 intentionally skipped), Agent tests, all 1,718 learning-goal cases,
+catalog/KG/migration validation, production build/bundle budgets, isolated DB
+regression and all five Chromium journeys. Both per-run test databases were
+removed. Four live synthetic checks passed for non-thinking routing, low-effort
+structured generation, Tutor model selection and profile intake extraction.
+These checks establish compatibility, not Flash/Pro teaching-quality parity.
+The running application continues to use Supabase; no production deployment,
+commit or push was performed.
+
 ### 2026-09-29 managed database cutover
 
 The owner authorized resetting all old Primoria cloud test data. Supabase
@@ -531,3 +553,27 @@ singapore_secondary_mathematics
 
 This handoff update changes documentation only. It does not replace the full
 local test evidence recorded above or claim a new test run.
+
+
+## 2026-10-22 visualization platform integration evidence
+
+The 45-component Agent A platform passed `pnpm test:regression` (exit 0):
+901 Web tests passed, 18 skipped; Agent unit/integration, typecheck/lint,
+1,718 permanent routing cases, 31 KG checks, catalog/schema synchronization,
+production build/bundle budgets, isolated Web/Agent DB, four production browser
+journeys, widget sandbox, and 45 widgets at three widths passed. The skipped
+tests are not passing gates. Subsequent focused checks passed 21 tests.
+
+The immutable 20-input real-model baseline used the historical 38-item catalog;
+all 20 executed, with 16 latest passes and four retained failures. Two additional
+real production calls on catalog45 confirmed directory search followed by
+component selection. Static default samples are not real-model test results.
+
+Full-reference acceptance remains failed: 1,018 candidate cases / 2,275 source
+capabilities are not frozen and have no verified mappings. Full-chain model
+usage correlation remains incomplete. These results do not approve deployment,
+publication, source authorization, or previously guarded release gates.
+
+Current detail: [Agent A validation](visualization-agent-a-validation.md).
+Stable logs, checksums and captured result links:
+`artifacts/visualization-acceptance/platform-baseline-20261022/verification.json`.

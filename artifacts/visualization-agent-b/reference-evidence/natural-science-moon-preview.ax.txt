@@ -1,0 +1,27 @@
+Browser tab: 2, Title: "拾光视界 v1.0 - 自然科学科普可视化系统", URL: "https://www.shiguangtongxue.cn/subjects/natural-science/app.html?stage=starter&v=20260924135452".
+1 AXWebArea 拾光视界 v1.0 - 自然科学科普可视化系统, URL: shiguangtongxue.cn/subjects/natural-science/app.html?stage=starter&v=20260924135452
+	2 container
+		3 container
+			4 button 科 拾光视界
+				5 text 科
+				6 text 拾光视界
+			473 button 返回列表
+			7 button 个人中心
+			8 button 订阅中心
+			10 text 自然科学启蒙 / 全部单元
+			474 container
+				475 heading 月相变化圆盘, Value: 2
+					476 text 月相变化圆盘
+				477 text 转动月相圆盘，观察月亮从弯到圆再到弯的变化。
+				478 heading 核心要点 / OBJECTIVES, Value: 5
+					479 text 核心要点 / OBJECTIVES
+				480 text 观察月亮形状 认识周期变化 练习连续记录
+				481 heading 摘要 / ABSTRACT, Value: 5
+					482 text 摘要 / ABSTRACT
+				483 text 通过可拖动月相圆盘、八大月相快捷盘、趣味问答和月相记录日记，理解月亮形状的周期变化。
+				484 button 进入交互课件
+	470 container Description: 小拾光学习助手, ID: shgLearningAssistant
+		471 button 打开小拾光萌宠学习助手
+			472 button 点击切换为【橘莉 Jolly · 星光绒绒兽】
+
+The focused UI element is 1 AXWebArea 拾光视界 v1.0 - 自然科学科普可视化系统, URL: shiguangtongxue.cn/subjects/natural-science/app.html?stage=starter&v=20260924135452

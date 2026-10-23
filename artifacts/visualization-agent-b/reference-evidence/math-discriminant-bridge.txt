@@ -1,0 +1,54 @@
+Browser tab: 1, Title: "拾光视界 v12.0 - 数学全景教学系统", URL: "https://www.shiguangtongxue.cn/subjects/math/app.html?stage=junior&cardId=j9a_m03&v=20260926005820".
+1 AXWebArea 拾光视界 v12.0 - 数学全景教学系统, URL: shiguangtongxue.cn/subjects/math/app.html?stage=junior&cardId=j9a_m03&v=20260926005820
+	23 container
+		24 container
+			25 button 返回列表
+			26 text 一元二次方程根的判别式
+			27 text 数 拾光视界
+			28 button 退出系统
+			29 container
+				30 container lp
+					31 container 判别式模式
+						32 checkbox 根数判定, Value: 0
+						33 checkbox 拦截求交, Value: 0
+						34 checkbox 拱桥通航, Value: 1
+						35 checkbox 韦达根距, Value: 0
+						36 checkbox 直线联立, Value: 0
+					77 container ctrl-app
+						78 container hlabel
+							79 text 水位高度 H
+							80 text 3.0
+						81 slider (settable, integer) Value: 3, ID: sh
+					50 button 复位
+					51 checkbox 扫描Δ, Value: 0, ID: btnscan
+					52 button 重根挑战
+					53 text 🟢 拖顶点平移  |  🔵 拖开口调a  |  🔴 拖红线调H  |  双指缩放
+				54 container rp
+					55 container
+						56 text Δ
+						82 text 9.60
+						58 text 根数
+						83 text 2 个
+						60 text 状态
+						84 text 两个实根
+						62 text x₁
+						85 text 3.873
+						64 text x₂
+						86 text -3.873
+						66 text 根距
+						87 text 7.75
+						68 container relation-list
+							88 text Δ=b²-4a(c-H) x₁+x₂=0.00 x₁x₂=-15.00 根距=7.75
+					70 container eqbox
+						89 text -0.4x² + 0.0x + 9.0 =  3.0
+						90 text 移项得：
+						91 text -0.4x² + 0.0x  + 6.0  = 0
+					76 container rtxt
+						92 text Δ > 0 → 两个不同实数根
+						93 text 抛物线与水位线有  2个交点
+						94 text x₁ =  3.873 ，x₂ =  -3.873
+	20 container Description: 小拾光学习助手, ID: shgLearningAssistant
+		21 button 打开小拾光萌宠学习助手
+			22 button 点击切换为【橘莉 Jolly · 星光绒绒兽】
+
+The focused UI element is 34 checkbox 拱桥通航, Value: 1

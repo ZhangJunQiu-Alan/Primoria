@@ -1,4 +1,5 @@
 import { IR_VERSION } from "./lesson-plan-ir";
+import { INTERACTIVE_CATALOG_HASH } from "@primoria/contracts/artifacts/interactive-catalog";
 
 // Checkpoint compatibility versions (engineering doc §4.2). A stored checkpoint
 // is only reused when all three match the running worker, so a deployment that
@@ -12,10 +13,9 @@ import { IR_VERSION } from "./lesson-plan-ir";
 //    for the same IR + KG changes.
 
 export { IR_VERSION };
-// Bumped so resumed generation does not reuse writer batches created before the
-// Markdown math delimiter contract. Previous: 2026-06-30-writer-instruction.
-export const PROMPT_VERSION = "2026-07-17-markdown-math-delimiters";
-export const COMPILER_VERSION = "3";
+// Catalog capabilities are part of both planning and writing context.
+export const PROMPT_VERSION = `2026-10-22-catalog-structured-writer:${INTERACTIVE_CATALOG_HASH}`;
+export const COMPILER_VERSION = "4";
 
 export type CheckpointVersions = {
   irVersion: number;

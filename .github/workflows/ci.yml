@@ -210,6 +210,9 @@ jobs:
       - name: Widget renderer E2E
         run: pnpm test:widget:e2e
 
+      - name: Offline visualization replay across viewport widths
+        run: pnpm visualization:test:replay
+
       - name: Upload browser failure artifacts
         if: failure()
         uses: actions/upload-artifact@v4

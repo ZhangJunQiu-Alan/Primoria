@@ -121,6 +121,9 @@ export function createTutorModel(
     temperature: 0.2,
     maxTokens,
     streaming,
+    modelKwargs: model.startsWith("deepseek-") && model === process.env.AI_MODEL_FAST?.trim()
+      ? { thinking: { type: "enabled" }, reasoning_effort: "low" }
+      : undefined,
     callbacks: llmUsageCallbacks("tutor-model"),
     configuration: {
       baseURL: baseUrl.replace(/\/$/, ""),
@@ -162,6 +165,7 @@ export function createUtilityModel(
     streaming: false,
     maxRetries: 1,
     timeout,
+    modelKwargs: model.startsWith("deepseek-") ? { thinking: { type: "disabled" } } : undefined,
     callbacks: llmUsageCallbacks("utility-model"),
     configuration: {
       baseURL: baseUrl.replace(/\/$/, ""),

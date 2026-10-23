@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-23",
+  "scope": "Approved local publication; no deployment",
+  "webUnit": {
+    "passed": 927,
+    "skipped": 18
+  },
+  "catalogRegistered": 45,
+  "candidatePending": 4,
+  "dependencyAudit": {
+    "high": 0,
+    "critical": 0,
+    "moderate": 2,
+    "low": 1
+  },
+  "updatedDependencies": {
+    "next": "16.4.2",
+    "eslint-config-next": "16.4.2",
+    "@next/bundle-analyzer": "16.4.2",
+    "dompurify": "3.4.17",
+    "follow-redirects": "1.16.1"
+  },
+  "logs": [
+    {
+      "path": "reports/publication-regression.log",
+      "sha256": "5854bad9e0eeb0871b3a11f8ad530cb35854244158b1d018cbd75266622092c8"
+    },
+    {
+      "path": "reports/publication-audit.log",
+      "sha256": "36c04bf78a429b290cdeb6bdc807685fbf49fab89fb02063dc6674336c19b884"
+    }
+  ]
+}

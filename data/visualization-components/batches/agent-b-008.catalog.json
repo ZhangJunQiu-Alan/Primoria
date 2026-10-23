@@ -1,0 +1,153 @@
+{
+  "components": [
+    {
+      "componentId": "chem.weak-acid-buffer",
+      "version": 1,
+      "name": {
+        "zh-CN": "弱酸解离与缓冲响应",
+        "en": "Weak acid and buffer response"
+      },
+      "catalogDescription": {
+        "zh-CN": "单元弱酸、共轭碱、酸碱扰动、电荷与物料守恒",
+        "en": "Monoprotic acid equilibrium, conjugate base, water autoionization, and mass and charge balance"
+      },
+      "teachingPurpose": {
+        "zh-CN": "单元弱酸、共轭碱、酸碱扰动、电荷与物料守恒",
+        "en": "Monoprotic acid equilibrium, conjugate base, water autoionization, and mass and charge balance"
+      },
+      "primaryAction": "adjust",
+      "disciplineTags": [
+        "chemistry"
+      ],
+      "capabilityTags": [
+        "weak-acid",
+        "buffer",
+        "acid-dissociation",
+        "charge-balance"
+      ],
+      "implementation": {
+        "status": "implemented",
+        "rendererKey": "weakAcidBuffer"
+      },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "totalConcentration": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "default": 0.1
+          },
+          "pKa": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 12,
+            "default": 4.76
+          },
+          "saltFraction": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "default": 0.5
+          },
+          "addedBaseMM": {
+            "type": "number",
+            "minimum": -100,
+            "maximum": 100,
+            "default": 0
+          },
+          "view": {
+            "type": "string",
+            "enum": [
+              "composition",
+              "response"
+            ],
+            "default": "composition"
+          },
+          "showCapacity": {
+            "type": "boolean",
+            "default": true
+          }
+        },
+        "required": [
+          "totalConcentration",
+          "pKa",
+          "saltFraction",
+          "addedBaseMM",
+          "view",
+          "showCapacity"
+        ],
+        "default": {
+          "totalConcentration": 0.1,
+          "pKa": 4.76,
+          "saltFraction": 0.5,
+          "addedBaseMM": 0,
+          "view": "composition",
+          "showCapacity": true
+        }
+      },
+      "patchHints": [
+        {
+          "zh-CN": "只修改用户要求的教学参数，其余字段保留。",
+          "en": "Patch only the requested teaching parameters and preserve the rest."
+        },
+        {
+          "zh-CN": "酸/盐比例接近1:1时比较缓冲响应；降低总浓度时容量变弱；极稀溶液需包含水。addedBaseMM是固定体积浓度当量，不是滴入体积；不用于多元酸或真实高浓度活度计算。",
+          "en": "Respect the documented model assumptions and parameter bounds."
+        }
+      ],
+      "fallbackConditions": [
+        {
+          "zh-CN": "本组件不处理：多元酸、真实高浓度活度、滴入体积与稀释、强酸强碱滴定操作。",
+          "en": "Outside this component: 多元酸, 真实高浓度活度, 滴入体积与稀释, 强酸强碱滴定操作."
+        }
+      ],
+      "examplePrompts": [
+        {
+          "zh-CN": "缓冲溶液为什么加一点酸pH变化不大？",
+          "en": "Why does a buffer resist a small acid addition?"
+        },
+        {
+          "zh-CN": "酸稀到和纯水差不多了，还能用根号KaC吗？",
+          "en": "Does the square-root approximation still work when an acid is extremely dilute?"
+        }
+      ],
+      "search": {
+        "aliases": [
+          "弱酸解离",
+          "缓冲溶液",
+          "共轭酸碱对",
+          "稀溶液pH",
+          "缓冲容量",
+          "pKa",
+          "weak acid",
+          "buffer capacity",
+          "conjugate base"
+        ],
+        "concepts": [
+          "weak-acid",
+          "buffer",
+          "acid-dissociation",
+          "charge-balance"
+        ],
+        "stages": [
+          "senior",
+          "university"
+        ],
+        "supports": [
+          "25°C理想单元弱酸",
+          "含水自解离的极稀溶液",
+          "固定体积酸碱当量扰动"
+        ],
+        "excludes": [
+          "多元酸",
+          "真实高浓度活度",
+          "滴入体积与稀释",
+          "强酸强碱滴定操作"
+        ],
+        "referenceIds": []
+      }
+    }
+  ]
+}

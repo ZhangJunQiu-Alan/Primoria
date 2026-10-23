@@ -1,0 +1,958 @@
+Browser tab: 1, Title: "拾光视界 - 高中物理可视化", URL: "https://www.shiguangtongxue.cn/subjects/physics/senior/".
+1 AXWebArea 拾光视界 - 高中物理可视化, URL: shiguangtongxue.cn/subjects/physics/senior/
+	2 container
+		3 container homeRoot
+			4 container
+				5 container 物理
+					6 text 物
+				7 container userInfo
+					8 button 个人中心, ID: headerProfileBtn
+					9 button 订阅中心, ID: headerSubscribeBtn
+				10 button 切换科目, ID: exitSystemBtn
+			11 container 物理课程筛选
+				12 container Description: 知识领域, ID: categoryFilterContainer
+					13 checkbox 全部知识领域, Value: 1
+					14 checkbox 力学, Value: 0
+					15 checkbox 电磁, Value: 0
+					16 checkbox 光学, Value: 0
+					17 checkbox 热学, Value: 0
+					18 checkbox 近代物理, Value: 0
+					19 checkbox 声学与波动, Value: 0
+				20 container
+					21 text 高中物理
+					22 text 103
+					23 text  个实验
+			24 container modelGrid
+				25 button 受力平衡实验室 预览
+					26 container
+						27 image 受力平衡实验室
+					28 container
+						29 text 高中物理 · 力学
+						30 heading 受力平衡实验室, Value: 3
+							31 text 受力平衡实验室
+						32 text #静止的艺术 ΣF = 0 查看实验 
+				33 button 牛顿运动定律 预览
+					34 container
+						35 image 牛顿运动定律
+					36 container
+						37 text 高中物理 · 力学
+						38 heading 牛顿运动定律, Value: 3
+							39 text 牛顿运动定律
+						40 text #因果的律动 F = ma 查看实验 
+				41 button 平抛运动仿真 预览
+					42 container
+						43 image 平抛运动仿真
+					44 container
+						45 text 高中物理 · 力学
+						46 heading 平抛运动仿真, Value: 3
+							47 text 平抛运动仿真
+						48 text #自由的弧度 y = ½gt² 查看实验 
+				49 button 斜抛运动（含空气阻力） 预览
+					50 container
+						51 image 斜抛运动（含空气阻力）
+					52 container
+						53 text 高中物理 · 力学
+						54 heading 斜抛运动（含空气阻力）, Value: 3
+							55 text 斜抛运动（含空气阻力）
+						56 text #角度 #初速 x = v₀cosθ·t, y = h₀ + v₀sinθ·t - ½gt² 查看实验 
+				57 button 圆周运动探究 预览
+					58 container
+						59 image 圆周运动探究
+					60 container
+						61 text 高中物理 · 力学
+						62 heading 圆周运动探究, Value: 3
+							63 text 圆周运动探究
+						64 text #循环的秩序 a = v²/r 查看实验 
+				65 button 万有引力与航天 预览
+					66 container
+						67 image 万有引力与航天
+					68 container
+						69 text 高中物理 · 力学
+						70 heading 万有引力与航天, Value: 3
+							71 text 万有引力与航天
+						72 text #星尘的羁绊 F = GmM/r² 查看实验 
+				73 button 卫星变轨原理 预览
+					74 container
+						75 image 卫星变轨原理
+					76 container
+						77 text 高中物理 · 力学
+						78 heading 卫星变轨原理, Value: 3
+							79 text 卫星变轨原理
+						80 text #轨道的跳跃 Orbital Shift 查看实验 
+				81 button 天体多星模型 预览
+					82 container
+						83 image 天体多星模型
+					84 container
+						85 text 高中物理 · 力学
+						86 heading 天体多星模型, Value: 3
+							87 text 天体多星模型
+						88 text #双星 #三星 N-body (2/3) 查看实验 
+				89 button 机械能守恒 预览
+					90 container
+						91 image 机械能守恒
+					92 container
+						93 text 高中物理 · 力学
+						94 heading 机械能守恒, Value: 3
+							95 text 机械能守恒
+						96 text #能量的轮转 E = K + P 查看实验 
+				97 button 动量守恒碰撞 预览
+					98 container
+						99 image 动量守恒碰撞
+					100 container
+						101 text 高中物理 · 力学
+						102 heading 动量守恒碰撞, Value: 3
+							103 text 动量守恒碰撞
+						104 text #瞬时的交换 Σp = constant 查看实验 
+				105 button 摩擦力探索 预览
+					106 container
+						107 image 摩擦力探索
+					108 container
+						109 text 高中物理 · 力学
+						110 heading 摩擦力探索, Value: 3
+							111 text 摩擦力探索
+						112 text #阻碍的艺术 f = μN 查看实验 
+				113 button 传送带动力学 预览
+					114 container
+						115 image 传送带动力学
+					116 container
+						117 text 高中物理 · 力学
+						118 heading 传送带动力学, Value: 3
+							119 text 传送带动力学
+						120 text #流水线的物理 f = μN 查看实验 
+				121 button 机械振动与波 预览
+					122 container
+						123 image 机械振动与波
+					124 container
+						125 text 高中物理 · 力学
+						126 heading 机械振动与波, Value: 3
+							127 text 机械振动与波
+						128 text #能量的扩散 y = Asin(kx-ωt) 查看实验 
+				129 button 冲量与动量定理 预览
+					130 container
+						131 image 冲量与动量定理
+					132 container
+						133 text 高中物理 · 力学
+						134 heading 冲量与动量定理, Value: 3
+							135 text 冲量与动量定理
+						136 text #F-t 图 #缓冲时间 I = Ft = Δp 查看实验 
+				137 button 弹簧振子与简谐振动 预览
+					138 container
+						139 image 弹簧振子与简谐振动
+					140 container
+						141 text 高中物理 · 力学
+						142 heading 弹簧振子与简谐振动, Value: 3
+							143 text 弹簧振子与简谐振动
+						144 text #x-t #v-t x = A cos(ωt + φ) 查看实验 
+				145 button 竖直上抛与自由落体 预览
+					146 container
+						147 image 竖直上抛与自由落体
+					148 container
+						149 text 高中物理 · 力学
+						150 heading 竖直上抛与自由落体, Value: 3
+							151 text 竖直上抛与自由落体
+						152 text #上升 #最高点 v = v₀ - gt 查看实验 
+				153 button 连接体动力学 预览
+					154 container
+						155 image 连接体动力学
+					156 container
+						157 text 高中物理 · 力学
+						158 heading 连接体动力学, Value: 3
+							159 text 连接体动力学
+						160 text #整体法 #隔离法 F = ma 查看实验 
+				161 button 超重失重与电梯模型 预览
+					162 container
+						163 image 超重失重与电梯模型
+					164 container
+						165 text 高中物理 · 力学
+						166 heading 超重失重与电梯模型, Value: 3
+							167 text 超重失重与电梯模型
+						168 text #视重 #支持力 N = m(g ± a) 查看实验 
+				169 button 静电场图谱 预览
+					170 container
+						171 image 静电场图谱
+					172 container
+						173 text 高中物理 · 电磁
+						174 heading 静电场图谱, Value: 3
+							175 text 静电场图谱
+						176 text #无形之网 E = kQ/r² 查看实验 
+				177 button 电容动态模拟 预览
+					178 container
+						179 image 电容动态模拟
+					180 container
+						181 text 高中物理 · 电磁
+						182 heading 电容动态模拟, Value: 3
+							183 text 电容动态模拟
+						184 text #电荷的静候 C = Q/U 查看实验 
+				185 button 交流发电机 预览
+					186 container
+						187 image 交流发电机
+					188 container
+						189 text 高中物理 · 电磁
+						190 heading 交流发电机, Value: 3
+							191 text 交流发电机
+						192 text #正弦律动 e = NBSωsinωt 查看实验 
+				193 button 楞次定律模拟 预览
+					194 container
+						195 image 楞次定律模拟
+					196 container
+						197 text 高中物理 · 电磁
+						198 heading 楞次定律模拟, Value: 3
+							199 text 楞次定律模拟
+						200 text #反抗者的平衡 ε = -ΔΦ/Δt 查看实验 
+				201 button 单双棒导轨模型 预览
+					202 container
+						203 image 单双棒导轨模型
+					204 container
+						205 text 高中物理 · 电磁
+						206 heading 单双棒导轨模型, Value: 3
+							207 text 单双棒导轨模型
+						208 text #感应电流 #安培力 ε = BL(v₁−v₂) 查看实验 
+				209 button 电路实战实验室 预览
+					210 container
+						211 image 电路实战实验室
+					212 container
+						213 text 高中物理 · 电磁
+						214 heading 电路实战实验室, Value: 3
+							215 text 电路实战实验室
+						216 text #电荷的流动 I = E/(R+r) 查看实验 
+				217 button 电阻串并联与分压分流 预览
+					218 container
+						219 image 电阻串并联与分压分流
+					220 container
+						221 text 高中物理 · 电磁
+						222 heading 电阻串并联与分压分流, Value: 3
+							223 text 电阻串并联与分压分流
+						224 text #等效电阻 #分压 U = IR 查看实验 
+				225 button 带电粒子匀强电场偏转 预览
+					226 container
+						227 image 带电粒子匀强电场偏转
+					228 container
+						229 text 高中物理 · 电磁
+						230 heading 带电粒子匀强电场偏转, Value: 3
+							231 text 带电粒子匀强电场偏转
+						232 text #板间抛物线 a = qE/m 查看实验 
+				233 button 欧姆表/伏安法测电阻与误差 预览
+					234 container
+						235 image 欧姆表/伏安法测电阻与误差
+					236 container
+						237 text 高中物理 · 电磁
+						238 heading 欧姆表/伏安法测电阻与误差, Value: 3
+							239 text 欧姆表/伏安法测电阻与误差
+						240 text #A内接 #外接 R = V/I 查看实验 
+				241 button 电学实验专题 预览
+					242 container
+						243 image 电学实验专题
+					244 container
+						245 text 高中物理 · 电磁
+						246 heading 电学实验专题, Value: 3
+							247 text 电学实验专题
+						248 text #伏安法 #灯泡 R = U/I, U = E - Ir 查看实验 
+				249 button 密里根油滴实验 预览
+					250 container
+						251 image 密里根油滴实验
+					252 container
+						253 text 高中物理 · 电磁
+						254 heading 密里根油滴实验, Value: 3
+							255 text 密里根油滴实验
+						256 text #电量的量子化 q = ne 查看实验 
+				257 button LC 电磁振荡 预览
+					258 container
+						259 image LC 电磁振荡
+					260 container
+						261 text 高中物理 · 电磁
+						262 heading LC 电磁振荡, Value: 3
+							263 text LC 电磁振荡
+						264 text #交替的场 T = 2π√LC 查看实验 
+				265 button 变压器实验室 预览
+					266 container
+						267 image 变压器实验室
+					268 container
+						269 text 高中物理 · 电磁
+						270 heading 变压器实验室, Value: 3
+							271 text 变压器实验室
+						272 text #电压的阶梯 U₁/U₂ = n₁/n₂ 查看实验 
+				273 button 磁场中的旋转圆 预览
+					274 container
+						275 image 磁场中的旋转圆
+					276 container
+						277 text 高中物理 · 电磁
+						278 heading 磁场中的旋转圆, Value: 3
+							279 text 磁场中的旋转圆
+						280 text #洛伦兹力 F = qBv 查看实验 
+				281 button 左右手定则判定 预览
+					282 container
+						283 image 左右手定则判定
+					284 container
+						285 text 高中物理 · 电磁
+						286 heading 左右手定则判定, Value: 3
+							287 text 左右手定则判定
+						288 text #安培力 #洛伦兹力 F = BILsinθ；F = qvBsinθ；ε = Blv 查看实验 
+				289 button 通电直导线磁场 预览
+					290 container
+						291 image 通电直导线磁场
+					292 container
+						293 text 高中物理 · 电磁
+						294 heading 通电直导线磁场, Value: 3
+							295 text 通电直导线磁场
+						296 text #环形磁场 #右手定则 B ∝ I/r 查看实验 
+				297 button 几何光学光路 预览
+					298 container
+						299 image 几何光学光路
+					300 container
+						301 text 高中物理 · 光学
+						302 heading 几何光学光路, Value: 3
+							303 text 几何光学光路
+						304 text #光的折线 n₁sinθ₁ = n₂sinθ₂ 查看实验 
+				305 button 双缝干涉实验 预览
+					306 container
+						307 image 双缝干涉实验
+					308 container
+						309 text 高中物理 · 光学
+						310 heading 双缝干涉实验, Value: 3
+							311 text 双缝干涉实验
+						312 text #波动的证明 Δx = (L/d)λ 查看实验 
+				313 button 薄膜干涉图象 预览
+					314 container
+						315 image 薄膜干涉图象
+					316 container
+						317 text 高中物理 · 光学
+						318 heading 薄膜干涉图象, Value: 3
+							319 text 薄膜干涉图象
+						320 text #色彩的干涉 2nd = kλ 查看实验 
+				321 button 布朗运动模拟 预览
+					322 container
+						323 image 布朗运动模拟
+					324 container
+						325 text 高中物理 · 热学
+						326 heading 布朗运动模拟, Value: 3
+							327 text 布朗运动模拟
+						328 text #无序的秩序 p = nkT 查看实验 
+				329 button 理想气体状态 预览
+					330 container
+						331 image 理想气体状态
+					332 container
+						333 text 高中物理 · 热学
+						334 heading 理想气体状态, Value: 3
+							335 text 理想气体状态
+						336 text #压力的律动 PV = nRT 查看实验 
+				337 button 理想气体等过程对比 预览
+					338 container
+						339 image 理想气体等过程对比
+					340 container
+						341 text 高中物理 · 热学
+						342 heading 理想气体等过程对比, Value: 3
+							343 text 理想气体等过程对比
+						344 text #等温 #等压 PV = nRT 查看实验 
+				345 button 光电效应实验 预览
+					346 container
+						347 image 光电效应实验
+					348 container
+						349 text 高中物理 · 近代物理
+						350 heading 光电效应实验, Value: 3
+							351 text 光电效应实验
+						352 text #光子的力量 hf = W₀ + Eₖ,max 查看实验 
+				353 button 玻尔原子能级 预览
+					354 container
+						355 image 玻尔原子能级
+					356 container
+						357 text 高中物理 · 近代物理
+						358 heading 玻尔原子能级, Value: 3
+							359 text 玻尔原子能级
+						360 text #量子的阶梯 hν = E₂ - E₁ 查看实验 
+				361 button 放射性半衰期 预览
+					362 container
+						363 image 放射性半衰期
+					364 container
+						365 text 高中物理 · 近代物理
+						366 heading 放射性半衰期, Value: 3
+							367 text 放射性半衰期
+						368 text #时间的凋零 N = N₀(1/2) t/T 查看实验 
+				369 button α、β、γ 射线性质对比 预览
+					370 container
+						371 image α、β、γ 射线性质对比
+					372 container
+						373 text 高中物理 · 近代物理
+						374 heading α、β、γ 射线性质对比, Value: 3
+							375 text α、β、γ 射线性质对比
+						376 text #带电 #偏转 α / β / γ 查看实验 
+				377 button 多普勒效应 预览
+					378 container
+						379 image 多普勒效应
+					380 container
+						381 text 高中物理 · 声学与波动
+						382 heading 多普勒效应, Value: 3
+							383 text 多普勒效应
+						384 text #频率的移位 f' = f(v±v₀)/(v∓v s ) 查看实验 
+				385 button 胡克定律探究 预览
+					386 container
+						387 image 胡克定律探究
+					388 container
+						389 text 高中物理 · 力学
+						390 heading 胡克定律探究, Value: 3
+							391 text 胡克定律探究
+						392 text #形变的弹力 F = kΔx 查看实验 
+				393 button 单摆周期实验 预览
+					394 container
+						395 image 单摆周期实验
+					396 container
+						397 text 高中物理 · 力学
+						398 heading 单摆周期实验, Value: 3
+							399 text 单摆周期实验
+						400 text #重力的摇摆 T = 2π√(L/g) 查看实验 
+				401 button 功与功率实验室 预览
+					402 container
+						403 image 功与功率实验室
+					404 container
+						405 text 高中物理 · 力学
+						406 heading 功与功率实验室, Value: 3
+							407 text 功与功率实验室
+						408 text #能量的转化率 P = W/t = Fv 查看实验 
+				409 button 运动学基础训练 预览
+					410 container
+						411 image 运动学基础训练
+					412 container
+						413 text 高中物理 · 力学
+						414 heading 运动学基础训练, Value: 3
+							415 text 运动学基础训练
+						416 text #位置与速度 v = Δs/Δt 查看实验 
+				417 button 测量与读数训练 预览
+					418 container
+						419 image 测量与读数训练
+					420 container
+						421 text 高中物理 · 力学
+						422 heading 测量与读数训练, Value: 3
+							423 text 测量与读数训练
+						424 text #游标卡尺 #螺旋测微器 读数 = 主尺 + 游标 查看实验 
+				425 button 法拉第感应定律 预览
+					426 container
+						427 image 法拉第感应定律
+					428 container
+						429 text 高中物理 · 电磁
+						430 heading 法拉第感应定律, Value: 3
+							431 text 法拉第感应定律
+						432 text #变化的磁通 E = nΔΦ/Δt 查看实验 
+				433 button 自感现象观察 预览
+					434 container
+						435 image 自感现象观察
+					436 container
+						437 text 高中物理 · 电磁
+						438 heading 自感现象观察, Value: 3
+							439 text 自感现象观察
+						440 text #自我的阻碍 E = -LΔI/Δt 查看实验 
+				441 button 复合场粒子运动 预览
+					442 container
+						443 image 复合场粒子运动
+					444 container
+						445 text 高中物理 · 电磁
+						446 heading 复合场粒子运动, Value: 3
+							447 text 复合场粒子运动
+						448 text #电磁的律动 F合 = mg + qE + q(v × B) 查看实验 
+				449 button 3D复合场粒子运动 预览
+					450 container
+						451 image 3D复合场粒子运动
+					452 container
+						453 text 高中物理 · 电磁
+						454 heading 3D复合场粒子运动, Value: 3
+							455 text 3D复合场粒子运动
+						456 text #三维轨迹 F = mg + qE + qv×B 查看实验 
+				457 button 单缝衍射图谱 预览
+					458 container
+						459 image 单缝衍射图谱
+					460 container
+						461 text 高中物理 · 光学
+						462 heading 单缝衍射图谱, Value: 3
+							463 text 单缝衍射图谱
+						464 text #光影的扩散 Diffraction 查看实验 
+				465 button 光色散/三棱镜 预览
+					466 container
+						467 image 光色散/三棱镜
+					468 container
+						469 text 高中物理 · 光学
+						470 heading 光色散/三棱镜, Value: 3
+							471 text 光色散/三棱镜
+						472 text #彩虹的解构 Dispersion 查看实验 
+				473 button 光偏振实验 预览
+					474 container
+						475 image 光偏振实验
+					476 container
+						477 text 高中物理 · 光学
+						478 heading 光偏振实验, Value: 3
+							479 text 光偏振实验
+						480 text #震动的选择 I = I₀ cos²θ 查看实验 
+				481 button 热力学第一定律 预览
+					482 container
+						483 image 热力学第一定律
+					484 container
+						485 text 高中物理 · 热学
+						486 heading 热力学第一定律, Value: 3
+							487 text 热力学第一定律
+						488 text #内能的收支 ΔU = Q + W 查看实验 
+				489 button 分子力/势能曲线 预览
+					490 container
+						491 image 分子力/势能曲线
+					492 container
+						493 text 高中物理 · 热学
+						494 heading 分子力/势能曲线, Value: 3
+							495 text 分子力/势能曲线
+						496 text #微观的平衡 Potential Curve 查看实验 
+				497 button 相变与加热曲线 预览
+					498 container
+						499 image 相变与加热曲线
+					500 container
+						501 text 高中物理 · 热学
+						502 heading 相变与加热曲线, Value: 3
+							503 text 相变与加热曲线
+						504 text #冰水蒸气 #平台吸热 Q = cmΔT / mλ 查看实验 
+				505 button 热平衡与比热容 预览
+					506 container
+						507 image 热平衡与比热容
+					508 container
+						509 text 高中物理 · 热学
+						510 heading 热平衡与比热容, Value: 3
+							511 text 热平衡与比热容
+						512 text #Q放=Q吸 #冷热混合 Q = cmΔT 查看实验 
+				513 button 气体压强的微观来源 预览
+					514 container
+						515 image 气体压强的微观来源
+					516 container
+						517 text 高中物理 · 热学
+						518 heading 气体压强的微观来源, Value: 3
+							519 text 气体压强的微观来源
+						520 text #撞壁频率 #平均动能 p = nkT 查看实验 
+				521 button 油膜法估测分子大小 预览
+					522 container
+						523 image 油膜法估测分子大小
+					524 container
+						525 text 高中物理 · 热学
+						526 heading 油膜法估测分子大小, Value: 3
+							527 text 油膜法估测分子大小
+						528 text #单分子油膜 #面积估算 d = V / S 查看实验 
+				529 button 热机循环与效率 预览
+					530 container
+						531 image 热机循环与效率
+					532 container
+						533 text 高中物理 · 热学
+						534 heading 热机循环与效率, Value: 3
+							535 text 热机循环与效率
+						536 text #p-V 面积 #循环做功 η = W / Q吸 查看实验 
+				537 button 热传递方式对比 预览
+					538 container
+						539 image 热传递方式对比
+					540 container
+						541 text 高中物理 · 热学
+						542 heading 热传递方式对比, Value: 3
+							543 text 热传递方式对比
+						544 text #传导 #对流 Heat Transfer 查看实验 
+				545 button 表面张力与毛细现象 预览
+					546 container
+						547 image 表面张力与毛细现象
+					548 container
+						549 text 高中物理 · 热学
+						550 heading 表面张力与毛细现象, Value: 3
+							551 text 表面张力与毛细现象
+						552 text #液滴 #接触角 h ∝ 1 / r 查看实验 
+				553 button 饱和汽与湿度 预览
+					554 container
+						555 image 饱和汽与湿度
+					556 container
+						557 text 高中物理 · 热学
+						558 heading 饱和汽与湿度, Value: 3
+							559 text 饱和汽与湿度
+						560 text #饱和压 #相对湿度 φ = p / pₛ 查看实验 
+				561 button 卢瑟福散射实验 预览
+					562 container
+						563 image 卢瑟福散射实验
+					564 container
+						565 text 高中物理 · 近代物理
+						566 heading 卢瑟福散射实验, Value: 3
+							567 text 卢瑟福散射实验
+						568 text #原子核的发现 α-Scattering 查看实验 
+				569 button 重核裂变链式反应 预览
+					570 container
+						571 image 重核裂变链式反应
+					572 container
+						573 text 高中物理 · 近代物理
+						574 heading 重核裂变链式反应, Value: 3
+							575 text 重核裂变链式反应
+						576 text #能量的爆发 E = Δmc² 查看实验 
+				577 button 轻核聚变过程 预览
+					578 container
+						579 image 轻核聚变过程
+					580 container
+						581 text 高中物理 · 近代物理
+						582 heading 轻核聚变过程, Value: 3
+							583 text 轻核聚变过程
+						584 text #恒星的动力 Nuclear Fusion 查看实验 
+				585 button 波粒二象性 预览
+					586 container
+						587 image 波粒二象性
+					588 container
+						589 text 高中物理 · 近代物理
+						590 heading 波粒二象性, Value: 3
+							591 text 波粒二象性
+						592 text #量子的本质 λ = h/p 查看实验 
+				593 button 氢原子光谱与巴耳末线系 预览
+					594 container
+						595 image 氢原子光谱与巴耳末线系
+					596 container
+						597 text 高中物理 · 近代物理
+						598 heading 氢原子光谱与巴耳末线系, Value: 3
+							599 text 氢原子光谱与巴耳末线系
+						600 text #能级 #跃迁 1/λ = R(1/n f ²-1/n i ²) 查看实验 
+				601 button 核反应方程与质能亏损 预览
+					602 container
+						603 image 核反应方程与质能亏损
+					604 container
+						605 text 高中物理 · 近代物理
+						606 heading 核反应方程与质能亏损, Value: 3
+							607 text 核反应方程与质能亏损
+						608 text #守恒 #配平 E = Δmc² 查看实验 
+				609 button 比结合能曲线与核稳定性 预览
+					610 container
+						611 image 比结合能曲线与核稳定性
+					612 container
+						613 text 高中物理 · 近代物理
+						614 heading 比结合能曲线与核稳定性, Value: 3
+							615 text 比结合能曲线与核稳定性
+						616 text #铁峰 #聚变 E b  / A 查看实验 
+				617 button 电子衍射与物质波 预览
+					618 container
+						619 image 电子衍射与物质波
+					620 container
+						621 text 高中物理 · 近代物理
+						622 heading 电子衍射与物质波, Value: 3
+							623 text 电子衍射与物质波
+						624 text #德布罗意波 #衍射环 λ = h / p 查看实验 
+				625 button 云室粒子径迹观察 预览
+					626 container
+						627 image 云室粒子径迹观察
+					628 container
+						629 text 高中物理 · 近代物理
+						630 heading 云室粒子径迹观察, Value: 3
+							631 text 云室粒子径迹观察
+						632 text #α #β Ion Tracks 查看实验 
+				633 button 黑体辐射与普朗克量子化 预览
+					634 container
+						635 image 黑体辐射与普朗克量子化
+					636 container
+						637 text 高中物理 · 近代物理
+						638 heading 黑体辐射与普朗克量子化, Value: 3
+							639 text 黑体辐射与普朗克量子化
+						640 text #紫外灾难 #峰值漂移 λ max ·T = b, E = nhf 查看实验 
+				641 button 速度选择器（E×B） 预览
+					642 container
+						643 image 速度选择器（E×B）
+					644 container
+						645 text 高中物理 · 电磁
+						646 heading 速度选择器（E×B）, Value: 3
+							647 text 速度选择器（E×B）
+						648 text #直线通过的条件 v = E/B 查看实验 
+				649 button 涡流演示 预览
+					650 container
+						651 image 涡流演示
+					652 container
+						653 text 高中物理 · 电磁
+						654 heading 涡流演示, Value: 3
+							655 text 涡流演示
+						656 text #阻碍变化的涡流 ε = -ΔΦ/Δt 查看实验 
+				657 button 霍尔效应 预览
+					658 container
+						659 image 霍尔效应
+					660 container
+						661 text 高中物理 · 电磁
+						662 heading 霍尔效应, Value: 3
+							663 text 霍尔效应
+						664 text #侧向电势差 V H  ∝ I·B 查看实验 
+				665 button 质谱仪（基础） 预览
+					666 container
+						667 image 质谱仪（基础）
+					668 container
+						669 text 高中物理 · 电磁
+						670 heading 质谱仪（基础）, Value: 3
+							671 text 质谱仪（基础）
+						672 text #半径区分 m #q r = v/(|q/m|·B) 查看实验 
+				673 button 回旋加速器 预览
+					674 container
+						675 image 回旋加速器
+					676 container
+						677 text 高中物理 · 电磁
+						678 heading 回旋加速器, Value: 3
+							679 text 回旋加速器
+						680 text #跨缝加速 #半径增大 T = 2πm/(qB) 查看实验 
+				681 button 匀加速直线运动实验 预览
+					682 container
+						683 image 匀加速直线运动实验
+					684 container
+						685 text 高中物理 · 力学
+						686 heading 匀加速直线运动实验, Value: 3
+							687 text 匀加速直线运动实验
+						688 text #s–t²斜率测a s = v₀t + ½at² 查看实验 
+				689 button 机械波干涉 预览
+					690 container
+						691 image 机械波干涉
+					692 container
+						693 text 高中物理 · 声学与波动
+						694 heading 机械波干涉, Value: 3
+							695 text 机械波干涉
+						696 text #叠加原理 #驻波特征 y = y₁ + y₂ 查看实验 
+				697 button 阻尼驱动简谐共振 预览
+					698 container
+						699 image 阻尼驱动简谐共振
+					700 container
+						701 text 高中物理 · 力学
+						702 heading 阻尼驱动简谐共振, Value: 3
+							703 text 阻尼驱动简谐共振
+						704 text #幅频与相位 m ẍ + c ẋ + k x = F 查看实验 
+				705 button 康普顿效应 预览
+					706 container
+						707 image 康普顿效应
+					708 container
+						709 text 高中物理 · 光学
+						710 heading 康普顿效应, Value: 3
+							711 text 康普顿效应
+						712 text #X射线散射 Δλ = λ C (1-cosθ) 查看实验 
+				713 button 动量守恒球槽模型 预览
+					714 container
+						715 image 动量守恒球槽模型
+					716 container
+						717 text 高中物理 · 力学
+						718 heading 动量守恒球槽模型, Value: 3
+							719 text 动量守恒球槽模型
+						720 text #小球-槽耦合 Pₓ = m·vₓ + M·V 查看实验 
+				721 button 电表改装和多用电表 预览
+					722 container
+						723 image 电表改装和多用电表
+					724 container
+						725 text 高中物理 · 电磁
+						726 heading 电表改装和多用电表, Value: 3
+							727 text 电表改装和多用电表
+						728 text #并联分流 #串联分压 R并 = I g ·R g  / (I 量  - I g ) 查看实验 
+				729 button 驻波节点/腹点对比 预览
+					730 container
+						731 image 驻波节点/腹点对比
+					732 container
+						733 text 高中物理 · 声学与波动
+						734 heading 驻波节点/腹点对比, Value: 3
+							735 text 驻波节点/腹点对比
+						736 text #等幅vs不等幅 Amin=|A₁-A₂| 查看实验 
+				737 button 波的反射（固定端/自由端） 预览
+					738 container
+						739 image 波的反射（固定端/自由端）
+					740 container
+						741 text 高中物理 · 声学与波动
+						742 heading 波的反射（固定端/自由端）, Value: 3
+							743 text 波的反射（固定端/自由端）
+						744 text #反相 #同相 y = y i  ± y r 查看实验 
+				745 button 机械波衍射与障碍绕射 预览
+					746 container
+						747 image 机械波衍射与障碍绕射
+					748 container
+						749 text 高中物理 · 声学与波动
+						750 heading 机械波衍射与障碍绕射, Value: 3
+							751 text 机械波衍射与障碍绕射
+						752 text #缝宽 #波长 a ~ λ 查看实验 
+				753 button 电磁波与电磁波谱 预览
+					754 container
+						755 image 电磁波与电磁波谱
+					756 container
+						757 text 高中物理 · 声学与波动
+						758 heading 电磁波与电磁波谱, Value: 3
+							759 text 电磁波与电磁波谱
+						760 text #波长 #频率 c = λf 查看实验 
+				761 button 示波器（CRT） 预览
+					762 container
+						763 image 示波器（CRT）
+					764 container
+						765 text 高中物理 · 电磁
+						766 heading 示波器（CRT）, Value: 3
+							767 text 示波器（CRT）
+						768 text #时基扫描 #X-Y李萨如 x(t), y(t) 查看实验 
+				769 button 运动的合成与分解 预览
+					770 container
+						771 image 运动的合成与分解
+					772 container
+						773 text 高中物理 · 力学
+						774 heading 运动的合成与分解, Value: 3
+							775 text 运动的合成与分解
+						776 text #速度合成 #牵连速度 v 绝 =v 牵 +v 相 查看实验 
+				777 button 卡文迪许扭秤实验 预览
+					778 container
+						779 image 卡文迪许扭秤实验
+					780 container
+						781 text 高中物理 · 力学
+						782 heading 卡文迪许扭秤实验, Value: 3
+							783 text 卡文迪许扭秤实验
+						784 text #万有引力常量测量 G = κθr²/(2MmL) 查看实验 
+				785 button 阿特伍德机 预览
+					786 container
+						787 image 阿特伍德机
+					788 container
+						789 text 高中物理 · 力学
+						790 heading 阿特伍德机, Value: 3
+							791 text 阿特伍德机
+						792 text #双质量-定滑轮加速度系统 a=(m₂-m₁)g/(m₁+m₂+I/R²) 查看实验 
+				793 button 等时圆和最速降线 预览
+					794 container
+						795 image 等时圆和最速降线
+					796 container
+						797 text 高中物理 · 力学
+						798 heading 等时圆和最速降线, Value: 3
+							799 text 等时圆和最速降线
+						800 text #等时圆 #摆线最快 t=2√(R/g) 查看实验 
+				801 button 相对运动与合速度 预览
+					802 container
+						803 image 相对运动与合速度
+					804 container
+						805 text 高中物理 · 力学
+						806 heading 相对运动与合速度, Value: 3
+							807 text 相对运动与合速度
+						808 text #参考系切换 v A /B=v A −v B 查看实验 
+				809 button 光栅衍射（主极大/级次） 预览
+					810 container
+						811 image 光栅衍射（主极大/级次）
+					812 container
+						813 text 高中物理 · 光学
+						814 heading 光栅衍射（主极大/级次）, Value: 3
+							815 text 光栅衍射（主极大/级次）
+						816 text #主极大分布与波长反推 d·sinθ = mλ 查看实验 
+				817 button 全反射与光纤导光 预览
+					818 container
+						819 image 全反射与光纤导光
+					820 container
+						821 text 高中物理 · 光学
+						822 heading 全反射与光纤导光, Value: 3
+							823 text 全反射与光纤导光
+						824 text #临界角与导光条件 sinθ_c = n₂/n₁ 查看实验 
+				825 button 磁场边界粒子轨迹 预览
+					826 container
+						827 image 磁场边界粒子轨迹
+					828 container
+						829 text 高中物理 · 电磁
+						830 heading 磁场边界粒子轨迹, Value: 3
+							831 text 磁场边界粒子轨迹
+						832 text #圆弧出界与临界半径 r = mv/(|q|B) 查看实验 
+				833 button 弹道摆综合模型 预览
+					834 container
+						835 image 弹道摆综合模型
+					836 container
+						837 text 高中物理 · 力学
+						838 heading 弹道摆综合模型, Value: 3
+							839 text 弹道摆综合模型
+						840 text #碰撞守恒 + 机械能上摆 m v₀=(M+m)V 查看实验 
+				841 button 数据处理综合实验室 预览
+					842 container
+						843 image 数据处理综合实验室
+					844 container
+						845 text 高中物理 · 力学
+						846 heading 数据处理综合实验室, Value: 3
+							847 text 数据处理综合实验室
+						848 text #误差 #拟合 统计 + 回归 + 滤波 查看实验 
+				849 button 导体静电专题 预览
+					850 container
+						851 image 导体静电专题
+					852 container
+						853 text 高中物理 · 电磁
+						854 heading 导体静电专题, Value: 3
+							855 text 导体静电专题
+						856 text #感应 #平衡 导体静电 查看实验 
+				857 button 运动测量专题 预览
+					858 container
+						859 image 运动测量专题
+					860 container
+						861 text 高中物理 · 力学
+						862 heading 运动测量专题, Value: 3
+							863 text 运动测量专题
+						864 text #纸带 #频闪 v = Δs/Δt, v = d/Δt 查看实验 
+				865 button 近代物理尺度宇宙 预览
+					866 container
+						867 image 近代物理尺度宇宙
+					868 container
+						869 text 高中物理 · 近代物理
+						870 heading 近代物理尺度宇宙, Value: 3
+							871 text 近代物理尺度宇宙
+						872 text #经典 #引力 Classical -> Gravity -> Quantum -> Strings 查看实验 
+				873 button 迈克尔逊干涉仪仿真 预览
+					874 container
+						875 image 迈克尔逊干涉仪仿真
+					876 container
+						877 text 高中物理 · 光学
+						878 heading 迈克尔逊干涉仪仿真, Value: 3
+							879 text 迈克尔逊干涉仪仿真
+						880 text #精密的极点 2d = kλ 查看实验 
+				881 button 圆孔衍射与瑞利判据 预览
+					882 container
+						883 image 圆孔衍射与瑞利判据
+					884 container
+						885 text 高中物理 · 光学
+						886 heading 圆孔衍射与瑞利判据, Value: 3
+							887 text 圆孔衍射与瑞利判据
+						888 text #分辨率的极限 θ = 1.22λ/D 查看实验 
+				889 button 布儒斯特角验证 预览
+					890 container
+						891 image 布儒斯特角验证
+					892 container
+						893 text 高中物理 · 光学
+						894 heading 布儒斯特角验证, Value: 3
+							895 text 布儒斯特角验证
+						896 text #偏振的觉醒 tan(i p ) = n 查看实验 
+				897 button 劳埃德镜与半波损失 预览
+					898 container
+						899 image 劳埃德镜与半波损失
+					900 container
+						901 text 高中物理 · 光学
+						902 heading 劳埃德镜与半波损失, Value: 3
+							903 text 劳埃德镜与半波损失
+						904 text #相位的突变 Δφ = π 查看实验 
+				905 button 晶体双折射 预览
+					906 container
+						907 image 晶体双折射
+					908 container
+						909 text 高中物理 · 光学
+						910 heading 晶体双折射, Value: 3
+							911 text 晶体双折射
+						912 text #o光与e光的剥离 n o  ≠ n e 查看实验 
+				913 button X射线晶体衍射 预览
+					914 container
+						915 image X射线晶体衍射
+					916 container
+						917 text 高中物理 · 光学
+						918 heading X射线晶体衍射, Value: 3
+							919 text X射线晶体衍射
+						920 text #布拉格方程 2d·sinθ = kλ 查看实验 
+		921 button 打开物理题库练习
+			922 text 题库
+			923 text 练习
+		924 container Description: 小拾光学习助手, ID: shgLearningAssistant
+			925 button 打开小拾光萌宠学习助手
+				926 button 点击切换为【橘莉 Jolly · 星光绒绒兽】
+		927 container 电路实战实验室, ID: enginePreviewModal
+			928 container
+				929 button 关闭预览
+					930 text 
+				931 image Description: 电路实战实验室, ID: enginePreviewImage
+				932 text 高中物理 · 电磁引擎
+				933 container
+					934 text SHG_MOD_019
+					935 heading 电路实战实验室, Value: 3, ID: enginePreviewVisualTitle
+						936 text 电路实战实验室
+					937 text 电荷的流动
+				938 text ENGINE PREVIEW
+				939 text 电磁引擎
+				940 text I = E/(R+r)
+				941 heading 电路实战实验室, Value: 3, ID: enginePreviewTitle
+					942 text 电路实战实验室
+				943 text 内外电路·电表示数·功率分配
+				944 text 核心要点
+				945 content list enginePreviewPoints
+					946 container
+						947 text 01 先把电源内阻与外电阻分开，不把整个回路只看成一个 R。
+					948 container
+						949 text 02 观察电流、电压和功率在不同接法下如何重新分配。
+					950 container
+						951 text 03 重点比较闭合、断路、短路和负载变化时的读数差异。
+				952 text 摘要
+				953 text 电路实战最需要整体结构感。预览先帮你把各元件作用和测量位置理顺，再进入实验更容易读懂每一次示数变化。核心要看 I = E/(R+r) 背后的变量关系：改变一个量时，另一个量为什么会随之变化，模拟中把数值变化和现象变化对应起来。
+				954 button 返回卡片列表
+				955 button 进入互动实验, ID: enginePreviewEnterBtn
+
+The focused UI element is 209 button 电路实战实验室 预览

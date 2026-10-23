@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "mappings": [],
+  "notes": [
+    "Coverage mappings are added only after matching a specific source capability. Six components exist but their scene-level browser audit is not complete. No full-coverage claim."
+  ]
+}

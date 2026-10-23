@@ -273,7 +273,13 @@ export const POST = async (req: NextRequest) => {
       },
     }),
   });
-  return handleRequest(normalizedRequest);
+  const response = await handleRequest(normalizedRequest);
+  if (response.headers.get("content-type")?.includes("text/event-stream")) {
+    const headers = new Headers(response.headers);
+    headers.set("content-type", "text/event-stream; charset=utf-8");
+    return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+  }
+  return response;
 };
 
 async function requestWithNormalizedAttachments(req: NextRequest) {

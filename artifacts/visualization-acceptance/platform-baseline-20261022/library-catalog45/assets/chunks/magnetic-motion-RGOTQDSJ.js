@@ -1,0 +1,1 @@
+import{a,b,c,d,e}from"./chunk-3AKLBGLV.js";import"./chunk-FTKDBJEQ.js";import"./chunk-7SZRL6FY.js";export{c as DEFAULT_MAGNETIC_MOTION_CONFIG,a as MagneticMotionConfigSchema,b as MagneticMotionPatchSchema,d as computeMagneticMotion,e as magneticMotionComponent};

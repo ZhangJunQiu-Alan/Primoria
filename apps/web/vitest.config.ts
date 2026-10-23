@@ -8,6 +8,8 @@ export default defineConfig({
     },
   },
   test: {
+    maxWorkers: process.env.CI ? 4 : 1,
+    maxConcurrency: process.env.CI ? 3 : 1,
     environment: "node",
     include: ["tests/**/*.spec.ts"],
     setupFiles: ["./tests/setup.ts"],

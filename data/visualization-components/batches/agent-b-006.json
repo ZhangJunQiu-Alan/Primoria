@@ -1,0 +1,416 @@
+{
+  "batchId": "agent-b-006",
+  "changeKind": "existing-widget-refinement",
+  "components": [
+    {
+      "componentId": "general.timeline-causality",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/timeline-causality.tsx",
+      "widgetExport": "TimelineCausalityWidget",
+      "samples": [
+        {
+          "timelineTitle": "A sequence of connected events",
+          "events": [
+            {
+              "id": "event-1",
+              "label": "Initial condition",
+              "dateLabel": "Phase 1",
+              "summary": "The situation before change."
+            },
+            {
+              "id": "event-2",
+              "label": "Turning point",
+              "dateLabel": "Phase 2",
+              "summary": "A change redirects what follows."
+            },
+            {
+              "id": "event-3",
+              "label": "Outcome",
+              "dateLabel": "Phase 3",
+              "summary": "The later consequence."
+            }
+          ],
+          "causalLinks": [
+            {
+              "fromEventId": "event-1",
+              "toEventId": "event-2",
+              "explanation": "The initial condition makes the turning point possible."
+            },
+            {
+              "fromEventId": "event-2",
+              "toEventId": "event-3",
+              "explanation": "The turning point changes the final outcome."
+            }
+          ]
+        },
+        {
+          "timelineTitle": "A sequence of connected events",
+          "events": [
+            {
+              "id": "event-1",
+              "label": "Initial condition",
+              "dateLabel": "Phase 1",
+              "summary": "The situation before change."
+            },
+            {
+              "id": "event-2",
+              "label": "Turning point",
+              "dateLabel": "Phase 2",
+              "summary": "A change redirects what follows."
+            },
+            {
+              "id": "event-3",
+              "label": "Outcome",
+              "dateLabel": "Phase 3",
+              "summary": "The later consequence."
+            }
+          ],
+          "causalLinks": [
+            {
+              "fromEventId": "event-1",
+              "toEventId": "event-2",
+              "explanation": "The initial condition makes the turning point possible."
+            },
+            {
+              "fromEventId": "event-2",
+              "toEventId": "event-3",
+              "explanation": "The turning point changes the final outcome."
+            }
+          ]
+        },
+        {
+          "timelineTitle": "A sequence of connected events",
+          "events": [
+            {
+              "id": "event-1",
+              "label": "Initial condition",
+              "dateLabel": "Phase 1",
+              "summary": "The situation before change."
+            },
+            {
+              "id": "event-2",
+              "label": "Turning point",
+              "dateLabel": "Phase 2",
+              "summary": "A change redirects what follows."
+            },
+            {
+              "id": "event-3",
+              "label": "Outcome",
+              "dateLabel": "Phase 3",
+              "summary": "The later consequence."
+            }
+          ],
+          "causalLinks": [
+            {
+              "fromEventId": "event-1",
+              "toEventId": "event-2",
+              "explanation": "The initial condition makes the turning point possible."
+            },
+            {
+              "fromEventId": "event-2",
+              "toEventId": "event-3",
+              "explanation": "The turning point changes the final outcome."
+            }
+          ]
+        },
+        {
+          "timelineTitle": "A sequence of connected events",
+          "events": [
+            {
+              "id": "event-1",
+              "label": "Initial condition",
+              "dateLabel": "Phase 1",
+              "summary": "The situation before change."
+            },
+            {
+              "id": "event-2",
+              "label": "Turning point",
+              "dateLabel": "Phase 2",
+              "summary": "A change redirects what follows."
+            },
+            {
+              "id": "event-3",
+              "label": "Outcome",
+              "dateLabel": "Phase 3",
+              "summary": "The later consequence."
+            }
+          ],
+          "causalLinks": [
+            {
+              "fromEventId": "event-1",
+              "toEventId": "event-2",
+              "explanation": "The initial condition makes the turning point possible."
+            },
+            {
+              "fromEventId": "event-2",
+              "toEventId": "event-3",
+              "explanation": "The turning point changes the final outcome."
+            }
+          ]
+        }
+      ],
+      "modulePath": "apps/web/src/lib/interactive/components/timeline-causality.ts",
+      "componentExport": "timelineCausalityComponent",
+      "configSchemaExport": "TimelineCausalityConfigSchema",
+      "configVersion": 1,
+      "changeKind": "existing-widget-refinement",
+      "integrationStatus": "existing-registration-unchanged",
+      "visualStatus": "selected-scenarios-layout-verified",
+      "tests": [],
+      "evidence": [
+        "artifacts/visualization-agent-b/existing-library-review/evidence/layout-audit.json"
+      ]
+    },
+    {
+      "componentId": "humanities.argument-map",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/argument-map.tsx",
+      "widgetExport": "ArgumentMapWidget",
+      "samples": [
+        {
+          "centralClaim": "The proposed conclusion is justified.",
+          "statements": [
+            {
+              "id": "reason-1",
+              "kind": "reason",
+              "text": "A general reason supports the claim."
+            },
+            {
+              "id": "evidence-1",
+              "kind": "evidence",
+              "text": "A concrete example supports the reason."
+            },
+            {
+              "id": "objection-1",
+              "kind": "objection",
+              "text": "An alternative interpretation challenges it."
+            }
+          ],
+          "relations": [
+            {
+              "fromId": "evidence-1",
+              "toId": "reason-1",
+              "relationType": "supports"
+            },
+            {
+              "fromId": "reason-1",
+              "toId": "central-claim",
+              "relationType": "supports"
+            },
+            {
+              "fromId": "objection-1",
+              "toId": "central-claim",
+              "relationType": "challenges"
+            }
+          ]
+        },
+        {
+          "centralClaim": "The proposed conclusion is justified.",
+          "statements": [
+            {
+              "id": "reason-1",
+              "kind": "reason",
+              "text": "A general reason supports the claim."
+            },
+            {
+              "id": "evidence-1",
+              "kind": "evidence",
+              "text": "A concrete example supports the reason."
+            },
+            {
+              "id": "objection-1",
+              "kind": "objection",
+              "text": "An alternative interpretation challenges it."
+            }
+          ],
+          "relations": [
+            {
+              "fromId": "evidence-1",
+              "toId": "reason-1",
+              "relationType": "supports"
+            },
+            {
+              "fromId": "reason-1",
+              "toId": "central-claim",
+              "relationType": "supports"
+            },
+            {
+              "fromId": "objection-1",
+              "toId": "central-claim",
+              "relationType": "challenges"
+            }
+          ]
+        },
+        {
+          "centralClaim": "The proposed conclusion is justified.",
+          "statements": [
+            {
+              "id": "reason-1",
+              "kind": "reason",
+              "text": "A general reason supports the claim."
+            },
+            {
+              "id": "evidence-1",
+              "kind": "evidence",
+              "text": "A concrete example supports the reason."
+            },
+            {
+              "id": "objection-1",
+              "kind": "objection",
+              "text": "An alternative interpretation challenges it."
+            }
+          ],
+          "relations": [
+            {
+              "fromId": "evidence-1",
+              "toId": "reason-1",
+              "relationType": "supports"
+            },
+            {
+              "fromId": "reason-1",
+              "toId": "central-claim",
+              "relationType": "supports"
+            },
+            {
+              "fromId": "objection-1",
+              "toId": "central-claim",
+              "relationType": "challenges"
+            }
+          ]
+        },
+        {
+          "centralClaim": "The proposed conclusion is justified.",
+          "statements": [
+            {
+              "id": "reason-1",
+              "kind": "reason",
+              "text": "A general reason supports the claim."
+            },
+            {
+              "id": "evidence-1",
+              "kind": "evidence",
+              "text": "A concrete example supports the reason."
+            },
+            {
+              "id": "objection-1",
+              "kind": "objection",
+              "text": "An alternative interpretation challenges it."
+            }
+          ],
+          "relations": [
+            {
+              "fromId": "evidence-1",
+              "toId": "reason-1",
+              "relationType": "supports"
+            },
+            {
+              "fromId": "reason-1",
+              "toId": "central-claim",
+              "relationType": "supports"
+            },
+            {
+              "fromId": "objection-1",
+              "toId": "central-claim",
+              "relationType": "challenges"
+            }
+          ]
+        }
+      ],
+      "modulePath": "apps/web/src/lib/interactive/components/argument-map.ts",
+      "componentExport": "argumentMapComponent",
+      "configSchemaExport": "ArgumentMapConfigSchema",
+      "configVersion": 1,
+      "changeKind": "existing-widget-refinement",
+      "integrationStatus": "existing-registration-unchanged",
+      "visualStatus": "selected-scenarios-layout-verified",
+      "tests": [],
+      "evidence": [
+        "artifacts/visualization-agent-b/existing-library-review/evidence/layout-audit.json"
+      ]
+    },
+    {
+      "componentId": "literature.close-reading",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/close-reading.tsx",
+      "widgetExport": "CloseReadingWidget",
+      "samples": [
+        {
+          "passage": "A short passage whose language supports more than one interpretation.",
+          "focus": "diction",
+          "annotations": [
+            {
+              "quote": "more than one interpretation",
+              "focus": "diction",
+              "device": "qualification",
+              "observation": "The wording resists a single fixed reading.",
+              "effect": "It invites the reader to compare plausible meanings."
+            }
+          ]
+        },
+        {
+          "passage": "白日依山尽，\n黄河入海流。\n欲穷千里目，\n更上一层楼。",
+          "focus": "imagery",
+          "annotations": [
+            {
+              "quote": "白日依山尽",
+              "focus": "imagery",
+              "device": "夕照",
+              "observation": "太阳沿山际落下。",
+              "effect": "展开远处的天际线。"
+            },
+            {
+              "quote": "黄河入海流",
+              "focus": "imagery",
+              "device": "流动",
+              "observation": "河水向远方延伸。",
+              "effect": "把眼前景象引向更广阔的空间。"
+            }
+          ]
+        },
+        {
+          "passage": "读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读读白日依山尽，黄河入海流。",
+          "focus": "imagery",
+          "annotations": [
+            {
+              "quote": "白日依山尽",
+              "focus": "imagery",
+              "device": "夕照",
+              "observation": "太阳沿山际落下。",
+              "effect": "展开远处的天际线。"
+            },
+            {
+              "quote": "黄河入海流",
+              "focus": "imagery",
+              "device": "流动",
+              "observation": "河水向远方延伸。",
+              "effect": "把眼前景象引向更广阔的空间。"
+            }
+          ]
+        },
+        {
+          "passage": "A short passage whose language supports more than one interpretation.",
+          "focus": "imagery",
+          "annotations": [
+            {
+              "quote": "more than one interpretation",
+              "focus": "diction",
+              "device": "qualification",
+              "observation": "The wording resists a single fixed reading.",
+              "effect": "It invites the reader to compare plausible meanings."
+            }
+          ]
+        }
+      ],
+      "modulePath": "apps/web/src/lib/interactive/components/close-reading.ts",
+      "componentExport": "closeReadingComponent",
+      "configSchemaExport": "CloseReadingConfigSchema",
+      "configVersion": 1,
+      "changeKind": "existing-widget-refinement",
+      "integrationStatus": "existing-registration-unchanged",
+      "visualStatus": "selected-scenarios-layout-verified",
+      "tests": [
+        "apps/web/tests/visualization-reading-review.spec.ts"
+      ],
+      "evidence": [
+        "artifacts/visualization-agent-b/existing-library-review/evidence/layout-audit.json"
+      ]
+    }
+  ]
+}

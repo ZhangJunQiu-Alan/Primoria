@@ -117,7 +117,7 @@ await migrateAgentRuntime(process.env.DATABASE_URL);
 const { startAgentServer } = await import("../apps/agent/src/server.mjs");
 const agentRuntime = await startAgentServer();
 
-const web = spawn("pnpm", ["--filter", "@primoria/web", "dev"], {
+const web = spawn("pnpm", ["--filter", "@primoria/web", process.env.REGRESSION_WEB_MODE === "production" ? "start" : "dev"], {
   cwd: process.cwd(),
   env: {
     ...process.env,
@@ -140,7 +140,12 @@ try {
   context = await browser.newContext();
   page = await context.newPage();
   const pageErrors = [];
+  const streamContentTypes = [];
   page.on("pageerror", (error) => pageErrors.push(error.message));
+  page.on("response", (response) => {
+    const contentType = response.headers()["content-type"] ?? "";
+    if (new URL(response.url()).pathname === "/api/copilotkit" && contentType.includes("text/event-stream")) streamContentTypes.push(contentType);
+  });
 
   await page.goto(`${BASE_URL}/auth/sign-in?next=/`, { waitUntil: "domcontentloaded" });
   const passwordInput = await fillPasswordAfterHydration(page, PASSWORD);
@@ -162,6 +167,7 @@ try {
 
   await assertOwnerReachedAgentRuntime();
   assert(pageErrors.length === 0, `unexpected page errors: ${pageErrors.join(" | ")}`);
+  assert(streamContentTypes.length > 0 && streamContentTypes.every((value) => /charset=utf-8/i.test(value)), "Web SSE must declare UTF-8 for faithful multilingual capture");
   process.stdout.write("[tutor-runtime.smoke] ALL CHECKS PASSED\n");
 } catch (error) {
   await mkdir(path.dirname(screenshotPath), { recursive: true });

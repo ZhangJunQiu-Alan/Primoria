@@ -1,0 +1,123 @@
+Browser tab: 1, Title: "元素视界 · Chemistry Visual Lab", URL: "https://www.shiguangtongxue.cn/subjects/chemistry/app.html?view=dynamic-principles".
+0 AXWebArea 元素视界 · Chemistry Visual Lab, URL: shiguangtongxue.cn/subjects/chemistry/app.html?view=dynamic-principles
+	1 container
+		2 container
+			3 button ☀, Help: 切换到浅色背景
+			4 button 📋, Help: 元素周期表
+			5 button 🧊, Help: 晶体与晶胞
+			6 button 🧪, Help: 有机结构
+			7 button 🔬, Help: 化学反应沙盒
+			8 button ⚛️, Help: 杂化轨道
+			9 button 🗺, Help: 无机图谱
+			10 button ⚡, Help: 动态原理
+			11 button 🔍, Help: 分析检验
+			12 button 🧮, Help: 化学计算
+			13 button 🛡, Help: 安全演示
+			14 button Description: 展开, Help: 展开侧边栏
+			15 button 🎁, Help: 订阅中心
+			16 button 退出登录
+			17 button Description: 打开个人中心, Help: 个人中心
+			69 container
+				70 container
+					71 text 探微析澜 • 执衡致远
+					72 heading 化学动态原理, Value: 1
+						73 text 化学动态原理
+					74 text “宏观辨识辨万物之象，微观探析析原理之源，变化平衡悟博弈之理。”每一次反应参数的微调，都是微观粒子无数次碰撞交融的宏观映射；每一条数理曲线的起伏，都揭示了化学世界中能量与平衡的博弈规律。让我们在探究与实证中，感悟科学的严谨与深邃。
+				75 text 专题切换
+				76 text 切换专题后，下方各分类里的结论、镜头和流程会同步刷新。
+				77 button 反应速率 从碰撞理论入手，把温度、浓度、接触面积和催化剂放回同一张判断表。
+					78 container
+						79 text 反应速率 从碰撞理论入手，把温度、浓度、接触面积和催化剂放回同一张判断表。
+				80 button 化学平衡 把浓度、压强、温度和 Q/K 判据拆开，再合并成一个最终方向判断。
+					81 container
+						82 text 化学平衡 把浓度、压强、温度和 Q/K 判据拆开，再合并成一个最终方向判断。
+				83 button 热化学 强化 Hess 定律、反应热符号和系数处理，让热化学不再只靠死记。
+					84 container
+						85 text 热化学 强化 Hess 定律、反应热符号和系数处理，让热化学不再只靠死记。
+				86 button 电化学 把原电池、电解池和腐蚀放进同一套电极判断框架，先分类型再写结论。
+					87 container
+						88 text 电化学 把原电池、电解池和腐蚀放进同一套电极判断框架，先分类型再写结论。
+				89 button 溶液平衡 用“先选模型”代替“先算一遍”，覆盖弱酸、盐水解和 Ksp 三个高频入口。
+					90 container
+						91 text 溶液平衡 用“先选模型”代替“先算一遍”，覆盖弱酸、盐水解和 Ksp 三个高频入口。
+				92 button 滴定与离子 等当点前后本质都回到“剩余粒子是谁”，离子大小比较则回到三大守恒。
+					93 container
+						94 text 滴定与离子 等当点前后本质都回到“剩余粒子是谁”，离子大小比较则回到三大守恒。
+				95 button 工业流程 把工业条件看成“速率、平衡、成本、环保”的综合优化，不再只背模板。
+					96 container
+						97 text 工业流程 把工业条件看成“速率、平衡、成本、环保”的综合优化，不再只背模板。
+				98 text TEACHING SIMULATOR
+				99 text 速率演示台
+				100 text 微观动力学控制中心 (参数可调课件)
+				101 container
+					102 text 温度 58 %
+					103 slider (settable, integer) 温度 58%, Value: 58
+				104 container
+					105 text 反应物浓度 62 %
+					106 slider (settable, integer) 反应物浓度 62%, Value: 62
+				107 container
+					108 text 接触面积 44 %
+					109 slider (settable, integer) 接触面积 44%, Value: 44
+				110 button 催化剂: 已加入
+					111 text 催化剂
+					112 text : 
+					113 text 已加入
+				114 container
+					115 image
+					116 image
+						117 text 活性催化网面
+						118 text 反应物固态接触床面
+						119 text MICRO-CHAMBER WIDESCREEN v2.0
+						120 text SYS_ACTIVE_HIGH_SCALE
+					121 image
+					122 text 点击空白处加入活化分子 / 点击微粒将其激发 催化活化能下降
+				123 text 活化分子占比
+				124 container
+					125 text 49 %
+				126 text 单位时间碰撞数
+				127 container
+					128 text 1126  次
+				129 text 有效产物生成
+				130 container
+					131 text 143  mol
+				132 text 麦克斯韦-玻尔兹曼能量分布图 (动能遥测)
+				133 image
+					134 container
+						135 text Ea  (已降低)
+					136 text 动能 E
+					137 text 分子数比例 N(E)/N
+					138 text 活化分子区
+				139 text 活化能壁垒 (Ea) 185 kJ/mol 分子热运动能级 中高强度 能级突破率 49 % 🟢 已加入催化剂，Ea 骤降，活化分子占比与碰撞概率大增。 反应势能历程图 (活化络合物)
+				140 image
+					141 text Ea
+					142 text ΔH < 0
+					143 text 反应物
+					144 text 生成物
+					145 text 过渡态
+					146 text 催化能垒降低
+					147 text 反应历程
+					148 text 势能 E
+				149 text 吸放热: 放热反应 (ΔH) Ea 降低 80 kJ/mol 微观影响因素 (变量响应遥测)
+				150 image
+				151 text 温度 58
+				152 image
+				153 text 浓度 62
+				154 image
+				155 text 接触面积 44
+				156 image
+				157 text 催化剂 90 碰撞理论与重点分布 (物理判定)
+				158 image
+				159 text 有效碰撞 79
+				160 image
+				161 text 活化能判断 88
+				162 image
+				163 text 控制变量 70 反应速率实时曲线 (动力学监控)
+				164 image
+					165 text 高速 (v_max)
+					166 text 低速 (v_min)
+				167 text 当前速率: v =  4.019  mol/(L·s)
+	66 container Description: 小拾光学习助手, ID: shgLearningAssistant
+		67 button 打开小拾光萌宠学习助手
+			68 button 点击切换为【橘莉 Jolly · 星光绒绒兽】
+
+The focused UI element is 0 AXWebArea 元素视界 · Chemistry Visual Lab, URL: shiguangtongxue.cn/subjects/chemistry/app.html?view=dynamic-principles

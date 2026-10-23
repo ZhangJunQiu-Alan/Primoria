@@ -1,0 +1,360 @@
+Browser tab: 2, Title: "拾光视界 v12.0 - 地理全景教学系统", URL: "https://www.shiguangtongxue.cn/subjects/geography/app.html?stage=junior&v=20261019164656".
+1 AXWebArea 拾光视界 v12.0 - 地理全景教学系统, URL: shiguangtongxue.cn/subjects/geography/app.html?stage=junior&v=20261019164656
+	2 container
+		3 container
+			4 button 地 拾光视界
+				5 text 地
+				6 text 拾光视界
+			7 button 个人中心
+			8 button 订阅中心
+			9 button 退出系统
+			10 text 初中 / 全部单元
+			11 button 全部单元
+			12 button 七年级上册
+			13 button 七年级下册
+			14 button 八年级上册
+			15 button 八年级下册
+			16 container
+				17 text 模块单元数量:  53
+			18 container
+				19 button 打开地球的自转与公转模拟
+					20 container
+						21 text 视觉表现等级  A
+						22 heading 地球的自转与公转模拟, Value: 3
+							23 text 地球的自转与公转模拟
+						24 text 打开单元 M 1 M 2 M 3
+				25 button 打开等高线地形图的三维投影
+					26 container
+						27 text 视觉表现等级  A
+						28 heading 等高线地形图的三维投影, Value: 3
+							29 text 等高线地形图的三维投影
+						30 text 打开单元 M 1 M 2 M 3
+				31 button 打开七大洲与五大洋全景分布
+					32 container
+						33 text 视觉表现等级  A
+						34 heading 七大洲与五大洋全景分布, Value: 3
+							35 text 七大洲与五大洋全景分布
+						36 text 打开单元 M 1 M 2 M 3
+				37 button 打开板块构造与海陆变迁
+					38 container
+						39 text 视觉表现等级  A
+						40 heading 板块构造与海陆变迁, Value: 3
+							41 text 板块构造与海陆变迁
+						42 text 打开单元 M 1 M 2 M 3
+				43 button 打开世界气温与气候类型分布
+					44 container
+						45 text 视觉表现等级  A
+						46 heading 世界气温与气候类型分布, Value: 3
+							47 text 世界气温与气候类型分布
+						48 text 打开单元 M 1 M 2 M 3
+				49 button 打开全球人口密度 3D 热力带
+					50 container
+						51 text 视觉表现等级  A
+						52 heading 全球人口密度 3D 热力带, Value: 3
+							53 text 全球人口密度 3D 热力带
+						54 text 打开单元 M 1 M 2 M 3
+				55 button 打开地壳运动与盘古大陆分裂
+					56 container
+						57 text 视觉表现等级  A
+						58 heading 地壳运动与盘古大陆分裂, Value: 3
+							59 text 地壳运动与盘古大陆分裂
+						60 text 打开单元 M 1 M 2 M 3
+				61 button 打开经纬网坐标系与地球仪定位
+					62 container
+						63 text 视觉表现等级  A
+						64 heading 经纬网坐标系与地球仪定位, Value: 3
+							65 text 经纬网坐标系与地球仪定位
+						66 text 打开单元 M 1 M 2 M 3
+				67 button 打开地球五带划分与太阳直射点
+					68 container
+						69 text 视觉表现等级  A
+						70 heading 地球五带划分与太阳直射点, Value: 3
+							71 text 地球五带划分与太阳直射点
+						72 text 打开单元 M 1 M 2 M 3
+				73 button 打开地图三要素与比例尺方向图例
+					74 container
+						75 text 视觉表现等级  A
+						76 heading 地图三要素与比例尺方向图例, Value: 3
+							77 text 地图三要素与比例尺方向图例
+						78 text 打开单元 M 1 M 2 M 3
+				79 button 打开亚洲地形与河流放射状分布
+					80 container
+						81 text 视觉表现等级  A
+						82 heading 亚洲地形与河流放射状分布, Value: 3
+							83 text 亚洲地形与河流放射状分布
+						84 text 打开单元 M 1 M 2 M 3
+				85 button 打开天气符号与卫星云图判读
+					86 container
+						87 text 视觉表现等级  A
+						88 heading 天气符号与卫星云图判读, Value: 3
+							89 text 天气符号与卫星云图判读
+						90 text 打开单元 M 1 M 2 M 3
+				91 button 打开日本的地形与火山地震
+					92 container
+						93 text 视觉表现等级  A
+						94 heading 日本的地形与火山地震, Value: 3
+							95 text 日本的地形与火山地震
+						96 text 打开单元 M 1 M 2 M 3
+				97 button 打开气温曲线与降水柱状图气候判读
+					98 container
+						99 text 视觉表现等级  A
+						100 heading 气温曲线与降水柱状图气候判读, Value: 3
+							101 text 气温曲线与降水柱状图气候判读
+						102 text 打开单元 M 1 M 2 M 3
+				103 button 打开日本列岛：地震带与火山地震带
+					104 container
+						105 text 视觉表现等级  A
+						106 heading 日本列岛：地震带与火山地震带, Value: 3
+							107 text 日本列岛：地震带与火山地震带
+						108 text 打开单元 M 1 M 2 M 3
+				109 button 打开聚落形态与自然环境
+					110 container
+						111 text 视觉表现等级  A
+						112 heading 聚落形态与自然环境, Value: 3
+							113 text 聚落形态与自然环境
+						114 text 打开单元 M 1 M 2 M 3
+				115 button 打开欧洲西部的温带海洋性气候
+					116 container
+						117 text 视觉表现等级  A
+						118 heading 欧洲西部的温带海洋性气候, Value: 3
+							119 text 欧洲西部的温带海洋性气候
+						120 text 打开单元 M 1 M 2 M 3
+				121 button 打开东南亚十字路口的海峡与航线
+					122 container
+						123 text 视觉表现等级  A
+						124 heading 东南亚十字路口的海峡与航线, Value: 3
+							125 text 东南亚十字路口的海峡与航线
+						126 text 打开单元 M 1 M 2 M 3
+				127 button 打开中东石油资源三维分布
+					128 container
+						129 text 视觉表现等级  A
+						130 heading 中东石油资源三维分布, Value: 3
+							131 text 中东石油资源三维分布
+						132 text 打开单元 M 1 M 2 M 3
+				133 button 打开撒哈拉以南非洲的气候带
+					134 container
+						135 text 视觉表现等级  A
+						136 heading 撒哈拉以南非洲的气候带, Value: 3
+							137 text 撒哈拉以南非洲的气候带
+						138 text 打开单元 M 1 M 2 M 3
+				139 button 打开南北美洲纵贯山脉与气候
+					140 container
+						141 text 视觉表现等级  A
+						142 heading 南北美洲纵贯山脉与气候, Value: 3
+							143 text 南北美洲纵贯山脉与气候
+						144 text 打开单元 M 1 M 2 M 3
+				145 button 打开中国辽阔的疆域与邻国
+					146 container
+						147 text 视觉表现等级  A
+						148 heading 中国辽阔的疆域与邻国, Value: 3
+							149 text 中国辽阔的疆域与邻国
+						150 text 打开单元 M 1 M 2 M 3
+				151 button 打开中国三级阶梯地势模型
+					152 container
+						153 text 视觉表现等级  A
+						154 heading 中国三级阶梯地势模型, Value: 3
+							155 text 中国三级阶梯地势模型
+						156 text 打开单元 M 1 M 2 M 3
+				157 button 打开季风气候：冬夏季风进退模拟
+					158 container
+						159 text 视觉表现等级  A
+						160 heading 季风气候：冬夏季风进退模拟, Value: 3
+							161 text 季风气候：冬夏季风进退模拟
+						162 text 打开单元 M 1 M 2 M 3
+				163 button 打开亚洲位置范围与分区拼图
+					164 container
+						165 text 视觉表现等级  A
+						166 heading 亚洲位置范围与分区拼图, Value: 3
+							167 text 亚洲位置范围与分区拼图
+						168 text 打开单元 M 1 M 2 M 3
+				169 button 打开长江流域水系三维地形与三峡大坝
+					170 container
+						171 text 视觉表现等级  A
+						172 heading 长江流域水系三维地形与三峡大坝, Value: 3
+							173 text 长江流域水系三维地形与三峡大坝
+						174 text 打开单元 M 1 M 2 M 3
+				175 button 打开印度季风农业与人口城市
+					176 container
+						177 text 视觉表现等级  A
+						178 heading 印度季风农业与人口城市, Value: 3
+							179 text 印度季风农业与人口城市
+						180 text 打开单元 M 1 M 2 M 3
+				181 button 打开黄河地上悬河与历史改道
+					182 container
+						183 text 视觉表现等级  A
+						184 heading 黄河地上悬河与历史改道, Value: 3
+							185 text 黄河地上悬河与历史改道
+						186 text 打开单元 M 1 M 2 M 3
+				187 button 打开俄罗斯工业带与交通线
+					188 container
+						189 text 视觉表现等级  A
+						190 heading 俄罗斯工业带与交通线, Value: 3
+							191 text 俄罗斯工业带与交通线
+						192 text 打开单元 M 1 M 2 M 3
+				193 button 打开中国自然资源分布总览
+					194 container
+						195 text 视觉表现等级  A
+						196 heading 中国自然资源分布总览, Value: 3
+							197 text 中国自然资源分布总览
+						198 text 打开单元 M 1 M 2 M 3
+				199 button 打开澳大利亚矿产、牧羊带与城市
+					200 container
+						201 text 视觉表现等级  A
+						202 heading 澳大利亚矿产、牧羊带与城市, Value: 3
+							203 text 澳大利亚矿产、牧羊带与城市
+						204 text 打开单元 M 1 M 2 M 3
+				205 button 打开中国四大地理区域划分
+					206 container
+						207 text 视觉表现等级  A
+						208 heading 中国四大地理区域划分, Value: 3
+							209 text 中国四大地理区域划分
+						210 text 打开单元 M 1 M 2 M 3
+				211 button 打开巴西地形气候与亚马孙
+					212 container
+						213 text 视觉表现等级  A
+						214 heading 巴西地形气候与亚马孙, Value: 3
+							215 text 巴西地形气候与亚马孙
+						216 text 打开单元 M 1 M 2 M 3
+				217 button 打开黄土高原的水土流失沙盘
+					218 container
+						219 text 视觉表现等级  A
+						220 heading 黄土高原的水土流失沙盘, Value: 3
+							221 text 黄土高原的水土流失沙盘
+						222 text 打开单元 M 1 M 2 M 3
+				223 button 打开极地地区冰盖、科考与生态保护
+					224 container
+						225 text 视觉表现等级  A
+						226 heading 极地地区冰盖、科考与生态保护, Value: 3
+							227 text 极地地区冰盖、科考与生态保护
+						228 text 打开单元 M 1 M 2 M 3
+				229 button 打开塔里木盆地与绿洲分布
+					230 container
+						231 text 视觉表现等级  A
+						232 heading 塔里木盆地与绿洲分布, Value: 3
+							233 text 塔里木盆地与绿洲分布
+						234 text 打开单元 M 1 M 2 M 3
+				235 button 打开长三角珠三角城市群热力模拟
+					236 container
+						237 text 视觉表现等级  A
+						238 heading 长三角珠三角城市群热力模拟, Value: 3
+							239 text 长三角珠三角城市群热力模拟
+						240 text 打开单元 M 1 M 2 M 3
+				241 button 打开青藏高原隆起与高寒气候模拟
+					242 container
+						243 text 视觉表现等级  A
+						244 heading 青藏高原隆起与高寒气候模拟, Value: 3
+							245 text 青藏高原隆起与高寒气候模拟
+						246 text 打开单元 M 1 M 2 M 3
+				247 button 打开港澳台地理位置与区域联系
+					248 container
+						249 text 视觉表现等级  A
+						250 heading 港澳台地理位置与区域联系, Value: 3
+							251 text 港澳台地理位置与区域联系
+						252 text 打开单元 M 1 M 2 M 3
+				253 button 打开中国人口分布与胡焕庸线
+					254 container
+						255 text 视觉表现等级  A
+						256 heading 中国人口分布与胡焕庸线, Value: 3
+							257 text 中国人口分布与胡焕庸线
+						258 text 打开单元 M 1 M 2 M 3
+				259 button 打开中国民族分布与文化景观
+					260 container
+						261 text 视觉表现等级  A
+						262 heading 中国民族分布与文化景观, Value: 3
+							263 text 中国民族分布与文化景观
+						264 text 打开单元 M 1 M 2 M 3
+				265 button 打开中国行政区划拼图与省级轮廓
+					266 container
+						267 text 视觉表现等级  A
+						268 heading 中国行政区划拼图与省级轮廓, Value: 3
+							269 text 中国行政区划拼图与省级轮廓
+						270 text 打开单元 M 1 M 2 M 3
+				271 button 打开中国气温降水、温度带与干湿区
+					272 container
+						273 text 视觉表现等级  A
+						274 heading 中国气温降水、温度带与干湿区, Value: 3
+							275 text 中国气温降水、温度带与干湿区
+						276 text 打开单元 M 1 M 2 M 3
+				277 button 打开中国农业分布与因地制宜
+					278 container
+						279 text 视觉表现等级  A
+						280 heading 中国农业分布与因地制宜, Value: 3
+							281 text 中国农业分布与因地制宜
+						282 text 打开单元 M 1 M 2 M 3
+				283 button 打开中国交通运输网络
+					284 container
+						285 text 视觉表现等级  A
+						286 heading 中国交通运输网络, Value: 3
+							287 text 中国交通运输网络
+						288 text 打开单元 M 1 M 2 M 3
+				289 button 打开中国工业基地与高新技术产业
+					290 container
+						291 text 视觉表现等级  A
+						292 heading 中国工业基地与高新技术产业, Value: 3
+							293 text 中国工业基地与高新技术产业
+						294 text 打开单元 M 1 M 2 M 3
+				295 button 打开北方地区旱作农业与水资源约束
+					296 container
+						297 text 视觉表现等级  A
+						298 heading 北方地区旱作农业与水资源约束, Value: 3
+							299 text 北方地区旱作农业与水资源约束
+						300 text 打开单元 M 1 M 2 M 3
+				301 button 打开南方地区水田农业与河湖城市
+					302 container
+						303 text 视觉表现等级  A
+						304 heading 南方地区水田农业与河湖城市, Value: 3
+							305 text 南方地区水田农业与河湖城市
+						306 text 打开单元 M 1 M 2 M 3
+				307 button 打开东北三省地形气候与重工业转型
+					308 container
+						309 text 视觉表现等级  A
+						310 heading 东北三省地形气候与重工业转型, Value: 3
+							311 text 东北三省地形气候与重工业转型
+						312 text 打开单元 M 1 M 2 M 3
+				313 button 打开北京城市职能与水资源
+					314 container
+						315 text 视觉表现等级  A
+						316 heading 北京城市职能与水资源, Value: 3
+							317 text 北京城市职能与水资源
+						318 text 打开单元 M 1 M 2 M 3
+				319 button 打开台湾地形气候与产业联系
+					320 container
+						321 text 视觉表现等级  A
+						322 heading 台湾地形气候与产业联系, Value: 3
+							323 text 台湾地形气候与产业联系
+						324 text 打开单元 M 1 M 2 M 3
+				325 button 打开西北干旱区水资源与荒漠化治理
+					326 container
+						327 text 视觉表现等级  A
+						328 heading 西北干旱区水资源与荒漠化治理, Value: 3
+							329 text 西北干旱区水资源与荒漠化治理
+						330 text 打开单元 M 1 M 2 M 3
+				331 button 打开青藏地区高寒农业、交通与生态保护
+					332 container
+						333 text 视觉表现等级  A
+						334 heading 青藏地区高寒农业、交通与生态保护, Value: 3
+							335 text 青藏地区高寒农业、交通与生态保护
+						336 text 打开单元 M 1 M 2 M 3
+	337 container Description: 小拾光学习助手, ID: shgLearningAssistant
+		338 button 打开小拾光萌宠学习助手
+			339 button 点击切换为【橘莉 Jolly · 星光绒绒兽】
+	340 container 先体验地理，再决定是否订阅
+		341 container
+			342 text 拾光视界 · 试用体验
+			343 heading 先体验地理，再决定是否订阅, Value: 2, ID: shg-trial-notice-title
+				344 text 先体验地理，再决定是否订阅
+			345 button 关闭试用提示
+		346 text 试用权益已开启
+		347 text 本次6小时试用期内，地理全部内容免费体验
+		348 text 先完整体验，合适再订阅。试用结束后，可从右上角“订阅中心”继续开通。
+		349 text 本次体验
+		350 text 地理全部内容
+		351 text 剩余体验时间
+		352 text 2小时 39分
+		353 text 遇到使用问题？添加客服微信
+		354 button 18584322518
+		355 button 开始体验
+		356 button 不再提示
+		357 button 查看订阅方案
+
+The focused UI element is 1 AXWebArea 拾光视界 v12.0 - 地理全景教学系统, URL: shiguangtongxue.cn/subjects/geography/app.html?stage=junior&v=20261019164656

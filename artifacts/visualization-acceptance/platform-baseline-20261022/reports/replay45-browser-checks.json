@@ -1,0 +1,571 @@
+{
+  "status": "passed",
+  "origin": "http://127.0.0.1:65366",
+  "components": 45,
+  "viewports": [
+    {
+      "width": 390,
+      "renders": [
+        {
+          "componentId": "physics.lens-imaging",
+          "readyMs": 272
+        },
+        {
+          "componentId": "chem.acid-base-titration",
+          "readyMs": 850
+        },
+        {
+          "componentId": "physics.wave-superposition",
+          "readyMs": 829
+        },
+        {
+          "componentId": "cs.sorting-steps",
+          "readyMs": 838
+        },
+        {
+          "componentId": "math.function-explorer",
+          "readyMs": 829
+        },
+        {
+          "componentId": "math.angle-measure",
+          "readyMs": 831
+        },
+        {
+          "componentId": "general.timeline-causality",
+          "readyMs": 825
+        },
+        {
+          "componentId": "general.process-sequence",
+          "readyMs": 836
+        },
+        {
+          "componentId": "humanities.source-comparison",
+          "readyMs": 817
+        },
+        {
+          "componentId": "humanities.argument-map",
+          "readyMs": 820
+        },
+        {
+          "componentId": "literature.narrative-arc",
+          "readyMs": 836
+        },
+        {
+          "componentId": "literature.character-relationships",
+          "readyMs": 834
+        },
+        {
+          "componentId": "literature.close-reading",
+          "readyMs": 820
+        },
+        {
+          "componentId": "language.sentence-structure",
+          "readyMs": 828
+        },
+        {
+          "componentId": "social.policy-tradeoff",
+          "readyMs": 814
+        },
+        {
+          "componentId": "geography.climate-comparison",
+          "readyMs": 820
+        },
+        {
+          "componentId": "arts.color-harmony",
+          "readyMs": 811
+        },
+        {
+          "componentId": "music.rhythm-pattern",
+          "readyMs": 828
+        },
+        {
+          "componentId": "psychology.experiment-design",
+          "readyMs": 829
+        },
+        {
+          "componentId": "math.calculus-lab",
+          "readyMs": 822
+        },
+        {
+          "componentId": "physics.refraction-lab",
+          "readyMs": 819
+        },
+        {
+          "componentId": "physics.projectile-lab",
+          "readyMs": 825
+        },
+        {
+          "componentId": "physics.circuit-lab",
+          "readyMs": 838
+        },
+        {
+          "componentId": "astronomy.moon-phases",
+          "readyMs": 834
+        },
+        {
+          "componentId": "biology.mendelian-genetics",
+          "readyMs": 827
+        },
+        {
+          "componentId": "math.fraction-equivalence",
+          "readyMs": 817
+        },
+        {
+          "componentId": "math.chicken-rabbit",
+          "readyMs": 838
+        },
+        {
+          "componentId": "geography.earth-seasons",
+          "readyMs": 831
+        },
+        {
+          "componentId": "chem.ideal-gas",
+          "readyMs": 837
+        },
+        {
+          "componentId": "chem.reaction-kinetics",
+          "readyMs": 825
+        },
+        {
+          "componentId": "physics.oscillation-lab",
+          "readyMs": 820
+        },
+        {
+          "componentId": "math.trigonometry-circle",
+          "readyMs": 830
+        },
+        {
+          "componentId": "chem.chemical-equilibrium",
+          "readyMs": 820
+        },
+        {
+          "componentId": "chem.molecular-geometry",
+          "readyMs": 809
+        },
+        {
+          "componentId": "physics.lever-balance",
+          "readyMs": 820
+        },
+        {
+          "componentId": "physics.buoyancy-lab",
+          "readyMs": 811
+        },
+        {
+          "componentId": "physics.electric-field",
+          "readyMs": 829
+        },
+        {
+          "componentId": "math.binomial-distribution",
+          "readyMs": 832
+        },
+        {
+          "componentId": "biology.cell-division",
+          "readyMs": 834
+        },
+        {
+          "componentId": "biology.osmosis-lab",
+          "readyMs": 835
+        },
+        {
+          "componentId": "physics.magnetic-motion",
+          "readyMs": 829
+        },
+        {
+          "componentId": "physics.photoelectric-effect",
+          "readyMs": 821
+        },
+        {
+          "componentId": "math.linear-system",
+          "readyMs": 836
+        },
+        {
+          "componentId": "math.quadratic-equation",
+          "readyMs": 828
+        },
+        {
+          "componentId": "chem.weak-acid-buffer",
+          "readyMs": 830
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "renders": [
+        {
+          "componentId": "physics.lens-imaging",
+          "readyMs": 314
+        },
+        {
+          "componentId": "chem.acid-base-titration",
+          "readyMs": 829
+        },
+        {
+          "componentId": "physics.wave-superposition",
+          "readyMs": 813
+        },
+        {
+          "componentId": "cs.sorting-steps",
+          "readyMs": 814
+        },
+        {
+          "componentId": "math.function-explorer",
+          "readyMs": 824
+        },
+        {
+          "componentId": "math.angle-measure",
+          "readyMs": 824
+        },
+        {
+          "componentId": "general.timeline-causality",
+          "readyMs": 823
+        },
+        {
+          "componentId": "general.process-sequence",
+          "readyMs": 828
+        },
+        {
+          "componentId": "humanities.source-comparison",
+          "readyMs": 813
+        },
+        {
+          "componentId": "humanities.argument-map",
+          "readyMs": 815
+        },
+        {
+          "componentId": "literature.narrative-arc",
+          "readyMs": 821
+        },
+        {
+          "componentId": "literature.character-relationships",
+          "readyMs": 816
+        },
+        {
+          "componentId": "literature.close-reading",
+          "readyMs": 816
+        },
+        {
+          "componentId": "language.sentence-structure",
+          "readyMs": 824
+        },
+        {
+          "componentId": "social.policy-tradeoff",
+          "readyMs": 816
+        },
+        {
+          "componentId": "geography.climate-comparison",
+          "readyMs": 815
+        },
+        {
+          "componentId": "arts.color-harmony",
+          "readyMs": 826
+        },
+        {
+          "componentId": "music.rhythm-pattern",
+          "readyMs": 833
+        },
+        {
+          "componentId": "psychology.experiment-design",
+          "readyMs": 829
+        },
+        {
+          "componentId": "math.calculus-lab",
+          "readyMs": 832
+        },
+        {
+          "componentId": "physics.refraction-lab",
+          "readyMs": 816
+        },
+        {
+          "componentId": "physics.projectile-lab",
+          "readyMs": 819
+        },
+        {
+          "componentId": "physics.circuit-lab",
+          "readyMs": 837
+        },
+        {
+          "componentId": "astronomy.moon-phases",
+          "readyMs": 825
+        },
+        {
+          "componentId": "biology.mendelian-genetics",
+          "readyMs": 819
+        },
+        {
+          "componentId": "math.fraction-equivalence",
+          "readyMs": 820
+        },
+        {
+          "componentId": "math.chicken-rabbit",
+          "readyMs": 833
+        },
+        {
+          "componentId": "geography.earth-seasons",
+          "readyMs": 837
+        },
+        {
+          "componentId": "chem.ideal-gas",
+          "readyMs": 827
+        },
+        {
+          "componentId": "chem.reaction-kinetics",
+          "readyMs": 813
+        },
+        {
+          "componentId": "physics.oscillation-lab",
+          "readyMs": 813
+        },
+        {
+          "componentId": "math.trigonometry-circle",
+          "readyMs": 817
+        },
+        {
+          "componentId": "chem.chemical-equilibrium",
+          "readyMs": 817
+        },
+        {
+          "componentId": "chem.molecular-geometry",
+          "readyMs": 821
+        },
+        {
+          "componentId": "physics.lever-balance",
+          "readyMs": 807
+        },
+        {
+          "componentId": "physics.buoyancy-lab",
+          "readyMs": 823
+        },
+        {
+          "componentId": "physics.electric-field",
+          "readyMs": 815
+        },
+        {
+          "componentId": "math.binomial-distribution",
+          "readyMs": 817
+        },
+        {
+          "componentId": "biology.cell-division",
+          "readyMs": 819
+        },
+        {
+          "componentId": "biology.osmosis-lab",
+          "readyMs": 828
+        },
+        {
+          "componentId": "physics.magnetic-motion",
+          "readyMs": 836
+        },
+        {
+          "componentId": "physics.photoelectric-effect",
+          "readyMs": 822
+        },
+        {
+          "componentId": "math.linear-system",
+          "readyMs": 817
+        },
+        {
+          "componentId": "math.quadratic-equation",
+          "readyMs": 822
+        },
+        {
+          "componentId": "chem.weak-acid-buffer",
+          "readyMs": 811
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "renders": [
+        {
+          "componentId": "physics.lens-imaging",
+          "readyMs": 325
+        },
+        {
+          "componentId": "chem.acid-base-titration",
+          "readyMs": 827
+        },
+        {
+          "componentId": "physics.wave-superposition",
+          "readyMs": 832
+        },
+        {
+          "componentId": "cs.sorting-steps",
+          "readyMs": 827
+        },
+        {
+          "componentId": "math.function-explorer",
+          "readyMs": 811
+        },
+        {
+          "componentId": "math.angle-measure",
+          "readyMs": 825
+        },
+        {
+          "componentId": "general.timeline-causality",
+          "readyMs": 837
+        },
+        {
+          "componentId": "general.process-sequence",
+          "readyMs": 829
+        },
+        {
+          "componentId": "humanities.source-comparison",
+          "readyMs": 817
+        },
+        {
+          "componentId": "humanities.argument-map",
+          "readyMs": 838
+        },
+        {
+          "componentId": "literature.narrative-arc",
+          "readyMs": 830
+        },
+        {
+          "componentId": "literature.character-relationships",
+          "readyMs": 837
+        },
+        {
+          "componentId": "literature.close-reading",
+          "readyMs": 826
+        },
+        {
+          "componentId": "language.sentence-structure",
+          "readyMs": 812
+        },
+        {
+          "componentId": "social.policy-tradeoff",
+          "readyMs": 814
+        },
+        {
+          "componentId": "geography.climate-comparison",
+          "readyMs": 830
+        },
+        {
+          "componentId": "arts.color-harmony",
+          "readyMs": 825
+        },
+        {
+          "componentId": "music.rhythm-pattern",
+          "readyMs": 822
+        },
+        {
+          "componentId": "psychology.experiment-design",
+          "readyMs": 828
+        },
+        {
+          "componentId": "math.calculus-lab",
+          "readyMs": 814
+        },
+        {
+          "componentId": "physics.refraction-lab",
+          "readyMs": 820
+        },
+        {
+          "componentId": "physics.projectile-lab",
+          "readyMs": 820
+        },
+        {
+          "componentId": "physics.circuit-lab",
+          "readyMs": 836
+        },
+        {
+          "componentId": "astronomy.moon-phases",
+          "readyMs": 835
+        },
+        {
+          "componentId": "biology.mendelian-genetics",
+          "readyMs": 832
+        },
+        {
+          "componentId": "math.fraction-equivalence",
+          "readyMs": 833
+        },
+        {
+          "componentId": "math.chicken-rabbit",
+          "readyMs": 364
+        },
+        {
+          "componentId": "geography.earth-seasons",
+          "readyMs": 807
+        },
+        {
+          "componentId": "chem.ideal-gas",
+          "readyMs": 818
+        },
+        {
+          "componentId": "chem.reaction-kinetics",
+          "readyMs": 823
+        },
+        {
+          "componentId": "physics.oscillation-lab",
+          "readyMs": 823
+        },
+        {
+          "componentId": "math.trigonometry-circle",
+          "readyMs": 823
+        },
+        {
+          "componentId": "chem.chemical-equilibrium",
+          "readyMs": 819
+        },
+        {
+          "componentId": "chem.molecular-geometry",
+          "readyMs": 820
+        },
+        {
+          "componentId": "physics.lever-balance",
+          "readyMs": 838
+        },
+        {
+          "componentId": "physics.buoyancy-lab",
+          "readyMs": 833
+        },
+        {
+          "componentId": "physics.electric-field",
+          "readyMs": 826
+        },
+        {
+          "componentId": "math.binomial-distribution",
+          "readyMs": 814
+        },
+        {
+          "componentId": "biology.cell-division",
+          "readyMs": 818
+        },
+        {
+          "componentId": "biology.osmosis-lab",
+          "readyMs": 819
+        },
+        {
+          "componentId": "physics.magnetic-motion",
+          "readyMs": 813
+        },
+        {
+          "componentId": "physics.photoelectric-effect",
+          "readyMs": 817
+        },
+        {
+          "componentId": "math.linear-system",
+          "readyMs": 824
+        },
+        {
+          "componentId": "math.quadratic-equation",
+          "readyMs": 831
+        },
+        {
+          "componentId": "chem.weak-acid-buffer",
+          "readyMs": 814
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "apiRequests": [],
+  "checks": [
+    "all registered widgets render at three widths",
+    "local controls and reset respond",
+    "no new prompt input",
+    "no API requests",
+    "no browser runtime errors"
+  ]
+}

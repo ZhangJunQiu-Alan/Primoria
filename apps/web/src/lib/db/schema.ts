@@ -126,6 +126,27 @@ export const authRateLimits = pgTable(
   }),
 );
 
+export const interactiveComponentInstances = pgTable(
+  "interactive_component_instances",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    instanceId: text("instance_id").notNull(),
+    requestHash: text("request_hash").notNull(),
+    componentId: text("component_id").notNull(),
+    configVersion: integer("config_version").notNull(),
+    initialConfig: jsonb("initial_config").$type<Record<string, unknown>>().notNull(),
+    config: jsonb("config").$type<Record<string, unknown>>().notNull(),
+    revision: integer("revision").notNull().default(1),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    ownerInstanceUnique: uniqueIndex("interactive_component_instances_owner_instance_uidx").on(table.ownerId, table.instanceId),
+    versionCheck: check("interactive_component_instances_version_check", sql`${table.configVersion} >= 1 and ${table.revision} >= 1`),
+  }),
+);
+
 export const interactiveComponentQuotas = pgTable(
   "interactive_component_quotas",
   {

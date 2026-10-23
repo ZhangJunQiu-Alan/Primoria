@@ -1,6 +1,7 @@
 import type { CourseBlock } from "./types";
 import { MERMAID_RUNTIME_VERSION } from "../mermaid-runtime";
 import { mermaidParserWorkerClient } from "./mermaid-parser-worker-client";
+import { parseInteractivePayload } from "../interactive/payload";
 
 const MAX_MERMAID_DEFINITION_LENGTH = 50_000;
 
@@ -36,6 +37,10 @@ export async function assertValidMermaidDefinition(definition: string): Promise<
 }
 
 export async function assertPersistableCourseBlock(block: CourseBlock): Promise<void> {
+  if (block.type === "visual" && block.engine === "interactive") {
+    parseInteractivePayload(block.interactive);
+    return;
+  }
   if (block.type !== "visual" || block.engine !== "mermaid") return;
   await assertValidMermaidDefinition(block.mermaidDefinition ?? "");
 }

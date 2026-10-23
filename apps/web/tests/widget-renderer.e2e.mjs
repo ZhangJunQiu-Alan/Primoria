@@ -57,6 +57,8 @@ async function main() {
   server.stderr.on("data", (chunk) => process.stderr.write(`[next:err] ${chunk.toString()}`));
 
   let browser;
+  let page;
+  const consoleErrors = [];
   let failed = false;
   let screenshotPath = "";
 
@@ -79,8 +81,7 @@ async function main() {
     }
     await context.route("**/api/telemetry/visualization", (route) => route.fulfill({ status: 204 }));
     await context.addCookies([{ name: "primoria_session", value: "widget-renderer-e2e", url: BASE }]);
-    const page = await context.newPage();
-    const consoleErrors = [];
+    page = await context.newPage();
     page.on("console", (message) => {
       if (message.type() === "error") consoleErrors.push(message.text());
     });
@@ -184,6 +185,13 @@ async function main() {
   } catch (error) {
     failed = true;
     log("TEST FAILED:", error instanceof Error ? error.message : String(error));
+    if (page) {
+      const screenshotDir = await mkdtemp(path.join(os.tmpdir(), "primoria-widget-e2e-failed-"));
+      screenshotPath = path.join(screenshotDir, "widget-renderer-failure.png");
+      await page.screenshot({ path: screenshotPath, fullPage: true }).catch(() => {});
+      const frame = page.frameLocator('iframe[title="Streaming fixture"]');
+      log("streaming diagnostics:", JSON.stringify({ status: await frame.locator("#stream-status").textContent().catch(() => null), action: await frame.locator("#stream-action").textContent().catch(() => null), errors: consoleErrors }));
+    }
     if (screenshotPath) log("screenshot:", screenshotPath);
   } finally {
     if (browser) await browser.close();

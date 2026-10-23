@@ -1,4 +1,5 @@
 import { spawn } from "node:child_process";
+import { randomUUID } from "node:crypto";
 import { resolve } from "node:path";
 
 const databaseUrl = process.env.TEST_DATABASE_URL;
@@ -16,6 +17,7 @@ const env = {
   CI_TUTOR_RUNTIME_SMOKE: "1",
   CI_SHARE_SMOKE: "1",
   PRIMORIA_DISABLE_OUTLINE_ENRICHMENT: "1",
+  PRIMORIA_AGENT_INTERNAL_SECRET: process.env.PRIMORIA_AGENT_INTERNAL_SECRET ?? randomUUID(),
 };
 
 async function run(args: string[], extraEnv: Partial<NodeJS.ProcessEnv> = {}) {
@@ -38,6 +40,7 @@ async function main() {
     await run(["test:tutor-runtime:e2e"]);
     await run(["test:course-share:e2e"]);
     await run(["test:widget:e2e"]);
+    await run(["visualization:test:replay"]);
   } finally {
     await run(["--filter", "@primoria/web", "exec", "next", "typegen"]);
   }

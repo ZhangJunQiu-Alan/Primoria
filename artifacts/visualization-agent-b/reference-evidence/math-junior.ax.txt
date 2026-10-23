@@ -1,0 +1,649 @@
+Browser tab: 2, Title: "拾光视界 v12.0 - 数学全景教学系统", URL: "https://www.shiguangtongxue.cn/subjects/math/app.html?stage=junior&v=20260926005820".
+1 AXWebArea 拾光视界 v12.0 - 数学全景教学系统, URL: shiguangtongxue.cn/subjects/math/app.html?stage=junior&v=20260926005820
+	23 container
+		24 container
+			25 button 数 拾光视界
+				26 text 数
+				27 text 拾光视界
+			28 button 个人中心
+			29 button 订阅中心
+			30 button 退出系统
+			31 text 初中 / 全部单元
+			32 button 全部单元
+			33 button 七年级上册
+			34 button 七年级下册
+			35 button 八年级上册
+			36 button 八年级下册
+			37 button 九年级上册
+			38 button 九年级下册
+			39 button 学科专题
+			40 button 中考模型专题
+			41 container
+				42 text 模块单元数量:  100
+			43 container
+				44 button 打开有理数的运算与数轴
+					45 container
+						46 text 视觉表现等级  A
+						47 heading 有理数的运算与数轴, Value: 3
+							48 text 有理数的运算与数轴
+						49 text # 数轴 # 有理数 # 大小比较 打开单元 M 1 M 2 M 3
+				50 button 打开立体图形的展开与折叠
+					51 container
+						52 text 视觉表现等级  A
+						53 heading 立体图形的展开与折叠, Value: 3
+							54 text 立体图形的展开与折叠
+						55 text # 立体图形 # 展开图 打开单元 M 1 M 2 M 3
+				56 button 打开绝对值与相反数几何意义
+					57 container
+						58 text 视觉表现等级  A
+						59 heading 绝对值与相反数几何意义, Value: 3
+							60 text 绝对值与相反数几何意义
+						61 text # 数轴 # 有理数 # 大小比较 打开单元 M 1 M 2 M 3
+				62 button 打开一元一次方程的天平模型
+					63 container
+						64 text 视觉表现等级  A
+						65 heading 一元一次方程的天平模型, Value: 3
+							66 text 一元一次方程的天平模型
+						67 text # 等式性质 # 方程 打开单元 M 1 M 2 M 3
+				68 button 打开有理数乘方的指数爆炸可视化
+					69 container
+						70 text 视觉表现等级  A
+						71 heading 有理数乘方的指数爆炸可视化, Value: 3
+							72 text 有理数乘方的指数爆炸可视化
+						73 text # 数轴 # 有理数 # 大小比较 打开单元 M 1 M 2 M 3
+				74 button 打开整式合并同类项积木
+					75 container
+						76 text 视觉表现等级  A
+						77 heading 整式合并同类项积木, Value: 3
+							78 text 整式合并同类项积木
+						79 text # 整式 # 同类项 # 合并 # 单项式 打开单元 M 1 M 2 M 3
+				80 button 打开平行线的性质与截线定理
+					81 container
+						82 text 视觉表现等级  A
+						83 heading 平行线的性质与截线定理, Value: 3
+							84 text 平行线的性质与截线定理
+						85 text # 平行线 # 截线角 打开单元 M 1 M 2 M 3
+				86 button 打开去括号与符号变化机器
+					87 container
+						88 text 视觉表现等级  A
+						89 heading 去括号与符号变化机器, Value: 3
+							90 text 去括号与符号变化机器
+						91 text # 整式 # 去括号 # 符号 # 合并同类项 打开单元 M 1 M 2 M 3
+				92 button 打开坐标系中的多边形平移
+					93 container
+						94 text 视觉表现等级  A
+						95 heading 坐标系中的多边形平移, Value: 3
+							96 text 坐标系中的多边形平移
+						97 text # 坐标平移 # 几何变换 打开单元 M 1 M 2 M 3
+				98 button 打开线段中点与线段和差
+					99 container
+						100 text 视觉表现等级  A
+						101 heading 线段中点与线段和差, Value: 3
+							102 text 线段中点与线段和差
+						103 text # 线段 # 中点 # 长度 # 线段和差 打开单元 M 1 M 2 M 3
+				104 button 打开不等式解集的数轴表示
+					105 container
+						106 text 视觉表现等级  A
+						107 heading 不等式解集的数轴表示, Value: 3
+							108 text 不等式解集的数轴表示
+						109 text # 不等式 # 数轴表示 打开单元 M 1 M 2 M 3
+				110 button 打开角的度量与角平分线
+					111 container
+						112 text 视觉表现等级  A
+						113 heading 角的度量与角平分线, Value: 3
+							114 text 角的度量与角平分线
+						115 text # 角 # 量角器 # 角平分线 # 双平分线 打开单元 M 1 M 2 M 3
+				116 button 打开同位角与内错角辨析
+					117 container
+						118 text 视觉表现等级  A
+						119 heading 同位角与内错角辨析, Value: 3
+							120 text 同位角与内错角辨析
+						121 text # 平行线 # 截线角 打开单元 M 1 M 2 M 3
+				122 button 打开科学记数法数量级缩放
+					123 container
+						124 text 视觉表现等级  A
+						125 heading 科学记数法数量级缩放, Value: 3
+							126 text 科学记数法数量级缩放
+						127 text # 科学记数法 # 数量级 # 乘方 打开单元 M 1 M 2 M 3
+				128 button 打开二元一次方程组的交点求解
+					129 container
+						130 text 视觉表现等级  A
+						131 heading 二元一次方程组的交点求解, Value: 3
+							132 text 二元一次方程组的交点求解
+						133 text # 方程组 # 交点 打开单元 M 1 M 2 M 3
+				134 button 打开一元一次方程应用线段图
+					135 container
+						136 text 视觉表现等级  A
+						137 heading 一元一次方程应用线段图, Value: 3
+							138 text 一元一次方程应用线段图
+						139 text # 方程应用 # 线段图 # 建模 # 方程建模 打开单元 M 1 M 2 M 3
+				140 button 打开全等三角形的判定定理验证
+					141 container
+						142 text 视觉表现等级  A
+						143 heading 全等三角形的判定定理验证, Value: 3
+							144 text 全等三角形的判定定理验证
+						145 text # SSS # SAS # ASA # AAS 打开单元 M 1 M 2 M 3
+				146 button 打开余角补角与方位角
+					147 container
+						148 text 视觉表现等级  A
+						149 heading 余角补角与方位角, Value: 3
+							150 text 余角补角与方位角
+						151 text # 余角 # 补角 # 方位角 # 余角补角 打开单元 M 1 M 2 M 3
+				152 button 打开轴对称与镜面反射空间构建
+					153 container
+						154 text 视觉表现等级  A
+						155 heading 轴对称与镜面反射空间构建, Value: 3
+							156 text 轴对称与镜面反射空间构建
+						157 text # 轴对称 # 镜面反射 打开单元 M 1 M 2 M 3
+				158 button 打开数轴区间与有理数大小比较
+					159 container
+						160 text 视觉表现等级  A
+						161 heading 数轴区间与有理数大小比较, Value: 3
+							162 text 数轴区间与有理数大小比较
+						163 text # 数轴 # 区间 # 大小比较 # 有理数 打开单元 M 1 M 2 M 3
+				164 button 打开完全平方公式的几何拼图
+					165 container
+						166 text 视觉表现等级  A
+						167 heading 完全平方公式的几何拼图, Value: 3
+							168 text 完全平方公式的几何拼图
+						169 text # 完全平方公式 # 平方差公式 打开单元 M 1 M 2 M 3
+				170 button 打开HL 判定直角三角形全等
+					171 container
+						172 text 视觉表现等级  A
+						173 heading HL 判定直角三角形全等, Value: 3
+							174 text HL 判定直角三角形全等
+						175 text # SSS # SAS # ASA # AAS 打开单元 M 1 M 2 M 3
+				176 button 打开勾股定理的经典几何面积证明
+					177 container
+						178 text 视觉表现等级  A
+						179 heading 勾股定理的经典几何面积证明, Value: 3
+							180 text 勾股定理的经典几何面积证明
+						181 text # 勾股定理 # 面积证明 打开单元 M 1 M 2 M 3
+				182 button 打开一次函数斜率与截距动态图
+					183 container
+						184 text 视觉表现等级  A
+						185 heading 一次函数斜率与截距动态图, Value: 3
+							186 text 一次函数斜率与截距动态图
+						187 text # 斜率 # 截距 打开单元 M 1 M 2 M 3
+				188 button 打开菱形与矩形的动态形变
+					189 container
+						190 text 视觉表现等级  A
+						191 heading 菱形与矩形的动态形变, Value: 3
+							192 text 菱形与矩形的动态形变
+						193 text # 矩形 # 菱形 # 正方形 打开单元 M 1 M 2 M 3
+				194 button 打开毕达哥拉斯树分形动画
+					195 container
+						196 text 视觉表现等级  A
+						197 heading 毕达哥拉斯树分形动画, Value: 3
+							198 text 毕达哥拉斯树分形动画
+						199 text # 勾股定理 # 面积证明 打开单元 M 1 M 2 M 3
+				200 button 打开平方根与立方根数轴定位
+					201 container
+						202 text 视觉表现等级  A
+						203 heading 平方根与立方根数轴定位, Value: 3
+							204 text 平方根与立方根数轴定位
+						205 text # 实数 # 平方根 # 立方根 # 算术平方根 打开单元 M 1 M 2 M 3
+				206 button 打开频率分布直方图与数据分析
+					207 container
+						208 text 视觉表现等级  A
+						209 heading 频率分布直方图与数据分析, Value: 3
+							210 text 频率分布直方图与数据分析
+						211 text # 平均数 # 中位数 # 众数 打开单元 M 1 M 2 M 3
+				212 button 打开无理数逼近与根号定位
+					213 container
+						214 text 视觉表现等级  A
+						215 heading 无理数逼近与根号定位, Value: 3
+							216 text 无理数逼近与根号定位
+						217 text # 无理数 # 逼近 # 根号 # 实数 打开单元 M 1 M 2 M 3
+				218 button 打开二次函数的抛物线与顶点
+					219 container
+						220 text 视觉表现等级  A
+						221 heading 二次函数的抛物线与顶点, Value: 3
+							222 text 二次函数的抛物线与顶点
+						223 text # 抛物线 # 顶点 # 参数 打开单元 M 1 M 2 M 3
+				224 button 打开圆与圆周角定理动态推演
+					225 container
+						226 text 视觉表现等级  A
+						227 heading 圆与圆周角定理动态推演, Value: 3
+							228 text 圆与圆周角定理动态推演
+						229 text # 圆周角 # 弧弦关系 打开单元 M 1 M 2 M 3
+				230 button 打开点到直线距离与垂线段
+					231 container
+						232 text 视觉表现等级  A
+						233 heading 点到直线距离与垂线段, Value: 3
+							234 text 点到直线距离与垂线段
+						235 text # 垂线 # 距离 # 最短 # 点到直线距离 打开单元 M 1 M 2 M 3
+				236 button 打开一元二次方程根的判别式
+					237 container
+						238 text 视觉表现等级  A
+						239 heading 一元二次方程根的判别式, Value: 3
+							240 text 一元二次方程根的判别式
+						241 text # 配方法 # 公式法 # 判别式 打开单元 M 1 M 2 M 3
+				242 button 打开坐标象限与点的符号规律
+					243 container
+						244 text 视觉表现等级  A
+						245 heading 坐标象限与点的符号规律, Value: 3
+							246 text 坐标象限与点的符号规律
+						247 text # 坐标系 # 象限 # 符号 # 坐标 打开单元 M 1 M 2 M 3
+				248 button 打开垂径定理的几何构造
+					249 container
+						250 text 视觉表现等级  A
+						251 heading 垂径定理的几何构造, Value: 3
+							252 text 垂径定理的几何构造
+						253 text # 圆周角 # 弧弦关系 打开单元 M 1 M 2 M 3
+				254 button 打开数据收集与统计图生成
+					255 container
+						256 text 视觉表现等级  A
+						257 heading 数据收集与统计图生成, Value: 3
+							258 text 数据收集与统计图生成
+						259 text # 统计 # 数据 # 图表 # 抽样 打开单元 M 1 M 2 M 3
+				260 button 打开旋转变换与中心对称图形
+					261 container
+						262 text 视觉表现等级  A
+						263 heading 旋转变换与中心对称图形, Value: 3
+							264 text 旋转变换与中心对称图形
+						265 text # 旋转 # 中心对称 打开单元 M 1 M 2 M 3
+				266 button 打开实际问题中的不等式建模
+					267 container
+						268 text 视觉表现等级  A
+						269 heading 实际问题中的不等式建模, Value: 3
+							270 text 实际问题中的不等式建模
+						271 text # 不等式应用 # 建模 # 范围 # 不等式解法 打开单元 M 1 M 2 M 3
+				272 button 打开概率的树状图与列表法
+					273 container
+						274 text 视觉表现等级  A
+						275 heading 概率的树状图与列表法, Value: 3
+							276 text 概率的树状图与列表法
+						277 text # 抛物线 # 顶点 # 参数 打开单元 M 1 M 2 M 3
+				278 button 打开锐角三角函数与测绘应用
+					279 container
+						280 text 视觉表现等级  A
+						281 heading 锐角三角函数与测绘应用, Value: 3
+							282 text 锐角三角函数与测绘应用
+						283 text # 仰角 # 俯角 # 坡度 打开单元 M 1 M 2 M 3
+				284 button 打开几何体的三视图光影投影
+					285 container
+						286 text 视觉表现等级  A
+						287 heading 几何体的三视图光影投影, Value: 3
+							288 text 几何体的三视图光影投影
+						289 text # 主视图 # 俯视图 # 左视图 打开单元 M 1 M 2 M 3
+				290 button 打开位似变换与相似多边形
+					291 container
+						292 text 视觉表现等级  A
+						293 heading 位似变换与相似多边形, Value: 3
+							294 text 位似变换与相似多边形
+						295 text # 相似判定 # 比例 打开单元 M 1 M 2 M 3
+				296 button 打开正方体截面的所有可能
+					297 container
+						298 text 视觉表现等级  A
+						299 heading 正方体截面的所有可能, Value: 3
+							300 text 正方体截面的所有可能
+						301 text # 主视图 # 俯视图 # 左视图 打开单元 M 1 M 2 M 3
+				302 button 打开三角形三边关系实验室
+					303 container
+						304 text 视觉表现等级  A
+						305 heading 三角形三边关系实验室, Value: 3
+							306 text 三角形三边关系实验室
+						307 text # 三角形 # 三边关系 # 判定 # 高线中线角平分线 打开单元 M 1 M 2 M 3
+				308 button 打开三角形与多边形内角和拆分
+					309 container
+						310 text 视觉表现等级  A
+						311 heading 三角形与多边形内角和拆分, Value: 3
+							312 text 三角形与多边形内角和拆分
+						313 text # 三角形 # 多边形 # 内角和 # 外角 打开单元 M 1 M 2 M 3
+				314 button 打开等腰三角形性质与判定
+					315 container
+						316 text 视觉表现等级  A
+						317 heading 等腰三角形性质与判定, Value: 3
+							318 text 等腰三角形性质与判定
+						319 text # 等腰三角形 # 性质 # 判定 # 性质判定 打开单元 M 1 M 2 M 3
+				320 button 打开角平分线与垂直距离
+					321 container
+						322 text 视觉表现等级  A
+						323 heading 角平分线与垂直距离, Value: 3
+							324 text 角平分线与垂直距离
+						325 text # 角平分线 # 垂线距离 # 全等 # 距离相等 打开单元 M 1 M 2 M 3
+				326 button 打开因式分解面积拼图
+					327 container
+						328 text 视觉表现等级  A
+						329 heading 因式分解面积拼图, Value: 3
+							330 text 因式分解面积拼图
+						331 text # 因式分解 # 面积模型 # 拼图 # 提公因式 打开单元 M 1 M 2 M 3
+				332 button 打开分式约分通分可视化
+					333 container
+						334 text 视觉表现等级  A
+						335 heading 分式约分通分可视化, Value: 3
+							336 text 分式约分通分可视化
+						337 text # 分式 # 约分 # 通分 # 分式运算 打开单元 M 1 M 2 M 3
+				338 button 打开分式方程增根警报器
+					339 container
+						340 text 视觉表现等级  A
+						341 heading 分式方程增根警报器, Value: 3
+							342 text 分式方程增根警报器
+						343 text # 分式方程 # 增根 # 检验 打开单元 M 1 M 2 M 3
+				344 button 打开轴对称折叠作图
+					345 container
+						346 text 视觉表现等级  A
+						347 heading 轴对称折叠作图, Value: 3
+							348 text 轴对称折叠作图
+						349 text # 轴对称 # 折叠 # 作图 打开单元 M 1 M 2 M 3
+				350 button 打开二次根式化简与合并
+					351 container
+						352 text 视觉表现等级  A
+						353 heading 二次根式化简与合并, Value: 3
+							354 text 二次根式化简与合并
+						355 text # 二次根式 # 化简 # 合并 # 定义 打开单元 M 1 M 2 M 3
+				356 button 打开勾股定理逆定理判定器
+					357 container
+						358 text 视觉表现等级  A
+						359 heading 勾股定理逆定理判定器, Value: 3
+							360 text 勾股定理逆定理判定器
+						361 text # 勾股逆定理 # 三角形 # 判定 # 逆定理 打开单元 M 1 M 2 M 3
+				362 button 打开平行四边形判定实验室
+					363 container
+						364 text 视觉表现等级  A
+						365 heading 平行四边形判定实验室, Value: 3
+							366 text 平行四边形判定实验室
+						367 text # 平行四边形 # 判定 # 四边形 打开单元 M 1 M 2 M 3
+				368 button 打开配方法几何拼方
+					369 container
+						370 text 视觉表现等级  A
+						371 heading 配方法几何拼方, Value: 3
+							372 text 配方法几何拼方
+						373 text # 配方法 # 面积模型 # 方程 # 公式法 打开单元 M 1 M 2 M 3
+				374 button 打开弧弦圆心角关系
+					375 container
+						376 text 视觉表现等级  A
+						377 heading 弧弦圆心角关系, Value: 3
+							378 text 弧弦圆心角关系
+						379 text # 弧 # 弦 # 圆心角 # 圆周角 打开单元 M 1 M 2 M 3
+				380 button 打开随机试验频率稳定性
+					381 container
+						382 text 视觉表现等级  A
+						383 heading 随机试验频率稳定性, Value: 3
+							384 text 随机试验频率稳定性
+						385 text # 概率 # 频率 # 模拟 # 概率估计 打开单元 M 1 M 2 M 3
+				386 button 打开圆内接四边形与对角互补
+					387 container
+						388 text 视觉表现等级  A
+						389 heading 圆内接四边形与对角互补, Value: 3
+							390 text 圆内接四边形与对角互补
+						391 text # 圆内接四边形 # 对角互补 # 圆 # 圆周角 打开单元 M 1 M 2 M 3
+				392 button 打开正多边形与圆
+					393 container
+						394 text 视觉表现等级  A
+						395 heading 正多边形与圆, Value: 3
+							396 text 正多边形与圆
+						397 text # 正多边形 # 圆 # 中心角 打开单元 M 1 M 2 M 3
+				398 button 打开二次函数实际最值建模
+					399 container
+						400 text 视觉表现等级  A
+						401 heading 二次函数实际最值建模, Value: 3
+							402 text 二次函数实际最值建模
+						403 text # 二次函数应用 # 最值 # 建模 打开单元 M 1 M 2 M 3
+				404 button 打开反比例函数图像与 k 的几何意义
+					405 container
+						406 text 视觉表现等级  A
+						407 heading 反比例函数图像与 k 的几何意义, Value: 3
+							408 text 反比例函数图像与 k 的几何意义
+						409 text # 反比例函数 # 双曲线 # 面积 # k 的意义 打开单元 M 1 M 2 M 3
+				410 button 打开相似三角形判定实验室
+					411 container
+						412 text 视觉表现等级  A
+						413 heading 相似三角形判定实验室, Value: 3
+							414 text 相似三角形判定实验室
+						415 text # 相似三角形 # 判定 # 比例 # 相似判定 打开单元 M 1 M 2 M 3
+				416 button 打开平行线分线段成比例
+					417 container
+						418 text 视觉表现等级  A
+						419 heading 平行线分线段成比例, Value: 3
+							420 text 平行线分线段成比例
+						421 text # 比例线段 # 平行线 # 相似 打开单元 M 1 M 2 M 3
+				422 button 打开投影长度与光源位置
+					423 container
+						424 text 视觉表现等级  A
+						425 heading 投影长度与光源位置, Value: 3
+							426 text 投影长度与光源位置
+						427 text # 投影 # 光源 # 影长 打开单元 M 1 M 2 M 3
+				428 button 打开解直角三角形路线规划
+					429 container
+						430 text 视觉表现等级  A
+						431 heading 解直角三角形路线规划, Value: 3
+							432 text 解直角三角形路线规划
+						433 text # 解直角三角形 # 应用 # 测量 # 仰角 打开单元 M 1 M 2 M 3
+				434 button 打开相似多边形面积比
+					435 container
+						436 text 视觉表现等级  A
+						437 heading 相似多边形面积比, Value: 3
+							438 text 相似多边形面积比
+						439 text # 相似多边形 # 面积比 # 比例 # 相似判定 打开单元 M 1 M 2 M 3
+				440 button 打开根式化简专题
+					441 container
+						442 text 视觉表现等级  A
+						443 heading 根式化简专题, Value: 3
+							444 text 根式化简专题
+						445 text # 根式 # 化简 # 专题 打开单元 M 1 M 2 M 3
+				446 button 打开方程解法流程专题
+					447 container
+						448 text 视觉表现等级  A
+						449 heading 方程解法流程专题, Value: 3
+							450 text 方程解法流程专题
+						451 text # 方程 # 流程 # 专题 打开单元 M 1 M 2 M 3
+				452 button 打开不等式与区间专题
+					453 container
+						454 text 视觉表现等级  A
+						455 heading 不等式与区间专题, Value: 3
+							456 text 不等式与区间专题
+						457 text # 不等式 # 区间 # 专题 打开单元 M 1 M 2 M 3
+				458 button 打开一次函数专题
+					459 container
+						460 text 视觉表现等级  A
+						461 heading 一次函数专题, Value: 3
+							462 text 一次函数专题
+						463 text # 一次函数 # 图像 # 专题 打开单元 M 1 M 2 M 3
+				464 button 打开二次函数专题
+					465 container
+						466 text 视觉表现等级  A
+						467 heading 二次函数专题, Value: 3
+							468 text 二次函数专题
+						469 text # 二次函数 # 抛物线 # 专题 打开单元 M 1 M 2 M 3
+				470 button 打开函数与方程交点专题
+					471 container
+						472 text 视觉表现等级  A
+						473 heading 函数与方程交点专题, Value: 3
+							474 text 函数与方程交点专题
+						475 text # 函数 # 方程 # 交点 打开单元 M 1 M 2 M 3
+				476 button 打开几何辅助线构造专题
+					477 container
+						478 text 视觉表现等级  A
+						479 heading 几何辅助线构造专题, Value: 3
+							480 text 几何辅助线构造专题
+						481 text # 辅助线 # 几何证明 # 专题 打开单元 M 1 M 2 M 3
+				482 button 打开全等证明链专题
+					483 container
+						484 text 视觉表现等级  A
+						485 heading 全等证明链专题, Value: 3
+							486 text 全等证明链专题
+						487 text # 全等 # 证明链 # 几何证明 打开单元 M 1 M 2 M 3
+				488 button 打开相似证明链专题
+					489 container
+						490 text 视觉表现等级  A
+						491 heading 相似证明链专题, Value: 3
+							492 text 相似证明链专题
+						493 text # 相似 # 证明链 # 几何证明 打开单元 M 1 M 2 M 3
+				494 button 打开圆的性质综合专题
+					495 container
+						496 text 视觉表现等级  A
+						497 heading 圆的性质综合专题, Value: 3
+							498 text 圆的性质综合专题
+						499 text # 圆 # 性质 # 专题 打开单元 M 1 M 2 M 3
+				500 button 打开面积法专题
+					501 container
+						502 text 视觉表现等级  A
+						503 heading 面积法专题, Value: 3
+							504 text 面积法专题
+						505 text # 面积法 # 几何 # 专题 打开单元 M 1 M 2 M 3
+				506 button 打开飞镖模型：凹四边形角关系
+					507 container
+						508 text 视觉表现等级  A
+						509 heading 飞镖模型：凹四边形角关系, Value: 3
+							510 text 飞镖模型：凹四边形角关系
+						511 text # 飞镖模型 # 凹四边形 # 角关系 # 几何证明 打开单元 M 1 M 2 M 3
+				512 button 打开统计概率专题
+					513 container
+						514 text 视觉表现等级  A
+						515 heading 统计概率专题, Value: 3
+							516 text 统计概率专题
+						517 text # 统计 # 概率 # 数据分析 打开单元 M 1 M 2 M 3
+				518 button 打开空间想象与三视图专题
+					519 container
+						520 text 视觉表现等级  A
+						521 heading 空间想象与三视图专题, Value: 3
+							522 text 空间想象与三视图专题
+						523 text # 空间想象 # 三视图 # 专题 打开单元 M 1 M 2 M 3
+				524 button 打开将军饮马最短路径模型
+					525 container
+						526 text 视觉表现等级  A
+						527 heading 将军饮马最短路径模型, Value: 3
+							528 text 将军饮马最短路径模型
+						529 text # 将军饮马 # 最短路径 # 镜像 # 轴对称 打开单元 M 1 M 2 M 3
+				530 button 打开手拉手全等旋转模型
+					531 container
+						532 text 视觉表现等级  A
+						533 heading 手拉手全等旋转模型, Value: 3
+							534 text 手拉手全等旋转模型
+						535 text # 手拉手 # 旋转 # 全等 打开单元 M 1 M 2 M 3
+				536 button 打开一线三等角模型
+					537 container
+						538 text 视觉表现等级  A
+						539 heading 一线三等角模型, Value: 3
+							540 text 一线三等角模型
+						541 text # 一线三等角 # K 字模型 # 相似 # 全等 打开单元 M 1 M 2 M 3
+				542 button 打开半角模型
+					543 container
+						544 text 视觉表现等级  A
+						545 heading 半角模型, Value: 3
+							546 text 半角模型
+						547 text # 半角 # 旋转全等 # 正方形 # 周长恒定 打开单元 M 1 M 2 M 3
+				548 button 打开倍长中线模型
+					549 container
+						550 text 视觉表现等级  A
+						551 heading 倍长中线模型, Value: 3
+							552 text 倍长中线模型
+						553 text # 倍长中线 # 全等 # 中线不等式 # 平行四边形 打开单元 M 1 M 2 M 3
+				554 button 打开截长补短模型
+					555 container
+						556 text 视觉表现等级  A
+						557 heading 截长补短模型, Value: 3
+							558 text 截长补短模型
+						559 text # 截长补短 # 构造 # 全等 打开单元 M 1 M 2 M 3
+				560 button 打开角平分线双垂线模型
+					561 container
+						562 text 视觉表现等级  A
+						563 heading 角平分线双垂线模型, Value: 3
+							564 text 角平分线双垂线模型
+						565 text # 角平分线 # 双垂线 # 面积法 打开单元 M 1 M 2 M 3
+				566 button 打开垂直平分线寻点模型
+					567 container
+						568 text 视觉表现等级  A
+						569 heading 垂直平分线寻点模型, Value: 3
+							570 text 垂直平分线寻点模型
+						571 text # 垂直平分线 # 轨迹 # 等距 # 尺规作图 打开单元 M 1 M 2 M 3
+				572 button 打开A 字型相似模型
+					573 container
+						574 text 视觉表现等级  A
+						575 heading A 字型相似模型, Value: 3
+							576 text A 字型相似模型
+						577 text # A 字型 # 相似 # 平行线 # 成比例 打开单元 M 1 M 2 M 3
+				578 button 打开8 字型相似模型
+					579 container
+						580 text 视觉表现等级  A
+						581 heading 8 字型相似模型, Value: 3
+							582 text 8 字型相似模型
+						583 text # 8 字型 # 相似 # 对顶角 # 平行线 打开单元 M 1 M 2 M 3
+				584 button 打开直角三角形斜边高相似模型
+					585 container
+						586 text 视觉表现等级  A
+						587 heading 直角三角形斜边高相似模型, Value: 3
+							588 text 直角三角形斜边高相似模型
+						589 text # 母子相似 # 射影定理 # 斜边高 # 面积恒等 打开单元 M 1 M 2 M 3
+				590 button 打开圆幂模型：切线、相交弦、切割线
+					591 container
+						592 text 视觉表现等级  A
+						593 heading 圆幂模型：切线、相交弦、切割线, Value: 3
+							594 text 圆幂模型：切线、相交弦、切割线
+						595 text # 圆幂 # 切线长 # 相交弦 # 割线 打开单元 M 1 M 2 M 3
+				596 button 打开隐圆模型
+					597 container
+						598 text 视觉表现等级  A
+						599 heading 隐圆模型, Value: 3
+							600 text 隐圆模型
+						601 text # 隐圆 # 四点共圆 # 直角定圆 # 同弧同角 打开单元 M 1 M 2 M 3
+				602 button 打开折叠重合模型
+					603 container
+						604 text 视觉表现等级  A
+						605 heading 折叠重合模型, Value: 3
+							606 text 折叠重合模型
+						607 text # 折叠 # 轴对称 # 重合 打开单元 M 1 M 2 M 3
+				608 button 打开动点轨迹模型
+					609 container
+						610 text 视觉表现等级  A
+						611 heading 动点轨迹模型, Value: 3
+							612 text 动点轨迹模型
+						613 text # 动点 # 轨迹 # 最值 打开单元 M 1 M 2 M 3
+				614 button 打开胡不归模型
+					615 container
+						616 text 视觉表现等级  A
+						617 heading 胡不归模型, Value: 3
+							618 text 胡不归模型
+						619 text # 胡不归 # 最短路径 # 加权 打开单元 M 1 M 2 M 3
+				620 button 打开阿氏圆模型
+					621 container
+						622 text 视觉表现等级  A
+						623 heading 阿氏圆模型, Value: 3
+							624 text 阿氏圆模型
+						625 text # 阿氏圆 # 定比轨迹 # 相似 打开单元 M 1 M 2 M 3
+				626 button 打开面积比例模型：燕尾与蝴蝶
+					627 container
+						628 text 视觉表现等级  A
+						629 heading 面积比例模型：燕尾与蝴蝶, Value: 3
+							630 text 面积比例模型：燕尾与蝴蝶
+						631 text # 燕尾模型 # 蝴蝶模型 # 面积比 打开单元 M 1 M 2 M 3
+				632 button 打开正方形旋转模型
+					633 container
+						634 text 视觉表现等级  A
+						635 heading 正方形旋转模型, Value: 3
+							636 text 正方形旋转模型
+						637 text # 正方形 # 旋转 # 全等 打开单元 M 1 M 2 M 3
+				638 button 打开60 度等边旋转模型
+					639 container
+						640 text 视觉表现等级  A
+						641 heading 60 度等边旋转模型, Value: 3
+							642 text 60 度等边旋转模型
+						643 text # 等边三角形 # 60 度旋转 # 旋转全等 打开单元 M 1 M 2 M 3
+			644 button 打开题库练习
+				645 text 题库
+				646 text 练习
+	2 container Description: 小拾光学习助手, ID: shgLearningAssistant
+		3 button 打开小拾光萌宠学习助手
+			4 button 点击切换为【橘莉 Jolly · 星光绒绒兽】
+	5 container 先体验数学，再决定是否订阅
+		6 container
+			7 text 拾光视界 · 试用体验
+			8 heading 先体验数学，再决定是否订阅, Value: 2, ID: shg-trial-notice-title
+				9 text 先体验数学，再决定是否订阅
+			10 button 关闭试用提示
+		11 text 试用权益已开启
+		12 text 本次6小时试用期内，数学全部内容免费体验
+		13 text 先完整体验，合适再订阅。试用结束后，可从右上角“订阅中心”继续开通。
+		14 text 本次体验
+		15 text 数学全部内容
+		16 text 剩余体验时间
+		647 text 2小时 22分
+		18 text 遇到使用问题？添加客服微信
+		19 button 18584322518
+		20 button 开始体验
+		21 button 不再提示
+		22 button 查看订阅方案
+
+The focused UI element is 1 AXWebArea 拾光视界 v12.0 - 数学全景教学系统, URL: shiguangtongxue.cn/subjects/math/app.html?stage=junior&v=20260926005820

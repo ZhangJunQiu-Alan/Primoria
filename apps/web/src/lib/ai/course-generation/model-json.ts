@@ -1,6 +1,6 @@
 import type { z } from "zod";
 import type { TutorProviderSettings } from "../types";
-import { createTutorModel, resolveProviderSettings } from "../deepagent/model";
+import { createTutorModel, createUtilityModel, resolveProviderSettings } from "../deepagent/model";
 
 // Generic structured-JSON invocation for the lesson pipeline. Mirrors the
 // provider handling in deepagent/course-generator.ts (structured output with a
@@ -9,6 +9,11 @@ import { createTutorModel, resolveProviderSettings } from "../deepagent/model";
 // untrusted parsed value for the caller's own Zod validation.
 
 type ProviderSettings = ReturnType<typeof resolveProviderSettings>;
+export type JsonModelCall = { model: string; status: number; usage: Record<string, unknown> | null; responseId: string | null };
+function modelUsage(value: unknown): Record<string, unknown> | null {
+  if (!value || typeof value !== "object" || !("usage_metadata" in value)) return null;
+  return value.usage_metadata && typeof value.usage_metadata === "object" ? value.usage_metadata as Record<string, unknown> : null;
+}
 
 export type InvokeJsonArgs = {
   system: string;
@@ -22,6 +27,8 @@ export type InvokeJsonArgs = {
   timeoutMs?: number;
   /** Caller cancellation; combined with the internal deadline. */
   signal?: AbortSignal;
+  onModelCall?: (call: JsonModelCall) => void;
+  utility?: boolean;
 };
 
 export const MODEL_JSON_TIMEOUT_CODE = "model_json_timeout";
@@ -71,7 +78,8 @@ function* extractBalancedJson(text: string): Generator<string> {
   const closes = "}]";
   for (let i = 0; i < text.length; i += 1) {
     if (!opens.includes(text[i])) continue;
-    let depth = 0;
+    const stack: string[] = [];
+    let closed = false;
     let inString = false;
     let escaped = false;
     for (let j = i; j < text.length; j += 1) {
@@ -83,15 +91,18 @@ function* extractBalancedJson(text: string): Generator<string> {
         continue;
       }
       if (ch === '"') inString = true;
-      else if (opens.includes(ch)) depth += 1;
+      else if (opens.includes(ch)) stack.push(ch);
       else if (closes.includes(ch)) {
-        depth -= 1;
-        if (depth === 0) {
+        if (opens.indexOf(stack.pop() ?? "") !== closes.indexOf(ch)) return;
+        if (stack.length === 0) {
           yield text.slice(i, j + 1);
+          i = j;
+          closed = true;
           break;
         }
       }
     }
+    if (!closed) return;
   }
 }
 
@@ -131,6 +142,7 @@ async function rawAnthropicJson(
   user: string,
   signal: AbortSignal,
   maxTokens: number,
+  onModelCall?: (call: JsonModelCall) => void,
 ): Promise<string> {
   if (!settings.baseUrl) throw new Error("Missing ANTHROPIC_BASE_URL");
   if (!settings.apiKey) throw new Error("Missing ANTHROPIC_API_KEY");
@@ -153,7 +165,10 @@ async function rawAnthropicJson(
   const json = (await response.json().catch(() => ({}))) as {
     content?: Array<{ type: string; text?: string }>;
     error?: { message?: string };
+    id?: string;
+    usage?: Record<string, unknown>;
   };
+  onModelCall?.({ model: settings.model, status: response.status, usage: json.usage ?? null, responseId: json.id ?? null });
   if (!response.ok) throw new Error(json.error?.message ?? `model request failed: ${response.status}`);
   const out = (json.content ?? [])
     .filter((part) => part.type === "text")
@@ -177,7 +192,9 @@ async function rawAnthropicJson(
 export async function invokeJson(args: InvokeJsonArgs): Promise<unknown> {
   const { system, user, schema, schemaName = "result", timeoutMs = 90_000 } = args;
   const settings = resolveProviderSettings(args.settings ?? {});
-  const model = createTutorModel(args.settings ?? {}, { streaming: false, maxTokens: args.maxTokens });
+  const model = args.utility
+    ? createUtilityModel({ ...args.settings, model: settings.model }, { maxTokens: args.maxTokens ?? 8192, timeoutMs })
+    : createTutorModel(args.settings ?? {}, { streaming: false, maxTokens: args.maxTokens });
 
   const deadlineAt = Date.now() + timeoutMs;
   const controller = new AbortController();
@@ -205,21 +222,32 @@ export async function invokeJson(args: InvokeJsonArgs): Promise<unknown> {
   try {
     if (shouldSkipStructuredOutput(settings)) {
       return parseJsonValue(
-        await attempt(rawAnthropicJson(settings, system, user, signal, args.maxTokens ?? 8192), "JSON generation"),
+        await attempt(rawAnthropicJson(settings, system, user, signal, args.maxTokens ?? 8192, args.onModelCall), "JSON generation"),
       );
     }
 
     if (schema) {
+      let observed = false;
       try {
+        if (args.onModelCall) {
+          const structured = model.withStructuredOutput(schema, { name: schemaName, includeRaw: true });
+          const result = await attempt(structured.invoke(messages, { signal }), "structured output");
+          observed = true;
+          args.onModelCall({ model: settings.model, status: 200, usage: modelUsage(result.raw), responseId: result.raw?.id ?? null });
+          if (result.parsed === null || result.parsed === undefined) throw new Error("Structured response did not parse");
+          return result.parsed;
+        }
         const structured = model.withStructuredOutput(schema, { name: schemaName });
         return await attempt(structured.invoke(messages, { signal }), "structured output");
       } catch (error) {
+        if (!observed) args.onModelCall?.({ model: settings.model, status: 0, usage: null, responseId: null });
         if (error instanceof ModelJsonTimeoutError || args.signal?.aborted) throw error;
         // fall through to JSON-prompt mode with the remaining budget
       }
     }
 
     const result = await attempt(model.invoke(messages, { signal }), "JSON generation");
+    args.onModelCall?.({ model: settings.model, status: 200, usage: result.usage_metadata ?? null, responseId: result.id ?? null });
     return parseJsonValue(messageContentToString(result.content));
   } finally {
     clearTimeout(deadlineTimer);

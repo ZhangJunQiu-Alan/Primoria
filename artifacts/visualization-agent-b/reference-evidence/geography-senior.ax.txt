@@ -1,0 +1,349 @@
+Browser tab: 2, Title: "拾光视界 v12.0 - 地理全景教学系统", URL: "https://www.shiguangtongxue.cn/subjects/geography/app.html?stage=senior&v=20261019164656".
+1 AXWebArea 拾光视界 v12.0 - 地理全景教学系统, URL: shiguangtongxue.cn/subjects/geography/app.html?stage=senior&v=20261019164656
+	2 container
+		3 container
+			4 button 地 拾光视界
+				5 text 地
+				6 text 拾光视界
+			7 button 个人中心
+			8 button 订阅中心
+			9 button 退出系统
+			10 text 高中 / 全部单元
+			11 button 全部单元
+			12 button 必修第一册
+			13 button 必修第二册
+			14 button 选择性必修1 自然地理基础
+			15 button 选择性必修2 区域发展
+			16 button 选择性必修3 资源、环境与国家安全
+			17 container
+				18 text 模块单元数量:  51
+			19 container
+				20 button 打开气象与地质灾害
+					21 container
+						22 text 视觉表现等级  A
+						23 heading 气象与地质灾害, Value: 3
+							24 text 气象与地质灾害
+						25 text 打开单元 M 1 M 2 M 3
+				26 button 打开科里奥利力与全球风带
+					27 container
+						28 text 视觉表现等级  A
+						29 heading 科里奥利力与全球风带, Value: 3
+							30 text 科里奥利力与全球风带
+						31 text 打开单元 M 1 M 2 M 3
+				32 button 打开热力环流与海陆风城市热岛
+					33 container
+						34 text 视觉表现等级  A
+						35 heading 热力环流与海陆风城市热岛, Value: 3
+							36 text 热力环流与海陆风城市热岛
+						37 text 打开单元 M 1 M 2 M 3
+				38 button 打开气旋与反气旋台风结构剖面
+					39 container
+						40 text 视觉表现等级  A
+						41 heading 气旋与反气旋台风结构剖面, Value: 3
+							42 text 气旋与反气旋台风结构剖面
+						43 text 打开单元 M 1 M 2 M 3
+				44 button 打开河流地貌V型谷三角洲牛轭湖
+					45 container
+						46 text 视觉表现等级  A
+						47 heading 河流地貌V型谷三角洲牛轭湖, Value: 3
+							48 text 河流地貌V型谷三角洲牛轭湖
+						49 text 打开单元 M 1 M 2 M 3
+				50 button 打开农业区位因素与世界农业带
+					51 container
+						52 text 视觉表现等级  A
+						53 heading 农业区位因素与世界农业带, Value: 3
+							54 text 农业区位因素与世界农业带
+						55 text 打开单元 M 1 M 2 M 3
+				56 button 打开工业区位与产业转移路径
+					57 container
+						58 text 视觉表现等级  A
+						59 heading 工业区位与产业转移路径, Value: 3
+							60 text 工业区位与产业转移路径
+						61 text 打开单元 M 1 M 2 M 3
+				62 button 打开城市内部空间结构模型
+					63 container
+						64 text 视觉表现等级  A
+						65 heading 城市内部空间结构模型, Value: 3
+							66 text 城市内部空间结构模型
+						67 text 打开单元 M 1 M 2 M 3
+				68 button 打开全球交通网络与航线可视化
+					69 container
+						70 text 视觉表现等级  A
+						71 heading 全球交通网络与航线可视化, Value: 3
+							72 text 全球交通网络与航线可视化
+						73 text 打开单元 M 1 M 2 M 3
+				74 button 打开褶皱与断层的地质构造力学
+					75 container
+						76 text 视觉表现等级  A
+						77 heading 褶皱与断层的地质构造力学, Value: 3
+							78 text 褶皱与断层的地质构造力学
+						79 text 打开单元 M 1 M 2 M 3
+				80 button 打开洋流分布与渔场形成机制
+					81 container
+						82 text 视觉表现等级  A
+						83 heading 洋流分布与渔场形成机制, Value: 3
+							84 text 洋流分布与渔场形成机制
+						85 text 打开单元 M 1 M 2 M 3
+				86 button 打开天体系统与太阳活动
+					87 container
+						88 text 视觉表现等级  A
+						89 heading 天体系统与太阳活动, Value: 3
+							90 text 天体系统与太阳活动
+						91 text 打开单元 M 1 M 2 M 3
+				92 button 打开大气热力环流
+					93 container
+						94 text 视觉表现等级  A
+						95 heading 大气热力环流, Value: 3
+							96 text 大气热力环流
+						97 text 打开单元 M 1 M 2 M 3
+				98 button 打开海水的运动：洋流
+					99 container
+						100 text 视觉表现等级  A
+						101 heading 海水的运动：洋流, Value: 3
+							102 text 海水的运动：洋流
+						103 text 打开单元 M 1 M 2 M 3
+				104 button 打开河流地貌的发育
+					105 container
+						106 text 视觉表现等级  A
+						107 heading 河流地貌的发育, Value: 3
+							108 text 河流地貌的发育
+						109 text 打开单元 M 1 M 2 M 3
+				110 button 打开大气层垂直分层与臭氧层
+					111 container
+						112 text 视觉表现等级  A
+						113 heading 大气层垂直分层与臭氧层, Value: 3
+							114 text 大气层垂直分层与臭氧层
+						115 text 打开单元 M 1 M 2 M 3
+				116 button 打开人口分布与迁移
+					117 container
+						118 text 视觉表现等级  A
+						119 heading 人口分布与迁移, Value: 3
+							120 text 人口分布与迁移
+						121 text 打开单元 M 1 M 2 M 3
+				122 button 打开城镇化过程及影响
+					123 container
+						124 text 视觉表现等级  A
+						125 heading 城镇化过程及影响, Value: 3
+							126 text 城镇化过程及影响
+						127 text 打开单元 M 1 M 2 M 3
+				128 button 打开构造地貌的形成
+					129 container
+						130 text 视觉表现等级  A
+						131 heading 构造地貌的形成, Value: 3
+							132 text 构造地貌的形成
+						133 text 打开单元 M 1 M 2 M 3
+				134 button 打开锋面气旋与天气
+					135 container
+						136 text 视觉表现等级  A
+						137 heading 锋面气旋与天气, Value: 3
+							138 text 锋面气旋与天气
+						139 text 打开单元 M 1 M 2 M 3
+				140 button 打开流域的综合开发
+					141 container
+						142 text 视觉表现等级  A
+						143 heading 流域的综合开发, Value: 3
+							144 text 流域的综合开发
+						145 text 打开单元 M 1 M 2 M 3
+				146 button 打开地球内部圈层结构透视
+					147 container
+						148 text 视觉表现等级  A
+						149 heading 地球内部圈层结构透视, Value: 3
+							150 text 地球内部圈层结构透视
+						151 text 打开单元 M 1 M 2 M 3
+				152 button 打开产业转移与资源跨区域调配
+					153 container
+						154 text 视觉表现等级  A
+						155 heading 产业转移与资源跨区域调配, Value: 3
+							156 text 产业转移与资源跨区域调配
+						157 text 打开单元 M 1 M 2 M 3
+				158 button 打开地质年代与地球演化时间轴
+					159 container
+						160 text 视觉表现等级  A
+						161 heading 地质年代与地球演化时间轴, Value: 3
+							162 text 地质年代与地球演化时间轴
+						163 text 打开单元 M 1 M 2 M 3
+				164 button 打开化石能源开发与安全
+					165 container
+						166 text 视觉表现等级  A
+						167 heading 化石能源开发与安全, Value: 3
+							168 text 化石能源开发与安全
+						169 text 打开单元 M 1 M 2 M 3
+				170 button 打开水循环与陆地水体补给
+					171 container
+						172 text 视觉表现等级  A
+						173 heading 水循环与陆地水体补给, Value: 3
+							174 text 水循环与陆地水体补给
+						175 text 打开单元 M 1 M 2 M 3
+				176 button 打开生态退化与生态安全
+					177 container
+						178 text 视觉表现等级  A
+						179 heading 生态退化与生态安全, Value: 3
+							180 text 生态退化与生态安全
+						181 text 打开单元 M 1 M 2 M 3
+				182 button 打开植被分布与自然带
+					183 container
+						184 text 视觉表现等级  A
+						185 heading 植被分布与自然带, Value: 3
+							186 text 植被分布与自然带
+						187 text 打开单元 M 1 M 2 M 3
+				188 button 打开土壤剖面与土壤形成过程
+					189 container
+						190 text 视觉表现等级  A
+						191 heading 土壤剖面与土壤形成过程, Value: 3
+							192 text 土壤剖面与土壤形成过程
+						193 text 打开单元 M 1 M 2 M 3
+				194 button 打开乡村聚落与地域文化景观
+					195 container
+						196 text 视觉表现等级  A
+						197 heading 乡村聚落与地域文化景观, Value: 3
+							198 text 乡村聚落与地域文化景观
+						199 text 打开单元 M 1 M 2 M 3
+				200 button 打开服务业区位与商业中心
+					201 container
+						202 text 视觉表现等级  A
+						203 heading 服务业区位与商业中心, Value: 3
+							204 text 服务业区位与商业中心
+						205 text 打开单元 M 1 M 2 M 3
+				206 button 打开环境问题与人地协调
+					207 container
+						208 text 视觉表现等级  A
+						209 heading 环境问题与人地协调, Value: 3
+							210 text 环境问题与人地协调
+						211 text 打开单元 M 1 M 2 M 3
+				212 button 打开可持续发展路径模拟
+					213 container
+						214 text 视觉表现等级  A
+						215 heading 可持续发展路径模拟, Value: 3
+							216 text 可持续发展路径模拟
+						217 text 打开单元 M 1 M 2 M 3
+				218 button 打开昼夜长短与正午太阳高度计算模拟
+					219 container
+						220 text 视觉表现等级  A
+						221 heading 昼夜长短与正午太阳高度计算模拟, Value: 3
+							222 text 昼夜长短与正午太阳高度计算模拟
+						223 text 打开单元 M 1 M 2 M 3
+				224 button 打开岩石圈物质循环
+					225 container
+						226 text 视觉表现等级  A
+						227 heading 岩石圈物质循环, Value: 3
+							228 text 岩石圈物质循环
+						229 text 打开单元 M 1 M 2 M 3
+				230 button 打开外力作用与地貌组合
+					231 container
+						232 text 视觉表现等级  A
+						233 heading 外力作用与地貌组合, Value: 3
+							234 text 外力作用与地貌组合
+						235 text 打开单元 M 1 M 2 M 3
+				236 button 打开水循环、河湖补给与流量过程
+					237 container
+						238 text 视觉表现等级  A
+						239 heading 水循环、河湖补给与流量过程, Value: 3
+							240 text 水循环、河湖补给与流量过程
+						241 text 打开单元 M 1 M 2 M 3
+				242 button 打开自然环境整体性
+					243 container
+						244 text 视觉表现等级  A
+						245 heading 自然环境整体性, Value: 3
+							246 text 自然环境整体性
+						247 text 打开单元 M 1 M 2 M 3
+				248 button 打开地域分异规律
+					249 container
+						250 text 视觉表现等级  A
+						251 heading 地域分异规律, Value: 3
+							252 text 地域分异规律
+						253 text 打开单元 M 1 M 2 M 3
+				254 button 打开区域发展阶段与区域类型判读
+					255 container
+						256 text 视觉表现等级  A
+						257 heading 区域发展阶段与区域类型判读, Value: 3
+							258 text 区域发展阶段与区域类型判读
+						259 text 打开单元 M 1 M 2 M 3
+				260 button 打开资源型城市转型
+					261 container
+						262 text 视觉表现等级  A
+						263 heading 资源型城市转型, Value: 3
+							264 text 资源型城市转型
+						265 text 打开单元 M 1 M 2 M 3
+				266 button 打开生态脆弱区治理
+					267 container
+						268 text 视觉表现等级  A
+						269 heading 生态脆弱区治理, Value: 3
+							270 text 生态脆弱区治理
+						271 text 打开单元 M 1 M 2 M 3
+				272 button 打开城市群协同与都市圈
+					273 container
+						274 text 视觉表现等级  A
+						275 heading 城市群协同与都市圈, Value: 3
+							276 text 城市群协同与都市圈
+						277 text 打开单元 M 1 M 2 M 3
+				278 button 打开区域协调发展评价模型
+					279 container
+						280 text 视觉表现等级  A
+						281 heading 区域协调发展评价模型, Value: 3
+							282 text 区域协调发展评价模型
+						283 text 打开单元 M 1 M 2 M 3
+				284 button 打开粮食安全与耕地保护
+					285 container
+						286 text 视觉表现等级  A
+						287 heading 粮食安全与耕地保护, Value: 3
+							288 text 粮食安全与耕地保护
+						289 text 打开单元 M 1 M 2 M 3
+				290 button 打开水资源安全与流域调控
+					291 container
+						292 text 视觉表现等级  A
+						293 heading 水资源安全与流域调控, Value: 3
+							294 text 水资源安全与流域调控
+						295 text 打开单元 M 1 M 2 M 3
+				296 button 打开海洋空间资源与海洋权益
+					297 container
+						298 text 视觉表现等级  A
+						299 heading 海洋空间资源与海洋权益, Value: 3
+							300 text 海洋空间资源与海洋权益
+						301 text 打开单元 M 1 M 2 M 3
+				302 button 打开碳循环与双碳路径
+					303 container
+						304 text 视觉表现等级  A
+						305 heading 碳循环与双碳路径, Value: 3
+							306 text 碳循环与双碳路径
+						307 text 打开单元 M 1 M 2 M 3
+				308 button 打开污染转移与环境安全
+					309 container
+						310 text 视觉表现等级  A
+						311 heading 污染转移与环境安全, Value: 3
+							312 text 污染转移与环境安全
+						313 text 打开单元 M 1 M 2 M 3
+				314 button 打开生物多样性与自然保护地
+					315 container
+						316 text 视觉表现等级  A
+						317 heading 生物多样性与自然保护地, Value: 3
+							318 text 生物多样性与自然保护地
+						319 text 打开单元 M 1 M 2 M 3
+				320 button 打开国家战略资源安全图谱
+					321 container
+						322 text 视觉表现等级  A
+						323 heading 国家战略资源安全图谱, Value: 3
+							324 text 国家战略资源安全图谱
+						325 text 打开单元 M 1 M 2 M 3
+	326 container 先体验地理，再决定是否订阅
+		327 container
+			328 text 拾光视界 · 试用体验
+			329 heading 先体验地理，再决定是否订阅, Value: 2, ID: shg-trial-notice-title
+				330 text 先体验地理，再决定是否订阅
+			331 button 关闭试用提示
+		332 text 试用权益已开启
+		333 text 本次6小时试用期内，地理全部内容免费体验
+		334 text 先完整体验，合适再订阅。试用结束后，可从右上角“订阅中心”继续开通。
+		335 text 本次体验
+		336 text 地理全部内容
+		337 text 剩余体验时间
+		338 text 2小时 32分
+		339 text 遇到使用问题？添加客服微信
+		340 button 18584322518
+		341 button 开始体验
+		342 button 不再提示
+		343 button 查看订阅方案
+	344 container Description: 小拾光学习助手, ID: shgLearningAssistant
+		345 button 打开小拾光萌宠学习助手
+			346 button 点击切换为【橘莉 Jolly · 星光绒绒兽】
+
+The focused UI element is 1 AXWebArea 拾光视界 v12.0 - 地理全景教学系统, URL: shiguangtongxue.cn/subjects/geography/app.html?stage=senior&v=20261019164656

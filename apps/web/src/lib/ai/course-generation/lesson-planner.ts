@@ -4,6 +4,7 @@ import type { CourseContext, CourseContextTopic } from "../deepagent/course-kg-c
 import { languageDirective } from "../deepagent/course-kg-context";
 import { knowledgeBackgroundDirective, factsDirective } from "../../learner-profile/types";
 import { invokeJson, type InvokeJsonArgs } from "./model-json";
+import { searchInteractiveComponents } from "@primoria/contracts/artifacts/interactive-search";
 import {
   expectedBlockRange,
   IR_VERSION,
@@ -50,6 +51,13 @@ function fmtVisualConcepts(topic: CourseContextTopic): string {
   return visualConcepts(topic)
     .map((c) => `  - ${c.name} (${c.conceptId}) → engine ${c.visual}${c.visualHint ? `: ${c.visualHint}` : ""}`)
     .join("\n");
+}
+
+function fmtCatalogCandidates(kg: CourseContext): string {
+  return searchInteractiveComponents({
+    query: [kg.learningGoal, kg.startTopic.name, ...kg.startTopic.concepts.map((concept) => `${concept.name} ${concept.visualHint ?? ""}`)].filter(Boolean).join(" "),
+    limit: 4,
+  }).map((candidate) => `  - ${candidate.componentId}: ${candidate.description}\n    Supports: ${candidate.supports.join("; ")}\n    Excludes: ${candidate.exclusions.join("; ")}`).join("\n");
 }
 
 // A deterministic, always-valid scaffold for the common 1-3 concept topic. The
@@ -185,6 +193,10 @@ VALID CONCEPT IDS: ${conceptIds.join(", ")}
 
 VISUAL AFFORDANCE HINTS (strong hints, not quotas; V=visual is the product's core differentiator when it teaches a mechanism):
 ${visuals.length ? fmtVisualConcepts(kg.startTopic) : "  (none for this topic)"}
+
+TRUSTED VISUALIZATION CANDIDATES (retrieved for this lesson, not additional concepts):
+${fmtCatalogCandidates(kg) || "  (none retrieved)"}
+When a candidate supports a required concept, design that V=visual block around its actual controls and include its component ID in the writerInstruction. Prefer this reusable mechanism to requesting a custom simulation. Respect exclusions; never omit required concepts or change the lesson scope to force a match. Unsupported mechanisms retain the specialized/sandbox fallback.
 
 Target ${min}-${max} blocks for ${conceptCount} concepts.
 ${targetsSection}`;

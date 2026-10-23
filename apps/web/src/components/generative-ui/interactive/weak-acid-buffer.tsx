@@ -1,0 +1,24 @@
+"use client";
+
+import { computeWeakAcidBuffer, type WeakAcidBufferConfig } from "@/lib/interactive/components/weak-acid-buffer";
+import { WIDGET_COLORS as C } from "./palette";
+import { SegmentedControl, SliderRow } from "./primitives/controls";
+import { CartesianPlot, curvePath, plotCoordinates, SceneFrame, useSceneLocale } from "./primitives/scene-frame";
+
+export function WeakAcidBufferWidget({ config, onChange }: { config: WeakAcidBufferConfig; onChange: (next: WeakAcidBufferConfig) => void }) {
+  const t = useSceneLocale(), r = computeWeakAcidBuffer(config), p = plotCoordinates(-100, 100, 0, 14);
+  const set = <K extends keyof WeakAcidBufferConfig>(key: K, value: WeakAcidBufferConfig[K]) => onChange({ ...config, [key]: value });
+  return <SceneFrame id="chem.weak-acid-buffer" title={t("加一点酸碱，pH为什么有时变化很小？", "Why can pH resist a small acid or base addition?")} description={t("HA ⇌ H⁺ + A⁻。同时满足酸的总量、电荷守恒与水的自解离；不在稀溶液中盲用近似公式。", "HA ⇌ H⁺ + A⁻. Acid mass balance, charge balance and water autoionization are solved together, including very dilute solutions.")}
+    readouts={[{ label: "pH", value: r.pH.toFixed(4) }, { label: "[HA]", value: r.ha.toPrecision(4), unit: "mol/L" }, { label: "[A⁻]", value: r.a.toPrecision(4), unit: "mol/L" }, ...(config.showCapacity ? [{ label: t("局部缓冲容量 β", "Local buffer capacity β"), value: (r.capacity * 1000).toPrecision(4), unit: "mmol/(L·pH)" }] : [])]}
+    controls={<><SliderRow label={t("总酸浓度", "Total acid")} min={0} max={1} step={0.001} value={config.totalConcentration} unit="M" onChange={(v) => set("totalConcentration", v)} /><SliderRow label="pKa" min={1} max={12} step={0.01} value={config.pKa} onChange={(v) => set("pKa", v)} /><SliderRow label={t("初始盐比例", "Salt fraction")} min={0} max={1} step={0.01} value={config.saltFraction} onChange={(v) => set("saltFraction", v)} /><SliderRow label={t("强碱当量", "Base added")} min={-100} max={100} step={0.1} value={config.addedBaseMM} unit="mM" onChange={(v) => set("addedBaseMM", v)} /><SegmentedControl label={t("观察", "View")} value={config.view} options={[["composition", t("物种组成", "Species")], ["response", t("酸碱响应", "Response")]]} onChange={(v) => set("view", v)} /><label style={{ color: C.muted, fontSize: 12 }}><input type="checkbox" checked={config.showCapacity} onChange={(e) => set("showCapacity", e.target.checked)} />{t("显示缓冲容量", "Show buffer capacity")}</label></>}
+    explanation={t("Ka=[H⁺][A⁻]/[HA]，Ct=[HA]+[A⁻]，Kw=[H⁺][OH⁻]=10⁻¹⁴。共轭酸碱同时存在且浓度足够时，少量扰动主要改变物种比例；耗尽一方后，pH变化加快。β表示局部每改变一个pH单位所需的强碱浓度，不是任意大扰动的恒定容量。点阵只近似表示组成比例，不代表真实分子个数。本模型固定25°C、体积不变、理想活度，负强碱当量表示加酸；不替代真实滴定的体积稀释与多元酸模型。", "Ka=[H⁺][A⁻]/[HA], Ct=[HA]+[A⁻], and Kw=10⁻¹⁴. When both conjugate forms are present at sufficient concentration, small additions mainly change their ratio; after one is depleted pH changes faster. β is a local response, not a constant capacity for large additions. Dots approximate proportions, not actual molecule counts. The model assumes 25°C, fixed volume and ideal activities. Negative base equivalents mean added acid; volume dilution and polyprotic acids are outside this model.")}>
+    {config.view === "response" ? <CartesianPlot xMin={-100} xMax={100} yMin={0} yMax={14} xLabel={t("强碱当量 / mmol·L⁻¹", "Added base / mmol L⁻¹")} yLabel="pH" label={t("强酸碱扰动与pH响应曲线", "pH response to strong acid and base equivalents")}>
+      <path d={curvePath((x) => computeWeakAcidBuffer(config, x).pH, -100, 100, 0, 14, 250)} stroke={C.series1} strokeWidth={3} fill="none" /><circle cx={p.x(config.addedBaseMM)} cy={p.y(r.pH)} r={6} fill={C.series2} />
+    </CartesianPlot> : <svg viewBox="0 0 680 330" role="img" aria-label={t("弱酸与共轭碱的平衡组成", "Equilibrium composition of acid and conjugate base")} style={{ width: "100%", display: "block" }}>
+      <text x={180} y={44} textAnchor="middle" fill={C.series1} fontSize={24}>HA</text><text x={500} y={44} textAnchor="middle" fill={C.series2} fontSize={24}>A⁻</text>
+      <rect x={65} y={65} width={230} height={200} rx={16} fill={C.series1} fillOpacity={0.06} stroke={C.series1} /><rect x={385} y={65} width={230} height={200} rx={16} fill={C.series2} fillOpacity={0.06} stroke={C.series2} />
+      {Array.from({ length: config.totalConcentration === 0 ? 0 : 40 }, (_, i) => { const isA = i < Math.round(r.fractionA * 40), n = isA ? i : i - Math.round(r.fractionA * 40); return <circle key={i} cx={(isA ? 410 : 90) + n % 5 * 43} cy={90 + Math.floor(n / 5) * 21} r={6} fill={isA ? C.series2 : C.series1} />; })}
+      <text x={340} y={170} textAnchor="middle" fill={C.muted} fontSize={32}>⇌</text><text x={180} y={296} textAnchor="middle" fill={C.series1} fontSize={16}>{config.totalConcentration === 0 ? "—" : `${((1 - r.fractionA) * 100).toFixed(1)}%`}</text><text x={500} y={296} textAnchor="middle" fill={C.series2} fontSize={16}>{config.totalConcentration === 0 ? "—" : `${(r.fractionA * 100).toFixed(1)}%`}</text>
+    </svg>}
+  </SceneFrame>;
+}

@@ -1,0 +1,215 @@
+{
+  "capturedAt": "2026-10-22T13:22:33.456Z",
+  "records": [
+    {
+      "scene": 0,
+      "id": "math.calculus-lab",
+      "action": "keyboard-slider",
+      "control": "x₀",
+      "changed": true
+    },
+    {
+      "scene": 1,
+      "id": "physics.refraction-lab",
+      "action": "keyboard-slider",
+      "control": "n₁",
+      "changed": true
+    },
+    {
+      "scene": 2,
+      "id": "physics.projectile-lab",
+      "action": "keyboard-slider",
+      "control": "初速度",
+      "changed": true
+    },
+    {
+      "scene": 3,
+      "id": "physics.circuit-lab",
+      "action": "keyboard-slider",
+      "control": "电源电压",
+      "changed": true
+    },
+    {
+      "scene": 4,
+      "id": "astronomy.moon-phases",
+      "action": "keyboard-slider",
+      "control": "月龄",
+      "changed": true
+    },
+    {
+      "scene": 5,
+      "id": "biology.mendelian-genetics",
+      "action": "mode-button",
+      "control": "不完全显性",
+      "changed": true
+    },
+    {
+      "scene": 6,
+      "id": "math.fraction-equivalence",
+      "action": "keyboard-slider",
+      "control": "分子",
+      "changed": true
+    },
+    {
+      "scene": 7,
+      "id": "math.chicken-rabbit",
+      "action": "keyboard-slider",
+      "control": "头数",
+      "changed": true
+    },
+    {
+      "scene": 8,
+      "id": "geography.earth-seasons",
+      "action": "keyboard-slider",
+      "control": "年内日序",
+      "changed": true
+    },
+    {
+      "scene": 9,
+      "id": "chem.ideal-gas",
+      "action": "keyboard-slider",
+      "control": "绝对温度",
+      "changed": true
+    },
+    {
+      "scene": 10,
+      "id": "chem.reaction-kinetics",
+      "action": "keyboard-slider",
+      "control": "初始浓度",
+      "changed": true
+    },
+    {
+      "scene": 11,
+      "id": "physics.oscillation-lab",
+      "action": "keyboard-slider",
+      "control": "质量",
+      "changed": true
+    },
+    {
+      "scene": 12,
+      "id": "math.trigonometry-circle",
+      "action": "keyboard-slider",
+      "control": "转角",
+      "changed": true
+    },
+    {
+      "scene": 13,
+      "id": "chem.chemical-equilibrium",
+      "action": "keyboard-slider",
+      "control": "k₊",
+      "changed": true
+    },
+    {
+      "scene": 14,
+      "id": "chem.molecular-geometry",
+      "action": "mode-button",
+      "control": "H₂O",
+      "changed": true
+    },
+    {
+      "scene": 15,
+      "id": "physics.lever-balance",
+      "action": "keyboard-slider",
+      "control": "左侧力",
+      "changed": true
+    },
+    {
+      "scene": 16,
+      "id": "physics.buoyancy-lab",
+      "action": "keyboard-slider",
+      "control": "物体密度",
+      "changed": true
+    },
+    {
+      "scene": 17,
+      "id": "physics.electric-field",
+      "action": "keyboard-slider",
+      "control": "q₁",
+      "changed": true
+    },
+    {
+      "scene": 18,
+      "id": "math.binomial-distribution",
+      "action": "keyboard-slider",
+      "control": "试验次数",
+      "changed": true
+    },
+    {
+      "scene": 19,
+      "id": "biology.cell-division",
+      "action": "keyboard-slider",
+      "control": "关键阶段",
+      "changed": true
+    },
+    {
+      "scene": 20,
+      "id": "biology.osmosis-lab",
+      "action": "keyboard-slider",
+      "control": "左初始浓度",
+      "changed": true
+    },
+    {
+      "scene": 21,
+      "id": "physics.magnetic-motion",
+      "action": "keyboard-slider",
+      "control": "B",
+      "changed": true
+    },
+    {
+      "scene": 22,
+      "id": "physics.photoelectric-effect",
+      "action": "keyboard-slider",
+      "control": "波长",
+      "changed": true
+    },
+    {
+      "scene": 23,
+      "id": "math.linear-system",
+      "action": "keyboard-slider",
+      "control": "a1",
+      "changed": true
+    },
+    {
+      "scene": 24,
+      "id": "math.quadratic-equation",
+      "action": "keyboard-slider",
+      "control": "a",
+      "changed": true
+    },
+    {
+      "scene": 25,
+      "id": "chem.weak-acid-buffer",
+      "action": "keyboard-slider",
+      "control": "总酸浓度",
+      "changed": true
+    },
+    {
+      "scene": 26,
+      "id": "math.parabola-intersections",
+      "action": "keyboard-slider",
+      "control": "a",
+      "changed": true
+    },
+    {
+      "scene": 27,
+      "id": "physics.wire-resistance",
+      "action": "keyboard-slider",
+      "control": "20°C电阻率",
+      "changed": true
+    },
+    {
+      "scene": 28,
+      "id": "physics.closed-circuit",
+      "action": "keyboard-slider",
+      "control": "电动势 E",
+      "changed": true
+    },
+    {
+      "scene": 29,
+      "id": "chinese.poetry-imagery",
+      "action": "keyboard-image-selection",
+      "control": "人家",
+      "changed": true
+    }
+  ]
+}

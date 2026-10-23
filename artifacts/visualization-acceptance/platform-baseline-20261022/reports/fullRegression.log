@@ -1,0 +1,901 @@
+
+> primoria@ test:regression /Users/zhangjunqiu/Documents/Project/Primoria
+> pnpm test:regression:fast && pnpm test:regression:build && pnpm test:regression:db && REGRESSION_WEB_MODE=production pnpm test:regression:browser
+
+
+> primoria@ test:regression:fast /Users/zhangjunqiu/Documents/Project/Primoria
+> pnpm typecheck && pnpm lint && pnpm test && node --check apps/agent/src/graph.mjs && pnpm --filter @primoria/agent typecheck && pnpm test:agent && pnpm test:agent:integration && pnpm test:learning-goal-routing && pnpm eval:tutor:validate && pnpm eval:tutor:zh:check && pnpm catalog:validate && pnpm --filter @primoria/web test:interactive-routing && pnpm --filter @primoria/web validate:kg && pnpm --filter @primoria/web db:check:migrations
+
+
+> primoria@ typecheck /Users/zhangjunqiu/Documents/Project/Primoria
+> pnpm --filter @primoria/web typecheck
+
+
+> @primoria/web@0.1.0 typecheck /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> next typegen && tsc --noEmit
+
+Generating route types...
+✓ Types generated successfully
+
+> primoria@ lint /Users/zhangjunqiu/Documents/Project/Primoria
+> pnpm --filter @primoria/web lint
+
+
+> @primoria/web@0.1.0 lint /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> eslint .
+
+
+> primoria@ test /Users/zhangjunqiu/Documents/Project/Primoria
+> pnpm --filter @primoria/web test
+
+
+> @primoria/web@0.1.0 test /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> vitest run
+
+
+ RUN  v4.1.10 /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+
+
+ Test Files  136 passed | 6 skipped (142)
+      Tests  901 passed | 18 skipped (919)
+   Start at  20:58:12
+   Duration  89.81s (transform 2.51s, setup 1.26s, import 18.79s, tests 40.77s, environment 3.38s)
+
+
+> @primoria/agent@0.1.0 typecheck /Users/zhangjunqiu/Documents/Project/Primoria/apps/agent
+> tsc --noEmit
+
+
+> primoria@ test:agent /Users/zhangjunqiu/Documents/Project/Primoria
+> pnpm --filter @primoria/agent test
+
+
+> @primoria/agent@0.1.0 test /Users/zhangjunqiu/Documents/Project/Primoria/apps/agent
+> pnpm test:course-store && pnpm test:context-trim && pnpm test:agui-events && pnpm test:interactive-tool && pnpm test:internal-auth && pnpm test:database-pool && pnpm test:interactive-routing-contract && pnpm test:tutor-benchmark && pnpm test:runtime-worker && pnpm test:scripted-model
+
+
+> @primoria/agent@0.1.0 test:course-store /Users/zhangjunqiu/Documents/Project/Primoria/apps/agent
+> node tests/course-store-schema.unit.mjs
+
+[agent course-store-schema.unit] ALL CHECKS PASSED
+
+> @primoria/agent@0.1.0 test:context-trim /Users/zhangjunqiu/Documents/Project/Primoria/apps/agent
+> node tests/context-trim.unit.mjs
+
+[context-trim.unit] ALL CHECKS PASSED
+
+> @primoria/agent@0.1.0 test:agui-events /Users/zhangjunqiu/Documents/Project/Primoria/apps/agent
+> node tests/agui-events.unit.mjs
+
+[agui-events.unit] ALL CHECKS PASSED
+
+> @primoria/agent@0.1.0 test:interactive-tool /Users/zhangjunqiu/Documents/Project/Primoria/apps/agent
+> node tests/interactive-tool.unit.mjs
+
+[interactive-tool.unit] ALL CHECKS PASSED
+
+> @primoria/agent@0.1.0 test:internal-auth /Users/zhangjunqiu/Documents/Project/Primoria/apps/agent
+> node tests/internal-auth.unit.mjs
+
+[internal-auth.unit] ALL CHECKS PASSED
+
+> @primoria/agent@0.1.0 test:database-pool /Users/zhangjunqiu/Documents/Project/Primoria/apps/agent
+> node tests/database-pool.unit.mjs
+
+[database-pool.unit] ALL CHECKS PASSED
+
+> @primoria/agent@0.1.0 test:interactive-routing-contract /Users/zhangjunqiu/Documents/Project/Primoria/apps/agent
+> node tests/interactive-routing-contract.unit.mjs
+
+[interactive-routing-contract.unit] ALL CHECKS PASSED
+
+> @primoria/agent@0.1.0 test:tutor-benchmark /Users/zhangjunqiu/Documents/Project/Primoria/apps/agent
+> node tests/tutor-benchmark.unit.mjs
+
+[tutor-benchmark.unit] ALL CHECKS PASSED
+
+> @primoria/agent@0.1.0 test:runtime-worker /Users/zhangjunqiu/Documents/Project/Primoria/apps/agent
+> node tests/runtime-worker.unit.mjs
+
+[runtime-worker.unit] ALL CHECKS PASSED
+
+> @primoria/agent@0.1.0 test:scripted-model /Users/zhangjunqiu/Documents/Project/Primoria/apps/agent
+> node --test tests/scripted-openai-server.unit.mjs
+
+✔ scripted model teardown closes unfinished client connections (12.43375ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 187.86125
+
+> primoria@ test:agent:integration /Users/zhangjunqiu/Documents/Project/Primoria
+> pnpm --filter @primoria/agent test:integration
+
+
+> @primoria/agent@0.1.0 test:integration /Users/zhangjunqiu/Documents/Project/Primoria/apps/agent
+> pnpm test:graph-e2e
+
+
+> @primoria/agent@0.1.0 test:graph-e2e /Users/zhangjunqiu/Documents/Project/Primoria/apps/agent
+> node tests/graph-invoke.e2e.mjs
+
+[graph-invoke.e2e] ALL CHECKS PASSED
+
+> primoria@ test:learning-goal-routing /Users/zhangjunqiu/Documents/Project/Primoria
+> pnpm --filter @primoria/web test:learning-goal-routing
+
+
+> @primoria/web@0.1.0 test:learning-goal-routing /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> tsx scripts/generate-learning-goal-routing-dataset.ts --check && tsx scripts/eval-learning-goal-routing.ts --validate-only
+
+Verified 1718 generated learning-goal routing cases.
+Validated 1718 learning-goal routing cases.
+
+> primoria@ eval:tutor:validate /Users/zhangjunqiu/Documents/Project/Primoria
+> pnpm --filter @primoria/agent eval:tutor:validate
+
+
+> @primoria/agent@0.1.0 eval:tutor:validate /Users/zhangjunqiu/Documents/Project/Primoria/apps/agent
+> node scripts/run-tutor-benchmark.mjs --validate-only
+
+Validated 12 cases from primoria-tutor-bench-v1.
+
+> primoria@ eval:tutor:zh:check /Users/zhangjunqiu/Documents/Project/Primoria
+> pnpm --filter @primoria/agent eval:tutor:zh:check
+
+
+> @primoria/agent@0.1.0 eval:tutor:zh:check /Users/zhangjunqiu/Documents/Project/Primoria/apps/agent
+> node scripts/build-chinese-tutor-benchmark.mjs --check
+
+Chinese TutorBench is in sync: 60 cases across 6 domains.
+
+> primoria@ catalog:validate /Users/zhangjunqiu/Documents/Project/Primoria
+> node scripts/build-interactive-catalog.mjs --check && node scripts/validate-visualization-catalog.mjs
+
+[interactive-catalog] 45 entries, hash=82ac1ad7783797fc82676d489c6ebcd2433eefaa8dc33594bab41a7f664853d2
+[visualization-catalog] OK: 45 components (implemented=45)
+[visualization-catalog] discipline tags: arts, astronomy, biology, business, chemistry, civics, computer-science, cross-disciplinary, design, earth-science, economics, education, engineering, environmental-studies, ethics, film-studies, geography, health, history, language, law, linguistics, literature, math, mathematics, media-studies, music, natural-science, optics, performing-arts, philosophy, physics, primary-olympiad, psychology, public-policy, religious-studies, research-methods, science, social-science, statistics, theatre
+[visualization-catalog] production registry covered: arts.color-harmony, astronomy.moon-phases, biology.cell-division, biology.mendelian-genetics, biology.osmosis-lab, chem.acid-base-titration, chem.chemical-equilibrium, chem.ideal-gas, chem.molecular-geometry, chem.reaction-kinetics, chem.weak-acid-buffer, cs.sorting-steps, general.process-sequence, general.timeline-causality, geography.climate-comparison, geography.earth-seasons, humanities.argument-map, humanities.source-comparison, language.sentence-structure, literature.character-relationships, literature.close-reading, literature.narrative-arc, math.angle-measure, math.binomial-distribution, math.calculus-lab, math.chicken-rabbit, math.fraction-equivalence, math.function-explorer, math.linear-system, math.quadratic-equation, math.trigonometry-circle, music.rhythm-pattern, physics.buoyancy-lab, physics.circuit-lab, physics.electric-field, physics.lens-imaging, physics.lever-balance, physics.magnetic-motion, physics.oscillation-lab, physics.photoelectric-effect, physics.projectile-lab, physics.refraction-lab, physics.wave-superposition, psychology.experiment-design, social.policy-tradeoff
+
+> @primoria/web@0.1.0 test:interactive-routing /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> tsx scripts/eval-interactive-routing.ts --validate-only
+
+Validated 28 interactive routing cases.
+
+> @primoria/web@0.1.0 validate:kg /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> node scripts/validate-kg.mjs all
+
+✅ a_level_biology
+✅ a_level_chemistry
+✅ a_level_mathematics
+✅ a_level_physics
+✅ artificial_intelligence
+✅ computer_architecture
+✅ computer_network
+✅ computer_systems
+✅ data_structures_and_algorithms
+✅ deep_learning
+✅ discrete_math_and_probability
+✅ information_theory
+✅ introduction_to_computer_science
+✅ linear_algebra
+✅ machine_learning
+✅ mit_calculus
+✅ numerical_analysis
+✅ python_fundamentals
+✅ senior_secondary_biology
+   ⚠ 30/75 concepts are graph roots; review entry-point coverage
+✅ senior_secondary_chemistry
+   ⚠ 20/49 concepts are graph roots; review entry-point coverage
+✅ senior_secondary_mathematics
+   ⚠ 17/70 concepts are graph roots; review entry-point coverage
+✅ senior_secondary_physics
+   ⚠ 30/73 concepts are graph roots; review entry-point coverage
+✅ sicp_cs61a
+✅ singapore_h2_biology
+   ⚠ 14/42 concepts are graph roots; review entry-point coverage
+✅ singapore_h2_chemistry
+   ⚠ 13/18 concepts are graph roots; review entry-point coverage
+✅ singapore_h2_mathematics
+   ⚠ 17/33 concepts are graph roots; review entry-point coverage
+✅ singapore_h2_physics
+✅ singapore_lower_secondary_science
+   ⚠ 15/32 concepts are graph roots; review entry-point coverage
+✅ singapore_secondary_mathematics
+✅ software_construction
+✅ web_applications
+✅ governance registries, cross-subject edges, 11 curriculum framework(s), 11 mapping set(s), 10 gap set(s), 10 resolution set(s), 10 practice set(s), and 1 pedagogy profile set(s)
+
+[validate-kg] 31 graph(s) and governance passed
+
+> @primoria/web@0.1.0 db:check:migrations /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> drizzle-kit check --config drizzle.config.ts
+
+Reading config file '/Users/zhangjunqiu/Documents/Project/Primoria/apps/web/drizzle.config.ts'
+Everything's fine 🐶🔥
+
+> primoria@ test:regression:build /Users/zhangjunqiu/Documents/Project/Primoria
+> pnpm build && pnpm --filter @primoria/web bundle:check
+
+
+> primoria@ build /Users/zhangjunqiu/Documents/Project/Primoria
+> pnpm --filter @primoria/web build
+
+
+> @primoria/web@0.1.0 build /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> next build
+
+▲ Next.js 16.3.8 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 110ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 11.2s
+  Running TypeScript ...
+  Finished TypeScript in 13.8s ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/28) ...
+  Generating static pages using 7 workers (7/28) 
+  Generating static pages using 7 workers (14/28) 
+  Generating static pages using 7 workers (21/28) 
+✓ Generating static pages using 7 workers (28/28) in 347ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /account
+├ ƒ /api/auth/me
+├ ƒ /api/auth/password-reset/confirm
+├ ƒ /api/auth/password-reset/request
+├ ƒ /api/auth/sign-in
+├ ƒ /api/auth/sign-out
+├ ƒ /api/auth/sign-up
+├ ƒ /api/copilot-threads
+├ ƒ /api/copilot-threads/[id]/messages
+├ ƒ /api/copilotkit
+├ ƒ /api/courses
+├ ƒ /api/courses/[id]
+├ ƒ /api/courses/[id]/blocks/[blockId]
+├ ƒ /api/courses/[id]/chat
+├ ƒ /api/courses/[id]/edit
+├ ƒ /api/courses/[id]/edit-events
+├ ƒ /api/courses/[id]/learning-progress/[jobId]
+├ ƒ /api/courses/[id]/learning-progress/recommendation
+├ ƒ /api/courses/[id]/lesson-generation-jobs
+├ ƒ /api/courses/[id]/lessons/[lessonId]/generate
+├ ƒ /api/courses/[id]/lessons/[lessonId]/prewarm-next
+├ ƒ /api/courses/[id]/quiz
+├ ƒ /api/courses/[id]/share
+├ ƒ /api/health
+├ ƒ /api/health/live
+├ ƒ /api/health/ready
+├ ƒ /api/interactive-component
+├ ƒ /api/knowledge-graph/position
+├ ƒ /api/knowledge-graph/search
+├ ƒ /api/learner-facts
+├ ƒ /api/learner-facts/intake
+├ ƒ /api/learning-events/feedback
+├ ƒ /api/learning/course
+├ ƒ /api/lesson-generation-jobs
+├ ƒ /api/lesson-generation-jobs/[jobId]
+├ ƒ /api/media/assets/[assetId]
+├ ƒ /api/onboarding
+├ ƒ /api/onboarding/course
+├ ƒ /api/onboarding/facts
+├ ƒ /api/onboarding/goal
+├ ƒ /api/onboarding/style
+├ ƒ /api/profile
+├ ƒ /api/qa/batch-visual-mode/results
+├ ƒ /api/qa/declarative-lens
+├ ƒ /api/settings/preferences
+├ ƒ /api/share/[token]/import
+├ ƒ /api/telemetry/visualization
+├ ƒ /auth/callback
+├ ƒ /auth/sign-in
+├ ƒ /auth/sign-up
+├ ƒ /auth/signout
+├ ƒ /course/[id]
+├ ƒ /course/[id]/outline
+├ ƒ /debug/pipeline
+├ ƒ /dev/onboarding
+├ ƒ /forgot
+├ ƒ /internal/visualization-analytics
+├ ƒ /library
+├ ƒ /login
+├ ƒ /profile
+├ ƒ /qa/batch-visual-mode
+├ ƒ /qa/declarative-lens
+├ ƒ /qa/interactive-visual-results
+├ ƒ /qa/widget-renderer
+├ ƒ /reset-password
+├ ƒ /settings
+├ ƒ /settings/facts
+├ ƒ /share/[token]
+├ ƒ /signup
+├ ƒ /stats
+├ ƒ /weekly-report
+└ ƒ /welcome
+
+
+ƒ Proxy (Middleware)
+
+ƒ  (Dynamic)  server-rendered on demand
+
+
+> @primoria/web@0.1.0 bundle:check /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> node scripts/check-bundle-budget.mjs
+
+/: 532.5 KiB raw / 158.8 KiB gzip (11 chunks)
+/library: 499.1 KiB raw / 147.2 KiB gzip (9 chunks)
+/course/[id]: 967.3 KiB raw / 284.5 KiB gzip (13 chunks)
+/auth/sign-in: 463.2 KiB raw / 139.2 KiB gzip (9 chunks)
+/welcome: 476.5 KiB raw / 142.2 KiB gzip (9 chunks)
+
+> primoria@ test:regression:db /Users/zhangjunqiu/Documents/Project/Primoria
+> pnpm --filter @primoria/web test:regression:db:isolated
+
+
+> @primoria/web@0.1.0 test:regression:db:isolated /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> tsx scripts/with-isolated-test-db.ts pnpm exec tsx scripts/run-db-regression.ts
+
+[isolated-test-db] reused template primoria_regression_test_template
+[isolated-test-db] cloned primoria_regression_test_30988_mvjjuafd from primoria_regression_test_template
+
+> primoria@ test:db /Users/zhangjunqiu/Documents/Project/Primoria
+> pnpm --filter @primoria/web test:db
+
+
+> @primoria/web@0.1.0 test:db /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> pnpm test:lesson-jobs:db && pnpm test:onboarding-goal:db && pnpm test:course-description:db && pnpm test:progress:db && pnpm test:gamification:db && pnpm test:course-share:db && pnpm test:extractor:db && pnpm test:interactive-budget:db
+
+
+> @primoria/web@0.1.0 test:lesson-jobs:db /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> tsx tests/lesson-generation-store.db.ts && tsx tests/lesson-generation-worker.db.ts
+
+{
+  severity_local: 'NOTICE',
+  severity: 'NOTICE',
+  code: '42P06',
+  message: 'schema "drizzle" already exists, skipping',
+  file: 'schemacmds.c',
+  line: '135',
+  routine: 'CreateSchemaCommand'
+}
+{
+  severity_local: 'NOTICE',
+  severity: 'NOTICE',
+  code: '42P07',
+  message: 'relation "__drizzle_migrations" already exists, skipping',
+  file: 'parse_utilcmd.c',
+  line: '210',
+  routine: 'transformCreateStmt'
+}
+  ✓ enqueue creates one queued job
+  ✓ enqueue sets lesson generating
+  ✓ repeated enqueue returns the same job
+  ✓ ownership check rejects another user
+  ✓ exactly one worker wins the concurrent claim
+  ✓ claim increments attempts to 1
+  ✓ active lease cannot be reclaimed
+  ✓ heartbeat renews active lease
+  ✓ heartbeat extends lease expiry
+  ✓ expired lease can be reclaimed
+  ✓ reclaim generates a new lease token
+  ✓ reclaim increments attempts
+  ✓ old token cannot heartbeat
+  ✓ old token cannot update stage
+  ✓ old token cannot update progress
+  ✓ old token cannot write checkpoint
+  ✓ old token cannot fail job
+  ✓ old token cannot publish
+  ✓ invalid Mermaid cannot publish
+  ✓ invalid Mermaid writes nothing
+  ✓ active token publishes atomically
+  ✓ completed job cannot be reclaimed
+  ✓ exhausted attempts → failed
+  ✓ permanent failure resets lesson to planned
+  ✓ manual retry reuses the row
+  ✓ manual retry resets attempts/status/stage
+  ✓ idempotent upserts keep one row per key
+  ✓ checkpoint upsert overwrites payload
+  ✓ checkpoint versions round-trip
+  ✓ batch checkpoints deletable (fenced)
+  ✓ batch delete keeps the plan checkpoint
+  ✓ plan+dependents deletable (fenced)
+  ✓ plan+dependents delete clears all checkpoints
+[lesson-generation-store.db] ALL CHECKS PASSED
+{
+  severity_local: 'NOTICE',
+  severity: 'NOTICE',
+  code: '42P06',
+  message: 'schema "drizzle" already exists, skipping',
+  file: 'schemacmds.c',
+  line: '135',
+  routine: 'CreateSchemaCommand'
+}
+{
+  severity_local: 'NOTICE',
+  severity: 'NOTICE',
+  code: '42P07',
+  message: 'relation "__drizzle_migrations" already exists, skipping',
+  file: 'parse_utilcmd.c',
+  line: '210',
+  routine: 'transformCreateStmt'
+}
+  ✓ clean run invokes the writer once per batch
+  ✓ lesson published as generated
+  ✓ published 16 blocks
+  ✓ lesson title from plan
+  ✓ job completed
+  ✓ progress completed = total = batches + 2
+  ✓ plan + every batch checkpointed
+  ✓ resume regenerates only the missing batches
+  ✓ resumed job still publishes a complete lesson
+  ✓ second worker reclaimed the expired job
+  ✓ stale worker aborts with LeaseLostError
+  ✓ stale worker did not publish the lesson
+[lesson-generation-worker.db] ALL CHECKS PASSED
+
+> @primoria/web@0.1.0 test:onboarding-goal:db /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> tsx tests/learner-profile-goal-race.db.ts && tsx tests/learner-profile-stale-recovery.db.ts
+
+{
+  severity_local: 'NOTICE',
+  severity: 'NOTICE',
+  code: '42P06',
+  message: 'schema "drizzle" already exists, skipping',
+  file: 'schemacmds.c',
+  line: '135',
+  routine: 'CreateSchemaCommand'
+}
+{
+  severity_local: 'NOTICE',
+  severity: 'NOTICE',
+  code: '42P07',
+  message: 'relation "__drizzle_migrations" already exists, skipping',
+  file: 'parse_utilcmd.c',
+  line: '210',
+  routine: 'transformCreateStmt'
+}
+  ✓ stale positioned result affects zero rows
+  ✓ stale clarification affects zero rows
+  ✓ stale failure affects zero rows
+  ✓ newer goal remains current
+  ✓ newer goal remains pending
+  ✓ stale result cannot attach its graph
+  ✓ current pending goal can be positioned
+  ✓ current goal receives its own graph
+  ✓ current pending goal can request clarification
+  ✓ explicit subject selection still commits
+  ✓ explicit subject selection keeps the chosen graph
+  ✓ same-text retries receive distinct attempt IDs
+  ✓ attempt A cannot write after same-text attempt B starts
+  ✓ attempt B retains write authority
+[learner-profile-goal-race.db] ALL CHECKS PASSED
+{
+  severity_local: 'NOTICE',
+  severity: 'NOTICE',
+  code: '42P06',
+  message: 'schema "drizzle" already exists, skipping',
+  file: 'schemacmds.c',
+  line: '135',
+  routine: 'CreateSchemaCommand'
+}
+{
+  severity_local: 'NOTICE',
+  severity: 'NOTICE',
+  code: '42P07',
+  message: 'relation "__drizzle_migrations" already exists, skipping',
+  file: 'parse_utilcmd.c',
+  line: '210',
+  routine: 'transformCreateStmt'
+}
+  ✓ fresh pending goal positioning is not repaired
+[onboarding] goal positioning stalled past timeout; marked failed for retry { ownerId: 'stale_recovery_user' }
+  ✓ stale pending goal positioning is repaired to failed
+  ✓ repair writes the curated interruption message
+  ✓ repair keeps the learner's goal text for retry
+  ✓ zombie positioning result after repair affects zero rows
+  ✓ fresh building course is not repaired
+[onboarding] course preparation stalled past timeout; marked failed for retry {
+  ownerId: 'stale_recovery_user',
+  attemptId: '10a6db8f-81f5-40cc-8576-463db0f29dca'
+}
+  ✓ stale building course is repaired to failed
+  ✓ course repair writes the curated interruption message
+  ✓ course repair leaves the positioned goal intact
+  ✓ repaired failed course keeps onboarding incomplete
+  ✓ timed-out build cannot complete after stale recovery
+  ✓ current retry can transition building to ready
+  ✓ older failed build cannot overwrite a newer successful build
+  ✓ newer successful build remains ready
+[learner-profile-stale-recovery.db] ALL CHECKS PASSED
+
+> @primoria/web@0.1.0 test:course-description:db /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> tsx tests/course-description-race.db.ts
+
+{
+  severity_local: 'NOTICE',
+  severity: 'NOTICE',
+  code: '42P06',
+  message: 'schema "drizzle" already exists, skipping',
+  file: 'schemacmds.c',
+  line: '135',
+  routine: 'CreateSchemaCommand'
+}
+{
+  severity_local: 'NOTICE',
+  severity: 'NOTICE',
+  code: '42P07',
+  message: 'relation "__drizzle_migrations" already exists, skipping',
+  file: 'parse_utilcmd.c',
+  line: '210',
+  routine: 'transformCreateStmt'
+}
+  ✓ stale aggregate captured the template description
+  ✓ enrichment writes the improved description
+  ✓ aggregate save still persists unrelated course fields
+  ✓ stale aggregate cannot restore the template description
+[course-description-race.db] ALL CHECKS PASSED
+
+> @primoria/web@0.1.0 test:progress:db /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> tsx tests/learning-progress-jobs.db.ts && RUN_PROGRESS_DB=1 vitest run tests/learning-progress-processor.db.spec.ts
+
+{
+  severity_local: 'NOTICE',
+  severity: 'NOTICE',
+  code: '42P06',
+  message: 'schema "drizzle" already exists, skipping',
+  file: 'schemacmds.c',
+  line: '135',
+  routine: 'CreateSchemaCommand'
+}
+{
+  severity_local: 'NOTICE',
+  severity: 'NOTICE',
+  code: '42P07',
+  message: 'relation "__drizzle_migrations" already exists, skipping',
+  file: 'parse_utilcmd.c',
+  line: '210',
+  routine: 'transformCreateStmt'
+}
+  ✓ enqueue creates one queued progress job
+  ✓ repeated enqueue returns the same job
+  ✓ ownership check rejects another user
+  ✓ exactly one worker wins the concurrent claim
+  ✓ claim increments attempts to 1
+  ✓ active lease cannot be reclaimed
+  ✓ heartbeat renews active lease
+  ✓ expired lease can be reclaimed
+  ✓ reclaim generates a new lease token
+  ✓ reclaim increments attempts
+  ✓ old token cannot heartbeat
+  ✓ old token cannot update stage
+  ✓ old token cannot complete
+  ✓ active token records the decision
+  ✓ completed job has a pending decision
+  ✓ decision round-trips
+  ✓ completed job cannot be reclaimed
+  ✓ completed orchestration is not re-run on re-enqueue
+  ✓ pending decision listed for the course
+  ✓ pending decisions are owner-scoped
+  ✓ another user cannot resolve
+  ✓ accept returns the job + decision
+  ✓ resolved decision leaves the pending list
+  ✓ a non-pending decision cannot be resolved again
+  ✓ insertPlannedLesson is idempotent on a deterministic id
+  ✓ double-accept creates exactly one remediation lesson
+  ✓ remediation lesson is planned
+  ✓ remediation lesson is enqueued for generation
+  ✓ a lesson generation job exists for the remediation lesson
+  ✓ non-retryable failure → failed
+  ✓ re-enqueue of a failed job retries it
+  ✓ retry resets attempts/status
+[learning-progress-jobs.db] ALL CHECKS PASSED
+
+ RUN  v4.1.10 /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  21:00:58
+   Duration  1.48s (transform 379ms, setup 67ms, import 854ms, tests 357ms, environment 0ms)
+
+
+> @primoria/web@0.1.0 test:gamification:db /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> RUN_GAMIFICATION_DB=1 vitest run tests/gamification.db.spec.ts
+
+
+ RUN  v4.1.10 /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  21:01:01
+   Duration  1.07s (transform 151ms, setup 65ms, import 548ms, tests 263ms, environment 0ms)
+
+
+> @primoria/web@0.1.0 test:course-share:db /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> RUN_COURSE_SHARE_DB=1 vitest run tests/course-share.db.spec.ts
+
+
+ RUN  v4.1.10 /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+
+
+ Test Files  1 passed (1)
+      Tests  9 passed (9)
+   Start at  21:01:03
+   Duration  1.96s (transform 283ms, setup 65ms, import 725ms, tests 970ms, environment 0ms)
+
+
+> @primoria/web@0.1.0 test:extractor:db /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> tsx tests/extractor-jobs.db.ts
+
+{
+  severity_local: 'NOTICE',
+  severity: 'NOTICE',
+  code: '42P06',
+  message: 'schema "drizzle" already exists, skipping',
+  file: 'schemacmds.c',
+  line: '135',
+  routine: 'CreateSchemaCommand'
+}
+{
+  severity_local: 'NOTICE',
+  severity: 'NOTICE',
+  code: '42P07',
+  message: 'relation "__drizzle_migrations" already exists, skipping',
+  file: 'parse_utilcmd.c',
+  line: '210',
+  routine: 'transformCreateStmt'
+}
+  ✓ enqueue creates one queued extractor job
+  ✓ repeated enqueue returns the same job
+  ✓ exactly one worker wins the concurrent claim
+  ✓ claim increments attempts to 1
+  ✓ active lease cannot be reclaimed
+  ✓ heartbeat renews active lease
+  ✓ expired lease can be reclaimed
+  ✓ reclaim generates a new lease token
+  ✓ reclaim increments attempts
+  ✓ old token cannot heartbeat
+  ✓ old token cannot complete
+  ✓ active token completes the job
+  ✓ completed job is marked done
+  ✓ completed job cannot be reclaimed
+  ✓ completed extraction is not re-run on re-enqueue
+  ✓ retryable failure with budget requeues
+  ✓ requeued job is re-claimable at attempt 2
+  ✓ retryable failure with no budget fails permanently
+  ✓ reconciliation queues a missing extractor job
+  ✓ reconciliation is idempotent
+  ✓ reconciled job preserves completion context
+  ✓ profile intake repeated enqueue reuses the active job
+  ✓ a different active intake cannot replace queued text or change its source kind
+  ✓ exactly one worker wins a profile intake claim
+  ✓ stale profile intake fence cannot complete
+  ✓ active profile intake fence completes
+  ✓ successful profile intake clears raw source text
+  ✓ successful profile intake stores result counts
+  ✓ profile intake retryable first failure requeues
+  ✓ profile intake second failure is permanent
+  ✓ permanent profile intake failure clears raw source text
+  ✓ skip cancels the active onboarding job and clears raw text
+  ✓ skip records a terminal profile intake state
+  ✓ expired final profile intake lease is recovered
+  ✓ expired final lease clears raw source text
+  ✓ expired onboarding intake releases course readiness
+[extractor-jobs.db] ALL CHECKS PASSED
+
+> @primoria/web@0.1.0 test:interactive-budget:db /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> RUN_INTERACTIVE_BUDGET_DB=1 vitest run --no-file-parallelism tests/interactive-request-budget.db.spec.ts tests/interactive-instance.db.spec.ts
+
+
+ RUN  v4.1.10 /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+
+
+ Test Files  2 passed (2)
+      Tests  3 passed (3)
+   Start at  21:01:06
+   Duration  1.80s (transform 256ms, setup 73ms, import 853ms, tests 500ms, environment 0ms)
+
+
+> @primoria/agent@0.1.0 test:runtime:db /Users/zhangjunqiu/Documents/Project/Primoria/apps/agent
+> node tests/runtime-store.db.mjs && node tests/runtime-server.db.e2e.mjs
+
+[runtime-store.db] ALL CHECKS PASSED
+[agent-runtime] listening on http://127.0.0.1:3214
+{"ts":"2026-10-22T13:01:10.842Z","message":"llm usage","source":"tutor-agent","provider":"openai-compatible","model":null,"durationMs":12,"cost":null,"inputTokens":10,"outputTokens":2,"cacheReadTokens":null,"cacheWriteTokens":null}
+{"ts":"2026-10-22T13:01:10.881Z","message":"llm usage","source":"tutor-agent","provider":"openai-compatible","model":null,"durationMs":4,"cost":null,"inputTokens":10,"outputTokens":2,"cacheReadTokens":null,"cacheWriteTokens":null}
+[agent-runtime] request failed Error: runId belongs to another owner
+    at Object.ensureRun (file:///Users/zhangjunqiu/Documents/Project/Primoria/apps/agent/src/runtime/run-store.mjs:47:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async streamRun (file:///Users/zhangjunqiu/Documents/Project/Primoria/apps/agent/src/server.mjs:53:3)
+    at async Server.<anonymous> (file:///Users/zhangjunqiu/Documents/Project/Primoria/apps/agent/src/server.mjs:144:9) {
+  code: 'owner_mismatch'
+}
+{"ts":"2026-10-22T13:01:12.542Z","message":"llm usage","source":"tutor-agent","provider":"openai-compatible","model":null,"durationMs":1377,"cost":null,"inputTokens":10,"outputTokens":2,"cacheReadTokens":null,"cacheWriteTokens":null}
+[agent-runtime] run failed {
+  runId: 'run_f9a111b7-2a25-4ffe-81ba-d40300664a54',
+  outcome: 'failed',
+  error: 'terminated'
+}
+[runtime-server.db.e2e] ALL CHECKS PASSED
+[agent-runtime] test complete; draining
+[agent-runtime] workers drained
+[agent-runtime] HTTP server closed
+[agent-runtime] persistence closed
+[isolated-test-db] removed primoria_regression_test_30988_mvjjuafd
+
+> primoria@ test:regression:browser /Users/zhangjunqiu/Documents/Project/Primoria
+> pnpm --filter @primoria/web test:regression:browser:isolated
+
+
+> @primoria/web@0.1.0 test:regression:browser:isolated /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> tsx scripts/with-isolated-test-db.ts pnpm exec tsx scripts/run-browser-regression.ts
+
+[isolated-test-db] reused template primoria_regression_test_template
+[isolated-test-db] cloned primoria_regression_test_31624_mvjjuwye from primoria_regression_test_template
+Seeded ci-learning-smoke@example.com and crs_ci_learning_smoke.
+[seed-ci-onboarding] seeded ci-onboarding@example.com
+[seed-ci-tutor-runtime] seeded ci-tutor-runtime@example.com
+[seed-ci-course-share] seeded owner, receiver, and course
+
+> primoria@ test:learning-path:e2e /Users/zhangjunqiu/Documents/Project/Primoria
+> node e2e/learning-path.smoke.mjs
+
+[next] 
+> @primoria/web@0.1.0 start /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> next start
+
+[progress] 
+> @primoria/web@0.1.0 worker:learning-progress /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> tsx src/workers/learning-progress-worker.ts
+
+[next] ▲ Next.js 16.3.8
+[next] - Local:         http://localhost:3120
+- Network:       http://10.41.240.7:3120
+[next] ✓ Ready in 271ms
+[next] ✓ Running next.config.ts took 145ms
+[progress] {"ts":"2026-10-22T13:01:21.708Z","workerId":"progress_worker_ZhangJunQiudeMacBook-Pro.local_31959_26ec94","message":"learning progress worker started","idlePollMs":2500}
+[progress] {"ts":"2026-10-22T13:01:26.762Z","workerId":"progress_worker_ZhangJunQiudeMacBook-Pro.local_31959_26ec94","message":"claimed job","jobId":"lpjob_dn1UuQJYqiNvmvjjv4gc","courseId":"crs_ci_learning_smoke","lessonId":"lsn_ci_learning_smoke","ownerId":"usr_ci_learning_smoke","attempt":1}
+[progress] {"ts":"2026-10-22T13:01:26.831Z","workerId":"progress_worker_ZhangJunQiudeMacBook-Pro.local_31959_26ec94","message":"job completed","jobId":"lpjob_dn1UuQJYqiNvmvjjv4gc","courseId":"crs_ci_learning_smoke","lessonId":"lsn_ci_learning_smoke","decision":"course_complete","durationMs":69}
+[learning-path.smoke] ALL CHECKS PASSED
+[progress] {"ts":"2026-10-22T13:01:28.488Z","workerId":"progress_worker_ZhangJunQiudeMacBook-Pro.local_31959_26ec94","message":"shutdown signal received; draining","signal":"SIGTERM"}
+[next] /Users/zhangjunqiu/Documents/Project/Primoria/apps/web:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @primoria/web@0.1.0 start: `next start`
+Exit status 143
+[progress] {"ts":"2026-10-22T13:01:29.335Z","workerId":"progress_worker_ZhangJunQiudeMacBook-Pro.local_31959_26ec94","message":"learning progress worker stopped"}
+
+> primoria@ test:onboarding:e2e /Users/zhangjunqiu/Documents/Project/Primoria
+> node e2e/onboarding.smoke.mjs
+
+[agent-runtime] listening on http://127.0.0.1:3218
+[next] 
+> @primoria/web@0.1.0 start /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> next start
+
+[lesson] 
+> @primoria/web@0.1.0 worker:lesson-generation /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> tsx src/workers/lesson-generation-worker.ts
+
+[next] ▲ Next.js 16.3.8
+[next] - Local:         http://localhost:3126
+[next] - Network:       http://10.41.240.7:3126
+[next] ✓ Ready in 187ms
+[next] ✓ Running next.config.ts took 35ms
+[lesson] {"ts":"2026-10-22T13:01:32.675Z","workerId":"lesson_worker_ZhangJunQiudeMacBook-Pro.local_32349_d89e02","message":"lesson generation worker started","idlePollMs":2500,"concurrency":1}
+[next] [timing] onboarding/goal total=12.8ms auth=2.3ms resolve_anchor=0.3ms save_goal=3.8ms sync_fact=4.9ms build_course=0.1ms state=1.1ms
+[lesson] {"ts":"2026-10-22T13:01:35.221Z","workerId":"lesson_worker_ZhangJunQiudeMacBook-Pro.local_32349_d89e02","message":"claimed job","jobId":"ljob_Whbwfw_d8j90mvjjvbjg","courseId":"crs_yir85ey3mvjjvbim","lessonId":"lsn_zk8gw639mvjjvbim","attempt":1}
+[lesson] {"ts":"2026-10-22T13:01:35.314Z","message":"llm usage","source":"tutor-model","provider":"openai-compatible","model":"test","durationMs":26,"cost":null,"inputTokens":100,"outputTokens":100,"cacheReadTokens":null,"cacheWriteTokens":null}
+[lesson] {"ts":"2026-10-22T13:01:35.344Z","message":"llm usage","source":"utility-model","provider":"openai-compatible","model":"test","durationMs":3,"cost":null,"inputTokens":100,"outputTokens":100,"cacheReadTokens":null,"cacheWriteTokens":null}
+[lesson] {"ts":"2026-10-22T13:01:35.352Z","message":"llm usage","source":"utility-model","provider":"openai-compatible","model":"test","durationMs":2,"cost":null,"inputTokens":100,"outputTokens":100,"cacheReadTokens":null,"cacheWriteTokens":null}
+[lesson] {"ts":"2026-10-22T13:01:35.361Z","message":"llm usage","source":"utility-model","provider":"openai-compatible","model":"test","durationMs":2,"cost":null,"inputTokens":100,"outputTokens":100,"cacheReadTokens":null,"cacheWriteTokens":null}
+[lesson] {"ts":"2026-10-22T13:01:35.367Z","message":"llm usage","source":"utility-model","provider":"openai-compatible","model":"test","durationMs":2,"cost":null,"inputTokens":100,"outputTokens":100,"cacheReadTokens":null,"cacheWriteTokens":null}
+[lesson] {"ts":"2026-10-22T13:01:35.373Z","message":"llm usage","source":"utility-model","provider":"openai-compatible","model":"test","durationMs":2,"cost":null,"inputTokens":100,"outputTokens":100,"cacheReadTokens":null,"cacheWriteTokens":null}
+[lesson] {"ts":"2026-10-22T13:01:35.379Z","message":"llm usage","source":"utility-model","provider":"openai-compatible","model":"test","durationMs":2,"cost":null,"inputTokens":100,"outputTokens":100,"cacheReadTokens":null,"cacheWriteTokens":null}
+[lesson] {"ts":"2026-10-22T13:01:35.384Z","message":"llm usage","source":"utility-model","provider":"openai-compatible","model":"test","durationMs":2,"cost":null,"inputTokens":100,"outputTokens":100,"cacheReadTokens":null,"cacheWriteTokens":null}
+[lesson] {"ts":"2026-10-22T13:01:35.389Z","message":"llm usage","source":"utility-model","provider":"openai-compatible","model":"test","durationMs":2,"cost":null,"inputTokens":100,"outputTokens":100,"cacheReadTokens":null,"cacheWriteTokens":null}
+[lesson] {"ts":"2026-10-22T13:01:35.395Z","message":"llm usage","source":"utility-model","provider":"openai-compatible","model":"test","durationMs":2,"cost":null,"inputTokens":100,"outputTokens":100,"cacheReadTokens":null,"cacheWriteTokens":null}
+[lesson] {"ts":"2026-10-22T13:01:35.402Z","message":"llm usage","source":"utility-model","provider":"openai-compatible","model":"test","durationMs":2,"cost":null,"inputTokens":100,"outputTokens":100,"cacheReadTokens":null,"cacheWriteTokens":null}
+[lesson] {"ts":"2026-10-22T13:01:35.408Z","message":"llm usage","source":"utility-model","provider":"openai-compatible","model":"test","durationMs":1,"cost":null,"inputTokens":100,"outputTokens":100,"cacheReadTokens":null,"cacheWriteTokens":null}
+[lesson] {"ts":"2026-10-22T13:01:35.414Z","message":"llm usage","source":"utility-model","provider":"openai-compatible","model":"test","durationMs":1,"cost":null,"inputTokens":100,"outputTokens":100,"cacheReadTokens":null,"cacheWriteTokens":null}
+[lesson] {"ts":"2026-10-22T13:01:35.436Z","workerId":"lesson_worker_ZhangJunQiudeMacBook-Pro.local_32349_d89e02","message":"job completed","jobId":"ljob_Whbwfw_d8j90mvjjvbjg","courseId":"crs_yir85ey3mvjjvbim","lessonId":"lsn_zk8gw639mvjjvbim","durationMs":215}
+[onboarding.smoke] ALL CHECKS PASSED
+[lesson] {"ts":"2026-10-22T13:01:36.012Z","workerId":"lesson_worker_ZhangJunQiudeMacBook-Pro.local_32349_d89e02","message":"shutdown signal received; draining","signal":"SIGTERM"}
+[next] /Users/zhangjunqiu/Documents/Project/Primoria/apps/web:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @primoria/web@0.1.0 start: `next start`
+Exit status 143
+[lesson] /Users/zhangjunqiu/Documents/Project/Primoria/apps/web:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @primoria/web@0.1.0 worker:lesson-generation: `tsx src/workers/lesson-generation-worker.ts`
+Exit status 143
+[agent-runtime] onboarding smoke complete; draining
+[agent-runtime] workers drained
+[agent-runtime] HTTP server closed
+[agent-runtime] persistence closed
+
+> primoria@ test:tutor-runtime:e2e /Users/zhangjunqiu/Documents/Project/Primoria
+> node e2e/tutor-runtime.smoke.mjs
+
+[agent-runtime] listening on http://127.0.0.1:3216
+[next] 
+> @primoria/web@0.1.0 start /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> next start
+
+[next] ▲ Next.js 16.3.8
+[next] - Local:         http://localhost:3122
+[next] - Network:       http://10.41.240.7:3122
+[next] ✓ Ready in 195ms
+[next] ✓ Running next.config.ts took 121ms
+{"ts":"2026-10-22T13:02:12.695Z","message":"llm usage","source":"tutor-agent","provider":"openai-compatible","model":null,"durationMs":17,"cost":null,"inputTokens":10,"outputTokens":2,"cacheReadTokens":null,"cacheWriteTokens":null}
+{"ts":"2026-10-22T13:02:13.402Z","message":"llm usage","source":"tutor-agent","provider":"openai-compatible","model":null,"durationMs":5,"cost":null,"inputTokens":null,"outputTokens":null,"cacheReadTokens":null,"cacheWriteTokens":null}
+[tutor-runtime.smoke] ALL CHECKS PASSED
+[next] /Users/zhangjunqiu/Documents/Project/Primoria/apps/web:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @primoria/web@0.1.0 start: `next start`
+Exit status 143
+[agent-runtime] tutor runtime smoke complete; draining
+[agent-runtime] workers drained
+[agent-runtime] HTTP server closed
+[agent-runtime] persistence closed
+
+> primoria@ test:course-share:e2e /Users/zhangjunqiu/Documents/Project/Primoria
+> node e2e/course-share.smoke.mjs
+
+[next] 
+> @primoria/web@0.1.0 start /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> next start
+
+[next] ▲ Next.js 16.3.8
+[next] - Local:         http://localhost:3124
+[next] - Network:       http://10.41.240.7:3124
+[next] ✓ Ready in 210ms
+[next] ✓ Running next.config.ts took 111ms
+[course-share.smoke] ALL CHECKS PASSED
+[next] /Users/zhangjunqiu/Documents/Project/Primoria/apps/web:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @primoria/web@0.1.0 start: `next start`
+Exit status 143
+
+> primoria@ test:widget:e2e /Users/zhangjunqiu/Documents/Project/Primoria
+> pnpm --filter @primoria/web test:widget:e2e
+
+
+> @primoria/web@0.1.0 test:widget:e2e /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> node tests/widget-renderer.e2e.mjs
+
+[widget-renderer.e2e] starting Next.js dev server on port 3117
+[next] 
+> @primoria/web@0.1.0 dev /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
+> next dev
+
+[next] ▲ Next.js 16.3.8 (Turbopack)
+[next] - Local:         http://localhost:3117
+- Network:       http://10.41.240.7:3117
+- Environments: .env.local
+✓ Ready in 764ms
+[next] ✓ Running next.config.ts took 163ms
+[next] 
+[next] ○ Compiling /login ...
+[widget-renderer.e2e] server ready: http://localhost:3117/qa/widget-renderer
+[next]  GET /login?next=%2Fqa%2Fwidget-renderer 200 in 25.8s (next.js: 23.7s, proxy.ts: 4ms, application-code: 2.2s)
+[next]  GET /qa/widget-renderer 200 in 389ms (next.js: 121ms, proxy.ts: 37ms, application-code: 231ms)
+[widget-renderer.e2e] ALL CHECKS PASSED
+[widget-renderer.e2e] screenshot: /var/folders/95/0lqd775j01qgk66k9c4nxxkc0000gn/T/primoria-widget-e2e-1H5Wxi/widget-renderer-fixture.png
+[widget-renderer.e2e] shutting down dev server
+
+> primoria@ visualization:test:replay /Users/zhangjunqiu/Documents/Project/Primoria
+> node e2e/visualization-replay.smoke.mjs
+
+
+> primoria@ visualization:replay /Users/zhangjunqiu/Documents/Project/Primoria
+> pnpm --filter @primoria/web exec tsx scripts/export-visualization-replay.ts --gallery-only --out /var/folders/95/0lqd775j01qgk66k9c4nxxkc0000gn/T/primoria-replay-test-flwXQa
+
+[visualization-replay] /var/folders/95/0lqd775j01qgk66k9c4nxxkc0000gn/T/primoria-replay-test-flwXQa/index.html (0 frozen inputs, 0 executed cases, 45 components; scope=platform-baseline)
+[visualization-replay.smoke] PASS 45 components × 3 viewports; evidence=/var/folders/95/0lqd775j01qgk66k9c4nxxkc0000gn/T/primoria-replay-test-flwXQa
+Generating route types...
+✓ Types generated successfully
+[isolated-test-db] removed primoria_regression_test_31624_mvjjuwye

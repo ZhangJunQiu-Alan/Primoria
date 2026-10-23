@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { readFileSync, readdirSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -210,8 +210,11 @@ for (const requiredNonStemTag of ["history", "literature", "language", "philosop
 
 const componentDir = resolve(repoRoot, "apps/web/src/lib/interactive/components");
 const registrySource = readFileSync(resolve(componentDir, "registry.ts"), "utf8");
-const implementedModuleSource = readdirSync(componentDir)
-  .filter((name) => name.endsWith(".ts") && !["registry.ts", "types.ts"].includes(name))
+const registeredModuleNames = [...registrySource.matchAll(/import\s*\{\s*(\w+Component)\s*\}\s*from\s*"\.\/([^"/]+)"/g)]
+  .filter((match) => registrySource.includes(`\n  ${match[1]},`))
+  .map((match) => `${match[2]}.ts`);
+if (registeredModuleNames.length === 0) fail("registry", "no production component modules were resolved");
+const implementedModuleSource = registeredModuleNames
   .map((name) => readFileSync(resolve(componentDir, name), "utf8"))
   .join("\n");
 const componentModuleSources = `${registrySource}\n${implementedModuleSource}`;
@@ -229,6 +232,11 @@ const implementedComponentIds = [...implementedModuleSource.matchAll(/componentI
 for (const componentId of new Set(implementedComponentIds)) {
   if (componentsById.get(componentId)?.implementation?.status !== "implemented") {
     fail("components", `implemented module ${componentId} is not marked implemented in the catalog`);
+  }
+}
+for (const component of catalog.components ?? []) {
+  if (component.implementation?.status === "implemented" && !implementedComponentIds.includes(component.componentId)) {
+    fail("components", `catalog component ${component.componentId} has no registered production module`);
   }
 }
 

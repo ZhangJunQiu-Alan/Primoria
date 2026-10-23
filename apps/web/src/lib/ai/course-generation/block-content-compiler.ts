@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { InteractiveComponentPayloadSchema } from "@primoria/contracts/artifacts/schemas";
+import { parseInteractivePayload } from "@/lib/interactive/payload";
 import {
   AlgorithmStepZodSchema,
   MathExplorerCurveSchema,
@@ -83,7 +85,8 @@ const VisualContentSchema = z
   .object({
     title: nonEmpty,
     description: nonEmpty,
-    engine: z.enum(["html", "echarts", "mermaid", "physics", "algorithm", "math_explorer"]).optional(),
+    engine: z.enum(["html", "echarts", "mermaid", "physics", "algorithm", "math_explorer", "interactive"]).optional(),
+    interactive: InteractiveComponentPayloadSchema.optional(),
     html: z.string().optional(),
     echartsOption: z.record(z.unknown()).optional(),
     echartsHeight: z.coerce.number().optional(),
@@ -94,6 +97,7 @@ const VisualContentSchema = z
   })
   .refine(
     (v) =>
+      (v.engine === "interactive" && v.interactive) ||
       (v.engine === "echarts" && v.echartsOption) ||
       (v.engine === "mermaid" && v.mermaidDefinition?.trim()) ||
       (v.engine === "physics" && v.physicsScene) ||
@@ -182,9 +186,9 @@ function normalizeVisualContent(raw: unknown): unknown {
   // Map invented / affordance-name engine values onto the canonical enum (models
   // echo the KG affordance name, e.g. "interactive-visual"/"simulation", instead
   // of the engine id). Only rewrites values that are NOT already valid.
-  const VALID_ENGINES = new Set(["html", "echarts", "mermaid", "physics", "algorithm", "math_explorer"]);
+  const VALID_ENGINES = new Set(["html", "echarts", "mermaid", "physics", "algorithm", "math_explorer", "interactive"]);
   const ENGINE_ALIASES: Record<string, string> = {
-    interactive: "html", "interactive-visual": "html", interactive_visual: "html", iframe: "html", widget: "html",
+    "interactive-visual": "html", interactive_visual: "html", iframe: "html", widget: "html",
     simulation: "physics", matter: "physics", matterjs: "physics", "physics-simulation": "physics",
     function: "math_explorer", "function-plot": "math_explorer", math: "math_explorer", mathexplorer: "math_explorer", "math-explorer": "math_explorer",
     chart: "echarts", echart: "echarts",
@@ -218,6 +222,7 @@ function normalizeVisualContent(raw: unknown): unknown {
     algorithm: "algorithmViz",
     math_explorer: "mathExplorer",
     html: "html",
+    interactive: "interactive",
   };
   const STRING_PAYLOAD = new Set(["html", "mermaid"]); // canonical value is a string
   const target = engine ? ENGINE_KEY[engine] : undefined;
@@ -330,7 +335,9 @@ export function compileBlockContent(job: BlockGenerationJob, rawContent: unknown
   // produce an unknown/invented engine — it only supplies the payload.
   let visualRaw = rawContent;
   if (job.type === "visual" && job.engine && rawContent && typeof rawContent === "object" && !Array.isArray(rawContent)) {
-    visualRaw = { ...(rawContent as Record<string, unknown>), engine: job.engine };
+    const content = rawContent as Record<string, unknown>;
+    const usesCatalog = content.engine === "interactive" || content.interactive !== undefined;
+    visualRaw = { ...content, engine: usesCatalog ? "interactive" : job.engine };
   }
   const parseInput = job.type === "visual" ? normalizeVisualContent(visualRaw) : rawContent;
   const parsed = schema.safeParse(parseInput);
@@ -340,6 +347,25 @@ export function compileBlockContent(job: BlockGenerationJob, rawContent: unknown
       `block ${job.order} (${job.type}) content invalid: ${parsed.error.message}${diagnostic}`,
       { jobId: job.jobId, issues: parsed.error.flatten() },
     );
+  }
+
+  if (job.type === "visual") {
+    const content = parsed.data as z.infer<typeof VisualContentSchema>;
+    if (content.engine === "interactive") {
+      try {
+        const interactive = parseInteractivePayload(content.interactive);
+        if (!job.interactiveCandidates?.includes(interactive.componentId)) {
+          throw new Error("Component was not in this block's retrieved candidates");
+        }
+        return {
+          id: blockIdFor(job, lessonId), type: "visual", title: content.title,
+          description: content.description, conceptIds: job.conceptIds,
+          pedagogicalRole: job.pedagogicalRole, engine: "interactive", interactive,
+        };
+      } catch (error) {
+        throw new BlockCompileError(`block ${job.order} interactive config invalid: ${(error as Error).message}`, { jobId: job.jobId });
+      }
+    }
   }
 
   if (job.type === "image") {

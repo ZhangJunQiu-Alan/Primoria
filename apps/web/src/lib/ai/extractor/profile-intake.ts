@@ -10,6 +10,7 @@ import {
   type LearnerFact,
 } from "../../learner-profile/types";
 import { invokeJson } from "../course-generation/model-json";
+import { fastTierSettings } from "../deepagent/model";
 import { looksLikeInjection } from "./distill";
 
 const RawItemSchema = z.object({
@@ -161,6 +162,7 @@ export async function distillProfileIntake(input: {
     user,
     schema: RawResultSchema,
     schemaName: "profile_fact_intake",
+    settings: fastTierSettings(),
     maxTokens: 1_200,
     timeoutMs: 30_000,
   });

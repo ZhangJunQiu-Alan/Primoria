@@ -9,11 +9,13 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 const mockState = vi.hoisted(() => ({
   resolveProviderSettings: vi.fn(),
   createTutorModel: vi.fn(),
+  createUtilityModel: vi.fn(),
 }));
 
 vi.mock("@/lib/ai/deepagent/model", () => ({
   resolveProviderSettings: mockState.resolveProviderSettings,
   createTutorModel: mockState.createTutorModel,
+  createUtilityModel: mockState.createUtilityModel,
 }));
 
 type InvokeCall = { signal?: AbortSignal };
@@ -55,6 +57,14 @@ async function loadInvokeJson() {
 }
 
 describe("invokeJson deadline contract", () => {
+  it("uses the non-thinking utility factory without replacing an explicitly selected quality model", async () => {
+    mockState.resolveProviderSettings.mockReturnValue({ ...openAiSettings, model: "quality-pro" });
+    mockState.createUtilityModel.mockReturnValue({ invoke: vi.fn().mockResolvedValue({ content: '{"x":1}' }) });
+    const { invokeJson } = await loadInvokeJson();
+    await expect(invokeJson({ system: "s", user: "u", utility: true, settings: { model: "quality-pro" }, maxTokens: 2048, timeoutMs: 5000 })).resolves.toEqual({ x: 1 });
+    expect(mockState.createUtilityModel).toHaveBeenCalledWith({ model: "quality-pro" }, { maxTokens: 2048, timeoutMs: 5000 });
+    expect(mockState.createTutorModel).not.toHaveBeenCalled();
+  });
   beforeEach(() => {
     vi.clearAllMocks();
     vi.useFakeTimers();
@@ -185,5 +195,24 @@ describe("invokeJson deadline contract", () => {
     const error = new ModelJsonTimeoutError("x timed out");
     expect(error.code).toBe(MODEL_JSON_TIMEOUT_CODE);
     expect(MODEL_JSON_TIMEOUT_CODE).toBe("model_json_timeout");
+  });
+  it("captures provider usage and response ids without exposing credentials", async () => {
+    const { model } = makeModel({ structuredInvoke: vi.fn().mockResolvedValue({ parsed: { answer: 2 }, raw: { id: "response-1", usage_metadata: { input_tokens: 8, output_tokens: 4, total_tokens: 12 } } }) });
+    mockState.createTutorModel.mockReturnValue(model);
+    const { invokeJson } = await loadInvokeJson();
+    const calls: unknown[] = [];
+    expect(await invokeJson({ system: "s", user: "u", schema: {} as never, onModelCall: (call) => calls.push(call) })).toEqual({ answer: 2 });
+    expect(calls).toEqual([{ model: "gpt-test", status: 200, responseId: "response-1", usage: { input_tokens: 8, output_tokens: 4, total_tokens: 12 } }]);
+    expect(JSON.stringify(calls)).not.toContain("apiKey");
+  });
+  it("retains failed structured attempts when a JSON fallback succeeds", async () => {
+    const { model } = makeModel({ structuredInvoke: vi.fn().mockRejectedValue(new Error("unsupported")), invoke: vi.fn().mockResolvedValue({ content: '{"answer":2}' }) });
+    mockState.createTutorModel.mockReturnValue(model);
+    const { invokeJson } = await loadInvokeJson();
+    const calls: Array<{ status: number; usage: unknown }> = [];
+    expect(await invokeJson({ system: "s", user: "u", schema: {} as never, onModelCall: (call) => calls.push(call) })).toEqual({ answer: 2 });
+    expect(calls).toHaveLength(2);
+    expect(calls[0]).toMatchObject({ status: 0, usage: null });
+    expect(calls[1]).toMatchObject({ status: 200, usage: null });
   });
 });

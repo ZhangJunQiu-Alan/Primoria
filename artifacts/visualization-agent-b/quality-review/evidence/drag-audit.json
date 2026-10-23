@@ -1,0 +1,64 @@
+{
+  "capturedAt": "2026-10-22T12:30:39.223Z",
+  "records": [
+    {
+      "componentId": "math.quadratic-equation",
+      "handle": "vertex",
+      "viewport": 1440,
+      "before": {
+        "readouts": "Δ = b²−4ac16实根-1, 3顶点(1, -4)",
+        "x": 758.8500061035156,
+        "y": 613.76416015625
+      },
+      "after": {
+        "readouts": "Δ = b²−4ac11.612实根-0.39883, 3.0088顶点(1.305, -2.903)",
+        "x": 783.0975036621094,
+        "y": 596.0650634765625
+      },
+      "target": {
+        "x": 782.8500061035156,
+        "y": 595.76416015625
+      },
+      "errorPixels": 0.3896124352288486
+    },
+    {
+      "componentId": "math.quadratic-equation",
+      "handle": "curvature",
+      "viewport": 1440,
+      "before": {
+        "readouts": "Δ = b²−4ac11.612实根-0.39883, 3.0088顶点(1.305, -2.903)",
+        "x": 942.0975036621094,
+        "y": 531.5272521972656
+      },
+      "after": {
+        "a": "1.3",
+        "readouts": "Δ = b²−4ac15.08实根-0.18973, 2.7974顶点(1.3038, -2.9)",
+        "x": 942.0057678222656,
+        "y": 512.1174011230469
+      },
+      "errorPixels": 0.5972363174762578
+    },
+    {
+      "componentId": "math.parabola-intersections",
+      "handle": "line-height",
+      "viewport": 1440,
+      "before": {
+        "intercept": "2",
+        "readouts": "交点数2x₁-2.3166x₂4.3166移项后 Δ11横坐标差 Δx6.6332斜弦长度9.3808x₁+x₂2x₁x₂-10",
+        "x": 981.4499816894532,
+        "y": 511.93934631347656
+      },
+      "after": {
+        "intercept": "3.61",
+        "readouts": "交点数2x₁-2.7709x₂4.7709移项后 Δ14.22横坐标差 Δx7.5419斜弦长度10.666x₁+x₂2x₁x₂-13.22",
+        "x": 981.4499816894532,
+        "y": 495.9380187988281
+      },
+      "errorPixels": 0.0013275146484375
+    }
+  ],
+  "zoom": {
+    "plotChanged": true,
+    "modelUnchanged": true
+  }
+}

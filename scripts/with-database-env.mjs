@@ -35,9 +35,17 @@ if (!env.DATABASE_URL && env.PRIMORIA_DISABLE_LOCAL_ENV !== "1" && existsSync(co
   }
 }
 
-const child = spawn(command, args, { cwd: root, env, stdio: "inherit" });
+const grouped = process.platform !== "win32";
+const child = spawn(command, args, { cwd: root, env, stdio: "inherit", detached: grouped });
 for (const signal of ["SIGINT", "SIGTERM"]) {
-  process.on(signal, () => child.kill(signal));
+  process.on(signal, () => {
+    try {
+      if (grouped && child.pid) process.kill(-child.pid, signal);
+      else child.kill(signal);
+    } catch (error) {
+      if (error?.code !== "ESRCH") throw error;
+    }
+  });
 }
 child.once("error", () => {
   console.error("Unable to start database command.");

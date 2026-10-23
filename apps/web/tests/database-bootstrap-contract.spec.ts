@@ -45,7 +45,8 @@ describe("database bootstrap and production Docker contract", () => {
     const backup = readRepoFile("scripts/pg-backup.sh");
 
     expect(productionEnv).toContain("OPENAI_MODEL=deepseek-v4-pro");
-    expect(productionEnv).toContain("AI_MODEL_FAST=deepseek-v4-flash");
+    expect(productionEnv).toContain("AI_MODEL_TUTOR=deepseek-flash");
+    expect(productionEnv).toContain("AI_MODEL_FAST=deepseek-flash");
     expect(productionEnv).toContain("KG_EMBEDDING_PROVIDER=minimax");
     expect(productionEnv).not.toMatch(/^KG_EMBEDDING_PROVIDER=openai-compatible$/m);
     expect(backup).toContain('REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"');
@@ -64,5 +65,10 @@ describe("database bootstrap and production Docker contract", () => {
     const agentService = compose.slice(compose.indexOf("  agent:\n"), compose.indexOf("  worker-lesson-generation:"));
     expect(webService).not.toContain("ports:");
     expect(agentService).not.toContain("ports:");
+    for (const name of ["docker-compose.prod.yml", "docker-compose.supabase.yml"]) {
+      const topology = readRepoFile(name);
+      const agent = topology.slice(topology.indexOf("  agent:\n"), topology.indexOf("  worker-lesson-generation:"));
+      expect(agent).toContain("AI_MODEL_TUTOR: ${AI_MODEL_TUTOR:-}");
+    }
   });
 });

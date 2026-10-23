@@ -1,0 +1,165 @@
+{
+  "components": [
+    {
+      "componentId": "chinese.poetry-imagery",
+      "version": 1,
+      "name": {
+        "zh-CN": "诗词意象与文本证据",
+        "en": "Poetry imagery and textual evidence"
+      },
+      "catalogDescription": {
+        "zh-CN": "秋思、登鹳雀楼、静夜思的诗景、证据、意象归类与词语补全",
+        "en": "Three bundled classical poems, interpretive landscapes, exact quotations, imagery grouping and phrase completion"
+      },
+      "teachingPurpose": {
+        "zh-CN": "秋思、登鹳雀楼、静夜思的诗景、证据、意象归类与词语补全",
+        "en": "Three bundled classical poems, interpretive landscapes, exact quotations, imagery grouping and phrase completion"
+      },
+      "primaryAction": "annotate",
+      "disciplineTags": [
+        "language",
+        "literature",
+        "chinese"
+      ],
+      "capabilityTags": [
+        "poetry-imagery",
+        "textual-evidence",
+        "imagery-classification",
+        "poem-structure",
+        "phrase-completion"
+      ],
+      "implementation": {
+        "status": "implemented",
+        "rendererKey": "poetryImagery"
+      },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "poemId": {
+            "type": "string",
+            "enum": [
+              "autumn-thoughts",
+              "stork-tower",
+              "quiet-night"
+            ],
+            "default": "autumn-thoughts",
+            "description": "仅三首内置公版作品 / one of three bundled public-domain texts"
+          },
+          "view": {
+            "type": "string",
+            "enum": [
+              "scene",
+              "evidence",
+              "classify",
+              "complete"
+            ],
+            "default": "scene",
+            "description": "原创诗景、证据链、归类、原词补全 / landscape, evidence, classification or phrase completion"
+          },
+          "focus": {
+            "type": "string",
+            "enum": [
+              "imagery",
+              "structure",
+              "emotion"
+            ],
+            "default": "imagery",
+            "description": "意象、结构或情感证据 / imagery, structure or emotion focus"
+          },
+          "showTranslation": {
+            "type": "boolean",
+            "default": true,
+            "description": "显示独立编写的英文释义 / show the independently authored English translation"
+          }
+        },
+        "required": [
+          "poemId",
+          "view",
+          "focus",
+          "showTranslation"
+        ],
+        "default": {
+          "poemId": "autumn-thoughts",
+          "view": "scene",
+          "focus": "imagery",
+          "showTranslation": true
+        }
+      },
+      "patchHints": [
+        {
+          "zh-CN": "只修改用户要求的教学参数，其余字段保留。",
+          "en": "Patch only the requested teaching parameters and preserve the rest."
+        },
+        {
+          "zh-CN": "天净沙·秋思→autumn-thoughts，登鹳雀楼→stork-tower，静夜思→quiet-night。补全/归类练习不改写原文。只支持这三首内置文本，其他诗文用文本细读或其他可信渲染器；不能虚构朗读能力。",
+          "en": "Map Tianjingsha to autumn-thoughts, Stork Tower to stork-tower and Quiet Night to quiet-night. Keep original wording. Practice and word selection are local state. Other texts should use close reading or another trusted renderer."
+        }
+      ],
+      "fallbackConditions": [
+        {
+          "zh-CN": "本组件不处理：其他诗词的自动编写与仿作、音频朗读、视频与自动播放、任意文本输入、单一标准文学解读、audio recitation、arbitrary poems or prose、one uniquely correct literary interpretation。",
+          "en": "Automatic composition or arbitrary poems/prose, audio recitation, video, autoplay or a claim of one uniquely correct literary interpretation."
+        }
+      ],
+      "examplePrompts": [
+        {
+          "zh-CN": "天净沙秋思的景物为什么显得凄凉？把原句和画面对应起来",
+          "en": "Connect the images in Autumn Thoughts to their words and explain the reading."
+        },
+        {
+          "zh-CN": "静夜思写地上霜，是不是真的结霜了？",
+          "en": "Does the frost comparison in Thoughts on a Quiet Night establish that it really froze?"
+        }
+      ],
+      "search": {
+        "aliases": [
+          "天净沙秋思",
+          "诗词意象",
+          "古诗词可视化",
+          "意象归类",
+          "情景交融",
+          "登鹳雀楼",
+          "静夜思",
+          "poetry imagery",
+          "textual evidence",
+          "classical Chinese poems"
+        ],
+        "concepts": [
+          "poetry-imagery",
+          "textual-evidence",
+          "imagery-classification",
+          "poem-structure",
+          "phrase-completion"
+        ],
+        "stages": [
+          "primary",
+          "junior"
+        ],
+        "supports": [
+          "仅内置天净沙秋思、登鹳雀楼、静夜思",
+          "原句—观察—表达效果证据链",
+          "选择词语与原创示意诗景联动",
+          "结构与情感解读",
+          "意象归类和原词补全的本地练习",
+          "three bundled public-domain poems",
+          "quotation observation and interpretation",
+          "local classification and phrase practice"
+        ],
+        "excludes": [
+          "其他诗词的自动编写与仿作",
+          "音频朗读",
+          "视频与自动播放",
+          "任意文本输入",
+          "单一标准文学解读",
+          "audio recitation",
+          "arbitrary poems or prose",
+          "one uniquely correct literary interpretation"
+        ],
+        "referenceIds": [
+          "shiguang.chinese.junior.c7a_m04"
+        ]
+      }
+    }
+  ]
+}

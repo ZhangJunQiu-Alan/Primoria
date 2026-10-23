@@ -57,9 +57,19 @@ Browser CopilotKit
 
 Visualization is catalog-first:
 
-- 19 all-subject schema-driven React components selected through
-  `open_interactive_component`.
+- Versioned all-subject schema-driven React components selected through
+  `open_interactive_component`; 45 registered components, with bounded catalog
+  search instead of inlining the complete catalog above 40 entries.
 - Authenticated Web stage 2 creates a full config or validated minimal patch.
+- Interactive instances are owner-scoped database records with immutable initial
+  configs and optimistic revisions for user control changes. Chat history restores
+  completed tool signals, then reads the saved config without another model call.
+- Course VisualBlocks support the same versioned `engine: interactive` payload;
+  Web validates generated and shared configurations before persistence. Both
+  course and chat render the component directly with its explanation.
+- A generated bilingual catalog index serves bounded read-only local retrieval;
+  widgets and their schemas load on demand. Static acceptance replay uses these
+  production widgets with captured configs and no application/model API access.
 - Structured chart/diagram/STEM/algorithm/math/3D/wave/graph/molecule renderers
   handle off-catalog shapes with known contracts.
 - `plan_visualization` + sandboxed `widgetRenderer` remains the custom fallback.
@@ -71,7 +81,11 @@ Visualization is catalog-first:
 
 HTML widgets run in a sandboxed iframe with validated dependency URLs, Primoria
 theme tokens, SVG/form helpers, resize and prompt bridges, and deferred script
-execution until streaming HTML settles.
+execution until streaming HTML settles and the authenticated shell-ready
+handshake arrives. JSON generation rejects truncated outer values rather than
+accepting a complete nested fragment. Course block writers retain the selected
+model tier with non-thinking structured writes, and checkpoints invalidate when
+the prompt/compiler or catalog context changes.
 
 ## Persistence and workers
 
@@ -104,6 +118,7 @@ OPENAI_API_KEY=your-key
 OPENAI_MODEL=gpt-5.4
 AI_MODEL_FAST=your-fast-model
 AI_MODEL_CONTENT=your-quality-model
+AI_MODEL_TUTOR=your-tutor-model
 DATABASE_URL=postgresql://primoria_app:primoria_dev@127.0.0.1:5432/primoria
 DATABASE_SSL=disable
 PRIMORIA_AGENT_URL=http://localhost:2024
@@ -112,6 +127,14 @@ PRIMORIA_AGENT_URL=http://localhost:2024
 `AI_MODEL_CONTENT` is optional and applies to source comparison and causal
 timeline configuration. When unset, those components use the normal default
 model rather than `AI_MODEL_FAST`.
+
+The selected DeepSeek split uses `deepseek-flash` for `AI_MODEL_TUTOR` and
+`AI_MODEL_FAST`, while the Web default remains `deepseek-v4-pro`. The Agent's
+Tutor override is independent of the Web course-generation model. DeepSeek
+utility calls disable thinking; other Web fast-tier calls (including profile
+intake and lesson fact distillation) explicitly use low
+thinking effort. Other providers and the quality model keep their existing
+behavior.
 
 Production access to the internal visualization report additionally requires:
 

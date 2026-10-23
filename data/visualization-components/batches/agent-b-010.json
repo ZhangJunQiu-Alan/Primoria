@@ -1,0 +1,109 @@
+{
+  "batchId": "agent-b-010",
+  "components": [
+    {
+      "componentId": "physics.wire-resistance",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/wire-resistance.ts",
+      "componentExport": "wireResistanceComponent",
+      "configSchemaExport": "WireResistanceConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/wire-resistance.tsx",
+      "widgetExport": "WireResistanceWidget",
+      "samples": [
+        {
+          "resistivityMicroOhmM": 0.017,
+          "lengthM": 5,
+          "areaMM2": 1,
+          "temperatureC": 20,
+          "temperatureCoefficient": 0.0039,
+          "view": "geometry"
+        },
+        {
+          "resistivityMicroOhmM": 0.017,
+          "lengthM": 10,
+          "areaMM2": 1,
+          "temperatureC": 20,
+          "temperatureCoefficient": 0.0039,
+          "view": "length"
+        },
+        {
+          "resistivityMicroOhmM": 2,
+          "lengthM": 20,
+          "areaMM2": 0.05,
+          "temperatureC": 150,
+          "temperatureCoefficient": 0.006,
+          "view": "area"
+        },
+        {
+          "resistivityMicroOhmM": 0.017,
+          "lengthM": 5,
+          "areaMM2": 1,
+          "temperatureC": 120,
+          "temperatureCoefficient": 0.004,
+          "view": "temperature"
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-circuit-extensions.spec.ts"
+      ],
+      "integrationStatus": "awaiting-agent-a-registration",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    },
+    {
+      "componentId": "physics.closed-circuit",
+      "configVersion": 1,
+      "modulePath": "apps/web/src/lib/interactive/components/closed-circuit.ts",
+      "componentExport": "closedCircuitComponent",
+      "configSchemaExport": "ClosedCircuitConfigSchema",
+      "widgetPath": "apps/web/src/components/generative-ui/interactive/closed-circuit.tsx",
+      "widgetExport": "ClosedCircuitWidget",
+      "samples": [
+        {
+          "emf": 6,
+          "internalResistance": 1,
+          "loadResistance": 5,
+          "switchClosed": true,
+          "view": "circuit",
+          "showPowerBalance": true
+        },
+        {
+          "emf": 12,
+          "internalResistance": 2,
+          "loadResistance": 2,
+          "switchClosed": true,
+          "view": "characteristic",
+          "showPowerBalance": true
+        },
+        {
+          "emf": 6,
+          "internalResistance": 0,
+          "loadResistance": 0,
+          "switchClosed": true,
+          "view": "circuit",
+          "showPowerBalance": true
+        },
+        {
+          "emf": 12,
+          "internalResistance": 2,
+          "loadResistance": 2,
+          "switchClosed": true,
+          "view": "power",
+          "showPowerBalance": true
+        }
+      ],
+      "tests": [
+        "apps/web/tests/visualization-circuit-extensions.spec.ts"
+      ],
+      "integrationStatus": "awaiting-agent-a-registration",
+      "visualStatus": "sample-layout-and-interaction-verified",
+      "visualEvidence": [
+        "artifacts/visualization-agent-b/quality-review/evidence/layout-audit.json",
+        "artifacts/visualization-agent-b/quality-review/evidence/interaction-audit.json"
+      ]
+    }
+  ]
+}

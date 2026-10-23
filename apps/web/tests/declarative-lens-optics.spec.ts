@@ -6,6 +6,7 @@ import {
   computeLensImage,
 } from "../src/lib/interactive/components/lens-imaging";
 import { COMPONENT_REGISTRY } from "../src/lib/interactive/components/registry";
+import { INTERACTIVE_COMPONENT_IDS } from "@primoria/contracts/artifacts/interactive-catalog";
 
 // Correctness criteria from the component spec: 1/f = 1/u + 1/v.
 
@@ -75,7 +76,8 @@ describe("COMPONENT_REGISTRY", () => {
   it("has unique ids and the expected implemented component set", () => {
     const ids = COMPONENT_REGISTRY.map((entry) => entry.componentId);
     expect(new Set(ids).size).toBe(ids.length);
-    expect(COMPONENT_REGISTRY).toHaveLength(19);
+    expect(ids.length).toBeGreaterThanOrEqual(19);
+    expect([...ids].sort()).toEqual([...INTERACTIVE_COMPONENT_IDS].sort());
     expect(COMPONENT_REGISTRY.every((entry) => entry.implemented)).toBe(true);
   });
 });

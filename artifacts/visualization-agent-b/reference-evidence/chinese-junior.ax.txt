@@ -1,0 +1,732 @@
+Browser tab: 2, Title: "拾光视界 - 初中语文诗词与文言文", URL: "https://www.shiguangtongxue.cn/subjects/chinese/app.html?stage=junior&v=20260924135452".
+1 AXWebArea 拾光视界 - 初中语文诗词与文言文, URL: shiguangtongxue.cn/subjects/chinese/app.html?stage=junior&v=20260924135452
+	2 image
+	3 container
+		4 button 文 拾光视界
+			5 text 文
+			6 text 拾光视界
+		7 button 个人中心
+		8 button 订阅中心
+		9 button 退出系统
+		10 text 初中 / 全部单元
+		11 button 全部单元
+		12 button 七年级上册
+		13 button 七年级下册
+		14 button 八年级上册
+		15 button 八年级下册
+		16 button 九年级上册
+		17 button 九年级下册
+		18 button 名著导读
+		19 container
+			20 text 模块单元数量： 114
+		21 container
+			22 button 查看观沧海
+				23 container
+					24 text 古诗词诵读 待接入
+					25 heading 观沧海, Value: 3
+						26 text 观沧海
+					27 text # 统编版 # 七年级上册 # 古诗词诵读 查看卡片 →
+			28 button 查看闻王昌龄左迁龙标遥有此寄
+				29 container
+					30 text 古诗词诵读 已接入
+					31 heading 闻王昌龄左迁龙标遥有此寄, Value: 3
+						32 text 闻王昌龄左迁龙标遥有此寄
+					33 text 背诵 ·  未开始 # 统编版 # 七年级上册 # 古诗词诵读 进入课件 →
+			34 button 查看次北固山下
+				35 container
+					36 text 古诗词诵读 待接入
+					37 heading 次北固山下, Value: 3
+						38 text 次北固山下
+					39 text # 统编版 # 七年级上册 # 古诗词诵读 查看卡片 →
+			40 button 查看天净沙·秋思
+				41 container
+					42 text 古诗词诵读 已接入
+					43 heading 天净沙·秋思, Value: 3
+						44 text 天净沙·秋思
+					45 text 背诵 ·  未开始 # 统编版 # 七年级上册 # 古诗词诵读 进入课件 →
+			46 button 查看峨眉山月歌
+				47 container
+					48 text 古诗词诵读 待接入
+					49 heading 峨眉山月歌, Value: 3
+						50 text 峨眉山月歌
+					51 text # 统编版 # 七年级上册 # 古诗词诵读 查看卡片 →
+			52 button 查看江南逢李龟年
+				53 container
+					54 text 古诗词诵读 待接入
+					55 heading 江南逢李龟年, Value: 3
+						56 text 江南逢李龟年
+					57 text # 统编版 # 七年级上册 # 古诗词诵读 查看卡片 →
+			58 button 查看行军九日思长安故园
+				59 container
+					60 text 古诗词诵读 待接入
+					61 heading 行军九日思长安故园, Value: 3
+						62 text 行军九日思长安故园
+					63 text # 统编版 # 七年级上册 # 古诗词诵读 查看卡片 →
+			64 button 查看夜上受降城闻笛
+				65 container
+					66 text 古诗词诵读 待接入
+					67 heading 夜上受降城闻笛, Value: 3
+						68 text 夜上受降城闻笛
+					69 text # 统编版 # 七年级上册 # 古诗词诵读 查看卡片 →
+			70 button 查看秋词（其一）
+				71 container
+					72 text 古诗词诵读 待接入
+					73 heading 秋词（其一）, Value: 3
+						74 text 秋词（其一）
+					75 text # 统编版 # 七年级上册 # 古诗词诵读 查看卡片 →
+			76 button 查看夜雨寄北
+				77 container
+					78 text 古诗词诵读 已接入
+					79 heading 夜雨寄北, Value: 3
+						80 text 夜雨寄北
+					81 text 背诵 ·  未开始 # 统编版 # 七年级上册 # 古诗词诵读 进入课件 →
+			82 button 查看十一月四日风雨大作（其二）
+				83 container
+					84 text 古诗词诵读 待接入
+					85 heading 十一月四日风雨大作（其二）, Value: 3
+						86 text 十一月四日风雨大作（其二）
+					87 text # 统编版 # 七年级上册 # 古诗词诵读 查看卡片 →
+			88 button 查看潼关
+				89 container
+					90 text 古诗词诵读 待接入
+					91 heading 潼关, Value: 3
+						92 text 潼关
+					93 text # 统编版 # 七年级上册 # 古诗词诵读 查看卡片 →
+			94 button 查看咏雪
+				95 container
+					96 text 文言文阅读 待接入
+					97 heading 咏雪, Value: 3
+						98 text 咏雪
+					99 text # 统编版 # 七年级上册 # 文言文阅读 查看卡片 →
+			100 button 查看陈太丘与友期行
+				101 container
+					102 text 文言文阅读 待接入
+					103 heading 陈太丘与友期行, Value: 3
+						104 text 陈太丘与友期行
+					105 text # 统编版 # 七年级上册 # 文言文阅读 查看卡片 →
+			106 button 查看《论语》十二章
+				107 container
+					108 text 文言文阅读 待接入
+					109 heading 《论语》十二章, Value: 3
+						110 text 《论语》十二章
+					111 text # 统编版 # 七年级上册 # 文言文阅读 查看卡片 →
+			112 button 查看诫子书
+				113 container
+					114 text 文言文阅读 待接入
+					115 heading 诫子书, Value: 3
+						116 text 诫子书
+					117 text # 统编版 # 七年级上册 # 文言文阅读 查看卡片 →
+			118 button 查看狼
+				119 container
+					120 text 文言文阅读 待接入
+					121 heading 狼, Value: 3
+						122 text 狼
+					123 text # 统编版 # 七年级上册 # 文言文阅读 查看卡片 →
+			124 button 查看穿井得一人
+				125 container
+					126 text 文言文阅读 待接入
+					127 heading 穿井得一人, Value: 3
+						128 text 穿井得一人
+					129 text # 统编版 # 七年级上册 # 文言文阅读 查看卡片 →
+			130 button 查看杞人忧天
+				131 container
+					132 text 文言文阅读 待接入
+					133 heading 杞人忧天, Value: 3
+						134 text 杞人忧天
+					135 text # 统编版 # 七年级上册 # 文言文阅读 查看卡片 →
+			136 button 查看竹里馆
+				137 container
+					138 text 古诗词诵读 待接入
+					139 heading 竹里馆, Value: 3
+						140 text 竹里馆
+					141 text # 统编版 # 七年级下册 # 古诗词诵读 查看卡片 →
+			142 button 查看春夜洛城闻笛
+				143 container
+					144 text 古诗词诵读 待接入
+					145 heading 春夜洛城闻笛, Value: 3
+						146 text 春夜洛城闻笛
+					147 text # 统编版 # 七年级下册 # 古诗词诵读 查看卡片 →
+			148 button 查看逢入京使
+				149 container
+					150 text 古诗词诵读 待接入
+					151 heading 逢入京使, Value: 3
+						152 text 逢入京使
+					153 text # 统编版 # 七年级下册 # 古诗词诵读 查看卡片 →
+			154 button 查看晚春
+				155 container
+					156 text 古诗词诵读 待接入
+					157 heading 晚春, Value: 3
+						158 text 晚春
+					159 text # 统编版 # 七年级下册 # 古诗词诵读 查看卡片 →
+			160 button 查看登幽州台歌
+				161 container
+					162 text 古诗词诵读 待接入
+					163 heading 登幽州台歌, Value: 3
+						164 text 登幽州台歌
+					165 text # 统编版 # 七年级下册 # 古诗词诵读 查看卡片 →
+			166 button 查看望岳
+				167 container
+					168 text 古诗词诵读 待接入
+					169 heading 望岳, Value: 3
+						170 text 望岳
+					171 text # 统编版 # 七年级下册 # 古诗词诵读 查看卡片 →
+			172 button 查看登飞来峰
+				173 container
+					174 text 古诗词诵读 待接入
+					175 heading 登飞来峰, Value: 3
+						176 text 登飞来峰
+					177 text # 统编版 # 七年级下册 # 古诗词诵读 查看卡片 →
+			178 button 查看游山西村
+				179 container
+					180 text 古诗词诵读 待接入
+					181 heading 游山西村, Value: 3
+						182 text 游山西村
+					183 text # 统编版 # 七年级下册 # 古诗词诵读 查看卡片 →
+			184 button 查看己亥杂诗（其五）
+				185 container
+					186 text 古诗词诵读 待接入
+					187 heading 己亥杂诗（其五）, Value: 3
+						188 text 己亥杂诗（其五）
+					189 text # 统编版 # 七年级下册 # 古诗词诵读 查看卡片 →
+			190 button 查看泊秦淮
+				191 container
+					192 text 古诗词诵读 待接入
+					193 heading 泊秦淮, Value: 3
+						194 text 泊秦淮
+					195 text # 统编版 # 七年级下册 # 古诗词诵读 查看卡片 →
+			196 button 查看贾生
+				197 container
+					198 text 古诗词诵读 待接入
+					199 heading 贾生, Value: 3
+						200 text 贾生
+					201 text # 统编版 # 七年级下册 # 古诗词诵读 查看卡片 →
+			202 button 查看过松源晨炊漆公店（其五）
+				203 container
+					204 text 古诗词诵读 待接入
+					205 heading 过松源晨炊漆公店（其五）, Value: 3
+						206 text 过松源晨炊漆公店（其五）
+					207 text # 统编版 # 七年级下册 # 古诗词诵读 查看卡片 →
+			208 button 查看约客
+				209 container
+					210 text 古诗词诵读 待接入
+					211 heading 约客, Value: 3
+						212 text 约客
+					213 text # 统编版 # 七年级下册 # 古诗词诵读 查看卡片 →
+			214 button 查看孙权劝学
+				215 container
+					216 text 文言文阅读 待接入
+					217 heading 孙权劝学, Value: 3
+						218 text 孙权劝学
+					219 text # 统编版 # 七年级下册 # 文言文阅读 查看卡片 →
+			220 button 查看木兰诗
+				221 container
+					222 text 文言文阅读 待接入
+					223 heading 木兰诗, Value: 3
+						224 text 木兰诗
+					225 text # 统编版 # 七年级下册 # 文言文阅读 查看卡片 →
+			226 button 查看卖油翁
+				227 container
+					228 text 文言文阅读 待接入
+					229 heading 卖油翁, Value: 3
+						230 text 卖油翁
+					231 text # 统编版 # 七年级下册 # 文言文阅读 查看卡片 →
+			232 button 查看陋室铭
+				233 container
+					234 text 文言文阅读 待接入
+					235 heading 陋室铭, Value: 3
+						236 text 陋室铭
+					237 text # 统编版 # 七年级下册 # 文言文阅读 查看卡片 →
+			238 button 查看爱莲说
+				239 container
+					240 text 文言文阅读 待接入
+					241 heading 爱莲说, Value: 3
+						242 text 爱莲说
+					243 text # 统编版 # 七年级下册 # 文言文阅读 查看卡片 →
+			244 button 查看河中石兽
+				245 container
+					246 text 文言文阅读 待接入
+					247 heading 河中石兽, Value: 3
+						248 text 河中石兽
+					249 text # 统编版 # 七年级下册 # 文言文阅读 查看卡片 →
+			250 button 查看野望
+				251 container
+					252 text 古诗词诵读 待接入
+					253 heading 野望, Value: 3
+						254 text 野望
+					255 text # 统编版 # 八年级上册 # 古诗词诵读 查看卡片 →
+			256 button 查看黄鹤楼
+				257 container
+					258 text 古诗词诵读 待接入
+					259 heading 黄鹤楼, Value: 3
+						260 text 黄鹤楼
+					261 text # 统编版 # 八年级上册 # 古诗词诵读 查看卡片 →
+			262 button 查看使至塞上
+				263 container
+					264 text 古诗词诵读 待接入
+					265 heading 使至塞上, Value: 3
+						266 text 使至塞上
+					267 text # 统编版 # 八年级上册 # 古诗词诵读 查看卡片 →
+			268 button 查看渡荆门送别
+				269 container
+					270 text 古诗词诵读 待接入
+					271 heading 渡荆门送别, Value: 3
+						272 text 渡荆门送别
+					273 text # 统编版 # 八年级上册 # 古诗词诵读 查看卡片 →
+			274 button 查看钱塘湖春行
+				275 container
+					276 text 古诗词诵读 待接入
+					277 heading 钱塘湖春行, Value: 3
+						278 text 钱塘湖春行
+					279 text # 统编版 # 八年级上册 # 古诗词诵读 查看卡片 →
+			280 button 查看饮酒（其五）
+				281 container
+					282 text 古诗词诵读 待接入
+					283 heading 饮酒（其五）, Value: 3
+						284 text 饮酒（其五）
+					285 text # 统编版 # 八年级上册 # 古诗词诵读 查看卡片 →
+			286 button 查看春望
+				287 container
+					288 text 古诗词诵读 待接入
+					289 heading 春望, Value: 3
+						290 text 春望
+					291 text # 统编版 # 八年级上册 # 古诗词诵读 查看卡片 →
+			292 button 查看雁门太守行
+				293 container
+					294 text 古诗词诵读 待接入
+					295 heading 雁门太守行, Value: 3
+						296 text 雁门太守行
+					297 text # 统编版 # 八年级上册 # 古诗词诵读 查看卡片 →
+			298 button 查看赤壁
+				299 container
+					300 text 古诗词诵读 待接入
+					301 heading 赤壁, Value: 3
+						302 text 赤壁
+					303 text # 统编版 # 八年级上册 # 古诗词诵读 查看卡片 →
+			304 button 查看渔家傲（天接云涛连晓雾）
+				305 container
+					306 text 古诗词诵读 待接入
+					307 heading 渔家傲（天接云涛连晓雾）, Value: 3
+						308 text 渔家傲（天接云涛连晓雾）
+					309 text # 统编版 # 八年级上册 # 古诗词诵读 查看卡片 →
+			310 button 查看龟虽寿
+				311 container
+					312 text 古诗词诵读 待接入
+					313 heading 龟虽寿, Value: 3
+						314 text 龟虽寿
+					315 text # 统编版 # 八年级上册 # 古诗词诵读 查看卡片 →
+			316 button 查看赠从弟（其二）
+				317 container
+					318 text 古诗词诵读 待接入
+					319 heading 赠从弟（其二）, Value: 3
+						320 text 赠从弟（其二）
+					321 text # 统编版 # 八年级上册 # 古诗词诵读 查看卡片 →
+			322 button 查看梁甫行
+				323 container
+					324 text 古诗词诵读 待接入
+					325 heading 梁甫行, Value: 3
+						326 text 梁甫行
+					327 text # 统编版 # 八年级上册 # 古诗词诵读 查看卡片 →
+			328 button 查看浣溪沙（一曲新词酒一杯）
+				329 container
+					330 text 古诗词诵读 待接入
+					331 heading 浣溪沙（一曲新词酒一杯）, Value: 3
+						332 text 浣溪沙（一曲新词酒一杯）
+					333 text # 统编版 # 八年级上册 # 古诗词诵读 查看卡片 →
+			334 button 查看采桑子（轻舟短棹西湖好）
+				335 container
+					336 text 古诗词诵读 待接入
+					337 heading 采桑子（轻舟短棹西湖好）, Value: 3
+						338 text 采桑子（轻舟短棹西湖好）
+					339 text # 统编版 # 八年级上册 # 古诗词诵读 查看卡片 →
+			340 button 查看相见欢（金陵城上西楼）
+				341 container
+					342 text 古诗词诵读 待接入
+					343 heading 相见欢（金陵城上西楼）, Value: 3
+						344 text 相见欢（金陵城上西楼）
+					345 text # 统编版 # 八年级上册 # 古诗词诵读 查看卡片 →
+			346 button 查看如梦令（常记溪亭日暮）
+				347 container
+					348 text 古诗词诵读 待接入
+					349 heading 如梦令（常记溪亭日暮）, Value: 3
+						350 text 如梦令（常记溪亭日暮）
+					351 text # 统编版 # 八年级上册 # 古诗词诵读 查看卡片 →
+			352 button 查看三峡
+				353 container
+					354 text 文言文阅读 待接入
+					355 heading 三峡, Value: 3
+						356 text 三峡
+					357 text # 统编版 # 八年级上册 # 文言文阅读 查看卡片 →
+			358 button 查看答谢中书书
+				359 container
+					360 text 文言文阅读 待接入
+					361 heading 答谢中书书, Value: 3
+						362 text 答谢中书书
+					363 text # 统编版 # 八年级上册 # 文言文阅读 查看卡片 →
+			364 button 查看记承天寺夜游
+				365 container
+					366 text 文言文阅读 待接入
+					367 heading 记承天寺夜游, Value: 3
+						368 text 记承天寺夜游
+					369 text # 统编版 # 八年级上册 # 文言文阅读 查看卡片 →
+			370 button 查看与朱元思书
+				371 container
+					372 text 文言文阅读 待接入
+					373 heading 与朱元思书, Value: 3
+						374 text 与朱元思书
+					375 text # 统编版 # 八年级上册 # 文言文阅读 查看卡片 →
+			376 button 查看得道多助，失道寡助
+				377 container
+					378 text 文言文阅读 待接入
+					379 heading 得道多助，失道寡助, Value: 3
+						380 text 得道多助，失道寡助
+					381 text # 统编版 # 八年级上册 # 文言文阅读 查看卡片 →
+			382 button 查看富贵不能淫
+				383 container
+					384 text 文言文阅读 待接入
+					385 heading 富贵不能淫, Value: 3
+						386 text 富贵不能淫
+					387 text # 统编版 # 八年级上册 # 文言文阅读 查看卡片 →
+			388 button 查看生于忧患，死于安乐
+				389 container
+					390 text 文言文阅读 待接入
+					391 heading 生于忧患，死于安乐, Value: 3
+						392 text 生于忧患，死于安乐
+					393 text # 统编版 # 八年级上册 # 文言文阅读 查看卡片 →
+			394 button 查看愚公移山
+				395 container
+					396 text 文言文阅读 待接入
+					397 heading 愚公移山, Value: 3
+						398 text 愚公移山
+					399 text # 统编版 # 八年级上册 # 文言文阅读 查看卡片 →
+			400 button 查看周亚夫军细柳
+				401 container
+					402 text 文言文阅读 待接入
+					403 heading 周亚夫军细柳, Value: 3
+						404 text 周亚夫军细柳
+					405 text # 统编版 # 八年级上册 # 文言文阅读 查看卡片 →
+			406 button 查看关雎
+				407 container
+					408 text 古诗词诵读 待接入
+					409 heading 关雎, Value: 3
+						410 text 关雎
+					411 text # 统编版 # 八年级下册 # 古诗词诵读 查看卡片 →
+			412 button 查看蒹葭
+				413 container
+					414 text 古诗词诵读 待接入
+					415 heading 蒹葭, Value: 3
+						416 text 蒹葭
+					417 text # 统编版 # 八年级下册 # 古诗词诵读 查看卡片 →
+			418 button 查看石壕吏
+				419 container
+					420 text 古诗词诵读 待接入
+					421 heading 石壕吏, Value: 3
+						422 text 石壕吏
+					423 text # 统编版 # 八年级下册 # 古诗词诵读 查看卡片 →
+			424 button 查看茅屋为秋风所破歌
+				425 container
+					426 text 古诗词诵读 待接入
+					427 heading 茅屋为秋风所破歌, Value: 3
+						428 text 茅屋为秋风所破歌
+					429 text # 统编版 # 八年级下册 # 古诗词诵读 查看卡片 →
+			430 button 查看式微
+				431 container
+					432 text 古诗词诵读 待接入
+					433 heading 式微, Value: 3
+						434 text 式微
+					435 text # 统编版 # 八年级下册 # 古诗词诵读 查看卡片 →
+			436 button 查看子衿
+				437 container
+					438 text 古诗词诵读 待接入
+					439 heading 子衿, Value: 3
+						440 text 子衿
+					441 text # 统编版 # 八年级下册 # 古诗词诵读 查看卡片 →
+			442 button 查看送杜少府之任蜀州
+				443 container
+					444 text 古诗词诵读 待接入
+					445 heading 送杜少府之任蜀州, Value: 3
+						446 text 送杜少府之任蜀州
+					447 text # 统编版 # 八年级下册 # 古诗词诵读 查看卡片 →
+			448 button 查看望洞庭湖赠张丞相
+				449 container
+					450 text 古诗词诵读 待接入
+					451 heading 望洞庭湖赠张丞相, Value: 3
+						452 text 望洞庭湖赠张丞相
+					453 text # 统编版 # 八年级下册 # 古诗词诵读 查看卡片 →
+			454 button 查看题破山寺后禅院
+				455 container
+					456 text 古诗词诵读 待接入
+					457 heading 题破山寺后禅院, Value: 3
+						458 text 题破山寺后禅院
+					459 text # 统编版 # 八年级下册 # 古诗词诵读 查看卡片 →
+			460 button 查看送友人
+				461 container
+					462 text 古诗词诵读 待接入
+					463 heading 送友人, Value: 3
+						464 text 送友人
+					465 text # 统编版 # 八年级下册 # 古诗词诵读 查看卡片 →
+			466 button 查看卜算子·黄州定慧院寓居作
+				467 container
+					468 text 古诗词诵读 待接入
+					469 heading 卜算子·黄州定慧院寓居作, Value: 3
+						470 text 卜算子·黄州定慧院寓居作
+					471 text # 统编版 # 八年级下册 # 古诗词诵读 查看卡片 →
+			472 button 查看卜算子·咏梅
+				473 container
+					474 text 古诗词诵读 待接入
+					475 heading 卜算子·咏梅, Value: 3
+						476 text 卜算子·咏梅
+					477 text # 统编版 # 八年级下册 # 古诗词诵读 查看卡片 →
+			478 button 查看桃花源记
+				479 container
+					480 text 文言文阅读 待接入
+					481 heading 桃花源记, Value: 3
+						482 text 桃花源记
+					483 text # 统编版 # 八年级下册 # 文言文阅读 查看卡片 →
+			484 button 查看小石潭记
+				485 container
+					486 text 文言文阅读 待接入
+					487 heading 小石潭记, Value: 3
+						488 text 小石潭记
+					489 text # 统编版 # 八年级下册 # 文言文阅读 查看卡片 →
+			490 button 查看核舟记
+				491 container
+					492 text 文言文阅读 待接入
+					493 heading 核舟记, Value: 3
+						494 text 核舟记
+					495 text # 统编版 # 八年级下册 # 文言文阅读 查看卡片 →
+			496 button 查看北冥有鱼
+				497 container
+					498 text 文言文阅读 待接入
+					499 heading 北冥有鱼, Value: 3
+						500 text 北冥有鱼
+					501 text # 统编版 # 八年级下册 # 文言文阅读 查看卡片 →
+			502 button 查看庄子与惠子游于濠梁之上
+				503 container
+					504 text 文言文阅读 待接入
+					505 heading 庄子与惠子游于濠梁之上, Value: 3
+						506 text 庄子与惠子游于濠梁之上
+					507 text # 统编版 # 八年级下册 # 文言文阅读 查看卡片 →
+			508 button 查看虽有嘉肴
+				509 container
+					510 text 文言文阅读 待接入
+					511 heading 虽有嘉肴, Value: 3
+						512 text 虽有嘉肴
+					513 text # 统编版 # 八年级下册 # 文言文阅读 查看卡片 →
+			514 button 查看大道之行也
+				515 container
+					516 text 文言文阅读 待接入
+					517 heading 大道之行也, Value: 3
+						518 text 大道之行也
+					519 text # 统编版 # 八年级下册 # 文言文阅读 查看卡片 →
+			520 button 查看马说
+				521 container
+					522 text 文言文阅读 待接入
+					523 heading 马说, Value: 3
+						524 text 马说
+					525 text # 统编版 # 八年级下册 # 文言文阅读 查看卡片 →
+			526 button 查看沁园春·雪
+				527 container
+					528 text 古诗词诵读 待接入
+					529 heading 沁园春·雪, Value: 3
+						530 text 沁园春·雪
+					531 text # 统编版 # 九年级上册 # 古诗词诵读 查看卡片 →
+			532 button 查看行路难（其一）
+				533 container
+					534 text 古诗词诵读 待接入
+					535 heading 行路难（其一）, Value: 3
+						536 text 行路难（其一）
+					537 text # 统编版 # 九年级上册 # 古诗词诵读 查看卡片 →
+			538 button 查看酬乐天扬州初逢席上见赠
+				539 container
+					540 text 古诗词诵读 待接入
+					541 heading 酬乐天扬州初逢席上见赠, Value: 3
+						542 text 酬乐天扬州初逢席上见赠
+					543 text # 统编版 # 九年级上册 # 古诗词诵读 查看卡片 →
+			544 button 查看水调歌头（明月几时有）
+				545 container
+					546 text 古诗词诵读 待接入
+					547 heading 水调歌头（明月几时有）, Value: 3
+						548 text 水调歌头（明月几时有）
+					549 text # 统编版 # 九年级上册 # 古诗词诵读 查看卡片 →
+			550 button 查看月夜忆舍弟
+				551 container
+					552 text 古诗词诵读 待接入
+					553 heading 月夜忆舍弟, Value: 3
+						554 text 月夜忆舍弟
+					555 text # 统编版 # 九年级上册 # 古诗词诵读 查看卡片 →
+			556 button 查看长沙过贾谊宅
+				557 container
+					558 text 古诗词诵读 待接入
+					559 heading 长沙过贾谊宅, Value: 3
+						560 text 长沙过贾谊宅
+					561 text # 统编版 # 九年级上册 # 古诗词诵读 查看卡片 →
+			562 button 查看左迁蓝关示侄孙湘
+				563 container
+					564 text 古诗词诵读 待接入
+					565 heading 左迁蓝关示侄孙湘, Value: 3
+						566 text 左迁蓝关示侄孙湘
+					567 text # 统编版 # 九年级上册 # 古诗词诵读 查看卡片 →
+			568 button 查看商山早行
+				569 container
+					570 text 古诗词诵读 待接入
+					571 heading 商山早行, Value: 3
+						572 text 商山早行
+					573 text # 统编版 # 九年级上册 # 古诗词诵读 查看卡片 →
+			574 button 查看咸阳城东楼
+				575 container
+					576 text 古诗词诵读 待接入
+					577 heading 咸阳城东楼, Value: 3
+						578 text 咸阳城东楼
+					579 text # 统编版 # 九年级上册 # 古诗词诵读 查看卡片 →
+			580 button 查看无题
+				581 container
+					582 text 古诗词诵读 待接入
+					583 heading 无题, Value: 3
+						584 text 无题
+					585 text # 统编版 # 九年级上册 # 古诗词诵读 查看卡片 →
+			586 button 查看行香子（树绕村庄）
+				587 container
+					588 text 古诗词诵读 待接入
+					589 heading 行香子（树绕村庄）, Value: 3
+						590 text 行香子（树绕村庄）
+					591 text # 统编版 # 九年级上册 # 古诗词诵读 查看卡片 →
+			592 button 查看丑奴儿·书博山道中壁
+				593 container
+					594 text 古诗词诵读 待接入
+					595 heading 丑奴儿·书博山道中壁, Value: 3
+						596 text 丑奴儿·书博山道中壁
+					597 text # 统编版 # 九年级上册 # 古诗词诵读 查看卡片 →
+			598 button 查看岳阳楼记
+				599 container
+					600 text 文言文阅读 待接入
+					601 heading 岳阳楼记, Value: 3
+						602 text 岳阳楼记
+					603 text # 统编版 # 九年级上册 # 文言文阅读 查看卡片 →
+			604 button 查看醉翁亭记
+				605 container
+					606 text 文言文阅读 待接入
+					607 heading 醉翁亭记, Value: 3
+						608 text 醉翁亭记
+					609 text # 统编版 # 九年级上册 # 文言文阅读 查看卡片 →
+			610 button 查看湖心亭看雪
+				611 container
+					612 text 文言文阅读 待接入
+					613 heading 湖心亭看雪, Value: 3
+						614 text 湖心亭看雪
+					615 text # 统编版 # 九年级上册 # 文言文阅读 查看卡片 →
+			616 button 查看渔家傲·秋思
+				617 container
+					618 text 古诗词诵读 待接入
+					619 heading 渔家傲·秋思, Value: 3
+						620 text 渔家傲·秋思
+					621 text # 统编版 # 九年级下册 # 古诗词诵读 查看卡片 →
+			622 button 查看江城子·密州出猎
+				623 container
+					624 text 古诗词诵读 待接入
+					625 heading 江城子·密州出猎, Value: 3
+						626 text 江城子·密州出猎
+					627 text # 统编版 # 九年级下册 # 古诗词诵读 查看卡片 →
+			628 button 查看破阵子·为陈同甫赋壮词以寄之
+				629 container
+					630 text 古诗词诵读 待接入
+					631 heading 破阵子·为陈同甫赋壮词以寄之, Value: 3
+						632 text 破阵子·为陈同甫赋壮词以寄之
+					633 text # 统编版 # 九年级下册 # 古诗词诵读 查看卡片 →
+			634 button 查看满江红（小住京华）
+				635 container
+					636 text 古诗词诵读 待接入
+					637 heading 满江红（小住京华）, Value: 3
+						638 text 满江红（小住京华）
+					639 text # 统编版 # 九年级下册 # 古诗词诵读 查看卡片 →
+			640 button 查看山坡羊·潼关怀古
+				641 container
+					642 text 古诗词诵读 待接入
+					643 heading 山坡羊·潼关怀古, Value: 3
+						644 text 山坡羊·潼关怀古
+					645 text # 统编版 # 九年级下册 # 古诗词诵读 查看卡片 →
+			646 button 查看定风波（莫听穿林打叶声）
+				647 container
+					648 text 古诗词诵读 待接入
+					649 heading 定风波（莫听穿林打叶声）, Value: 3
+						650 text 定风波（莫听穿林打叶声）
+					651 text # 统编版 # 九年级下册 # 古诗词诵读 查看卡片 →
+			652 button 查看临江仙·夜登小阁，忆洛中旧游
+				653 container
+					654 text 古诗词诵读 待接入
+					655 heading 临江仙·夜登小阁，忆洛中旧游, Value: 3
+						656 text 临江仙·夜登小阁，忆洛中旧游
+					657 text # 统编版 # 九年级下册 # 古诗词诵读 查看卡片 →
+			658 button 查看太常引·建康中秋夜为吕叔潜赋
+				659 container
+					660 text 古诗词诵读 待接入
+					661 heading 太常引·建康中秋夜为吕叔潜赋, Value: 3
+						662 text 太常引·建康中秋夜为吕叔潜赋
+					663 text # 统编版 # 九年级下册 # 古诗词诵读 查看卡片 →
+			664 button 查看浣溪沙（身向云山那畔行）
+				665 container
+					666 text 古诗词诵读 待接入
+					667 heading 浣溪沙（身向云山那畔行）, Value: 3
+						668 text 浣溪沙（身向云山那畔行）
+					669 text # 统编版 # 九年级下册 # 古诗词诵读 查看卡片 →
+			670 button 查看鱼我所欲也
+				671 container
+					672 text 文言文阅读 待接入
+					673 heading 鱼我所欲也, Value: 3
+						674 text 鱼我所欲也
+					675 text # 统编版 # 九年级下册 # 文言文阅读 查看卡片 →
+			676 button 查看唐雎不辱使命
+				677 container
+					678 text 文言文阅读 待接入
+					679 heading 唐雎不辱使命, Value: 3
+						680 text 唐雎不辱使命
+					681 text # 统编版 # 九年级下册 # 文言文阅读 查看卡片 →
+			682 button 查看送东阳马生序
+				683 container
+					684 text 文言文阅读 待接入
+					685 heading 送东阳马生序, Value: 3
+						686 text 送东阳马生序
+					687 text # 统编版 # 九年级下册 # 文言文阅读 查看卡片 →
+			688 button 查看曹刿论战
+				689 container
+					690 text 文言文阅读 待接入
+					691 heading 曹刿论战, Value: 3
+						692 text 曹刿论战
+					693 text # 统编版 # 九年级下册 # 文言文阅读 查看卡片 →
+			694 button 查看邹忌讽齐王纳谏
+				695 container
+					696 text 文言文阅读 待接入
+					697 heading 邹忌讽齐王纳谏, Value: 3
+						698 text 邹忌讽齐王纳谏
+					699 text # 统编版 # 九年级下册 # 文言文阅读 查看卡片 →
+			700 button 查看出师表
+				701 container
+					702 text 文言文阅读 待接入
+					703 heading 出师表, Value: 3
+						704 text 出师表
+					705 text # 统编版 # 九年级下册 # 文言文阅读 查看卡片 →
+		706 button 打开背诵训练
+			707 text 背
+			708 text 背诵训练
+	709 container 先体验语文，再决定是否订阅
+		710 container
+			711 text 拾光视界 · 试用体验
+			712 heading 先体验语文，再决定是否订阅, Value: 2, ID: shg-trial-notice-title
+				713 text 先体验语文，再决定是否订阅
+			714 button 关闭试用提示
+		715 text 试用权益已开启
+		716 text 本次6小时试用期内，语文全部内容免费体验
+		717 text 先完整体验，合适再订阅。试用结束后，可从右上角“订阅中心”继续开通。
+		718 text 本次体验
+		719 text 语文全部内容
+		720 text 剩余体验时间
+		721 text 2小时 14分
+		722 text 遇到使用问题？添加客服微信
+		723 button 18584322518
+		724 button 开始体验
+		725 button 不再提示
+		726 button 查看订阅方案
+	727 container Description: 小拾光学习助手, ID: shgLearningAssistant
+		728 button 打开小拾光萌宠学习助手
+			729 button 点击切换为【橘莉 Jolly · 星光绒绒兽】
+
+The focused UI element is 1 AXWebArea 拾光视界 - 初中语文诗词与文言文, URL: shiguangtongxue.cn/subjects/chinese/app.html?stage=junior&v=20260924135452
