@@ -204,12 +204,16 @@ export async function persistChatFeedbackToServer(input: {
 export async function persistThreadMessageToServer(
   threadId: string,
   message: { id: string; role: string; content: string; metadata?: unknown; createdAt?: number; courseId?: string | null; lessonId?: string | null },
+  options: { keepalive?: boolean } = {},
 ) {
   try {
+    const body = JSON.stringify(message);
     await fetch(`/api/copilot-threads/${encodeURIComponent(threadId)}/messages`, {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify(message),
+      body,
+      // Browsers cap keepalive bodies at 64 KiB; larger messages use a normal request.
+      keepalive: Boolean(options.keepalive) && body.length < 60_000,
     });
   } catch {
     // Best-effort sync only.
