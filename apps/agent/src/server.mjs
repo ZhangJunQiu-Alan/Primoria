@@ -2,6 +2,7 @@ import { createServer } from "node:http";
 import { fileURLToPath } from "node:url";
 import { createAgentCheckpointer } from "./runtime/checkpointer.mjs";
 import { RunAgentInputSchema } from "@ag-ui/core";
+import { exceedsAgentInputArrayLimit } from "@primoria/contracts/agent-input-limits";
 import { createPrimoriaGraph } from "./graph.mjs";
 import { createRunStore } from "./runtime/run-store.mjs";
 import { createRunWorker } from "./runtime/runner.mjs";
@@ -138,7 +139,9 @@ export async function startAgentServer() {
       }
 
       if (req.method === "POST" && url.pathname === "/agent") {
-        const parsed = RunAgentInputSchema.safeParse(await readJson(req));
+        const input = await readJson(req);
+        if (exceedsAgentInputArrayLimit(input)) return json(res, 413, { error: "agent_input_too_large" });
+        const parsed = RunAgentInputSchema.safeParse(input);
         if (!parsed.success) return json(res, 400, { error: "invalid_agent_input" });
         if (!inputMatchesOwner(parsed.data, ownerId)) return json(res, 403, { error: "owner_mismatch" });
         await streamRun(req, res, store, parsed.data, ownerId);

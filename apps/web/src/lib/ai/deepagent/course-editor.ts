@@ -40,7 +40,7 @@ const VisualEditECharts = z.object({
   type: z.literal("visual"),
   title: z.string(),
   description: z.string(),
-  echartsOption: z.record(z.unknown()),
+  echartsOption: z.record(z.string(), z.unknown()),
   echartsHeight: z.number().optional(),
 });
 const VisualEditMermaid = z.object({
