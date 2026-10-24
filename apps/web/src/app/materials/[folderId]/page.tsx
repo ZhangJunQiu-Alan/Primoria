@@ -4,6 +4,7 @@ import { FolderDetail } from "@/components/materials/folder-detail";
 import { getCurrentUserForRsc, isAuthEnabled } from "@/lib/auth/session";
 import { getDictionaryForUser } from "@/lib/i18n/server";
 import { getFolder, listFolderMaterials, listFolders } from "@/lib/materials/folders";
+import { loadFolderCourseState } from "@/lib/materials/folder-course";
 import { loadFolderOverview } from "@/lib/materials/folder-overview";
 
 export const dynamic = "force-dynamic";
@@ -21,7 +22,12 @@ export default async function MaterialFolderPage({ params }: { params: Promise<{
     listFolders(user.id),
   ]);
   if (!folder) notFound();
-  const overview = folder.kind === "subject" ? await loadFolderOverview(user.id, folderId, language).catch(() => null) : null;
+  const [overview, course] = folder.kind === "subject"
+    ? await Promise.all([
+        loadFolderOverview(user.id, folderId, language).catch(() => null),
+        loadFolderCourseState(user.id, folderId).catch(() => null),
+      ])
+    : [null, null];
 
   return (
     <main className="app-shell">
@@ -35,6 +41,7 @@ export default async function MaterialFolderPage({ params }: { params: Promise<{
           folders={folders.map((entry) => ({ id: entry.id, name: entry.name, kind: entry.kind }))}
           initialMaterials={materials}
           initialOverview={overview}
+          initialCourse={course}
         />
       </section>
     </main>

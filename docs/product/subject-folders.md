@@ -1,6 +1,6 @@
 # 科目文件夹：按讲累积的私有 KG 与自适应选择题测验
 
-Status: approved design; phases 1 (folders), 2 (per-lecture KG), and 3 (adaptive quiz) implemented, phase 4 in progress (2026-10-24).
+Status: approved design; all four phases implemented (2026-10-24).
 Extends [`learning-materials.md`](learning-materials.md); runtime code, schemas,
 and tests remain the source of truth once implemented.
 
@@ -95,13 +95,23 @@ worker:
 - 允许删除；重新拼装后该讲独有的概念离开大 KG，掌握度行保留（owner 私有）。
 - 已生成的课时内容保留，来源标注随之消失；只覆盖被删概念的**未生成**课时从大纲移除。
 - 这替代了第一阶段"有课程在用就禁止删除"的规则（该规则继续适用于旧的资料组合课程）。
+- 实现：每次 `rebuildFolderGraph` 后由 `reconcileFolderCourses`（`folder-course-reconcile.ts`）处理建在
+  该文件夹图上的课程——课时的 topic 锚点跟随它的第一个仍在图中的概念（文件夹图的 topic id 按讲生成，
+  排序、删除、改角色都会让概念换到别的 topic），所有概念都已离开大 KG 的 `planned`、未生成课时被删除；
+  已生成的课时保留（其概念若全部离开，课时内容仍可读，但学习进度无法再归到这些概念上）。
 
 ### 4.4 按 KG 生成课程
 
 - 与现有建课完全同一思路：复用 `initializeCourseOutline` 的 concept-frontier 大纲，按大 KG 的
   顺序把未掌握的概念每 2–3 个一组做成一节计划课时，scope key 为 `graph:<mat 文件夹图>:full`。
-- 课程大纲是创建时的快照；之后新增的讲，通过"同步新内容"把新概念按 KG 顺序插入为计划课时
-  （放在第 4 阶段）。
+- 课程大纲是创建时的快照；之后新增的讲，通过"同步新内容"把新概念按 KG 顺序插入为计划课时。
+- 实现（`apps/web/src/lib/materials/folder-course.ts`）：`POST /api/folders/[id]/course` 建课或返回已有课程
+  （每个文件夹一门，首节课进入生成队列）；`GET` 返回课程与可同步的新知识点数；
+  `POST /api/folders/[id]/course/sync` 插入计划课时。新概念 = 大 KG 中没有任何课时覆盖、也未掌握的概念；
+  先按"排在第一个讲授更靠后概念的已有课时之前"划分到各个空档，再在每个空档内用同一个 concept-frontier
+  每 2–3 个一组（新课时不会混合两个空档的概念），排序键取空档两端之间的分数。课时 id 由课程与概念集合
+  决定，重复同步不会重复插入。文件夹详情页的"课程"卡片：建课、继续学习、同步新内容。
+- "勾选资料建课"仍然保留，用于针对少数文件单独建课（第一阶段的资料组合课程）。
 
 ### 4.5 自适应选择题测验
 
@@ -166,8 +176,7 @@ POST /api/folders/:id/quizzes/:sessionId/submit { submissionId, answers }
   内容多的整本教材会被压缩；以后再按资料规模放宽。
 - 只有分析失败的讲义可以重试；已完成的讲义不会重新分析（重新分析会换掉它独有概念的 id）。
 - 发给模型的已有概念清单最多 300 个，超出部分无法被 `sameAs` 命中。
-- 删除讲义后已有课程的课时处理（§4.3 第二条）随第 4 阶段的文件夹建课一起实现；在那之前文件夹图只被
-  KG 概览读取。
+- 同步只会新增课时，不会重写已有课时的标题或概念分组；新课时使用概念名模板标题（不做大纲润色调用）。
 
 ## 8. 分阶段交付
 
@@ -188,4 +197,4 @@ POST /api/folders/:id/quizzes/:sessionId/submit { submissionId, answers }
    以及按讲列出概念与掌握度的 KG 概览（`GET /api/folders/[id]/graph`）。
 3. **自适应选择题测验**（已实现）：见 §4.5 实现细节与 §5；路由 `POST /api/folders/[id]/quizzes`、
    `POST /api/folders/[id]/quizzes/[sessionId]/submit`。
-4. **从文件夹建课**与"同步新内容"。
+4. **从文件夹建课**与"同步新内容"（已实现）：见 §4.3、§4.4 的实现说明。

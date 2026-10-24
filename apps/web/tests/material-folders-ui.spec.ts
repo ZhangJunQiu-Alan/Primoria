@@ -5,6 +5,7 @@ import { createRoot, type Root } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { FolderDetail } from "../src/components/materials/folder-detail";
 import { FolderList } from "../src/components/materials/folder-list";
+import { FolderCourseCard } from "../src/components/materials/folder-course-card";
 import { FolderQuiz } from "../src/components/materials/folder-quiz";
 import type { FolderGraphOverview } from "../src/lib/materials/folder-overview";
 import type { FolderQuizOutcome, FolderQuizStart } from "../src/lib/materials/folder-quiz";
@@ -162,7 +163,9 @@ describe("FolderDetail", () => {
       Response.json({ material: material("lm_1", "第1讲", 1, { role: "reference" }) }),
       Response.json({ material: material("lm_1", "第1讲", 1, { folderId: "mf_web" }) }),
     ];
-    const fetchMock = vi.fn(async (url: string) => (url.endsWith("/graph") ? Response.json({ overview: null }) : patches.shift()!));
+    const fetchMock = vi.fn(async (url: string) =>
+      url.endsWith("/graph") ? Response.json({ overview: null }) : url.endsWith("/course") ? Response.json({ course: null }) : patches.shift()!,
+    );
     vi.stubGlobal("fetch", fetchMock);
     await mountDetail([material("lm_1", "第1讲", 1)]);
     const patchCalls = () => fetchMock.mock.calls.filter(([url]) => url === "/api/materials/lm_1");
@@ -374,5 +377,53 @@ describe("FolderQuiz", () => {
     await click(buttonByText("开始测验（10 题）"));
     expect(container.textContent).toContain("题目准备失败");
     expect(buttonByText("开始测验（10 题）")).toBeDefined();
+  });
+});
+
+describe("FolderCourseCard", () => {
+  it("builds the course from the graph and opens it", async () => {
+    const fetchMock = vi.fn(async () => Response.json({ courseId: "crs_9", created: true }, { status: 202 }));
+    vi.stubGlobal("fetch", fetchMock);
+    await render(createElement(FolderCourseCard, { folderId: "mf_sec", ready: true, course: null, onChange: vi.fn() }));
+    await click(buttonByText("按知识图谱建课"));
+    expect(fetchMock).toHaveBeenCalledWith("/api/folders/mf_sec/course", { method: "POST" });
+    expect(push).toHaveBeenCalledWith("/course/crs_9");
+  });
+
+  it("disables building until a lecture is analyzed", async () => {
+    vi.stubGlobal("fetch", vi.fn());
+    await render(createElement(FolderCourseCard, { folderId: "mf_sec", ready: false, course: null, onChange: vi.fn() }));
+    expect(buttonByText("按知识图谱建课")?.disabled).toBe(true);
+    expect(container.textContent).toContain("讲义分析完成后就可以建课了");
+  });
+
+  it("continues an existing course and syncs new concepts", async () => {
+    const onChange = vi.fn();
+    const fetchMock = vi.fn(async () => Response.json({ courseId: "crs_1", added: 2 }));
+    vi.stubGlobal("fetch", fetchMock);
+    await render(createElement(FolderCourseCard, {
+      folderId: "mf_sec",
+      ready: true,
+      course: { courseId: "crs_1", title: "Information Security", lessonCount: 4, newConceptCount: 5 },
+      onChange,
+    }));
+    expect(container.querySelector("a")?.getAttribute("href")).toBe("/course/crs_1");
+    expect(container.textContent).toContain("后来加入的讲义带来了 5 个新知识点");
+    await click(buttonByText("同步新内容"));
+    expect(fetchMock).toHaveBeenCalledWith("/api/folders/mf_sec/course/sync", { method: "POST" });
+    expect(container.textContent).toContain("已加入 2 节新课");
+    expect(onChange).toHaveBeenCalledTimes(1);
+  });
+
+  it("hides sync when the course is up to date", async () => {
+    vi.stubGlobal("fetch", vi.fn());
+    await render(createElement(FolderCourseCard, {
+      folderId: "mf_sec",
+      ready: true,
+      course: { courseId: "crs_1", title: "S", lessonCount: 4, newConceptCount: 0 },
+      onChange: vi.fn(),
+    }));
+    expect(buttonByText("同步新内容")).toBeUndefined();
+    expect(container.textContent).toContain("课程已包含知识图谱里所有未掌握的知识点");
   });
 });

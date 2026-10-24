@@ -12,6 +12,8 @@ import {
   materialFormatFor,
 } from "@/lib/materials/limits";
 import type { FolderGraphOverview } from "@/lib/materials/folder-overview";
+import type { FolderCourseState } from "@/lib/materials/folder-course";
+import { FolderCourseCard } from "./folder-course-card";
 import { FolderQuiz } from "./folder-quiz";
 import type { FolderKind, MaterialRole, MaterialSummary } from "@/lib/materials/types";
 
@@ -45,11 +47,13 @@ export function FolderDetail({
   folders,
   initialMaterials,
   initialOverview = null,
+  initialCourse = null,
 }: {
   folder: FolderRef;
   folders: FolderRef[];
   initialMaterials: MaterialSummary[];
   initialOverview?: FolderGraphOverview | null;
+  initialCourse?: FolderCourseState | null;
 }) {
   const { dictionary, language } = useI18n();
   const t = dictionary.materials;
@@ -71,6 +75,7 @@ export function FolderDetail({
   const [confirmingFolderDelete, setConfirmingFolderDelete] = useState(false);
   const [notices, setNotices] = useState<Notice[]>([]);
   const [overview, setOverview] = useState(initialOverview);
+  const [course, setCourse] = useState(initialCourse);
   const busy = uploadingName !== null || building;
   const analyzing = materials.some(isAnalyzing);
   const readyCount = useRef(initialMaterials.filter((material) => material.kgStatus === "ready").length);
@@ -104,12 +109,20 @@ export function FolderDetail({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [analyzing, folder.id]);
 
+  // The KG changed (analysis, reorder, role, delete, quiz): re-read the
+  // overview and the folder course's sync state.
   async function refreshOverview() {
     if (folder.kind !== "subject") return;
     try {
-      const res = await fetch(`/api/folders/${encodeURIComponent(folder.id)}/graph`, { cache: "no-store" });
-      const body = (await res.json().catch(() => ({}))) as { overview?: FolderGraphOverview };
-      if (res.ok && body.overview) setOverview(body.overview);
+      const id = encodeURIComponent(folder.id);
+      const [graphRes, courseRes] = await Promise.all([
+        fetch(`/api/folders/${id}/graph`, { cache: "no-store" }),
+        fetch(`/api/folders/${id}/course`, { cache: "no-store" }),
+      ]);
+      const graphBody = (await graphRes.json().catch(() => ({}))) as { overview?: FolderGraphOverview };
+      const courseBody = (await courseRes.json().catch(() => ({}))) as { course?: FolderCourseState | null };
+      if (graphRes.ok && graphBody.overview) setOverview(graphBody.overview);
+      if (courseRes.ok && courseBody.course !== undefined) setCourse(courseBody.course);
     } catch {
       // the overview is informational
     }
@@ -556,7 +569,10 @@ export function FolderDetail({
       </section>
 
       {isSubject ? (
-        <FolderQuiz folderId={folder.id} ready={Boolean(overview?.conceptCount)} onFinished={() => void refreshOverview()} />
+        <>
+          <FolderCourseCard folderId={folder.id} ready={Boolean(overview?.conceptCount)} course={course} onChange={() => void refreshOverview()} />
+          <FolderQuiz folderId={folder.id} ready={Boolean(overview?.conceptCount)} onFinished={() => void refreshOverview()} />
+        </>
       ) : null}
 
       <p className="materials-privacy-note">

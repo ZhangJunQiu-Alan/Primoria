@@ -25,6 +25,9 @@ const state = vi.hoisted(() => ({
   loadFolderOverview: vi.fn(),
   startFolderQuiz: vi.fn(),
   submitFolderQuiz: vi.fn(),
+  createFolderCourse: vi.fn(),
+  syncFolderCourse: vi.fn(),
+  loadFolderCourseState: vi.fn(),
 }));
 
 vi.mock("../src/lib/auth/guard", () => ({ requireConfiguredAuthUser: state.requireConfiguredAuthUser }));
@@ -56,6 +59,15 @@ vi.mock("../src/lib/materials/folder-overview", () => ({ loadFolderOverview: sta
 vi.mock("../src/lib/materials/folder-quiz-store", async () => {
   const { FolderQuizError } = await vi.importActual<typeof import("../src/lib/materials/folder-quiz-store")>("../src/lib/materials/folder-quiz-store");
   return { FolderQuizError, startFolderQuiz: state.startFolderQuiz, submitFolderQuiz: state.submitFolderQuiz };
+});
+vi.mock("../src/lib/materials/folder-course", async () => {
+  const { FolderCourseError } = await vi.importActual<typeof import("../src/lib/materials/folder-course")>("../src/lib/materials/folder-course");
+  return {
+    FolderCourseError,
+    createFolderCourse: state.createFolderCourse,
+    syncFolderCourse: state.syncFolderCourse,
+    loadFolderCourseState: state.loadFolderCourseState,
+  };
 });
 vi.mock("../src/lib/i18n/server", () => ({ resolveUiLanguageForUser: async () => "zh" }));
 vi.mock("../src/lib/ai/deepagent/course-generator", () => ({ initializeCourseOutline: state.initializeCourseOutline }));
@@ -343,6 +355,38 @@ describe("material routes", () => {
       expect(response.status).toBe(status);
       expect((await response.json()).code).toBe(code);
     }
+  });
+
+  it("builds, reads, and syncs the folder course", async () => {
+    const { FolderCourseError } = await import("../src/lib/materials/folder-course");
+    const course = await import("../src/app/api/folders/[id]/course/route");
+    const sync = await import("../src/app/api/folders/[id]/course/sync/route");
+    const params = { params: Promise.resolve({ id: "mf_sec" }) };
+    const req = (method: string, path = "") => new Request(`http://primoria.test/api/folders/mf_sec/course${path}`, { method });
+
+    state.createFolderCourse.mockResolvedValueOnce({ courseId: "crs_1", created: true });
+    const created = await course.POST(req("POST"), params);
+    expect(created.status).toBe(202);
+    expect(await created.json()).toEqual({ courseId: "crs_1", created: true });
+    expect(state.createFolderCourse).toHaveBeenCalledWith("u1", "mf_sec");
+    state.createFolderCourse.mockResolvedValueOnce({ courseId: "crs_1", created: false });
+    expect((await course.POST(req("POST"), params)).status).toBe(200);
+    state.createFolderCourse.mockRejectedValueOnce(new FolderCourseError("no_graph", "none"));
+    expect((await course.POST(req("POST"), params)).status).toBe(409);
+    state.createFolderCourse.mockRejectedValueOnce(new Error("relation does not exist"));
+    const broken = await course.POST(req("POST"), params);
+    expect(broken.status).toBe(503);
+    expect(JSON.stringify(await broken.json())).not.toContain("relation");
+
+    state.loadFolderCourseState.mockResolvedValueOnce({ courseId: "crs_1", title: "S", lessonCount: 3, newConceptCount: 2 });
+    expect(await (await course.GET(req("GET"), params)).json()).toEqual({ course: { courseId: "crs_1", title: "S", lessonCount: 3, newConceptCount: 2 } });
+    state.loadFolderCourseState.mockResolvedValueOnce(null);
+    expect(await (await course.GET(req("GET"), params)).json()).toEqual({ course: null });
+
+    state.syncFolderCourse.mockResolvedValueOnce({ courseId: "crs_1", added: 2 });
+    expect(await (await sync.POST(req("POST", "/sync"), params)).json()).toEqual({ courseId: "crs_1", added: 2 });
+    state.syncFolderCourse.mockRejectedValueOnce(new FolderCourseError("no_course", "none"));
+    expect((await sync.POST(req("POST", "/sync"), params)).status).toBe(404);
   });
 
   it("refuses share links for material courses", async () => {

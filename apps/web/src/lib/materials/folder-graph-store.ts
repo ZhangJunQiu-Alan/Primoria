@@ -10,6 +10,7 @@ import {
   type LearningMaterialRow,
   type MaterialFolderRow,
 } from "../db/schema";
+import { reconcileFolderCourses } from "./folder-course-reconcile";
 import { assembleFolderGraph, folderGraphId, type AssembledFolderGraph, type AssemblyLecture, type LectureSubgraph } from "./folder-graph";
 
 // Persistence around the pure folder-graph assembly. The assembled graph lives
@@ -67,9 +68,10 @@ export function majorityLanguage(materials: LearningMaterialRow[]): "zh" | "en" 
   return all > 0 && zh * 2 >= all ? "zh" : "en";
 }
 
-/** Re-assemble and persist a subject folder's graph. A folder with no ready
- * lecture keeps no graph — unless a course already runs on it, in which case
- * the last graph stays so the course's lessons keep resolving. */
+/** Re-assemble and persist a subject folder's graph, then re-anchor the
+ * lessons of courses built on it. A folder with no ready lecture keeps no
+ * graph — unless a course already runs on it, in which case the last graph
+ * stays so the course's lessons keep resolving. */
 export async function rebuildFolderGraph(ownerId: string, folderId: string, db: DbOrTx = getDb()): Promise<AssembledFolderGraph | null> {
   const state = await loadFolderLectures(ownerId, folderId, db);
   if (!state || state.folder.kind !== "subject") return null;
@@ -103,5 +105,6 @@ export async function rebuildFolderGraph(ownerId: string, folderId: string, db: 
     .insert(materialTopicGraphs)
     .values({ graphId, ownerId, ...values, createdAt: new Date() })
     .onConflictDoUpdate({ target: materialTopicGraphs.graphId, set: values });
+  await reconcileFolderCourses(db, ownerId, assembled.graph);
   return assembled;
 }

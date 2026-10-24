@@ -4,7 +4,7 @@ import { z } from "zod";
 import { enrichCourseOutlineDescriptions } from "@/lib/ai/course-generation/outline-enrichment";
 import { getCourseByScopeKey, saveCourse } from "@/lib/courses/store";
 import { getTopicGraph, type TopicGraph } from "@/lib/knowledge-graph/topic-graph";
-import { buildConceptFrontierOutline } from "@/lib/knowledge-graph/concept-frontier";
+import { buildConceptFrontierOutline, type ConceptBundle } from "@/lib/knowledge-graph/concept-frontier";
 import { listConceptMasteryByOwner } from "@/lib/mastery/owner-store";
 import type { BlockType, Course, CourseBlock, Lesson } from "@/lib/courses/types";
 import { courseBlocks, summarizeCourse } from "@/lib/courses/types";
@@ -365,6 +365,12 @@ function conceptFrontierLessons(
       masteredConceptIds: new Set(),
     });
   }
+  return plannedBundleLessons(bundles, language, now);
+}
+
+/** Planned lessons (concept-name template titles, sortKey 1…n) for frontier
+ * bundles; also used to append new folder-graph concepts to a course. */
+export function plannedBundleLessons(bundles: ConceptBundle[], language: string | null | undefined, now: number): Lesson[] {
   return bundles.map((bundle, index) => {
     const names = bundle.concepts.map((concept) => lessonConceptName(concept, language));
     return {

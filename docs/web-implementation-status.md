@@ -48,7 +48,8 @@ AG-UI Agent runtime; it is not a static mock and has no Supabase runtime path.
   (`material_kg_jobs` in the Extractor worker) assembled into one private folder
   KG, a lecture-by-lecture KG overview with mastery, and weakness-weighted
   single-choice folder quizzes with a reusable grounded question bank and
-  rolling-window mastery.
+  rolling-window mastery, and one concept-frontier course per folder with
+  "sync new content" for later lectures.
 - Learner-uploaded study materials (`/materials`; PDF/DOCX/Markdown/TXT text
   extraction and chunking) that build owner-private `mat_*` course graphs with
   per-concept source citations, material-grounded lesson generation,
