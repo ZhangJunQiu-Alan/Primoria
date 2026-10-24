@@ -695,17 +695,21 @@ Primoria has two complementary visualization paths:
    `open_interactive_component`; Web performs config generation/patching and
    renders a pre-engineered React component. The catalog, Web registry, widget
    map, and shared Agent routing prior are guarded by sync tests.
-   The current registry has 45 components. Above 40 entries the Tutor reads a
+   The current registry has 49 components. Above 40 entries the Tutor reads a
    discipline directory and retrieves bounded candidates through the read-only
    `search_interactive_components` tool. Course planners receive candidate
    capabilities before choosing a mechanism; saved VisualBlocks use the same
-   versioned components as chat.
+   versioned components as chat. Stored configs (chat instances, course
+   blocks, share snapshots) are upgraded on read through each component's
+   `migrations` chain; a block that cannot be upgraded shows a notice instead
+   of failing its lesson, and publication drops it rather than copying an
+   unvalidated config.
 2. **Off-catalog fallback:** specialized structured renderers handle known chart,
    diagram, physics, algorithm, math, wave, graph, molecule, and 3D shapes;
    `plan_visualization` + `widgetRenderer` handles the remaining custom HTML
    widget cases in a sandboxed iframe.
 
-HTML widgets execute inside a sandboxed iframe. `apps/web/src/components/generative-ui/widget-renderer.tsx` assembles a standalone document around the fragment, theme CSS, SVG/form helpers, a `window.sendPrompt` bridge, and validated dependencies. Content is delivered only after the iframe shell sends its authenticated ready handshake; an initial blank-document load is insufficient.
+HTML widgets execute inside a sandboxed iframe. `apps/web/src/components/generative-ui/widget-renderer.tsx` assembles a standalone document around the fragment, theme CSS, SVG/form helpers, a `window.sendPrompt` bridge, and validated dependencies. Content is delivered only after the iframe shell sends its authenticated ready handshake; an initial blank-document load is insufficient. If the handshake does not arrive within 12 seconds the card shows a retry that rebuilds the shell on a fresh channel.
 
 Widget HTML must be a fragment: no `<!doctype>`, no `<html>`, `<head>`, or `<body>` wrapper, and no `100vh` app-shell layouts.
 

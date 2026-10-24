@@ -58,7 +58,7 @@ Browser CopilotKit
 Visualization is catalog-first:
 
 - Versioned all-subject schema-driven React components selected through
-  `open_interactive_component`; 45 registered components, with bounded catalog
+  `open_interactive_component`; 49 registered components, with bounded catalog
   search instead of inlining the complete catalog above 40 entries.
 - Authenticated Web stage 2 creates a full config or validated minimal patch.
 - Interactive instances are owner-scoped database records with immutable initial

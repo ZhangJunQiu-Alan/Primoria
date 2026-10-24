@@ -1,6 +1,6 @@
 # Agent A 执行指令：平台、索引、集成与实测
 
-状态：平台已实现并完成45项集成，继续按此责任边界推进；全量参考验收未完成。最新证据见 [Agent A交接](visualization-agent-a-handoff.md)。完整要求见 [总任务书](visualization-full-coverage-execution.md)。
+状态：平台已实现并完成45项集成，继续按此责任边界推进；全量参考验收未完成。最新证据见 [Agent A交接](visualization-agent-a-handoff.md)。完整要求见 [总任务书](../../visualization-full-coverage-execution.md)。
 
 ## 任务
 
