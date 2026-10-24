@@ -618,3 +618,7 @@ a running app (`visualization:eval:attach`) refuses a non-test database unless
   journeys, and 49-component replay at three widths. The later UTF-8 keepalive
   change additionally passes its seven focused persistence/recorder checks
   and final Web typecheck; remote CI checks the final PR revision.
+- The isolated widget-renderer smoke starts Next dev with Webpack. CI exposed
+  a Turbopack virtual Google-font-module resolution failure during its separate
+  dev-server startup, returning 500 before the fixture became ready. The smoke
+  keeps all widget assertions and the production prohibition on QA pages.
