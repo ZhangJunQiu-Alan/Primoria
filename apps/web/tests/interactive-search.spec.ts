@@ -29,6 +29,34 @@ describe("shared semantic visualization index", () => {
   ])("finds %s without requiring a component id", (query, expected) => {
     expect(searchInteractiveComponents({ query, limit: 3 }).map((entry) => entry.componentId)).toContain(expected);
   });
+  it.each([
+    ["show me the reaction rate", "chem.reaction-kinetics"],
+    ["反应速度和温度有什么关系", "chem.reaction-kinetics"],
+    ["抛出去的球的轨迹", "physics.projectile-lab"],
+    ["Why does the moon change shape?", "astronomy.moon-phases"],
+    ["电源内阻对路端电压的影响", "physics.closed-circuit"],
+    ["导线越长电阻越大吗", "physics.wire-resistance"],
+    ["静夜思里有哪些意象", "chinese.poetry-imagery"],
+    ["抛物线和直线有几个交点", "math.parabola-intersections"],
+    ["缓冲溶液里加少量强酸pH怎么变", "chem.weak-acid-buffer"],
+    ["滴定曲线的等当点", "chem.acid-base-titration"],
+    ["全反射的临界角", "physics.refraction-lab"],
+    ["凸透镜成像规律", "physics.lens-imaging"],
+    ["阿基米德原理浮力", "physics.buoyancy-lab"],
+    ["杠杆平衡和力臂", "physics.lever-balance"],
+    ["单摆周期和摆长", "physics.oscillation-lab"],
+  ])("ranks %s first for its own component, ahead of confusable neighbours", (query, expected) => {
+    expect(searchInteractiveComponents({ query, limit: 3 })[0]?.componentId).toBe(expected);
+  });
+  it("never matches English words by arbitrary substring or common filler", () => {
+    for (const result of searchInteractiveComponents({ query: "I want to see motion", limit: 10 })) {
+      expect(result.matchedTerms).toEqual(["motion"]);
+    }
+    expect(searchInteractiveComponents({ query: "show me the ion" })).toEqual([]);
+    expect(searchInteractiveComponents({ query: "I want to see it please" })).toEqual([]);
+    const rate = searchInteractiveComponents({ query: "rate", limit: 10 }).map((entry) => entry.componentId);
+    expect(rate).not.toContain("arts.color-harmony");
+  });
   it("bounds results, respects an explicit discipline, and returns exclusions without configs", () => {
     const result = searchInteractiveComponents({ query: "lens imaging wave graph", discipline: "physics", limit: 1 });
     expect(result).toHaveLength(1);

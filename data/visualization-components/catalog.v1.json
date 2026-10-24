@@ -3063,7 +3063,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：任意函数表达式、多元微积分、无盖盒最优化。",
-          "en": "Outside this component: 任意函数表达式, 多元微积分, 无盖盒最优化."
+          "en": "Outside this component: arbitrary function expressions, multivariable calculus, open-box optimization."
         }
       ],
       "examplePrompts": [
@@ -3209,7 +3209,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：透镜成像、薄膜干涉、棱镜色散。",
-          "en": "Outside this component: 透镜成像, 薄膜干涉, 棱镜色散."
+          "en": "Outside this component: lens imaging, thin-film interference, prism dispersion."
         }
       ],
       "examplePrompts": [
@@ -3359,7 +3359,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：平方空气阻力、风场、旋转球马格努斯效应。",
-          "en": "Outside this component: 平方空气阻力, 风场, 旋转球马格努斯效应."
+          "en": "Outside this component: quadratic air drag, wind fields, the Magnus effect on spinning balls."
         }
       ],
       "examplePrompts": [
@@ -3379,7 +3379,11 @@
           "抛射角",
           "空气阻力",
           "projectile",
-          "horizontal launch"
+          "horizontal launch",
+          "轨迹",
+          "抛体轨迹",
+          "trajectory",
+          "thrown ball"
         ],
         "concepts": [
           "projectile-motion",
@@ -3500,7 +3504,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：短路、电池内阻、电容充放电、交流电。",
-          "en": "Outside this component: 短路, 电池内阻, 电容充放电, 交流电."
+          "en": "Outside this component: short circuits, battery internal resistance, capacitor charging and discharging, alternating current."
         }
       ],
       "examplePrompts": [
@@ -3632,7 +3636,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：月食、日食、月相日记保存、真实星历。",
-          "en": "Outside this component: 月食, 日食, 月相日记保存, 真实星历."
+          "en": "Outside this component: lunar eclipses, solar eclipses, saving a moon-phase diary, real ephemerides."
         }
       ],
       "examplePrompts": [
@@ -3777,7 +3781,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：连锁遗传、伴性遗传、多基因性状、疾病风险预测。",
-          "en": "Outside this component: 连锁遗传, 伴性遗传, 多基因性状, 疾病风险预测."
+          "en": "Outside this component: linked inheritance, sex-linked inheritance, polygenic traits, disease-risk prediction."
         }
       ],
       "examplePrompts": [
@@ -3915,7 +3919,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：分数四则运算、循环小数。",
-          "en": "Outside this component: 分数四则运算, 循环小数."
+          "en": "Outside this component: fraction arithmetic, repeating decimals."
         }
       ],
       "examplePrompts": [
@@ -4041,7 +4045,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：三种动物、任意线性方程组。",
-          "en": "Outside this component: 三种动物, 任意线性方程组."
+          "en": "Outside this component: three kinds of animals, arbitrary systems of linear equations."
         }
       ],
       "examplePrompts": [
@@ -4182,7 +4186,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：实时星历、大气折射、时区与民用时转换。",
-          "en": "Outside this component: 实时星历, 大气折射, 时区与民用时转换."
+          "en": "Outside this component: real-time ephemerides, atmospheric refraction, time-zone and civil-time conversion."
         }
       ],
       "examplePrompts": [
@@ -4323,7 +4327,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：真实气体液化、绝热过程、等压过程、分子碰撞实时模拟。",
-          "en": "Outside this component: 真实气体液化, 绝热过程, 等压过程, 分子碰撞实时模拟."
+          "en": "Outside this component: real-gas liquefaction, adiabatic processes, isobaric processes, real-time molecular collision simulation."
         }
       ],
       "examplePrompts": [
@@ -4476,7 +4480,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：化学平衡移动、多步反应机理、催化剂路径可视化。",
-          "en": "Outside this component: 化学平衡移动, 多步反应机理, 催化剂路径可视化."
+          "en": "Outside this component: chemical equilibrium shifts, multi-step reaction mechanisms, catalyst pathway visualization."
         }
       ],
       "examplePrompts": [
@@ -4496,7 +4500,11 @@
           "半衰期",
           "阿伦尼乌斯",
           "reaction kinetics",
-          "Arrhenius"
+          "Arrhenius",
+          "reaction rate",
+          "rate law",
+          "rate constant",
+          "反应速度"
         ],
         "concepts": [
           "reaction-kinetics",
@@ -4629,7 +4637,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：阻尼振动、受迫振动、共振、双摆。",
-          "en": "Outside this component: 阻尼振动, 受迫振动, 共振, 双摆."
+          "en": "Outside this component: damped oscillation, forced oscillation, resonance, double pendulums."
         }
       ],
       "examplePrompts": [
@@ -4774,7 +4782,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：任意三角恒等式推导、正弦定理解三角形。",
-          "en": "Outside this component: 任意三角恒等式推导, 正弦定理解三角形."
+          "en": "Outside this component: deriving arbitrary trigonometric identities, solving triangles with the law of sines."
         }
       ],
       "examplePrompts": [
@@ -4924,7 +4932,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：多反应物平衡、气体压强与体积移动、温度对平衡常数的依赖。",
-          "en": "Outside this component: 多反应物平衡, 气体压强与体积移动, 温度对平衡常数的依赖."
+          "en": "Outside this component: equilibria with several reactants, shifts driven by gas pressure or volume, temperature dependence of the equilibrium constant."
         }
       ],
       "examplePrompts": [
@@ -5049,7 +5057,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：真实电子密度、量子轨道、任意分子、反应机理。",
-          "en": "Outside this component: 真实电子密度, 量子轨道, 任意分子, 反应机理."
+          "en": "Outside this component: real electron density, quantum orbitals, arbitrary molecules, reaction mechanisms."
         }
       ],
       "examplePrompts": [
@@ -5183,7 +5191,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：任意方向受力、杠杆质量、转动动力学。",
-          "en": "Outside this component: 任意方向受力, 杠杆质量, 转动动力学."
+          "en": "Outside this component: forces in arbitrary directions, lever mass, rotational dynamics."
         }
       ],
       "examplePrompts": [
@@ -5327,7 +5335,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：流体阻力动画、表面张力、非均匀液体。",
-          "en": "Outside this component: 流体阻力动画, 表面张力, 非均匀液体."
+          "en": "Outside this component: fluid-drag animation, surface tension, non-uniform liquids."
         }
       ],
       "examplePrompts": [
@@ -5478,7 +5486,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：运动粒子轨迹、导体屏蔽、真实电场线积分。",
-          "en": "Outside this component: 运动粒子轨迹, 导体屏蔽, 真实电场线积分."
+          "en": "Outside this component: moving-particle trajectories, conductor shielding, exact field-line integration."
         }
       ],
       "examplePrompts": [
@@ -5618,7 +5626,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：不放回抽样、相关试验、正态近似。",
-          "en": "Outside this component: 不放回抽样, 相关试验, 正态近似."
+          "en": "Outside this component: sampling without replacement, correlated trials, normal approximation."
         }
       ],
       "examplePrompts": [
@@ -5745,7 +5753,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：交叉互换、非整倍体、细胞周期动力学。",
-          "en": "Outside this component: 交叉互换, 非整倍体, 细胞周期动力学."
+          "en": "Outside this component: crossing over, aneuploidy, cell-cycle dynamics."
         }
       ],
       "examplePrompts": [
@@ -5901,7 +5909,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：细胞膨压、固定U形管液柱平衡、真实渗透时间。",
-          "en": "Outside this component: 细胞膨压, 固定U形管液柱平衡, 真实渗透时间."
+          "en": "Outside this component: cell turgor pressure, fixed U-tube liquid-column equilibrium, real osmosis time scales."
         }
       ],
       "examplePrompts": [
@@ -6053,7 +6061,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：电场加速、相对论修正、磁镜与非均匀磁场。",
-          "en": "Outside this component: 电场加速, 相对论修正, 磁镜与非均匀磁场."
+          "en": "Outside this component: electric-field acceleration, relativistic corrections, magnetic mirrors and non-uniform magnetic fields."
         }
       ],
       "examplePrompts": [
@@ -6196,7 +6204,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：真实金属精确伏安曲线、空间电荷、多光子发射。",
-          "en": "Outside this component: 真实金属精确伏安曲线, 空间电荷, 多光子发射."
+          "en": "Outside this component: exact I-V curves for real metals, space charge, multiphoton emission."
         }
       ],
       "examplePrompts": [
@@ -6356,7 +6364,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：三元以上方程组、非线性方程组、任意精度符号运算。",
-          "en": "Outside this component: 三元以上方程组, 非线性方程组, 任意精度符号运算."
+          "en": "Outside this component: systems with three or more unknowns, nonlinear systems, arbitrary-precision symbolic computation."
         }
       ],
       "examplePrompts": [
@@ -6508,7 +6516,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：任意高次方程、超出范围的系数、符号分式推演。",
-          "en": "Outside this component: 任意高次方程, 超出范围的系数, 符号分式推演."
+          "en": "Outside this component: arbitrary higher-degree equations, coefficients outside the supported range, symbolic fraction derivations."
         }
       ],
       "examplePrompts": [
@@ -6655,7 +6663,7 @@
       "fallbackConditions": [
         {
           "zh-CN": "本组件不处理：多元酸、真实高浓度活度、滴入体积与稀释、强酸强碱滴定操作。",
-          "en": "Outside this component: 多元酸, 真实高浓度活度, 滴入体积与稀释, 强酸强碱滴定操作."
+          "en": "Outside this component: polyprotic acids, real high-concentration activity, dilution from added volume, strong acid-strong base titration procedure."
         }
       ],
       "examplePrompts": [
@@ -6702,6 +6710,674 @@
           "强酸强碱滴定操作"
         ],
         "referenceIds": []
+      }
+    },
+    {
+      "componentId": "math.parabola-intersections",
+      "version": 1,
+      "name": {
+        "zh-CN": "抛物线求交与拱桥水位",
+        "en": "Parabola-line intersections"
+      },
+      "catalogDescription": {
+        "zh-CN": "水平线或斜线求交、移项判别式、韦达根距与桥孔水位宽度",
+        "en": "Reduced quadratic coefficients, horizontal and oblique intersections, Vieta relations, chord length and bridge water level"
+      },
+      "teachingPurpose": {
+        "zh-CN": "水平线或斜线求交、移项判别式、韦达根距与桥孔水位宽度",
+        "en": "Reduced quadratic coefficients, horizontal and oblique intersections, Vieta relations, chord length and bridge water level"
+      },
+      "primaryAction": "adjust",
+      "disciplineTags": [
+        "math"
+      ],
+      "capabilityTags": [
+        "parabola-intersections",
+        "quadratic-discriminant",
+        "vieta-relations",
+        "chord-length",
+        "bridge-water-level"
+      ],
+      "implementation": {
+        "status": "implemented",
+        "rendererKey": "parabolaIntersections"
+      },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "a": {
+            "type": "number",
+            "minimum": -4,
+            "maximum": 4,
+            "default": 1,
+            "multipleOf": 0.01,
+            "description": "二次项系数 / quadratic coefficient; 0.01 grid"
+          },
+          "b": {
+            "type": "number",
+            "minimum": -12,
+            "maximum": 12,
+            "default": 0,
+            "multipleOf": 0.01,
+            "description": "一次项系数 / linear coefficient; 0.01 grid"
+          },
+          "c": {
+            "type": "number",
+            "minimum": -12,
+            "maximum": 12,
+            "default": -4,
+            "multipleOf": 0.01,
+            "description": "常数项 / constant coefficient; 0.01 grid"
+          },
+          "slope": {
+            "type": "number",
+            "minimum": -4,
+            "maximum": 4,
+            "default": 0,
+            "multipleOf": 0.01,
+            "description": "直线斜率 / line slope; ignored in horizontal and bridge scenes"
+          },
+          "intercept": {
+            "type": "number",
+            "minimum": -12,
+            "maximum": 12,
+            "default": 0,
+            "multipleOf": 0.01,
+            "description": "截线高度或直线截距 / water level or line intercept"
+          },
+          "scene": {
+            "type": "string",
+            "enum": [
+              "horizontal",
+              "line",
+              "bridge"
+            ],
+            "default": "horizontal",
+            "description": "水平求交、直线联立、拱桥示意 / horizontal, line or bridge"
+          },
+          "showDistance": {
+            "type": "boolean",
+            "default": true,
+            "description": "显示水平根距与斜弦长 / show horizontal separation and chord length"
+          }
+        },
+        "required": [
+          "a",
+          "b",
+          "c",
+          "slope",
+          "intercept",
+          "scene",
+          "showDistance"
+        ],
+        "default": {
+          "a": 1,
+          "b": 0,
+          "c": -4,
+          "slope": 0,
+          "intercept": 0,
+          "scene": "horizontal",
+          "showDistance": true
+        }
+      },
+      "patchHints": [
+        {
+          "zh-CN": "只修改用户要求的教学参数，其余字段保留。",
+          "en": "Patch only the requested teaching parameters and preserve the rest."
+        },
+        {
+          "zh-CN": "拱桥示例a=-0.4,b=0,c=9,intercept=3；韦达与根距使用移项后的b-slope与c-intercept，不能继续套用原式b,c。横坐标差与斜弦长度分开。普通ax²+bx+c=0及复根优先用math.quadratic-equation。",
+          "en": "Use reduced coefficients b−slope and c−intercept for the discriminant and Vieta relations. Horizontal root separation differs from the sloping chord. A standard quadratic equation, including complex roots, belongs to math.quadratic-equation."
+        }
+      ],
+      "fallbackConditions": [
+        {
+          "zh-CN": "本组件不处理：船高净空与航行安全判定、任意曲线求交、三维结构分析。",
+          "en": "Vessel headroom or navigation safety, arbitrary curves, or three-dimensional structural analysis."
+        }
+      ],
+      "examplePrompts": [
+        {
+          "zh-CN": "桥下水位上涨，水面处还能有多宽？",
+          "en": "How does the opening width change as the water level rises under a parabolic arch?"
+        },
+        {
+          "zh-CN": "斜线和抛物线求交时，判别式为什么也变了？",
+          "en": "Why must the discriminant change when intersecting a parabola with an oblique line?"
+        }
+      ],
+      "search": {
+        "aliases": [
+          "抛物线与直线求交",
+          "拦截求交",
+          "拱桥通航",
+          "韦达根距",
+          "水位宽度",
+          "parabola-line intersection",
+          "Vieta root separation"
+        ],
+        "concepts": [
+          "parabola-intersections",
+          "quadratic-discriminant",
+          "vieta-relations",
+          "chord-length",
+          "bridge-water-level"
+        ],
+        "stages": [
+          "junior",
+          "senior"
+        ],
+        "supports": [
+          "水平截线与斜线",
+          "移项后的判别式",
+          "水平根距与斜弦长度",
+          "向下抛物线桥孔近似"
+        ],
+        "excludes": [
+          "船高净空与航行安全判定",
+          "任意曲线求交",
+          "三维结构分析"
+        ],
+        "referenceIds": [
+          "shiguang.math.junior.j9a_m03"
+        ]
+      }
+    },
+    {
+      "componentId": "physics.wire-resistance",
+      "version": 1,
+      "name": {
+        "zh-CN": "导线电阻与电阻定律",
+        "en": "Wire resistance and resistivity"
+      },
+      "catalogDescription": {
+        "zh-CN": "ρL/A、材料电阻率、长度截面积和线性温度修正",
+        "en": "Uniform-wire resistance, length, area and a prescribed linear temperature correction"
+      },
+      "teachingPurpose": {
+        "zh-CN": "ρL/A、材料电阻率、长度截面积和线性温度修正",
+        "en": "Uniform-wire resistance, length, area and a prescribed linear temperature correction"
+      },
+      "primaryAction": "adjust",
+      "disciplineTags": [
+        "physics"
+      ],
+      "capabilityTags": [
+        "wire-resistance",
+        "resistivity",
+        "cross-sectional-area",
+        "temperature-coefficient"
+      ],
+      "implementation": {
+        "status": "implemented",
+        "rendererKey": "wireResistance"
+      },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "resistivityMicroOhmM": {
+            "type": "number",
+            "minimum": 0.01,
+            "maximum": 2,
+            "default": 0.017,
+            "description": "20°C电阻率，μΩ·m / resistivity at 20°C, micro-ohm metre"
+          },
+          "lengthM": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 20,
+            "default": 5,
+            "description": "均匀导线长度，m / uniform wire length, metres"
+          },
+          "areaMM2": {
+            "type": "number",
+            "minimum": 0.05,
+            "maximum": 10,
+            "default": 1,
+            "description": "横截面积，mm²；不是直径 / cross-sectional area, square millimetres; not diameter"
+          },
+          "temperatureC": {
+            "type": "number",
+            "minimum": -20,
+            "maximum": 150,
+            "default": 20,
+            "description": "外部给定温度，°C / prescribed temperature, Celsius"
+          },
+          "temperatureCoefficient": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 0.006,
+            "default": 0.0039,
+            "description": "20°C附近线性温度系数，/°C / linear temperature coefficient about 20°C, per Celsius"
+          },
+          "view": {
+            "type": "string",
+            "enum": [
+              "geometry",
+              "length",
+              "area",
+              "temperature"
+            ],
+            "default": "geometry",
+            "description": "形状、长度、面积、温度关系 / geometry, length, area or temperature"
+          }
+        },
+        "required": [
+          "resistivityMicroOhmM",
+          "lengthM",
+          "areaMM2",
+          "temperatureC",
+          "temperatureCoefficient",
+          "view"
+        ],
+        "default": {
+          "resistivityMicroOhmM": 0.017,
+          "lengthM": 5,
+          "areaMM2": 1,
+          "temperatureC": 20,
+          "temperatureCoefficient": 0.0039,
+          "view": "geometry"
+        }
+      },
+      "patchHints": [
+        {
+          "zh-CN": "只修改用户要求的教学参数，其余字段保留。",
+          "en": "Patch only the requested teaching parameters and preserve the rest."
+        },
+        {
+          "zh-CN": "比较单变量时保留其他参数；面积是mm²，不是直径。μΩ·m与mm²均含10^-6，读数R以Ω给出。此组件用于电阻定律；电池内阻与负载功率用physics.closed-circuit，理想双电阻串并联用physics.circuit-lab。",
+          "en": "Vary one quantity while preserving others. Area is in mm² and is not diameter. Resistivity is at 20°C in μΩ·m. Use physics.closed-circuit for source resistance and physics.circuit-lab for two ideal resistors."
+        }
+      ],
+      "fallbackConditions": [
+        {
+          "zh-CN": "本组件不处理：电池内阻与负载匹配、真实材料实测数据库、自发热温度求解、热膨胀、非欧姆器件、battery internal resistance、self-heating simulation。",
+          "en": "Battery internal resistance or load matching, empirical material databases, self-heating, thermal expansion or non-ohmic devices."
+        }
+      ],
+      "examplePrompts": [
+        {
+          "zh-CN": "电线拉长一倍和变粗一倍，电阻分别怎么变？",
+          "en": "How do doubling length and doubling area affect wire resistance?"
+        },
+        {
+          "zh-CN": "给我看看ρL/A里面截面积和直径的区别",
+          "en": "Show why cross-sectional area is not the same as diameter in R=ρL/A."
+        }
+      ],
+      "search": {
+        "aliases": [
+          "电阻定律",
+          "导线电阻",
+          "影响电阻大小因素",
+          "长度截面积",
+          "ρL/A",
+          "wire resistance",
+          "resistivity",
+          "resistance law"
+        ],
+        "concepts": [
+          "wire-resistance",
+          "resistivity",
+          "cross-sectional-area",
+          "temperature-coefficient"
+        ],
+        "stages": [
+          "junior",
+          "senior"
+        ],
+        "supports": [
+          "R=ρL/A",
+          "长度正比与面积反比",
+          "圆截面积与直径区别",
+          "给定温度的线性电阻率修正",
+          "uniform ohmic wire",
+          "linear temperature correction"
+        ],
+        "excludes": [
+          "电池内阻与负载匹配",
+          "真实材料实测数据库",
+          "自发热温度求解",
+          "热膨胀",
+          "非欧姆器件",
+          "battery internal resistance",
+          "self-heating simulation"
+        ],
+        "referenceIds": [
+          "shiguang.physics.junior.3149"
+        ]
+      }
+    },
+    {
+      "componentId": "physics.closed-circuit",
+      "version": 1,
+      "name": {
+        "zh-CN": "闭合电路与电源内阻",
+        "en": "Closed circuit and internal resistance"
+      },
+      "catalogDescription": {
+        "zh-CN": "E/(R+r)、路端电压、断路短路、输出功率和最大功率匹配",
+        "en": "EMF, source resistance, terminal voltage, open and short states, power conservation and load matching"
+      },
+      "teachingPurpose": {
+        "zh-CN": "E/(R+r)、路端电压、断路短路、输出功率和最大功率匹配",
+        "en": "EMF, source resistance, terminal voltage, open and short states, power conservation and load matching"
+      },
+      "primaryAction": "adjust",
+      "disciplineTags": [
+        "physics"
+      ],
+      "capabilityTags": [
+        "closed-circuit",
+        "internal-resistance",
+        "terminal-voltage",
+        "maximum-power-transfer",
+        "power-efficiency"
+      ],
+      "implementation": {
+        "status": "implemented",
+        "rendererKey": "closedCircuit"
+      },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "emf": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 24,
+            "default": 6,
+            "multipleOf": 0.01,
+            "description": "恒定电动势E，V / constant source EMF, volts; 0.01 grid"
+          },
+          "internalResistance": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10,
+            "default": 1,
+            "multipleOf": 0.01,
+            "description": "串联内阻r，Ω / series internal resistance, ohms; 0.01 grid"
+          },
+          "loadResistance": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100,
+            "default": 5,
+            "multipleOf": 0.01,
+            "description": "单一等效外电阻R，Ω / single equivalent ohmic load, ohms; 0.01 grid"
+          },
+          "switchClosed": {
+            "type": "boolean",
+            "default": true,
+            "description": "闭合或断开负载回路 / close or open the load circuit"
+          },
+          "view": {
+            "type": "string",
+            "enum": [
+              "circuit",
+              "characteristic",
+              "power"
+            ],
+            "default": "circuit",
+            "description": "电路、U-I特性、负载功率 / circuit, source/load U-I curves or load power"
+          },
+          "showPowerBalance": {
+            "type": "boolean",
+            "default": true,
+            "description": "显示EI=I²R+I²r / show source power and both sinks"
+          }
+        },
+        "required": [
+          "emf",
+          "internalResistance",
+          "loadResistance",
+          "switchClosed",
+          "view",
+          "showPowerBalance"
+        ],
+        "default": {
+          "emf": 6,
+          "internalResistance": 1,
+          "loadResistance": 5,
+          "switchClosed": true,
+          "view": "circuit",
+          "showPowerBalance": true
+        }
+      },
+      "patchHints": [
+        {
+          "zh-CN": "只修改用户要求的教学参数，其余字段保留。",
+          "en": "Patch only the requested teaching parameters and preserve the rest."
+        },
+        {
+          "zh-CN": "最大输出功率在R=r>0，但效率仅50%；高效率不等于最大功率。改变r同时影响U-I斜率和内耗；若r=0，不宣称存在有限的最大输出功率。本组件不做多支路拓扑、电表接法误差、蓄电池化学、自发热温变或RC暂态。",
+          "en": "R=r>0 maximizes load power at 50% efficiency; maximum efficiency is a different question. Open circuit has I=0 and terminal U=E. Ideal r=R=0 with E>0 has no finite steady state, and r=0 has no finite maximum power for E>0."
+        }
+      ],
+      "fallbackConditions": [
+        {
+          "zh-CN": "本组件不处理：多支路拓扑自动求解、电表接法与测量误差、电池化学与容量、RC暂态、温度自发变化。",
+          "en": "Arbitrary multi-branch topology, meter connection errors, battery chemistry or capacity, RC transients or changing temperature."
+        }
+      ],
+      "examplePrompts": [
+        {
+          "zh-CN": "电池有内阻时，电压和功率怎么分？",
+          "en": "How do terminal voltage and power change when a battery has internal resistance?"
+        },
+        {
+          "zh-CN": "最大输出功率是不是效率也最高？给我看图",
+          "en": "Does maximum output power also mean maximum efficiency? Show me a plot."
+        }
+      ],
+      "search": {
+        "aliases": [
+          "闭合电路欧姆定律",
+          "电源内阻",
+          "电池内阻",
+          "路端电压",
+          "功率分配",
+          "最大输出功率",
+          "E/(R+r)",
+          "internal resistance",
+          "terminal voltage",
+          "maximum power transfer"
+        ],
+        "concepts": [
+          "closed-circuit",
+          "internal-resistance",
+          "terminal-voltage",
+          "maximum-power-transfer",
+          "power-efficiency"
+        ],
+        "stages": [
+          "senior"
+        ],
+        "supports": [
+          "恒定电动势与串联内阻",
+          "单一等效欧姆负载",
+          "断路短路与理想短路无有限解",
+          "U-I电源特性和负载线",
+          "最大功率与效率区别",
+          "EMF plus internal resistance",
+          "load matching at R=r"
+        ],
+        "excludes": [
+          "多支路拓扑自动求解",
+          "电表接法与测量误差",
+          "电池化学与容量",
+          "RC暂态",
+          "温度自发变化",
+          "arbitrary circuit topology",
+          "battery chemistry and capacity",
+          "RC transients"
+        ],
+        "referenceIds": [
+          "shiguang.physics.senior.19"
+        ]
+      }
+    },
+    {
+      "componentId": "chinese.poetry-imagery",
+      "version": 1,
+      "name": {
+        "zh-CN": "诗词意象与文本证据",
+        "en": "Poetry imagery and textual evidence"
+      },
+      "catalogDescription": {
+        "zh-CN": "秋思、登鹳雀楼、静夜思的诗景、证据、意象归类与词语补全",
+        "en": "Three bundled classical poems, interpretive landscapes, exact quotations, imagery grouping and phrase completion"
+      },
+      "teachingPurpose": {
+        "zh-CN": "秋思、登鹳雀楼、静夜思的诗景、证据、意象归类与词语补全",
+        "en": "Three bundled classical poems, interpretive landscapes, exact quotations, imagery grouping and phrase completion"
+      },
+      "primaryAction": "annotate",
+      "disciplineTags": [
+        "language",
+        "literature",
+        "chinese"
+      ],
+      "capabilityTags": [
+        "poetry-imagery",
+        "textual-evidence",
+        "imagery-classification",
+        "poem-structure",
+        "phrase-completion"
+      ],
+      "implementation": {
+        "status": "implemented",
+        "rendererKey": "poetryImagery"
+      },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "poemId": {
+            "type": "string",
+            "enum": [
+              "autumn-thoughts",
+              "stork-tower",
+              "quiet-night"
+            ],
+            "default": "autumn-thoughts",
+            "description": "仅三首内置公版作品 / one of three bundled public-domain texts"
+          },
+          "view": {
+            "type": "string",
+            "enum": [
+              "scene",
+              "evidence",
+              "classify",
+              "complete"
+            ],
+            "default": "scene",
+            "description": "原创诗景、证据链、归类、原词补全 / landscape, evidence, classification or phrase completion"
+          },
+          "focus": {
+            "type": "string",
+            "enum": [
+              "imagery",
+              "structure",
+              "emotion"
+            ],
+            "default": "imagery",
+            "description": "意象、结构或情感证据 / imagery, structure or emotion focus"
+          },
+          "showTranslation": {
+            "type": "boolean",
+            "default": true,
+            "description": "显示独立编写的英文释义 / show the independently authored English translation"
+          }
+        },
+        "required": [
+          "poemId",
+          "view",
+          "focus",
+          "showTranslation"
+        ],
+        "default": {
+          "poemId": "autumn-thoughts",
+          "view": "scene",
+          "focus": "imagery",
+          "showTranslation": true
+        }
+      },
+      "patchHints": [
+        {
+          "zh-CN": "只修改用户要求的教学参数，其余字段保留。",
+          "en": "Patch only the requested teaching parameters and preserve the rest."
+        },
+        {
+          "zh-CN": "天净沙·秋思→autumn-thoughts，登鹳雀楼→stork-tower，静夜思→quiet-night。补全/归类练习不改写原文。只支持这三首内置文本，其他诗文用文本细读或其他可信渲染器；不能虚构朗读能力。",
+          "en": "Map Tianjingsha to autumn-thoughts, Stork Tower to stork-tower and Quiet Night to quiet-night. Keep original wording. Practice and word selection are local state. Other texts should use close reading or another trusted renderer."
+        }
+      ],
+      "fallbackConditions": [
+        {
+          "zh-CN": "本组件不处理：其他诗词的自动编写与仿作、音频朗读、视频与自动播放、任意文本输入、单一标准文学解读、audio recitation、arbitrary poems or prose、one uniquely correct literary interpretation。",
+          "en": "Automatic composition or arbitrary poems/prose, audio recitation, video, autoplay or a claim of one uniquely correct literary interpretation."
+        }
+      ],
+      "examplePrompts": [
+        {
+          "zh-CN": "天净沙秋思的景物为什么显得凄凉？把原句和画面对应起来",
+          "en": "Connect the images in Autumn Thoughts to their words and explain the reading."
+        },
+        {
+          "zh-CN": "静夜思写地上霜，是不是真的结霜了？",
+          "en": "Does the frost comparison in Thoughts on a Quiet Night establish that it really froze?"
+        }
+      ],
+      "search": {
+        "aliases": [
+          "天净沙秋思",
+          "诗词意象",
+          "古诗词可视化",
+          "意象归类",
+          "情景交融",
+          "登鹳雀楼",
+          "静夜思",
+          "poetry imagery",
+          "textual evidence",
+          "classical Chinese poems"
+        ],
+        "concepts": [
+          "poetry-imagery",
+          "textual-evidence",
+          "imagery-classification",
+          "poem-structure",
+          "phrase-completion"
+        ],
+        "stages": [
+          "primary",
+          "junior"
+        ],
+        "supports": [
+          "仅内置天净沙秋思、登鹳雀楼、静夜思",
+          "原句—观察—表达效果证据链",
+          "选择词语与原创示意诗景联动",
+          "结构与情感解读",
+          "意象归类和原词补全的本地练习",
+          "three bundled public-domain poems",
+          "quotation observation and interpretation",
+          "local classification and phrase practice"
+        ],
+        "excludes": [
+          "其他诗词的自动编写与仿作",
+          "音频朗读",
+          "视频与自动播放",
+          "任意文本输入",
+          "单一标准文学解读",
+          "audio recitation",
+          "arbitrary poems or prose",
+          "one uniquely correct literary interpretation"
+        ],
+        "referenceIds": [
+          "shiguang.chinese.junior.c7a_m04"
+        ]
       }
     }
   ]
