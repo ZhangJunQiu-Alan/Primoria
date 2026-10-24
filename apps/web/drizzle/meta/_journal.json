@@ -400,6 +400,13 @@
       "when": 1792849739602,
       "tag": "0056_material_chunk_embedding_fk",
       "breakpoints": true
+    },
+    {
+      "idx": 57,
+      "version": "7",
+      "when": 1792851978365,
+      "tag": "0057_material_folders",
+      "breakpoints": true
     }
   ]
 }

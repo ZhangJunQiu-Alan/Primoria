@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { TutorNavRail } from "@/components/tutor/nav-rail";
-import { MaterialLibrary } from "@/components/materials/material-library";
+import { FolderList } from "@/components/materials/folder-list";
 import { getCurrentUserForRsc, isAuthEnabled } from "@/lib/auth/session";
 import { getDictionaryForUser } from "@/lib/i18n/server";
-import { listMaterials } from "@/lib/materials/store";
+import { listFolders } from "@/lib/materials/folders";
 
 export const dynamic = "force-dynamic";
 
@@ -12,9 +12,9 @@ export default async function MaterialsPage() {
   const user = await getCurrentUserForRsc();
   // Materials need a persisted identity (the API fails closed without auth).
   const signedIn = authEnabled && Boolean(user);
-  const [{ dictionary: t }, materials] = await Promise.all([
+  const [{ dictionary: t }, folders] = await Promise.all([
     getDictionaryForUser(user?.id ?? null),
-    signedIn && user ? listMaterials(user.id).catch(() => []) : Promise.resolve([]),
+    signedIn && user ? listFolders(user.id).catch(() => []) : Promise.resolve([]),
   ]);
 
   return (
@@ -22,11 +22,11 @@ export default async function MaterialsPage() {
       <TutorNavRail initialAuthState={{ authEnabled, user }} />
       <section className="workspace library-workspace">
         <header className="library-page-header">
-          <h1>{t.materials.pageTitle}</h1>
-          <p>{t.materials.intro}</p>
+          <h1>{t.folders.pageTitle}</h1>
+          <p>{t.folders.intro}</p>
         </header>
         {signedIn ? (
-          <MaterialLibrary initialMaterials={materials} />
+          <FolderList initialFolders={folders} />
         ) : (
           <div className="library-empty library-auth-empty">
             <span className="course-block-tag">{t.library.privateWorkspace}</span>

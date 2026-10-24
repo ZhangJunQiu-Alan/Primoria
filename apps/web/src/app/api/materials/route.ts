@@ -3,8 +3,10 @@ import { NextResponse } from "next/server";
 import { requireConfiguredAuthUser } from "@/lib/auth/guard";
 import { MaterialInputError, prepareMaterial, type MaterialInputErrorCode } from "@/lib/materials/ingest";
 import { MAX_MATERIAL_FILE_BYTES, MAX_MATERIALS_PER_OWNER } from "@/lib/materials/limits";
+import { ensureUnsortedFolder, getFolder } from "@/lib/materials/folders";
 import { scheduleMaterialIndexing } from "@/lib/materials/semantic-index";
 import { countMaterials, insertMaterial, listMaterials } from "@/lib/materials/store";
+import { MATERIAL_ROLES, type MaterialRole } from "@/lib/materials/types";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -34,7 +36,8 @@ export async function GET() {
   }
 }
 
-// Upload one material (multipart field "file"). Text is extracted and chunked
+// Upload one material (multipart field "file", optional "folderId" and "role";
+// default: the unsorted inbox, as a lecture). Text is extracted and chunked
 // synchronously; only the text is stored, never the original bytes.
 export async function POST(request: Request) {
   const { denied, user } = await requireConfiguredAuthUser("materials");
@@ -46,13 +49,20 @@ export async function POST(request: Request) {
   }
 
   let file: File;
+  let folderField: string | null;
+  let roleField: string | null;
   try {
     const form = await request.formData();
     const entry = form.get("file");
     if (!(entry instanceof File)) throw new Error("missing file field");
     file = entry;
+    folderField = typeof form.get("folderId") === "string" ? String(form.get("folderId")) : null;
+    roleField = typeof form.get("role") === "string" ? String(form.get("role")) : null;
   } catch {
     return NextResponse.json({ error: "Expected a multipart upload with one file.", code: "invalid_upload" }, { status: 400 });
+  }
+  if (roleField !== null && !MATERIAL_ROLES.includes(roleField as MaterialRole)) {
+    return NextResponse.json({ error: "Unknown material role.", code: "invalid_role" }, { status: 400 });
   }
 
   try {
@@ -67,7 +77,12 @@ export async function POST(request: Request) {
       mimeType: file.type,
       bytes: new Uint8Array(await file.arrayBuffer()),
     });
-    const { material, duplicate } = await insertMaterial(user.id, prepared);
+    const folder = folderField ? await getFolder(user.id, folderField) : await ensureUnsortedFolder(user.id);
+    if (!folder) return NextResponse.json({ error: "Folder not found" }, { status: 404 });
+    const { material, duplicate } = await insertMaterial(user.id, prepared, {
+      folderId: folder.id,
+      role: (roleField as MaterialRole | null) ?? "lecture",
+    });
     // Semantic index for course Tutor Q&A; best-effort after the response, and
     // a duplicate re-upload doubles as a retry for a previously failed pass.
     scheduleMaterialIndexing(user.id, [material.id]);

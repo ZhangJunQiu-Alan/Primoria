@@ -838,6 +838,32 @@ export const generatedTopicGraphs = pgTable(
   }),
 );
 
+// Subject folders for uploaded materials (docs/product/subject-folders.md). A
+// subject folder groups one subject's lectures and owns one assembled KG; each
+// owner also has exactly one system "unsorted" inbox folder.
+export const materialFolders = pgTable(
+  "material_folders",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    // subject | unsorted
+    kind: text("kind").notNull().default("subject"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    ownerUnsortedUnique: uniqueIndex("material_folders_owner_unsorted_uidx")
+      .on(table.ownerId)
+      .where(sql`${table.kind} = 'unsorted'`),
+    ownerNameUnique: uniqueIndex("material_folders_owner_name_uidx")
+      .on(table.ownerId, sql`lower(${table.name})`)
+      .where(sql`${table.kind} = 'subject'`),
+    ownerCreatedIdx: index("material_folders_owner_created_idx").on(table.ownerId, table.createdAt),
+    kindCheck: check("material_folders_kind_check", sql`${table.kind} in ('subject', 'unsorted')`),
+  }),
+);
+
 // Learner-uploaded study material (docs/product/learning-materials.md). Only
 // the extracted text is kept (as ordered chunks), never the original bytes.
 // content_sha256 makes a re-upload of the same file idempotent per owner.
@@ -855,12 +881,24 @@ export const learningMaterials = pgTable(
     chunkCount: integer("chunk_count").notNull(),
     pageCount: integer("page_count"),
     language: text("language"),
+    folderId: text("folder_id").notNull().references(() => materialFolders.id, { onDelete: "restrict" }),
+    // lecture: part of the folder KG sequence | reference: sources only
+    role: text("role").notNull().default("lecture"),
+    // Order inside the folder (fractional, so an insert never renumbers).
+    position: doublePrecision("position").notNull().default(0),
+    // Lecture number parsed from the file name ("第3讲", "Lecture 03"); null when absent.
+    lectureNumber: doublePrecision("lecture_number"),
+    // How position was decided: filename | ai | manual | upload (appended)
+    orderSource: text("order_source").notNull().default("upload"),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
   },
   (table) => ({
     ownerShaUnique: uniqueIndex("learning_materials_owner_sha_uidx").on(table.ownerId, table.contentSha256),
     ownerCreatedIdx: index("learning_materials_owner_created_idx").on(table.ownerId, table.createdAt),
+    folderPositionIdx: index("learning_materials_folder_position_idx").on(table.folderId, table.position),
+    roleCheck: check("learning_materials_role_check", sql`${table.role} in ('lecture', 'reference')`),
+    orderSourceCheck: check("learning_materials_order_source_check", sql`${table.orderSource} in ('filename', 'ai', 'manual', 'upload')`),
     countsCheck: check(
       "learning_materials_counts_check",
       sql`${table.byteLength} >= 0 and ${table.charCount} >= 0 and ${table.chunkCount} >= 0 and (${table.pageCount} is null or ${table.pageCount} >= 0)`,
@@ -920,6 +958,7 @@ export type LearnerProfileRow = typeof learnerProfiles.$inferSelect;
 export type LearnerFactRow = typeof learnerFacts.$inferSelect;
 export type ExtractorJobRow = typeof extractorJobs.$inferSelect;
 export type ProfileFactIntakeJobRow = typeof profileFactIntakeJobs.$inferSelect;
+export type MaterialFolderRow = typeof materialFolders.$inferSelect;
 export type LearningMaterialRow = typeof learningMaterials.$inferSelect;
 export type LearningMaterialChunkRow = typeof learningMaterialChunks.$inferSelect;
 export type MaterialTopicGraphRow = typeof materialTopicGraphs.$inferSelect;

@@ -5,12 +5,14 @@ import {
   courses,
   learningMaterialChunks,
   learningMaterials,
+  materialFolders,
   materialTopicGraphs,
   type LearningMaterialChunkRow,
   type LearningMaterialRow,
 } from "../db/schema";
 import type { PreparedMaterial } from "./ingest";
-import type { MaterialChunkRef, MaterialSummary } from "./types";
+import { insertionPosition, parseLectureNumber } from "./ordering";
+import type { MaterialChunkRef, MaterialOrderSource, MaterialRole, MaterialSummary } from "./types";
 
 // Owner-scoped persistence for uploaded learning materials. Every query filters
 // by owner_id; a material id from another owner reads as "not found".
@@ -30,6 +32,11 @@ export function toMaterialSummary(row: LearningMaterialRow): MaterialSummary {
     chunkCount: row.chunkCount,
     pageCount: row.pageCount,
     language: row.language,
+    folderId: row.folderId,
+    role: row.role as MaterialRole,
+    position: row.position,
+    lectureNumber: row.lectureNumber,
+    orderSource: row.orderSource as MaterialOrderSource,
     createdAt: row.createdAt.getTime(),
   };
 }
@@ -61,12 +68,29 @@ export async function getMaterialsByIds(ownerId: string, ids: string[]): Promise
 
 export type InsertMaterialResult = { material: MaterialSummary; duplicate: boolean };
 
-/** Insert a material and all of its chunks atomically. Re-uploading the same
- * bytes (same owner + sha256) returns the existing material untouched. */
-export async function insertMaterial(ownerId: string, prepared: PreparedMaterial): Promise<InsertMaterialResult> {
+/** Insert a material and all of its chunks atomically into `placement.folderId`
+ * (which the caller has verified belongs to the owner). The folder row is
+ * locked so concurrent uploads into one folder get distinct positions.
+ * Re-uploading the same bytes (same owner + sha256) returns the existing
+ * material untouched, wherever it lives. */
+export async function insertMaterial(
+  ownerId: string,
+  prepared: PreparedMaterial,
+  placement: { folderId: string; role: MaterialRole },
+): Promise<InsertMaterialResult> {
   const db = getDb();
   return db.transaction(async (tx) => {
     const now = new Date();
+    await tx
+      .select({ id: materialFolders.id })
+      .from(materialFolders)
+      .where(and(eq(materialFolders.id, placement.folderId), eq(materialFolders.ownerId, ownerId)))
+      .for("update");
+    const siblings = await tx
+      .select({ position: learningMaterials.position, lectureNumber: learningMaterials.lectureNumber })
+      .from(learningMaterials)
+      .where(and(eq(learningMaterials.ownerId, ownerId), eq(learningMaterials.folderId, placement.folderId)));
+    const lectureNumber = parseLectureNumber(prepared.fileName);
     const [inserted] = await tx
       .insert(learningMaterials)
       .values({
@@ -81,6 +105,11 @@ export async function insertMaterial(ownerId: string, prepared: PreparedMaterial
         chunkCount: prepared.chunks.length,
         pageCount: prepared.pageCount,
         language: prepared.language,
+        folderId: placement.folderId,
+        role: placement.role,
+        position: insertionPosition(siblings, lectureNumber),
+        lectureNumber,
+        orderSource: lectureNumber === null ? "upload" : "filename",
         createdAt: now,
         updatedAt: now,
       })
