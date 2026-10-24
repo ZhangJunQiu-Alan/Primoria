@@ -6,6 +6,7 @@ import { initializeCourseOutline } from "@/lib/ai/deepagent/course-generator";
 import { enqueueLessonGenerationJob, toLessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
 import { MAX_COURSE_SOURCE_CHARS, MAX_MATERIALS_PER_COURSE } from "@/lib/materials/limits";
 import { getOrCreateMaterialGraph } from "@/lib/materials/material-graph-store";
+import { scheduleMaterialIndexing } from "@/lib/materials/semantic-index";
 import { getMaterialsByIds } from "@/lib/materials/store";
 import { getUserPreferences } from "@/lib/settings/user-settings";
 import type { LearningMaterialRow } from "@/lib/db/schema";
@@ -84,6 +85,9 @@ export async function POST(request: Request) {
       summary: courseSummary(materials, language),
     });
     const enqueued = await enqueueLessonGenerationJob({ ownerId, courseId: course.id, lessonId: firstLesson.id });
+    // Course Tutor Q&A searches these materials; backfill any chunk an upload
+    // pass missed.
+    scheduleMaterialIndexing(ownerId, ids);
     const job = enqueued.job ? toLessonGenerationJobSummary(enqueued.job) : null;
     return NextResponse.json({ courseId: course.id, lessonId: firstLesson.id, job, summary }, { status: 202 });
   } catch (error) {

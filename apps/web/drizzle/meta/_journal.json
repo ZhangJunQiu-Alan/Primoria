@@ -393,6 +393,13 @@
       "when": 1792842772046,
       "tag": "0055_learning_materials",
       "breakpoints": true
+    },
+    {
+      "idx": 56,
+      "version": "7",
+      "when": 1792849739602,
+      "tag": "0056_material_chunk_embedding_fk",
+      "breakpoints": true
     }
   ]
 }

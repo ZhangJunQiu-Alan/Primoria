@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { requireConfiguredAuthUser } from "@/lib/auth/guard";
 import { MaterialInputError, prepareMaterial, type MaterialInputErrorCode } from "@/lib/materials/ingest";
 import { MAX_MATERIAL_FILE_BYTES, MAX_MATERIALS_PER_OWNER } from "@/lib/materials/limits";
+import { scheduleMaterialIndexing } from "@/lib/materials/semantic-index";
 import { countMaterials, insertMaterial, listMaterials } from "@/lib/materials/store";
 
 export const runtime = "nodejs";
@@ -67,6 +68,9 @@ export async function POST(request: Request) {
       bytes: new Uint8Array(await file.arrayBuffer()),
     });
     const { material, duplicate } = await insertMaterial(user.id, prepared);
+    // Semantic index for course Tutor Q&A; best-effort after the response, and
+    // a duplicate re-upload doubles as a retry for a previously failed pass.
+    scheduleMaterialIndexing(user.id, [material.id]);
     return NextResponse.json({ material, duplicate }, { status: duplicate ? 200 : 201 });
   } catch (error) {
     if (error instanceof MaterialInputError) {
