@@ -19,5 +19,7 @@ describe("postgres error inspection", () => {
     expect(isUniqueViolation(wrapped, "material_folders_owner_name_uidx")).toBe(true);
     expect(isUniqueViolation(wrapped, "courses_owner_scope_uidx")).toBe(false);
     expect(isUniqueViolation(Object.assign(new Error("fk"), { cause: { code: "23503" } }))).toBe(false);
+    // Hand-built errors in older tests name the constraint as `constraint`.
+    expect(isUniqueViolation({ code: "23505", constraint: "identities_provider_user_uidx" }, "identities_provider_user_uidx")).toBe(true);
   });
 });

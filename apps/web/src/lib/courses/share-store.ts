@@ -3,6 +3,7 @@ import { and, desc, eq, inArray, isNull } from "drizzle-orm";
 import type { Course, ImageBlock, Lesson } from "./types";
 import { courseToRow, getCourse, lessonToRow } from "./store";
 import { getDb } from "../db/client";
+import { isUniqueViolation } from "../db/errors";
 import { courses as coursesTable, courseShareLinks, courseShareVersions, lessons as lessonsTable, mediaAssets } from "../db/schema";
 import { sanitizeInteractiveBlock, upgradeInteractiveBlock } from "../interactive/payload";
 import { isMaterialGraphId } from "../materials/types";
@@ -261,12 +262,6 @@ export function snapshotToImportedCourse(snapshot: CourseShareSnapshot, now = Da
   };
 }
 
-function isUniqueViolation(error: unknown, constraint: string): boolean {
-  const err = error as { code?: string; constraint_name?: string; constraint?: string; message?: string };
-  const name = err?.constraint_name ?? err?.constraint ?? "";
-  return err?.code === "23505" && (name === constraint || Boolean(err?.message?.includes(constraint)));
-}
-
 export async function importSharedCourse(token: string, ownerId: string): Promise<ImportShareResult> {
   const share = await getActiveShareByToken(token);
   if (!share) return { ok: false, reason: "not_found" };
@@ -281,8 +276,8 @@ export async function importSharedCourse(token: string, ownerId: string): Promis
 
   const sourceGraphId = share.snapshot.course.graphId;
   if (sourceGraphId) {
-    const duplicateSubject = await db
-      .select({ id: coursesTable.id })
+    const sameSubject = await db
+      .select({ id: coursesTable.id, importedFromShareId: coursesTable.importedFromShareId })
       .from(coursesTable)
       .where(
         and(
@@ -290,9 +285,12 @@ export async function importSharedCourse(token: string, ownerId: string): Promis
           eq(coursesTable.graphId, sourceGraphId),
           isNull(coursesTable.archivedAt),
         ),
-      )
-      .limit(1);
-    if (duplicateSubject[0]) return { ok: false, reason: "duplicate_subject" };
+      );
+    // A concurrent import of this same share may have committed since the
+    // check above: that is the idempotent case, not a duplicate subject.
+    const raced = sameSubject.find((row) => row.importedFromShareId === share.id);
+    if (raced) return { ok: true, courseId: raced.id, alreadyImported: true };
+    if (sameSubject.length > 0) return { ok: false, reason: "duplicate_subject" };
   }
 
   const course = snapshotToImportedCourse(share.snapshot);
@@ -307,7 +305,9 @@ export async function importSharedCourse(token: string, ownerId: string): Promis
       }
     });
   } catch (error) {
-    if (isUniqueViolation(error, "courses_owner_imported_share_uidx")) {
+    // Whichever owner-scoped unique index a concurrent import of this share
+    // trips first, the winner's row is the idempotent answer.
+    if (isUniqueViolation(error)) {
       const raced = await db
         .select({ id: coursesTable.id })
         .from(coursesTable)

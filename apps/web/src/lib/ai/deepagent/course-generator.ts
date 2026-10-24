@@ -3,6 +3,7 @@ import { after } from "next/server";
 import { z } from "zod";
 import { enrichCourseOutlineDescriptions } from "@/lib/ai/course-generation/outline-enrichment";
 import { getCourseByScopeKey, saveCourse } from "@/lib/courses/store";
+import { isUniqueViolation } from "@/lib/db/errors";
 import { getTopicGraph, type TopicGraph } from "@/lib/knowledge-graph/topic-graph";
 import { buildConceptFrontierOutline, type ConceptBundle } from "@/lib/knowledge-graph/concept-frontier";
 import { listConceptMasteryByOwner } from "@/lib/mastery/owner-store";
@@ -321,17 +322,7 @@ async function loadMasteredConceptIds(ownerId: string, graphId: string): Promise
 }
 
 function isOwnerScopeUniqueViolation(error: unknown) {
-  if (!error || typeof error !== "object") return false;
-  const record = error as Record<string, unknown>;
-  const message = error instanceof Error ? error.message : "";
-  const detail = typeof record.detail === "string" ? record.detail : "";
-  const constraint = typeof record.constraint === "string" ? record.constraint : "";
-  return (
-    record.code === "23505" &&
-    (constraint === "courses_owner_scope_uidx" ||
-      message.includes("courses_owner_scope_uidx") ||
-      detail.includes("courses_owner_scope_uidx"))
-  );
+  return isUniqueViolation(error, "courses_owner_scope_uidx");
 }
 
 function tryGetTopicGraph(graphId: string | null): TopicGraph | null {
