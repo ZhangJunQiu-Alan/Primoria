@@ -14,6 +14,21 @@ export function learnerRequestFromMessages(messages) {
   return visible.length <= 2000 ? visible : null;
 }
 
+/** @param {string} value */
+const compact = (value) => value.normalize("NFKC").replace(/\s+/g, "");
+
+/**
+ * Restores the learner's exact wording only when the model's request is that
+ * same message with whitespace lost. A clarification reply ("第一个") or one
+ * intent split from a multi-intent message keeps the model's own request.
+ * @param {string} request
+ * @param {any} messages
+ */
+export function canonicalInteractiveRequest(request, messages) {
+  const learner = learnerRequestFromMessages(messages);
+  return learner && compact(learner) === compact(request) ? learner : request;
+}
+
 export const searchInteractiveComponentsTool = tool(
   async (input) => JSON.stringify({ catalogHash: INTERACTIVE_CATALOG_HASH, candidates: searchInteractiveComponents(input) }),
   {
@@ -37,7 +52,7 @@ export const openInteractiveComponentTool = tool(
     return JSON.stringify({
       type: "interactive_component_request",
       componentId: component_id,
-      request: learnerRequestFromMessages(runtime && "state" in runtime ? runtime.state?.messages : undefined) ?? request,
+      request: canonicalInteractiveRequest(request, runtime && "state" in runtime ? runtime.state?.messages : undefined),
       instanceId,
       ...(target_instance_id ? { targetInstanceId: target_instance_id } : {}),
       ...(known ? {} : { error: "unknown_component" }),
