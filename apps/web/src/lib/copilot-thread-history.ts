@@ -213,7 +213,7 @@ export async function persistThreadMessageToServer(
       headers: { "content-type": "application/json" },
       body,
       // Browsers cap keepalive bodies at 64 KiB; larger messages use a normal request.
-      keepalive: Boolean(options.keepalive) && body.length < 60_000,
+      keepalive: Boolean(options.keepalive) && new TextEncoder().encode(body).byteLength < 60_000,
     });
   } catch {
     // Best-effort sync only.
