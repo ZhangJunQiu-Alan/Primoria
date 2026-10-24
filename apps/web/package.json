@@ -64,7 +64,8 @@
     "test:regression:browser:isolated": "tsx scripts/with-isolated-test-db.ts pnpm exec tsx scripts/run-browser-regression.ts",
     "test:extractor": "tsx tests/learning-events-lesson-id.unit.ts && tsx tests/facts-directive.unit.ts && tsx tests/learner-facts-plan.unit.ts && tsx tests/distill-prompt.unit.ts && tsx tests/facts-consumption.unit.ts && tsx tests/feedback-latest.unit.ts",
     "test:extractor:db": "tsx tests/extractor-jobs.db.ts",
-    "test:interactive-budget:db": "RUN_INTERACTIVE_BUDGET_DB=1 vitest run --no-file-parallelism tests/interactive-request-budget.db.spec.ts tests/interactive-instance.db.spec.ts",
+    "visualization:eval:isolated": "tsx scripts/with-isolated-test-db.ts pnpm exec tsx scripts/run-visualization-acceptance.ts --start-app",
+    "test:interactive-budget:db": "RUN_INTERACTIVE_BUDGET_DB=1 vitest run --no-file-parallelism tests/interactive-request-budget.db.spec.ts tests/interactive-instance.db.spec.ts tests/visualization-acceptance-env.db.spec.ts",
     "test:db": "pnpm test:lesson-jobs:db && pnpm test:onboarding-goal:db && pnpm test:course-description:db && pnpm test:progress:db && pnpm test:gamification:db && pnpm test:course-share:db && pnpm test:extractor:db && pnpm test:interactive-budget:db"
   },
   "dependencies": {
