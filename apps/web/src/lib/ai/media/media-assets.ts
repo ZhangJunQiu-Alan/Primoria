@@ -1,7 +1,8 @@
 import { eq } from "drizzle-orm";
 import { getDb } from "@/lib/db/client";
 import { mediaAssets, type MediaAssetRow } from "@/lib/db/schema";
-import { imageCacheKey, type ImageBrief } from "./image-brief";
+import { imageCacheKey, type ImageBrief, type ImageKind } from "./image-brief";
+import { getMediaObjectStore, mediaObjectPath, type MediaObjectStore } from "./media-storage";
 
 /** Public URL a block references. Bytes are served by the media API, never
  * embedded in the block JSONB or React props. */
@@ -31,7 +32,9 @@ export type NewMediaAsset = {
   provider: string;
   model: string;
   mimeType: string;
-  dataBase64: string;
+  /** Legacy in-row bytes; null when the bytes live in Storage. */
+  dataBase64: string | null;
+  storagePath: string | null;
   prompt: string;
   brief: ImageBrief;
   alt: string;
@@ -81,15 +84,29 @@ export type ResolveImageInput = {
   ownerId: string | null;
   /** Called only on a cache miss. */
   generate: () => Promise<GeneratedImage>;
+  /** Where new bytes go; defaults to the configured Supabase Storage bucket, and
+   * null (no Storage configured) keeps them in Postgres. */
+  objects?: MediaObjectStore | null;
 };
 
 export type ResolvedImageAsset = {
   assetId: string;
   imageUrl: string;
   mimeType: string;
+  /** The asset's own text: on reuse these describe the cached picture, which can
+   * differ from the requesting brief's wording. */
+  alt: string;
+  caption: string;
+  prompt: string;
+  imageKind: ImageKind;
   /** True when an existing cached asset satisfied the brief (no generation). */
   reused: boolean;
 };
+
+function storedImageKind(row: MediaAssetRow, fallback: ImageKind): ImageKind {
+  const kind = (row.brief as Partial<ImageBrief> | null)?.imageKind;
+  return kind ?? fallback;
+}
 
 /** Reuse-or-generate: identical briefs (by cacheKey) return the same asset and
  * never call `generate` twice. */
@@ -97,29 +114,70 @@ export async function resolveImageAsset(
   input: ResolveImageInput,
   store: MediaAssetStore = dbMediaAssetStore,
 ): Promise<ResolvedImageAsset> {
-  const cacheKey = imageCacheKey(input.brief, input.model);
+  const cacheKey = imageCacheKey(input.brief);
   const cached = await store.findByCacheKey(cacheKey);
   if (cached) {
-    return { assetId: cached.id, imageUrl: imageAssetUrl(cached.id), mimeType: cached.mimeType, reused: true };
+    return {
+      assetId: cached.id,
+      imageUrl: imageAssetUrl(cached.id),
+      mimeType: cached.mimeType,
+      alt: cached.alt,
+      caption: cached.caption,
+      prompt: cached.prompt,
+      imageKind: storedImageKind(cached, input.brief.imageKind),
+      reused: true,
+    };
   }
 
   const generated = await input.generate();
-  const byteLength = Buffer.from(generated.dataBase64, "base64").byteLength;
+  const bytes = new Uint8Array(Buffer.from(generated.dataBase64, "base64"));
+  const id = randomAssetId();
+  const objects = input.objects === undefined ? getMediaObjectStore() : input.objects;
+  // Upload before the row exists so a stored row never points at missing bytes.
+  // A concurrent insert winning the cache key leaves one unreferenced object.
+  let storagePath: string | null = null;
+  if (objects) {
+    storagePath = mediaObjectPath(id, generated.mimeType);
+    await objects.put(storagePath, bytes, generated.mimeType);
+  }
   const row = await store.insert({
-    id: randomAssetId(),
+    id,
     ownerId: input.ownerId,
     cacheKey,
     provider: input.provider ?? "google",
     model: generated.model || input.model,
     mimeType: generated.mimeType,
-    dataBase64: generated.dataBase64,
+    dataBase64: storagePath ? null : generated.dataBase64,
+    storagePath,
     prompt: input.brief.prompt,
     brief: input.brief,
     alt: input.brief.alt,
     caption: input.brief.caption,
     width: generated.width ?? null,
     height: generated.height ?? null,
-    byteLength,
+    byteLength: bytes.byteLength,
   });
-  return { assetId: row.id, imageUrl: imageAssetUrl(row.id), mimeType: row.mimeType, reused: false };
+  return {
+    assetId: row.id,
+    imageUrl: imageAssetUrl(row.id),
+    mimeType: row.mimeType,
+    alt: row.alt,
+    caption: row.caption,
+    prompt: row.prompt,
+    imageKind: storedImageKind(row, input.brief.imageKind),
+    reused: false,
+  };
+}
+
+/** An asset's bytes, from Storage or (legacy rows) from the in-row copy. */
+export async function readMediaAssetBytes(
+  asset: Pick<MediaAssetRow, "storagePath" | "dataBase64">,
+  objects: MediaObjectStore | null = getMediaObjectStore(),
+): Promise<Uint8Array<ArrayBuffer>> {
+  if (asset.storagePath) {
+    if (!objects) throw new Error("media asset is stored in Supabase Storage, but Storage is not configured");
+    return objects.get(asset.storagePath);
+  }
+  if (asset.dataBase64) return new Uint8Array(Buffer.from(asset.dataBase64, "base64"));
+  throw new Error("media asset has no stored bytes");
 }

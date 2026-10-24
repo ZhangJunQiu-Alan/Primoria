@@ -379,6 +379,13 @@
       "when": 1792808617690,
       "tag": "0053_drop_tutor_style_facts",
       "breakpoints": true
+    },
+    {
+      "idx": 54,
+      "version": "7",
+      "when": 1792818489824,
+      "tag": "0054_media_assets_storage_path",
+      "breakpoints": true
     }
   ]
 }

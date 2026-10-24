@@ -30,6 +30,10 @@ if (!env.DATABASE_URL && env.PRIMORIA_DISABLE_LOCAL_ENV !== "1" && existsSync(co
   for (const key of ["DATABASE_SSL", "DATABASE_POOL_MAX"]) {
     if (settings[key]) env[key] = settings[key];
   }
+  // Lesson image bytes live in the same project's Storage bucket.
+  for (const key of ["SUPABASE_URL", "SUPABASE_SECRET_KEY", "PRIMORIA_MEDIA_BUCKET"]) {
+    if (settings[key] && !env[key]) env[key] = settings[key];
+  }
   if (settings.NODE_EXTRA_CA_CERTS) {
     env.NODE_EXTRA_CA_CERTS = resolve(root, settings.NODE_EXTRA_CA_CERTS);
   }
