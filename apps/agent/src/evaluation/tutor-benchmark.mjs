@@ -125,8 +125,8 @@ export const TutorBenchmarkDatasetSchema = z
     benchmarkId: z.string().min(1),
     description: z.string().min(1),
     casePassThreshold: z.number().min(0).max(1),
-    dimensionWeights: z.record(z.number().nonnegative()),
-    dimensionMinimums: z.record(z.number().min(0).max(1)).default({}),
+    dimensionWeights: z.record(z.string(), z.number().nonnegative()),
+    dimensionMinimums: z.record(z.string(), z.number().min(0).max(1)).default({}),
     cases: z.array(CaseSchema).min(1),
   })
   .strict()

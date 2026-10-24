@@ -6,14 +6,14 @@ export const AcceptanceAttemptSchema = z.object({
   startedAt: z.string().datetime({ offset: true }), finishedAt: z.string().datetime({ offset: true }),
   status: z.enum(["passed", "failed", "blocked"]), explanation: z.string(),
   payload: InteractiveComponentPayloadSchema.optional(),
-  patch: z.record(z.unknown()).optional(),
+  patch: z.record(z.string(), z.unknown()).optional(),
   courseId: z.string().optional(),
   configurationRequest: z.string().optional(),
-  courseOutput: z.record(z.unknown()).optional(),
-  positioningOutput: z.record(z.unknown()).optional(),
+  courseOutput: z.record(z.string(), z.unknown()).optional(),
+  positioningOutput: z.record(z.string(), z.unknown()).optional(),
   model: z.string().optional(), runIds: z.array(z.string()).default([]),
-  toolCalls: z.array(z.object({ name: z.string(), id: z.string(), args: z.record(z.unknown()) })).default([]),
-  modelCalls: z.array(z.object({ model: z.string(), status: z.number().int(), usage: z.record(z.unknown()).nullable(), responseId: z.string().nullable() })).default([]),
+  toolCalls: z.array(z.object({ name: z.string(), id: z.string(), args: z.record(z.string(), z.unknown()) })).default([]),
+  modelCalls: z.array(z.object({ model: z.string(), status: z.number().int(), usage: z.record(z.string(), z.unknown()).nullable(), responseId: z.string().nullable() })).default([]),
   latencyMs: z.number().nonnegative(), error: z.string().optional(),
   screenshot: z.string().regex(/^[a-zA-Z0-9_-]+\.(?:png|jpg|webp)$/).optional(), assertions: z.array(z.string()).default([]),
 }).strict();
@@ -22,7 +22,7 @@ export const AcceptanceCaseSchema = z.object({
   caseId: z.string(), prompt: z.string().min(1), kind: z.enum(["chat", "adjust", "course"]),
   language: z.enum(["zh", "en", "mixed"]), length: z.enum(["short", "medium", "long"]),
   expectedComponentIds: z.array(z.string()).min(1), subject: z.string(),
-  parentCaseId: z.string().optional(), parameterAssertions: z.record(z.union([z.string(), z.number(), z.boolean()])).default({}),
+  parentCaseId: z.string().optional(), parameterAssertions: z.record(z.string(), z.union([z.string(), z.number(), z.boolean()])).default({}),
   attempts: z.array(AcceptanceAttemptSchema),
 }).strict();
 

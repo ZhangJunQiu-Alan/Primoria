@@ -45,7 +45,7 @@ export async function GET(request: Request) {
 }
 
 const UpdateSchema = z.object({
-  instanceId: z.string().min(1).max(200), revision: z.number().int().positive(), config: z.record(z.unknown()),
+  instanceId: z.string().min(1).max(200), revision: z.number().int().positive(), config: z.record(z.string(), z.unknown()),
 }).strict();
 
 export async function PATCH(request: Request) {

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { execFileSync } from "node:child_process";
+import { readFileSync } from "node:fs";
 
 const SEVERITY_ORDER = new Map([
   ["info", 0],
@@ -105,20 +106,72 @@ function formatAdvisory(advisory) {
   return `- ${advisory.name}@${range} [${advisory.severity}] ${advisory.title || advisory.overview || "Untitled"} (${url})`;
 }
 
+// Exact package versions whose listed advisories are accepted until `expires`
+// (inclusive, UTC). Each entry must also appear in the Temporary Exceptions table
+// in docs/dependency-security.md. Expired entries fail the audit.
+function loadExceptions() {
+  const exceptions = JSON.parse(readFileSync(new URL("./audit-exceptions.json", import.meta.url), "utf8"));
+  const today = new Date().toISOString().slice(0, 10);
+  return {
+    active: exceptions.filter((exception) => exception.expires >= today),
+    expired: exceptions.filter((exception) => exception.expires < today),
+  };
+}
+
+// Moves excepted versions into their own payload so their advisories can be
+// matched to the exception without semver-matching ranges.
+function splitExceptedVersions(payload, exceptions) {
+  const checked = structuredClone(payload);
+  const excepted = {};
+  for (const exception of exceptions) {
+    const installed = checked[exception.package] ?? [];
+    const matched = installed.filter((version) => exception.versions.includes(version));
+    if (matched.length === 0) {
+      console.warn(`[audit:prod] exception ${exception.advisory} for ${exception.package}@${exception.versions.join(",")} matches no installed version; remove it`);
+      continue;
+    }
+    checked[exception.package] = installed.filter((version) => !matched.includes(version));
+    if (checked[exception.package].length === 0) delete checked[exception.package];
+    excepted[exception.package] = [...new Set([...(excepted[exception.package] ?? []), ...matched])];
+  }
+  return { checked, excepted };
+}
+
+function isExcepted(advisory, exceptions) {
+  return exceptions.some(
+    (exception) => exception.package === advisory.name && advisory.url?.endsWith(`/${exception.advisory}`),
+  );
+}
+
 async function main() {
   const { auditLevel } = parseArgs(process.argv.slice(2));
   const payload = productionDependencyVersions();
   const packageCount = Object.keys(payload).length;
   const versionCount = Object.values(payload).reduce((count, versions) => count + versions.length, 0);
-  const advisories = flattenAdvisories(await fetchAdvisories(payload));
-  const blocking = advisories.filter((advisory) => isBlocking(advisory, auditLevel));
+  const exceptions = loadExceptions();
+  const { checked, excepted } = splitExceptedVersions(payload, exceptions.active);
+  const advisories = flattenAdvisories(await fetchAdvisories(checked));
+  const exceptedAdvisories = Object.keys(excepted).length > 0 ? flattenAdvisories(await fetchAdvisories(excepted)) : [];
+  const accepted = exceptedAdvisories.filter((advisory) => isExcepted(advisory, exceptions.active));
+  const blocking = [
+    ...advisories,
+    ...exceptedAdvisories.filter((advisory) => !accepted.includes(advisory)),
+  ].filter((advisory) => isBlocking(advisory, auditLevel));
 
-  const summary = severityCounts(advisories)
+  const summary = severityCounts([...advisories, ...exceptedAdvisories])
     .map(([severity, count]) => `${severity}=${count}`)
     .join(", ") || "none";
   console.log(`[audit:prod] checked ${packageCount} packages / ${versionCount} versions via npm bulk advisory endpoint`);
   console.log(`[audit:prod] advisories: ${summary}`);
+  for (const advisory of accepted) {
+    const { expires } = exceptions.active.find((exception) => isExcepted(advisory, [exception]));
+    console.log(`[audit:prod] accepted until ${expires} ${formatAdvisory(advisory)}`);
+  }
 
+  for (const exception of exceptions.expired) {
+    console.error(`[audit:prod] exception ${exception.advisory} for ${exception.package} expired on ${exception.expires}`);
+    process.exitCode = 1;
+  }
   if (blocking.length > 0) {
     console.error(`[audit:prod] ${blocking.length} advisory/advisories at or above ${auditLevel}:`);
     for (const advisory of blocking) console.error(formatAdvisory(advisory));
