@@ -79,6 +79,9 @@ services:
       AI_MODEL_CONTENT: ${AI_MODEL_CONTENT:-}
       GEMINI_API_KEY: ${GEMINI_API_KEY:-}
       GEMINI_IMAGE_MODEL: ${GEMINI_IMAGE_MODEL:-}
+      SUPABASE_URL: ${SUPABASE_URL:-}
+      SUPABASE_SECRET_KEY: ${SUPABASE_SECRET_KEY:-}
+      PRIMORIA_MEDIA_BUCKET: ${PRIMORIA_MEDIA_BUCKET:-lesson-media}
       PRIMORIA_ENABLE_INTERNAL_ANALYTICS: ${PRIMORIA_ENABLE_INTERNAL_ANALYTICS:-0}
       PRIMORIA_INTERNAL_EMAILS: ${PRIMORIA_INTERNAL_EMAILS:-}
       INTERACTIVE_COMPONENT_RATE_LIMIT_WINDOW_SECONDS: ${INTERACTIVE_COMPONENT_RATE_LIMIT_WINDOW_SECONDS:-60}
@@ -172,6 +175,9 @@ services:
       AI_MODEL_CONTENT: ${AI_MODEL_CONTENT:-}
       GEMINI_API_KEY: ${GEMINI_API_KEY:-}
       GEMINI_IMAGE_MODEL: ${GEMINI_IMAGE_MODEL:-}
+      SUPABASE_URL: ${SUPABASE_URL:-}
+      SUPABASE_SECRET_KEY: ${SUPABASE_SECRET_KEY:-}
+      PRIMORIA_MEDIA_BUCKET: ${PRIMORIA_MEDIA_BUCKET:-lesson-media}
     command: ["pnpm", "--filter", "@primoria/web", "worker:lesson-generation"]
     healthcheck: &worker-healthcheck
       test: ["CMD", "node", "-e", "require('fs').stat('/tmp/primoria-worker-ready',(e,s)=>{if(e||Date.now()-s.mtimeMs>30000)process.exit(1)})"]

@@ -254,7 +254,7 @@ Courses are shared via public snapshot links. `course_share_links` stores one im
 
 ### Media assets
 
-Lesson image assets are a global pool by design: generation always writes `media_assets.owner_id = NULL`, the media route serves ownerless assets publicly with immutable caching, and `imageCacheKey` (a hash of brief semantics) reuses one asset across users. Image briefs must stay user-agnostic — never feed learner facts into them, and never add owner-scoping to lesson images. `owner_id` is a reserved private channel with no current writers.
+Lesson image assets are a global pool by design: generation always writes `media_assets.owner_id = NULL`, the media route serves ownerless assets publicly with immutable caching, and `imageCacheKey` is concept-level — sorted conceptIds + style version + primary language subtag, without the image model, image kind, or the writer's learning goal (analogy illustrations still key on kind + learning goal) — so a concept has one canonical image, generated once by a lesson or an offline pre-warm with any model, and later lessons reuse it with the asset's own kind/alt/caption. `media_assets` keeps metadata and `storage_path`; bytes live in Storage (legacy rows keep `data_base64` until `pnpm media:migrate-storage -- --apply`). Image briefs must stay user-agnostic — never feed learner facts into them, and never add owner-scoping to lesson images. `owner_id` is a reserved private channel with no current writers.
 
 ### KG failure policy
 
@@ -268,7 +268,7 @@ Public routes are defined once in `apps/web/src/lib/auth/routes.ts` and shared b
 
 ORM: Drizzle + `postgres` driver. Drizzle owns App/Auth/Course schema; versioned Web SQL owns KG/pgvector; `apps/agent/db/migrations/` owns only `agent_runtime`. `pnpm db:bootstrap` applies all three owners idempotently. KG source data and embeddings are imported separately with `pnpm db:initialize:kg`. Core App tables include users, identities, sessions, rate limits, courses, lessons, lesson/progress/extractor jobs, `profile_fact_intake_jobs`, learning events, mastery, learner profiles/facts, `player_progress`, `xp_awards`, `daily_quest_completions`, `achievement_unlocks`, chat messages, media assets, and settings.
 
-The selected shared database is managed Supabase PostgreSQL in the existing Primoria Singapore project. Root commands load the ignored `.env.supabase` through `scripts/with-database-env.mjs`, with separate migration/runtime roles and verified TLS. Supabase hosts the database only; authentication remains Web-owned and no browser Supabase SDK/anon key is used. Explicit environment connections take priority. Docker PostgreSQL on `127.0.0.1:5432` remains the offline and isolated regression option. See `docs/supabase-deployment.md`.
+The selected shared database is managed Supabase PostgreSQL in the existing Primoria Singapore project. Root commands load the ignored `.env.supabase` through `scripts/with-database-env.mjs`, with separate migration/runtime roles and verified TLS. Supabase hosts the database plus a private `lesson-media` Storage bucket for lesson image bytes, reached server-side only with `SUPABASE_URL`/`SUPABASE_SECRET_KEY` (`apps/web/src/lib/ai/media/media-storage.ts`); authentication remains Web-owned and no browser Supabase SDK/anon key is used. Explicit environment connections take priority. Docker PostgreSQL on `127.0.0.1:5432` remains the offline and isolated regression option. See `docs/supabase-deployment.md`.
 
 ### Model provider
 
