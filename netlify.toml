@@ -1,7 +1,10 @@
 [build]
-  base = "apps/web"
-  command = "pnpm build"
-  publish = ".next"
+  base = "."
+  command = "pnpm --filter @primoria/web build"
+  publish = "apps/web/.next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
 [build.environment]
   NODE_VERSION = "22"
