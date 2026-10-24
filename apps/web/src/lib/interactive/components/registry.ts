@@ -1,3 +1,7 @@
+import { parabolaIntersectionsComponent } from "./parabola-intersections";
+import { wireResistanceComponent } from "./wire-resistance";
+import { closedCircuitComponent } from "./closed-circuit";
+import { poetryImageryComponent } from "./poetry-imagery";
 import { cellDivisionComponent } from "./cell-division";
 import { osmosisLabComponent } from "./osmosis-lab";
 import { magneticMotionComponent } from "./magnetic-motion";
@@ -52,6 +56,10 @@ import type { ImplementedComponent, RegistryEntry } from "./types";
 // components/generative-ui/interactive.
 
 const componentModules: RegistryEntry[] = [
+  parabolaIntersectionsComponent,
+  wireResistanceComponent,
+  closedCircuitComponent,
+  poetryImageryComponent,
   cellDivisionComponent,
   osmosisLabComponent,
   magneticMotionComponent,

@@ -44,5 +44,9 @@ export const INTERACTIVE_COMPONENT_VERSIONS = {
   "physics.photoelectric-effect": 1,
   "math.linear-system": 1,
   "math.quadratic-equation": 1,
-  "chem.weak-acid-buffer": 1
+  "chem.weak-acid-buffer": 1,
+  "math.parabola-intersections": 1,
+  "physics.wire-resistance": 1,
+  "physics.closed-circuit": 1,
+  "chinese.poetry-imagery": 1
 };
