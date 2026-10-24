@@ -693,6 +693,16 @@ function assembleShell(channel: string, parentOrigin: string) {
 </html>`;
 }
 
+// The sandbox shell announces itself over the authenticated bridge channel. If
+// that never arrives (blocked script, lost message) the card must not stay
+// blank forever: surface a retry that rebuilds the shell on a fresh channel.
+export const WIDGET_SHELL_READY_TIMEOUT_MS = 12_000;
+
+function randomBridgeChannel() {
+  // getRandomValues also works in non-secure contexts (LAN http), unlike randomUUID.
+  return Array.from(window.crypto.getRandomValues(new Uint8Array(16)), (byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
 export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt, variant = "tool" }: WidgetRendererComponentProps) {
   const safeHtml = typeof html === "string" ? html : "";
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -702,6 +712,8 @@ export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt, v
   const executedHtmlRef = useRef("");
   const [height, setHeight] = useState(0);
   const [loaded, setLoaded] = useState(false);
+  const [shellTimedOut, setShellTimedOut] = useState(false);
+  const [shellAttempt, setShellAttempt] = useState(0);
   const [settledHtml, setSettledHtml] = useState("");
   const [fadingOut, setFadingOut] = useState(false);
   const [dependencyPreloadResult, setDependencyPreloadResult] = useState<WidgetDependencyPreloadSnapshot | null>(null);
@@ -821,7 +833,7 @@ export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt, v
 
     if (!shellReadyRef.current) {
       shellReadyRef.current = true;
-      bridgeChannelRef.current = window.crypto.randomUUID();
+      bridgeChannelRef.current = randomBridgeChannel();
       iframe.srcdoc = assembleShell(bridgeChannelRef.current, window.location.origin);
       return;
     }
@@ -838,7 +850,22 @@ export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt, v
       },
       "*",
     );
-  }, [safeHtml, normalizedDependencies, loaded]);
+  }, [safeHtml, normalizedDependencies, loaded, shellAttempt]);
+
+  useEffect(() => {
+    if (loaded || !safeHtml) return;
+    const timeout = setTimeout(() => setShellTimedOut(true), WIDGET_SHELL_READY_TIMEOUT_MS);
+    return () => clearTimeout(timeout);
+  }, [loaded, safeHtml, shellAttempt]);
+
+  const retryShell = () => {
+    shellReadyRef.current = false;
+    committedHtmlRef.current = "";
+    executedHtmlRef.current = "";
+    setLoaded(false);
+    setShellTimedOut(false);
+    setShellAttempt((value) => value + 1);
+  };
 
   useEffect(() => {
     const iframe = iframeRef.current;
@@ -882,6 +909,12 @@ export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt, v
       {dependencyPreload.status === "error" ? (
         <div className="widget-renderer-error" role="alert">
           Visual resources are taking longer than expected. The widget will keep trying inside the frame.
+        </div>
+      ) : null}
+      {shellTimedOut && !loaded ? (
+        <div className="widget-renderer-error" role="alert">
+          The visualization frame did not start.{" "}
+          <button type="button" onClick={retryShell}>Retry</button>
         </div>
       ) : null}
       {htmlPreviewSettled && !safeHtml.trim() ? (
