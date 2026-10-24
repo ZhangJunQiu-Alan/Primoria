@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { boolean, check, doublePrecision, index, integer, jsonb, pgTable, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
+import { boolean, check, doublePrecision, index, integer, jsonb, pgTable, primaryKey, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
   id: text("id").primaryKey(),
@@ -838,11 +838,90 @@ export const generatedTopicGraphs = pgTable(
   }),
 );
 
+// Learner-uploaded study material (docs/product/learning-materials.md). Only
+// the extracted text is kept (as ordered chunks), never the original bytes.
+// content_sha256 makes a re-upload of the same file idempotent per owner.
+export const learningMaterials = pgTable(
+  "learning_materials",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    title: text("title").notNull(),
+    fileName: text("file_name").notNull(),
+    mimeType: text("mime_type").notNull(),
+    byteLength: integer("byte_length").notNull(),
+    contentSha256: text("content_sha256").notNull(),
+    charCount: integer("char_count").notNull(),
+    chunkCount: integer("chunk_count").notNull(),
+    pageCount: integer("page_count"),
+    language: text("language"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    ownerShaUnique: uniqueIndex("learning_materials_owner_sha_uidx").on(table.ownerId, table.contentSha256),
+    ownerCreatedIdx: index("learning_materials_owner_created_idx").on(table.ownerId, table.createdAt),
+    countsCheck: check(
+      "learning_materials_counts_check",
+      sql`${table.byteLength} >= 0 and ${table.charCount} >= 0 and ${table.chunkCount} >= 0 and (${table.pageCount} is null or ${table.pageCount} >= 0)`,
+    ),
+  }),
+);
+
+// Ordered text chunks of one material. owner_id is denormalized so every read
+// is owner-scoped without a join. Lesson grounding addresses chunks by
+// (material_id, ordinal) through material_topic_graphs.concept_sources.
+export const learningMaterialChunks = pgTable(
+  "learning_material_chunks",
+  {
+    materialId: text("material_id").notNull().references(() => learningMaterials.id, { onDelete: "cascade" }),
+    ordinal: integer("ordinal").notNull(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    text: text("text").notNull(),
+    heading: text("heading"),
+    pageStart: integer("page_start"),
+    pageEnd: integer("page_end"),
+    charCount: integer("char_count").notNull(),
+  },
+  (table) => ({
+    pk: primaryKey({ name: "learning_material_chunks_pk", columns: [table.materialId, table.ordinal] }),
+    ownerMaterialIdx: index("learning_material_chunks_owner_material_idx").on(table.ownerId, table.materialId),
+    ordinalCheck: check("learning_material_chunks_ordinal_check", sql`${table.ordinal} >= 0 and ${table.charCount} >= 0`),
+  }),
+);
+
+// Owner-private course graphs derived from uploaded materials. Same TopicGraph
+// shape as library/gen_* graphs so outline building, lesson planning, and
+// mastery run unchanged — but unlike generated_topic_graphs a row is never
+// shared across users or promoted. graph_id is derived from owner + sorted
+// material ids, so rebuilding from the same materials reuses the graph.
+// concept_sources maps conceptId → [{ materialId, ordinal }] for grounding.
+export const materialTopicGraphs = pgTable(
+  "material_topic_graphs",
+  {
+    graphId: text("graph_id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    materialIds: jsonb("material_ids").$type<string[]>().notNull(),
+    title: text("title").notNull(),
+    language: text("language"),
+    graph: jsonb("graph").notNull(),
+    conceptSources: jsonb("concept_sources").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    ownerCreatedIdx: index("material_topic_graphs_owner_created_idx").on(table.ownerId, table.createdAt),
+  }),
+);
+
 export type UserRow = typeof users.$inferSelect;
 export type MediaAssetRow = typeof mediaAssets.$inferSelect;
 export type LearnerProfileRow = typeof learnerProfiles.$inferSelect;
 export type LearnerFactRow = typeof learnerFacts.$inferSelect;
 export type ExtractorJobRow = typeof extractorJobs.$inferSelect;
 export type ProfileFactIntakeJobRow = typeof profileFactIntakeJobs.$inferSelect;
+export type LearningMaterialRow = typeof learningMaterials.$inferSelect;
+export type LearningMaterialChunkRow = typeof learningMaterialChunks.$inferSelect;
+export type MaterialTopicGraphRow = typeof materialTopicGraphs.$inferSelect;
 export type IdentityRow = typeof identities.$inferSelect;
 export type SessionRow = typeof sessions.$inferSelect;

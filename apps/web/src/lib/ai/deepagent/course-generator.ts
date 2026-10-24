@@ -18,6 +18,7 @@ import { finalizeImageBlocks, makePendingImageBlock } from "@/lib/ai/media/image
 import { InteractiveComponentPayloadSchema } from "@primoria/contracts/artifacts/schemas";
 import { parseInteractivePayload } from "@/lib/interactive/payload";
 import { getImplementedComponent } from "@/lib/interactive/components/registry";
+import { isMaterialGraphId } from "@/lib/materials/types";
 
 const TextBlockSchema = z.object({
   type: z.literal("text"),
@@ -165,7 +166,10 @@ export type GenerateCourseInput = {
   language?: string | null;
   // LLM-generated topic graph for out-of-library goals; anchors the course to
   // its gen_* graphId and shapes the outline exactly like a library graph.
+  // Owner-private mat_* graphs built from uploaded materials use the same slot.
   generatedGraph?: TopicGraph;
+  // Overrides the template course summary (material courses name their sources).
+  summary?: string;
 };
 
 function randomId(prefix: string) {
@@ -178,8 +182,10 @@ export type InitializeCourseOutlineInput = {
   kgContext?: CourseContext;
   source?: "cold_start" | "profile";
   language?: string | null;
-  // LLM-generated topic graph for out-of-library goals.
+  // LLM-generated topic graph for out-of-library goals, or an owner-private
+  // mat_* graph built from uploaded materials.
   generatedGraph?: TopicGraph;
+  summary?: string;
 };
 
 export type InitializeCourseOutlineResult = {
@@ -242,7 +248,7 @@ export async function initializeCourseOutline(
   if (!course) {
     const masteredConceptIds = graphId ? await loadMasteredConceptIds(ownerId, graphId) : new Set<string>();
     course = buildOutlineCourse(
-      { topic: input.topic, kgContext: input.kgContext, language: input.language, generatedGraph: input.generatedGraph },
+      { topic: input.topic, kgContext: input.kgContext, language: input.language, generatedGraph: input.generatedGraph, summary: input.summary },
       graphId,
       scopeKey,
       masteredConceptIds,
@@ -450,11 +456,11 @@ function buildOutlineCourse(
     id: input.courseId ?? randomId("crs"),
     title: subject,
     topic: input.kgContext?.learningGoal ?? subject,
-    summary: input.kgContext?.learningGoal
+    summary: input.summary ?? (input.kgContext?.learningGoal
       ? `${subject}：围绕「${input.kgContext.learningGoal}」的定制学习路径`
       : graphId
         ? `${subject}的个性化学习路径`
-        : input.topic,
+        : input.topic),
     estimatedMinutes: 0,
     anchorConceptId: input.kgContext?.targetConceptIds?.[0] ?? input.kgContext?.targetConceptId ?? null,
     graphId,
@@ -511,6 +517,8 @@ export type GenerateBlockInput = {
   targetType: GeneratableBlockType;
   instruction: string;
   sourceBlock?: CourseBlock;
+  /** Required for material (mat_*) courses, whose images are owner-private. */
+  ownerId?: string | null;
 };
 
 export async function generateBlock(
@@ -579,9 +587,13 @@ You are now writing a BRIEF for ONE static teaching IMAGE block for an existing 
     brief,
   });
   // Global asset (ownerId null): the brief-keyed cache is shared across users, so
-  // the asset must be globally readable or reuse would 404. See the imaging stage
-  // note in lesson-generation-processor.ts.
-  const [finalized] = await finalizeImageBlocks([pending], { ownerId: null, model: IMAGE_MODEL, language: input.course.language ?? null });
+  // the asset must be globally readable or reuse would 404 — except material
+  // courses, which stay owner-private. See the imaging stage note in
+  // lesson-generation-processor.ts.
+  const materialCourse = isMaterialGraphId(input.course.graphId);
+  if (materialCourse && !input.ownerId) throw new Error("Material course images require an owner.");
+  const imageOwnerId = materialCourse ? input.ownerId ?? null : null;
+  const [finalized] = await finalizeImageBlocks([pending], { ownerId: imageOwnerId, model: IMAGE_MODEL, language: input.course.language ?? null });
   return finalized;
 }
 

@@ -5,6 +5,7 @@ import { courseToRow, getCourse, lessonToRow } from "./store";
 import { getDb } from "../db/client";
 import { courses as coursesTable, courseShareLinks, courseShareVersions, lessons as lessonsTable, mediaAssets } from "../db/schema";
 import { sanitizeInteractiveBlock, upgradeInteractiveBlock } from "../interactive/payload";
+import { isMaterialGraphId } from "../materials/types";
 
 /** Sanitized course copy stored in course_share_versions.snapshot. */
 export type CourseShareSnapshot = {
@@ -108,11 +109,22 @@ export async function getShareForCourse(courseId: string, ownerId: string): Prom
   return rows[0] ? rowToShareLink(rows[0].share, rows[0].version) : null;
 }
 
+/** Courses built from a learner's uploaded materials (mat_* graphs) carry
+ * private source content and cannot be published as share links. */
+export class CourseShareNotAllowedError extends Error {
+  readonly code = "material_course_share_disabled";
+  constructor() {
+    super("Courses built from uploaded materials cannot be shared.");
+    this.name = "CourseShareNotAllowedError";
+  }
+}
+
 /** Publishes an immutable share version. Refreshing or re-enabling revokes the
  * prior capability token and inserts a new snapshot row in the same series. */
 export async function upsertShare(courseId: string, ownerId: string): Promise<CourseShareLink | null> {
   const course = await getCourse(courseId, ownerId);
   if (!course) return null;
+  if (isMaterialGraphId(course.graphId)) throw new CourseShareNotAllowedError();
   const snapshot = buildShareSnapshot(course, await listGlobalAssetIds(course));
 
   return getDb().transaction(async (tx) => {

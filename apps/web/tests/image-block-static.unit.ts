@@ -62,13 +62,21 @@ function main() {
   assert(generator.includes("function generateImageBlock"), "generator has a dedicated image brief→asset path");
   assert(generator.includes("finalizeImageBlocks"), "generator finalizes image blocks via the imaging step");
 
-  // ── Cross-user cache safety: images are GLOBAL (ownerId null) so a brief-keyed
-  // cache hit is readable by every user (an owner-scoped asset would 404 on reuse).
-  // The processor builds one shared imaging config (ownerId null) and finalizes
-  // each batch's images through it, so the prefix can advance past ready images.
-  assert(/imaging: FinalizeImageOptions = \{[\s\S]*?ownerId: null/.test(processor), "lesson images are stored global (ownerId null)");
+  // ── Cross-user cache safety: library/gen_* images are GLOBAL (ownerId null) so a
+  // brief-keyed cache hit is readable by every user (an owner-scoped asset would
+  // 404 on reuse). Only owner-private material (mat_*) courses use the owner
+  // channel (behavior covered by tests/material-grounding.spec.ts). The processor
+  // builds one shared imaging config and finalizes each batch's images through
+  // it, so the prefix can advance past ready images.
+  assert(
+    /imaging: FinalizeImageOptions = \{[\s\S]*?ownerId: isMaterialGraphId\(ctx\.course\.graphId\) \? ownerId : null/.test(processor),
+    "lesson images are global (ownerId null) except owner-private material courses",
+  );
   assert(/finalizeImageBlocks\([\s\S]*?, imaging\)/.test(processor), "processor finalizes images through the shared imaging config");
-  assert(/finalizeImageBlocks\(\[pending\], \{ ownerId: null/.test(generator), "editor images are stored global (ownerId null)");
+  assert(
+    /const imageOwnerId = materialCourse \? input\.ownerId \?\? null : null;[\s\S]*?finalizeImageBlocks\(\[pending\], \{ ownerId: imageOwnerId/.test(generator),
+    "editor images are global (ownerId null) except owner-private material courses",
+  );
 
   process.stdout.write("[image-block-static.unit] ALL CHECKS PASSED\n");
 }

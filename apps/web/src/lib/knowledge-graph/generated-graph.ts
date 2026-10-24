@@ -98,7 +98,7 @@ export function normalizeTopicKey(topic: string): string {
     .replace(/\s+/g, " ");
 }
 
-function slugify(value: string, fallback: string): string {
+export function slugify(value: string, fallback: string): string {
   const slug = value
     .normalize("NFKD")
     .toLowerCase()

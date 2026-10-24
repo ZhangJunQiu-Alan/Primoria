@@ -1,6 +1,7 @@
 import type { AlgorithmStep, MathExplorerArtifact, PhysicsScene } from "@/lib/agent-os";
 import type { ImageBrief } from "@/lib/ai/media/image-brief";
 import type { InteractiveComponentPayload } from "@primoria/contracts/artifacts/schemas";
+import { isMaterialGraphId } from "@/lib/materials/types";
 
 export type BlockType = "text" | "analogy" | "transfer" | "visual" | "image" | "code" | "quiz" | "mind_map" | "slide" | "worksheet";
 
@@ -291,6 +292,9 @@ export type CourseSummary = {
   title: string;
   topic: string;
   summary: string;
+  /** Built from the learner's uploaded materials (owner-private mat_* graph):
+   * the UI labels its source and offers no share link. */
+  fromMaterials?: boolean;
   estimatedMinutes: number;
   outline: CourseOutlineItem[];
   lessons: CourseSummaryLesson[];
@@ -347,6 +351,7 @@ export function summarizeCourse(course: Course): CourseSummary {
     title: course.title,
     topic: course.topic,
     summary: course.summary,
+    ...(isMaterialGraphId(course.graphId) ? { fromMaterials: true } : {}),
     estimatedMinutes: generatedMinutes || course.estimatedMinutes,
     outline: courseBlocks(course).map((block) => ({
       type: block.type,

@@ -4,6 +4,7 @@ import type { CourseContext, CourseContextTopic } from "../deepagent/course-kg-c
 import { languageDirective } from "../deepagent/course-kg-context";
 import { knowledgeBackgroundDirective, factsDirective } from "../../learner-profile/types";
 import { invokeJson, type InvokeJsonArgs } from "./model-json";
+import { buildPlannerSourceSection } from "./source-grounding";
 import { searchInteractiveComponents } from "@primoria/contracts/artifacts/interactive-search";
 import {
   expectedBlockRange,
@@ -190,7 +191,7 @@ CONCEPTS (teach in this default order; [..] = learner's prior mastery):
 ${fmtConcepts(kg.startTopic)}
 ${kg.targetConceptId ? `TARGET CONCEPT (center the lesson on it): ${kg.targetConceptId}` : ""}
 VALID CONCEPT IDS: ${conceptIds.join(", ")}
-
+${buildPlannerSourceSection(kg)}
 VISUAL AFFORDANCE HINTS (strong hints, not quotas; V=visual is the product's core differentiator when it teaches a mechanism):
 ${visuals.length ? fmtVisualConcepts(kg.startTopic) : "  (none for this topic)"}
 

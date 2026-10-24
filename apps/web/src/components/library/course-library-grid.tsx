@@ -290,6 +290,9 @@ export function CourseLibraryGrid({
               <ListIcon />
             </button>
           </div>
+          <Link href="/materials" className="library-materials-link">
+            {t.library.buildFromMaterials}
+          </Link>
           <Link href="/" className="library-create-course">
             <PlusIcon />
             <span>{t.library.createCourse}</span>
@@ -581,7 +584,8 @@ function CourseRow({
       <td data-label={t.library.name}>
         <div className="library-course-name">
           <div className="library-course-copy">
-            {course.topic && course.topic !== course.title ? <span className="library-course-topic">{course.topic}</span> : null}
+            {course.fromMaterials ? <span className="library-course-topic">{t.library.fromMaterials}</span> : null}
+            {!course.fromMaterials && course.topic && course.topic !== course.title ? <span className="library-course-topic">{course.topic}</span> : null}
             <Link href={`/course/${course.id}`} className="library-course-title">{course.title}</Link>
           </div>
         </div>
@@ -638,9 +642,11 @@ function CourseRow({
               <Link href={`/course/${course.id}/outline`} role="menuitem">
                 {t.library.viewOutline}
               </Link>
-              <button type="button" role="menuitem" onClick={() => onShareCourse(course)}>
-                {t.library.shareCourse}
-              </button>
+              {course.fromMaterials ? null : (
+                <button type="button" role="menuitem" onClick={() => onShareCourse(course)}>
+                  {t.library.shareCourse}
+                </button>
+              )}
               <button type="button" className="danger" role="menuitem" onClick={() => onDeleteCourse(course)}>
                 {t.common.delete}
               </button>

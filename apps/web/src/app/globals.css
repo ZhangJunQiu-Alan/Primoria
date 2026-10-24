@@ -3126,6 +3126,23 @@ cpk-web-inspector {
 .library-create-course:hover {
   background: var(--pine-hover);
 }
+.library-materials-link {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+.library-materials-link:hover {
+  border-color: var(--pine);
+  color: var(--pine);
+}
 .library-table-card {
   min-width: 0;
   overflow: visible;
@@ -3451,6 +3468,218 @@ cpk-web-inspector {
 .library-page-header p {
   margin: 0;
   color: var(--ink-muted);
+}
+
+.materials-library {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 920px;
+  min-width: 0;
+}
+
+.materials-dropzone {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 22px;
+  border: 1px dashed var(--line-strong);
+  border-radius: 12px;
+  background: var(--panel);
+  color: var(--ink-muted);
+}
+
+.materials-dropzone.dragging {
+  border-color: var(--pine);
+  background: var(--pine-tint);
+}
+
+.materials-dropzone.busy {
+  opacity: 0.8;
+}
+
+.materials-dropzone p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.materials-dropzone button:disabled,
+.materials-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.materials-notices {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.materials-notice {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.materials-notice.info {
+  background: var(--pine-tint);
+  color: var(--ink);
+}
+
+.materials-notice.error {
+  background: var(--rose-tint);
+  color: var(--coral-ink);
+}
+
+.materials-list-card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  box-shadow: var(--soft-shadow);
+  min-width: 0;
+}
+
+.materials-list-header,
+.materials-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding: 14px 18px;
+  color: var(--ink-muted);
+  font-size: 13px;
+}
+
+.materials-list-header {
+  border-bottom: 1px solid var(--line);
+}
+
+.materials-actions {
+  border-top: 1px solid var(--line);
+}
+
+.materials-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.materials-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+}
+
+.materials-list li + li {
+  border-top: 1px solid var(--line-soft);
+}
+
+.materials-list li.selected {
+  background: var(--pine-tint);
+}
+
+.materials-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.materials-item input {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--pine);
+}
+
+.materials-item-format {
+  flex: none;
+  min-width: 44px;
+  padding: 3px 6px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--quiet);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-align: center;
+}
+
+.materials-item-copy {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.materials-item-copy strong {
+  overflow: hidden;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.materials-item-copy small {
+  color: var(--quiet);
+  font-size: 12px;
+}
+
+.materials-delete {
+  flex: none;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink-muted);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.materials-delete.confirming {
+  border-color: var(--coral-ink);
+  color: var(--coral-ink);
+}
+
+.materials-building {
+  margin: 0;
+  padding: 0 18px 16px;
+  color: var(--ink-muted);
+  font-size: 13px;
+}
+
+.materials-privacy-note {
+  margin: 0;
+  color: var(--quiet);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.materials-privacy-note a {
+  color: var(--ink);
+}
+
+@media (max-width: 680px) {
+  .materials-dropzone {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .materials-list li {
+    padding: 12px 14px;
+  }
+
+  .materials-actions button {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 .library-view-toggle button + button {
@@ -4788,7 +5017,7 @@ cpk-web-inspector {
   .library-share-link-row button {
     width: 100%;
   }
-  .library-create-course {
+  .library-create-course, .library-materials-link {
     flex: 1;
     justify-content: center;
   }
@@ -5839,6 +6068,14 @@ cpk-web-inspector {
 .course-lesson-concept-copy span {
   color: var(--quiet);
   font-size: 12px;
+}
+
+.course-lesson-concept-source {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
 }
 
 .course-lesson-level {

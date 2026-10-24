@@ -54,6 +54,14 @@ export function CourseLessonAside({
                 <span className="course-lesson-concept-copy">
                   <strong>{concept.name}</strong>
                   <span>{t.conceptStatus[concept.status]}</span>
+                  {concept.sources?.map((source) => (
+                    <small key={source.materialId} className="course-lesson-concept-source">
+                      {formatMessage(t.conceptSource, {
+                        title: source.title,
+                        locator: source.locator ? ` · ${source.locator}` : "",
+                      })}
+                    </small>
+                  ))}
                 </span>
               </li>
             ))}

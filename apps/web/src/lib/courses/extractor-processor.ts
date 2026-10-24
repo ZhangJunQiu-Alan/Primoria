@@ -2,7 +2,7 @@ import { and, eq, inArray } from "drizzle-orm";
 import { getDb } from "../db/client";
 import { copilotChatMessages, learningEvents } from "../db/schema";
 import { getCourse } from "./store";
-import { getTopic } from "../knowledge-graph/topic-graph";
+import { resolveCourseTopicGraph } from "./course-graph";
 import { ContextError, LeaseLostError } from "../ai/course-generation/generation-errors";
 import { listAllFactsForExtraction, applyFactPlan, planFactMutations } from "../learner-facts/store";
 import { distillFacts, type DistillEvent } from "../ai/extractor/distill";
@@ -52,7 +52,9 @@ export async function processExtractorJob(claim: ExtractorClaim, deps: Extractor
   const graphId = course.graphId;
   const topicId = lesson.topicId;
   if (!graphId || !topicId) throw new ContextError(`lesson ${lessonId} has no knowledge-graph anchor`);
-  const topic = getTopic(graphId, topicId);
+  const graph = await resolveCourseTopicGraph(graphId, ownerId);
+  if (!graph) throw new ContextError(`graph ${graphId} not found for course ${courseId}`);
+  const topic = graph.topics.find((entry) => entry.topicId === topicId);
   if (!topic) throw new ContextError(`topic ${topicId} not found in graph ${graphId}`);
 
   // ── Gather this lesson's window events ──────────────────────────────────────

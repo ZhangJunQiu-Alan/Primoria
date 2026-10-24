@@ -13,6 +13,7 @@ import {
 } from "../ai/course-generation/block-writer";
 import { validateLessonBlocks } from "../ai/course-generation/lesson-validator";
 import { finalizeImageBlocks, isPendingImageBlock, type FinalizeImageOptions, type ImageGenerate } from "../ai/media/image-builder";
+import { isMaterialGraphId } from "../materials/types";
 import type { MediaAssetStore } from "../ai/media/media-assets";
 import { IR_VERSION } from "../ai/course-generation/lesson-plan-ir";
 import { CURRENT_CHECKPOINT_VERSIONS, isCheckpointCompatible } from "../ai/course-generation/versions";
@@ -177,9 +178,11 @@ export async function processLessonGenerationJob(
   // brief semantics and shared across users, so the asset must be globally
   // readable — an owner-scoped asset would 404 for every user who reuses it.
   // Safe because generated images carry no user context (no text, and the brief
-  // is never exposed through the asset URL).
+  // is never exposed through the asset URL). Material (mat_*) lessons are the
+  // exception: their briefs may echo the learner's uploaded text, so they use
+  // the owner-private channel (owner-namespaced cache, authenticated serving).
   const imaging: FinalizeImageOptions = {
-    ownerId: null,
+    ownerId: isMaterialGraphId(ctx.course.graphId) ? ownerId : null,
     model: IMAGE_MODEL,
     language: ctx.course.language ?? null,
     generate: options.imageGenerate,

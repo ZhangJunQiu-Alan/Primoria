@@ -1,14 +1,17 @@
 import type { Course, Lesson } from "./types";
 import { getCourse } from "./store";
-import { getTopicGraph, type TopicGraph, type TopicConcept } from "../knowledge-graph/topic-graph";
-import { getGeneratedGraphById } from "../knowledge-graph/generated-graph";
-import type { CourseContext, CourseContextTopic } from "../ai/deepagent/course-kg-context";
+import type { TopicGraph, TopicConcept } from "../knowledge-graph/topic-graph";
+import type { CourseContext, CourseContextTopic, SourceExcerpt } from "../ai/deepagent/course-kg-context";
 import { ContextError } from "../ai/course-generation/generation-errors";
 import { getLearnerProfile } from "../learner-profile/store";
 import { listActiveFacts } from "../learner-facts/store";
 import { PLANNER_FACT_CATEGORIES, type FactCategory, type KnowledgeBackground, type LearnerFact } from "../learner-profile/types";
 import { listConceptMasteryByOwner } from "../mastery/owner-store";
 import type { MasteryStatus } from "../mastery/store";
+import { getMaterialGraph, type MaterialGraphRecord } from "../materials/material-graph-store";
+import { loadLessonSourceExcerpts } from "../materials/grounding";
+import { isMaterialGraphId } from "../materials/types";
+import { resolveCourseTopicGraph } from "./course-graph";
 
 const MAX_PLANNER_FACTS = 8;
 const MAX_INTEREST_FACTS = 2;
@@ -105,10 +108,18 @@ export async function loadLessonGenerationContext(input: {
     throw new ContextError(`lesson ${lessonId} has no knowledge-graph topic anchor (graphId=${graphId}, topicId=${topicId})`);
   }
 
-  // Library graphs are static; gen_* graphs live in generated_topic_graphs.
-  // Both share the TopicGraph shape, so the planner sees identical context.
-  const graph = await resolveTopicGraph(graphId);
-  if (!graph) throw new ContextError(`graph ${graphId} not found in library or generated graphs`);
+  // Library graphs are static; gen_* graphs live in generated_topic_graphs and
+  // owner-private mat_* graphs in material_topic_graphs. All share the
+  // TopicGraph shape, so the planner sees identical context.
+  let materialGraph: MaterialGraphRecord | null = null;
+  let graph: TopicGraph | null;
+  if (isMaterialGraphId(graphId)) {
+    materialGraph = await getMaterialGraph(graphId, ownerId);
+    graph = materialGraph?.graph ?? null;
+  } else {
+    graph = await resolveCourseTopicGraph(graphId, ownerId);
+  }
+  if (!graph) throw new ContextError(`graph ${graphId} not found in library, generated, or material graphs`);
 
   const orderedTopics = [...graph.topics].sort((a, b) => a.defaultOrder - b.defaultOrder);
   const topic = orderedTopics.find((entry) => entry.topicId === topicId);
@@ -151,6 +162,9 @@ export async function loadLessonGenerationContext(input: {
   const nextLesson = orderedLessons.find((entry) => entry.sortKey > lesson.sortKey) ?? null;
   const currentConcepts = resolveLessonConcepts(lesson.conceptIds, topic.topicId);
   const nextConcepts = nextLesson ? resolveLessonConcepts(nextLesson.conceptIds, nextLesson.topicId) : [];
+  const sourceExcerpts = materialGraph
+    ? await loadMaterialExcerpts(ownerId, materialGraph, currentConcepts.map((c) => c.conceptId), course.language)
+    : [];
 
   const kg: CourseContext = {
     learningPathType: "linear",
@@ -172,17 +186,32 @@ export async function loadLessonGenerationContext(input: {
     knowledgeBackground,
     facts,
     ...(graph.codeAdapted ? { codeEligible: true } : {}),
+    ...(sourceExcerpts.length ? { sourceExcerpts } : {}),
   };
 
   return { course, lesson, kg };
 }
 
-async function resolveTopicGraph(graphId: string): Promise<TopicGraph | null> {
-  try {
-    return getTopicGraph(graphId);
-  } catch {
-    return getGeneratedGraphById(graphId);
+// A material lesson without its source text would silently become a generic
+// lesson, so cited-but-unreadable sources are a non-retryable ContextError
+// (material deletion is refused while a course depends on it, so this means
+// the data is genuinely gone).
+async function loadMaterialExcerpts(
+  ownerId: string,
+  record: MaterialGraphRecord,
+  conceptIds: string[],
+  language: string | null | undefined,
+): Promise<SourceExcerpt[]> {
+  const { excerpts, citedRefCount } = await loadLessonSourceExcerpts({
+    ownerId,
+    record,
+    conceptIds,
+    language: language?.toLowerCase().startsWith("zh") ? "zh" : "en",
+  });
+  if (citedRefCount > 0 && excerpts.length === 0) {
+    throw new ContextError(`source material for graph ${record.graphId} is no longer available`);
   }
+  return excerpts;
 }
 
 // Free-form (out-of-library) course: no KG anchor exists, so the lesson itself

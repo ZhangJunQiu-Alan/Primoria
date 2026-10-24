@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireConfiguredAuthUser } from "@/lib/auth/guard";
-import { getShareForCourse, revokeShare, upsertShare } from "@/lib/courses/share-store";
+import { CourseShareNotAllowedError, getShareForCourse, revokeShare, upsertShare } from "@/lib/courses/share-store";
 import { getCourse } from "@/lib/courses/store";
 
 export async function GET(_request: Request, context: { params: Promise<{ id: string }> }) {
@@ -17,9 +17,16 @@ export async function POST(_request: Request, context: { params: Promise<{ id: s
   const { denied, user } = await requireConfiguredAuthUser("course-share");
   if (denied || !user) return denied ?? NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const { id } = await context.params;
-  const share = await upsertShare(id, user.id);
-  if (!share) return NextResponse.json({ error: "Course not found" }, { status: 404 });
-  return NextResponse.json({ share });
+  try {
+    const share = await upsertShare(id, user.id);
+    if (!share) return NextResponse.json({ error: "Course not found" }, { status: 404 });
+    return NextResponse.json({ share });
+  } catch (error) {
+    if (error instanceof CourseShareNotAllowedError) {
+      return NextResponse.json({ error: error.message, code: error.code }, { status: 403 });
+    }
+    throw error;
+  }
 }
 
 export async function DELETE(_request: Request, context: { params: Promise<{ id: string }> }) {
