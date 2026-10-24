@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-const mocks = vi.hoisted(() => ({ auth: vi.fn(), get: vi.fn(), create: vi.fn(), update: vi.fn(), reserve: vi.fn(), complete: vi.fn(), fail: vi.fn(), configure: vi.fn(), access: vi.fn() }));
+const mocks = vi.hoisted(() => ({ auth: vi.fn(), get: vi.fn(), create: vi.fn(), update: vi.fn(), reserve: vi.fn(), complete: vi.fn(), fail: vi.fn(), configure: vi.fn(), access: vi.fn(), touch: vi.fn() }));
 vi.mock("@/lib/auth/guard", () => ({ requireConfiguredAuthUser: mocks.auth }));
-vi.mock("@/lib/interactive/instance-store", () => ({ getInteractiveInstance: mocks.get, createInteractiveInstance: mocks.create, updateInteractiveInstance: mocks.update }));
+vi.mock("@/lib/interactive/instance-store", () => ({ getInteractiveInstance: mocks.get, createInteractiveInstance: mocks.create, updateInteractiveInstance: mocks.update, touchInteractiveInstance: mocks.touch }));
 vi.mock("@/lib/interactive/request-budget", () => ({ hashInteractiveRequest: (input: unknown) => JSON.stringify(input), reserveInteractiveRequest: mocks.reserve, completeInteractiveRequest: mocks.complete, failInteractiveRequest: mocks.fail, checkInteractiveInstanceAccess: mocks.access }));
 vi.mock("@/lib/interactive/configure", () => ({ configureComponent: mocks.configure }));
 import { GET, POST, PATCH } from "../src/app/api/interactive-component/route";
@@ -18,6 +18,7 @@ beforeEach(() => {
   mocks.configure.mockResolvedValue({ ok: true, mode: "create", config, ms: 1 });
   mocks.create.mockResolvedValue(saved);
   mocks.access.mockResolvedValue({ allowed: true });
+  mocks.touch.mockResolvedValue(undefined);
   vi.unstubAllEnvs();
 });
 describe("authenticated durable interactive component API", () => {
@@ -45,8 +46,24 @@ describe("authenticated durable interactive component API", () => {
     expect(response.status).toBe(200);
     expect(response.headers.get("cache-control")).toContain("no-store");
     expect(mocks.get).toHaveBeenCalledWith("owner", "new");
+    expect(mocks.touch).toHaveBeenCalledWith(saved);
     expect(mocks.configure).not.toHaveBeenCalled();
     expect(await response.json()).not.toHaveProperty("ownerId");
+  });
+  it("still serves a saved instance when the retention touch fails", async () => {
+    mocks.get.mockResolvedValue(saved);
+    mocks.touch.mockRejectedValue(new Error("write failed"));
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    expect((await GET(new Request("http://localhost/api/interactive-component?instanceId=new"))).status).toBe(200);
+  });
+  it("maps a stored config that no longer validates to a conflict, not a client error", async () => {
+    mocks.get.mockResolvedValue({ ...saved, config: { ...config, focalLength: -10 } });
+    const read = await GET(new Request("http://localhost/api/interactive-component?instanceId=new"));
+    expect(read.status).toBe(409);
+    const replay = await POST(req(request));
+    expect(replay.status).toBe(409);
+    expect(await replay.json()).toMatchObject({ error: "unsupported_saved_configuration" });
+    expect(mocks.configure).not.toHaveBeenCalled();
   });
   it("does not regenerate an instance after the short request cache expires", async () => {
     mocks.get.mockResolvedValue(saved);

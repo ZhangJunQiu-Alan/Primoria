@@ -162,6 +162,11 @@ async function run() {
       ...process.env,
       DATABASE_URL: appDatabaseUrl,
       TEST_DATABASE_URL: testUrl.toString(),
+      // Isolated runs keep lesson image bytes in their own database, never the
+      // shared Storage bucket. Next does not override an explicitly empty value
+      // from .env.local, and media-storage.ts treats empty as unconfigured.
+      SUPABASE_URL: "",
+      SUPABASE_SECRET_KEY: "",
     },
     stdio: "inherit",
   });

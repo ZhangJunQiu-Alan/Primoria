@@ -149,6 +149,20 @@ describe("InteractiveComponentCard", () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
+  it.each([
+    ["target_not_found", 404, "已不存在"],
+    ["unsupported_target_version", 409, "版本暂不支持"],
+  ])("shows a non-retryable notice when the adjustment target is %s", async (error, status, text) => {
+    const fetchMock = vi.fn(async (_input: RequestInfo | URL, init?: RequestInit) => init?.method === "POST"
+      ? new Response(JSON.stringify({ ok: false, error }), { status })
+      : new Response(JSON.stringify({ ok: false, error: "not_found" }), { status: 404 }));
+    vi.stubGlobal("fetch", fetchMock);
+    const container = await mount(createElement(InteractiveComponentCard, { componentId: "physics.lens-imaging", request: "make it bigger", instanceId: "adjust-tool", targetInstanceId: "gone-tool" }));
+    await waitFor(() => expect(container.querySelector('[role="alert"]')?.textContent).toContain(text));
+    expect(container.querySelector("button")).toBeNull();
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+
   it("derives a stable legacy instance id so remounts reuse the saved output", async () => {
     const urls: string[] = [];
     vi.stubGlobal("fetch", vi.fn(async (url: string) => {
