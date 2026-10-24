@@ -218,6 +218,12 @@ text blocks. Image plus visual usually occupies 30–45% of a lesson, but every
 media block needs a distinct teaching purpose. Each concept should close with
 its own quiz rather than moving all checks to the lesson end.
 
+Lesson images prioritize accurate explanation of a concept. Labels, arrows,
+numbers, formulas, chemical notation, and short explanations may appear inside
+an image when they aid understanding. Instructional text follows the lesson
+language and must be correct and readable at lesson-column width. `caption`
+means the explanation displayed below the image; `alt` describes its teaching
+content accessibly. Neither compensates for incorrect or unclear image content.
 
 ### 3.6 Quiz, events, mastery, and next-step decisions
 

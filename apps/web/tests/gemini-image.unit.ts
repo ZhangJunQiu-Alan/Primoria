@@ -45,10 +45,13 @@ function okResponse(): Response {
   return new Response(JSON.stringify(json), { status: 200, headers: { "Content-Type": "application/json" } });
 }
 
-function testPromptGuardsAgainstText() {
+function testPromptSupportsTeachingText() {
   const prompt = buildImagePrompt(BRIEF);
   assert(prompt.includes("A flat illustration of a chloroplast cross-section"), "prompt keeps the brief prompt");
-  assert(/Do not render any text/i.test(prompt), "prompt forbids embedded text/labels");
+  assert(prompt.includes("Teaching goal: Recognize the chloroplast"), "prompt includes the teaching goal");
+  assert(prompt.includes("Include labels, arrows, numbers, formulas, chemical notation, or short explanations when they improve understanding"), "prompt permits useful instructional text");
+  assert(prompt.includes('Use the teaching language "en"'), "prompt defaults instructional text to English");
+  assert(prompt.includes("readable at lesson-column width"), "prompt requires readable instructional text");
   assert(prompt.includes("Avoid: photorealism, clutter."), "prompt folds in the negative prompt");
   assert(prompt.includes("Aspect ratio: 16:9."), "prompt includes aspect ratio hint");
 }
@@ -91,7 +94,7 @@ async function testSuccessfulParse() {
   assert(headers["x-goog-api-key"] === "secret-key-123", "passes the key in the x-goog-api-key header");
   const body = JSON.parse(String(capturedInit?.body));
   assert(JSON.stringify(body.generationConfig.responseModalities) === JSON.stringify(["IMAGE"]), "requests IMAGE modality");
-  assert(typeof body.contents[0].parts[0].text === "string" && body.contents[0].parts[0].text.includes("Do not render any text"), "sends the guarded prompt");
+  assert(typeof body.contents[0].parts[0].text === "string" && body.contents[0].parts[0].text === buildImagePrompt(BRIEF), "sends the teaching-focused prompt");
 }
 
 async function testHttpErrorDoesNotLeakKey() {
@@ -119,7 +122,7 @@ async function testMissingImageThrows() {
 }
 
 async function main() {
-  testPromptGuardsAgainstText();
+  testPromptSupportsTeachingText();
   testConfigRequiresKey();
   await testSuccessfulParse();
   await testHttpErrorDoesNotLeakKey();

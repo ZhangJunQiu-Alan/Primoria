@@ -36,32 +36,44 @@ const STYLE_BY_KIND: Record<ImageKind, string> = {
     "Style: natural photographic rendering, warm soft daylight, one clear subject, uncluttered neutral background, true-to-life color.",
 };
 
-/** Assembles the text prompt sent to the image model from a brief. Enforces the
- * house constraint that AI images never carry text/labels/formulas — those
- * belong in `visual` blocks or a structured overlay, not a generated raster. */
+/** Assembles a teaching-focused image prompt, including legible instructional
+ * text when it helps explain the concept. */
 export function buildImagePrompt(brief: ImageBrief): string {
   const lines = [
     brief.prompt.trim(),
     STYLE_BY_KIND[brief.imageKind],
-    "Do not render any text, words, numbers, labels, axis ticks, formulas, or chemical notation inside the image.",
+    `Teaching goal: ${brief.learningGoal.trim()}`,
+    "Prioritize factual accuracy and a clear explanation of this concept. Include labels, arrows, numbers, formulas, chemical notation, or short explanations when they improve understanding; omit text that adds no teaching value.",
+    `Use the teaching language \"${brief.language?.trim() || DEFAULT_LANGUAGE}\" for instructional text. Render any exact label text specified in the brief verbatim. Keep text accurate, concise, readable at lesson-column width, and clearly associated with the relevant structure or step. Avoid overlapping labels, tiny text, decorative prose, and watermarks.`,
     "Aspect ratio: 16:9.",
   ];
   if (brief.negativePrompt?.trim()) lines.push(`Avoid: ${brief.negativePrompt.trim()}.`);
   return lines.join("\n");
 }
 
-/** Stable reuse key. Hashes the brief's *semantics* — not the rendered prompt
- * text — so reworded prompts for the same concept/goal/style still reuse one
- * asset. conceptIds are sorted so ordering never forks the cache. */
-export function imageCacheKey(brief: ImageBrief, model: string): string {
+/** Stable reuse key, shared by every learner and every image model: one
+ * canonical image per concept set + house style + language, so a concept's image
+ * is generated once (by a lesson or an offline pre-warm with any model) and every
+ * later lesson reuses it with that asset's own kind/alt/caption. Language stays
+ * in the key because the reused alt/caption are written in it. Analogy
+ * illustrations draw the lesson's own analogy, so they stay keyed by kind and
+ * learning goal. conceptIds are sorted so ordering never forks the cache. */
+/** Primary language subtag for the cache key: "zh-CN", "zh_Hans" and "zh" share
+ * one Chinese asset, and unset means the default language. */
+export function imageLanguage(language: string | null | undefined): string {
+  const primary = language?.trim().toLowerCase().split(/[-_]/)[0];
+  return primary || DEFAULT_LANGUAGE;
+}
+
+export function imageCacheKey(brief: ImageBrief): string {
   const canonical = {
-    model,
     conceptIds: [...brief.conceptIds].map((id) => id.trim()).sort(),
-    learningGoal: brief.learningGoal.trim(),
-    imageKind: brief.imageKind,
     styleVersion: brief.styleVersion ?? STYLE_VERSION,
     aspectRatio: "16:9",
-    language: brief.language ?? DEFAULT_LANGUAGE,
+    language: imageLanguage(brief.language),
+    ...(brief.imageKind === "analogy_illustration"
+      ? { imageKind: brief.imageKind, learningGoal: brief.learningGoal.trim() }
+      : {}),
   };
   return createHash("sha256").update(JSON.stringify(canonical)).digest("hex");
 }

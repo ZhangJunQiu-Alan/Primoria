@@ -17,6 +17,7 @@
     "start:extractor": "pnpm --filter @primoria/web worker:extractor",
     "db:bootstrap": "node scripts/with-database-env.mjs migration pnpm db:bootstrap:schemas",
     "db:initialize:kg": "node scripts/with-database-env.mjs runtime pnpm --filter @primoria/web db:initialize:kg",
+    "media:migrate-storage": "node scripts/with-database-env.mjs runtime pnpm --filter @primoria/web media:migrate-storage",
     "build": "pnpm --filter @primoria/web build",
     "audit:prod": "node scripts/audit-prod-bulk.mjs --audit-level high",
     "lint": "pnpm --filter @primoria/web lint",
