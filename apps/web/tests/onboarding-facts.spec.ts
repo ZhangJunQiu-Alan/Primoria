@@ -19,14 +19,6 @@ describe("onboarding learner facts", () => {
     });
   });
 
-  it("captures both the selected tutor and teaching preference", () => {
-    expect(buildOnboardingFact({ kind: "tutor_style", value: "feynman" })).toEqual({
-      sourceId: "onboarding:tutor_style",
-      text: "Selected Richard Feynman as tutor; prefers intuition and analogies before formal details.",
-      category: "preference",
-    });
-  });
-
   it("does not create a fact for a skipped answer", () => {
     expect(buildOnboardingFact({ kind: "learning_goal", value: null })).toBeNull();
   });

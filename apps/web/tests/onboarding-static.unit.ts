@@ -177,8 +177,8 @@ function main() {
   assert(writer.includes("knowledgeBackgroundDirective"), "writer prompt includes background directive");
 
   const copilotRoute = src("app/api/copilotkit/route.ts");
-  assert(copilotRoute.includes("tutorStyleDirective"), "copilot route injects tutor style");
-  assert(copilotRoute.includes("dialogue only"), "tutor style stays dialogue-only");
+  assert(copilotRoute.includes("primoria_tutor_style: this.learnerProfile?.tutorStyle ?? null"), "copilot route passes tutor style as server-set run state");
+  assert(copilotRoute.includes("dialogue only"), "learner profile context stays dialogue-only");
 
   process.stdout.write("[onboarding-static.unit] ALL CHECKS PASSED\n");
 }

@@ -8,6 +8,7 @@ import {
   EDUCATION_STAGES,
   isEducationCurriculum,
   isEducationStage,
+  DEFAULT_TUTOR_STYLE,
   isTutorStyle,
   type EducationContextSource,
   type EducationCurriculum,
@@ -59,7 +60,6 @@ type OnboardingVisual = {
 };
 
 const STEP_ORDER: OnboardingStep[] = ["goal", "facts", "style"];
-const DEFAULT_TUTOR_STYLE: TutorStyle = "feynman";
 
 const STEP_VISUALS: Record<OnboardingStep, { src: string; mark: string; width: number; height: number }> = {
   goal: {

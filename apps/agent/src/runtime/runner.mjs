@@ -61,6 +61,7 @@ function runtimeContext(input) {
   return {
     primoria_owner_id: input?.state?.primoria_owner_id,
     user_id: input?.state?.user_id,
+    primoria_tutor_style: input?.state?.primoria_tutor_style,
     copilotkit: input?.state?.copilotkit,
   };
 }

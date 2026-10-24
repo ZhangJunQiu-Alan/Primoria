@@ -63,7 +63,9 @@ Onboarding captures four explicit signals across three pages:
 1. learning goal;
 2. current education stage and confirmed curriculum;
 3. an optional 2–2000 character self-introduction for Facts intake;
-4. Tutor style (`socratic`, `feynman`, or `euclid`).
+4. Tutor style (`socratic`, `feynman`, or `euclid`; skipped resolves to
+   `feynman`). Settings can change it at any time; it applies from the next
+   Tutor message.
 
 The goal is positioned against library KGs. A broad covered subject may reuse
 the full authored graph; a precise topic/concept uses its prerequisite closure;
@@ -115,8 +117,34 @@ Browser CopilotKit UI
 ```
 
 The Web route injects owner identity, course-detail context when relevant,
-learner profile, and active learner facts. The Agent selects tools and streams
-AG-UI events. The removed `/api/tutor/chat` stack is not a fallback.
+the learner's Tutor style as `primoria_tutor_style` run state, and active
+learner facts. The Agent selects tools and streams AG-UI events. The removed
+`/api/tutor/chat` stack is not a fallback.
+
+Tutor style changes how the Tutor teaches in dialogue, not what it routes to.
+The Agent appends one persona section from `packages/contracts/src/tutor-style.mjs`
+to the main Tutor and `concept-agent` system prompts:
+
+- `socratic`: one guiding question per reply; the definition, result, and key
+  insight are withheld (even from framing sentences) until the learner reaches
+  them, with escalating hints, unless the learner explicitly asks for the answer.
+- `feynman`: an everyday analogy in plain words first, then a teach-back request
+  to explain the idea in the learner's own words; the Tutor repairs the single
+  most important gap in that explanation.
+- `euclid`: a one-line precise definition and at most two conditions, then a few
+  numbered one-line justified steps (Given → To find → Steps → Check for
+  problems), within a ~250-character budget; follow-up turns confirm or correct
+  in one to three lines without restating definitions.
+
+Every style shares one presentation, also defined in `tutor-style.mjs`:
+teaching replies are structured cards — two to four blocks with bold
+emoji-icon labels, comparisons in small tables, and the closing question in a
+blockquote. Tool-call sentences, greetings, and quick factual lookups stay
+plain text.
+
+Style is not a learner fact and never enters lesson generation.
+`apps/agent/evals/tutor-style.v1.json` runs the same prompts under all three
+styles and checks deterministic behavior markers against a real model.
 
 Important tool behavior:
 
@@ -189,6 +217,13 @@ Generation aims for short teaching loops with no more than two consecutive pure
 text blocks. Image plus visual usually occupies 30–45% of a lesson, but every
 media block needs a distinct teaching purpose. Each concept should close with
 its own quiz rather than moving all checks to the lesson end.
+
+Lesson images prioritize accurate explanation of a concept. Labels, arrows,
+numbers, formulas, chemical notation, and short explanations may appear inside
+an image when they aid understanding. Instructional text follows the lesson
+language and must be correct and readable at lesson-column width. `caption`
+means the explanation displayed below the image; `alt` describes its teaching
+content accessibly. Neither compensates for incorrect or unclear image content.
 
 ### 3.6 Quiz, events, mastery, and next-step decisions
 

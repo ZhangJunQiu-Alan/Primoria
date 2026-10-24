@@ -1,10 +1,12 @@
 # Supabase database deployment
 
 Current target: Primoria (`rygafvlzzkvqhhenajzi`), Singapore. The separate
-English_Primoria project is unrelated. Supabase hosts PostgreSQL/pgvector;
-Next.js, the AG-UI Agent and three workers still need an application server.
-Authentication remains Primoria's server-owned users/identities/sessions.
-No Supabase browser SDK, Auth migration or service-role key is required.
+English_Primoria project is unrelated. Supabase hosts PostgreSQL/pgvector and
+a private Storage bucket for lesson image bytes; Next.js, the AG-UI Agent and
+three workers still need an application server. Authentication remains
+Primoria's server-owned users/identities/sessions. No Supabase browser SDK or
+Auth migration is used; the only Supabase API credential is the server-side
+Storage key described below.
 
 ## Local connection and commands
 
@@ -64,6 +66,29 @@ agent_runtime and no runtime permission to create schemas or tables.
 Keep Supabase-owned auth, storage, realtime and extension schemas intact.
 Repository KG SQL, Drizzle and Agent migrations remain the schema authorities;
 do not introduce a second supabase/migrations history.
+
+## Lesson image Storage
+
+`media_assets` keeps image metadata and `storage_path`; the bytes live in the
+private `lesson-media` bucket (`PRIMORIA_MEDIA_BUCKET`). Web and the lesson
+worker read and write it server-side with `SUPABASE_URL` and
+`SUPABASE_SECRET_KEY` from `.env.supabase`; browsers only ever fetch
+`/api/media/assets/[assetId]`. Use a secret key (`sb_secret_...`, sent on
+`apikey`) or the legacy service_role key. It bypasses Storage policies but the
+application schemas revoke service_role grants, so it cannot read app tables
+through the Data API. Storage-only S3 access keys would narrow it further and
+need a SigV4 client. Without these variables, bytes stay in Postgres.
+
+Rows written before Storage keep their in-row `data_base64` and still serve.
+Move them once, then reclaim the space:
+
+```bash
+pnpm media:migrate-storage             # dry run, lists rows to move
+pnpm media:migrate-storage -- --apply  # creates the bucket if missing, uploads, verifies, clears data_base64
+```
+
+Then run `VACUUM (FULL) media_assets;` in the SQL editor. Free-plan Storage is
+1 GB with 5 GB/month egress shared with the database.
 
 ## Application server deployment
 

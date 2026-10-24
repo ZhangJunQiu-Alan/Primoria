@@ -8,7 +8,6 @@ import type {
   KnowledgeBackground,
   LearnerFact,
   LearnerProfile,
-  TutorStyle,
 } from "../learner-profile/types";
 import { EDUCATION_CURRICULUM_LABELS } from "../learner-profile/education-context";
 
@@ -76,8 +75,7 @@ export function isLikelySemanticFactDuplicate(left: string, right: string) {
 export type OnboardingFactInput =
   | { kind: "learning_goal"; value: string | null }
   | { kind: "knowledge_background"; value: KnowledgeBackground | null }
-  | { kind: "curriculum_system"; value: EducationCurriculum | null }
-  | { kind: "tutor_style"; value: TutorStyle | null };
+  | { kind: "curriculum_system"; value: EducationCurriculum | null };
 
 export type OnboardingFactDescriptor = {
   sourceId: string;
@@ -109,23 +107,10 @@ export function buildOnboardingFact(input: OnboardingFactInput): OnboardingFactD
     };
   }
 
-  if (input.kind === "curriculum_system") {
-    return {
-      sourceId: "onboarding:curriculum_system",
-      text: `Curriculum: ${EDUCATION_CURRICULUM_LABELS[input.value]}`,
-      category: "profile_context",
-    };
-  }
-
-  const tutorFacts: Record<TutorStyle, string> = {
-    socratic: "Selected Socrates as tutor; prefers guiding questions before direct answers.",
-    feynman: "Selected Richard Feynman as tutor; prefers intuition and analogies before formal details.",
-    euclid: "Selected Euclid as tutor; prefers precise definitions and structured reasoning.",
-  };
   return {
-    sourceId: "onboarding:tutor_style",
-    text: tutorFacts[input.value],
-    category: "preference",
+    sourceId: "onboarding:curriculum_system",
+    text: `Curriculum: ${EDUCATION_CURRICULUM_LABELS[input.value]}`,
+    category: "profile_context",
   };
 }
 
@@ -187,12 +172,11 @@ export async function syncOnboardingFact(ownerId: string, input: OnboardingFactI
 }
 
 export async function syncOnboardingProfileFacts(
-  profile: Pick<LearnerProfile, "ownerId" | "learningGoal" | "knowledgeBackground" | "curriculumSystem" | "tutorStyle">,
+  profile: Pick<LearnerProfile, "ownerId" | "learningGoal" | "knowledgeBackground" | "curriculumSystem">,
 ): Promise<void> {
   await syncOnboardingFact(profile.ownerId, { kind: "learning_goal", value: profile.learningGoal });
   await syncOnboardingFact(profile.ownerId, { kind: "knowledge_background", value: profile.knowledgeBackground });
   await syncOnboardingFact(profile.ownerId, { kind: "curriculum_system", value: profile.curriculumSystem });
-  await syncOnboardingFact(profile.ownerId, { kind: "tutor_style", value: profile.tutorStyle });
 }
 
 // Planned mutation for one op, decided purely from the current facts. Pure so the

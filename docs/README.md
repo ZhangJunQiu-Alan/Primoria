@@ -45,6 +45,7 @@ use the priority order below and verify behavior against the code.
 ## Operations and engineering
 
 - [`deployment-preflight.md`](deployment-preflight.md) — production release, privileges, verification, rollback, and recovery.
+- [`image-prewarm-handoff.md`](image-prewarm-handoff.md) — Codex built-in image generation runbook for standard Chinese concept images in Supabase Storage, with teaching-first text/label review, provenance, confirmation gates, verification, and rollback; no OpenAI image API key.
 - [`dependency-security.md`](dependency-security.md) — production audit policy, overrides, and accepted non-blocking findings.
 - [`integration-regression-testing.md`](integration-regression-testing.md) — approved critical-journey regression architecture, deterministic test data, CI layers, and release gates.
 - [`issue-taxonomy-and-roadmap.md`](issue-taxonomy-and-roadmap.md) — issue labels and current implementation slices.

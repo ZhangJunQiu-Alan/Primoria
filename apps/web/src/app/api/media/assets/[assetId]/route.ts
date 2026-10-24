@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getOptionalAuthUser } from "@/lib/auth/guard";
 import { hasDatabaseUrl } from "@/lib/db/client";
-import { getMediaAsset } from "@/lib/ai/media/media-assets";
+import { getMediaAsset, readMediaAssetBytes } from "@/lib/ai/media/media-assets";
 
 // Serves cached media bytes for `image` blocks. Global assets (owner_id NULL)
 // are public and immutably cacheable; owner-scoped assets require the matching
@@ -27,7 +27,7 @@ export async function GET(_request: Request, context: { params: Promise<{ assetI
       }
     }
 
-    const body = new Uint8Array(Buffer.from(asset.dataBase64, "base64"));
+    const body = await readMediaAssetBytes(asset);
     const cacheControl = asset.ownerId
       ? "private, max-age=31536000, immutable"
       : "public, max-age=31536000, immutable";
