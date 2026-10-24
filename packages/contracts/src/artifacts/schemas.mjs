@@ -112,7 +112,7 @@ export const SearchInteractiveComponentsArgsSchema = z.object({
 export const InteractiveComponentPayloadSchema = z.object({
   componentId: z.string().min(1).max(100),
   configVersion: z.number().int().positive(),
-  config: z.record(z.unknown()),
+  config: z.record(z.string(), z.unknown()),
 }).strict();
 
 export const OpenInteractiveComponentArgsSchema = z.object({
@@ -139,7 +139,7 @@ export const OpenInteractiveComponentArgsSchema = z.object({
 export const RenderChartArgsSchema = z.object({
   title: z.string().describe("Display title for the chart card header"),
   description: z.string().describe("One sentence describing what this chart shows"),
-  option: z.record(z.unknown()).describe("Complete ECharts option JSON object"),
+  option: z.record(z.string(), z.unknown()).describe("Complete ECharts option JSON object"),
   height: z.number().optional().describe("Canvas height in px, default 400"),
 });
 
