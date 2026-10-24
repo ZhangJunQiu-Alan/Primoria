@@ -35,5 +35,13 @@ test-results/
 # LangGraph API
 .langgraph_api
 
+# Generated acceptance/replay bundles, screenshots and review evidence. Publish
+# them as release assets or object storage; the exporters regenerate them.
+/artifacts/
+
+# Third-party reference-site inventory and observation evidence (private; see
+# docs/visualization-reference-inventory.md)
+.private/
+
 # Local Supabase CLI connection cache
 supabase/.temp/

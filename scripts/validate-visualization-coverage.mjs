@@ -2,12 +2,13 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve, relative, isAbsolute } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ReferenceInventorySchema, ReferenceCoverageSchema, reportReferenceCoverage } from "../packages/contracts/src/artifacts/visualization-reference.mjs";
+import { referenceInventoryPath } from "./visualization-reference-path.mjs";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
-const inventoryPath = resolve(root, "data/visualization-components/reference-inventory.v1.json");
+const inventoryPath = referenceInventoryPath();
 const coveragePath = resolve(root, "data/visualization-components/reference-coverage.v1.json");
 if (!existsSync(inventoryPath) || !existsSync(coveragePath)) {
-  console.error("[visualization-coverage] BLOCKED: reference inventory/coverage not delivered; full coverage cannot be verified");
+  console.error(`[visualization-coverage] BLOCKED: reference inventory (${inventoryPath}) or coverage not available; the inventory is private and kept out of the repository, so full coverage cannot be verified here`);
   process.exit(1);
 }
 const inventory = ReferenceInventorySchema.parse(JSON.parse(readFileSync(inventoryPath, "utf8")));
