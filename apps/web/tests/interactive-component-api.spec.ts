@@ -1,10 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-const mocks = vi.hoisted(() => ({ auth: vi.fn(), get: vi.fn(), create: vi.fn(), update: vi.fn(), reserve: vi.fn(), complete: vi.fn(), fail: vi.fn(), configure: vi.fn() }));
+const mocks = vi.hoisted(() => ({ auth: vi.fn(), get: vi.fn(), create: vi.fn(), update: vi.fn(), reserve: vi.fn(), complete: vi.fn(), fail: vi.fn(), configure: vi.fn(), access: vi.fn() }));
 vi.mock("@/lib/auth/guard", () => ({ requireConfiguredAuthUser: mocks.auth }));
 vi.mock("@/lib/interactive/instance-store", () => ({ getInteractiveInstance: mocks.get, createInteractiveInstance: mocks.create, updateInteractiveInstance: mocks.update }));
-vi.mock("@/lib/interactive/request-budget", () => ({ hashInteractiveRequest: (input: unknown) => JSON.stringify(input), reserveInteractiveRequest: mocks.reserve, completeInteractiveRequest: mocks.complete, failInteractiveRequest: mocks.fail }));
+vi.mock("@/lib/interactive/request-budget", () => ({ hashInteractiveRequest: (input: unknown) => JSON.stringify(input), reserveInteractiveRequest: mocks.reserve, completeInteractiveRequest: mocks.complete, failInteractiveRequest: mocks.fail, checkInteractiveInstanceAccess: mocks.access }));
 vi.mock("@/lib/interactive/configure", () => ({ configureComponent: mocks.configure }));
 import { GET, POST, PATCH } from "../src/app/api/interactive-component/route";
+import { InteractivePayloadError } from "../src/lib/interactive/payload";
 const config = { lensType: "convex", focalLength: 10, objectDistance: 30, objectHeight: 8, showRays: true };
 const request = { instanceId: "new", componentId: "physics.lens-imaging", prompt: "lens" };
 const saved = { ...request, ownerId: "owner", configVersion: 1, config, revision: 1, requestHash: JSON.stringify({ componentId: request.componentId, prompt: request.prompt, targetInstanceId: null }) };
@@ -16,16 +17,20 @@ beforeEach(() => {
   mocks.reserve.mockResolvedValue({ kind: "execute", requestId: "reserved" });
   mocks.configure.mockResolvedValue({ ok: true, mode: "create", config, ms: 1 });
   mocks.create.mockResolvedValue(saved);
+  mocks.access.mockResolvedValue({ allowed: true });
+  vi.unstubAllEnvs();
 });
 describe("authenticated durable interactive component API", () => {
   it("releases a failed configuration request so the same card can retry", async () => {
     mocks.configure.mockResolvedValue({ ok: false, error: "invalid config", ms: 2, modelCalls: [{ model: "fixture", status: 200, usage: null, responseId: null }] });
     const response = await POST(req(request));
     expect(response.status).toBe(502);
-    expect(await response.json()).toMatchObject({ ok: false, modelCalls: [{ model: "fixture" }] });
+    expect(await response.json()).not.toHaveProperty("modelCalls");
     expect(mocks.fail).toHaveBeenCalledWith("reserved", "owner");
     expect(mocks.complete).not.toHaveBeenCalled();
     expect(mocks.create).not.toHaveBeenCalled();
+    vi.stubEnv("PRIMORIA_EXPOSE_MODEL_CALLS", "1");
+    expect(await (await POST(req(request))).json()).toMatchObject({ ok: false, modelCalls: [{ model: "fixture" }] });
   });
   it("checks auth before reading or writing configurations", async () => {
     mocks.auth.mockResolvedValue({ denied: new Response("unauthorized", { status: 401 }), user: null });
@@ -55,7 +60,7 @@ describe("authenticated durable interactive component API", () => {
     expect(mocks.configure).not.toHaveBeenCalled();
   });
   it("rejects missing or differently typed adjustment targets instead of creating defaults", async () => {
-    expect((await POST(req({ ...request, targetInstanceId: "other-owner-instance", current: config }))).status).toBe(404);
+    expect((await POST(req({ ...request, targetInstanceId: "other-owner-instance" }))).status).toBe(404);
     expect(mocks.configure).not.toHaveBeenCalled();
     mocks.get.mockResolvedValueOnce(null).mockResolvedValueOnce({ ...saved, componentId: "music.rhythm-pattern" });
     expect((await POST(req({ ...request, targetInstanceId: "wrong-type" }))).status).toBe(404);
@@ -63,7 +68,9 @@ describe("authenticated durable interactive component API", () => {
   it("uses the server-owned target config and persists the new result", async () => {
     mocks.get.mockResolvedValueOnce(null).mockResolvedValueOnce(saved);
     mocks.create.mockImplementation(async (input: Record<string, unknown>) => ({ ...saved, ...input, revision: 1 }));
-    const response = await POST(req({ ...request, targetInstanceId: "old", current: { focalLength: 999 } }));
+    expect((await POST(req({ ...request, targetInstanceId: "old", current: { focalLength: 999 } }))).status).toBe(400);
+    mocks.get.mockReset().mockResolvedValueOnce(null).mockResolvedValueOnce(saved);
+    const response = await POST(req({ ...request, targetInstanceId: "old" }));
     expect(response.status).toBe(200);
     expect(mocks.configure).toHaveBeenCalledWith("lens", expect.anything(), "adjust", { componentId: request.componentId, config }, expect.any(AbortSignal));
     expect(mocks.create).toHaveBeenCalledWith(expect.objectContaining({ ownerId: "owner", instanceId: "new", configVersion: 1 }));
@@ -72,7 +79,32 @@ describe("authenticated durable interactive component API", () => {
   it("enforces optimistic revision updates", async () => {
     mocks.update.mockResolvedValue({ kind: "conflict" });
     expect((await PATCH(req({ instanceId: "new", revision: 1, config }, "PATCH"))).status).toBe(409);
-    expect(mocks.update).toHaveBeenCalledWith("owner", "new", 1, config);
+    expect(mocks.update).toHaveBeenCalledWith("owner", "new", 1, config, undefined);
+  });
+  it("maps an unsupported saved version to a conflict, not a server failure", async () => {
+    mocks.update.mockRejectedValue(new InteractivePayloadError("unsupported_version", "no migration"));
+    const response = await PATCH(req({ instanceId: "new", revision: 1, config }, "PATCH"));
+    expect(response.status).toBe(409);
+    expect(await response.json()).toMatchObject({ error: "unsupported_saved_configuration" });
+    mocks.get.mockResolvedValue({ ...saved, configVersion: 99 });
+    expect((await GET(new Request("http://localhost/api/interactive-component?instanceId=new"))).status).toBe(409);
+    const replay = await POST(req(request));
+    expect(replay.status).toBe(409);
+    expect(mocks.configure).not.toHaveBeenCalled();
+  });
+  it("forwards the client's config version so a stale tab's config is upgraded", async () => {
+    mocks.update.mockResolvedValue({ kind: "updated", instance: saved });
+    expect((await PATCH(req({ instanceId: "new", revision: 1, configVersion: 1, config }, "PATCH"))).status).toBe(200);
+    expect(mocks.update).toHaveBeenCalledWith("owner", "new", 1, config, 1);
+  });
+  it("rate-limits saved-instance reads and control saves", async () => {
+    mocks.access.mockResolvedValue({ allowed: false, retryAfterSeconds: 7, reason: "account" });
+    const read = await GET(new Request("http://localhost/api/interactive-component?instanceId=new"));
+    expect(read.status).toBe(429);
+    expect(read.headers.get("retry-after")).toBe("7");
+    expect((await PATCH(req({ instanceId: "new", revision: 1, config }, "PATCH"))).status).toBe(429);
+    expect(mocks.get).not.toHaveBeenCalled();
+    expect(mocks.update).not.toHaveBeenCalled();
   });
   it("rejects invalid requests before reserving model capacity", async () => {
     expect((await POST(req({ ...request, extra: true }))).status).toBe(400);

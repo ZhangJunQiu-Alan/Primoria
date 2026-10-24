@@ -1,1 +1,0 @@
-import{a,b,c,d,e}from"./chunk-SFIMXHTK.js";import"./chunk-FTKDBJEQ.js";import"./chunk-7SZRL6FY.js";export{c as DEFAULT_SENTENCE_STRUCTURE_CONFIG,a as SentenceStructureConfigSchema,b as SentenceStructurePatchSchema,d as analyzeSentenceStructure,e as sentenceStructureComponent};

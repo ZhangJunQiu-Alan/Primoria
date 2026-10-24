@@ -31,7 +31,7 @@
 
 ## 参考清单与覆盖约定
 
-`reference-inventory.v1.json` 顶层：`schemaVersion: 1`、`snapshot: { startedAt, completedAt?, entryUrls, frozen }`、`cases`。每例：`referenceId`、`url`、`subject`、`stage`、`title`、`status: verified|unverified|blocked`、`capabilities: [{ capabilityId, description }]`、`evidence: string[]`。
+参考清单是第三方站点的盘点材料，保存在 gitignore 的 `.private/visualization-reference/reference-inventory.v1.json`（可用 `PRIMORIA_REFERENCE_INVENTORY` 覆盖），不提交到公开仓库；仓库内只保留我方覆盖表与校验程序。`reference-inventory.v1.json` 顶层：`schemaVersion: 1`、`snapshot: { startedAt, completedAt?, entryUrls, frozen }`、`cases`。每例：`referenceId`、`url`、`subject`、`stage`、`title`、`status: verified|unverified|blocked`、`capabilities: [{ capabilityId, description }]`、`evidence: string[]`。
 
 `reference-coverage.v1.json` 顶层：`schemaVersion: 1`、`mappings`。每行：`referenceId`、`capabilityId`、`componentId`、`configVersion`、`status: verified|unverified|blocked`、`testIds: string[]`、`evidence: string[]`、`notes?`。一个能力对应多个组件时分别登记，能力覆盖计数不重复。未冻结/未完成盘点不显示全量通过。
 

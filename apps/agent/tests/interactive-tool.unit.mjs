@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
 import { ToolNode } from "@langchain/langgraph/prebuilt";
-import { openInteractiveComponentTool, learnerRequestFromMessages } from "../src/tools/interactive.mjs";
+import { openInteractiveComponentTool, learnerRequestFromMessages, canonicalInteractiveRequest } from "../src/tools/interactive.mjs";
 
 const result = await openInteractiveComponentTool.invoke({
   type: "tool_call",
@@ -26,5 +26,14 @@ assert.equal(learnerRequestFromMessages([]), null);
 const canonical = "演示电路。 保持标注。";
 const nodeOutput = await new ToolNode([openInteractiveComponentTool]).invoke({ messages: [new HumanMessage(canonical), new AIMessage({ content: "", tool_calls: [{ id: "canonical-call", name: "open_interactive_component", args: { component_id: "physics.circuit-lab", request: canonical.replaceAll(" ", "") } }] })] });
 assert.equal(JSON.parse(String(nodeOutput.messages[0].content)).request, canonical);
+
+// A clarification reply is not the adjustment itself; the model's request wins.
+const clarified = await new ToolNode([openInteractiveComponentTool]).invoke({ messages: [
+  new HumanMessage("把弹簧加重"), new AIMessage("你想调整哪一个振子？"), new HumanMessage("第一个"),
+  new AIMessage({ content: "", tool_calls: [{ id: "clarified-call", name: "open_interactive_component", args: { component_id: "physics.oscillation-lab", request: "把弹簧加重", target_instance_id: "osc-1" } }] }),
+] });
+assert.equal(JSON.parse(String(clarified.messages[0].content)).request, "把弹簧加重");
+assert.equal(canonicalInteractiveRequest("Show the lens", [{ role: "user", content: "Show the lens and then a projectile" }]), "Show the lens");
+assert.equal(canonicalInteractiveRequest("Show the lens", undefined), "Show the lens");
 
 process.stdout.write("[interactive-tool.unit] ALL CHECKS PASSED\n");

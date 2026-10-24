@@ -29,10 +29,7 @@ use the priority order below and verify behavior against the code.
 - [`交互组件规范.md`](交互组件规范.md) — canonical production component contract, routing flow, file boundaries, and acceptance gates.
 - [`visualization-full-coverage-execution.md`](visualization-full-coverage-execution.md) — active execution contract for reference-site coverage, two coding agents, 20 real-model prompts, and a replay-only acceptance website; full-reference acceptance remains incomplete.
 - [`visualization-interface-contract.md`](visualization-interface-contract.md) — shared component, versioned course payload, reference inventory, and batch handoff contract.
-- [`visualization-agent-a-handoff.md`](visualization-agent-a-handoff.md) — platform implementation progress and current validation limits; not full-reference acceptance.
-- [`visualization-agent-a-validation.md`](visualization-agent-a-validation.md) — dated 45-component platform regression, fixed 20-prompt evidence, offline review entry, and remaining full-reference gates.
-- [`visualization-human-acceptance-checklist.md`](visualization-human-acceptance-checklist.md) — combined human checklist for 20 captured prompts, 49 registered/pending scenes, visual quality, and unresolved acceptance gates.
-- [`visualization-human-acceptance-2026-10-23.md`](visualization-human-acceptance-2026-10-23.md) — user approval and commit/push authorization; preserves unresolved engineering results.
+- [`visualization-reference-inventory.md`](visualization-reference-inventory.md) — reference-site inventory method, counts, and the private-material boundary (inventory and evidence stay out of the repository).
 - [`opengenerative-ui-adaptation.md`](opengenerative-ui-adaptation.md) — renderer patterns adopted by Primoria and remaining future ideas.
 
 ## Knowledge graph
@@ -65,6 +62,7 @@ use the priority order below and verify behavior against the code.
 - [`archive/reviews/visualization-catalog-report-2026-07-15.md`](archive/reviews/visualization-catalog-report-2026-07-15.md) — delivery snapshot for the 19-component Catalog.
 - [`archive/reviews/visualization-catalog-admission-review-2026-07-15.md`](archive/reviews/visualization-catalog-admission-review-2026-07-15.md) — dated admission evidence and historical test counts.
 - [`archive/reviews/primoria-project-review-2026-07-17.html`](archive/reviews/primoria-project-review-2026-07-17.html) — dated repository review; its “current findings” are not current backlog authority.
+- [`archive/visualization-2026-10/`](archive/visualization-2026-10/) — dated two-Agent visualization build records (Agent A/B instructions, handoffs, 45-component platform validation, human acceptance checklist and 2026-10-23 approval). Logs they cite under `/tmp` were local and are not retained; acceptance bundles live outside Git (see `visualization-full-coverage-execution.md`).
 - [`archive/proposals/adaptive-learning-upgrade-proposal-2026-07-18.md`](archive/proposals/adaptive-learning-upgrade-proposal-2026-07-18.md) — unapproved Trace Forest, Solve-Check, protocol/auth, and package-boundary proposal.
 
 Archived material preserves design and review history. It must not be used as a

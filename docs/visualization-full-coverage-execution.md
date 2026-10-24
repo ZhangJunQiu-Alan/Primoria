@@ -1,6 +1,6 @@
 # Visualization 全量覆盖执行任务书
 
-状态：执行中。平台、45项组件注册及实测回放已交付；参考清单冻结、逐项能力覆盖和全量验收仍未完成。本文是验收要求，实际完成状态与证据见`visualization-agent-a-handoff.md`及`visualization-agent-b-handoff.md`。
+状态：执行中。平台、49项组件注册（2026-10-24 完成批次 009/010/011 集成）及实测回放已交付；参考清单冻结、逐项能力覆盖和全量验收仍未完成。本文是验收要求，实际完成状态与证据见[`visualization-agent-a-handoff.md`](archive/visualization-2026-10/visualization-agent-a-handoff.md)及[`visualization-agent-b-handoff.md`](archive/visualization-2026-10/visualization-agent-b-handoff.md)。
 
 日期：2026-10-22。工作目录：`/Users/zhangjunqiu/Documents/Project/Primoria`。
 
@@ -65,7 +65,7 @@
 | 文档 | 运行链路、测试报告、集成回归、项目入口文档 | 参考清单、覆盖映射、组件说明和视觉验收记录 |
 | 全局文件 | package scripts、lockfile、共享 i18n、根配置由 A 统一修改 | 通过交接清单请求修改，不直接竞争编辑 |
 
-执行任务分别见 [Agent A 指令](visualization-agent-a-instructions.md) 和 [Agent B 指令](visualization-agent-b-instructions.md)。
+执行任务分别见 [Agent A 指令](archive/visualization-2026-10/visualization-agent-a-instructions.md) 和 [Agent B 指令](archive/visualization-2026-10/visualization-agent-b-instructions.md)。
 
 并发规则：
 
@@ -167,7 +167,7 @@ A 在全站清单和组件库可用后生成 `apps/web/tests/fixtures/visualizat
 
 ## 10. 验收网页与证据包
 
-由 A 导出到 `artifacts/visualization-acceptance/<run-id>/`，提供静态 `index.html`、所需本地资源、脱敏结果、覆盖/质量报告与内容 hash 清单。输出目录和生成方式写入文档；可再生成单 HTML 便携版本，但不能仅交截图或 Markdown 报告。
+由 A 导出到 `artifacts/visualization-acceptance/<run-id>/`（该目录不进入 Git，证据包作为 Release 附件或对象存储发布），提供静态 `index.html`、所需本地资源、脱敏结果、覆盖/质量报告与内容 hash 清单。输出目录和生成方式写入文档；可再生成单 HTML 便携版本，但不能仅交截图或 Markdown 报告。
 
 页面包含：
 

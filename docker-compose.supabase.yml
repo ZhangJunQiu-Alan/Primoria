@@ -5,7 +5,9 @@
 x-db-env: &db-env
   DATABASE_URL: ${DATABASE_URL:?set Supabase runtime DATABASE_URL}
   DATABASE_SSL: verify-full
-  DATABASE_POOL_MAX: ${DATABASE_POOL_MAX:-1}
+  # Empty = sized from DATABASE_URL: 1 on the session pooler (5432), 5 on the
+  # transaction pooler (6543). See docs/supabase-deployment.md.
+  DATABASE_POOL_MAX: ${DATABASE_POOL_MAX:-}
   NODE_EXTRA_CA_CERTS: /app/docker/certs/supabase-prod-ca-2021.crt
 
 x-migration-db-env: &migration-db-env
@@ -60,7 +62,6 @@ services:
       <<: *db-env
       PRIMORIA_AGENT_URL: http://agent:2024
       PRIMORIA_AGENT_INTERNAL_SECRET: ${PRIMORIA_AGENT_INTERNAL_SECRET:?set PRIMORIA_AGENT_INTERNAL_SECRET in .env}
-      DATABASE_POOL_MAX: "1"
       APP_BASE_URL: ${APP_BASE_URL:?set APP_BASE_URL in .env}
       KG_EMBEDDING_PROVIDER: ${KG_EMBEDDING_PROVIDER:-minimax}
       KG_EMBEDDING_BASE_URL: ${KG_EMBEDDING_BASE_URL:-}
@@ -89,6 +90,9 @@ services:
       INTERACTIVE_COMPONENT_CONCURRENCY_MAX: ${INTERACTIVE_COMPONENT_CONCURRENCY_MAX:-2}
       INTERACTIVE_COMPONENT_REQUEST_TIMEOUT_SECONDS: ${INTERACTIVE_COMPONENT_REQUEST_TIMEOUT_SECONDS:-45}
       INTERACTIVE_COMPONENT_IDEMPOTENCY_TTL_SECONDS: ${INTERACTIVE_COMPONENT_IDEMPOTENCY_TTL_SECONDS:-600}
+      INTERACTIVE_COMPONENT_READ_RATE_LIMIT_MAX: ${INTERACTIVE_COMPONENT_READ_RATE_LIMIT_MAX:-240}
+      INTERACTIVE_COMPONENT_WRITE_RATE_LIMIT_MAX: ${INTERACTIVE_COMPONENT_WRITE_RATE_LIMIT_MAX:-180}
+      INTERACTIVE_COMPONENT_INSTANCE_MAX_PER_OWNER: ${INTERACTIVE_COMPONENT_INSTANCE_MAX_PER_OWNER:-2000}
       VISUALIZATION_TELEMETRY_RETENTION_DAYS: ${VISUALIZATION_TELEMETRY_RETENTION_DAYS:-90}
       EMAIL_PROVIDER: ${EMAIL_PROVIDER:-}
       TENCENT_SES_SECRET_ID: ${TENCENT_SES_SECRET_ID:-}
@@ -133,7 +137,7 @@ services:
     environment:
       <<: *db-env
       PRIMORIA_AGENT_INTERNAL_SECRET: ${PRIMORIA_AGENT_INTERNAL_SECRET:?set PRIMORIA_AGENT_INTERNAL_SECRET in .env}
-      AGENT_DATABASE_POOL_MAX: ${AGENT_DATABASE_POOL_MAX:-1}
+      AGENT_DATABASE_POOL_MAX: ${AGENT_DATABASE_POOL_MAX:-}
       AGENT_RUN_CONCURRENCY: ${AGENT_RUN_CONCURRENCY:-2}
       AGENT_RUN_MAX_ATTEMPTS: ${AGENT_RUN_MAX_ATTEMPTS:-2}
       AGENT_RUN_LEASE_MS: ${AGENT_RUN_LEASE_MS:-30000}
@@ -166,7 +170,6 @@ services:
     restart: unless-stopped
     environment:
       <<: *db-env
-      DATABASE_POOL_MAX: "1"
       AI_PROVIDER: ${AI_PROVIDER:-openai-compatible}
       OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
@@ -199,7 +202,6 @@ services:
     restart: unless-stopped
     environment:
       <<: *db-env
-      DATABASE_POOL_MAX: "1"
     command: ["pnpm", "--filter", "@primoria/web", "worker:learning-progress"]
     healthcheck: *worker-healthcheck
     depends_on:
@@ -216,7 +218,6 @@ services:
     restart: unless-stopped
     environment:
       <<: *db-env
-      DATABASE_POOL_MAX: "1"
       AI_PROVIDER: ${AI_PROVIDER:-openai-compatible}
       OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}

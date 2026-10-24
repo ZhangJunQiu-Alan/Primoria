@@ -466,10 +466,15 @@ function messageText(message: { content?: unknown; role?: unknown }) {
   return message.role === "assistant" ? sanitizeCopilotAssistantText(text) : text;
 }
 
-function CopilotThreadHistoryRecorder({ threadId, title, courseId, lessonId }: { threadId: string; title?: string; courseId?: string | null; lessonId?: string | null }) {
+export function CopilotThreadHistoryRecorder({ threadId, title, courseId, lessonId }: { threadId: string; title?: string; courseId?: string | null; lessonId?: string | null }) {
   const { agent } = useAgent({ agentId: "primoria_tutor", threadId, updates: [UseAgentUpdate.OnMessagesChanged] });
   const recordedMessagesRef = useRef<Map<string, string>>(new Map());
   const createdAtRef = useRef<Map<string, number>>(new Map());
+  const pendingFlushRef = useRef<((options?: { keepalive?: boolean }) => void) | null>(null);
+
+  // Writes are debounced while a reply streams; leaving the chat must still
+  // persist the latest messages instead of dropping the pending write.
+  useEffect(() => () => pendingFlushRef.current?.({ keepalive: true }), []);
 
   useEffect(() => {
     if (agent.messages.length === 0) return;
@@ -485,29 +490,33 @@ function CopilotThreadHistoryRecorder({ threadId, title, courseId, lessonId }: {
     });
     void persistThreadSummaryToServer(summary);
 
-    const timer = setTimeout(() => {
-    const completed = completedInteractiveToolIds(agent.messages);
-    for (const [index, message] of agent.messages.entries()) {
-      const metadata = interactiveHistoryMetadata(message, completed);
-      if (!metadata) continue;
-      const id = message.id ?? `${message.role}-${messageText(message).slice(0, 32)}`;
-      const content = messageText(message).trim();
-      if (!content && !("interactiveToolCalls" in metadata)) continue;
-      const fingerprint = JSON.stringify({ content, metadata });
-      if (recordedMessagesRef.current.get(id) === fingerprint) continue;
-      recordedMessagesRef.current.set(id, fingerprint);
-      if (!createdAtRef.current.has(id)) createdAtRef.current.set(id, Date.now() + index);
-      void persistThreadMessageToServer(threadId, {
-        id,
-        role: message.role,
-        content,
-        metadata,
-        createdAt: createdAtRef.current.get(id),
-        courseId,
-        lessonId,
-      });
-    }
-    }, 350);
+    const messages = agent.messages;
+    const flush = (options: { keepalive?: boolean } = {}) => {
+      pendingFlushRef.current = null;
+      const completed = completedInteractiveToolIds(messages);
+      for (const [index, message] of messages.entries()) {
+        const metadata = interactiveHistoryMetadata(message, completed);
+        if (!metadata) continue;
+        const id = message.id ?? `${message.role}-${messageText(message).slice(0, 32)}`;
+        const content = messageText(message).trim();
+        if (!content && !("interactiveToolCalls" in metadata)) continue;
+        const fingerprint = JSON.stringify({ content, metadata });
+        if (recordedMessagesRef.current.get(id) === fingerprint) continue;
+        recordedMessagesRef.current.set(id, fingerprint);
+        if (!createdAtRef.current.has(id)) createdAtRef.current.set(id, Date.now() + index);
+        void persistThreadMessageToServer(threadId, {
+          id,
+          role: message.role,
+          content,
+          metadata,
+          createdAt: createdAtRef.current.get(id),
+          courseId,
+          lessonId,
+        }, options);
+      }
+    };
+    pendingFlushRef.current = flush;
+    const timer = setTimeout(flush, 350);
     return () => clearTimeout(timer);
   }, [agent.messages, threadId, title, courseId, lessonId]);
 

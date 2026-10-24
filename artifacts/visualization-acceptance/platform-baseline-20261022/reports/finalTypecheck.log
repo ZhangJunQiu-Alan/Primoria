@@ -1,6 +1,0 @@
-
-> @primoria/web@0.1.0 typecheck /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
-> next typegen && tsc --noEmit
-
-Generating route types...
-✓ Types generated successfully

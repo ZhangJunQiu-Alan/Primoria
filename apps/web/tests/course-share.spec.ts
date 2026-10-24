@@ -94,6 +94,17 @@ describe("course share snapshot", () => {
     copied.interactive!.config.focalLength = 25;
     expect(shared).toMatchObject({ interactive: { config: { focalLength: 10 } } });
   });
+  it("shares and imports a course whose trusted block cannot be upgraded, without copying its unvalidated config", () => {
+    const course = fixtureCourse();
+    course.lessons[0].blocks!.push({ id: "future", type: "visual", description: "Observe rays", engine: "interactive", interactive: { componentId: "physics.lens-imaging", configVersion: 99, config: { focalLength: 10 } } });
+    const snapshot = buildShareSnapshot(course, new Set(["asset_global"]));
+    expect(snapshot.course.lessons[0].blocks!.at(-1)).toMatchObject({ id: "future", engine: "interactive", description: "Observe rays" });
+    expect(snapshot.course.lessons[0].blocks!.at(-1)).not.toHaveProperty("interactive");
+    const legacySnapshot = structuredClone(snapshot);
+    legacySnapshot.course.lessons[0].blocks!.push({ id: "unknown", type: "visual", description: "Removed component", engine: "interactive", interactive: { componentId: "retired.component", configVersion: 1, config: {} } });
+    const imported = snapshotToImportedCourse(legacySnapshot);
+    expect(imported.lessons[0].blocks!.at(-1)).not.toHaveProperty("interactive");
+  });
   it("strips learner progress and archival state", () => {
     const snapshot = buildShareSnapshot(fixtureCourse(), new Set(["asset_global"]));
 

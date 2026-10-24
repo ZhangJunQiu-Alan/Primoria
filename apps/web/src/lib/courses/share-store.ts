@@ -4,7 +4,7 @@ import type { Course, ImageBlock, Lesson } from "./types";
 import { courseToRow, getCourse, lessonToRow } from "./store";
 import { getDb } from "../db/client";
 import { courses as coursesTable, courseShareLinks, courseShareVersions, lessons as lessonsTable, mediaAssets } from "../db/schema";
-import { parseInteractivePayload } from "../interactive/payload";
+import { sanitizeInteractiveBlock, upgradeInteractiveBlock } from "../interactive/payload";
 
 /** Sanitized course copy stored in course_share_versions.snapshot. */
 export type CourseShareSnapshot = {
@@ -51,9 +51,7 @@ export function buildShareSnapshot(course: Course, globalAssetIds: Set<string>, 
     triggeredFrom: null,
     blocks: lesson.blocks
       ? lesson.blocks.map((block) => {
-          if (block.type === "visual" && block.engine === "interactive") {
-            return { ...structuredClone(block), interactive: parseInteractivePayload(block.interactive) };
-          }
+          if (block.type === "visual" && block.engine === "interactive") return sanitizeInteractiveBlock(structuredClone(block));
           if (block.type !== "image" || !block.assetId || globalAssetIds.has(block.assetId)) return structuredClone(block);
           const degraded: ImageBlock = { ...block, assetId: "", imageUrl: "", status: "error" };
           return degraded;
@@ -195,6 +193,14 @@ export type ActiveShare = {
   updatedAt: number;
 };
 
+/** Snapshots are immutable; trusted visual blocks are upgraded when read. */
+function upgradeSnapshotBlocks(snapshot: CourseShareSnapshot): CourseShareSnapshot {
+  return {
+    ...snapshot,
+    course: { ...snapshot.course, lessons: snapshot.course.lessons.map((lesson) => ({ ...lesson, blocks: lesson.blocks?.map(upgradeInteractiveBlock) ?? null })) },
+  };
+}
+
 export async function getActiveShareByToken(token: string): Promise<ActiveShare | null> {
   if (!token) return null;
   const rows = await getDb()
@@ -210,7 +216,7 @@ export async function getActiveShareByToken(token: string): Promise<ActiveShare 
     versionId: row.version.id,
     version: row.version.version,
     courseId: row.share.courseId,
-    snapshot: row.version.snapshot as CourseShareSnapshot,
+    snapshot: upgradeSnapshotBlocks(row.version.snapshot as CourseShareSnapshot),
     updatedAt: row.version.createdAt.getTime(),
   };
 }
@@ -221,9 +227,7 @@ export async function getActiveShareByToken(token: string): Promise<ActiveShare 
 export function snapshotToImportedCourse(snapshot: CourseShareSnapshot, now = Date.now()): Course {
   const source = structuredClone(snapshot.course);
   for (const lesson of source.lessons) {
-    for (const block of lesson.blocks ?? []) {
-      if (block.type === "visual" && block.engine === "interactive") block.interactive = parseInteractivePayload(block.interactive);
-    }
+    if (lesson.blocks) lesson.blocks = lesson.blocks.map(sanitizeInteractiveBlock);
   }
   return {
     ...source,

@@ -56,7 +56,8 @@
     "catalog:build": "node scripts/build-interactive-catalog.mjs",
     "catalog:coverage": "node scripts/validate-visualization-coverage.mjs",
     "visualization:prompts": "pnpm --filter @primoria/web exec tsx scripts/generate-visualization-prompts.ts",
-    "visualization:eval": "node scripts/with-database-env.mjs runtime pnpm --filter @primoria/web exec tsx scripts/run-visualization-acceptance.ts",
+    "visualization:eval": "pnpm --filter @primoria/web visualization:eval:isolated",
+    "visualization:eval:attach": "node scripts/with-database-env.mjs runtime pnpm --filter @primoria/web exec tsx scripts/run-visualization-acceptance.ts",
     "visualization:replay": "pnpm --filter @primoria/web exec tsx scripts/export-visualization-replay.ts",
     "visualization:test:replay": "node e2e/visualization-replay.smoke.mjs"
   },

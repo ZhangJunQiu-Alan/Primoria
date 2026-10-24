@@ -6,6 +6,7 @@ import { reportReferenceCoverage } from "@primoria/contracts/artifacts/visualiza
 import { AcceptanceManifestSchema, validateAcceptanceDistribution, type AcceptanceCase } from "../src/lib/interactive/acceptance";
 import { visualizationSourceFingerprint } from "./visualization-source-fingerprint";
 import { normalizeInteractiveDiscipline } from "@primoria/contracts/artifacts/interactive-search";
+import { referenceInventoryPath } from "../../../scripts/visualization-reference-path.mjs";
 
 const args = process.argv.slice(2);
 const argument = (key: string) => { const at = args.indexOf(key); return at < 0 ? null : args[at + 1]; };
@@ -17,7 +18,7 @@ const root = resolve(process.cwd(), "../..");
 const baseline = args.includes("--baseline");
 const referenceSubjects = new Map<string, Set<string>>();
 if (!baseline) {
-  const inventory = JSON.parse(readFileSync(resolve(root, "data/visualization-components/reference-inventory.v1.json"), "utf8"));
+  const inventory = JSON.parse(readFileSync(referenceInventoryPath(), "utf8"));
   const coverage = JSON.parse(readFileSync(resolve(root, "data/visualization-components/reference-coverage.v1.json"), "utf8"));
   for (const entry of inventory.cases) {
     const ids = referenceSubjects.get(entry.subject) ?? new Set<string>();

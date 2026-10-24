@@ -142,7 +142,14 @@ Visualization is catalog-first with structured/sandbox fallbacks:
    browser card calls authenticated `POST /api/interactive-component`.
 2. Web generates a full config for create or a minimal patch for adjust,
    validates it with the component Zod schema, and renders the registered React
-   component. The Agent never reads or writes the config.
+   component. The Agent never reads or writes the config. Above 40 entries the
+   prompt carries only a discipline directory and the model first calls the
+   read-only `search_interactive_components` tool.
+   Outputs persist in the owner-scoped `interactive_component_instances` table
+   (immutable initial config, current config, revision-locked PATCH). Course
+   VisualBlocks use the same components via `engine: "interactive"`. A catalog
+   `version` bump must add the component's `migrations` step (sync test);
+   stored configs are upgraded on read, never batch-rewritten.
 3. If no catalog entry fits, use the matching specialized renderer. Remaining
    custom cases use the inseparable `plan_visualization` → `widgetRenderer`
    sandbox flow.
@@ -277,9 +284,9 @@ Public routes are defined once in `apps/web/src/lib/auth/routes.ts` and shared b
 
 ### DB
 
-ORM: Drizzle + `postgres` driver. Drizzle owns App/Auth/Course schema; versioned Web SQL owns KG/pgvector; `apps/agent/db/migrations/` owns only `agent_runtime`. `pnpm db:bootstrap` applies all three owners idempotently. KG source data and embeddings are imported separately with `pnpm db:initialize:kg`. Core App tables include `users`, `identities`, `sessions`, `auth_rate_limits`, `courses`, `lessons`, lesson/progress/extractor jobs, `profile_fact_intake_jobs`, learning events, mastery, learner profiles/facts, `player_progress`, `xp_awards`, `daily_quest_completions`, `achievement_unlocks`, chat messages, media assets, and settings.
+ORM: Drizzle + `postgres` driver. Drizzle owns App/Auth/Course schema; versioned Web SQL owns KG/pgvector; `apps/agent/db/migrations/` owns only `agent_runtime`. `pnpm db:bootstrap` applies all three owners idempotently. KG source data and embeddings are imported separately with `pnpm db:initialize:kg`. Core App tables include `users`, `identities`, `sessions`, `auth_rate_limits`, `courses`, `lessons`, lesson/progress/extractor jobs, `profile_fact_intake_jobs`, learning events, mastery, learner profiles/facts, `player_progress`, `xp_awards`, `daily_quest_completions`, `achievement_unlocks`, chat messages, `interactive_component_instances`, media assets, and settings.
 
-The selected shared database is managed Supabase PostgreSQL in the existing Primoria Singapore project. Root commands load the ignored `.env.supabase` through `scripts/with-database-env.mjs`, with separate migration/runtime roles and verified TLS. Supabase hosts the database plus a private `lesson-media` Storage bucket for lesson image bytes, reached server-side only with `SUPABASE_URL`/`SUPABASE_SECRET_KEY` (`apps/web/src/lib/ai/media/media-storage.ts`); authentication remains Web-owned and no browser Supabase SDK/anon key is used. Explicit environment connections take priority. Docker PostgreSQL on `127.0.0.1:5432` remains the offline and isolated regression option. See `docs/supabase-deployment.md`.
+The selected shared database is managed Supabase PostgreSQL in the existing Primoria Singapore project. Root commands load the ignored `.env.supabase` through `scripts/with-database-env.mjs`, with separate migration/runtime roles and verified TLS. Supabase hosts the database plus a private `lesson-media` Storage bucket for lesson image bytes, reached server-side only with `SUPABASE_URL`/`SUPABASE_SECRET_KEY` (`apps/web/src/lib/ai/media/media-storage.ts`); authentication remains Web-owned and no browser Supabase SDK/anon key is used. Explicit environment connections take priority. Runtime traffic belongs on the Transaction pooler (6543) and migrations on the Session pooler (5432, KG advisory lock); pool sizes default from the URL (1 per client on the Session pooler) unless `DATABASE_POOL_MAX`/`AGENT_DATABASE_POOL_MAX` is set, so never add session-level SQL (advisory locks, LISTEN, session `SET`) to runtime code. Docker PostgreSQL on `127.0.0.1:5432` remains the offline and isolated regression option. See `docs/supabase-deployment.md`.
 
 ### Model provider
 
