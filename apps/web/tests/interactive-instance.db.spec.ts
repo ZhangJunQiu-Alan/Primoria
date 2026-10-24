@@ -21,4 +21,17 @@ suite("durable interactive instance database contract", () => {
     expect(duplicate?.revision).toBe(2);
     expect(duplicate?.initialConfig.focalLength).toBe(10);
   });
+  it("records the upgraded version on save and keeps only the most recently used instances per owner", async () => {
+    const saved = await store.updateInteractiveInstance("instance-owner", "tool-1", 2, { focalLength: 12 }, 1);
+    expect(saved.kind === "updated" && saved.instance.configVersion).toBe(1);
+    for (const id of ["tool-2", "tool-3"]) {
+      await store.createInteractiveInstance({ ownerId: "instance-owner", instanceId: id, requestHash: id, componentId: "physics.lens-imaging", configVersion: 1, config: { focalLength: 10 } });
+    }
+    await store.createInteractiveInstance({ ownerId: "other-owner", instanceId: "tool-1", requestHash: "other", componentId: "physics.lens-imaging", configVersion: 1, config: { focalLength: 10 } });
+    await sql`update interactive_component_instances set updated_at = now() - interval '1 day' where owner_id = 'instance-owner' and instance_id = 'tool-2'`;
+    await store.pruneInteractiveInstances("instance-owner", 2);
+    const remaining = await sql<{ instance_id: string }[]>`select instance_id from interactive_component_instances where owner_id = 'instance-owner' order by instance_id`;
+    expect(remaining.map((row) => row.instance_id)).toEqual(["tool-1", "tool-3"]);
+    expect(await store.getInteractiveInstance("other-owner", "tool-1")).not.toBeNull();
+  });
 });

@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { sql } from "drizzle-orm";
 import { getDb, type DbOrTx } from "@/lib/db/client";
+import { checkOwnerRateLimit } from "@/lib/auth/rate-limit";
 
 const DEFAULT_WINDOW_SECONDS = 60;
 const DEFAULT_REQUESTS_PER_WINDOW = 20;
@@ -34,6 +35,18 @@ export function getInteractiveRequestBudgetConfig(): BudgetConfig {
     requestTimeoutSeconds: positiveInt("INTERACTIVE_COMPONENT_REQUEST_TIMEOUT_SECONDS", DEFAULT_REQUEST_TIMEOUT_SECONDS, 10, 300),
     cacheTtlSeconds: positiveInt("INTERACTIVE_COMPONENT_IDEMPOTENCY_TTL_SECONDS", DEFAULT_CACHE_TTL_SECONDS, 60, 86_400),
   };
+}
+
+/** Saved-instance reads (GET) and control saves (PATCH) never call a model but still hit the DB. */
+export async function checkInteractiveInstanceAccess(ownerId: string, kind: "read" | "write") {
+  return checkOwnerRateLimit({
+    scope: `interactive-instance-${kind}`,
+    ownerId,
+    maxAttempts: kind === "read"
+      ? positiveInt("INTERACTIVE_COMPONENT_READ_RATE_LIMIT_MAX", 240, 1, 10_000)
+      : positiveInt("INTERACTIVE_COMPONENT_WRITE_RATE_LIMIT_MAX", 180, 1, 10_000),
+    windowSeconds: 60,
+  });
 }
 
 export function hashInteractiveRequest(value: unknown) {

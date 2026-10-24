@@ -109,6 +109,19 @@ export async function checkAuthRateLimit(input: {
   return { allowed: true };
 }
 
+/** Fixed-window limit keyed by an authenticated owner (shares the auth limiter table). */
+export async function checkOwnerRateLimit(input: {
+  scope: string;
+  ownerId: string;
+  maxAttempts: number;
+  windowSeconds: number;
+}): Promise<AuthRateLimitResult> {
+  const config = getAuthRateLimitConfig();
+  if (!config.enabled) return { allowed: true };
+  await maybePruneExpiredRateLimits(config);
+  return consumeRateLimitKey(buildKey(`${input.scope}:account`, input.ownerId, input.maxAttempts, "account"), input.windowSeconds);
+}
+
 export function authRateLimitHeaders(result: Exclude<AuthRateLimitResult, { allowed: true }>) {
   return {
     "Retry-After": String(result.retryAfterSeconds),

@@ -16,29 +16,45 @@ export type InteractiveComponentCardProps = {
 };
 
 type ReadyState = InteractiveComponentPayload & { revision: number };
-type CardState = { status: "loading" } | { status: "error"; message: string } | { status: "ready"; value: ReadyState };
+type CardState = { status: "loading" } | { status: "error"; message: string; retryable: boolean } | { status: "ready"; value: ReadyState };
+
+// Tool results recorded before instance IDs existed have no stable call id. A
+// content-derived id makes remounts reuse the saved instance instead of
+// generating (and paying for) a new one each time.
+function legacyInstanceId(...parts: string[]) {
+  let a = 0x811c9dc5, b = 0x9e3779b9;
+  for (const char of parts.join("\u0000")) {
+    const code = char.codePointAt(0) ?? 0;
+    a = Math.imul(a ^ code, 0x01000193);
+    b = Math.imul(b ^ code, 0x5bd1e995);
+  }
+  return `legacy:${(a >>> 0).toString(36)}${(b >>> 0).toString(36)}`;
+}
 
 export function InteractiveComponentCard(props: InteractiveComponentCardProps) {
-  const [fallbackId] = useState(() => `legacy:${crypto.randomUUID()}`);
-  const instanceId = props.instanceId ?? fallbackId;
+  const instanceId = props.instanceId ?? legacyInstanceId(props.componentId, props.request, props.targetInstanceId ?? "");
   return <PersistedComponentCard key={`${props.componentId}:${instanceId}:${props.request}:${props.targetInstanceId ?? ""}`} {...props} instanceId={instanceId} />;
 }
 
 async function readResponse(response: Response): Promise<ReadyState & { ok: boolean; error?: string }> {
   const body = await response.json();
   if (!body.ok || !body.config || !Number.isInteger(body.revision) || !Number.isInteger(body.configVersion)) {
-    throw new Error(body.error ?? "配置读取失败 / Configuration unavailable");
+    throw new Error(typeof body.error === "string" ? body.error : "configuration_unavailable");
   }
   return body;
+}
+
+class SaveError extends Error {
+  constructor(message: string, readonly action: "retry" | "reload" | null) { super(message); }
 }
 
 function PersistedComponentCard({ componentId, request, instanceId, targetInstanceId = null }: InteractiveComponentCardProps & { instanceId: string }) {
   const t = useInteractiveT().card;
   const [state, setState] = useState<CardState>({ status: "loading" });
   const [attempt, setAttempt] = useState(0);
-  const [saveError, setSaveError] = useState<string | null>(null);
-  const [saveConflict, setSaveConflict] = useState(false);
+  const [saveError, setSaveError] = useState<{ message: string; action: "retry" | "reload" | null } | null>(null);
   const revision = useRef(1);
+  const configVersion = useRef<number | null>(null);
   const pendingConfig = useRef<Record<string, unknown> | null>(null);
   const saving = useRef(false);
   const alive = useRef(true);
@@ -49,7 +65,6 @@ function PersistedComponentCard({ componentId, request, instanceId, targetInstan
     if (saving.current || !pendingConfig.current) return;
     saving.current = true;
     let inFlight: Record<string, unknown> | null = null;
-    let conflict = false;
     try {
       while (pendingConfig.current) {
         const config = pendingConfig.current;
@@ -57,24 +72,26 @@ function PersistedComponentCard({ componentId, request, instanceId, targetInstan
         pendingConfig.current = null;
         const response = await fetch("/api/interactive-component", {
           method: "PATCH", headers: { "content-type": "application/json" },
-          body: JSON.stringify({ instanceId, revision: revision.current, config }),
+          body: JSON.stringify({ instanceId, revision: revision.current, ...(configVersion.current ? { configVersion: configVersion.current } : {}), config }),
           keepalive: true,
         });
         if (!response.ok) {
-          conflict = response.status === 409;
-          throw new Error(conflict ? "其他页面已更新此场景，请刷新后继续。 / This scene changed in another tab. Refresh to continue." : "场景保存失败，请重试。 / Unable to save this scene.");
+          const error = await response.json().then((body: { error?: unknown }) => body.error, () => null);
+          if (response.status === 409 && error === "unsupported_saved_configuration") throw new SaveError(t.unsupportedSaved, null);
+          throw response.status === 409 ? new SaveError(t.saveConflict, "reload") : new SaveError(t.saveFailed, "retry");
         }
         const value = await readResponse(response);
         revision.current = value.revision;
-        if (alive.current) { setSaveError(null); setSaveConflict(false); }
+        configVersion.current = value.configVersion;
+        if (alive.current) setSaveError(null);
       }
     } catch (error) {
       pendingConfig.current ??= inFlight;
-      if (alive.current) { setSaveError(error instanceof Error ? error.message : t.requestFailed); setSaveConflict(conflict); }
+      if (alive.current) setSaveError(error instanceof SaveError ? { message: error.message, action: error.action } : { message: t.saveFailed, action: "retry" });
     } finally {
       saving.current = false;
     }
-  }, [instanceId, t.requestFailed]);
+  }, [instanceId, t.saveFailed, t.saveConflict, t.unsupportedSaved]);
 
   useEffect(() => {
     alive.current = true;
@@ -111,24 +128,26 @@ function PersistedComponentCard({ componentId, request, instanceId, targetInstan
         }
         const value = await readResponse(response);
         if (signal.aborted) return;
-        if (value.componentId !== componentId) throw new Error("组件配置不匹配 / Component configuration mismatch");
+        if (value.componentId !== componentId) throw new Error("component_mismatch");
         revision.current = value.revision;
+        configVersion.current = value.configVersion;
         setState({ status: "ready", value });
         reportVisualizationEvent({ source: "interactive", topic: request, componentId, status: "rendered" });
-      } catch {
+      } catch (error) {
         if (signal.aborted) return;
-        setState({ status: "error", message: t.configFailed });
+        const unsupported = error instanceof Error && error.message === "unsupported_saved_configuration";
+        setState({ status: "error", message: unsupported ? t.unsupportedSaved : t.configFailed, retryable: !unsupported });
         reportVisualizationEvent({ source: "interactive", topic: request, componentId, status: "api_error" });
       }
     })();
     return () => controller.abort();
-  }, [attempt, componentId, instanceId, request, supported, t.configFailed, targetInstanceId]);
+  }, [attempt, componentId, instanceId, request, supported, t.configFailed, t.unsupportedSaved, targetInstanceId]);
 
 
 
   if (!supported) return <div className="message-row tool"><div className="tool-card status-card"><div className="tool-title">{t.unsupported}</div></div></div>;
   if (state.status === "loading") return <div className="message-row tool"><div className="tool-card status-card" aria-busy="true"><div className="tool-title"><span className="tool-spinner" />{t.preparing}</div></div></div>;
-  if (state.status === "error") return <div className="message-row tool"><div className="tool-card status-card" role="alert"><p>{msg(t.generationFailed, { message: state.message })}</p><button type="button" onClick={() => { setState({ status: "loading" }); setAttempt((value) => value + 1); }}>重试 / Retry</button></div></div>;
+  if (state.status === "error") return <div className="message-row tool"><div className="tool-card status-card" role="alert"><p>{state.retryable ? msg(t.generationFailed, { message: state.message }) : state.message}</p>{state.retryable ? <button type="button" onClick={() => { setState({ status: "loading" }); setAttempt((value) => value + 1); }}>{t.retry}</button> : null}</div></div>;
 
   return <div className="message-row tool widget-renderer-row"><div style={{ width: "100%" }}>
     <InteractiveVisualization payload={state.value} onChange={(config) => {
@@ -137,6 +156,6 @@ function PersistedComponentCard({ componentId, request, instanceId, targetInstan
       clearTimeout(timer.current);
       timer.current = setTimeout(() => { void savePending(); }, 500);
     }} />
-    {saveError ? <div role="alert"><p>{saveError}</p><button type="button" onClick={() => { if (saveConflict) window.location.reload(); else void savePending(); }}>{saveConflict ? "重新载入 / Reload" : "重试保存 / Retry save"}</button></div> : null}
+    {saveError ? <div role="alert"><p>{saveError.message}</p>{saveError.action ? <button type="button" onClick={() => { if (saveError.action === "reload") window.location.reload(); else void savePending(); }}>{saveError.action === "reload" ? t.reload : t.retrySave}</button> : null}</div> : null}
   </div></div>;
 }
