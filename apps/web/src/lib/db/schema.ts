@@ -653,13 +653,14 @@ export const userConceptMastery = pgTable(
   }),
 );
 
-// Mastery for owner-private mat_* graphs. user_concept_mastery carries a
-// foreign key into the library KG tables (knowledge_graph_concepts), which
-// material concepts — stored inside material_topic_graphs.graph — never enter.
-// Same columns and rules; rows outlive a re-assembled folder graph and go
-// with the folder (or the owner).
-export const materialConceptMastery = pgTable(
-  "material_concept_mastery",
+// Mastery for concepts of generated graphs: gen_* topic graphs and
+// owner-private mat_* material graphs. Their concepts live inside JSON graph
+// rows (generated_topic_graphs, material_topic_graphs) and never enter the
+// library KG table that user_concept_mastery's foreign key references
+// (knowledge_graph_concepts). Same columns and rules; rows outlive a
+// re-assembled or deleted graph and go with the owner.
+export const generatedConceptMastery = pgTable(
+  "generated_concept_mastery",
   {
     ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
     graphId: text("graph_id").notNull(),
@@ -670,10 +671,10 @@ export const materialConceptMastery = pgTable(
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
   },
   (table) => ({
-    pk: uniqueIndex("material_concept_mastery_owner_graph_concept_uidx").on(table.ownerId, table.graphId, table.conceptId),
-    statusCheck: check("material_concept_mastery_status_check", sql`${table.status} in ('untested', 'weak', 'learning', 'mastered')`),
-    scoreCheck: check("material_concept_mastery_score_check", sql`${table.score} is null or (${table.score} >= 0 and ${table.score} <= 1)`),
-    graphCheck: check("material_concept_mastery_graph_check", sql`starts_with(${table.graphId}, 'mat_')`),
+    pk: uniqueIndex("generated_concept_mastery_owner_graph_concept_uidx").on(table.ownerId, table.graphId, table.conceptId),
+    statusCheck: check("generated_concept_mastery_status_check", sql`${table.status} in ('untested', 'weak', 'learning', 'mastered')`),
+    scoreCheck: check("generated_concept_mastery_score_check", sql`${table.score} is null or (${table.score} >= 0 and ${table.score} <= 1)`),
+    graphCheck: check("generated_concept_mastery_graph_check", sql`starts_with(${table.graphId}, 'gen_') or starts_with(${table.graphId}, 'mat_')`),
   }),
 );
 

@@ -55,7 +55,7 @@ and tests remain the source of truth once implemented.
   **掌握度键是 (owner, 文件夹图 id, 概念 id)**，所以拼装、重排、插入或删除讲都不改变已有概念 id。
 - **掌握度表**：`user_concept_mastery` 有一条指向题库 KG 概念表（`knowledge_graph_concepts`）的外键，
   `mat_*` 概念不在那张表里，所以 `mat_*` 图（文件夹图与第一阶段的资料组合图）的掌握度写入同列同规则的
-  `material_concept_mastery`；`apps/web/src/lib/mastery/owner-store.ts` 按 graph id 路由。与第一阶段一致，
+  `generated_concept_mastery`（`gen_*` 生成图谱同样存在这里）；`apps/web/src/lib/mastery/owner-store.ts` 按 graph id 路由。与第一阶段一致，
   图谱或文件夹删除后掌握度行保留（owner 私有，随账号删除）。
 - **大 KG**：确定性拼装产物，写入现有 `material_topic_graphs`，graph id 为
   `mat_<hash(folderId)>`。沿用 `mat_` 前缀意味着现有的私有化规则全部自动适用：owner 才能解析、
@@ -186,7 +186,7 @@ POST /api/folders/:id/quizzes/:sessionId/submit { submissionId, answers }
    `/materials` 文件夹列表与 `/materials/[folderId]` 文件夹详情。此阶段建课仍沿用"勾选资料建课"。
 2. **按讲 KG**（已实现）：迁移 0059（`material_kg_jobs`、`material_subgraphs`、
    `learning_materials.kg_status`、`material_topic_graphs.folder_id`；已在科目文件夹里的讲义会被回填入队）
-   与 0060（`material_concept_mastery`）。队列在 Extractor worker 内处理，优先级为资料事实 → 讲义 KG →
+   与 0060（`generated_concept_mastery`）。队列在 Extractor worker 内处理，优先级为资料事实 → 讲义 KG →
    Extractor，同一文件夹串行，最多 2 次尝试，`/api/health` 报告 `lectureKg` 队列与心跳
    （`lecture-kg-jobs.ts`、`lecture-kg-processor.ts`）。小 KG 复用资料图谱提示词并附上文件夹已有概念
    （K1…，最多 300 个）；文件名没有序号、学习者也没手动排过序时，一次轻量调用决定插入位置

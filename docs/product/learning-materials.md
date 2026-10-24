@@ -166,7 +166,7 @@ course rail question → /api/copilotkit
   "资料不可用"的不可重试错误失败，而不会静默生成脱离资料的内容。上传配额检查同样不是
   事务性的，并发上传可能短暂超出 50 份。
 - 删除资料会删除片段与派生图谱，但保留该图谱下已有的掌握度行（owner 私有、只含概念 id；
-  `mat_*` 图的掌握度存于 `material_concept_mastery`，因为 `user_concept_mastery` 的外键只指向题库 KG 概念）。
+  `mat_*` 与 `gen_*` 图的掌握度存于 `generated_concept_mastery`，因为 `user_concept_mastery` 的外键只指向题库 KG 概念）。
 - 资料课程只能从 `/materials` 页面创建；Tutor 不会主动用资料建课。
 - 基于资料的问答只在资料课程的侧栏 Tutor 里生效；主 Tutor 和资料页都不能直接"问资料"。
 - 检索只针对每条提问做一次（不做多轮/多跳检索），只看当前这一问加选中文本；追问"那第二点呢"

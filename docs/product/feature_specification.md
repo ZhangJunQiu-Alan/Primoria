@@ -388,7 +388,7 @@ definitions, and examples; the lesson reader shows concept-level sources
 shared. A material cannot be deleted while a course still uses a material-set
 graph built from it; deleting a lecture from a subject folder re-assembles the
 folder graph instead. Mastery, Facts, and XP follow the same rules as other
-courses (material-graph mastery is stored in `material_concept_mastery`); the
+courses (generated- and material-graph mastery is stored in `generated_concept_mastery`); the
 material itself is not a learner fact.
 
 Inside a material course, the course-rail Tutor answers material-first. For

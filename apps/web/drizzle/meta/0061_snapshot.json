@@ -1891,6 +1891,112 @@
       },
       "isRLSEnabled": false
     },
+    "public.generated_concept_mastery": {
+      "name": "generated_concept_mastery",
+      "schema": "",
+      "columns": {
+        "owner_id": {
+          "name": "owner_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "graph_id": {
+          "name": "graph_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "concept_id": {
+          "name": "concept_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'untested'"
+        },
+        "score": {
+          "name": "score",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "generated_concept_mastery_owner_graph_concept_uidx": {
+          "name": "generated_concept_mastery_owner_graph_concept_uidx",
+          "columns": [
+            {
+              "expression": "owner_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "graph_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "concept_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "generated_concept_mastery_owner_id_users_id_fk": {
+          "name": "generated_concept_mastery_owner_id_users_id_fk",
+          "tableFrom": "generated_concept_mastery",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "generated_concept_mastery_status_check": {
+          "name": "generated_concept_mastery_status_check",
+          "value": "\"generated_concept_mastery\".\"status\" in ('untested', 'weak', 'learning', 'mastered')"
+        },
+        "generated_concept_mastery_score_check": {
+          "name": "generated_concept_mastery_score_check",
+          "value": "\"generated_concept_mastery\".\"score\" is null or (\"generated_concept_mastery\".\"score\" >= 0 and \"generated_concept_mastery\".\"score\" <= 1)"
+        },
+        "generated_concept_mastery_graph_check": {
+          "name": "generated_concept_mastery_graph_check",
+          "value": "starts_with(\"generated_concept_mastery\".\"graph_id\", 'gen_') or starts_with(\"generated_concept_mastery\".\"graph_id\", 'mat_')"
+        }
+      },
+      "isRLSEnabled": false
+    },
     "public.generated_topic_graphs": {
       "name": "generated_topic_graphs",
       "schema": "",
@@ -4455,112 +4561,6 @@
         "lessons_version_check": {
           "name": "lessons_version_check",
           "value": "\"lessons\".\"version\" >= 1"
-        }
-      },
-      "isRLSEnabled": false
-    },
-    "public.material_concept_mastery": {
-      "name": "material_concept_mastery",
-      "schema": "",
-      "columns": {
-        "owner_id": {
-          "name": "owner_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "graph_id": {
-          "name": "graph_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "concept_id": {
-          "name": "concept_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "status": {
-          "name": "status",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'untested'"
-        },
-        "score": {
-          "name": "score",
-          "type": "double precision",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "material_concept_mastery_owner_graph_concept_uidx": {
-          "name": "material_concept_mastery_owner_graph_concept_uidx",
-          "columns": [
-            {
-              "expression": "owner_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "graph_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "concept_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "material_concept_mastery_owner_id_users_id_fk": {
-          "name": "material_concept_mastery_owner_id_users_id_fk",
-          "tableFrom": "material_concept_mastery",
-          "tableTo": "users",
-          "columnsFrom": [
-            "owner_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {
-        "material_concept_mastery_status_check": {
-          "name": "material_concept_mastery_status_check",
-          "value": "\"material_concept_mastery\".\"status\" in ('untested', 'weak', 'learning', 'mastered')"
-        },
-        "material_concept_mastery_score_check": {
-          "name": "material_concept_mastery_score_check",
-          "value": "\"material_concept_mastery\".\"score\" is null or (\"material_concept_mastery\".\"score\" >= 0 and \"material_concept_mastery\".\"score\" <= 1)"
-        },
-        "material_concept_mastery_graph_check": {
-          "name": "material_concept_mastery_graph_check",
-          "value": "starts_with(\"material_concept_mastery\".\"graph_id\", 'mat_')"
         }
       },
       "isRLSEnabled": false

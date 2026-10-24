@@ -265,11 +265,12 @@ describe("buildFolderOverview", () => {
 });
 
 describe("masteryTableFor", () => {
-  it("keeps material mastery out of the library-referencing table", async () => {
+  it("keeps generated-graph mastery out of the library-referencing table", async () => {
     const { getTableName } = await import("drizzle-orm");
     const { masteryTableFor } = await import("../src/lib/mastery/owner-store");
-    expect(getTableName(masteryTableFor(folderGraphId("mf_1")))).toBe("material_concept_mastery");
+    const { GENERATED_GRAPH_PREFIX } = await import("../src/lib/knowledge-graph/generated-graph");
+    expect(getTableName(masteryTableFor(folderGraphId("mf_1")))).toBe("generated_concept_mastery");
+    expect(getTableName(masteryTableFor(`${GENERATED_GRAPH_PREFIX}mcp_1234abcd`))).toBe("generated_concept_mastery");
     expect(getTableName(masteryTableFor("math_linear_algebra"))).toBe("user_concept_mastery");
-    expect(getTableName(masteryTableFor("gen_mcp_1234abcd"))).toBe("user_concept_mastery");
   });
 });

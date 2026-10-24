@@ -1,14 +1,17 @@
 import { and, eq } from "drizzle-orm";
 import { getDb, hasDatabaseUrl, type DbOrTx } from "../db/client";
-import { materialConceptMastery, userConceptMastery } from "../db/schema";
+import { generatedConceptMastery, userConceptMastery } from "../db/schema";
 import { isMaterialGraphId } from "../materials/types";
 import type { ConceptMastery, MasteryStatus } from "./store";
 
-/** Owner-private mat_* concepts are not in the library KG tables that
- * user_concept_mastery references, so their mastery has its own table with
- * identical columns. */
+/** Concepts of generated graphs (gen_* topic graphs, owner-private mat_*
+ * material graphs) are not in the library KG table that user_concept_mastery
+ * references, so their mastery has its own table with identical columns.
+ * "gen_" is GENERATED_GRAPH_PREFIX (knowledge-graph/generated-graph.ts, which
+ * this store does not import to stay free of the model client). */
 export function masteryTableFor(graphId: string): typeof userConceptMastery {
-  return (isMaterialGraphId(graphId) ? materialConceptMastery : userConceptMastery) as typeof userConceptMastery;
+  const generated = graphId.startsWith("gen_") || isMaterialGraphId(graphId);
+  return (generated ? generatedConceptMastery : userConceptMastery) as typeof userConceptMastery;
 }
 
 // Owner-scoped concept-mastery access for the learning-progress worker, which
