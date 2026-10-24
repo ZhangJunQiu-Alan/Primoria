@@ -1,13 +1,15 @@
 import { readFileSync } from "node:fs";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import { readFileSync as readContract } from "node:fs";
+
 import {
   DEFAULT_TUTOR_STYLE,
   TUTOR_STYLES,
-  formatTutorStylePrompt,
   isTutorStyle,
   resolveTutorStyle,
 } from "@primoria/contracts/tutor-style";
+import { formatTutorStylePrompt } from "@primoria/contracts/tutor-style-prompt";
 import * as profileTypes from "../src/lib/learner-profile/types";
 
 const mockState = vi.hoisted(() => ({
@@ -48,7 +50,14 @@ describe("tutor style contract", () => {
   it("is the only style list Web uses", () => {
     expect(profileTypes.TUTOR_STYLES).toBe(TUTOR_STYLES);
     expect(profileTypes.isTutorStyle).toBe(isTutorStyle);
+    expect(profileTypes.resolveTutorStyle).toBe(resolveTutorStyle);
     expect(profileTypes.DEFAULT_TUTOR_STYLE).toBe(DEFAULT_TUTOR_STYLE);
+  });
+
+  it("keeps persona prompt text out of the module browser code imports", () => {
+    const ids = readContract(new URL("../../../packages/contracts/src/tutor-style.mjs", import.meta.url), "utf8");
+    expect(ids).not.toMatch(/TUTOR STYLE:|TUTOR PRESENTATION|import /);
+    expect(src("lib/learner-profile/types.ts")).not.toContain("tutor-style-prompt");
   });
 });
 
@@ -57,6 +66,20 @@ describe("tutor style wiring", () => {
     const route = src("app/api/copilotkit/route.ts");
     expect(route).toContain("primoria_tutor_style: this.learnerProfile?.tutorStyle ?? null");
     expect(route).not.toContain("tutorStyleDirective");
+  });
+
+  it("migration 0053 deletes only the untouched synthetic style facts", () => {
+    const sql = readContract(new URL("../drizzle/0053_drop_tutor_style_facts.sql", import.meta.url), "utf8");
+    const delete_ = sql.slice(sql.indexOf("DELETE FROM"));
+    expect(delete_).toContain(`"category" = 'preference'`);
+    expect(delete_).toContain(`'[{"eventIds": ["onboarding:tutor_style"]}]'`);
+    // The exact strings onboarding used to write; a learner-edited row no longer matches.
+    for (const text of [
+      "Selected Socrates as tutor; prefers guiding questions before direct answers.",
+      "Selected Richard Feynman as tutor; prefers intuition and analogies before formal details.",
+      "Selected Euclid as tutor; prefers precise definitions and structured reasoning.",
+    ]) expect(delete_).toContain(`'${text}'`);
+    expect(delete_).not.toMatch(/jsonb_array_length/);
   });
 
   it("no longer mirrors the style into learner facts", () => {

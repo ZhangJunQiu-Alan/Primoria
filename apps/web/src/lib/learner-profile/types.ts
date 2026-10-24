@@ -28,7 +28,7 @@ export type EducationCurriculum = (typeof EDUCATION_CURRICULA)[number];
 export const EDUCATION_CONTEXT_SOURCES = ["confirmed_suggestion", "user_selected"] as const;
 export type EducationContextSource = (typeof EDUCATION_CONTEXT_SOURCES)[number];
 
-export { DEFAULT_TUTOR_STYLE, TUTOR_STYLES, isTutorStyle, type TutorStyle } from "@primoria/contracts/tutor-style";
+export { DEFAULT_TUTOR_STYLE, TUTOR_STYLES, isTutorStyle, resolveTutorStyle, type TutorStyle } from "@primoria/contracts/tutor-style";
 
 // Distilled facts produced from explicit intake or learning events. Category
 // routes consumption: gaps/background/preferences and bounded interests can

@@ -124,7 +124,7 @@ async function runLive(dataset) {
     import("@langchain/core/messages"),
     import("../src/model.mjs"),
     import("../src/prompts.mjs"),
-    import("@primoria/contracts/tutor-style"),
+    import("@primoria/contracts/tutor-style-prompt"),
   ]);
   const model = createModel({ streaming: false });
   const responses = [];
