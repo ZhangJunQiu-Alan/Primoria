@@ -9,9 +9,12 @@ No Supabase browser SDK, Auth migration or service-role key is required.
 ## Local connection and commands
 
 Copy `.env.supabase.example` to the ignored `.env.supabase` and provide distinct
-`primoria_runtime` and `primoria_migrator` credentials. Use Session pooling on
-port 5432; transaction pooling on 6543 cannot preserve the KG migration's
-session advisory lock. Both URLs use `sslmode=verify-full`.
+`primoria_runtime` and `primoria_migrator` credentials. The runtime URL uses
+Transaction pooling on port 6543; the migration URL keeps Session pooling on
+port 5432 because the KG migration holds a session advisory lock. Runtime code
+uses no session-level features (advisory locks, LISTEN/NOTIFY, session `SET`),
+and both Postgres clients send unnamed statements (`prepare: false` /
+node-postgres defaults). Both URLs use `sslmode=verify-full`.
 `NODE_EXTRA_CA_CERTS` loads the bundled public Supabase CA before Node starts.
 Certificate source:
 https://supabase-downloads.s3-ap-southeast-1.amazonaws.com/prod/ssl/prod-ca-2021.crt
@@ -27,16 +30,18 @@ Root commands select cloud connections when `.env.supabase` exists. Explicit
 connections take priority, preserving isolated regression databases and CI.
 Direct `pnpm --filter` commands do not load the root connection file: use the
 wrapper above. Local `.env.local` database values remain for offline testing.
-The current session-pool limit observed on October 22 is 15 clients for the
-runtime role. The local cloud file and selected Compose topology use
-`DATABASE_POOL_MAX=1` per Web/worker process. Agent run persistence and the
-LangGraph checkpointer both honor a bounded pool limit (default 1;
-`AGENT_DATABASE_POOL_MAX` overrides the general limit). The existing bounded
-course-card reader adds at most one Agent connection. This budgets seven
-connections across Web, three workers, and the Agent's three clients, leaving
-headroom for acceptance tools. Raising a per-process limit requires checking
-the sum across all processes; the checkpointer no longer silently opens its
-Node PostgreSQL default pool. TLS verification and session pooling stay enabled.
+Pool sizes follow the runtime URL unless `DATABASE_POOL_MAX` (or
+`AGENT_DATABASE_POOL_MAX` for the Agent) is set explicitly. On the Session
+pooler (`*.pooler.supabase.com:5432`, limited to 15 clients for the runtime
+role as observed on October 22) every Web/worker process and each Agent client
+keeps one connection: seven in total across Web, three workers and the Agent's
+run store, checkpointer and course-card reader. On the Transaction pooler
+(6543) or a direct/local database the defaults are 5 per Web/worker process
+(2 for the extractor) and 4 for each Agent pool, because the pooler multiplexes
+client connections. An existing `.env.supabase` that still points at 5432 keeps
+the one-connection budget; switch its runtime URL to 6543 and remove
+`DATABASE_POOL_MAX` to lift the single-connection serialization. TLS
+verification stays enabled.
 
 Agent startup respects inherited environment and does not run DDL; root
 `pnpm dev` bootstraps with the migration credential first.

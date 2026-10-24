@@ -21,10 +21,23 @@ export function getDatabaseUrl() {
   return url;
 }
 
-function getDatabasePoolMax() {
+// Supabase's session pooler (port 5432 on *.pooler.supabase.com) caps client
+// connections per role, so a process keeps a single connection there. The
+// transaction pooler (6543), direct and local databases use the normal pool.
+// Mirrored in apps/agent/src/runtime/checkpointer.mjs.
+export function isSupabaseSessionPooler(databaseUrl: string) {
+  try {
+    const url = new URL(databaseUrl);
+    return url.hostname.endsWith(".pooler.supabase.com") && (url.port || "5432") === "5432";
+  } catch {
+    return false;
+  }
+}
+
+export function getDatabasePoolMax(databaseUrl = process.env.DATABASE_URL ?? "") {
   const configured = Number(process.env.DATABASE_POOL_MAX ?? "");
   if (Number.isFinite(configured) && configured > 0) return Math.min(Math.floor(configured), 20);
-  return 5;
+  return isSupabaseSessionPooler(databaseUrl) ? 1 : 5;
 }
 
 function getDatabaseConnectTimeout() {
@@ -40,7 +53,7 @@ export function getDb() {
 
   const ssl = getDatabaseSsl();
   const client = postgres(url, {
-    max: getDatabasePoolMax(),
+    max: getDatabasePoolMax(url),
     connect_timeout: getDatabaseConnectTimeout(),
     prepare: false,
     ...(ssl !== undefined ? { ssl } : {}),
