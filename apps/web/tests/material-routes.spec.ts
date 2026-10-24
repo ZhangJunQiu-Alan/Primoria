@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 const state = vi.hoisted(() => ({
   requireConfiguredAuthUser: vi.fn(),
   countMaterials: vi.fn(),
+  findMaterialByDigest: vi.fn(),
   insertMaterial: vi.fn(),
   listMaterials: vi.fn(),
   deleteMaterial: vi.fn(),
@@ -33,6 +34,7 @@ const state = vi.hoisted(() => ({
 vi.mock("../src/lib/auth/guard", () => ({ requireConfiguredAuthUser: state.requireConfiguredAuthUser }));
 vi.mock("../src/lib/materials/store", () => ({
   countMaterials: state.countMaterials,
+  findMaterialByDigest: state.findMaterialByDigest,
   insertMaterial: state.insertMaterial,
   listMaterials: state.listMaterials,
   deleteMaterial: state.deleteMaterial,
@@ -171,9 +173,22 @@ describe("material routes", () => {
     expect(oversized.status).toBe(413);
 
     state.countMaterials.mockResolvedValue(50);
+    state.findMaterialByDigest.mockResolvedValue(null);
     const quota = await POST(upload(new File([longText], "notes.txt")));
     expect(quota.status).toBe(409);
     expect((await quota.json()).code).toBe("quota_exceeded");
+    expect(state.insertMaterial).not.toHaveBeenCalled();
+  });
+
+  it("returns the stored material for a re-upload at the cap", async () => {
+    const { createHash } = await import("node:crypto");
+    state.countMaterials.mockResolvedValue(50);
+    state.findMaterialByDigest.mockResolvedValue({ id: "lm_1", title: "notes" });
+    const { POST } = await import("../src/app/api/materials/route");
+    const response = await POST(upload(new File([longText], "notes.txt")));
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({ material: { id: "lm_1", title: "notes" }, duplicate: true });
+    expect(state.findMaterialByDigest).toHaveBeenCalledWith("u1", createHash("sha256").update(longText).digest("hex"));
     expect(state.insertMaterial).not.toHaveBeenCalled();
   });
 

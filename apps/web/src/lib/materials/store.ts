@@ -61,6 +61,16 @@ export async function countMaterials(ownerId: string): Promise<number> {
   return Number(row?.value ?? 0);
 }
 
+/** The owner's stored material with this upload digest, if any. */
+export async function findMaterialByDigest(ownerId: string, contentSha256: string): Promise<MaterialSummary | null> {
+  const [row] = await getDb()
+    .select()
+    .from(learningMaterials)
+    .where(and(eq(learningMaterials.ownerId, ownerId), eq(learningMaterials.contentSha256, contentSha256)))
+    .limit(1);
+  return row ? toMaterialSummary(row) : null;
+}
+
 export async function getMaterialsByIds(ownerId: string, ids: string[]): Promise<LearningMaterialRow[]> {
   if (ids.length === 0) return [];
   return getDb()

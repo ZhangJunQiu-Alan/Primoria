@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 
 import { requireConfiguredAuthUser } from "@/lib/auth/guard";
-import { MaterialInputError, prepareMaterial, type MaterialInputErrorCode } from "@/lib/materials/ingest";
+import { materialDigest, MaterialInputError, prepareMaterial, type MaterialInputErrorCode } from "@/lib/materials/ingest";
 import { MAX_MATERIAL_FILE_BYTES, MAX_MATERIALS_PER_OWNER } from "@/lib/materials/limits";
 import { ensureUnsortedFolder, getFolder } from "@/lib/materials/folders";
 import { scheduleMaterialIndexing } from "@/lib/materials/semantic-index";
-import { countMaterials, insertMaterial, listMaterials } from "@/lib/materials/store";
+import { countMaterials, findMaterialByDigest, insertMaterial, listMaterials } from "@/lib/materials/store";
 import { MATERIAL_ROLES, type MaterialRole } from "@/lib/materials/types";
 
 export const runtime = "nodejs";
@@ -66,17 +66,21 @@ export async function POST(request: Request) {
   }
 
   try {
+    const bytes = new Uint8Array(await file.arrayBuffer());
     if ((await countMaterials(user.id)) >= MAX_MATERIALS_PER_OWNER) {
+      // Re-uploading a stored file stays idempotent at the cap (and retries
+      // its indexing), without extracting it again.
+      const existing = await findMaterialByDigest(user.id, materialDigest(bytes));
+      if (existing) {
+        scheduleMaterialIndexing(user.id, [existing.id]);
+        return NextResponse.json({ material: existing, duplicate: true }, { status: 200 });
+      }
       return NextResponse.json(
         { error: `You can keep up to ${MAX_MATERIALS_PER_OWNER} materials. Delete one to upload another.`, code: "quota_exceeded" },
         { status: 409 },
       );
     }
-    const prepared = await prepareMaterial({
-      fileName: file.name,
-      mimeType: file.type,
-      bytes: new Uint8Array(await file.arrayBuffer()),
-    });
+    const prepared = await prepareMaterial({ fileName: file.name, mimeType: file.type, bytes });
     const folder = folderField ? await getFolder(user.id, folderField) : await ensureUnsortedFolder(user.id);
     if (!folder) return NextResponse.json({ error: "Folder not found" }, { status: 404 });
     const { material, duplicate } = await insertMaterial(user.id, prepared, {

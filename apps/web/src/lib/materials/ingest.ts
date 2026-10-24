@@ -60,6 +60,11 @@ export const extractMaterialSegments: ExtractSegments = async (format, buffer) =
   return { segments: [{ text: buffer.toString("utf8"), page: null }], pageCount: null };
 };
 
+/** Same-owner dedupe key: SHA-256 of the uploaded bytes. */
+export function materialDigest(bytes: Uint8Array): string {
+  return createHash("sha256").update(bytes).digest("hex");
+}
+
 export async function prepareMaterial(
   input: { fileName: string; mimeType: string | null; bytes: Uint8Array },
   extract: ExtractSegments = extractMaterialSegments,
@@ -99,7 +104,7 @@ export async function prepareMaterial(
     mimeType: MATERIAL_MIME_BY_FORMAT[format],
     format,
     byteLength: input.bytes.byteLength,
-    contentSha256: createHash("sha256").update(buffer).digest("hex"),
+    contentSha256: materialDigest(input.bytes),
     charCount,
     pageCount: extracted.pageCount,
     language: detectMaterialLanguage(chunks.map((chunk) => chunk.text).join("\n")),
