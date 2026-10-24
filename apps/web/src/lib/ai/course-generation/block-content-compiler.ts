@@ -87,7 +87,7 @@ const VisualContentSchema = z
     engine: z.enum(["html", "echarts", "mermaid", "physics", "algorithm", "math_explorer", "interactive"]).optional(),
     interactive: InteractiveComponentPayloadSchema.optional(),
     html: z.string().optional(),
-    echartsOption: z.record(z.unknown()).optional(),
+    echartsOption: z.record(z.string(), z.unknown()).optional(),
     echartsHeight: z.coerce.number().optional(),
     mermaidDefinition: z.string().optional(),
     physicsScene: PhysicsSceneZodSchema.optional(),

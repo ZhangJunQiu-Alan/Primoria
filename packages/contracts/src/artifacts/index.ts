@@ -257,7 +257,7 @@ export const EChartsArtifactSchema = z.object({
   type: z.literal("echarts_widget"),
   title: z.string(),
   description: z.string(),
-  option: z.record(z.unknown()),
+  option: z.record(z.string(), z.unknown()),
   height: z.number().optional(),
 }) satisfies z.ZodType<EChartsArtifact>;
 
