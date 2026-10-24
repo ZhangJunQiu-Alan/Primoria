@@ -1,0 +1,8 @@
+[
+  {
+    "advisory": "GHSA-mrhx-c7xc-m3w5",
+    "package": "zod",
+    "versions": ["3.25.76"],
+    "expires": "2026-12-31"
+  }
+]

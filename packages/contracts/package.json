@@ -28,6 +28,10 @@
       "types": "./src/tutor-style.d.ts",
       "default": "./src/tutor-style.mjs"
     },
+    "./agent-input-limits": {
+      "types": "./src/agent-input-limits.d.ts",
+      "default": "./src/agent-input-limits.mjs"
+    },
     "./tutor-style-prompt": {
       "types": "./src/tutor-style-prompt.d.ts",
       "default": "./src/tutor-style-prompt.mjs"
@@ -46,7 +50,7 @@
     }
   },
   "dependencies": {
-    "zod": "^3.23.8"
+    "zod": "^4.6.6"
   },
   "devDependencies": {
     "typescript": "^5.7.0"
