@@ -178,8 +178,10 @@ predefine release batches.
 ## Netlify previews (2026-10-24)
 
 The old dashboard base directory `hackathon` no longer exists. Root
-`netlify.toml` overrides it with `apps/web`, `pnpm build`, and `.next`, using
-Node 22 and the repository PNPM version. PR previews can build the Web app;
+`netlify.toml` overrides it with the workspace root, installs dependencies from
+the root PNPM lockfile, builds `@primoria/web`, and publishes `apps/web/.next`
+through the Next.js adapter. It uses Node 22 and the repository PNPM version.
+PR previews can build the Web app;
 they do not host the self-hosted Agent or workers. Production auto-builds are
 explicitly ignored while the application server and domain are deferred.
 Revisit that guard only as part of an authorized deployment.

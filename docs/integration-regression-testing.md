@@ -612,3 +612,9 @@ a running app (`visualization:eval:attach`) refuses a non-test database unless
 - Application server, domain and production deployment are deferred by the
   owner. Netlify production builds are ignored; PR previews use the actual Web
   directory instead of the deleted `hackathon` directory.
+- The complete local `pnpm test:regression` exited 0: Web unit baseline 988
+  passed / 20 intentional skips, Agent suites, 1,718 learning-goal cases,
+  production build/bundle budgets, isolated DB/HTTP suites, all browser
+  journeys, and 49-component replay at three widths. The later UTF-8 keepalive
+  change additionally passes its seven focused persistence/recorder checks
+  and final Web typecheck; remote CI checks the final PR revision.
