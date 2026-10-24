@@ -354,7 +354,13 @@ Learners organize their own study materials in private subject folders on
 `/materials` (one folder per subject plus an Unsorted inbox) and upload PDF,
 DOCX, Markdown, or TXT (≤ 8 MiB per file; scanned documents are not supported).
 Files are lectures or references; lectures are ordered by the number in their
-file name ("第3讲", "Lecture 03") until the learner reorders them by hand. Only extracted
+file name ("第3讲", "Lecture 03") until the learner reorders them by hand, and a
+lecture without a number is placed by one light model call. Each lecture in a
+subject folder is analyzed in the background into a small knowledge graph that
+reuses concepts earlier lectures already introduced; the small graphs are
+assembled deterministically, in lecture order, into the folder's private
+`mat_*` graph, which the folder page shows lecture by lecture with mastery.
+Failed analyses can be retried. Only extracted
 text is stored, as ordered chunks with page/heading locators; re-uploading the
 same file is idempotent. Selecting one to five materials builds a course:
 
@@ -369,9 +375,11 @@ unlike `gen_*` graphs. Lesson Planner and Writer receive the cited excerpts as
 data (not instructions) and must teach from the material's terminology,
 definitions, and examples; the lesson reader shows concept-level sources
 ("file · p. 3–4"). Material courses use private lesson images and cannot be
-shared. A material cannot be deleted while a course still uses a graph built
-from it. Mastery, Facts, and XP work exactly as for other courses; the material
-itself is not a learner fact.
+shared. A material cannot be deleted while a course still uses a material-set
+graph built from it; deleting a lecture from a subject folder re-assembles the
+folder graph instead. Mastery, Facts, and XP follow the same rules as other
+courses (material-graph mastery is stored in `material_concept_mastery`); the
+material itself is not a learner fact.
 
 Inside a material course, the course-rail Tutor answers material-first. For
 each question Web retrieves up to six chunks of that course's own materials

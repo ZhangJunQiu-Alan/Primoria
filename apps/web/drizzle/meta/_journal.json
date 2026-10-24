@@ -407,6 +407,20 @@
       "when": 1792851978365,
       "tag": "0057_material_folders",
       "breakpoints": true
+    },
+    {
+      "idx": 58,
+      "version": "7",
+      "when": 1792852979165,
+      "tag": "0058_lecture_kg_jobs",
+      "breakpoints": true
+    },
+    {
+      "idx": 59,
+      "version": "7",
+      "when": 1792854173892,
+      "tag": "0059_material_concept_mastery",
+      "breakpoints": true
     }
   ]
 }

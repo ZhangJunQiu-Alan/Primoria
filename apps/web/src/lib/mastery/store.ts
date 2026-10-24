@@ -2,7 +2,7 @@ import { and, eq } from "drizzle-orm";
 
 import { getCurrentUser } from "@/lib/auth/session";
 import { getDb, hasDatabaseUrl } from "@/lib/db/client";
-import { userConceptMastery } from "@/lib/db/schema";
+import { masteryTableFor } from "@/lib/mastery/owner-store";
 
 // Per-user concept mastery in app-owned Postgres. Owner is resolved internally
 // from the request session; no-ops/empty when auth is not configured or there is
@@ -28,10 +28,11 @@ export async function listConceptMastery(graphId: string): Promise<ConceptMaster
   const owner = await resolveOwner();
   if (!owner) return [];
 
+  const table = masteryTableFor(graphId);
   const rows = await getDb()
     .select()
-    .from(userConceptMastery)
-    .where(and(eq(userConceptMastery.ownerId, owner), eq(userConceptMastery.graphId, graphId)));
+    .from(table)
+    .where(and(eq(table.ownerId, owner), eq(table.graphId, graphId)));
 
   return rows.map((row) => ({
     graphId: row.graphId,
@@ -52,11 +53,12 @@ export async function upsertConceptMastery(
   if (!owner) return;
 
   const now = new Date();
+  const table = masteryTableFor(graphId);
   await getDb()
-    .insert(userConceptMastery)
+    .insert(table)
     .values({ ownerId: owner, graphId, conceptId, status, score, updatedAt: now })
     .onConflictDoUpdate({
-      target: [userConceptMastery.ownerId, userConceptMastery.graphId, userConceptMastery.conceptId],
+      target: [table.ownerId, table.graphId, table.conceptId],
       set: { status, score, updatedAt: now },
     });
 }

@@ -44,7 +44,9 @@ AG-UI Agent runtime; it is not a static mock and has no Supabase runtime path.
   reviewable/editable/dismissible learner facts across six categories.
 - Immutable snapshot course sharing with idempotent import.
 - Subject folders for uploaded materials (Unsorted inbox, lecture/reference
-  roles, filename-number and manual lecture order).
+  roles, filename-number, AI, and manual lecture order) with per-lecture KG jobs
+  (`material_kg_jobs` in the Extractor worker) assembled into one private folder
+  KG and a lecture-by-lecture KG overview with mastery.
 - Learner-uploaded study materials (`/materials`; PDF/DOCX/Markdown/TXT text
   extraction and chunking) that build owner-private `mat_*` course graphs with
   per-concept source citations, material-grounded lesson generation,

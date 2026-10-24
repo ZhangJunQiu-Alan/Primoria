@@ -1,4 +1,4 @@
-import { and, asc, count, desc, eq, inArray, or, sql } from "drizzle-orm";
+import { and, asc, count, desc, eq, inArray, isNull, or, sql } from "drizzle-orm";
 
 import { getDb } from "../db/client";
 import {
@@ -11,8 +11,10 @@ import {
   type LearningMaterialRow,
 } from "../db/schema";
 import type { PreparedMaterial } from "./ingest";
+import { rebuildFolderGraph } from "./folder-graph-store";
+import { enqueueLectureKgJob } from "./lecture-kg-jobs";
 import { insertionPosition, parseLectureNumber } from "./ordering";
-import type { MaterialChunkRef, MaterialOrderSource, MaterialRole, MaterialSummary } from "./types";
+import type { MaterialChunkRef, MaterialKgStatus, MaterialOrderSource, MaterialRole, MaterialSummary } from "./types";
 
 // Owner-scoped persistence for uploaded learning materials. Every query filters
 // by owner_id; a material id from another owner reads as "not found".
@@ -37,6 +39,7 @@ export function toMaterialSummary(row: LearningMaterialRow): MaterialSummary {
     position: row.position,
     lectureNumber: row.lectureNumber,
     orderSource: row.orderSource as MaterialOrderSource,
+    kgStatus: row.kgStatus as MaterialKgStatus,
     createdAt: row.createdAt.getTime(),
   };
 }
@@ -81,8 +84,8 @@ export async function insertMaterial(
   const db = getDb();
   return db.transaction(async (tx) => {
     const now = new Date();
-    await tx
-      .select({ id: materialFolders.id })
+    const [folder] = await tx
+      .select({ id: materialFolders.id, kind: materialFolders.kind })
       .from(materialFolders)
       .where(and(eq(materialFolders.id, placement.folderId), eq(materialFolders.ownerId, ownerId)))
       .for("update");
@@ -140,6 +143,11 @@ export async function insertMaterial(
     for (let i = 0; i < rows.length; i += 200) {
       await tx.insert(learningMaterialChunks).values(rows.slice(i, i + 200));
     }
+    // A lecture filed under a subject gets its small KG built by the worker.
+    if (folder?.kind === "subject" && placement.role === "lecture") {
+      await enqueueLectureKgJob(tx, { ownerId, materialId: inserted.id, folderId: placement.folderId });
+      return { material: toMaterialSummary({ ...inserted, kgStatus: "pending" }), duplicate: false };
+    }
     return { material: toMaterialSummary(inserted), duplicate: false };
   });
 }
@@ -191,24 +199,28 @@ export type DeleteMaterialResult =
   | { ok: false; reason: "not_found" }
   | { ok: false; reason: "in_use"; courses: { id: string; title: string }[] };
 
-/** Delete a material plus the private graphs derived from it. Refused while
- * any course (archived included) still runs on one of those graphs, because
- * its planned lessons would lose their grounding source. */
+/** Delete a material plus the hand-picked material-set graphs derived from it.
+ * Refused while any course (archived included) still runs on one of those
+ * graphs, because its planned lessons would lose their grounding source. The
+ * file's subject folder graph is re-assembled without it. */
 export async function deleteMaterial(ownerId: string, materialId: string): Promise<DeleteMaterialResult> {
   return getDb().transaction(async (tx) => {
     const [material] = await tx
-      .select({ id: learningMaterials.id })
+      .select({ id: learningMaterials.id, folderId: learningMaterials.folderId })
       .from(learningMaterials)
       .where(and(eq(learningMaterials.ownerId, ownerId), eq(learningMaterials.id, materialId)))
       .for("update")
       .limit(1);
     if (!material) return { ok: false, reason: "not_found" } as const;
 
+    // Only hand-picked material-set graphs block deletion; a subject folder's
+    // graph is re-assembled without the file (subject-folders.md §4.3).
     const graphs = await tx
       .select({ graphId: materialTopicGraphs.graphId })
       .from(materialTopicGraphs)
       .where(and(
         eq(materialTopicGraphs.ownerId, ownerId),
+        isNull(materialTopicGraphs.folderId),
         sql`${materialTopicGraphs.materialIds} @> ${JSON.stringify([materialId])}::jsonb`,
       ));
     const graphIds = graphs.map((graph) => graph.graphId);
@@ -227,6 +239,7 @@ export async function deleteMaterial(ownerId: string, materialId: string): Promi
     await tx
       .delete(learningMaterials)
       .where(and(eq(learningMaterials.ownerId, ownerId), eq(learningMaterials.id, materialId)));
+    await rebuildFolderGraph(ownerId, material.folderId, tx);
     return { ok: true } as const;
   });
 }

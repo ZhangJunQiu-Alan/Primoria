@@ -3813,6 +3813,84 @@ cpk-web-inspector {
   color: var(--ink);
 }
 
+.materials-kg-status {
+  font-size: 12px;
+}
+
+.materials-item-copy .materials-kg-status.pending {
+  color: var(--ink-muted);
+}
+
+.materials-item-copy .materials-kg-status.ready {
+  color: var(--pine);
+}
+
+.materials-kg-failed {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.materials-kg-status.failed {
+  color: var(--coral-ink);
+}
+
+.folder-graph-empty {
+  margin: 0;
+  padding: 14px 18px 16px;
+  color: var(--ink-muted);
+  font-size: 13px;
+}
+
+.folder-graph-lectures {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 14px 18px 18px;
+  list-style: none;
+}
+
+.folder-graph-lectures > li > strong {
+  display: block;
+  margin-bottom: 8px;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.folder-graph-lectures ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.folder-graph-concept {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  font-size: 12px;
+}
+
+.folder-graph-concept .course-lesson-concept-dot {
+  margin-top: 0;
+}
+
+.folder-graph-concept small {
+  color: var(--quiet);
+  font-size: 11px;
+}
+
 @media (max-width: 680px) {
   .materials-list li {
     flex-wrap: wrap;

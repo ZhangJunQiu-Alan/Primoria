@@ -650,6 +650,30 @@ export const userConceptMastery = pgTable(
   }),
 );
 
+// Mastery for owner-private mat_* graphs. user_concept_mastery carries a
+// foreign key into the library KG tables (knowledge_graph_concepts), which
+// material concepts — stored inside material_topic_graphs.graph — never enter.
+// Same columns and rules; rows outlive a re-assembled folder graph and go
+// with the folder (or the owner).
+export const materialConceptMastery = pgTable(
+  "material_concept_mastery",
+  {
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    graphId: text("graph_id").notNull(),
+    conceptId: text("concept_id").notNull(),
+    // untested | weak | learning | mastered
+    status: text("status").notNull().default("untested"),
+    score: doublePrecision("score"),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    pk: uniqueIndex("material_concept_mastery_owner_graph_concept_uidx").on(table.ownerId, table.graphId, table.conceptId),
+    statusCheck: check("material_concept_mastery_status_check", sql`${table.status} in ('untested', 'weak', 'learning', 'mastered')`),
+    scoreCheck: check("material_concept_mastery_score_check", sql`${table.score} is null or (${table.score} >= 0 and ${table.score} <= 1)`),
+    graphCheck: check("material_concept_mastery_graph_check", sql`starts_with(${table.graphId}, 'mat_')`),
+  }),
+);
+
 // Cached AI-generated media (lesson `image` blocks). The block JSONB only
 // references an asset by id/URL; the bytes live here. `cache_key` is the reuse
 // core — a hash over the image brief (model/concepts/goal/kind/style/etc) so an
@@ -890,6 +914,9 @@ export const learningMaterials = pgTable(
     lectureNumber: doublePrecision("lecture_number"),
     // How position was decided: filename | ai | manual | upload (appended)
     orderSource: text("order_source").notNull().default("upload"),
+    // Per-lecture KG state: pending | processing | ready | failed | skipped
+    // (references and unsorted files are skipped).
+    kgStatus: text("kg_status").notNull().default("skipped"),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
   },
@@ -899,6 +926,7 @@ export const learningMaterials = pgTable(
     folderPositionIdx: index("learning_materials_folder_position_idx").on(table.folderId, table.position),
     roleCheck: check("learning_materials_role_check", sql`${table.role} in ('lecture', 'reference')`),
     orderSourceCheck: check("learning_materials_order_source_check", sql`${table.orderSource} in ('filename', 'ai', 'manual', 'upload')`),
+    kgStatusCheck: check("learning_materials_kg_status_check", sql`${table.kgStatus} in ('pending', 'processing', 'ready', 'failed', 'skipped')`),
     countsCheck: check(
       "learning_materials_counts_check",
       sql`${table.byteLength} >= 0 and ${table.charCount} >= 0 and ${table.chunkCount} >= 0 and (${table.pageCount} is null or ${table.pageCount} >= 0)`,
@@ -939,6 +967,9 @@ export const materialTopicGraphs = pgTable(
   {
     graphId: text("graph_id").primaryKey(),
     ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    // Set on a subject folder's assembled graph (one per folder); null on the
+    // phase-1 graphs built from a hand-picked material set.
+    folderId: text("folder_id").references(() => materialFolders.id, { onDelete: "set null" }),
     materialIds: jsonb("material_ids").$type<string[]>().notNull(),
     title: text("title").notNull(),
     language: text("language"),
@@ -949,6 +980,62 @@ export const materialTopicGraphs = pgTable(
   },
   (table) => ({
     ownerCreatedIdx: index("material_topic_graphs_owner_created_idx").on(table.ownerId, table.createdAt),
+    folderUnique: uniqueIndex("material_topic_graphs_folder_uidx").on(table.folderId).where(sql`${table.folderId} IS NOT NULL`),
+  }),
+);
+
+// One lecture's small KG inside a subject folder (docs/product/subject-folders.md §3).
+// Concepts carry their folder-wide concept id: a new id when the lecture
+// introduces the concept, an existing one when the model judged it the same
+// idea (sameAs). The folder graph is a deterministic assembly of these rows.
+export const materialSubgraphs = pgTable(
+  "material_subgraphs",
+  {
+    materialId: text("material_id").primaryKey().references(() => learningMaterials.id, { onDelete: "cascade" }),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    folderId: text("folder_id").notNull().references(() => materialFolders.id, { onDelete: "cascade" }),
+    graph: jsonb("graph").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    folderIdx: index("material_subgraphs_folder_idx").on(table.ownerId, table.folderId),
+  }),
+);
+
+// Recoverable per-lecture KG jobs. One row per material (reused on retry or
+// when the file moves to another subject folder). Lease/fencing mirrors
+// profile_fact_intake_jobs; the claim never starts a second job in a folder
+// whose job is still running, so concept merging always sees the latest graph.
+export const materialKgJobs = pgTable(
+  "material_kg_jobs",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    materialId: text("material_id").notNull().references(() => learningMaterials.id, { onDelete: "cascade" }),
+    folderId: text("folder_id").notNull().references(() => materialFolders.id, { onDelete: "cascade" }),
+    // queued | running | completed | failed
+    status: text("status").notNull().default("queued"),
+    attempts: integer("attempts").notNull().default(0),
+    maxAttempts: integer("max_attempts").notNull().default(2),
+    leaseOwner: text("lease_owner"),
+    leaseToken: text("lease_token"),
+    leaseExpiresAt: timestamp("lease_expires_at", { withTimezone: true }),
+    heartbeatAt: timestamp("heartbeat_at", { withTimezone: true }),
+    lastError: text("last_error"),
+    errorCategory: text("error_category"),
+    startedAt: timestamp("started_at", { withTimezone: true }),
+    completedAt: timestamp("completed_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    materialUnique: uniqueIndex("material_kg_jobs_material_uidx").on(table.materialId),
+    leaseTokenUnique: uniqueIndex("material_kg_jobs_lease_token_uidx").on(table.leaseToken),
+    statusLeaseIdx: index("material_kg_jobs_status_lease_idx").on(table.status, table.leaseExpiresAt),
+    folderStatusIdx: index("material_kg_jobs_folder_status_idx").on(table.folderId, table.status),
+    statusCheck: check("material_kg_jobs_status_check", sql`${table.status} in ('queued', 'running', 'completed', 'failed')`),
+    attemptsCheck: check("material_kg_jobs_attempts_check", sql`${table.attempts} >= 0 and ${table.maxAttempts} > 0`),
   }),
 );
 
@@ -962,5 +1049,7 @@ export type MaterialFolderRow = typeof materialFolders.$inferSelect;
 export type LearningMaterialRow = typeof learningMaterials.$inferSelect;
 export type LearningMaterialChunkRow = typeof learningMaterialChunks.$inferSelect;
 export type MaterialTopicGraphRow = typeof materialTopicGraphs.$inferSelect;
+export type MaterialSubgraphRow = typeof materialSubgraphs.$inferSelect;
+export type MaterialKgJobRow = typeof materialKgJobs.$inferSelect;
 export type IdentityRow = typeof identities.$inferSelect;
 export type SessionRow = typeof sessions.$inferSelect;

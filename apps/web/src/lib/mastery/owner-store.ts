@@ -1,7 +1,15 @@
 import { and, eq } from "drizzle-orm";
 import { getDb, hasDatabaseUrl, type DbOrTx } from "../db/client";
-import { userConceptMastery } from "../db/schema";
+import { materialConceptMastery, userConceptMastery } from "../db/schema";
+import { isMaterialGraphId } from "../materials/types";
 import type { ConceptMastery, MasteryStatus } from "./store";
+
+/** Owner-private mat_* concepts are not in the library KG tables that
+ * user_concept_mastery references, so their mastery has its own table with
+ * identical columns. */
+export function masteryTableFor(graphId: string): typeof userConceptMastery {
+  return (isMaterialGraphId(graphId) ? materialConceptMastery : userConceptMastery) as typeof userConceptMastery;
+}
 
 // Owner-scoped concept-mastery access for the learning-progress worker, which
 // runs with an explicit ownerId and has no request session (the session-scoped
@@ -10,10 +18,11 @@ import type { ConceptMastery, MasteryStatus } from "./store";
 
 export async function listConceptMasteryByOwner(ownerId: string, graphId: string): Promise<ConceptMastery[]> {
   if (!ownerId || !hasDatabaseUrl()) return [];
+  const table = masteryTableFor(graphId);
   const rows = await getDb()
     .select()
-    .from(userConceptMastery)
-    .where(and(eq(userConceptMastery.ownerId, ownerId), eq(userConceptMastery.graphId, graphId)));
+    .from(table)
+    .where(and(eq(table.ownerId, ownerId), eq(table.graphId, graphId)));
   return rows.map((row) => ({
     graphId: row.graphId,
     conceptId: row.conceptId,
@@ -33,11 +42,12 @@ export async function upsertConceptMasteryByOwner(
 ): Promise<void> {
   if (!ownerId || !hasDatabaseUrl()) return;
   const now = new Date();
+  const table = masteryTableFor(graphId);
   await db
-    .insert(userConceptMastery)
+    .insert(table)
     .values({ ownerId, graphId, conceptId, status, score, updatedAt: now })
     .onConflictDoUpdate({
-      target: [userConceptMastery.ownerId, userConceptMastery.graphId, userConceptMastery.conceptId],
+      target: [table.ownerId, table.graphId, table.conceptId],
       set: { status, score, updatedAt: now },
     });
 }

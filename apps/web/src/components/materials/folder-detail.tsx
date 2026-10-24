@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { DragEvent } from "react";
 import { msg, useI18n } from "@/lib/i18n/client";
 import {
@@ -11,6 +11,7 @@ import {
   MAX_MATERIALS_PER_COURSE,
   materialFormatFor,
 } from "@/lib/materials/limits";
+import type { FolderGraphOverview } from "@/lib/materials/folder-overview";
 import type { FolderKind, MaterialRole, MaterialSummary } from "@/lib/materials/types";
 
 type Notice = { tone: "info" | "error"; text: string };
@@ -35,15 +36,19 @@ function formatLabel(mimeType: string) {
 }
 
 const byPosition = (a: MaterialSummary, b: MaterialSummary) => a.position - b.position || a.createdAt - b.createdAt;
+const KG_POLL_MS = 5_000;
+const isAnalyzing = (material: MaterialSummary) => material.kgStatus === "pending" || material.kgStatus === "processing";
 
 export function FolderDetail({
   folder: initialFolder,
   folders,
   initialMaterials,
+  initialOverview = null,
 }: {
   folder: FolderRef;
   folders: FolderRef[];
   initialMaterials: MaterialSummary[];
+  initialOverview?: FolderGraphOverview | null;
 }) {
   const { dictionary, language } = useI18n();
   const t = dictionary.materials;
@@ -64,7 +69,62 @@ export function FolderDetail({
   const [nameDraft, setNameDraft] = useState(initialFolder.name);
   const [confirmingFolderDelete, setConfirmingFolderDelete] = useState(false);
   const [notices, setNotices] = useState<Notice[]>([]);
+  const [overview, setOverview] = useState(initialOverview);
   const busy = uploadingName !== null || building;
+  const analyzing = materials.some(isAnalyzing);
+  const readyCount = useRef(initialMaterials.filter((material) => material.kgStatus === "ready").length);
+
+  // While a lecture is being analyzed, poll the folder; whenever another
+  // lecture finishes, refresh the knowledge-graph overview.
+  useEffect(() => {
+    if (!analyzing) return;
+    let cancelled = false;
+    const timer = setInterval(async () => {
+      try {
+        const res = await fetch(`/api/folders/${encodeURIComponent(folder.id)}`, { cache: "no-store" });
+        const body = (await res.json().catch(() => ({}))) as { materials?: MaterialSummary[] };
+        if (cancelled || !res.ok || !body.materials) return;
+        const next = [...body.materials].sort(byPosition);
+        setMaterials(next);
+        const ready = next.filter((material) => material.kgStatus === "ready").length;
+        if (ready !== readyCount.current) {
+          readyCount.current = ready;
+          void refreshOverview();
+        }
+      } catch {
+        // keep polling
+      }
+    }, KG_POLL_MS);
+    return () => {
+      cancelled = true;
+      clearInterval(timer);
+    };
+    // refreshOverview only reads folder.id, which the effect already depends on.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [analyzing, folder.id]);
+
+  async function refreshOverview() {
+    if (folder.kind !== "subject") return;
+    try {
+      const res = await fetch(`/api/folders/${encodeURIComponent(folder.id)}/graph`, { cache: "no-store" });
+      const body = (await res.json().catch(() => ({}))) as { overview?: FolderGraphOverview };
+      if (res.ok && body.overview) setOverview(body.overview);
+    } catch {
+      // the overview is informational
+    }
+  }
+
+  async function retryKg(material: MaterialSummary) {
+    try {
+      const res = await fetch(`/api/materials/${encodeURIComponent(material.id)}/kg`, { method: "POST" });
+      const body = (await res.json().catch(() => ({}))) as MaterialResponse;
+      if (!res.ok || !body.material) throw new Error("retry rejected");
+      const updated = body.material;
+      setMaterials((current) => current.map((entry) => (entry.id === updated.id ? updated : entry)));
+    } catch {
+      setNotices([{ tone: "error", text: t.kgRetryFailed }]);
+    }
+  }
   const isSubject = folder.kind === "subject";
   const folderName = isSubject ? folder.name : tf.unsorted;
   const otherFolders = folders.filter((entry) => entry.id !== folder.id);
@@ -118,6 +178,7 @@ export function FolderDetail({
       const body = (await res.json().catch(() => ({}))) as { materials?: MaterialSummary[] };
       if (!res.ok || !body.materials) throw new Error("order rejected");
       setMaterials([...body.materials].sort(byPosition));
+      void refreshOverview();
     } catch {
       setMaterials(previous);
       setNotices([{ tone: "error", text: t.orderFailed }]);
@@ -149,6 +210,7 @@ export function FolderDetail({
       } else {
         setMaterials((current) => current.map((entry) => (entry.id === updated.id ? updated : entry)).sort(byPosition));
       }
+      void refreshOverview();
     } catch {
       setNotices([{ tone: "error", text: t.updateFailed }]);
     }
@@ -173,6 +235,7 @@ export function FolderDetail({
       if (res.ok) {
         setMaterials((current) => current.filter((entry) => entry.id !== material.id));
         setSelected((current) => current.filter((entry) => entry !== material.id));
+        void refreshOverview();
       } else if (body.code === "material_in_use") {
         const courses = (body.courses ?? [])
           .map((course) => (language === "zh" ? `《${course.title}》` : `“${course.title}”`))
@@ -394,8 +457,16 @@ export function FolderDetail({
                           material.orderSource === "filename" ? t.orderFromFilename : material.orderSource === "manual" ? t.orderManual : null,
                         ].filter(Boolean).join(" · ")}
                       </small>
+                      {isAnalyzing(material) ? <small className="materials-kg-status pending">{t.kgPending}</small> : null}
+                      {material.kgStatus === "ready" ? <small className="materials-kg-status ready">{t.kgReady}</small> : null}
                     </span>
                   </label>
+                  {material.kgStatus === "failed" ? (
+                    <span className="materials-kg-failed">
+                      <small className="materials-kg-status failed">{t.kgFailed}</small>
+                      <button type="button" className="materials-delete" onClick={() => void retryKg(material)}>{t.kgRetry}</button>
+                    </span>
+                  ) : null}
                   <div className="materials-item-controls">
                     <button type="button" className="materials-icon-button" aria-label={msg(t.moveUp, { title: material.title })} disabled={index === 0 || busy} onClick={() => moveTo(index, index - 1)}>↑</button>
                     <button type="button" className="materials-icon-button" aria-label={msg(t.moveDown, { title: material.title })} disabled={index === materials.length - 1 || busy} onClick={() => moveTo(index, index + 1)}>↓</button>
@@ -452,6 +523,36 @@ export function FolderDetail({
           {building ? <p className="materials-building" role="status">{t.building}</p> : null}
         </section>
       )}
+
+      <section className="materials-list-card folder-graph" aria-label={t.graphTitle}>
+        <header className="materials-list-header">
+          <span>{t.graphTitle}</span>
+          {overview?.conceptCount ? <span>{msg(t.graphCount, { count: overview.conceptCount })}</span> : null}
+        </header>
+        {!isSubject ? (
+          <p className="folder-graph-empty">{t.graphUnsorted}</p>
+        ) : !overview || overview.lectures.length === 0 ? (
+          <p className="folder-graph-empty">{t.graphEmpty}</p>
+        ) : (
+          <ol className="folder-graph-lectures">
+            {overview.lectures.map((lecture, index) => (
+              <li key={lecture.materialId}>
+                <strong>{msg(t.lectureIndex, { index: index + 1 })} · {lecture.title}</strong>
+                <ul>
+                  {lecture.concepts.map((concept) => (
+                    <li key={concept.conceptId} className={`folder-graph-concept concept-${concept.status}`} title={dictionary.course.conceptStatus[concept.status]}>
+                      <span className="course-lesson-concept-dot" aria-hidden="true" />
+                      {concept.name}
+                      <span className="sr-only"> · {dictionary.course.conceptStatus[concept.status]}</span>
+                      {concept.revisitedIn > 0 ? <small>{msg(t.revisited, { count: concept.revisitedIn })}</small> : null}
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ol>
+        )}
+      </section>
 
       <p className="materials-privacy-note">
         {t.privacyNote} <Link href="/library">{t.viewLibrary}</Link>

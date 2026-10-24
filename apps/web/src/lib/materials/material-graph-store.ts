@@ -33,7 +33,7 @@ export type MaterialGraphRecord = {
 
 export type MaterialGraphModelInvoker = (input: { system: string; user: string; signal?: AbortSignal }) => Promise<string>;
 
-const defaultInvoker: MaterialGraphModelInvoker = async ({ system, user, signal }) => {
+export const defaultMaterialGraphInvoker: MaterialGraphModelInvoker = async ({ system, user, signal }) => {
   const model = createUtilityModel({}, { maxTokens: 8192, timeoutMs: MATERIAL_GRAPH_TIMEOUT_MS });
   const response = await model.invoke(
     [
@@ -71,7 +71,7 @@ export type MaterialGraphResult = { record: MaterialGraphRecord; created: boolea
 /** Returns null when the model cannot produce a grounded, teachable graph. */
 export async function getOrCreateMaterialGraph(
   input: { ownerId: string; materials: LearningMaterialRow[]; language: "zh" | "en" },
-  invokeModel: MaterialGraphModelInvoker = defaultInvoker,
+  invokeModel: MaterialGraphModelInvoker = defaultMaterialGraphInvoker,
   timeoutMs = MATERIAL_GRAPH_TIMEOUT_MS,
 ): Promise<MaterialGraphResult | null> {
   const { ownerId, materials, language } = input;

@@ -1,6 +1,6 @@
 # 科目文件夹：按讲累积的私有 KG 与自适应选择题测验
 
-Status: approved design; phase 1 (folders) implemented, phases 2–4 in progress (2026-10-24).
+Status: approved design; phases 1 (folders) and 2 (per-lecture KG) implemented, phases 3–4 in progress (2026-10-24).
 Extends [`learning-materials.md`](learning-materials.md); runtime code, schemas,
 and tests remain the source of truth once implemented.
 
@@ -50,9 +50,13 @@ and tests remain the source of truth once implemented.
   `kg_status`（`pending` | `processing` | `ready` | `failed` | `skipped`）。
 - **小 KG**（`material_subgraphs`，每个讲义文件一行）：该讲的 topics/concepts、讲内先修边、
   每个概念引用的片段，以及 AI 给出的 `sameAs`（与已有概念相同）和 `requires`（依赖已有概念）。
-- **概念身份**（`folder_concepts`）：文件夹内每个概念一个稳定 id，记录它最早创建于哪个文件、
-  合并进来的同义概念、汇总的出处。**掌握度键是 (owner, 文件夹图 id, 概念 id)**，所以拼装、
-  重排、插入新讲都不改变已有概念 id。
+- **概念身份**：没有单独的概念表。小 KG 里的每个概念直接带文件夹级 id：新概念生成新 id
+  （`fc_<随机>_<slug>`），`sameAs` 命中的概念沿用已有 id，出处在拼装时汇总（每概念最多 12 段）。
+  **掌握度键是 (owner, 文件夹图 id, 概念 id)**，所以拼装、重排、插入或删除讲都不改变已有概念 id。
+- **掌握度表**：`user_concept_mastery` 有一条指向题库 KG 概念表（`knowledge_graph_concepts`）的外键，
+  `mat_*` 概念不在那张表里，所以 `mat_*` 图（文件夹图与第一阶段的资料组合图）的掌握度写入同列同规则的
+  `material_concept_mastery`；`apps/web/src/lib/mastery/owner-store.ts` 按 graph id 路由。与第一阶段一致，
+  图谱或文件夹删除后掌握度行保留（owner 私有，随账号删除）。
 - **大 KG**：确定性拼装产物，写入现有 `material_topic_graphs`，graph id 为
   `mat_<hash(folderId)>`。沿用 `mat_` 前缀意味着现有的私有化规则全部自动适用：owner 才能解析、
   课时图片私有、课程不能分享、侧栏 Tutor 资料问答、学习进度/Extractor 解析。
@@ -79,8 +83,9 @@ worker:
 ### 4.2 拼装算法（确定性）
 
 1. 讲义按 `position` 排序。
-2. 概念归并：`sameAs` 形成等价类，类的 id = 最早**创建**的成员（与顺序无关，保证 id 稳定）；
-   概念出现在类中**排序最靠前**那一讲的位置，后续讲的同义概念只并入出处。
+2. 概念归并：分析一讲时 `sameAs` 直接沿用已有概念的 id，所以同一概念的 id 由最早**分析**
+   的那一讲决定（与排序无关，保证 id 稳定）；概念放在含有它的讲中**排序最靠前**那一讲的位置，
+   其余讲只并入出处。
 3. Topics 按讲顺序拼接（topic id 带文件前缀），被合并走概念而变空的 topic 丢弃。
 4. 边：讲内链 + 相邻讲首尾边 + AI `requires` 边（只保留指向更早位置的边，结果必为 DAG）。
 5. 拼装在上传完成、拖动排序、改角色、删除文件时重跑；不调用模型，毫秒级。
@@ -140,7 +145,12 @@ POST /api/folders/:id/quizzes/:sessionId/submit { submissionId, answers }
   第一版不提供手动合并/拆分（以后再加）。
 - 跨讲依赖只允许指向更早的讲；如果真实课程中后面的讲是前面的先修，需要学习者手动调整顺序。
 - 测验题只做单选，不能考察推导和开放性理解；简答/判分留到以后。
-- 单个 PDF 若是整门课（几百页），小 KG 的 topic 上限需要放宽到与资料规模匹配（实现时定）。
+- 单个 PDF 若是整门课（几百页），小 KG 仍沿用资料图谱的上限（≤ 12 个 topic、每个 ≤ 3 个概念），
+  内容多的整本教材会被压缩；以后再按资料规模放宽。
+- 只有分析失败的讲义可以重试；已完成的讲义不会重新分析（重新分析会换掉它独有概念的 id）。
+- 发给模型的已有概念清单最多 300 个，超出部分无法被 `sameAs` 命中。
+- 删除讲义后已有课程的课时处理（§4.3 第二条）随第 4 阶段的文件夹建课一起实现；在那之前文件夹图只被
+  KG 概览读取。
 
 ## 8. 分阶段交付
 
@@ -148,7 +158,16 @@ POST /api/folders/:id/quizzes/:sessionId/submit { submissionId, answers }
    上传时间回填）、文件角色、文件名序号解析与插入（`apps/web/src/lib/materials/ordering.ts`）、
    手动排序与跨文件夹移动（`folders.ts`，`/api/folders/**`、`PATCH /api/materials/[id]`）、
    `/materials` 文件夹列表与 `/materials/[folderId]` 文件夹详情。此阶段建课仍沿用"勾选资料建课"。
-2. **按讲 KG**：`material_kg_jobs` 队列、小 KG（sameAs/requires）、AI 排序兜底、确定性拼装、
-   文件夹 KG 概览（按讲列概念与掌握度）、删除后重拼。
+2. **按讲 KG**（已实现）：迁移 0058（`material_kg_jobs`、`material_subgraphs`、
+   `learning_materials.kg_status`、`material_topic_graphs.folder_id`；已在科目文件夹里的讲义会被回填入队）
+   与 0059（`material_concept_mastery`）。队列在 Extractor worker 内处理，优先级为资料事实 → 讲义 KG →
+   Extractor，同一文件夹串行，最多 2 次尝试，`/api/health` 报告 `lectureKg` 队列与心跳
+   （`lecture-kg-jobs.ts`、`lecture-kg-processor.ts`）。小 KG 复用资料图谱提示词并附上文件夹已有概念
+   （K1…，最多 300 个）；文件名没有序号、学习者也没手动排过序时，一次轻量调用决定插入位置
+   （`lecture-order.ts`，位置来源记为 `ai`）。拼装是纯函数（`folder-graph.ts`），由
+   `rebuildFolderGraph`（`folder-graph-store.ts`）在分析完成、排序、改角色、移动、删除、重命名时重跑。
+   讲义改为参考资料再改回时复用已有小 KG；移到别的科目会删除小 KG 并按新文件夹重新分析。
+   文件夹详情页显示每讲的分析状态（失败可 `POST /api/materials/[id]/kg` 重试）、分析中每 5 秒刷新，
+   以及按讲列出概念与掌握度的 KG 概览（`GET /api/folders/[id]/graph`）。
 3. **自适应选择题测验**：题库、分配、生成、提交、掌握度累积（§5 的决定）。
 4. **从文件夹建课**与"同步新内容"。

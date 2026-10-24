@@ -2,7 +2,18 @@ import { and, asc, eq, sql } from "drizzle-orm";
 
 import { getDb, type DbOrTx } from "../db/client";
 import { isUniqueViolation } from "../db/errors";
-import { learningMaterials, materialFolders, type MaterialFolderRow } from "../db/schema";
+import {
+  courses,
+  learningMaterials,
+  materialFolders,
+  materialKgJobs,
+  materialSubgraphs,
+  materialTopicGraphs,
+  type MaterialFolderRow,
+} from "../db/schema";
+import { folderGraphId } from "./folder-graph";
+import { rebuildFolderGraph } from "./folder-graph-store";
+import { enqueueLectureKgJob } from "./lecture-kg-jobs";
 import { insertionPosition } from "./ordering";
 import { toMaterialSummary } from "./store";
 import { MAX_FOLDER_NAME_CHARS, type FolderKind, type FolderSummary, type MaterialRole, type MaterialSummary } from "./types";
@@ -108,6 +119,7 @@ export async function renameFolder(ownerId: string, folderId: string, name: unkn
       .set({ name: value, updatedAt: new Date() })
       .where(and(eq(materialFolders.ownerId, ownerId), eq(materialFolders.id, folderId)))
       .returning();
+    if (row) await rebuildFolderGraph(ownerId, folderId);
     return row ?? null;
   } catch (error) {
     if (isUniqueViolation(error, NAME_CONSTRAINT)) throw new FolderInputError("duplicate_name", "A folder with this name already exists.");
@@ -139,9 +151,20 @@ export async function deleteFolder(ownerId: string, folderId: string): Promise<b
     for (const material of moving) {
       await tx
         .update(learningMaterials)
-        .set({ folderId: inbox.id, position: next, orderSource: "upload", updatedAt: new Date() })
+        .set({ folderId: inbox.id, position: next, orderSource: "upload", kgStatus: "skipped", updatedAt: new Date() })
         .where(and(eq(learningMaterials.ownerId, ownerId), eq(learningMaterials.id, material.id)));
       next += 1;
+    }
+    // Lecture subgraphs and KG jobs cascade with the folder. The folder graph
+    // goes too unless a course runs on it (then it stays, detached).
+    const graphId = folderGraphId(folderId);
+    const [inUse] = await tx
+      .select({ id: courses.id })
+      .from(courses)
+      .where(and(eq(courses.ownerId, ownerId), eq(courses.graphId, graphId)))
+      .limit(1);
+    if (!inUse) {
+      await tx.delete(materialTopicGraphs).where(and(eq(materialTopicGraphs.ownerId, ownerId), eq(materialTopicGraphs.graphId, graphId)));
     }
     await tx.delete(materialFolders).where(and(eq(materialFolders.ownerId, ownerId), eq(materialFolders.id, folderId)));
     return true;
@@ -165,6 +188,7 @@ export async function reorderFolder(ownerId: string, folderId: string, materialI
         .set({ position: index + 1, orderSource: "manual", updatedAt: now })
         .where(and(eq(learningMaterials.ownerId, ownerId), eq(learningMaterials.id, id)));
     }
+    await rebuildFolderGraph(ownerId, folderId, tx);
     return listFolderMaterials(ownerId, folderId, tx);
   });
 }
@@ -184,9 +208,12 @@ export async function updateMaterialPlacement(
       .limit(1);
     if (!material) return null;
     const set: Partial<typeof learningMaterials.$inferInsert> = { updatedAt: new Date() };
+    const role = patch.role ?? (material.role as MaterialRole);
     if (patch.role) set.role = patch.role;
-    if (patch.folderId && patch.folderId !== material.folderId) {
-      const target = await getFolder(ownerId, patch.folderId, tx);
+    let target = await getFolder(ownerId, material.folderId, tx);
+    const moving = Boolean(patch.folderId && patch.folderId !== material.folderId);
+    if (moving) {
+      target = await getFolder(ownerId, patch.folderId!, tx);
       if (!target) return null;
       await tx.select({ id: materialFolders.id }).from(materialFolders).where(eq(materialFolders.id, target.id)).for("update");
       const siblings = await tx
@@ -196,12 +223,56 @@ export async function updateMaterialPlacement(
       set.folderId = target.id;
       set.position = insertionPosition(siblings, material.lectureNumber);
       set.orderSource = material.lectureNumber === null ? "upload" : "filename";
+      // Concept ids in a lecture's small KG belong to its folder; a moved
+      // lecture is rebuilt against the new folder's concepts.
+      await tx.delete(materialSubgraphs).where(and(eq(materialSubgraphs.ownerId, ownerId), eq(materialSubgraphs.materialId, materialId)));
     }
+
+    // KG state in the (new) folder: lectures in a subject folder need a small
+    // KG — reuse the one already built there, otherwise queue a build.
+    let enqueue = false;
+    if (target?.kind === "subject" && role === "lecture") {
+      const [existing] = moving
+        ? []
+        : await tx
+            .select({ materialId: materialSubgraphs.materialId })
+            .from(materialSubgraphs)
+            .where(and(eq(materialSubgraphs.ownerId, ownerId), eq(materialSubgraphs.materialId, materialId), eq(materialSubgraphs.folderId, target.id)))
+            .limit(1);
+      if (existing) set.kgStatus = "ready";
+      else enqueue = !["pending", "processing"].includes(material.kgStatus) || moving;
+    } else {
+      set.kgStatus = "skipped";
+      await tx.delete(materialKgJobs).where(and(eq(materialKgJobs.ownerId, ownerId), eq(materialKgJobs.materialId, materialId)));
+    }
+
     const [row] = await tx
       .update(learningMaterials)
       .set(set)
       .where(and(eq(learningMaterials.ownerId, ownerId), eq(learningMaterials.id, materialId)))
       .returning();
-    return row ? toMaterialSummary(row) : null;
+    if (!row) return null;
+    if (enqueue && target) await enqueueLectureKgJob(tx, { ownerId, materialId, folderId: target.id });
+    await rebuildFolderGraph(ownerId, material.folderId, tx);
+    if (moving && target) await rebuildFolderGraph(ownerId, target.id, tx);
+    const [fresh] = await tx.select().from(learningMaterials).where(eq(learningMaterials.id, materialId)).limit(1);
+    return toMaterialSummary(fresh ?? row);
+  });
+}
+
+/** Re-queue a failed lecture KG; null when the file is not a failed lecture
+ * in one of the owner's subject folders. */
+export async function retryLectureKg(ownerId: string, materialId: string): Promise<MaterialSummary | null> {
+  return getDb().transaction(async (tx) => {
+    const [material] = await tx
+      .select()
+      .from(learningMaterials)
+      .where(and(eq(learningMaterials.ownerId, ownerId), eq(learningMaterials.id, materialId)))
+      .limit(1);
+    if (!material || material.role !== "lecture" || material.kgStatus !== "failed") return null;
+    const folder = await getFolder(ownerId, material.folderId, tx);
+    if (folder?.kind !== "subject") return null;
+    await enqueueLectureKgJob(tx, { ownerId, materialId, folderId: folder.id });
+    return toMaterialSummary({ ...material, kgStatus: "pending" });
   });
 }

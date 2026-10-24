@@ -5,6 +5,7 @@ import { createRoot, type Root } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { FolderDetail } from "../src/components/materials/folder-detail";
 import { FolderList } from "../src/components/materials/folder-list";
+import type { FolderGraphOverview } from "../src/lib/materials/folder-overview";
 import type { FolderSummary, MaterialSummary } from "../src/lib/materials/types";
 
 const push = vi.fn();
@@ -26,6 +27,7 @@ function material(id: string, title: string, position: number, extra: Partial<Ma
     position,
     lectureNumber: null,
     orderSource: "upload",
+    kgStatus: "skipped",
     createdAt: Date.UTC(2026, 9, 1),
     ...extra,
   };
@@ -45,8 +47,8 @@ async function render(element: ReturnType<typeof createElement>) {
   await act(async () => root.render(element));
 }
 
-const mountDetail = (materials: MaterialSummary[], target = folder) =>
-  render(createElement(FolderDetail, { folder: target, folders, initialMaterials: materials }));
+const mountDetail = (materials: MaterialSummary[], target = folder, initialOverview: FolderGraphOverview | null = null) =>
+  render(createElement(FolderDetail, { folder: target, folders, initialMaterials: materials, initialOverview }));
 
 async function click(element: Element | null | undefined) {
   if (!element) throw new Error("element not found");
@@ -154,19 +156,23 @@ describe("FolderDetail", () => {
   });
 
   it("moves a file to another folder and changes a role", async () => {
-    const fetchMock = vi
-      .fn()
-      .mockResolvedValueOnce(Response.json({ material: material("lm_1", "第1讲", 1, { role: "reference" }) }))
-      .mockResolvedValueOnce(Response.json({ material: material("lm_1", "第1讲", 1, { folderId: "mf_web" }) }));
+    const patches = [
+      Response.json({ material: material("lm_1", "第1讲", 1, { role: "reference" }) }),
+      Response.json({ material: material("lm_1", "第1讲", 1, { folderId: "mf_web" }) }),
+    ];
+    const fetchMock = vi.fn(async (url: string) => (url.endsWith("/graph") ? Response.json({ overview: null }) : patches.shift()!));
     vi.stubGlobal("fetch", fetchMock);
     await mountDetail([material("lm_1", "第1讲", 1)]);
+    const patchCalls = () => fetchMock.mock.calls.filter(([url]) => url === "/api/materials/lm_1");
 
     await change(container.querySelector('select[aria-label="「第1讲」的类型"]'), "reference");
-    expect(fetchMock).toHaveBeenLastCalledWith("/api/materials/lm_1", expect.objectContaining({ method: "PATCH", body: JSON.stringify({ role: "reference" }) }));
+    expect(patchCalls().at(-1)).toEqual(["/api/materials/lm_1", expect.objectContaining({ method: "PATCH", body: JSON.stringify({ role: "reference" }) })]);
     expect(container.querySelector(".materials-order-tag")?.textContent).toBe("参考");
+    // The knowledge graph changes with the role, so the overview is re-read.
+    expect(fetchMock).toHaveBeenCalledWith("/api/folders/mf_sec/graph", { cache: "no-store" });
 
     await change(container.querySelector('select[aria-label="把「第1讲」移到其他文件夹"]'), "mf_web");
-    expect(fetchMock).toHaveBeenLastCalledWith("/api/materials/lm_1", expect.objectContaining({ method: "PATCH", body: JSON.stringify({ folderId: "mf_web" }) }));
+    expect(patchCalls().at(-1)).toEqual(["/api/materials/lm_1", expect.objectContaining({ method: "PATCH", body: JSON.stringify({ folderId: "mf_web" }) })]);
     expect(titles()).toEqual([]);
   });
 
@@ -212,6 +218,79 @@ describe("FolderDetail", () => {
     });
     expect(fetchMock).not.toHaveBeenCalled();
     expect(container.textContent).toContain("「archive.zip」不是支持的格式");
+  });
+
+  it("shows each lecture's knowledge-graph status and retries a failed one", async () => {
+    const fetchMock = vi.fn(async (url: string) =>
+      url.endsWith("/kg") ? Response.json({ material: material("lm_3", "第3讲", 3, { kgStatus: "pending" }) }) : Response.json({ materials: [] }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+    await mountDetail([
+      material("lm_1", "第1讲", 1, { kgStatus: "ready" }),
+      material("lm_2", "第2讲", 2, { kgStatus: "processing" }),
+      material("lm_3", "第3讲", 3, { kgStatus: "failed" }),
+    ]);
+    const statuses = () => [...container.querySelectorAll(".materials-kg-status")].map((node) => node.textContent);
+    expect(statuses()).toEqual(["已加入知识图谱", "正在分析知识点…", "知识点分析失败"]);
+
+    await click(buttonByText("重试"));
+    expect(fetchMock).toHaveBeenCalledWith("/api/materials/lm_3/kg", { method: "POST" });
+    expect(statuses()).toEqual(["已加入知识图谱", "正在分析知识点…", "正在分析知识点…"]);
+    expect(buttonByText("重试")).toBeUndefined();
+  });
+
+  it("polls while lectures are analyzed and refreshes the graph when they finish", async () => {
+    vi.useFakeTimers();
+    try {
+      const overview: FolderGraphOverview = {
+        graphId: "mat_0123456789abcdef",
+        conceptCount: 2,
+        lectures: [
+          {
+            materialId: "lm_1",
+            title: "第1讲",
+            concepts: [
+              { conceptId: "fc_a", name: "对称加密", status: "mastered", revisitedIn: 1 },
+              { conceptId: "fc_b", name: "分组模式", status: "untested", revisitedIn: 0 },
+            ],
+          },
+        ],
+      };
+      const fetchMock = vi.fn(async (url: string) =>
+        url.endsWith("/graph")
+          ? Response.json({ overview })
+          : Response.json({ materials: [material("lm_1", "第1讲", 1, { kgStatus: "ready" })] }),
+      );
+      vi.stubGlobal("fetch", fetchMock);
+      await mountDetail([material("lm_1", "第1讲", 1, { kgStatus: "pending" })]);
+      expect(container.querySelector(".folder-graph")?.textContent).toContain("把讲义放进这个文件夹后");
+
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(5_000);
+      });
+      expect(fetchMock).toHaveBeenCalledWith("/api/folders/mf_sec", { cache: "no-store" });
+      expect(fetchMock).toHaveBeenCalledWith("/api/folders/mf_sec/graph", { cache: "no-store" });
+      expect(container.querySelector(".materials-kg-status")?.textContent).toBe("已加入知识图谱");
+      const chips = [...container.querySelectorAll(".folder-graph-concept")];
+      expect(chips.map((chip) => chip.className)).toEqual(["folder-graph-concept concept-mastered", "folder-graph-concept concept-untested"]);
+      expect(chips[0].textContent).toContain("另有 1 讲复习");
+      expect(container.querySelector(".folder-graph")?.textContent).toContain("2 个知识点");
+
+      // Nothing is analyzing any more: polling stops.
+      const calls = fetchMock.mock.calls.length;
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(15_000);
+      });
+      expect(fetchMock.mock.calls.length).toBe(calls);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it("explains that the unsorted inbox has no knowledge graph", async () => {
+    vi.stubGlobal("fetch", vi.fn());
+    await mountDetail([material("lm_1", "随手笔记", 1, { folderId: "mf_inbox" })], folders[2]);
+    expect(container.querySelector(".folder-graph")?.textContent).toContain("「未分类」不是科目");
   });
 
   it("locks rename and delete on the unsorted inbox", async () => {

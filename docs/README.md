@@ -20,7 +20,7 @@ use the priority order below and verify behavior against the code.
 - [`product/facts-intake.md`](product/facts-intake.md) — onboarding structured education context, optional background Facts intake, queue lifecycle, classification, and mastery boundary.
 - [`product/gamification.md`](product/gamification.md) — implemented private guild Profile, reward rules, and safe modification points.
 - [`product/learning-materials.md`](product/learning-materials.md) — learner-uploaded materials, owner-private `mat_*` graphs, material-grounded lessons, privacy boundaries, and phased roadmap (RAG Q&A, practice sets).
-- [`product/subject-folders.md`](product/subject-folders.md) — approved direction, not yet implemented: NotebookLM-style subject folders, per-lecture KGs assembled into one folder KG, and weakness-weighted multiple-choice quizzes that feed mastery.
+- [`product/subject-folders.md`](product/subject-folders.md) — NotebookLM-style subject folders; folders (phase 1) and per-lecture KGs assembled into one folder KG (phase 2) are implemented; weakness-weighted multiple-choice quizzes that feed mastery and courses from the folder KG are approved and in progress.
 - [`product-architecture.md`](product-architecture.md) — current modular-monolith-plus ownership, data flow, workers, and adaptive-learning boundaries.
 - [`web-implementation-status.md`](web-implementation-status.md) — concise implementation inventory and remaining hardening work.
 - [`long-horizon-learning-principles.md`](long-horizon-learning-principles.md) — stable product principles behind the adaptive loop.

@@ -21,6 +21,8 @@ const state = vi.hoisted(() => ({
   listFolderMaterials: vi.fn(),
   reorderFolder: vi.fn(),
   updateMaterialPlacement: vi.fn(),
+  retryLectureKg: vi.fn(),
+  loadFolderOverview: vi.fn(),
 }));
 
 vi.mock("../src/lib/auth/guard", () => ({ requireConfiguredAuthUser: state.requireConfiguredAuthUser }));
@@ -45,8 +47,11 @@ vi.mock("../src/lib/materials/folders", async () => {
     listFolderMaterials: state.listFolderMaterials,
     reorderFolder: state.reorderFolder,
     updateMaterialPlacement: state.updateMaterialPlacement,
+    retryLectureKg: state.retryLectureKg,
   };
 });
+vi.mock("../src/lib/materials/folder-overview", () => ({ loadFolderOverview: state.loadFolderOverview }));
+vi.mock("../src/lib/i18n/server", () => ({ resolveUiLanguageForUser: async () => "zh" }));
 vi.mock("../src/lib/ai/deepagent/course-generator", () => ({ initializeCourseOutline: state.initializeCourseOutline }));
 vi.mock("../src/lib/courses/lesson-generation-jobs", () => ({
   enqueueLessonGenerationJob: state.enqueueLessonGenerationJob,
@@ -246,6 +251,39 @@ describe("material routes", () => {
     expect((await PATCH(patch({ folderId: "mf_someone_else" }), params)).status).toBe(404);
     expect((await PATCH(patch({}), params)).status).toBe(400);
     expect((await PATCH(patch({ role: "homework" }), params)).status).toBe(400);
+  });
+
+  it("re-queues only a failed lecture KG and reads the folder graph overview", async () => {
+    const kg = await import("../src/app/api/materials/[id]/kg/route");
+    const graph = await import("../src/app/api/folders/[id]/graph/route");
+    const materialParams = { params: Promise.resolve({ id: "lm_1" }) };
+    const folderParams = { params: Promise.resolve({ id: "mf_sec" }) };
+
+    state.retryLectureKg.mockResolvedValueOnce({ id: "lm_1", kgStatus: "pending" });
+    const retried = await kg.POST(new Request("http://primoria.test/api/materials/lm_1/kg", { method: "POST" }), materialParams);
+    expect(retried.status).toBe(200);
+    expect((await retried.json()).material.kgStatus).toBe("pending");
+    expect(state.retryLectureKg).toHaveBeenCalledWith("u1", "lm_1");
+
+    state.retryLectureKg.mockResolvedValueOnce(null);
+    const refused = await kg.POST(new Request("http://primoria.test/api/materials/lm_1/kg", { method: "POST" }), materialParams);
+    expect(refused.status).toBe(409);
+    expect((await refused.json()).code).toBe("not_retryable");
+
+    state.retryLectureKg.mockRejectedValueOnce(new Error("relation does not exist"));
+    const broken = await kg.POST(new Request("http://primoria.test/api/materials/lm_1/kg", { method: "POST" }), materialParams);
+    expect(broken.status).toBe(503);
+    expect(JSON.stringify(await broken.json())).not.toContain("relation");
+
+    const overview = { graphId: "mat_0123456789abcdef", conceptCount: 1, lectures: [] };
+    state.loadFolderOverview.mockResolvedValueOnce(overview);
+    const read = await graph.GET(new Request("http://primoria.test/api/folders/mf_sec/graph"), folderParams);
+    expect(read.status).toBe(200);
+    expect((await read.json()).overview).toEqual(overview);
+    expect(state.loadFolderOverview).toHaveBeenCalledWith("u1", "mf_sec", "zh");
+
+    state.loadFolderOverview.mockResolvedValueOnce(null);
+    expect((await graph.GET(new Request("http://primoria.test/api/folders/mf_x/graph"), folderParams)).status).toBe(404);
   });
 
   it("refuses share links for material courses", async () => {

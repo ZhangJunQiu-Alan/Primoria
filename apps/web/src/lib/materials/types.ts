@@ -15,8 +15,11 @@ export type MaterialSummary = {
   position: number;
   lectureNumber: number | null;
   orderSource: MaterialOrderSource;
+  kgStatus: MaterialKgStatus;
   createdAt: number;
 };
+
+export type MaterialKgStatus = "pending" | "processing" | "ready" | "failed" | "skipped";
 
 export type MaterialRole = "lecture" | "reference";
 export type MaterialOrderSource = "filename" | "ai" | "manual" | "upload";
