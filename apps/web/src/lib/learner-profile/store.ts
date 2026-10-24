@@ -640,6 +640,14 @@ export async function saveTutorStyle(ownerId: string, tutorStyle: TutorStyle) {
   });
 }
 
+// Settings change: unlike saveTutorStyle it leaves onboarding progress untouched.
+export async function updateTutorStyle(ownerId: string, tutorStyle: TutorStyle) {
+  return upsertLearnerProfile(ownerId, {
+    tutorStyle,
+    tutorStyleSkippedAt: null,
+  });
+}
+
 export async function skipTutorStyle(ownerId: string) {
   return upsertLearnerProfile(ownerId, {
     tutorStyle: null,

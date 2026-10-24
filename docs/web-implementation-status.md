@@ -15,6 +15,9 @@ AG-UI Agent runtime; it is not a static mock and has no Supabase runtime path.
   after durable enqueue. Region only narrows uncommitted curriculum candidates;
   multi-candidate contexts require an inline learner choice.
 - Main CopilotKit Tutor connected to the durable `primoria_tutor` runtime.
+- Tutor style (Socratic / Feynman explain-plus-teach-back / Euclid) rendered as
+  a system-prompt persona for the main Tutor and concept subagent; changeable
+  in Settings; per-style real-model eval in `apps/agent/evals/tutor-style.v1.json`.
 - Postgres-backed chat threads and New chat lifecycle.
 - KG positioning across a 31-graph runtime registry with canonical,
   topic/concept closure, and goal-scoped routes; deterministic cross-subject

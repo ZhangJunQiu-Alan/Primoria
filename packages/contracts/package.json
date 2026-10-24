@@ -24,6 +24,14 @@
       "types": "./src/visual-style.d.ts",
       "default": "./src/visual-style.mjs"
     },
+    "./tutor-style": {
+      "types": "./src/tutor-style.d.ts",
+      "default": "./src/tutor-style.mjs"
+    },
+    "./tutor-style-prompt": {
+      "types": "./src/tutor-style-prompt.d.ts",
+      "default": "./src/tutor-style-prompt.mjs"
+    },
     "./artifacts/interactive-search": {
       "types": "./src/artifacts/interactive-search.d.mts",
       "default": "./src/artifacts/interactive-search.mjs"

@@ -226,6 +226,18 @@ as a compatibility fallback after intake reaches a terminal state;
 if multiple systems remain possible, course creation stays behind clarification.
 Settings uses the same queue.
 
+Tutor style (`socratic` | `feynman` | `euclid`, default `feynman`) and its
+persona prompts are single-sourced in `packages/contracts` (`tutor-style.mjs` ids for Web/browser code, `tutor-style-prompt.mjs` prompt text for the Agent only).
+Web passes the stored `learner_profiles.tutor_style` (or null) as server-set
+`primoria_tutor_style` run state; the Agent's `PrimoriaTutorStyleMiddleware`
+appends exactly one TUTOR STYLE section plus the shared TUTOR PRESENTATION
+(structured cards: bold emoji block labels, comparison tables, final question
+in a blockquote) to the main Tutor and `concept-agent` system prompts; they
+govern teaching-reply form, layout, and length (never tool routing). Style shapes Tutor dialogue only: it is not a learner fact and
+never enters lesson generation. Settings changes it via
+`PUT /api/settings/tutor-style`. Per-style behavior markers live in
+`apps/agent/evals/tutor-style.v1.json` (`pnpm --filter @primoria/agent eval:tutor:style`, real model).
+
 Keep mastery and facts distinct. `user_concept_mastery` is rule/evidence-driven
 concept state written by the learning-progress worker. `learner_facts` stores
 durable preferences, prior knowledge, learning gaps, interests, goals, and
@@ -274,7 +286,7 @@ Public routes are defined once in `apps/web/src/lib/auth/routes.ts` and shared b
 
 ORM: Drizzle + `postgres` driver. Drizzle owns App/Auth/Course schema; versioned Web SQL owns KG/pgvector; `apps/agent/db/migrations/` owns only `agent_runtime`. `pnpm db:bootstrap` applies all three owners idempotently. KG source data and embeddings are imported separately with `pnpm db:initialize:kg`. Core App tables include `users`, `identities`, `sessions`, `auth_rate_limits`, `courses`, `lessons`, lesson/progress/extractor jobs, `profile_fact_intake_jobs`, learning events, mastery, learner profiles/facts, `player_progress`, `xp_awards`, `daily_quest_completions`, `achievement_unlocks`, chat messages, `interactive_component_instances`, media assets, and settings.
 
-The selected shared database is managed Supabase PostgreSQL in the existing Primoria Singapore project. Root commands load the ignored `.env.supabase` through `scripts/with-database-env.mjs`, with separate migration/runtime roles and verified TLS. Supabase hosts the database only; authentication remains Web-owned and no browser Supabase SDK/anon key is used. Explicit environment connections take priority. Runtime traffic belongs on the Transaction pooler (6543) and migrations on the Session pooler (5432, KG advisory lock); pool sizes default from the URL (1 per client on the Session pooler) unless `DATABASE_POOL_MAX`/`AGENT_DATABASE_POOL_MAX` is set, so never add session-level SQL (advisory locks, LISTEN, session `SET`) to runtime code. Docker PostgreSQL on `127.0.0.1:5432` remains the offline and isolated regression option. See `docs/supabase-deployment.md`.
+The selected shared database is managed Supabase PostgreSQL in the existing Primoria Singapore project. Root commands load the ignored `.env.supabase` through `scripts/with-database-env.mjs`, with separate migration/runtime roles and verified TLS. Supabase hosts the database plus a private `lesson-media` Storage bucket for lesson image bytes, reached server-side only with `SUPABASE_URL`/`SUPABASE_SECRET_KEY` (`apps/web/src/lib/ai/media/media-storage.ts`); authentication remains Web-owned and no browser Supabase SDK/anon key is used. Explicit environment connections take priority. Runtime traffic belongs on the Transaction pooler (6543) and migrations on the Session pooler (5432, KG advisory lock); pool sizes default from the URL (1 per client on the Session pooler) unless `DATABASE_POOL_MAX`/`AGENT_DATABASE_POOL_MAX` is set, so never add session-level SQL (advisory locks, LISTEN, session `SET`) to runtime code. Docker PostgreSQL on `127.0.0.1:5432` remains the offline and isolated regression option. See `docs/supabase-deployment.md`.
 
 ### Model provider
 
@@ -284,7 +296,7 @@ are `AI_MODEL_FAST` for routing/utility work and optional `AI_MODEL_CONTENT` for
 source comparison and causal timelines; the latter falls back to the default
 model, never the fast tier. The Agent's optional `AI_MODEL_TUTOR` overrides its
 provider default independently of Web course generation. DeepSeek Web utility
-calls and structured course Block Writer calls disable thinking while preserving the selected model tier; other fast-tier calls use low thinking effort.
+calls and structured course Block Writer calls disable thinking while preserving the selected model tier; other fast-tier calls use low thinking effort. The Agent tutor also runs DeepSeek models with thinking disabled.
 Supports `openai-compatible` and
 `anthropic-compatible`.
 
