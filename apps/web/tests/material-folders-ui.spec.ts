@@ -5,7 +5,9 @@ import { createRoot, type Root } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { FolderDetail } from "../src/components/materials/folder-detail";
 import { FolderList } from "../src/components/materials/folder-list";
+import { FolderQuiz } from "../src/components/materials/folder-quiz";
 import type { FolderGraphOverview } from "../src/lib/materials/folder-overview";
+import type { FolderQuizOutcome, FolderQuizStart } from "../src/lib/materials/folder-quiz";
 import type { FolderSummary, MaterialSummary } from "../src/lib/materials/types";
 
 const push = vi.fn();
@@ -299,5 +301,78 @@ describe("FolderDetail", () => {
     expect(container.querySelector("h2")?.textContent).toBe("未分类");
     expect(buttonByText("重命名")).toBeUndefined();
     expect(buttonByText("删除文件夹")).toBeUndefined();
+  });
+});
+
+describe("FolderQuiz", () => {
+  const quiz: FolderQuizStart = {
+    sessionId: "fqs_1",
+    size: 10,
+    questions: [
+      { questionId: "fqq_1", conceptId: "fc_a", conceptName: "对称密钥", lectureTitle: "第1讲", question: "双方为什么都要持有密钥？", choices: [{ id: "a", text: "加密和解密用同一个密钥" }, { id: "b", text: "为了签名" }, { id: "c", text: "为了压缩" }, { id: "d", text: "为了哈希" }] },
+      { questionId: "fqq_2", conceptId: "fc_b", conceptName: "哈希函数", lectureTitle: "第2讲", question: "哈希函数输出什么？", choices: [{ id: "a", text: "密钥" }, { id: "b", text: "固定长度摘要" }, { id: "c", text: "明文" }, { id: "d", text: "证书" }] },
+    ],
+  };
+  const outcome: FolderQuizOutcome = {
+    sessionId: "fqs_1",
+    score: 1,
+    total: 2,
+    results: [
+      { questionId: "fqq_1", conceptId: "fc_a", selectedId: "a", correctId: "a", correct: true, explanation: "同一个密钥。", sources: [{ materialId: "lm_1", title: "第1讲", locator: "第 3 页" }], firstAttempt: true },
+      { questionId: "fqq_2", conceptId: "fc_b", selectedId: "a", correctId: "b", correct: false, explanation: "摘要长度固定。", sources: [], firstAttempt: false },
+    ],
+    masteryChanges: [{ conceptId: "fc_a", conceptName: "对称密钥", from: "untested", to: "learning" }],
+  };
+
+  it("needs an analyzed graph before starting", async () => {
+    vi.stubGlobal("fetch", vi.fn());
+    await render(createElement(FolderQuiz, { folderId: "mf_sec", ready: false, onFinished: vi.fn() }));
+    expect(container.textContent).toContain("讲义分析完成后就可以测验了");
+    expect(buttonByText("开始测验（10 题）")?.disabled).toBe(true);
+  });
+
+  it("starts, submits all answers once, and shows results and mastery changes", async () => {
+    const onFinished = vi.fn();
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(Response.json({ quiz }, { status: 201 }))
+      .mockResolvedValueOnce(Response.json({ error: "x" }, { status: 503 }))
+      .mockResolvedValueOnce(Response.json({ outcome, deduplicated: false }));
+    vi.stubGlobal("fetch", fetchMock);
+    await render(createElement(FolderQuiz, { folderId: "mf_sec", ready: true, onFinished }));
+
+    await click(buttonByText("20 题"));
+    expect(fetchMock).toHaveBeenNthCalledWith(1, "/api/folders/mf_sec/quizzes", expect.objectContaining({ method: "POST", body: JSON.stringify({ size: 20 }) }));
+    expect(container.textContent).toContain("这次出了 2 题");
+    expect(container.querySelector(".course-quiz-q-kind")?.textContent).toBe("第1讲 · 对称密钥");
+    expect(buttonByText("提交答案")?.disabled).toBe(true);
+
+    await click(buttonByText("加密和解密用同一个密钥"));
+    await click(buttonByText("密钥"));
+    expect(container.textContent).toContain("已答 2/2");
+    await click(buttonByText("提交答案"));
+    expect(container.textContent).toContain("提交失败，请重试。");
+    await click(buttonByText("提交答案"));
+
+    const bodies = fetchMock.mock.calls.slice(1).map(([, init]) => JSON.parse((init as RequestInit).body as string));
+    expect(bodies[0].answers).toEqual([{ questionId: "fqq_1", selectedId: "a" }, { questionId: "fqq_2", selectedId: "a" }]);
+    expect(bodies[1].submissionId).toBe(bodies[0].submissionId);
+    expect(onFinished).toHaveBeenCalledTimes(1);
+    expect(container.textContent).toContain("得分 1/2");
+    expect(container.textContent).toContain("出处: 第1讲 · 第 3 页");
+    expect(container.textContent).toContain("这道题以前答过");
+    expect(container.querySelector(".folder-quiz-summary")?.textContent).toContain("对称密钥: 未开始 → 正在学习");
+    expect([...container.querySelectorAll(".course-quiz-question")].map((node) => node.className.trim())).toEqual([
+      "course-quiz-question is-correct",
+      "course-quiz-question is-wrong",
+    ]);
+  });
+
+  it("explains a failed start", async () => {
+    vi.stubGlobal("fetch", vi.fn(async () => Response.json({ code: "quiz_generation_failed" }, { status: 503 })));
+    await render(createElement(FolderQuiz, { folderId: "mf_sec", ready: true, onFinished: vi.fn() }));
+    await click(buttonByText("开始测验（10 题）"));
+    expect(container.textContent).toContain("题目准备失败");
+    expect(buttonByText("开始测验（10 题）")).toBeDefined();
   });
 });

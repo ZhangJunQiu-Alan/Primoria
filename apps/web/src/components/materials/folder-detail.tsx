@@ -12,6 +12,7 @@ import {
   materialFormatFor,
 } from "@/lib/materials/limits";
 import type { FolderGraphOverview } from "@/lib/materials/folder-overview";
+import { FolderQuiz } from "./folder-quiz";
 import type { FolderKind, MaterialRole, MaterialSummary } from "@/lib/materials/types";
 
 type Notice = { tone: "info" | "error"; text: string };
@@ -553,6 +554,10 @@ export function FolderDetail({
           </ol>
         )}
       </section>
+
+      {isSubject ? (
+        <FolderQuiz folderId={folder.id} ready={Boolean(overview?.conceptCount)} onFinished={() => void refreshOverview()} />
+      ) : null}
 
       <p className="materials-privacy-note">
         {t.privacyNote} <Link href="/library">{t.viewLibrary}</Link>

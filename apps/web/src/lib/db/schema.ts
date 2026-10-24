@@ -1049,7 +1049,86 @@ export type MaterialFolderRow = typeof materialFolders.$inferSelect;
 export type LearningMaterialRow = typeof learningMaterials.$inferSelect;
 export type LearningMaterialChunkRow = typeof learningMaterialChunks.$inferSelect;
 export type MaterialTopicGraphRow = typeof materialTopicGraphs.$inferSelect;
+// Subject-folder multiple-choice quizzes (docs/product/subject-folders.md §4.5).
+// The bank accumulates per concept and is reused: a session prefers questions
+// the learner has never answered, and only the first answer to a question is
+// mastery evidence. Choices are stored already shuffled; `sources` holds the
+// MaterialChunkRef[] the question was written from.
+export const folderQuizQuestions = pgTable(
+  "folder_quiz_questions",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    folderId: text("folder_id").notNull().references(() => materialFolders.id, { onDelete: "cascade" }),
+    conceptId: text("concept_id").notNull(),
+    language: text("language").notNull(),
+    question: text("question").notNull(),
+    choices: jsonb("choices").notNull(),
+    correctId: text("correct_id").notNull(),
+    explanation: text("explanation").notNull().default(""),
+    sources: jsonb("sources").notNull().default([]),
+    generatorVersion: integer("generator_version").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    conceptIdx: index("folder_quiz_questions_concept_idx").on(table.ownerId, table.folderId, table.conceptId),
+  }),
+);
+
+// One quiz over a folder graph. `items` lists the questions in order with the
+// concept and lecture they test; submit is idempotent on `submission_id` and
+// stores the graded `results` it returned.
+export const folderQuizSessions = pgTable(
+  "folder_quiz_sessions",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    folderId: text("folder_id").notNull().references(() => materialFolders.id, { onDelete: "cascade" }),
+    graphId: text("graph_id").notNull(),
+    size: integer("size").notNull(),
+    items: jsonb("items").notNull(),
+    // open | submitted
+    status: text("status").notNull().default("open"),
+    submissionId: text("submission_id"),
+    answers: jsonb("answers"),
+    score: integer("score"),
+    total: integer("total"),
+    results: jsonb("results"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    submittedAt: timestamp("submitted_at", { withTimezone: true }),
+  },
+  (table) => ({
+    ownerFolderIdx: index("folder_quiz_sessions_owner_folder_idx").on(table.ownerId, table.folderId, table.createdAt),
+    statusCheck: check("folder_quiz_sessions_status_check", sql`${table.status} in ('open', 'submitted')`),
+  }),
+);
+
+// Graded answers: the rolling mastery window (last five first attempts per
+// concept) reads these. At most one first attempt per owner and question.
+export const folderQuizAnswers = pgTable(
+  "folder_quiz_answers",
+  {
+    sessionId: text("session_id").notNull().references(() => folderQuizSessions.id, { onDelete: "cascade" }),
+    questionId: text("question_id").notNull().references(() => folderQuizQuestions.id, { onDelete: "cascade" }),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    graphId: text("graph_id").notNull(),
+    conceptId: text("concept_id").notNull(),
+    ordinal: integer("ordinal").notNull(),
+    selectedId: text("selected_id").notNull(),
+    isCorrect: boolean("is_correct").notNull(),
+    firstAttempt: boolean("first_attempt").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    pk: primaryKey({ columns: [table.sessionId, table.questionId] }),
+    firstAttemptUidx: uniqueIndex("folder_quiz_answers_first_attempt_uidx").on(table.ownerId, table.questionId).where(sql`${table.firstAttempt}`),
+    windowIdx: index("folder_quiz_answers_window_idx").on(table.ownerId, table.graphId, table.conceptId, table.createdAt),
+  }),
+);
+
 export type MaterialSubgraphRow = typeof materialSubgraphs.$inferSelect;
 export type MaterialKgJobRow = typeof materialKgJobs.$inferSelect;
+export type FolderQuizQuestionRow = typeof folderQuizQuestions.$inferSelect;
+export type FolderQuizSessionRow = typeof folderQuizSessions.$inferSelect;
 export type IdentityRow = typeof identities.$inferSelect;
 export type SessionRow = typeof sessions.$inferSelect;

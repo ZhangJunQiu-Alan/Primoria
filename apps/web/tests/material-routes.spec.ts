@@ -23,6 +23,8 @@ const state = vi.hoisted(() => ({
   updateMaterialPlacement: vi.fn(),
   retryLectureKg: vi.fn(),
   loadFolderOverview: vi.fn(),
+  startFolderQuiz: vi.fn(),
+  submitFolderQuiz: vi.fn(),
 }));
 
 vi.mock("../src/lib/auth/guard", () => ({ requireConfiguredAuthUser: state.requireConfiguredAuthUser }));
@@ -51,6 +53,10 @@ vi.mock("../src/lib/materials/folders", async () => {
   };
 });
 vi.mock("../src/lib/materials/folder-overview", () => ({ loadFolderOverview: state.loadFolderOverview }));
+vi.mock("../src/lib/materials/folder-quiz-store", async () => {
+  const { FolderQuizError } = await vi.importActual<typeof import("../src/lib/materials/folder-quiz-store")>("../src/lib/materials/folder-quiz-store");
+  return { FolderQuizError, startFolderQuiz: state.startFolderQuiz, submitFolderQuiz: state.submitFolderQuiz };
+});
 vi.mock("../src/lib/i18n/server", () => ({ resolveUiLanguageForUser: async () => "zh" }));
 vi.mock("../src/lib/ai/deepagent/course-generator", () => ({ initializeCourseOutline: state.initializeCourseOutline }));
 vi.mock("../src/lib/courses/lesson-generation-jobs", () => ({
@@ -284,6 +290,59 @@ describe("material routes", () => {
 
     state.loadFolderOverview.mockResolvedValueOnce(null);
     expect((await graph.GET(new Request("http://primoria.test/api/folders/mf_x/graph"), folderParams)).status).toBe(404);
+  });
+
+  it("starts a folder quiz with a validated size and safe error codes", async () => {
+    const { FolderQuizError } = await import("../src/lib/materials/folder-quiz-store");
+    const { POST } = await import("../src/app/api/folders/[id]/quizzes/route");
+    const params = { params: Promise.resolve({ id: "mf_sec" }) };
+    const start = (body?: unknown) =>
+      POST(new Request("http://primoria.test/api/folders/mf_sec/quizzes", { method: "POST", ...(body === undefined ? {} : { body: JSON.stringify(body) }) }), params);
+
+    state.startFolderQuiz.mockResolvedValue({ sessionId: "fqs_1", size: 10, questions: [] });
+    expect((await start()).status).toBe(201);
+    expect(state.startFolderQuiz).toHaveBeenLastCalledWith({ ownerId: "u1", folderId: "mf_sec", size: 10 });
+    expect((await start({ size: 20 })).status).toBe(201);
+    expect(state.startFolderQuiz).toHaveBeenLastCalledWith({ ownerId: "u1", folderId: "mf_sec", size: 20 });
+    expect((await start({ size: 15 })).status).toBe(400);
+
+    state.startFolderQuiz.mockRejectedValueOnce(new FolderQuizError("no_graph", "none"));
+    expect((await start({ size: 10 })).status).toBe(409);
+    state.startFolderQuiz.mockRejectedValueOnce(new FolderQuizError("generation_failed", "none"));
+    const failed = await start({ size: 10 });
+    expect(failed.status).toBe(503);
+    expect((await failed.json()).code).toBe("quiz_generation_failed");
+    state.startFolderQuiz.mockRejectedValueOnce(new FolderQuizError("folder_not_found", "none"));
+    expect((await start({ size: 10 })).status).toBe(404);
+    state.startFolderQuiz.mockRejectedValueOnce(new Error("relation does not exist"));
+    const broken = await start({ size: 10 });
+    expect(broken.status).toBe(503);
+    expect(JSON.stringify(await broken.json())).not.toContain("relation");
+  });
+
+  it("submits a folder quiz idempotently", async () => {
+    const { FolderQuizError } = await import("../src/lib/materials/folder-quiz-store");
+    const { POST } = await import("../src/app/api/folders/[id]/quizzes/[sessionId]/submit/route");
+    const params = { params: Promise.resolve({ id: "mf_sec", sessionId: "fqs_1" }) };
+    const submissionId = "6f1c1c2e-8c8a-4c1e-9b7e-3b8f2b0c9d11";
+    const submit = (body: unknown) =>
+      POST(new Request("http://primoria.test/api/folders/mf_sec/quizzes/fqs_1/submit", { method: "POST", body: JSON.stringify(body) }), params);
+    const answers = [{ questionId: "fqq_1", selectedId: "b" }];
+
+    state.submitFolderQuiz.mockResolvedValueOnce({ sessionId: "fqs_1", score: 1, total: 1, results: [], masteryChanges: [], replayed: true });
+    const ok = await submit({ submissionId, answers });
+    expect(ok.status).toBe(200);
+    expect(await ok.json()).toEqual({ outcome: { sessionId: "fqs_1", score: 1, total: 1, results: [], masteryChanges: [] }, deduplicated: true });
+    expect(state.submitFolderQuiz).toHaveBeenCalledWith({ ownerId: "u1", folderId: "mf_sec", sessionId: "fqs_1", submissionId, answers });
+
+    expect((await submit({ submissionId: "not-a-uuid", answers })).status).toBe(400);
+    expect((await submit({ submissionId, answers, score: 10 })).status).toBe(400);
+    for (const [code, status] of [["session_not_found", 404], ["already_submitted", 409], ["idempotency_conflict", 409], ["invalid_answers", 400]] as const) {
+      state.submitFolderQuiz.mockRejectedValueOnce(new FolderQuizError(code, "x"));
+      const response = await submit({ submissionId, answers });
+      expect(response.status).toBe(status);
+      expect((await response.json()).code).toBe(code);
+    }
   });
 
   it("refuses share links for material courses", async () => {

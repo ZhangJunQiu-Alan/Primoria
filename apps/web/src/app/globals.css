@@ -3886,6 +3886,75 @@ cpk-web-inspector {
   margin-top: 0;
 }
 
+.folder-quiz-body {
+  display: grid;
+  gap: 14px;
+  padding: 0 0 14px;
+}
+
+.folder-quiz-start {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0 18px;
+}
+
+.folder-quiz-note,
+.folder-quiz-error {
+  margin: 0;
+  padding: 0 18px;
+  font-size: 13px;
+}
+
+.folder-quiz-note {
+  color: var(--quiet);
+}
+
+.folder-quiz-error {
+  padding-bottom: 14px;
+  color: var(--coral-ink);
+}
+
+.folder-quiz-questions {
+  margin: 0;
+  padding: 14px 18px 0;
+  list-style: none;
+}
+
+.folder-quiz-questions .course-quiz-explanation p {
+  margin: 0 0 4px;
+}
+
+.folder-quiz-questions .course-quiz-explanation small {
+  display: block;
+  color: var(--quiet);
+}
+
+.folder-quiz-summary {
+  display: grid;
+  gap: 10px;
+  padding: 0 18px;
+  font-size: 13px;
+}
+
+.folder-quiz-summary p {
+  margin: 0;
+  color: var(--ink-muted);
+}
+
+.folder-quiz-summary ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.folder-quiz-summary .folder-quiz-start {
+  padding: 0;
+}
+
 .folder-graph-concept small {
   color: var(--quiet);
   font-size: 11px;

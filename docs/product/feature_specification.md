@@ -360,7 +360,13 @@ subject folder is analyzed in the background into a small knowledge graph that
 reuses concepts earlier lectures already introduced; the small graphs are
 assembled deterministically, in lecture order, into the folder's private
 `mat_*` graph, which the folder page shows lecture by lecture with mastery.
-Failed analyses can be retried. Only extracted
+Failed analyses can be retried. A folder quiz (10 or 20 single-choice
+questions) covers the whole folder graph: weaker concepts get more questions,
+mastered ones an occasional review, every question is written from the cited
+material and shows its explanation and source after submission, and only the
+first answer to a question counts. Quiz mastery uses each concept's last five
+first-attempt answers (at least three, 80% correct); quizzes award no XP, but
+mastery they produce counts for achievements and daily quests. Only extracted
 text is stored, as ordered chunks with page/heading locators; re-uploading the
 same file is idempotent. Selecting one to five materials builds a course:
 

@@ -123,7 +123,7 @@ different questions:
 
 | State | Meaning | Write authority |
 | --- | --- | --- |
-| `user_concept_mastery` (`material_concept_mastery` for owner-private `mat_*` graphs) | Demonstrated concept competence | Rule-based learning-progress worker |
+| `user_concept_mastery` (`material_concept_mastery` for owner-private `mat_*` graphs) | Demonstrated concept competence | Rule-based learning-progress worker; subject-folder quiz submit (rolling first-attempt window) |
 | `learner_facts` | Durable context that can improve teaching | Manual Settings writes or Extractor worker |
 | `player_progress` and `xp_awards` | Verified effort and completion since progression start | Server-side idempotent reward rules |
 

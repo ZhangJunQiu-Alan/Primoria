@@ -61,7 +61,7 @@ export function assembleState(state: FolderLectureState, exclude?: string): Asse
   return assembleFolderGraph({ folderId: state.folder.id, title: state.folder.name, lectures: assemblyLectures(state, exclude) });
 }
 
-function majorityLanguage(materials: LearningMaterialRow[]): "zh" | "en" {
+export function majorityLanguage(materials: LearningMaterialRow[]): "zh" | "en" {
   const zh = materials.filter((m) => m.language === "zh").reduce((total, m) => total + m.charCount, 0);
   const all = materials.reduce((total, m) => total + m.charCount, 0);
   return all > 0 && zh * 2 >= all ? "zh" : "en";

@@ -1,6 +1,6 @@
 # 科目文件夹：按讲累积的私有 KG 与自适应选择题测验
 
-Status: approved design; phases 1 (folders) and 2 (per-lecture KG) implemented, phases 3–4 in progress (2026-10-24).
+Status: approved design; phases 1 (folders), 2 (per-lecture KG), and 3 (adaptive quiz) implemented, phase 4 in progress (2026-10-24).
 Extends [`learning-materials.md`](learning-materials.md); runtime code, schemas,
 and tests remain the source of truth once implemented.
 
@@ -118,8 +118,24 @@ POST /api/folders/:id/quizzes/:sessionId/submit { submissionId, answers }
   → 写 quiz 证据事件（只计每道题的第一次作答）→ 掌握度更新（见 §5）
 ```
 
-新增表：`folder_quiz_questions`（题库：概念、题干、4 选项、正确项、解析、出处片段、生成版本）、
-`folder_quiz_sessions`（一次测验的题目列表、状态、提交时间、submissionId）。
+新增表（迁移 0060）：`folder_quiz_questions`（题库：概念、语言、题干、已打乱的 4 选项、正确项、解析、
+出处片段、生成版本）、`folder_quiz_sessions`（一次测验的题目列表、状态、submissionId、判分结果）、
+`folder_quiz_answers`（每道题的作答；`(owner, question)` 上只允许一条首次作答，滚动窗口读这张表）。
+
+实现细节（`apps/web/src/lib/materials/folder-quiz.ts` 纯函数、`folder-quiz-store.ts` 读写）：
+
+- 分配时已掌握概念的复习题上限只在较弱概念还能填满测验时生效；全部掌握（或较弱概念不够）时，
+  已掌握概念补足剩余题量（仍每概念最多 2 题）。概念太少时测验会短于 10/20 题，页面会说明。
+- 题库按语言区分：出题语言取设置里的内容语言，没有设置时取文件夹资料的多数语言。
+- 生成只针对"未答过的题不够"的概念，一次调用，90 秒超时；每个概念最多 3 段、共 24k 字符的引用片段，
+  没有片段的概念不出题；题目引用的片段必须属于该概念，否则回退到该概念的全部片段。选项在入库时打乱。
+  生成失败时用题库已有题目继续；一题都没有才返回 503 `quiz_generation_failed`。
+- 题目按大 KG 顺序（一讲一讲）排列，每题标注所属讲和概念；答案只在提交后返回。
+- 提交在同一事务里判分、写作答、更新掌握度并调用 `applyMasteryProgression`（已掌握成就/每日任务），
+  事务先锁文件夹行，保证同一文件夹的提交串行、首次作答判定准确。未作答的题算错但不计证据。
+  测验本身不发 XP。中途刷新页面会放弃未提交的测验（题目留在题库里，下次优先使用）。
+- 文件夹详情页的"测验"面板：开始 10 题 / 20 题、作答、提交（失败重试复用同一 submissionId）、
+  逐题对错与解析和出处、掌握度变化，提交后刷新 KG 概览。
 
 ## 5. 测验如何累积掌握度（已决定：方案 A）
 
@@ -127,9 +143,10 @@ POST /api/folders/:id/quizzes/:sessionId/submit { submissionId, answers }
 每次重新计算、不跨课累积。整个 KG 出 10 题、每概念每次最多 2 题时，单次测验永远凑不满 3 题，
 概念会一直停在"学习中"。两个选项：
 
-- **A（推荐）滚动窗口**：测验路径按该概念**最近 5 次首次作答**计算（仍要求 ≥ 3 题且 ≥ 80%；
-  已掌握后答错降为学习中，与现规则一致）。覆盖面广，掌握度在多次测验中逐步收敛。
-  课时测验路径保持现有的按课计算不变，两条路径写同一掌握度行，以最近一次为准。
+- **A（推荐，已实现：`computeRollingMasteryUpdates`）滚动窗口**：测验路径按该概念**最近 5 次首次作答**
+  计算（仍要求 ≥ 3 题且 ≥ 80%；已掌握后答错降为学习中，与现规则一致）。覆盖面广，掌握度在多次测验中
+  逐步收敛。课时测验路径保持现有的按课计算不变，两条路径写同一掌握度行，以最近一次为准。
+  已掌握的概念（无论来自哪条路径）只会因为本次答错而降级，窗口里题数不足 3 时答对不会让它掉级。
 - **B 集中练**：每次测验只挑 3 个最薄弱的概念、每个出 3 题（10 题 = 3×3 + 1 道复习）。
   沿用现规则不改，但单次测验覆盖面窄。
 
@@ -169,5 +186,6 @@ POST /api/folders/:id/quizzes/:sessionId/submit { submissionId, answers }
    讲义改为参考资料再改回时复用已有小 KG；移到别的科目会删除小 KG 并按新文件夹重新分析。
    文件夹详情页显示每讲的分析状态（失败可 `POST /api/materials/[id]/kg` 重试）、分析中每 5 秒刷新，
    以及按讲列出概念与掌握度的 KG 概览（`GET /api/folders/[id]/graph`）。
-3. **自适应选择题测验**：题库、分配、生成、提交、掌握度累积（§5 的决定）。
+3. **自适应选择题测验**（已实现）：见 §4.5 实现细节与 §5；路由 `POST /api/folders/[id]/quizzes`、
+   `POST /api/folders/[id]/quizzes/[sessionId]/submit`。
 4. **从文件夹建课**与"同步新内容"。

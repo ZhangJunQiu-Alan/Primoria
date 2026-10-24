@@ -41,3 +41,34 @@ export function computeMasteryUpdates(
   }
   return updates;
 }
+
+export const ROLLING_WINDOW_SIZE = 5;
+
+/** A concept's folder-quiz evidence: first-attempt results, newest first
+ * (this submission included), and whether this submission got one wrong. */
+export type RollingEvidence = { recent: boolean[]; newWrong: boolean };
+
+/**
+ * Subject-folder quiz path (docs/product/subject-folders.md §5, plan A): the
+ * same thresholds as computeMasteryUpdates, applied to the concept's last
+ * ROLLING_WINDOW_SIZE first-attempt answers so evidence accumulates across
+ * quizzes. A `mastered` concept (from either path) only drops — to `learning`
+ * — when this submission answers it wrong; correct answers never downgrade it
+ * just because the folder window is still short.
+ */
+export function computeRollingMasteryUpdates(
+  evidenceByConcept: Map<string, RollingEvidence>,
+  currentStateByConcept: Map<string, MasteryStatus>,
+): MasteryUpdate[] {
+  const updates: MasteryUpdate[] = [];
+  for (const [conceptId, { recent, newWrong }] of evidenceByConcept) {
+    const window = recent.slice(0, ROLLING_WINDOW_SIZE);
+    if (window.length === 0) continue;
+    const ev = { correct: window.filter(Boolean).length, total: window.length };
+    const score = ev.correct / ev.total;
+    const current = currentStateByConcept.get(conceptId);
+    const status: MasteryStatus = current === "mastered" ? (newWrong ? "learning" : "mastered") : baseStatus(ev);
+    updates.push({ conceptId, status, score });
+  }
+  return updates;
+}

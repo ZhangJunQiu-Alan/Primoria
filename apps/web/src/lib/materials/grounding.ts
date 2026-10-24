@@ -17,23 +17,31 @@ const refKey = (ref: MaterialChunkRef) => `${ref.materialId}#${ref.ordinal}`;
 
 export type ExcerptChunk = Pick<LearningMaterialChunkRow, "materialId" | "ordinal" | "text" | "heading" | "pageStart" | "pageEnd">;
 
-/** Pure: pick and label excerpts for `conceptIds` (lesson order). A chunk cited
- * by several concepts becomes one excerpt listing all of them. */
-export function selectLessonExcerpts(input: {
+type ExcerptSelectionInput = {
   conceptIds: string[];
   conceptSources: Record<string, MaterialChunkRef[]>;
   chunks: ExcerptChunk[];
   materialTitles: Map<string, string>;
   language: "zh" | "en";
   budget?: number;
-}): SourceExcerpt[] {
+  conceptBudget?: number;
+};
+
+/** Pure: pick and label excerpts for `conceptIds` (lesson order). A chunk cited
+ * by several concepts becomes one excerpt listing all of them. */
+export function selectLessonExcerpts(input: ExcerptSelectionInput): SourceExcerpt[] {
+  return selectExcerptEntries(input).map((entry) => entry.excerpt);
+}
+
+/** selectLessonExcerpts plus the chunk each excerpt came from. */
+export function selectExcerptEntries(input: ExcerptSelectionInput): { excerpt: SourceExcerpt; ref: MaterialChunkRef }[] {
   const chunkByKey = new Map(input.chunks.map((chunk) => [refKey(chunk), chunk]));
   const excerptByKey = new Map<string, SourceExcerpt>();
-  const ordered: SourceExcerpt[] = [];
+  const ordered: { excerpt: SourceExcerpt; ref: MaterialChunkRef }[] = [];
   let remaining = input.budget ?? LESSON_EXCERPT_BUDGET_CHARS;
 
   for (const conceptId of input.conceptIds) {
-    let conceptRemaining = CONCEPT_EXCERPT_BUDGET_CHARS;
+    let conceptRemaining = input.conceptBudget ?? CONCEPT_EXCERPT_BUDGET_CHARS;
     for (const ref of (input.conceptSources[conceptId] ?? []).slice(0, MAX_REFS_PER_CONCEPT)) {
       const key = refKey(ref);
       const shared = excerptByKey.get(key);
@@ -57,7 +65,7 @@ export function selectLessonExcerpts(input: {
         text,
       };
       excerptByKey.set(key, excerpt);
-      ordered.push(excerpt);
+      ordered.push({ excerpt, ref: { materialId: chunk.materialId, ordinal: chunk.ordinal } });
     }
   }
   return ordered;
