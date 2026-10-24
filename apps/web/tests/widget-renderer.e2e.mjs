@@ -47,7 +47,7 @@ async function waitForServer() {
 
 async function main() {
   log("starting Next.js dev server on port", PORT);
-  const server = spawn("pnpm", ["--filter", "@primoria/web", "dev"], {
+  const server = spawn("pnpm", ["--filter", "@primoria/web", "exec", "next", "dev", "--webpack"], {
     cwd: repoRoot,
     env: { ...process.env, PORT, PRIMORIA_ENABLE_QA_ROUTES: "1" },
     stdio: ["ignore", "pipe", "pipe"],

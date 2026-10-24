@@ -1,0 +1,14 @@
+[build]
+  base = "."
+  command = "pnpm --filter @primoria/web build"
+  publish = "apps/web/.next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  NODE_VERSION = "22"
+  PNPM_VERSION = "10.28.1"
+
+[context.production]
+  ignore = "exit 0"

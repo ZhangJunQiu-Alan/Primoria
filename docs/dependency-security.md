@@ -42,6 +42,11 @@ Remove an override once its direct owner resolves the vulnerable dependency.
 | `ws 8.x <8.21.0 -> 8.21.0` | Agent/runtime | Fix fragmented-message memory exhaustion in production WebSocket clients. | All production owners require 8.21.0 or newer. |
 | `zod 4.x <4.6.6 -> 4.6.6` | Platform/dependencies | Fix `GHSA-mrhx-c7xc-m3w5` issue accumulation for every zod 4 consumer. Web, Agent, and contracts depend on `zod ^4.6.6` directly. | All zod 4 consumers require 4.6.6 or newer. |
 
+| `fast-uri 3.x <3.1.9 -> 3.1.9` | Platform/dependencies | Patch scheme, host and path normalization advisories without crossing the 3.x API line. | All owners require 3.1.9 or newer. |
+| `ip-address <=10.7.3 -> 10.7.4` | Platform/dependencies | Bound IPv6 zone identifier matching time. | All owners require 10.7.4 or newer. |
+| `fast-copy 3.x <3.1.0 -> 3.1.0` | Platform/dependencies | Prevent stack exhaustion on deeply nested values. | All owners require 3.1.0 or newer. |
+| `katex <0.18.2 -> 0.18.2` | Web/rendering | Prevent an already polluted prototype from bypassing trust restrictions. The existing build, math rendering and browser regression cover the compatibility override. | Mermaid, rehype-katex and Web resolve patched KaTeX. |
+
 ## Temporary Exceptions
 
 Every entry in `scripts/audit-exceptions.json` must be listed here with all
@@ -51,9 +56,16 @@ fields before merging:
 | --- | --- | --- | --- | --- | --- |
 | `GHSA-mrhx-c7xc-m3w5` (high) | `zod@3.25.76` via `@copilotkit/runtime`, `@copilotkit/shared`, `@copilotkit/a2ui-renderer`, `@a2ui/web_core`, `@ag-ui/core@0.0.52`, `@ag-ui/client@0.0.52`, `mem0ai` | Web/runtime | Reachable: CopilotKit parses `/api/copilotkit` bodies and the Agent parses `/agent` bodies with AG-UI's zod 3 `RunAgentInputSchema`, which records an issue for every invalid array element (3.2 MB of invalid messages measured at ~780 MB of heap). No zod 3 release is patched, and CopilotKit 1.79.1 and AG-UI 1.0.3 still resolve zod 3. Overriding zod 3 to 4.6.6 keeps runtime behavior but turns the AG-UI and CopilotKit type declarations into `unknown`, failing Web typecheck. | Web (after auth) and the Agent reject input with more than `AGENT_INPUT_MAX_ARRAY_ITEMS` (10,000) schema-validated array elements with 413 before AG-UI parses it (`@primoria/contracts/agent-input-limits`); the Agent also caps bodies at 5 MB. | 2026-12-31 |
 
-## Tracked Non-Blocking Findings
+## 2026-10-24 Review
 
-| Advisory | Severity | Package/path | Owner | Reachability and action | Review by |
-| --- | --- | --- | --- | --- | --- |
-| `GHSA-w5hq-g745-h8pq` | Moderate | `@langchain/langgraph -> uuid@10` | Agent/runtime | The vulnerable v3/v5/v6 path requires a caller-supplied output buffer. LangGraph calls v5/v6 without that buffer; do not force a cross-major override. Remove when LangGraph requires `uuid >=11.1.1`. | 2026-10-12 |
-| `GHSA-866g-f22w-33x8` | Low | `@copilotkit/runtime -> @ai-sdk/google-vertex -> @ai-sdk/provider-utils` | Agent/runtime | No patched version is published. Primoria does not configure the Google Vertex adapter; monitor CopilotKit/AI SDK releases. | 2026-10-12 |
+The npm production bulk audit no longer reports either of the findings that
+had a 2026-10-12 review date (`GHSA-w5hq-g745-h8pq` / uuid and
+`GHSA-866g-f22w-33x8` / provider-utils). They are closed for the installed
+production dependency tree, rather than carried forward with an expired date.
+The fast-uri, ip-address, fast-copy and KaTeX findings are patched above.
+
+The remaining Zod 3 exception expires on 2026-12-31. Registry metadata checked
+on 2026-10-24 still has CopilotKit runtime 1.79.1 depending on Zod 3; a global
+Zod 4 substitution still requires upstream type interoperability. Recheck by
+2026-11-24. `audit:prod` continues to fail automatically after the exception
+expires and for any non-excepted advisory/version combination.
