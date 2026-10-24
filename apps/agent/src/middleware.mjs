@@ -1,5 +1,6 @@
 import { createMiddleware } from "langchain";
 import { z } from "zod";
+import { formatTutorStylePrompt } from "@primoria/contracts/tutor-style";
 import { trimAgentHistory } from "./context-trim.mjs";
 import { formatCourseDetailSystemPrompt } from "./prompts.mjs";
 
@@ -10,6 +11,7 @@ import { formatCourseDetailSystemPrompt } from "./prompts.mjs";
 export const PrimoriaContextSchema = z.object({
   primoria_owner_id: z.string().optional(),
   user_id: z.string().optional(),
+  primoria_tutor_style: z.string().nullish(),
   copilotkit: z.any().optional(),
 });
 
@@ -51,6 +53,23 @@ export const primoriaCourseDetailMiddleware = createMiddleware({
     return handler({
       ...request,
       systemMessage: request.systemMessage.concat(`\n\n${extra}`),
+    });
+  },
+});
+
+// The learner's chosen Tutor persona. Web passes the stored profile value (or
+// null) as run state; the subagent sees it through the forwarded state, hence the
+// stateSchema. Unknown/missing values resolve to the shared default style.
+export const primoriaTutorStyleMiddleware = createMiddleware({
+  name: "PrimoriaTutorStyleMiddleware",
+  contextSchema: PrimoriaContextSchema,
+  stateSchema: PrimoriaContextSchema,
+  wrapModelCall: async (request, handler) => {
+    const requestAny = /** @type {any} */ (request);
+    const style = requestAny?.runtime?.context?.primoria_tutor_style ?? requestAny?.state?.primoria_tutor_style;
+    return handler({
+      ...request,
+      systemMessage: request.systemMessage.concat(`\n\n${formatTutorStylePrompt(style)}`),
     });
   },
 });

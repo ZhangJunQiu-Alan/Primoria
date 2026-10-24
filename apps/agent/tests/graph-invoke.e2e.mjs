@@ -62,6 +62,7 @@ function assert(condition, message) {
 
 assert(captured.length > 0, "model endpoint was called");
 assert(captured[0].model === "deepseek-flash", "Tutor model overrides the Web/course default");
+assert(captured[0].thinking?.type === "disabled", "DeepSeek tutor runs with thinking mode disabled");
 const payload = JSON.stringify(captured[0].messages);
 assert(!payload.includes(BIG), "past-turn giant widget html is trimmed from the model request");
 assert(payload.includes("Pendulum"), "compacted summary keeps the widget title");

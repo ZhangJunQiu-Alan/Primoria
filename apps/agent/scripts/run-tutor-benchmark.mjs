@@ -120,10 +120,11 @@ async function runLive(dataset) {
   if (process.env.PRIMORIA_TUTOR_BENCH_LIVE !== "1") {
     throw new Error("Live model calls are locked. Set PRIMORIA_TUTOR_BENCH_LIVE=1 explicitly to authorize API usage.");
   }
-  const [{ HumanMessage, SystemMessage }, { createModel }, { SYSTEM_PROMPT }] = await Promise.all([
+  const [{ HumanMessage, SystemMessage }, { createModel }, { SYSTEM_PROMPT }, { formatTutorStylePrompt }] = await Promise.all([
     import("@langchain/core/messages"),
     import("../src/model.mjs"),
     import("../src/prompts.mjs"),
+    import("@primoria/contracts/tutor-style"),
   ]);
   const model = createModel({ streaming: false });
   const responses = [];
@@ -131,7 +132,7 @@ async function runLive(dataset) {
     process.stdout.write(`[${index + 1}/${dataset.cases.length}] ${item.id} ... `);
     const started = performance.now();
     const message = await model.invoke([
-      new SystemMessage(`${SYSTEM_PROMPT}${benchmarkContext(item)}`),
+      new SystemMessage(`${SYSTEM_PROMPT}\n\n${formatTutorStylePrompt(item.tutorStyle)}${benchmarkContext(item)}`),
       new HumanMessage(item.prompt),
     ]);
     const latencyMs = Math.round(performance.now() - started);

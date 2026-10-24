@@ -6,6 +6,7 @@ import {
   resolveImageAsset,
   type GeneratedImage,
   type MediaAssetStore,
+  type ResolvedImageAsset,
 } from "./media-assets";
 
 // Image Builder: the lesson-generation `imaging` stage. The Block Writer emits an
@@ -40,7 +41,10 @@ export type FinalizeImageOptions = {
   provider?: string;
 };
 
-function readyBlock(pending: PendingImageBlock, asset: { assetId: string; imageUrl: string }, model: string): ImageBlock {
+// kind/alt/caption/prompt come from the asset, not the pending brief: a
+// concept-level cache hit may serve a picture drawn for another lesson, and its
+// own text is what describes it.
+function readyBlock(pending: PendingImageBlock, asset: ResolvedImageAsset, model: string): ImageBlock {
   return {
     id: pending.id,
     type: "image",
@@ -49,10 +53,10 @@ function readyBlock(pending: PendingImageBlock, asset: { assetId: string; imageU
     pedagogicalRole: pending.pedagogicalRole,
     assetId: asset.assetId,
     imageUrl: asset.imageUrl,
-    alt: pending.alt,
-    caption: pending.caption,
-    imageKind: pending.imageKind,
-    prompt: pending.brief.prompt,
+    alt: asset.alt,
+    caption: asset.caption,
+    imageKind: asset.imageKind,
+    prompt: asset.prompt,
     model,
     aspectRatio: pending.aspectRatio,
     status: "ready",

@@ -668,7 +668,10 @@ export const mediaAssets = pgTable(
     provider: text("provider").notNull().default("google"),
     model: text("model").notNull(),
     mimeType: text("mime_type").notNull(),
-    dataBase64: text("data_base64").notNull(),
+    // Bytes live in Supabase Storage at storage_path; data_base64 is the legacy
+    // in-row copy, kept for rows written before Storage (or without it).
+    dataBase64: text("data_base64"),
+    storagePath: text("storage_path"),
     prompt: text("prompt").notNull(),
     brief: jsonb("brief").notNull(),
     alt: text("alt").notNull(),
@@ -682,6 +685,7 @@ export const mediaAssets = pgTable(
   (table) => ({
     cacheKeyUnique: uniqueIndex("media_assets_cache_key_uidx").on(table.cacheKey),
     ownerCreatedIdx: index("media_assets_owner_created_idx").on(table.ownerId, table.createdAt),
+    bytesLocationCheck: check("media_assets_bytes_location_check", sql`${table.dataBase64} is not null or ${table.storagePath} is not null`),
   }),
 );
 

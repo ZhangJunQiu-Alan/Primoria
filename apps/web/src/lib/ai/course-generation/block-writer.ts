@@ -82,7 +82,7 @@ const FIELD_HINTS: Record<GeneratableBlockType, string> = {
   analogy: `"title","source" (familiar thing),"target" (concept),"mapping"`,
   transfer: `"title","fromDomain","toDomain","explanation","example"`,
   visual: `"title","description","engine" plus the payload for that engine (see the engine directive on this block)`,
-  image: `"title","learningGoal","imageKind":"educational_illustration|structure_diagram|realistic_scene|analogy_illustration","prompt" (describe the scene/object/structure to draw — NO text, labels, numbers, axes, formulas, or chemical notation in the image),"alt","caption" (tell the learner what to notice),"negativePrompt"?. You write a BRIEF; the image is generated later.`,
+  image: `"title","learningGoal","imageKind":"educational_illustration|structure_diagram|realistic_scene|analogy_illustration","prompt" (describe the scene/object/structure and the relationships that explain the concept; include exact label text, arrows, numbers, formulas, chemical notation, or short explanations in the teaching language when useful; prioritize factual accuracy and legibility, avoid decorative text and crowded labels),"alt" (describe the actual teaching content accessibly),"caption" (a short explanation BELOW the image, telling the learner what to notice and why; do not rely on it to repair an unclear or inaccurate image),"negativePrompt"?. You write a BRIEF; the image is generated later.`,
   code: `"title","language","code","explanation"`,
   quiz: `"title","questions":[{"kind":"single","id","question","choices":[{"id","text"}] (2-4 options),"correctId","explanation"}] (1-3 focused questions). Use "kind":"single" (single correct choice) by default; do NOT attribute concepts — the system assigns conceptId automatically.`,
 };
