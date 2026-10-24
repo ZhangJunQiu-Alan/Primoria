@@ -13,6 +13,7 @@ import { selectPlannerFacts } from "@/lib/courses/lesson-generation-context";
 import { factsDirective, type LearnerFact, type LearnerProfile } from "@/lib/learner-profile/types";
 
 import { requireAuthUser } from "@/lib/auth/guard";
+import { exceedsAgentInputArrayLimit } from "@primoria/contracts/agent-input-limits";
 
 const agentRuntimeBaseUrl = process.env.PRIMORIA_AGENT_URL ?? "http://localhost:2024";
 const agentRuntimeUrl = `${agentRuntimeBaseUrl.replace(/\/$/, "")}/agent`;
@@ -246,11 +247,13 @@ export const POST = async (req: NextRequest) => {
   const { denied, user } = await requireAuthUser();
   if (denied) return denied;
   const ownerId = user?.id ?? "local-dev";
+  const json = await readJsonBody(req);
+  if (exceedsAgentInputArrayLimit(json?.body)) return Response.json({ error: "agent_input_too_large" }, { status: 413 });
 
   const [learnerProfile, learnerFacts] = user?.id
     ? await Promise.all([getLearnerProfile(user.id), listActiveFacts(user.id)])
     : [null, [] as LearnerFact[]];
-  const normalizedRequest = await requestWithNormalizedAttachments(req);
+  const normalizedRequest = json ? await requestWithNormalizedAttachments(req, json.body) : req;
   const primoriaAgent = new PrimoriaHttpAgent({
     url: agentRuntimeUrl,
     agentId: "primoria_tutor",
@@ -283,20 +286,16 @@ export const POST = async (req: NextRequest) => {
   return response;
 };
 
-async function requestWithNormalizedAttachments(req: NextRequest) {
-  let hasJson = false;
+async function readJsonBody(req: NextRequest): Promise<{ body: any } | null> {
   try {
-    await req.clone().json();
-    hasJson = true;
+    return { body: await req.clone().json() };
   } catch {
     // Request has no JSON body or is empty
+    return null;
   }
+}
 
-  if (!hasJson) {
-    return req;
-  }
-
-  const body = await req.json();
+async function requestWithNormalizedAttachments(req: NextRequest, body: any) {
   const messages = await normalizeCopilotMessagesWithAttachments(body?.messages, settingsFromEnvironment());
   const headers = new Headers(req.headers);
   headers.set("content-type", "application/json");

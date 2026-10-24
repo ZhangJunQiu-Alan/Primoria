@@ -49,7 +49,7 @@ const VisualBlockSchema = z.object({
   engine: z.enum(["html", "echarts", "mermaid", "physics", "interactive"]).optional(),
   interactive: InteractiveComponentPayloadSchema.optional(),
   html: z.string().optional(),
-  echartsOption: z.record(z.unknown()).optional(),
+  echartsOption: z.record(z.string(), z.unknown()).optional(),
   echartsHeight: z.number().optional(),
   mermaidDefinition: z.string().optional(),
   physicsScene: PhysicsSceneZodSchema.optional(),
