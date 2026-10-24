@@ -585,3 +585,30 @@ cites under `/tmp` were local and are not retained. `pnpm visualization:eval`
 now runs against a cloned test database with its own Agent and Web; attaching to
 a running app (`visualization:eval:attach`) refuses a non-test database unless
 `--allow-shared-database` is passed.
+
+### 2026-10-24 PR follow-up and pre-deployment verification
+
+- The visualization acceptance DB fixture now removes its recent synthetic
+  owner, Agent run and checkpoint in `afterAll`, including after an assertion
+  failure. The complete isolated Web DB suite followed by Agent runtime DB/HTTP
+  tests passes; `claimNext` no longer consumes the retained acceptance fixture.
+- Unmount history writes measure the complete JSON payload in UTF-8 bytes
+  before enabling keepalive. Regression cases include Chinese, emoji, ASCII,
+  and the 59,999/60,000-byte boundary.
+- A paid real Tutor graph turn on `deepseek-flash` accepted all 25 production
+  tools with Zod 4 `oneOf` and `propertyNames` schemas (HTTP 200), then called
+  `render_chat_quiz`. Usage reported 22,716 input / 266 output tokens, including
+  6,400 cached input tokens. This verifies provider schema interoperability;
+  it is not a production-host or complete Tutor quality acceptance.
+- Managed Supabase migrations 0053 and 0054 are applied. All 12 legacy images
+  were moved to private `lesson-media`, with read-back SHA-256 matching the
+  pre-migration manifest for every image and zero remaining inline byte rows.
+  Anonymous public-object access was rejected. `VACUUM (FULL) media_assets`
+  succeeded in SQL Editor: table plus indexes fell from 7,372,800 to 106,496
+  bytes (104 kB). The migration now also rejects equally sized corrupt bytes
+  before clearing the database copy; dedicated tests cover that write boundary.
+- Widget controls and errors use semantic theme variables; the existing
+  opaque-origin iframe and owner request-budget contracts remain covered.
+- Application server, domain and production deployment are deferred by the
+  owner. Netlify production builds are ignored; PR previews use the actual Web
+  directory instead of the deleted `hackathon` directory.

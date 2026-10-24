@@ -133,3 +133,17 @@ cross-subject edges. Signup, login and session reads passed through the local
 Web server against Supabase; the check account was deleted. Web health reported
 DB, KG, embeddings, Agent and workers healthy. This is a database migration and
 local integration result, not a public website release.
+
+## 2026-10-24 maintenance completion
+
+The selected Singapore database has applied 0053 (synthetic Tutor-style fact
+cleanup) and 0054 (`storage_path`). The 12 existing lesson images are now in
+the private `lesson-media` bucket; all 12 read-back SHA-256 hashes matched the
+originals and no image retains inline bytes. SQL Editor `VACUUM (FULL)
+media_assets` succeeded, leaving 104 kB including indexes. New imports verify
+complete byte equality before clearing their in-row copy. Operator backups
+remain local and are not committed.
+
+The local runtime URL uses Transaction pooling on 6543. There is no application
+server or domain yet; configuring and verifying a production runtime URL stays
+a future deployment step, explicitly deferred by the owner.

@@ -5,6 +5,8 @@
 //   pnpm media:migrate-storage            # dry run
 //   pnpm media:migrate-storage -- --apply # writes Storage + Postgres
 import { and, eq, isNotNull, isNull } from "drizzle-orm";
+import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { loadLocalEnv } from "./load-local-env";
 import { closeDb, getDb } from "../src/lib/db/client";
 import { mediaAssets } from "../src/lib/db/schema";
@@ -12,8 +14,7 @@ import { ensureMediaBucket, getMediaObjectStore, mediaObjectPath } from "../src/
 
 loadLocalEnv();
 
-async function main() {
-  const apply = process.argv.includes("--apply");
+export async function migrateMediaToStorage(apply = false) {
   const objects = getMediaObjectStore();
   if (!objects) throw new Error("Supabase Storage is not configured: set SUPABASE_URL and SUPABASE_SECRET_KEY.");
 
@@ -38,6 +39,9 @@ async function main() {
     if (stored.byteLength !== bytes.byteLength) {
       throw new Error(`read-back size mismatch for ${row.id}: ${stored.byteLength} != ${bytes.byteLength}`);
     }
+    if (!Buffer.from(stored).equals(bytes)) {
+      throw new Error(`read-back bytes mismatch for ${row.id}`);
+    }
     await db
       .update(mediaAssets)
       .set({ storagePath: path, dataBase64: null, updatedAt: new Date() })
@@ -53,7 +57,7 @@ async function main() {
   );
 }
 
-main()
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) migrateMediaToStorage(process.argv.includes("--apply"))
   .catch((error) => {
     console.error(error instanceof Error ? error.message : error);
     process.exitCode = 1;
