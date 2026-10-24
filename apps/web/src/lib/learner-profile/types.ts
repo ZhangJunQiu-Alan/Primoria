@@ -1,3 +1,5 @@
+import type { TutorStyle } from "@primoria/contracts/tutor-style";
+
 export const KNOWLEDGE_BACKGROUNDS = ["middle_school", "high_school", "undergraduate", "graduate"] as const;
 export type KnowledgeBackground = (typeof KNOWLEDGE_BACKGROUNDS)[number];
 
@@ -26,8 +28,7 @@ export type EducationCurriculum = (typeof EDUCATION_CURRICULA)[number];
 export const EDUCATION_CONTEXT_SOURCES = ["confirmed_suggestion", "user_selected"] as const;
 export type EducationContextSource = (typeof EDUCATION_CONTEXT_SOURCES)[number];
 
-export const TUTOR_STYLES = ["socratic", "feynman", "euclid"] as const;
-export type TutorStyle = (typeof TUTOR_STYLES)[number];
+export { DEFAULT_TUTOR_STYLE, TUTOR_STYLES, isTutorStyle, type TutorStyle } from "@primoria/contracts/tutor-style";
 
 // Distilled facts produced from explicit intake or learning events. Category
 // routes consumption: gaps/background/preferences and bounded interests can
@@ -128,10 +129,6 @@ export function isEducationContextSource(value: unknown): value is EducationCont
   return typeof value === "string" && (EDUCATION_CONTEXT_SOURCES as readonly string[]).includes(value);
 }
 
-export function isTutorStyle(value: unknown): value is TutorStyle {
-  return typeof value === "string" && (TUTOR_STYLES as readonly string[]).includes(value);
-}
-
 export function knowledgeBackgroundLabel(value: KnowledgeBackground | null | undefined) {
   switch (value) {
     case "middle_school":
@@ -147,19 +144,6 @@ export function knowledgeBackgroundLabel(value: KnowledgeBackground | null | und
   }
 }
 
-export function tutorStyleLabel(value: TutorStyle | null | undefined) {
-  switch (value) {
-    case "socratic":
-      return "Socratic";
-    case "feynman":
-      return "Feynman";
-    case "euclid":
-      return "Euclid";
-    default:
-      return "Feynman";
-  }
-}
-
 export function knowledgeBackgroundDirective(value: KnowledgeBackground | null | undefined) {
   switch (value) {
     case "middle_school":
@@ -172,18 +156,6 @@ export function knowledgeBackgroundDirective(value: KnowledgeBackground | null |
       return "LEARNER BACKGROUND: Graduate. Move faster, use precise definitions and notation, and emphasize structure, edge cases, and deeper connections.";
     default:
       return "LEARNER BACKGROUND: Unspecified. Use an accessible undergraduate baseline and adapt from the mastery tags; do not assume advanced prerequisites unless the topic requires them.";
-  }
-}
-
-export function tutorStyleDirective(value: TutorStyle | null | undefined) {
-  switch (value) {
-    case "socratic":
-      return "Tutor style: Socratic. Prefer guiding questions, checks for understanding, and short hints before direct answers. Help the learner reason their way to the idea.";
-    case "euclid":
-      return "Tutor style: Euclid. Be precise, structured, and rigorous. State definitions and conditions clearly, then build the explanation step by step.";
-    case "feynman":
-    default:
-      return "Tutor style: Feynman. Explain with intuition, simple language, analogies, and concrete examples before formal details.";
   }
 }
 
