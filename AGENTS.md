@@ -220,7 +220,7 @@ if multiple systems remain possible, course creation stays behind clarification.
 Settings uses the same queue.
 
 Tutor style (`socratic` | `feynman` | `euclid`, default `feynman`) and its
-persona prompts are single-sourced in `packages/contracts/src/tutor-style.mjs`.
+persona prompts are single-sourced in `packages/contracts` (`tutor-style.mjs` ids for Web/browser code, `tutor-style-prompt.mjs` prompt text for the Agent only).
 Web passes the stored `learner_profiles.tutor_style` (or null) as server-set
 `primoria_tutor_style` run state; the Agent's `PrimoriaTutorStyleMiddleware`
 appends exactly one TUTOR STYLE section plus the shared TUTOR PRESENTATION

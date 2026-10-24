@@ -12,6 +12,8 @@
 import { createServer } from "node:http";
 
 const captured = [];
+// "single": one task call; "parallel": two concept-agent task calls in one turn.
+let taskMode = "single";
 
 function systemText(body) {
   return (body?.messages ?? [])
@@ -37,8 +39,16 @@ const server = createServer((req, res) => {
       chunk({ ...base, choices: [{ index: 0, delta: { role: "assistant", content: "ok" }, finish_reason: null }] });
       chunk({ ...base, choices: [{ index: 0, delta: {}, finish_reason: "stop" }] });
     } else {
-      const args = JSON.stringify({ description: "Explain what a derivative is.", subagent_type: "concept-agent" });
-      chunk({ ...base, choices: [{ index: 0, delta: { role: "assistant", tool_calls: [{ index: 0, id: "call_task", type: "function", function: { name: "task", arguments: args } }] }, finish_reason: null }] });
+      const call = (index, description) => ({
+        index,
+        id: `call_task_${index}`,
+        type: "function",
+        function: { name: "task", arguments: JSON.stringify({ description, subagent_type: "concept-agent" }) },
+      });
+      const calls = taskMode === "parallel"
+        ? [call(0, "Explain what a derivative is."), call(1, "Explain what an integral is.")]
+        : [call(0, "Explain what a derivative is.")];
+      chunk({ ...base, choices: [{ index: 0, delta: { role: "assistant", tool_calls: calls }, finish_reason: null }] });
       chunk({ ...base, choices: [{ index: 0, delta: {}, finish_reason: "tool_calls" }] });
     }
     chunk({ ...base, choices: [], usage: { prompt_tokens: 10, completion_tokens: 1, total_tokens: 11 } });
@@ -61,7 +71,8 @@ function assert(condition, message) {
 }
 
 // Same state/context shape the runtime runner builds from the Web request.
-async function run(style, threadId) {
+async function run(style, threadId, mode = "single") {
+  taskMode = mode;
   captured.length = 0;
   const origLog = console.log;
   console.log = () => {};
@@ -101,6 +112,14 @@ for (const body of [...fallback.main, ...fallback.concept]) {
 }
 for (const body of fallback.concept) {
   assert(!systemText(body).includes("Socratic"), "concept-agent carries no hard-coded Socratic style");
+}
+
+// Two concept-agent tasks in one model turn must not collide on parent state
+// (each subagent returning the same keys in one superstep raises InvalidUpdateError).
+const parallel = await run("euclid", "style-parallel", "parallel");
+assert(parallel.concept.length >= 2, `both concept-agent tasks ran (got ${parallel.concept.length})`);
+for (const body of parallel.concept) {
+  assert(systemText(body).includes("TUTOR STYLE: Euclid"), "each parallel concept-agent call carries the persona");
 }
 
 server.close();

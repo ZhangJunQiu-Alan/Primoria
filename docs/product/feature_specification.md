@@ -122,7 +122,7 @@ learner facts. The Agent selects tools and streams AG-UI events. The removed
 `/api/tutor/chat` stack is not a fallback.
 
 Tutor style changes how the Tutor teaches in dialogue, not what it routes to.
-The Agent appends one persona section from `packages/contracts/src/tutor-style.mjs`
+The Agent appends one persona section from `packages/contracts/src/tutor-style-prompt.mjs`
 to the main Tutor and `concept-agent` system prompts:
 
 - `socratic`: one guiding question per reply; the definition, result, and key
@@ -136,7 +136,7 @@ to the main Tutor and `concept-agent` system prompts:
   problems), within a ~250-character budget; follow-up turns confirm or correct
   in one to three lines without restating definitions.
 
-Every style shares one presentation, also defined in `tutor-style.mjs`:
+Every style shares one presentation, also defined in `tutor-style-prompt.mjs`:
 teaching replies are structured cards — two to four blocks with bold
 emoji-icon labels, comparisons in small tables, and the closing question in a
 blockquote. Tool-call sentences, greetings, and quick factual lookups stay
