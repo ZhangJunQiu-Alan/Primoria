@@ -24,6 +24,12 @@ export type ImplementedComponent = {
   schemaDoc: string;
   /** stage-2 补丁路径的语义提示(口语 → 字段变化的约定),可选 */
   patchHints?: string;
+  /**
+   * Config upgrades keyed by the version they upgrade FROM (n → n+1). A catalog
+   * version bump must add the step so saved chats, courses and share snapshots
+   * stay readable; the sync test enforces a complete chain.
+   */
+  migrations?: Readonly<Record<number, (config: ComponentConfig) => ComponentConfig>>;
 };
 
 export type RegistryEntry = PlannedComponent | ImplementedComponent;

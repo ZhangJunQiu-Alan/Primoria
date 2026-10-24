@@ -137,7 +137,31 @@ describe("InteractiveComponentCard", () => {
     const container = await mount(createElement(InteractiveComponentCard, { componentId: "physics.lens-imaging", request: "existing", instanceId: "unavailable-tool" }));
     await waitFor(() => expect(container.querySelector('[role="alert"]')).not.toBeNull());
     expect(fetchMock).toHaveBeenCalledTimes(1);
-    expect(container.textContent).toContain("Retry");
+    expect([...container.querySelectorAll("button")].map((button) => button.textContent)).toContain("重试");
+  });
+
+  it("shows a non-retryable notice for a saved scene whose version cannot be upgraded", async () => {
+    const fetchMock = vi.fn(async () => new Response(JSON.stringify({ ok: false, error: "unsupported_saved_configuration" }), { status: 409 }));
+    vi.stubGlobal("fetch", fetchMock);
+    const container = await mount(createElement(InteractiveComponentCard, { componentId: "physics.lens-imaging", request: "old", instanceId: "old-tool" }));
+    await waitFor(() => expect(container.querySelector('[role="alert"]')?.textContent).toContain("无法重新打开"));
+    expect(container.querySelector("button")).toBeNull();
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+
+  it("derives a stable legacy instance id so remounts reuse the saved output", async () => {
+    const urls: string[] = [];
+    vi.stubGlobal("fetch", vi.fn(async (url: string) => {
+      urls.push(url);
+      return new Response(JSON.stringify({ ok: true, componentId: "physics.lens-imaging", configVersion: 1, revision: 1, config: { focalLength: 10 } }));
+    }));
+    for (let index = 0; index < 2; index += 1) {
+      const container = await mount(createElement(InteractiveComponentCard, { componentId: "physics.lens-imaging", request: "legacy request" }));
+      await waitFor(() => expect(container.querySelector("[data-config]")).not.toBeNull());
+    }
+    expect(urls).toHaveLength(2);
+    expect(urls[0]).toMatch(/instanceId=legacy%3A/);
+    expect(urls[1]).toBe(urls[0]);
   });
 
   it("keeps local controls immediate and retries a failed save without another model call", async () => {
@@ -155,12 +179,12 @@ describe("InteractiveComponentCard", () => {
     await waitFor(() => expect(container.querySelector("button")?.textContent).toBe("change parameter"));
     await act(async () => (container.querySelector("button") as HTMLButtonElement).click());
     expect(container.querySelector("[data-config]")?.getAttribute("data-config")).toContain('"focalLength":11');
-    await waitFor(() => expect(container.textContent).toContain("Retry save"));
-    const retry = [...container.querySelectorAll("button")].find((button) => button.textContent?.includes("Retry save"))!;
+    await waitFor(() => expect(container.textContent).toContain("重试保存"));
+    const retry = [...container.querySelectorAll("button")].find((button) => button.textContent?.includes("重试保存"))!;
     await act(async () => retry.click());
     await waitFor(() => expect(container.querySelector('[role="alert"]')).toBeNull());
     expect(writes).toHaveLength(2);
     expect(writes[1]).toEqual(writes[0]);
-    expect(writes[1]).toMatchObject({ instanceId: "save-retry", revision: 1, config: { focalLength: 11 } });
+    expect(writes[1]).toMatchObject({ instanceId: "save-retry", revision: 1, configVersion: 1, config: { focalLength: 11 } });
   });
 });

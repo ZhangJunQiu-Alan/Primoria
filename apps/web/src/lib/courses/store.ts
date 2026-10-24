@@ -4,6 +4,7 @@ import { summarizeCourse } from "./types";
 import { getCurrentUser } from "../auth/session";
 import { getDb, hasDatabaseUrl, type DbOrTx } from "../db/client";
 import { courses as coursesTable, lessons as lessonsTable } from "../db/schema";
+import { upgradeInteractiveBlock } from "../interactive/payload";
 
 export async function saveCourse(course: Course, ownerId?: string | null): Promise<Course> {
   const resolvedOwnerId = await requireOwnerId(ownerId, "save course");
@@ -496,7 +497,7 @@ function rowToLesson(row: typeof lessonsTable.$inferSelect): Lesson {
     topicId: row.topicId ?? null,
     conceptIds: (row.conceptIds as string[] | null) ?? [],
     triggeredFrom: row.triggeredFrom ?? null,
-    blocks: (row.blocks as CourseBlock[] | null) ?? null,
+    blocks: (row.blocks as CourseBlock[] | null)?.map(upgradeInteractiveBlock) ?? null,
     estimatedMinutes: row.estimatedMinutes === null ? null : Number(row.estimatedMinutes),
     version: row.version ?? 1,
     createdAt: row.createdAt.getTime(),
