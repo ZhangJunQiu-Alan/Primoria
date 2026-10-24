@@ -368,8 +368,17 @@ definitions, and examples; the lesson reader shows concept-level sources
 ("file · p. 3–4"). Material courses use private lesson images and cannot be
 shared. A material cannot be deleted while a course still uses a graph built
 from it. Mastery, Facts, and XP work exactly as for other courses; the material
-itself is not a learner fact. Canonical spec and roadmap (grounded Tutor Q&A,
-practice sets): `docs/product/learning-materials.md`.
+itself is not a learner fact.
+
+Inside a material course, the course-rail Tutor answers material-first. For
+each question Web retrieves up to six chunks of that course's own materials
+(lexical match, semantic similarity when the embedding provider is available,
+and the chunks the current lesson cites) and gives them to the Tutor as hidden
+data with citation rules: claims from the material carry their source ("file ·
+p. 3"), and anything beyond the material appears only in a separately labelled
+supplement. The main Tutor and library/generated courses are unaffected.
+Canonical spec and roadmap (practice sets next):
+`docs/product/learning-materials.md`.
 
 ## 4. Knowledge graph contract
 

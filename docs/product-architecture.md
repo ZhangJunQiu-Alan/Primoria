@@ -112,7 +112,9 @@ from, and lesson generation injects those excerpts into Planner/Writer prompts.
 `apps/web/src/lib/courses/course-graph.ts` is the single resolver from a course
 `graphId` to its TopicGraph (library, `gen_*`, or owner-only `mat_*`) for lesson
 generation, the lesson reader, and the learning-progress and Extractor workers.
-See `docs/product/learning-materials.md`.
+The course-rail Tutor in a material course receives Web-retrieved material
+excerpts (BM25 + pgvector + current-lesson prior, fused) as hidden context; the
+Agent itself never reads material rows. See `docs/product/learning-materials.md`.
 
 ## 4. Learner state boundaries
 

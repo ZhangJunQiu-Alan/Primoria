@@ -17,6 +17,8 @@ contracts, schemas, and tests remain the final source of truth.
 | 入口 | 资料库页面（`/materials`）上的按钮；v1 不加 Tutor 工具、不自动转存聊天附件 |
 | 图片与分享 | 资料课程的课时图片走 owner 私有媒体通道；资料课程默认不能生成分享链接 |
 | 产出范围 | 课程（含测验块）→ Tutor 基于资料问答（RAG）→ 资料题库/练习，按此顺序分阶段交付 |
+| 问答入口 | 只在资料课程的侧栏 Tutor 里基于资料回答；不做资料页"问 Tutor"，主 Tutor 不自动检索资料 |
+| 回答策略 | 资料优先并注明出处；资料没覆盖的部分可用通用知识补充，但必须放在"资料外补充"段落里 |
 
 ## 3. 与现有系统的边界
 
@@ -57,8 +59,17 @@ material_topic_graphs     由资料派生的私有课程图谱
   （不再调用模型），课程按 `scope_key = graph:<mat_id>:full` 在 owner 内复用。
 - 删除资料：若仍有课程（含已归档）使用由它派生的图谱，返回 409 并列出课程；否则
   在一个事务里删除派生图谱与资料（片段级联删除）。已有掌握度行保留（owner 私有）。
-- v1 不建向量列。课时 grounding 用图谱构建时记录的 `concept_sources`，确定性取回片段；
-  RAG 问答阶段再在 KG 拥有的 SQL 中加 embedding（避免 Drizzle 迁移依赖 pgvector 扩展）。
+- 课时 grounding 用图谱构建时记录的 `concept_sources`，确定性取回片段，不依赖向量。
+- 问答的语义索引在 KG 拥有的 SQL 里（pgvector 归 KG SQL 管，Drizzle 迁移不依赖扩展）：
+
+  ```text
+  material_chunk_embeddings   (KG SQL migration 0003)
+    (material_id, ordinal, model_version) PK, owner_id, embedding vector(1536), created_at
+    FK (material_id, ordinal) → learning_material_chunks ON DELETE CASCADE
+  ```
+
+  全新 bootstrap 时 KG 迁移先于 Drizzle 运行、片段表还不存在，外键由 Drizzle 迁移 0056 补上；
+  先跑过 Drizzle 的库则由 KG 0003 补上（与 0026 的跨所有者外键同一模式）。
 
 ## 5. 流程
 
@@ -101,7 +112,30 @@ material_topic_graphs     由资料派生的私有课程图谱
 与 Extractor worker 都经由它。此前学习进度与 Extractor 只认静态库图谱，`gen_*` 课程的
 课后任务会失败；本切片一并修复，决策器改为使用解析后的图谱。
 
-### 5.4 代码位置
+### 5.4 资料课程侧栏 Tutor 问答（第 2 阶段）
+
+```text
+upload / build course → after(): embed missing chunks (KG embedding provider, batches of 16)
+course rail question → /api/copilotkit
+  → course id + block ids from readable context (only these are read from the browser)
+  → getCourse(owner) + getMaterialGraph(owner)        (non-material course → no-op)
+  → lesson = server-side lesson owning the selected/visible block
+  → retrieval over the course's own chunks:
+      BM25 (Latin words + CJK bigrams) ┐
+      pgvector similarity (≥ 0.2)      ├─ reciprocal-rank fusion → ≤ 6 excerpts, ≤ 6k chars
+      lesson concepts' cited chunks ×½ ┘
+  → hidden "COURSE MATERIAL EXCERPTS" block next to COURSE DETAIL MODE
+```
+
+- 回答规则写在隐藏上下文里：先依据片段回答并标出处（"（来源：资料名 · 第 3 页）"），不打印
+  片段标签；片段不够时可补充通用知识，但必须放在以"资料外补充："开头的独立段落；与资料
+  不一致时指出差异；完全无关时先说明资料没有覆盖。片段同样声明为数据而非指令。
+- 课程内的 chat quiz 也会看到这些片段，题目以资料为准（仍不写掌握度）。
+- 降级：没有配置 embedding 服务、向量查询失败或超时（3s）时只用词法 + 当前课时先验；检索整体
+  失败时按普通课程模式回答，不中断对话。检索发现有未索引片段时安排一次补索引。
+- 库内与 `gen_*` 课程、主 Tutor 不受影响：只有服务端确认是该 owner 的 `mat_*` 课程才注入。
+
+### 5.5 代码位置
 
 - 资料库：`apps/web/src/lib/materials/{limits,chunking,ingest,store,types}.ts`，
   路由 `apps/web/src/app/api/materials/**`，页面 `apps/web/src/app/materials/page.tsx`
@@ -110,6 +144,10 @@ material_topic_graphs     由资料派生的私有课程图谱
   TopicGraph 转换）与 `material-graph-store.ts`（复用或构建、持久化）。
 - Grounding：`apps/web/src/lib/materials/grounding.ts`（取片段、概念来源）与
   `apps/web/src/lib/ai/course-generation/source-grounding.ts`（提示词段落）。
+- 问答：`apps/web/src/lib/materials/semantic-index.ts`（索引与向量检索）、`retrieval.ts`
+  （BM25、融合、取片段）、`tutor-context.ts`（解析课程上下文、组装隐藏上下文），接入点
+  `apps/web/src/app/api/copilotkit/route.ts`；批量 embedding 在
+  `apps/web/src/lib/knowledge-graph/embeddings.ts`。
 
 ## 6. 当前限制（v1，2026-10-24）
 
@@ -127,8 +165,14 @@ material_topic_graphs     由资料派生的私有课程图谱
   "资料不可用"的不可重试错误失败，而不会静默生成脱离资料的内容。上传配额检查同样不是
   事务性的，并发上传可能短暂超出 50 份。
 - 删除资料会删除片段与派生图谱，但保留该图谱下已有的掌握度行（owner 私有、只含概念 id）。
-- 资料课程目前只能从 `/materials` 页面创建；Tutor 不会主动用资料建课，也不能基于资料回答问题
-  （见 §7 第 2 阶段）。
+- 资料课程只能从 `/materials` 页面创建；Tutor 不会主动用资料建课。
+- 基于资料的问答只在资料课程的侧栏 Tutor 里生效；主 Tutor 和资料页都不能直接"问资料"。
+- 检索只针对每条提问做一次（不做多轮/多跳检索），只看当前这一问加选中文本；追问"那第二点呢"
+  依赖当前课时先验和对话上下文。
+- 引用出处由模型按规则写在回答文本里，没有独立的结构化引用 UI，也没有校验模型是否真的引用正确。
+- 语义索引是上传后尽力完成的：embedding 服务不可用时只靠词法检索，跨语言提问（如用中文问英文
+  教材）效果会明显变差；索引会在下次检索或建课时补齐。
+- 注入的片段随最后一条用户消息进入 Agent，会和其他运行数据一样保存在 `agent_runtime` 检查点里。
 
 ### 6.2 尚未验证
 
@@ -138,12 +182,15 @@ material_topic_graphs     由资料派生的私有课程图谱
   PostgreSQL 16 上单独验证过（去重、owner 隔离、删除拦截、级联删除），路由与页面用 mock 测试覆盖。
 - DOCX 解析沿用聊天附件的 mammoth 路径，没有单独用真实 DOCX 文件验证；PDF 用 Chromium 生成的
   双页中英文样例验证过按页、按标题分块。
+- 问答：在装了 pgvector 的临时 PostgreSQL 16 上跑过完整 `db:bootstrap`（含两个方向的外键补齐）
+  和索引 → 向量检索 → 隐藏上下文 → 删除级联，embedding 用确定性哈希向量代替；真实 embedding
+  服务（MiniMax/OpenAI 兼容）与真实模型的回答质量、引用格式遵守情况都还没有验证。
 
 ## 7. 分阶段交付
 
-1. **资料 → 课程**（本切片）：资料库表与 API、`/materials` 页面、`mat_*` 图谱、
+1. **资料 → 课程**（已完成）：资料库表与 API、`/materials` 页面、`mat_*` 图谱、
    建课、grounded 课时生成、概念级来源、私有图片、禁止分享。
-2. **Tutor 基于资料问答**：片段 embedding + 检索；课程侧栏 Tutor 与主 Tutor 在资料
-   课程/指定资料上回答并引用片段。
+2. **Tutor 基于资料问答**（已完成第一版）：片段 embedding + 混合检索；资料课程的侧栏 Tutor
+   资料优先回答并注明出处（§5.4）。主 Tutor / 资料页入口留待以后。
 3. **资料题库/练习**：从资料生成可计入证据的练习（需走课程测验路径，chat quiz 不更新掌握度）。
 4. 以后：OCR/图片资料、与库内 KG 的概念对齐、资料版本更新后的课程刷新。
