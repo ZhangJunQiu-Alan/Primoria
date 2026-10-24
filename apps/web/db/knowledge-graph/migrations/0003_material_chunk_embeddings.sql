@@ -17,7 +17,7 @@ create index if not exists material_chunk_embeddings_owner_material_idx
 
 -- Deleting a chunk (and so its material) removes its embeddings. On a fresh
 -- bootstrap this migration runs before Drizzle creates learning_material_chunks,
--- and Drizzle migration 0056 installs the FK; on a Drizzle-first database this
+-- and Drizzle migration 0057 installs the FK; on a Drizzle-first database this
 -- reconciles it.
 do $$
 begin

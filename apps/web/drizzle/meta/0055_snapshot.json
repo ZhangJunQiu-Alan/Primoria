@@ -1,5 +1,5 @@
 {
-  "id": "800d8e31-82df-4f37-985b-e0f78367f5e0",
+  "id": "25045724-65dc-466a-9dc5-b46a35449960",
   "prevId": "55a83d9f-d968-42a1-a0eb-e109a20cf5c5",
   "version": "7",
   "dialect": "postgresql",
@@ -1762,6 +1762,13 @@
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
+        },
+        "last_used_at": {
+          "name": "last_used_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {
@@ -1782,6 +1789,27 @@
             }
           ],
           "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "interactive_component_instances_owner_last_used_idx": {
+          "name": "interactive_component_instances_owner_last_used_idx",
+          "columns": [
+            {
+              "expression": "owner_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "last_used_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
           "concurrently": false,
           "method": "btree",
           "with": {}
@@ -2637,284 +2665,6 @@
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.learning_material_chunks": {
-      "name": "learning_material_chunks",
-      "schema": "",
-      "columns": {
-        "material_id": {
-          "name": "material_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "ordinal": {
-          "name": "ordinal",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "owner_id": {
-          "name": "owner_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "text": {
-          "name": "text",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "heading": {
-          "name": "heading",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "page_start": {
-          "name": "page_start",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "page_end": {
-          "name": "page_end",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "char_count": {
-          "name": "char_count",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {
-        "learning_material_chunks_owner_material_idx": {
-          "name": "learning_material_chunks_owner_material_idx",
-          "columns": [
-            {
-              "expression": "owner_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "material_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "learning_material_chunks_material_id_learning_materials_id_fk": {
-          "name": "learning_material_chunks_material_id_learning_materials_id_fk",
-          "tableFrom": "learning_material_chunks",
-          "tableTo": "learning_materials",
-          "columnsFrom": [
-            "material_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "learning_material_chunks_owner_id_users_id_fk": {
-          "name": "learning_material_chunks_owner_id_users_id_fk",
-          "tableFrom": "learning_material_chunks",
-          "tableTo": "users",
-          "columnsFrom": [
-            "owner_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {
-        "learning_material_chunks_pk": {
-          "name": "learning_material_chunks_pk",
-          "columns": [
-            "material_id",
-            "ordinal"
-          ]
-        }
-      },
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {
-        "learning_material_chunks_ordinal_check": {
-          "name": "learning_material_chunks_ordinal_check",
-          "value": "\"learning_material_chunks\".\"ordinal\" >= 0 and \"learning_material_chunks\".\"char_count\" >= 0"
-        }
-      },
-      "isRLSEnabled": false
-    },
-    "public.learning_materials": {
-      "name": "learning_materials",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "owner_id": {
-          "name": "owner_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "title": {
-          "name": "title",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "file_name": {
-          "name": "file_name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "mime_type": {
-          "name": "mime_type",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "byte_length": {
-          "name": "byte_length",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "content_sha256": {
-          "name": "content_sha256",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "char_count": {
-          "name": "char_count",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "chunk_count": {
-          "name": "chunk_count",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "page_count": {
-          "name": "page_count",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "language": {
-          "name": "language",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "learning_materials_owner_sha_uidx": {
-          "name": "learning_materials_owner_sha_uidx",
-          "columns": [
-            {
-              "expression": "owner_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "content_sha256",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "learning_materials_owner_created_idx": {
-          "name": "learning_materials_owner_created_idx",
-          "columns": [
-            {
-              "expression": "owner_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "learning_materials_owner_id_users_id_fk": {
-          "name": "learning_materials_owner_id_users_id_fk",
-          "tableFrom": "learning_materials",
-          "tableTo": "users",
-          "columnsFrom": [
-            "owner_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {
-        "learning_materials_counts_check": {
-          "name": "learning_materials_counts_check",
-          "value": "\"learning_materials\".\"byte_length\" >= 0 and \"learning_materials\".\"char_count\" >= 0 and \"learning_materials\".\"chunk_count\" >= 0 and (\"learning_materials\".\"page_count\" is null or \"learning_materials\".\"page_count\" >= 0)"
-        }
-      },
       "isRLSEnabled": false
     },
     "public.learning_progress_jobs": {
@@ -3863,111 +3613,6 @@
           "value": "\"lessons\".\"version\" >= 1"
         }
       },
-      "isRLSEnabled": false
-    },
-    "public.material_topic_graphs": {
-      "name": "material_topic_graphs",
-      "schema": "",
-      "columns": {
-        "graph_id": {
-          "name": "graph_id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "owner_id": {
-          "name": "owner_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "material_ids": {
-          "name": "material_ids",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "title": {
-          "name": "title",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "language": {
-          "name": "language",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "graph": {
-          "name": "graph",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "concept_sources": {
-          "name": "concept_sources",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "material_topic_graphs_owner_created_idx": {
-          "name": "material_topic_graphs_owner_created_idx",
-          "columns": [
-            {
-              "expression": "owner_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "material_topic_graphs_owner_id_users_id_fk": {
-          "name": "material_topic_graphs_owner_id_users_id_fk",
-          "tableFrom": "material_topic_graphs",
-          "tableTo": "users",
-          "columnsFrom": [
-            "owner_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
       "isRLSEnabled": false
     },
     "public.media_assets": {

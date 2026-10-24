@@ -140,9 +140,12 @@ export const interactiveComponentInstances = pgTable(
     revision: integer("revision").notNull().default(1),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+    // Retention order: refreshed by saves and (at most hourly) by reads.
+    lastUsedAt: timestamp("last_used_at", { withTimezone: true }).notNull().defaultNow(),
   },
   (table) => ({
     ownerInstanceUnique: uniqueIndex("interactive_component_instances_owner_instance_uidx").on(table.ownerId, table.instanceId),
+    ownerLastUsedIdx: index("interactive_component_instances_owner_last_used_idx").on(table.ownerId, table.lastUsedAt),
     versionCheck: check("interactive_component_instances_version_check", sql`${table.configVersion} >= 1 and ${table.revision} >= 1`),
   }),
 );

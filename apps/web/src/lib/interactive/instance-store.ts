@@ -6,6 +6,7 @@ import { parseInteractivePayload } from "./payload";
 import type { InteractiveComponentPayload } from "@primoria/contracts/artifacts/schemas";
 
 const DEFAULT_MAX_INSTANCES_PER_OWNER = 2000;
+const TOUCH_INTERVAL_MS = 60 * 60 * 1000;
 
 export function getInteractiveInstanceRetentionLimit() {
   const configured = Number(process.env.INTERACTIVE_COMPONENT_INSTANCE_MAX_PER_OWNER ?? "");
@@ -34,8 +35,15 @@ export async function createInteractiveInstance(input: InteractiveComponentPaylo
  */
 export async function pruneInteractiveInstances(ownerId: string, keep = getInteractiveInstanceRetentionLimit()) {
   const stale = getDb().select({ id: instances.id }).from(instances).where(eq(instances.ownerId, ownerId))
-    .orderBy(desc(instances.updatedAt), desc(instances.id)).offset(keep);
+    .orderBy(desc(instances.lastUsedAt), desc(instances.id)).offset(keep);
   await getDb().delete(instances).where(and(eq(instances.ownerId, ownerId), inArray(instances.id, stale)));
+}
+
+/** Marks a reopened instance as used, at most hourly, so retention keeps scenes learners still view. */
+export async function touchInteractiveInstance(instance: Pick<typeof instances.$inferSelect, "ownerId" | "instanceId" | "lastUsedAt">, now = new Date()) {
+  if (now.getTime() - instance.lastUsedAt.getTime() < TOUCH_INTERVAL_MS) return;
+  await getDb().update(instances).set({ lastUsedAt: now })
+    .where(and(eq(instances.ownerId, instance.ownerId), eq(instances.instanceId, instance.instanceId)));
 }
 
 export async function updateInteractiveInstance(ownerId: string, instanceId: string, revision: number, config: Record<string, unknown>, configVersion?: number) {
@@ -44,7 +52,7 @@ export async function updateInteractiveInstance(ownerId: string, instanceId: str
   // The browser edits the upgraded config it received; it reports that version
   // so a stale tab's older config is upgraded instead of mis-validated.
   const payload = parseInteractivePayload({ componentId: current.componentId, configVersion: configVersion ?? current.configVersion, config });
-  const [updated] = await getDb().update(instances).set({ config: payload.config, configVersion: payload.configVersion, revision: revision + 1, updatedAt: new Date() })
+  const [updated] = await getDb().update(instances).set({ config: payload.config, configVersion: payload.configVersion, revision: revision + 1, updatedAt: new Date(), lastUsedAt: new Date() })
     .where(and(eq(instances.ownerId, ownerId), eq(instances.instanceId, instanceId), eq(instances.revision, revision))).returning();
   return updated ? { kind: "updated" as const, instance: updated } : { kind: "conflict" as const };
 }

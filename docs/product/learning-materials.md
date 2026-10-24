@@ -68,7 +68,7 @@ material_topic_graphs     由资料派生的私有课程图谱
     FK (material_id, ordinal) → learning_material_chunks ON DELETE CASCADE
   ```
 
-  全新 bootstrap 时 KG 迁移先于 Drizzle 运行、片段表还不存在，外键由 Drizzle 迁移 0056 补上；
+  全新 bootstrap 时 KG 迁移先于 Drizzle 运行、片段表还不存在，外键由 Drizzle 迁移 0057 补上；
   先跑过 Drizzle 的库则由 KG 0003 补上（与 0026 的跨所有者外键同一模式）。
 
 ## 5. 流程

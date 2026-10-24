@@ -4,7 +4,7 @@ import { requireConfiguredAuthUser } from "@/lib/auth/guard";
 import { getImplementedComponent } from "@/lib/interactive/components/registry";
 import { configureComponent, type CurrentInstance } from "@/lib/interactive/configure";
 import { INTERACTIVE_COMPONENT_VERSIONS } from "@primoria/contracts/artifacts/interactive-versions";
-import { getInteractiveInstance, createInteractiveInstance, updateInteractiveInstance } from "@/lib/interactive/instance-store";
+import { getInteractiveInstance, createInteractiveInstance, touchInteractiveInstance, updateInteractiveInstance } from "@/lib/interactive/instance-store";
 import { InteractivePayloadError, parseInteractivePayload } from "@/lib/interactive/payload";
 import {
   checkInteractiveInstanceAccess,
@@ -49,10 +49,8 @@ export async function GET(request: Request) {
     if (!limit.allowed) return rateLimited(limit.retryAfterSeconds);
     const instance = await getInteractiveInstance(user.id, instanceId);
     if (!instance) return NextResponse.json({ ok: false, error: "not_found" }, { status: 404 });
-    let saved: ReturnType<typeof publicInstance>;
-    try { saved = publicInstance(instance); }
-    catch { return NextResponse.json({ ok: false, error: "unsupported_saved_configuration" }, { status: 409 }); }
-    return NextResponse.json({ ok: true, ...saved }, { headers: { "Cache-Control": "private, no-store" } });
+    await touchInteractiveInstance(instance).catch((error) => console.error("[interactive-component-read] touch failed", error));
+    return savedInstanceResponse(instance, { headers: { "Cache-Control": "private, no-store" } });
   } catch (error) {
     console.error("[interactive-component-read]", error);
     return NextResponse.json({ ok: false, error: "读取失败，请稍后重试" }, { status: 503 });
@@ -89,6 +87,14 @@ function publicInstance(instance: SavedInstance) {
   return { ...payload, revision: instance.revision };
 }
 
+/** A stored config that no longer validates or upgrades is a 409, never a client 400. */
+function savedInstanceResponse(instance: SavedInstance, init?: ResponseInit) {
+  let saved: ReturnType<typeof publicInstance>;
+  try { saved = publicInstance(instance); }
+  catch { return NextResponse.json({ ok: false, error: "unsupported_saved_configuration" }, { status: 409 }); }
+  return NextResponse.json({ ok: true, ...saved }, init);
+}
+
 export async function POST(request: Request) {
   const { denied, user } = await requireConfiguredAuthUser("interactive-component");
   if (denied) return denied;
@@ -100,7 +106,7 @@ export async function POST(request: Request) {
     const saved = await getInteractiveInstance(user.id, body.instanceId);
     if (saved) {
       if (saved.requestHash !== requestHash) return NextResponse.json({ ok: false, error: "idempotency_key_conflict" }, { status: 409 });
-      return NextResponse.json({ ok: true, ...publicInstance(saved) });
+      return savedInstanceResponse(saved);
     }
     const component = getImplementedComponent(body.componentId);
     if (!component) {

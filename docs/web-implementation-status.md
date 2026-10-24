@@ -80,6 +80,9 @@ Visualization is catalog-first:
 - Interactive instances are owner-scoped database records with immutable initial
   configs and optimistic revisions for user control changes. Chat history restores
   completed tool signals, then reads the saved config without another model call.
+  Each owner keeps the 2,000 most recently used instances (saved or reopened;
+  `INTERACTIVE_COMPONENT_INSTANCE_MAX_PER_OWNER`); a pruned chat card regenerates
+  through the budgeted POST path.
 - Course VisualBlocks support the same versioned `engine: interactive` payload;
   Web validates generated and shared configurations before persistence. Both
   course and chat render the component directly with its explanation.

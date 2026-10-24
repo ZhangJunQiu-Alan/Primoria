@@ -128,7 +128,7 @@ POST /api/folders/:id/quizzes/:sessionId/submit { submissionId, answers }
   → 写 quiz 证据事件（只计每道题的第一次作答）→ 掌握度更新（见 §5）
 ```
 
-新增表（迁移 0060）：`folder_quiz_questions`（题库：概念、语言、题干、已打乱的 4 选项、正确项、解析、
+新增表（迁移 0061）：`folder_quiz_questions`（题库：概念、语言、题干、已打乱的 4 选项、正确项、解析、
 出处片段、生成版本）、`folder_quiz_sessions`（一次测验的题目列表、状态、submissionId、判分结果）、
 `folder_quiz_answers`（每道题的作答；`(owner, question)` 上只允许一条首次作答，滚动窗口读这张表）。
 
@@ -180,13 +180,13 @@ POST /api/folders/:id/quizzes/:sessionId/submit { submissionId, answers }
 
 ## 8. 分阶段交付
 
-1. **文件夹基础**（已实现）：`material_folders` 与迁移 0057（为已有资料建每人的"未分类"文件夹并按
+1. **文件夹基础**（已实现）：`material_folders` 与迁移 0058（为已有资料建每人的"未分类"文件夹并按
    上传时间回填）、文件角色、文件名序号解析与插入（`apps/web/src/lib/materials/ordering.ts`）、
    手动排序与跨文件夹移动（`folders.ts`，`/api/folders/**`、`PATCH /api/materials/[id]`）、
    `/materials` 文件夹列表与 `/materials/[folderId]` 文件夹详情。此阶段建课仍沿用"勾选资料建课"。
-2. **按讲 KG**（已实现）：迁移 0058（`material_kg_jobs`、`material_subgraphs`、
+2. **按讲 KG**（已实现）：迁移 0059（`material_kg_jobs`、`material_subgraphs`、
    `learning_materials.kg_status`、`material_topic_graphs.folder_id`；已在科目文件夹里的讲义会被回填入队）
-   与 0059（`material_concept_mastery`）。队列在 Extractor worker 内处理，优先级为资料事实 → 讲义 KG →
+   与 0060（`material_concept_mastery`）。队列在 Extractor worker 内处理，优先级为资料事实 → 讲义 KG →
    Extractor，同一文件夹串行，最多 2 次尝试，`/api/health` 报告 `lectureKg` 队列与心跳
    （`lecture-kg-jobs.ts`、`lecture-kg-processor.ts`）。小 KG 复用资料图谱提示词并附上文件夹已有概念
    （K1…，最多 300 个）；文件名没有序号、学习者也没手动排过序时，一次轻量调用决定插入位置

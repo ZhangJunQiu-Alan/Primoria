@@ -44,6 +44,14 @@ async function readResponse(response: Response): Promise<ReadyState & { ok: bool
   return body;
 }
 
+// Load errors a retry cannot change: the saved scene, or the scene an
+// adjustment builds on, is unreadable or gone.
+const PERMANENT_LOAD_ERRORS = {
+  unsupported_saved_configuration: "unsupportedSaved",
+  unsupported_target_version: "unsupportedTarget",
+  target_not_found: "targetMissing",
+} as const;
+
 class SaveError extends Error {
   constructor(message: string, readonly action: "retry" | "reload" | null) { super(message); }
 }
@@ -135,13 +143,13 @@ function PersistedComponentCard({ componentId, request, instanceId, targetInstan
         reportVisualizationEvent({ source: "interactive", topic: request, componentId, status: "rendered" });
       } catch (error) {
         if (signal.aborted) return;
-        const unsupported = error instanceof Error && error.message === "unsupported_saved_configuration";
-        setState({ status: "error", message: unsupported ? t.unsupportedSaved : t.configFailed, retryable: !unsupported });
+        const code = error instanceof Error && Object.hasOwn(PERMANENT_LOAD_ERRORS, error.message) ? error.message as keyof typeof PERMANENT_LOAD_ERRORS : null;
+        setState(code ? { status: "error", message: t[PERMANENT_LOAD_ERRORS[code]], retryable: false } : { status: "error", message: t.configFailed, retryable: true });
         reportVisualizationEvent({ source: "interactive", topic: request, componentId, status: "api_error" });
       }
     })();
     return () => controller.abort();
-  }, [attempt, componentId, instanceId, request, supported, t.configFailed, t.unsupportedSaved, targetInstanceId]);
+  }, [attempt, componentId, instanceId, request, supported, t, targetInstanceId]);
 
 
 
