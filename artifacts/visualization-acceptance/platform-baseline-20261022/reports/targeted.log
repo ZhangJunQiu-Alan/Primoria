@@ -1,9 +1,0 @@
-
- RUN  v4.1.10 /Users/zhangjunqiu/Documents/Project/Primoria/apps/web
-
-
- Test Files  3 passed (3)
-      Tests  21 passed (21)
-   Start at  21:01:27
-   Duration  2.28s (transform 319ms, setup 84ms, import 1.14s, tests 498ms, environment 0ms)
-
