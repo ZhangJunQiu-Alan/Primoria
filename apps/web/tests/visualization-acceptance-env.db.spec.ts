@@ -22,7 +22,13 @@ suite("visualization acceptance cleanup", () => {
     await sql`delete from agent_runtime.runs`;
     await sql`create table if not exists agent_runtime.checkpoints (thread_id text not null, checkpoint_ns text not null default '', checkpoint_id text not null, checkpoint jsonb not null)`;
   });
-  afterAll(async () => { await teardownTestDb(sql); });
+  afterAll(async () => {
+    try {
+      await removeAcceptanceOwners(sql, ["current", "stale", "recent"].map((suffix) => `${ACCEPTANCE_OWNER_PREFIX}${suffix}`).concat("real-learner"));
+    } finally {
+      await teardownTestDb(sql);
+    }
+  });
 
   async function seedOwnerWithRun(ownerId: string, createdAt: string) {
     await seedUser(sql, ownerId);
