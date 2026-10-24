@@ -84,11 +84,11 @@
       "browserslist@<4.28.7": "4.29.3",
       "deepagents>fast-glob": "link:./packages/fast-glob-tinyglobby",
       "deepagents>micromatch": "link:./packages/micromatch-picomatch",
-      "fast-uri@>=3.0.0 <4.0.0": "3.1.8",
+      "fast-uri@>=3.0.0 <4.0.0": "3.1.9",
       "form-data@>=4.0.0 <4.0.6": "4.0.6",
       "@hono/node-server@>=1.0.0 <1.19.15": "1.19.17",
       "hono@<4.13.13": "4.13.13",
-      "ip-address@>=10.0.0 <11.0.0": "10.7.3",
+      "ip-address@>=10.0.0 <11.0.0": "10.7.4",
       "mem0ai>@types/jest": "-",
       "mongoose@>=9.0.0 <9.7.2": "9.11.0",
       "nanoid@>=3.0.0 <4.0.0": "3.3.18",
@@ -108,7 +108,9 @@
       "uuid@>=10.0.0 <11.1.1": "11.1.1",
       "ws@>=8.0.0 <8.21.0": "8.21.0",
       "dompurify@<3.4.17": "3.4.17",
-      "follow-redirects@<1.16.1": "1.16.1"
+      "follow-redirects@<1.16.1": "1.16.1",
+      "fast-copy@>=3.0.0 <3.1.0": "3.1.0",
+      "katex@>=0.11.0 <0.18.2": "0.18.2"
     }
   }
 }

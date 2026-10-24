@@ -110,6 +110,8 @@ export const THEME_CSS = `
   --color-text-success: #2f6b43;
   --color-text-warning: #7c560e;
   --color-text-danger: #9d3d2d;
+  --color-accent: #ef7358;
+  --color-focus-ring: rgba(255, 229, 143, 0.38);
   --color-border-primary: rgba(23, 19, 15, 0.36);
   --color-border-secondary: rgba(23, 19, 15, 0.22);
   --color-border-tertiary: rgba(23, 19, 15, 0.12);
@@ -196,10 +198,10 @@ select {
 input:focus, textarea:focus, select:focus {
   outline: none;
   border-color: var(--color-border-primary);
-  box-shadow: 0 0 0 3px rgba(255, 229, 143, 0.38);
+  box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
-input[type="range"] { width: 100%; accent-color: #ef7358; }
-input[type="checkbox"], input[type="radio"] { accent-color: #ef7358; }
+input[type="range"] { width: 100%; accent-color: var(--color-accent); }
+input[type="checkbox"], input[type="radio"] { accent-color: var(--color-accent); }
 a { color: var(--color-text-info); text-decoration: none; }
 a:hover { text-decoration: underline; }
 #content.initial-render > * { animation: fadeSlideIn .35s ease-out both; }
@@ -235,7 +237,7 @@ function showWidgetError(message) {
   postParentMessage({ type: 'primoria-widget-status', status: 'script_error', detail: String(message || '').slice(0, 300) });
   var box = document.createElement('div');
   box.setAttribute('data-primoria-widget-error', '1');
-  box.style.cssText = 'margin:12px 0;padding:10px 12px;border:1px solid #d76e52;border-radius:12px;background:#ffede6;color:#71331f;font:13px/1.45 var(--font-sans,system-ui);';
+  box.style.cssText = 'margin:12px 0;padding:10px 12px;border:1px solid var(--color-text-danger);border-radius:var(--border-radius-md);background:var(--color-background-danger);color:var(--color-text-danger);font:13px/1.45 var(--font-sans,system-ui);';
   box.textContent = 'Widget script error: ' + String(message || 'unknown error');
   content.prepend(box);
   try { reportHeight(); } catch (_) {}
