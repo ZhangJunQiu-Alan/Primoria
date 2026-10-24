@@ -18,7 +18,7 @@ const run = {
     runId: "shutdown-run",
     threadId: "shutdown-run",
     messages: [{ id: "user-1", role: "user", content: "wait" }],
-    state: {},
+    state: { primoria_tutor_style: "euclid" },
     forwardedProps: {},
   },
 };
@@ -46,8 +46,12 @@ const store = {
   },
 };
 
+let streamedState;
+let streamedConfig;
 const graph = {
-  async *streamEvents(_state, config) {
+  async *streamEvents(state, config) {
+    streamedState = state;
+    streamedConfig = config;
     releaseStarted();
     await new Promise((resolve) => config.signal.addEventListener("abort", resolve, { once: true }));
     throw new DOMException("Agent run aborted", "AbortError");
@@ -58,6 +62,8 @@ const worker = createRunWorker({ store, graph, concurrency: 1, leaseMs: 30_000, 
 await worker.start();
 await started;
 await worker.stop(5);
+assert.equal(streamedState.primoria_tutor_style, "euclid", "tutor style stays in graph state for subagents");
+assert.equal(streamedConfig.context.primoria_tutor_style, "euclid", "tutor style reaches the runtime context");
 
 assert.equal(failCalls, 0, "shutdown must leave the lease for stale-run recovery");
 assert.equal(finishCalls, 0);
