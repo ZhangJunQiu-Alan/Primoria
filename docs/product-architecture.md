@@ -53,8 +53,9 @@ and preserves the original audit trail.
 ## 3. Personal adaptive-learning loop
 
 ```text
-learning goal
-→ canonical KG, goal-scoped subgraph, or governed generated/hybrid graph
+learning goal (or uploaded materials)
+→ canonical KG, goal-scoped subgraph, governed generated/hybrid graph,
+  or owner-private material graph (mat_*)
 → mastery-aware concept frontier
 → planned course and lazy lesson generation
 → learner interaction and quiz evidence
@@ -104,6 +105,14 @@ code does not automatically enforce a review-status publication gate. See
 Lesson titles and descriptions start as deterministic templates. One
 best-effort background enrichment call may rewrite them behind an equality
 fence; generation failure keeps the templates.
+
+Courses built from uploaded materials use owner-private `mat_*` graphs stored
+in `material_topic_graphs`; every concept cites the material chunks it is taught
+from, and lesson generation injects those excerpts into Planner/Writer prompts.
+`apps/web/src/lib/courses/course-graph.ts` is the single resolver from a course
+`graphId` to its TopicGraph (library, `gen_*`, or owner-only `mat_*`) for lesson
+generation, the lesson reader, and the learning-progress and Extractor workers.
+See `docs/product/learning-materials.md`.
 
 ## 4. Learner state boundaries
 

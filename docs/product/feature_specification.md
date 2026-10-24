@@ -343,8 +343,33 @@ idempotent per learner and share series. Synchronizing an existing import to a
 new share version is not a current capability.
 
 Generated lesson images use a global cache keyed by user-agnostic brief
-semantics. Learner facts must never enter image briefs. `owner_id` remains a
-reserved private-media channel with no current lesson-image writers.
+semantics. Learner facts must never enter image briefs. The `owner_id`
+private-media channel has one writer: lessons of courses built from uploaded
+materials (§3.10), whose assets use an owner-namespaced cache key and are served
+only to their owner.
+
+### 3.10 Learning materials
+
+Learners upload their own study materials on `/materials` (PDF, DOCX, Markdown,
+or TXT; ≤ 8 MiB per file; scanned documents are not supported). Only extracted
+text is stored, as ordered chunks with page/heading locators; re-uploading the
+same file is idempotent. Selecting one to five materials builds a course:
+
+```text
+materials → budgeted labelled material map → one model call
+→ owner-private mat_* graph (every concept cites its source chunks)
+→ concept-frontier outline → lazy lesson jobs grounded in the cited excerpts
+```
+
+Material graphs are never shared across learners or promoted into the library,
+unlike `gen_*` graphs. Lesson Planner and Writer receive the cited excerpts as
+data (not instructions) and must teach from the material's terminology,
+definitions, and examples; the lesson reader shows concept-level sources
+("file · p. 3–4"). Material courses use private lesson images and cannot be
+shared. A material cannot be deleted while a course still uses a graph built
+from it. Mastery, Facts, and XP work exactly as for other courses; the material
+itself is not a learner fact. Canonical spec and roadmap (grounded Tutor Q&A,
+practice sets): `docs/product/learning-materials.md`.
 
 ## 4. Knowledge graph contract
 

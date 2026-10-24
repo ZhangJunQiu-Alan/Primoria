@@ -43,7 +43,13 @@ AG-UI Agent runtime; it is not a static mock and has no Supabase runtime path.
 - Durable onboarding/Settings intake jobs plus post-lesson Extractor jobs and
   reviewable/editable/dismissible learner facts across six categories.
 - Immutable snapshot course sharing with idempotent import.
-- Global user-agnostic generated-image cache.
+- Learner-uploaded study materials (`/materials`; PDF/DOCX/Markdown/TXT text
+  extraction and chunking) that build owner-private `mat_*` course graphs with
+  per-concept source citations, material-grounded lesson generation,
+  concept-level source attribution, private lesson images, and no share links
+  (`docs/product/learning-materials.md`).
+- Global user-agnostic generated-image cache (owner-scoped only for material
+  courses).
 - Chinese/English interface dictionaries and separate content-language handling.
 
 ## Tutor and visualization
