@@ -235,6 +235,7 @@ export async function insertPlannedLesson(input: {
   role: LessonRole;
   sortKey: number;
   triggeredFrom?: string | null;
+  conceptIds?: string[];
 }, db: DbOrTx = getDb()): Promise<Lesson> {
   const now = new Date();
   const rows = await db
@@ -251,6 +252,7 @@ export async function insertPlannedLesson(input: {
       status: "planned",
       sortKey: input.sortKey,
       triggeredFrom: input.triggeredFrom ?? null,
+      conceptIds: input.conceptIds ?? [],
       blocks: null,
       estimatedMinutes: null,
       version: 1,

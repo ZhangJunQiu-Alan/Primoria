@@ -3,6 +3,7 @@ import type { TutorProviderSettings } from "../types";
 import { languageDirective, type CourseContext } from "../deepagent/course-kg-context";
 import { knowledgeBackgroundDirective } from "../../learner-profile/types";
 import { invokeJson } from "./model-json";
+import { buildWriterSourceRules, buildWriterSourceSection } from "./source-grounding";
 import { fastTierSettings } from "../deepagent/model";
 import { compileBlockContent } from "./block-content-compiler";
 import { BlockCompileError, WriterError } from "./generation-errors";
@@ -169,8 +170,9 @@ MATH IN MARKDOWN:
 LESSON CONTEXT:
 Lesson: "${plan.title}" on topic "${kg.startTopic.name}".
 ${languageDirective(kg.language)}
-${knowledgeBackgroundDirective(kg.knowledgeBackground)}${quizContract}`;
-  const user = `Blocks to write:\n${batch.jobs.map((job) => describeJob(job, kg)).join("\n")}`;
+${knowledgeBackgroundDirective(kg.knowledgeBackground)}${buildWriterSourceRules(kg)}${quizContract}`;
+  const batchConceptIds = [...new Set(batch.jobs.flatMap((job) => job.conceptIds))];
+  const user = `Blocks to write:\n${batch.jobs.map((job) => describeJob(job, kg)).join("\n")}${buildWriterSourceSection(kg, batchConceptIds)}`;
   return { system, user };
 }
 

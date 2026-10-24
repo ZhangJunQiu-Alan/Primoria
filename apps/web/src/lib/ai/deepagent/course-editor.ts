@@ -208,7 +208,7 @@ export async function addBlock(
   if (!course) throw new CourseResourceNotFoundError("course");
 
   const block = await generateBlock(
-    { course, targetType: input.targetType, instruction: input.instruction },
+    { course, targetType: input.targetType, instruction: input.instruction, ownerId },
     settings,
   );
   await assertPersistableCourseBlock(block);
@@ -249,7 +249,7 @@ export async function transformBlock(
   }
 
   const generated = await generateBlock(
-    { course, targetType: input.targetType, instruction: input.instruction, sourceBlock: previous },
+    { course, targetType: input.targetType, instruction: input.instruction, sourceBlock: previous, ownerId },
     settings,
   );
   // Keep the original block id so position and references are preserved.

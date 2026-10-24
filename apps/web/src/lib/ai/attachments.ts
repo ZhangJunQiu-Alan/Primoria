@@ -6,6 +6,7 @@ import type {
   TutorProviderSettings,
 } from "./types";
 import { resolveProviderSettings } from "./deepagent/model";
+import { DOCX_MIME_TYPE, extractDocxText, extractPdfText, fileExtension } from "./document-text";
 
 export const MAX_ATTACHMENT_COUNT = 5;
 export const MAX_ATTACHMENT_BYTES = 10 * 1024 * 1024;
@@ -69,11 +70,6 @@ function isSupportedAttachment(attachment: ChatAttachment) {
   return DOCUMENT_MIME_TYPES.has(attachment.mimeType);
 }
 
-function extensionFor(name: string) {
-  const match = name.toLowerCase().match(/\.([a-z0-9]+)$/);
-  return match?.[1] ?? "";
-}
-
 function bufferFromBase64(attachment: ChatAttachment) {
   return Buffer.from(cleanBase64Text(attachment.base64Text), "base64");
 }
@@ -82,36 +78,19 @@ function cleanBase64Text(value: string) {
   return value.includes(",") ? value.slice(value.indexOf(",") + 1) : value;
 }
 
-function pdfWorkerUrl() {
-  return new URL("./pdf.worker.mjs", import.meta.resolve("pdf-parse")).toString();
-}
-
 async function extractDocumentText(attachment: ChatAttachment, buffer: Buffer) {
-  const ext = extensionFor(attachment.name);
+  const ext = fileExtension(attachment.name);
 
   if (attachment.mimeType.startsWith("text/") || ext === "txt" || ext === "md" || ext === "markdown") {
     return buffer.toString("utf8");
   }
 
   if (attachment.mimeType === "application/pdf" || ext === "pdf") {
-    const { PDFParse } = await import("pdf-parse");
-    PDFParse.setWorker(pdfWorkerUrl());
-    const parser = new PDFParse({ data: buffer });
-    try {
-      const parsed = await parser.getText();
-      return parsed.text ?? "";
-    } finally {
-      await parser.destroy();
-    }
+    return (await extractPdfText(buffer)).text;
   }
 
-  if (
-    attachment.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-    ext === "docx"
-  ) {
-    const mammoth = await import("mammoth");
-    const parsed = await mammoth.extractRawText({ buffer });
-    return parsed.value ?? "";
+  if (attachment.mimeType === DOCX_MIME_TYPE || ext === "docx") {
+    return extractDocxText(buffer);
   }
 
   return "";

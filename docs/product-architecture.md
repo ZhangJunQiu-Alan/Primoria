@@ -53,8 +53,9 @@ and preserves the original audit trail.
 ## 3. Personal adaptive-learning loop
 
 ```text
-learning goal
-→ canonical KG, goal-scoped subgraph, or governed generated/hybrid graph
+learning goal (or uploaded materials)
+→ canonical KG, goal-scoped subgraph, governed generated/hybrid graph,
+  or owner-private material graph (mat_*)
 → mastery-aware concept frontier
 → planned course and lazy lesson generation
 → learner interaction and quiz evidence
@@ -105,6 +106,16 @@ Lesson titles and descriptions start as deterministic templates. One
 best-effort background enrichment call may rewrite them behind an equality
 fence; generation failure keeps the templates.
 
+Courses built from uploaded materials use owner-private `mat_*` graphs stored
+in `material_topic_graphs`; every concept cites the material chunks it is taught
+from, and lesson generation injects those excerpts into Planner/Writer prompts.
+`apps/web/src/lib/courses/course-graph.ts` is the single resolver from a course
+`graphId` to its TopicGraph (library, `gen_*`, or owner-only `mat_*`) for lesson
+generation, the lesson reader, and the learning-progress and Extractor workers.
+The course-rail Tutor in a material course receives Web-retrieved material
+excerpts (BM25 + pgvector + current-lesson prior, fused) as hidden context; the
+Agent itself never reads material rows. See `docs/product/learning-materials.md`.
+
 ## 4. Learner state boundaries
 
 Mastery, learner facts, and progression share trusted learning events but answer
@@ -112,7 +123,7 @@ different questions:
 
 | State | Meaning | Write authority |
 | --- | --- | --- |
-| `user_concept_mastery` | Demonstrated concept competence | Rule-based learning-progress worker |
+| `user_concept_mastery` (`generated_concept_mastery` for generated `gen_*` and owner-private `mat_*` graphs) | Demonstrated concept competence | Rule-based learning-progress worker; subject-folder quiz submit (rolling first-attempt window) |
 | `learner_facts` | Durable context that can improve teaching | Manual Settings writes or Extractor worker |
 | `player_progress` and `xp_awards` | Verified effort and completion since progression start | Server-side idempotent reward rules |
 

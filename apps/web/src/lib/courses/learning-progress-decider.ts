@@ -1,4 +1,4 @@
-import { findTopicByConcept, getTopic } from "../knowledge-graph/topic-graph";
+import { getTopicGraph, type TopicGraph, type TopicNode } from "../knowledge-graph/topic-graph";
 import type { MasteryStatus } from "../mastery/store";
 
 // Pure post-lesson decision engine (docs/product/feature_specification.md §28–30). Given
@@ -38,6 +38,9 @@ export type DecideNextStepInput = {
   nextLesson: { id: string; title: string; topicId: string | null; sortKey: number } | null;
   /** Graph-wide concept mastery after this lesson's update. */
   masteryByConcept: Map<string, MasteryStatus>;
+  /** The course's resolved graph (library, gen_*, or owner-private mat_*).
+   * Omitted → the static library graph for graphId. */
+  graph?: TopicGraph;
 };
 
 function midpointSortKey(current: number, next: number | null): number {
@@ -45,7 +48,8 @@ function midpointSortKey(current: number, next: number | null): number {
 }
 
 export function decideNextStep(input: DecideNextStepInput): LearningDecision {
-  const { graphId, currentTopicId, masteryByConcept, nextLesson } = input;
+  const { currentTopicId, masteryByConcept, nextLesson } = input;
+  const graph = input.graph ?? getTopicGraph(input.graphId);
   const nextLessonTitle = nextLesson?.title ?? null;
 
   const isWeak = (conceptId: string) => masteryByConcept.get(conceptId) === "weak";
@@ -55,12 +59,12 @@ export function decideNextStep(input: DecideNextStepInput): LearningDecision {
   const weakHere = input.currentConceptIds
     .filter(isWeak)
     .map((conceptId) => {
-      const ownerTopic = findTopicByConcept(graphId, conceptId);
+      const ownerTopic = topicByConcept(graph, conceptId);
       const concept = ownerTopic?.conceptIds.find((candidate) => candidate.conceptId === conceptId);
       return { conceptId, name: concept?.name ?? conceptId, topicId: ownerTopic?.topicId ?? currentTopicId };
     });
   if (weakHere.length > 0) {
-    const rootCause = findPrereqRootCause(graphId, weakHere[0].topicId, masteryByConcept);
+    const rootCause = findPrereqRootCause(graph, weakHere[0].topicId, masteryByConcept);
     const target = rootCause ?? { conceptId: weakHere[0].conceptId, name: weakHere[0].name };
     const remediationSortKey = midpointSortKey(input.currentLessonSortKey, nextLesson?.sortKey ?? null);
     const reason = rootCause
@@ -70,7 +74,7 @@ export function decideNextStep(input: DecideNextStepInput): LearningDecision {
       kind: "remediation",
       reason,
       targetLessonId: null,
-      targetTopicId: findTopicByConcept(graphId, target.conceptId)?.topicId ?? currentTopicId,
+      targetTopicId: topicByConcept(graph, target.conceptId)?.topicId ?? currentTopicId,
       targetConceptId: target.conceptId,
       proposedSortKey: remediationSortKey,
       proposedTitle: `补救：${target.name}`,
@@ -108,15 +112,20 @@ export function decideNextStep(input: DecideNextStepInput): LearningDecision {
 /** Among the current topic's prereq topics, find a concept that is itself weak
  * (an evidenced gap, not merely untested) to remediate as the root cause. */
 function findPrereqRootCause(
-  graphId: string,
+  graph: TopicGraph,
   currentTopicId: string,
   masteryByConcept: Map<string, MasteryStatus>,
 ): { conceptId: string; name: string } | null {
-  const topic = getTopic(graphId, currentTopicId);
+  const topic = graph.topics.find((t) => t.topicId === currentTopicId);
   for (const prereqId of topic?.prereqTopics ?? []) {
-    const prereq = getTopic(graphId, prereqId);
+    const prereq = graph.topics.find((t) => t.topicId === prereqId);
     const weak = prereq?.conceptIds.find((c) => masteryByConcept.get(c.conceptId) === "weak");
     if (weak) return { conceptId: weak.conceptId, name: weak.name };
   }
   return null;
+}
+
+/** The topic that owns a concept (used to place a remediation lesson). */
+function topicByConcept(graph: TopicGraph, conceptId: string): TopicNode | undefined {
+  return graph.topics.find((t) => t.conceptIds.some((c) => c.conceptId === conceptId));
 }

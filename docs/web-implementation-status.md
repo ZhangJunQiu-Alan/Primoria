@@ -43,7 +43,20 @@ AG-UI Agent runtime; it is not a static mock and has no Supabase runtime path.
 - Durable onboarding/Settings intake jobs plus post-lesson Extractor jobs and
   reviewable/editable/dismissible learner facts across six categories.
 - Immutable snapshot course sharing with idempotent import.
-- Global user-agnostic generated-image cache.
+- Subject folders for uploaded materials (Unsorted inbox, lecture/reference
+  roles, filename-number, AI, and manual lecture order) with per-lecture KG jobs
+  (`material_kg_jobs` in the Extractor worker) assembled into one private folder
+  KG, a lecture-by-lecture KG overview with mastery, and weakness-weighted
+  single-choice folder quizzes with a reusable grounded question bank and
+  rolling-window mastery, and one concept-frontier course per folder with
+  "sync new content" for later lectures.
+- Learner-uploaded study materials (`/materials`; PDF/DOCX/Markdown/TXT text
+  extraction and chunking) that build owner-private `mat_*` course graphs with
+  per-concept source citations, material-grounded lesson generation,
+  concept-level source attribution, private lesson images, and no share links
+  (`docs/product/learning-materials.md`).
+- Global user-agnostic generated-image cache (owner-scoped only for material
+  courses).
 - Chinese/English interface dictionaries and separate content-language handling.
 
 ## Tutor and visualization

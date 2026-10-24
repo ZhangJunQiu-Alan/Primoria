@@ -108,13 +108,21 @@ function storedImageKind(row: MediaAssetRow, fallback: ImageKind): ImageKind {
   return kind ?? fallback;
 }
 
+/** Cache key of the asset row. Global assets use the brief key; an
+ * owner-scoped asset is namespaced by its owner so a private picture can never
+ * satisfy another learner's (or the global pool's) cache lookup. */
+export function mediaAssetCacheKey(brief: ImageBrief, ownerId: string | null): string {
+  const key = imageCacheKey(brief);
+  return ownerId ? `owner:${ownerId}:${key}` : key;
+}
+
 /** Reuse-or-generate: identical briefs (by cacheKey) return the same asset and
  * never call `generate` twice. */
 export async function resolveImageAsset(
   input: ResolveImageInput,
   store: MediaAssetStore = dbMediaAssetStore,
 ): Promise<ResolvedImageAsset> {
-  const cacheKey = imageCacheKey(input.brief);
+  const cacheKey = mediaAssetCacheKey(input.brief, input.ownerId);
   const cached = await store.findByCacheKey(cacheKey);
   if (cached) {
     return {

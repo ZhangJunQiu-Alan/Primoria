@@ -89,6 +89,37 @@ describe("initializeCourseOutline reuse persistence", () => {
     expect(mockState.afterCallbacks).toHaveLength(0);
   });
 
+  it("reuses the concurrent winner when saving loses the owner+scope race behind a Drizzle error", async () => {
+    const existing = reusedCourse();
+    // drizzle-orm wraps the postgres-js error; SQLSTATE and constraint sit on `cause`.
+    const raced = Object.assign(new Error("Failed query: insert into \"courses\" ..."), {
+      cause: Object.assign(new Error("duplicate key value"), { code: "23505", constraint_name: "courses_owner_scope_uidx" }),
+    });
+    mockState.getCourseByScopeKey.mockResolvedValueOnce(undefined).mockResolvedValueOnce(existing);
+    mockState.saveCourse.mockRejectedValueOnce(raced);
+    const { initializeCourseOutline } = await import("../src/lib/ai/deepagent/course-generator");
+    const input = {
+      ownerId: "u1",
+      topic: "Python",
+      kgContext: {
+        learningPathType: "linear",
+        graphId: "python_fundamentals",
+        startTopic: { topicId: "pyf_topic_running_python_programs", name: "Running Python Programs" },
+        targetConceptId: null,
+        nextTopic: null,
+      } as never,
+    };
+
+    const result = await initializeCourseOutline(input);
+    expect(result).toMatchObject({ course: existing, isNewCourse: false });
+    expect(mockState.afterCallbacks).toHaveLength(0);
+
+    const other = Object.assign(new Error("Failed query"), { cause: { code: "23505", constraint_name: "lessons_pkey" } });
+    mockState.getCourseByScopeKey.mockResolvedValueOnce(undefined);
+    mockState.saveCourse.mockRejectedValueOnce(other);
+    await expect(initializeCourseOutline(input)).rejects.toBe(other);
+  });
+
   it("still persists and schedules enrichment for a new freeform course", async () => {
     const { initializeCourseOutline } = await import("../src/lib/ai/deepagent/course-generator");
 

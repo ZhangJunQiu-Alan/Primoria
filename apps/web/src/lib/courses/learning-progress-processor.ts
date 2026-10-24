@@ -2,7 +2,7 @@ import { and, eq } from "drizzle-orm";
 import { getDb } from "../db/client";
 import { learningEvents } from "../db/schema";
 import { getCourse } from "./store";
-import { getTopic } from "../knowledge-graph/topic-graph";
+import { resolveCourseTopicGraph } from "./course-graph";
 import { ContextError, LeaseLostError } from "../ai/course-generation/generation-errors";
 import { listConceptMasteryByOwner, upsertConceptMasteryByOwner } from "../mastery/owner-store";
 import { computeMasteryUpdates, type ConceptEvidence } from "../mastery/rules";
@@ -61,7 +61,10 @@ export async function processLearningProgressJob(claim: LearningProgressClaim): 
   const graphId = course.graphId;
   const topicId = lesson.topicId;
   if (!graphId || !topicId) throw new ContextError(`lesson ${lessonId} has no knowledge-graph anchor`);
-  if (!getTopic(graphId, topicId)) throw new ContextError(`topic ${topicId} not found in graph ${graphId}`);
+  const graph = await resolveCourseTopicGraph(graphId, ownerId);
+  if (!graph) throw new ContextError(`graph ${graphId} not found for course ${courseId}`);
+  const topic = graph.topics.find((entry) => entry.topicId === topicId);
+  if (!topic) throw new ContextError(`topic ${topicId} not found in graph ${graphId}`);
 
   // ── Stage ①: mastery update ────────────────────────────────────────────────
   await updateLearningProgressStage(fence, "mastery");
@@ -99,10 +102,11 @@ export async function processLearningProgressJob(claim: LearningProgressClaim): 
   const nextLesson = currentIndex >= 0 ? sorted[currentIndex + 1] ?? null : null;
   const currentConceptIds = (lesson.conceptIds?.length ?? 0) > 0
     ? lesson.conceptIds!
-    : getTopic(graphId, topicId)?.conceptIds.map((concept) => concept.conceptId) ?? [];
+    : topic.conceptIds.map((concept) => concept.conceptId);
 
   const decision = decideNextStep({
     graphId,
+    graph,
     currentTopicId: topicId,
     currentConceptIds,
     currentLessonSortKey: lesson.sortKey,

@@ -60,6 +60,17 @@ const TABS: NavTab[] = [
     ),
   },
   {
+    id: "materials",
+    label: "Materials",
+    description: "Uploaded study materials and courses built from them.",
+    href: "/materials",
+    icon: (
+      <svg {...ICON_PROPS}>
+        <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8zM14 3v5h5M12 17v-6M9 14l3-3 3 3" />
+      </svg>
+    ),
+  },
+  {
     id: "stats",
     label: "Stats",
     description: "Learning statistics.",
@@ -210,6 +221,7 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
   const tabCopy: Record<string, string> = {
     messages: t.nav.tutor,
     library: t.nav.library,
+    materials: t.nav.materials,
     stats: t.nav.stats,
     weekly: t.nav.weeklyReport,
   };

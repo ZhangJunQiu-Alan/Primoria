@@ -74,12 +74,16 @@ describe("email registration", () => {
     expect(mockState.cookieSet).toHaveBeenCalledTimes(1);
   });
 
-  it("maps a concurrent duplicate email insert to the existing-account error without setting a cookie", async () => {
+  it.each([
+    ["the driver error", (error: Error) => error],
+    // drizzle-orm wraps the postgres-js error; SQLSTATE and constraint sit on `cause`.
+    ["a Drizzle-wrapped driver error", (error: Error) => Object.assign(new Error("Failed query: insert into \"identities\" ..."), { cause: error })],
+  ])("maps a concurrent duplicate email insert (%s) to the existing-account error without setting a cookie", async (_label, wrap) => {
     const { signUpWithEmail } = await import("../src/lib/auth/accounts");
-    const duplicate = Object.assign(new Error("duplicate key value violates unique constraint"), {
+    const duplicate = wrap(Object.assign(new Error("duplicate key value violates unique constraint"), {
       code: "23505",
-      constraint: "identities_provider_user_uidx",
-    });
+      constraint_name: "identities_provider_user_uidx",
+    }));
     const tx = {
       select: vi.fn(() => selectRows([])),
       insert: vi.fn(() => ({

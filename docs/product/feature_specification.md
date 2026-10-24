@@ -343,8 +343,63 @@ idempotent per learner and share series. Synchronizing an existing import to a
 new share version is not a current capability.
 
 Generated lesson images use a global cache keyed by user-agnostic brief
-semantics. Learner facts must never enter image briefs. `owner_id` remains a
-reserved private-media channel with no current lesson-image writers.
+semantics. Learner facts must never enter image briefs. The `owner_id`
+private-media channel has one writer: lessons of courses built from uploaded
+materials (§3.10), whose assets use an owner-namespaced cache key and are served
+only to their owner.
+
+### 3.10 Learning materials
+
+Learners organize their own study materials in private subject folders on
+`/materials` (one folder per subject plus an Unsorted inbox) and upload PDF,
+DOCX, Markdown, or TXT (≤ 8 MiB per file; scanned documents are not supported).
+Files are lectures or references; lectures are ordered by the number in their
+file name ("第3讲", "Lecture 03") until the learner reorders them by hand, and a
+lecture without a number is placed by one light model call. Each lecture in a
+subject folder is analyzed in the background into a small knowledge graph that
+reuses concepts earlier lectures already introduced; the small graphs are
+assembled deterministically, in lecture order, into the folder's private
+`mat_*` graph, which the folder page shows lecture by lecture with mastery.
+Failed analyses can be retried. A folder quiz (10 or 20 single-choice
+questions) covers the whole folder graph: weaker concepts get more questions,
+mastered ones an occasional review, every question is written from the cited
+material and shows its explanation and source after submission, and only the
+first answer to a question counts. Quiz mastery uses each concept's last five
+first-attempt answers (at least three, 80% correct); quizzes award no XP, but
+mastery they produce counts for achievements and daily quests. Each subject
+folder builds one course from its graph (two or three unmastered concepts per
+lesson, in graph order); when later lectures add concepts, "sync new content"
+inserts lessons for them where they belong, and deleting a lecture removes
+only the not-yet-generated lessons it alone covered. Only extracted
+text is stored, as ordered chunks with page/heading locators; re-uploading the
+same file is idempotent. Selecting one to five materials builds a course:
+
+```text
+materials → budgeted labelled material map → one model call
+→ owner-private mat_* graph (every concept cites its source chunks)
+→ concept-frontier outline → lazy lesson jobs grounded in the cited excerpts
+```
+
+Material graphs are never shared across learners or promoted into the library,
+unlike `gen_*` graphs. Lesson Planner and Writer receive the cited excerpts as
+data (not instructions) and must teach from the material's terminology,
+definitions, and examples; the lesson reader shows concept-level sources
+("file · p. 3–4"). Material courses use private lesson images and cannot be
+shared. A material cannot be deleted while a course still uses a material-set
+graph built from it; deleting a lecture from a subject folder re-assembles the
+folder graph instead. Mastery, Facts, and XP follow the same rules as other
+courses (generated- and material-graph mastery is stored in `generated_concept_mastery`); the
+material itself is not a learner fact.
+
+Inside a material course, the course-rail Tutor answers material-first. For
+each question Web retrieves up to six chunks of that course's own materials
+(lexical match, semantic similarity when the embedding provider is available,
+and the chunks the current lesson cites) and gives them to the Tutor as hidden
+data with citation rules: claims from the material carry their source ("file ·
+p. 3"), and anything beyond the material appears only in a separately labelled
+supplement. The main Tutor and library/generated courses are unaffected.
+Canonical spec and roadmap (practice sets next):
+`docs/product/learning-materials.md`.
 
 ## 4. Knowledge graph contract
 

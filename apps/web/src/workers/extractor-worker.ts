@@ -33,10 +33,20 @@ import {
   type ProfileFactIntakeClaim,
 } from "../lib/learner-facts/intake-jobs";
 import { processProfileFactIntakeJob } from "../lib/learner-facts/intake-processor";
+import {
+  claimNextLectureKgJob,
+  failExhaustedLectureKgJobs,
+  failLectureKgJob,
+  renewLectureKgLease,
+  LECTURE_KG_HEARTBEAT_INTERVAL_MS,
+  type LectureKgClaim,
+} from "../lib/materials/lecture-kg-jobs";
+import { processLectureKgJob } from "../lib/materials/lecture-kg-processor";
 import { buildOnboardingCourseIfReady } from "../lib/learner-profile/onboarding-course-readiness";
 
 // Long-running recoverable Extractor Worker (web package). It prioritizes
-// explicit profile-intake jobs, then distills lesson activity into durable
+// explicit profile-intake jobs, then per-lecture KG builds for subject folders
+// (a learner is waiting on those), then distills lesson activity into durable
 // learner_facts. Run with:
 //   pnpm --filter @primoria/web worker:extractor
 // A crashed worker's lease expires and another worker re-runs the (idempotent)
@@ -134,6 +144,57 @@ function startProfileIntakeHeartbeat(claim: ProfileFactIntakeClaim) {
       if (timer) clearTimeout(timer);
     },
   };
+}
+
+function startLectureKgHeartbeat(claim: LectureKgClaim) {
+  let stopped = false;
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const fence = { jobId: claim.job.id, workerId: claim.workerId, leaseToken: claim.leaseToken };
+  const tick = async () => {
+    if (stopped) return;
+    try {
+      if (!(await renewLectureKgLease(fence))) {
+        log("warn", "lecture KG lease lost; stopping heartbeat", { jobId: claim.job.id });
+        return;
+      }
+    } catch (error) {
+      log("warn", "lecture KG heartbeat renewal threw", { jobId: claim.job.id, errorName: errorName(error) });
+    }
+    if (!stopped) timer = setTimeout(tick, LECTURE_KG_HEARTBEAT_INTERVAL_MS);
+  };
+  timer = setTimeout(tick, LECTURE_KG_HEARTBEAT_INTERVAL_MS);
+  return {
+    stop() {
+      stopped = true;
+      if (timer) clearTimeout(timer);
+    },
+  };
+}
+
+async function processLectureKgClaim(claim: LectureKgClaim) {
+  const { id: jobId, ownerId, materialId, attempts } = claim.job;
+  const fence = { jobId, workerId: claim.workerId, leaseToken: claim.leaseToken };
+  const startedAt = Date.now();
+  log("info", "claimed lecture KG job", { jobId, ownerId, materialId, attempt: attempts });
+  const heartbeat = startLectureKgHeartbeat(claim);
+  try {
+    const outcome = await processLectureKgJob(claim);
+    log("info", "lecture KG job completed", { jobId, ...outcome, durationMs: Date.now() - startedAt });
+  } catch (error) {
+    const { category, retryable } = classifyGenerationError(error);
+    if (category === "lease_lost") {
+      log("warn", "lecture KG job abandoned after lease loss", { jobId, materialId });
+      return;
+    }
+    log("error", "lecture KG attempt failed", { jobId, materialId, errorCategory: category, retryable, errorName: errorName(error), durationMs: Date.now() - startedAt });
+    const result = await failLectureKgJob(fence, { category, retryable }).catch((failError) => {
+      log("error", "failed to record lecture KG failure", { jobId, errorName: errorName(failError) });
+      return { ok: false } as const;
+    });
+    if (result.ok) log("info", "lecture KG transition recorded", { jobId, status: result.status });
+  } finally {
+    heartbeat.stop();
+  }
 }
 
 async function processClaim(claim: ExtractorClaim) {
@@ -238,6 +299,12 @@ async function loop() {
       } catch (error) {
         log("error", "profile intake reconciliation failed", { errorName: errorName(error) });
       }
+      try {
+        const failed = await failExhaustedLectureKgJobs(RECONCILE_BATCH_SIZE);
+        if (failed > 0) log("warn", "expired lecture KG jobs marked failed", { failed });
+      } catch (error) {
+        log("error", "lecture KG reconciliation failed", { errorName: errorName(error) });
+      }
       lastProfileIntakeReconciledAt = Date.now();
     }
     if (Date.now() - lastReconciledAt >= RECONCILE_INTERVAL_MS) {
@@ -250,13 +317,16 @@ async function loop() {
       lastReconciledAt = Date.now();
     }
     let profileClaim: ProfileFactIntakeClaim | undefined;
+    let lectureClaim: LectureKgClaim | undefined;
     let claim: ExtractorClaim | undefined;
     try {
       profileClaim = await claimNextProfileFactIntakeJob({ workerId: WORKER_ID });
-      if (!profileClaim) claim = await claimNextExtractorJob({ workerId: WORKER_ID });
+      if (!profileClaim) lectureClaim = await claimNextLectureKgJob({ workerId: WORKER_ID });
+      if (!profileClaim && !lectureClaim) claim = await claimNextExtractorJob({ workerId: WORKER_ID });
       await Promise.all([
         recordWorkerHeartbeat("extractor", WORKER_ID),
         recordWorkerHeartbeat("profileFactIntake", WORKER_ID),
+        recordWorkerHeartbeat("lectureKg", WORKER_ID),
       ]).catch((error) => {
         log("warn", "worker heartbeat write failed", { error: String(error) });
       });
@@ -267,6 +337,10 @@ async function loop() {
     }
     if (profileClaim) {
       await processProfileIntakeClaim(profileClaim);
+      continue;
+    }
+    if (lectureClaim) {
+      await processLectureKgClaim(lectureClaim);
       continue;
     }
     if (!claim) {

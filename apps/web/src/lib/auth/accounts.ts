@@ -1,6 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { and, eq } from "drizzle-orm";
 import { getDb } from "../db/client";
+import { isUniqueViolation } from "../db/errors";
 import { identities, users } from "../db/schema";
 import { AuthError } from "./errors";
 import { hashPassword, verifyPassword } from "./password";
@@ -94,15 +95,5 @@ export async function signInWithEmail(input: { email: string; password: string }
 }
 
 function isEmailIdentityUniqueViolation(error: unknown) {
-  if (!error || typeof error !== "object") return false;
-  const record = error as Record<string, unknown>;
-  const message = error instanceof Error ? error.message : "";
-  const detail = typeof record.detail === "string" ? record.detail : "";
-  const constraint = typeof record.constraint === "string" ? record.constraint : "";
-  return (
-    record.code === "23505" &&
-    (constraint === "identities_provider_user_uidx" ||
-      message.includes("identities_provider_user_uidx") ||
-      detail.includes("identities_provider_user_uidx"))
-  );
+  return isUniqueViolation(error, "identities_provider_user_uidx");
 }

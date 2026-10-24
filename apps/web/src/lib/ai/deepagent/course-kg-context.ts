@@ -64,6 +64,22 @@ export type CourseContext = {
   // graphs carry codeAdapted from their creation-time LLM judgment). true lets
   // the plan include code blocks without matching code-eligibility.ts patterns.
   codeEligible?: boolean;
+  // Material courses (mat_* graphs) only: the learner's own uploaded text that
+  // grounds this lesson, already owner-scoped and budgeted by the loader.
+  // Absent on library/gen_* courses. Never learner facts.
+  sourceExcerpts?: SourceExcerpt[];
+};
+
+export type SourceExcerpt = {
+  /** Lesson-local label ("S1") the Planner uses to point Writers at excerpts. */
+  label: string;
+  /** Concepts of this lesson that the excerpt teaches. */
+  conceptIds: string[];
+  materialTitle: string;
+  /** Page locator ("第 3–4 页" / "p. 3–4"); null for formats without pages. */
+  locator: string | null;
+  heading: string | null;
+  text: string;
 };
 
 // Explicit content-language directive for generation prompts. KG topic/concept

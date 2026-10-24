@@ -11,6 +11,7 @@ import { getLearnerProfile } from "@/lib/learner-profile/store";
 import { listActiveFacts } from "@/lib/learner-facts/store";
 import { selectPlannerFacts } from "@/lib/courses/lesson-generation-context";
 import { factsDirective, type LearnerFact, type LearnerProfile } from "@/lib/learner-profile/types";
+import { buildCourseMaterialTutorContext, MATERIAL_CONTEXT_MARKER } from "@/lib/materials/tutor-context";
 
 import { requireAuthUser } from "@/lib/auth/guard";
 import { exceedsAgentInputArrayLimit } from "@primoria/contracts/agent-input-limits";
@@ -98,7 +99,7 @@ function withHiddenAgentContext(content: unknown, contexts: string[]) {
 function stripInjectedCourseContext(content: unknown) {
   const text = contentToText(content);
   const marker = "Learner question:";
-  const hasHiddenContext = text.includes("COURSE DETAIL MODE") || text.includes("PRIMORIA LEARNER PROFILE");
+  const hasHiddenContext = text.includes("COURSE DETAIL MODE") || text.includes("PRIMORIA LEARNER PROFILE") || text.includes(MATERIAL_CONTEXT_MARKER);
   if (!hasHiddenContext || !text.includes(marker)) return text;
   const index = text.lastIndexOf(marker);
   return text.slice(index + marker.length).trimStart();
@@ -118,7 +119,7 @@ function contentToText(content: unknown) {
   return String(content ?? "");
 }
 
-function normalizeAgentMessages(messages: any[] = [], context?: unknown, learnerFacts: LearnerFact[] = []) {
+function normalizeAgentMessages(messages: any[] = [], context?: unknown, learnerFacts: LearnerFact[] = [], materialContext = "") {
   const normalized = messages
     .filter((message) => message?.role !== "reasoning" && message?.role !== "activity")
     .map((message) => {
@@ -129,10 +130,13 @@ function normalizeAgentMessages(messages: any[] = [], context?: unknown, learner
     });
   const courseContext = formatCourseDetailContextForAgent(context);
   const profileContext = formatLearnerProfileContextForAgent(learnerFacts);
+  // Material excerpts only accompany course detail mode (they are retrieved
+  // for a material course the learner has open).
+  const excerptContext = courseContext ? materialContext : "";
   if (!courseContext && !profileContext) return normalized;
   const lastUserIndex = normalized.findLastIndex((message) => message?.role === "user");
   if (lastUserIndex < 0) return normalized;
-  const contexts = [profileContext, courseContext].filter(Boolean);
+  const contexts = [profileContext, courseContext, excerptContext].filter(Boolean);
   return normalized.map((message, index) =>
     index === lastUserIndex
       ? { ...message, content: withHiddenAgentContext(message.content, contexts) }
@@ -155,16 +159,18 @@ class PrimoriaHttpAgent extends LangGraphHttpAgent {
   ownerId: string | null;
   learnerProfile: LearnerProfile | null;
   learnerFacts: LearnerFact[];
+  materialContext: string;
   runtimeBaseUrl: string;
   activeRunId: string | null;
 
-  constructor(config: ConstructorParameters<typeof LangGraphHttpAgent>[0] & { runtimeBaseUrl: string; ownerId?: string | null; learnerProfile?: LearnerProfile | null; learnerFacts?: LearnerFact[] }) {
-    const { runtimeBaseUrl, ownerId, learnerProfile, learnerFacts, ...agentConfig } = config;
+  constructor(config: ConstructorParameters<typeof LangGraphHttpAgent>[0] & { runtimeBaseUrl: string; ownerId?: string | null; learnerProfile?: LearnerProfile | null; learnerFacts?: LearnerFact[]; materialContext?: string }) {
+    const { runtimeBaseUrl, ownerId, learnerProfile, learnerFacts, materialContext, ...agentConfig } = config;
     super(agentConfig);
     this.runtimeBaseUrl = runtimeBaseUrl;
     this.ownerId = ownerId ?? null;
     this.learnerProfile = learnerProfile ?? null;
     this.learnerFacts = learnerFacts ?? [];
+    this.materialContext = materialContext ?? "";
     this.activeRunId = null;
   }
 
@@ -174,6 +180,7 @@ class PrimoriaHttpAgent extends LangGraphHttpAgent {
     cloned.ownerId = this.ownerId;
     cloned.learnerProfile = this.learnerProfile;
     cloned.learnerFacts = this.learnerFacts;
+    cloned.materialContext = this.materialContext;
     cloned.activeRunId = this.activeRunId;
     return cloned;
   }
@@ -197,7 +204,7 @@ class PrimoriaHttpAgent extends LangGraphHttpAgent {
     return super.run({
       ...input,
       threadId: input.runId,
-      messages: normalizeAgentMessages(input?.messages, appContext, this.learnerFacts),
+      messages: normalizeAgentMessages(input?.messages, appContext, this.learnerFacts, this.materialContext),
       state: {
         ...sanitizedState,
         primoria_owner_id: ownerId,
@@ -250,9 +257,9 @@ export const POST = async (req: NextRequest) => {
   const json = await readJsonBody(req);
   if (exceedsAgentInputArrayLimit(json?.body)) return Response.json({ error: "agent_input_too_large" }, { status: 413 });
 
-  const [learnerProfile, learnerFacts] = user?.id
-    ? await Promise.all([getLearnerProfile(user.id), listActiveFacts(user.id)])
-    : [null, [] as LearnerFact[]];
+  const [learnerProfile, learnerFacts, materialContext] = user?.id
+    ? await Promise.all([getLearnerProfile(user.id), listActiveFacts(user.id), materialContextFor(user.id, json?.body)])
+    : [null, [] as LearnerFact[], ""];
   const normalizedRequest = json ? await requestWithNormalizedAttachments(req, json.body) : req;
   const primoriaAgent = new PrimoriaHttpAgent({
     url: agentRuntimeUrl,
@@ -261,6 +268,7 @@ export const POST = async (req: NextRequest) => {
     ownerId,
     learnerProfile,
     learnerFacts,
+    materialContext,
     headers: {
       "x-request-id": requestId,
       "x-primoria-agent-token": getAgentInternalToken(),
@@ -285,6 +293,25 @@ export const POST = async (req: NextRequest) => {
   }
   return response;
 };
+
+// Retrieval for the learner's latest question when the course rail is open on
+// a material course. Grounding is an enhancement: any failure answers from the
+// ordinary course context instead of failing the run.
+async function materialContextFor(ownerId: string, body: any): Promise<string> {
+  const messages = Array.isArray(body?.messages) ? body.messages : [];
+  const latestUser = [...messages].reverse().find((message: any) => message?.role === "user");
+  if (!latestUser || !Array.isArray(body?.context)) return "";
+  try {
+    return await buildCourseMaterialTutorContext({
+      ownerId,
+      context: body.context,
+      question: stripInjectedCourseContext(latestUser.content),
+    });
+  } catch (error) {
+    console.warn("[copilotkit] material retrieval failed:", error instanceof Error ? error.message : error);
+    return "";
+  }
+}
 
 async function readJsonBody(req: NextRequest): Promise<{ body: any } | null> {
   try {
