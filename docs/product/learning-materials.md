@@ -138,8 +138,9 @@ course rail question → /api/copilotkit
 ### 5.5 代码位置
 
 - 资料库：`apps/web/src/lib/materials/{limits,chunking,ingest,store,types}.ts`，
-  路由 `apps/web/src/app/api/materials/**`，页面 `apps/web/src/app/materials/page.tsx`
-  与 `apps/web/src/components/materials/material-library.tsx`。
+  路由 `apps/web/src/app/api/materials/**` 与 `apps/web/src/app/api/folders/**`，页面
+  `apps/web/src/app/materials/{page.tsx,[folderId]/page.tsx}`，组件
+  `apps/web/src/components/materials/{folder-list,folder-detail}.tsx`（文件夹见 subject-folders.md）。
 - 图谱：`apps/web/src/lib/materials/material-graph.ts`（纯函数：资料目录、提示词、解析、
   TopicGraph 转换）与 `material-graph-store.ts`（复用或构建、持久化）。
 - Grounding：`apps/web/src/lib/materials/grounding.ts`（取片段、概念来源）与

@@ -350,8 +350,11 @@ only to their owner.
 
 ### 3.10 Learning materials
 
-Learners upload their own study materials on `/materials` (PDF, DOCX, Markdown,
-or TXT; ≤ 8 MiB per file; scanned documents are not supported). Only extracted
+Learners organize their own study materials in private subject folders on
+`/materials` (one folder per subject plus an Unsorted inbox) and upload PDF,
+DOCX, Markdown, or TXT (≤ 8 MiB per file; scanned documents are not supported).
+Files are lectures or references; lectures are ordered by the number in their
+file name ("第3讲", "Lecture 03") until the learner reorders them by hand. Only extracted
 text is stored, as ordered chunks with page/heading locators; re-uploading the
 same file is idempotent. Selecting one to five materials builds a course:
 

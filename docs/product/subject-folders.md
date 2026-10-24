@@ -1,6 +1,6 @@
 # 科目文件夹：按讲累积的私有 KG 与自适应选择题测验
 
-Status: approved direction, design for review, not yet implemented (2026-10-24).
+Status: approved design; phase 1 (folders) implemented, phases 2–4 in progress (2026-10-24).
 Extends [`learning-materials.md`](learning-materials.md); runtime code, schemas,
 and tests remain the source of truth once implemented.
 
@@ -38,6 +38,9 @@ and tests remain the source of truth once implemented.
 | 12 | 题库按概念积累复用，同一道题只有学习者第一次作答计入掌握度 |
 | 13 | 先只做单选题：4 个选项、1 个正确答案，附解析与资料出处 |
 | 14 | 测验本身不发 XP；测验带来的"已掌握"仍按现有掌握度成就/每日任务规则结算 |
+| 15 | 小 KG 复用第一阶段的资料图谱生成器（每个 topic 2–3 个概念），只增加 `sameAs` / `requires` |
+| 16 | 从文件夹建课沿用现有 concept-frontier：按大 KG 顺序每 2–3 个概念一节课 |
+| 17 | 测验掌握度采用 §5 方案 A：按概念最近 5 次首次作答滚动计算 |
 
 ## 3. 模型
 
@@ -90,7 +93,8 @@ worker:
 
 ### 4.4 按 KG 生成课程
 
-- 复用 `initializeCourseOutline`，scope key 为 `graph:<mat 文件夹图>:full`。
+- 与现有建课完全同一思路：复用 `initializeCourseOutline` 的 concept-frontier 大纲，按大 KG 的
+  顺序把未掌握的概念每 2–3 个一组做成一节计划课时，scope key 为 `graph:<mat 文件夹图>:full`。
 - 课程大纲是创建时的快照；之后新增的讲，通过"同步新内容"把新概念按 KG 顺序插入为计划课时
   （放在第 4 阶段）。
 
@@ -112,7 +116,7 @@ POST /api/folders/:id/quizzes/:sessionId/submit { submissionId, answers }
 新增表：`folder_quiz_questions`（题库：概念、题干、4 选项、正确项、解析、出处片段、生成版本）、
 `folder_quiz_sessions`（一次测验的题目列表、状态、提交时间、submissionId）。
 
-## 5. 需要你决定：测验如何累积掌握度
+## 5. 测验如何累积掌握度（已决定：方案 A）
 
 现有规则按**单节课**的答题计算：一个概念要在同一节课的测验里答满 3 题且正确率 ≥ 80% 才算掌握，
 每次重新计算、不跨课累积。整个 KG 出 10 题、每概念每次最多 2 题时，单次测验永远凑不满 3 题，
@@ -140,7 +144,10 @@ POST /api/folders/:id/quizzes/:sessionId/submit { submissionId, answers }
 
 ## 8. 分阶段交付
 
-1. **文件夹基础**：文件夹表与迁移、文件角色与排序（文件名解析 + 手动拖动）、`/materials` 改版。
+1. **文件夹基础**（已实现）：`material_folders` 与迁移 0057（为已有资料建每人的"未分类"文件夹并按
+   上传时间回填）、文件角色、文件名序号解析与插入（`apps/web/src/lib/materials/ordering.ts`）、
+   手动排序与跨文件夹移动（`folders.ts`，`/api/folders/**`、`PATCH /api/materials/[id]`）、
+   `/materials` 文件夹列表与 `/materials/[folderId]` 文件夹详情。此阶段建课仍沿用"勾选资料建课"。
 2. **按讲 KG**：`material_kg_jobs` 队列、小 KG（sameAs/requires）、AI 排序兜底、确定性拼装、
    文件夹 KG 概览（按讲列概念与掌握度）、删除后重拼。
 3. **自适应选择题测验**：题库、分配、生成、提交、掌握度累积（§5 的决定）。
