@@ -28,10 +28,24 @@ suite("durable interactive instance database contract", () => {
       await store.createInteractiveInstance({ ownerId: "instance-owner", instanceId: id, requestHash: id, componentId: "physics.lens-imaging", configVersion: 1, config: { focalLength: 10 } });
     }
     await store.createInteractiveInstance({ ownerId: "other-owner", instanceId: "tool-1", requestHash: "other", componentId: "physics.lens-imaging", configVersion: 1, config: { focalLength: 10 } });
-    await sql`update interactive_component_instances set updated_at = now() - interval '1 day' where owner_id = 'instance-owner' and instance_id = 'tool-2'`;
+    await sql`update interactive_component_instances set last_used_at = now() - interval '1 day' where owner_id = 'instance-owner' and instance_id = 'tool-2'`;
     await store.pruneInteractiveInstances("instance-owner", 2);
     const remaining = await sql<{ instance_id: string }[]>`select instance_id from interactive_component_instances where owner_id = 'instance-owner' order by instance_id`;
     expect(remaining.map((row) => row.instance_id)).toEqual(["tool-1", "tool-3"]);
     expect(await store.getInteractiveInstance("other-owner", "tool-1")).not.toBeNull();
+  });
+  it("keeps a reopened instance over one last used earlier, touching at most hourly", async () => {
+    await sql`update interactive_component_instances set last_used_at = now() - interval '2 days' where owner_id = 'instance-owner' and instance_id = 'tool-1'`;
+    await sql`update interactive_component_instances set last_used_at = now() - interval '1 day' where owner_id = 'instance-owner' and instance_id = 'tool-3'`;
+    const reopened = (await store.getInteractiveInstance("instance-owner", "tool-1"))!;
+    await store.touchInteractiveInstance(reopened);
+    const touched = (await store.getInteractiveInstance("instance-owner", "tool-1"))!;
+    expect(touched.lastUsedAt.getTime()).toBeGreaterThan(reopened.lastUsedAt.getTime());
+    await store.touchInteractiveInstance(touched, new Date(touched.lastUsedAt.getTime() + 59 * 60_000));
+    expect((await store.getInteractiveInstance("instance-owner", "tool-1"))!.lastUsedAt.getTime()).toBe(touched.lastUsedAt.getTime());
+    await store.createInteractiveInstance({ ownerId: "instance-owner", instanceId: "tool-4", requestHash: "tool-4", componentId: "physics.lens-imaging", configVersion: 1, config: { focalLength: 10 } });
+    await store.pruneInteractiveInstances("instance-owner", 2);
+    const remaining = await sql<{ instance_id: string }[]>`select instance_id from interactive_component_instances where owner_id = 'instance-owner' order by instance_id`;
+    expect(remaining.map((row) => row.instance_id)).toEqual(["tool-1", "tool-4"]);
   });
 });
