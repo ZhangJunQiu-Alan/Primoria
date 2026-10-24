@@ -35,6 +35,46 @@ assert.deepEqual(
   { concept_understanding: 18, problem_solving: 18, application: 12, comparison: 12 },
 );
 
+const styleDataset = TutorBenchmarkDatasetSchema.parse(
+  JSON.parse(await readFile(new URL("../evals/tutor-style.v1.json", import.meta.url), "utf8")),
+);
+assert.equal(styleDataset.cases.length, 13);
+assert.ok(styleDataset.cases.every((item) => item.tutorStyle));
+// The personalization gate is 1.0, so a case without a style marker could never pass.
+assert.ok(styleDataset.cases.every((item) => item.checks.some((check) => check.dimension === "personalization")));
+assert.deepEqual(new Set(styleDataset.cases.map((item) => item.tutorStyle)), new Set(["socratic", "feynman", "euclid"]));
+/** @type {Map<string, Set<string>>} */
+const stylesByPrompt = new Map();
+for (const item of styleDataset.cases) {
+  stylesByPrompt.set(item.prompt, new Set([...(stylesByPrompt.get(item.prompt) ?? []), item.tutorStyle]));
+}
+assert.equal([...stylesByPrompt.values()].filter((styles) => styles.size === 3).length, 4, "four prompts run under all three styles");
+
+// The markers must tell the styles apart: each exemplar passes its own style's
+// case and fails the other two on the same prompt.
+const styleExemplars = {
+  socratic: "好问题，我们先从一个场景推起 👇\n\n**🚗 场景**\n你开车时，速度表上的数字一直在变。\n\n> 🤔 **速度表上的数字，和“一小时走了 60 公里”说的是同一件事吗？**",
+  feynman: "**🚗 先打个比方**\n想象你在开车，速度表告诉你“此刻”有多快，而不是一路的平均速度。\n\n**💡 导数是什么**\n导数就像函数的速度表：它衡量函数在某一点变化得有多快。\n\n> 👉 **你能用自己的话，把导数讲给一个朋友听吗？**",
+  euclid: "**📌 定义**\n若极限 lim_{h→0} [f(x₀+h) − f(x₀)]/h 存在，则称 f 在 x₀ 可导，该极限即导数 f′(x₀)。\n\n**⚖️ 成立条件**\n- 极限存在；左右极限不等时（如 |x| 在 0 处）不可导。\n\n**🔧 构造步骤**\n1. 平均变化率：[f(x₀+h) − f(x₀)]/h。\n2. 令 h→0 取极限（极限的定义）。\n\n> 🤔 **为什么不能直接令 h = 0？**",
+};
+for (const target of ["socratic", "feynman", "euclid"]) {
+  const item = styleDataset.cases.find((candidate) => candidate.id === `${target}.derivative.zh`);
+  assert.ok(item, `missing ${target}.derivative.zh`);
+  for (const [style, response] of Object.entries(styleExemplars)) {
+    const report = evaluateTutorBenchmark(
+      { ...styleDataset, cases: [item] },
+      {
+        schemaVersion: 1,
+        benchmarkId: styleDataset.benchmarkId,
+        run: { mode: "imported", startedAt: "2026-10-24T00:00:00.000Z", provider: null, model: null },
+        responses: [{ caseId: item.id, response, latencyMs: null, inputTokens: null, outputTokens: null, costUsd: null }],
+      },
+    );
+    assert.equal(report.cases[0].tutorStyle, target);
+    assert.equal(report.cases[0].passed, style === target, `${style} exemplar ${style === target ? "passes" : "fails"} ${item.id}`);
+  }
+}
+
 const dataset = {
   schemaVersion: 1,
   benchmarkId: "unit-bench",

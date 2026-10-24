@@ -9,6 +9,7 @@ import {
   isEducationCurriculum,
   isEducationStage,
   isTutorStyle,
+  resolveTutorStyle,
   type EducationContextSource,
   type EducationCurriculum,
   type EducationStage,
@@ -59,7 +60,6 @@ type OnboardingVisual = {
 };
 
 const STEP_ORDER: OnboardingStep[] = ["goal", "facts", "style"];
-const DEFAULT_TUTOR_STYLE: TutorStyle = "feynman";
 
 const STEP_VISUALS: Record<OnboardingStep, { src: string; mark: string; width: number; height: number }> = {
   goal: {
@@ -91,10 +91,6 @@ const STEP_VISUALS: Record<OnboardingStep, { src: string; mark: string; width: n
 function stepIndex(step: OnboardingStep) {
   const index = STEP_ORDER.indexOf(step);
   return index < 0 ? STEP_ORDER.length : index;
-}
-
-function normalizeTutorStyle(value: unknown): TutorStyle {
-  return isTutorStyle(value) ? value : DEFAULT_TUTOR_STYLE;
 }
 
 async function postOnboarding(path: string, body: Record<string, unknown>): Promise<OnboardingApiResponse> {
@@ -219,7 +215,7 @@ function debugOnboardingResponse(
   return {
     profile: {
       ...profile,
-      tutorStyle: body.skip ? null : normalizeTutorStyle(body.tutorStyle),
+      tutorStyle: body.skip ? null : resolveTutorStyle(body.tutorStyle),
       tutorStyleSkippedAt: body.skip ? now : null,
       onboardingCompletedAt: now,
       onboardingCourseStatus: profile.goalSkippedAt ? null : "ready",
@@ -248,7 +244,7 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
     initialState.profile?.educationContextSource ?? null,
   );
   const [curriculumMenuOpen, setCurriculumMenuOpen] = useState(false);
-  const [style, setStyle] = useState<TutorStyle>(() => normalizeTutorStyle(initialState.profile?.tutorStyle));
+  const [style, setStyle] = useState<TutorStyle>(() => resolveTutorStyle(initialState.profile?.tutorStyle));
   const [anchor, setAnchor] = useState<GoalAnchorSummary | null>(null);
   const [clarify, setClarify] = useState<GoalClarify | null>(null);
   const [courseId, setCourseId] = useState<string | null>(null);
@@ -424,7 +420,7 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
     setCurriculumSystem(initialState.profile?.curriculumSystem ?? null);
     setEducationContextSource(initialState.profile?.educationContextSource ?? null);
     setCurriculumMenuOpen(false);
-    setStyle(normalizeTutorStyle(initialState.profile?.tutorStyle));
+    setStyle(resolveTutorStyle(initialState.profile?.tutorStyle));
     setAnchor(null);
     setClarify(null);
     setCourseId(null);

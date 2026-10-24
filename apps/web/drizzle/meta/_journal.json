@@ -372,6 +372,13 @@
       "when": 1792662609776,
       "tag": "0052_black_rockslide",
       "breakpoints": true
+    },
+    {
+      "idx": 53,
+      "version": "7",
+      "when": 1792808617690,
+      "tag": "0053_drop_tutor_style_facts",
+      "breakpoints": true
     }
   ]
 }

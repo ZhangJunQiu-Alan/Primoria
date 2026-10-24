@@ -219,6 +219,18 @@ as a compatibility fallback after intake reaches a terminal state;
 if multiple systems remain possible, course creation stays behind clarification.
 Settings uses the same queue.
 
+Tutor style (`socratic` | `feynman` | `euclid`, default `feynman`) and its
+persona prompts are single-sourced in `packages/contracts` (`tutor-style.mjs` ids for Web/browser code, `tutor-style-prompt.mjs` prompt text for the Agent only).
+Web passes the stored `learner_profiles.tutor_style` (or null) as server-set
+`primoria_tutor_style` run state; the Agent's `PrimoriaTutorStyleMiddleware`
+appends exactly one TUTOR STYLE section plus the shared TUTOR PRESENTATION
+(structured cards: bold emoji block labels, comparison tables, final question
+in a blockquote) to the main Tutor and `concept-agent` system prompts; they
+govern teaching-reply form, layout, and length (never tool routing). Style shapes Tutor dialogue only: it is not a learner fact and
+never enters lesson generation. Settings changes it via
+`PUT /api/settings/tutor-style`. Per-style behavior markers live in
+`apps/agent/evals/tutor-style.v1.json` (`pnpm --filter @primoria/agent eval:tutor:style`, real model).
+
 Keep mastery and facts distinct. `user_concept_mastery` is rule/evidence-driven
 concept state written by the learning-progress worker. `learner_facts` stores
 durable preferences, prior knowledge, learning gaps, interests, goals, and
@@ -277,7 +289,7 @@ are `AI_MODEL_FAST` for routing/utility work and optional `AI_MODEL_CONTENT` for
 source comparison and causal timelines; the latter falls back to the default
 model, never the fast tier. The Agent's optional `AI_MODEL_TUTOR` overrides its
 provider default independently of Web course generation. DeepSeek Web utility
-calls and structured course Block Writer calls disable thinking while preserving the selected model tier; other fast-tier calls use low thinking effort.
+calls and structured course Block Writer calls disable thinking while preserving the selected model tier; other fast-tier calls use low thinking effort. The Agent tutor also runs DeepSeek models with thinking disabled.
 Supports `openai-compatible` and
 `anthropic-compatible`.
 

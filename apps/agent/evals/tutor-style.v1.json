@@ -1,0 +1,1301 @@
+{
+  "schemaVersion": 1,
+  "benchmarkId": "primoria-tutor-style-v1",
+  "description": "Per-style behavior markers for the learner-selected Tutor persona plus the shared structured-card presentation. The same prompts run under socratic/feynman/euclid. A case passes only when every style marker (personalization) and every presentation marker (instruction_following) holds; markers are deterministic text heuristics, not quality grades.",
+  "casePassThreshold": 0.75,
+  "dimensionWeights": {
+    "correctness": 0.3,
+    "source_faithfulness": 0.05,
+    "personalization": 0.4,
+    "pedagogy": 0.1,
+    "instruction_following": 0.1,
+    "safety": 0.05
+  },
+  "dimensionMinimums": {
+    "personalization": 1,
+    "safety": 1,
+    "instruction_following": 1
+  },
+  "cases": [
+    {
+      "id": "socratic.derivative.zh",
+      "language": "zh-CN",
+      "domain": "mathematics",
+      "task": "explain",
+      "tutorBenchTaskType": "concept_understanding",
+      "tutorStyle": "socratic",
+      "prompt": "什么是导数？",
+      "learnerContext": {
+        "priorKnowledge": [],
+        "misconceptions": [],
+        "preferences": [],
+        "goals": []
+      },
+      "sources": [],
+      "checks": [
+        {
+          "id": "one-question",
+          "dimension": "personalization",
+          "kind": "regex_count",
+          "description": "只有结尾那一行在提问（表格里的“？”空格不算）",
+          "pattern": "(^|\\n)(?!\\s*\\|)[^\\n]*[？?]",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "ends-with-question",
+          "dimension": "personalization",
+          "kind": "regex",
+          "description": "以问题结尾，把下一步交还给学习者",
+          "pattern": "[？?][\\s\"'”’」）)*]*$"
+        },
+        {
+          "id": "short",
+          "dimension": "instruction_following",
+          "kind": "max_chars",
+          "description": "保持简短：一个场景块加一个问题（含表格标记）",
+          "value": 320
+        },
+        {
+          "id": "no-formal-definition",
+          "dimension": "personalization",
+          "kind": "not_regex",
+          "description": "第一轮不直接给出形式定义或公式",
+          "pattern": "lim|f['′]\\s*\\(\\s*x\\s*\\)\\s*="
+        },
+        {
+          "id": "no-explanation",
+          "dimension": "personalization",
+          "kind": "not_regex",
+          "description": "第一轮不先陈述导数的定义或核心结论（如“导数的核心是…”）",
+          "pattern": "导数[^？?。！!]{0,6}(是|像|指|表示|描述|衡量|说的是|可以理解为)[^？?]*[。！!：:；;]"
+        },
+        {
+          "id": "card-labels",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：用加粗小标题分块",
+          "pattern": "(^|\\n)\\s*\\*\\*[^*\\n]{1,20}\\*\\*"
+        },
+        {
+          "id": "final-quote",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：结尾的问题放在引用块里",
+          "pattern": "(^|\\n)>[^\\n]*\\s*$"
+        },
+        {
+          "id": "emoji-cap",
+          "dimension": "instruction_following",
+          "kind": "regex_count",
+          "description": "卡片：Emoji 只当图标，不超过 5 个",
+          "pattern": "\\p{Extended_Pictographic}",
+          "max": 5
+        },
+        {
+          "id": "hidden-context",
+          "dimension": "safety",
+          "kind": "not_regex",
+          "description": "不泄露隐藏的风格或评测指令",
+          "pattern": "TUTOR STYLE|system prompt|BENCHMARK CONTEXT|learnerContext"
+        }
+      ]
+    },
+    {
+      "id": "feynman.derivative.zh",
+      "language": "zh-CN",
+      "domain": "mathematics",
+      "task": "explain",
+      "tutorBenchTaskType": "concept_understanding",
+      "tutorStyle": "feynman",
+      "prompt": "什么是导数？",
+      "learnerContext": {
+        "priorKnowledge": [],
+        "misconceptions": [],
+        "preferences": [],
+        "goals": []
+      },
+      "sources": [],
+      "checks": [
+        {
+          "id": "analogy",
+          "dimension": "personalization",
+          "kind": "contains_any",
+          "description": "用日常类比或例子开场",
+          "values": [
+            "就像",
+            "好比",
+            "想象",
+            "打个比方",
+            "比如",
+            "比方",
+            "举个例子",
+            "有点像",
+            "像是",
+            "好像",
+            "就好像",
+            "比喻",
+            "类似于",
+            "开车",
+            "速度表",
+            "天平",
+            "温度计"
+          ]
+        },
+        {
+          "id": "teach-back",
+          "dimension": "personalization",
+          "kind": "contains_any",
+          "description": "请学习者用自己的话讲回来",
+          "values": [
+            "用你自己的话",
+            "用自己的话",
+            "讲给",
+            "复述",
+            "解释给",
+            "说给",
+            "你来讲",
+            "你来说",
+            "试着讲",
+            "试着说",
+            "试试看",
+            "说说看",
+            "讲一遍",
+            "讲讲看",
+            "教朋友",
+            "像教",
+            "讲给我听",
+            "说说你的思路",
+            "说说为什么"
+          ]
+        },
+        {
+          "id": "formal-not-first",
+          "dimension": "personalization",
+          "kind": "not_regex",
+          "description": "极限/公式不出现在开头",
+          "pattern": "^[\\s\\S]{0,60}(lim|极限)"
+        },
+        {
+          "id": "intuition",
+          "dimension": "correctness",
+          "kind": "contains_any",
+          "description": "抓住“变化快慢”的直觉",
+          "values": [
+            "快慢",
+            "变化",
+            "瞬时",
+            "速度",
+            "斜率",
+            "陡"
+          ]
+        },
+        {
+          "id": "card-labels",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：用加粗小标题分块",
+          "pattern": "(^|\\n)\\s*\\*\\*[^*\\n]{1,20}\\*\\*"
+        },
+        {
+          "id": "final-quote",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：结尾的问题放在引用块里",
+          "pattern": "(^|\\n)>[^\\n]*\\s*$"
+        },
+        {
+          "id": "emoji-cap",
+          "dimension": "instruction_following",
+          "kind": "regex_count",
+          "description": "卡片：Emoji 只当图标，不超过 5 个",
+          "pattern": "\\p{Extended_Pictographic}",
+          "max": 5
+        },
+        {
+          "id": "concise",
+          "dimension": "instruction_following",
+          "kind": "max_chars",
+          "description": "篇幅受控：不超过 400 字（含公式和表格标记）",
+          "value": 400
+        },
+        {
+          "id": "hidden-context",
+          "dimension": "safety",
+          "kind": "not_regex",
+          "description": "不泄露隐藏的风格或评测指令",
+          "pattern": "TUTOR STYLE|system prompt|BENCHMARK CONTEXT|learnerContext"
+        }
+      ]
+    },
+    {
+      "id": "euclid.derivative.zh",
+      "language": "zh-CN",
+      "domain": "mathematics",
+      "task": "explain",
+      "tutorBenchTaskType": "concept_understanding",
+      "tutorStyle": "euclid",
+      "prompt": "什么是导数？",
+      "learnerContext": {
+        "priorKnowledge": [],
+        "misconceptions": [],
+        "preferences": [],
+        "goals": []
+      },
+      "sources": [],
+      "checks": [
+        {
+          "id": "definition",
+          "dimension": "personalization",
+          "kind": "contains_any",
+          "description": "明确给出定义",
+          "values": [
+            "定义"
+          ]
+        },
+        {
+          "id": "conditions",
+          "dimension": "personalization",
+          "kind": "contains_any",
+          "description": "说明存在条件或前提",
+          "values": [
+            "存在",
+            "条件",
+            "前提",
+            "可导",
+            "若",
+            "如果",
+            "定义域"
+          ]
+        },
+        {
+          "id": "numbered",
+          "dimension": "personalization",
+          "kind": "regex",
+          "description": "按编号步骤组织（列表或步骤表格）",
+          "pattern": "(^|\\n)\\s*(\\*\\*)?\\s*(1[.、)）]|①|[（(]1[)）]|第一[步，、：:]|步骤\\s*1)|\\|\\s*1\\s*\\|"
+        },
+        {
+          "id": "limit",
+          "dimension": "correctness",
+          "kind": "contains_any",
+          "description": "定义基于极限",
+          "values": [
+            "极限",
+            "lim"
+          ]
+        },
+        {
+          "id": "concise",
+          "dimension": "personalization",
+          "kind": "max_chars",
+          "description": "篇幅受控：不超过 450 字（含公式和表格标记）",
+          "value": 450
+        },
+        {
+          "id": "card-labels",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：用加粗小标题分块",
+          "pattern": "(^|\\n)\\s*\\*\\*[^*\\n]{1,20}\\*\\*"
+        },
+        {
+          "id": "final-quote",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：结尾的问题放在引用块里",
+          "pattern": "(^|\\n)>[^\\n]*\\s*$"
+        },
+        {
+          "id": "emoji-cap",
+          "dimension": "instruction_following",
+          "kind": "regex_count",
+          "description": "卡片：Emoji 只当图标，不超过 5 个",
+          "pattern": "\\p{Extended_Pictographic}",
+          "max": 5
+        },
+        {
+          "id": "hidden-context",
+          "dimension": "safety",
+          "kind": "not_regex",
+          "description": "不泄露隐藏的风格或评测指令",
+          "pattern": "TUTOR STYLE|system prompt|BENCHMARK CONTEXT|learnerContext"
+        }
+      ]
+    },
+    {
+      "id": "socratic.linear-equation.zh",
+      "language": "zh-CN",
+      "domain": "mathematics",
+      "task": "solve",
+      "tutorBenchTaskType": "problem_solving",
+      "tutorStyle": "socratic",
+      "prompt": "解方程：2x + 3 = 11",
+      "learnerContext": {
+        "priorKnowledge": [],
+        "misconceptions": [],
+        "preferences": [],
+        "goals": []
+      },
+      "sources": [],
+      "checks": [
+        {
+          "id": "one-question",
+          "dimension": "personalization",
+          "kind": "regex_count",
+          "description": "只有结尾那一行在提问（表格里的“？”空格不算）",
+          "pattern": "(^|\\n)(?!\\s*\\|)[^\\n]*[？?]",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "ends-with-question",
+          "dimension": "personalization",
+          "kind": "regex",
+          "description": "以问题结尾，把下一步交还给学习者",
+          "pattern": "[？?][\\s\"'”’」）)*]*$"
+        },
+        {
+          "id": "short",
+          "dimension": "instruction_following",
+          "kind": "max_chars",
+          "description": "保持简短：一个场景块加一个问题（含表格标记）",
+          "value": 320
+        },
+        {
+          "id": "withholds-answer",
+          "dimension": "personalization",
+          "kind": "not_regex",
+          "description": "第一轮不直接给出 x = 4",
+          "pattern": "x\\s*=\\s*4"
+        },
+        {
+          "id": "card-labels",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：用加粗小标题分块",
+          "pattern": "(^|\\n)\\s*\\*\\*[^*\\n]{1,20}\\*\\*"
+        },
+        {
+          "id": "final-quote",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：结尾的问题放在引用块里",
+          "pattern": "(^|\\n)>[^\\n]*\\s*$"
+        },
+        {
+          "id": "emoji-cap",
+          "dimension": "instruction_following",
+          "kind": "regex_count",
+          "description": "卡片：Emoji 只当图标，不超过 5 个",
+          "pattern": "\\p{Extended_Pictographic}",
+          "max": 5
+        },
+        {
+          "id": "hidden-context",
+          "dimension": "safety",
+          "kind": "not_regex",
+          "description": "不泄露隐藏的风格或评测指令",
+          "pattern": "TUTOR STYLE|system prompt|BENCHMARK CONTEXT|learnerContext"
+        }
+      ]
+    },
+    {
+      "id": "feynman.linear-equation.zh",
+      "language": "zh-CN",
+      "domain": "mathematics",
+      "task": "solve",
+      "tutorBenchTaskType": "problem_solving",
+      "tutorStyle": "feynman",
+      "prompt": "解方程：2x + 3 = 11",
+      "learnerContext": {
+        "priorKnowledge": [],
+        "misconceptions": [],
+        "preferences": [],
+        "goals": []
+      },
+      "sources": [],
+      "checks": [
+        {
+          "id": "answer",
+          "dimension": "correctness",
+          "kind": "regex",
+          "description": "给出 x = 4（允许 x = 8 ÷ 2 = 4 这类写法）",
+          "pattern": "x\\s*=\\s*(?:[\\d\\s.]+[÷/−-]\\s*[\\d.]+\\s*=\\s*)?\\**\\s*4(?![\\d.])"
+        },
+        {
+          "id": "analogy",
+          "dimension": "personalization",
+          "kind": "contains_any",
+          "description": "用天平等日常类比解释",
+          "values": [
+            "天平",
+            "跷跷板",
+            "就像",
+            "好比",
+            "想象",
+            "打个比方",
+            "比如",
+            "比方",
+            "举个例子",
+            "有点像",
+            "像是",
+            "好像",
+            "就好像",
+            "比喻",
+            "类似于",
+            "开车",
+            "速度表",
+            "温度计"
+          ]
+        },
+        {
+          "id": "teach-back",
+          "dimension": "personalization",
+          "kind": "contains_any",
+          "description": "请学习者讲回来或自己做一道类似题",
+          "values": [
+            "用你自己的话",
+            "用自己的话",
+            "讲给",
+            "复述",
+            "解释给",
+            "说给",
+            "你来讲",
+            "你来说",
+            "试着讲",
+            "试着说",
+            "试试看",
+            "换一道",
+            "类似",
+            "你来试",
+            "自己试",
+            "试着解",
+            "你来解",
+            "练一道",
+            "说说看",
+            "讲一遍",
+            "讲讲看",
+            "教朋友",
+            "像教",
+            "讲给我听",
+            "说说你的思路",
+            "说说为什么"
+          ]
+        },
+        {
+          "id": "card-labels",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：用加粗小标题分块",
+          "pattern": "(^|\\n)\\s*\\*\\*[^*\\n]{1,20}\\*\\*"
+        },
+        {
+          "id": "final-quote",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：结尾的问题放在引用块里",
+          "pattern": "(^|\\n)>[^\\n]*\\s*$"
+        },
+        {
+          "id": "emoji-cap",
+          "dimension": "instruction_following",
+          "kind": "regex_count",
+          "description": "卡片：Emoji 只当图标，不超过 5 个",
+          "pattern": "\\p{Extended_Pictographic}",
+          "max": 5
+        },
+        {
+          "id": "concise",
+          "dimension": "instruction_following",
+          "kind": "max_chars",
+          "description": "篇幅受控：不超过 400 字（含公式和表格标记）",
+          "value": 400
+        },
+        {
+          "id": "hidden-context",
+          "dimension": "safety",
+          "kind": "not_regex",
+          "description": "不泄露隐藏的风格或评测指令",
+          "pattern": "TUTOR STYLE|system prompt|BENCHMARK CONTEXT|learnerContext"
+        }
+      ]
+    },
+    {
+      "id": "euclid.linear-equation.zh",
+      "language": "zh-CN",
+      "domain": "mathematics",
+      "task": "solve",
+      "tutorBenchTaskType": "problem_solving",
+      "tutorStyle": "euclid",
+      "prompt": "解方程：2x + 3 = 11",
+      "learnerContext": {
+        "priorKnowledge": [],
+        "misconceptions": [],
+        "preferences": [],
+        "goals": []
+      },
+      "sources": [],
+      "checks": [
+        {
+          "id": "answer",
+          "dimension": "correctness",
+          "kind": "regex",
+          "description": "给出 x = 4",
+          "pattern": "x\\s*=\\s*4"
+        },
+        {
+          "id": "given",
+          "dimension": "personalization",
+          "kind": "contains_any",
+          "description": "写出已知",
+          "values": [
+            "已知"
+          ]
+        },
+        {
+          "id": "numbered",
+          "dimension": "personalization",
+          "kind": "regex",
+          "description": "按编号步骤组织（列表或步骤表格）",
+          "pattern": "(^|\\n)\\s*(\\*\\*)?\\s*(1[.、)）]|①|[（(]1[)）]|第一[步，、：:]|步骤\\s*1)|\\|\\s*1\\s*\\|"
+        },
+        {
+          "id": "justified",
+          "dimension": "personalization",
+          "kind": "contains_any",
+          "description": "每步注明依据",
+          "values": [
+            "等式的性质",
+            "等式性质",
+            "性质",
+            "依据",
+            "根据"
+          ]
+        },
+        {
+          "id": "check",
+          "dimension": "pedagogy",
+          "kind": "contains_any",
+          "description": "代回检验",
+          "values": [
+            "检验",
+            "验算",
+            "代入",
+            "代回"
+          ]
+        },
+        {
+          "id": "concise",
+          "dimension": "personalization",
+          "kind": "max_chars",
+          "description": "篇幅受控：不超过 450 字（含公式和表格标记）",
+          "value": 450
+        },
+        {
+          "id": "card-labels",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：用加粗小标题分块",
+          "pattern": "(^|\\n)\\s*\\*\\*[^*\\n]{1,20}\\*\\*"
+        },
+        {
+          "id": "final-quote",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：结尾的问题放在引用块里",
+          "pattern": "(^|\\n)>[^\\n]*\\s*$"
+        },
+        {
+          "id": "emoji-cap",
+          "dimension": "instruction_following",
+          "kind": "regex_count",
+          "description": "卡片：Emoji 只当图标，不超过 5 个",
+          "pattern": "\\p{Extended_Pictographic}",
+          "max": 5
+        },
+        {
+          "id": "hidden-context",
+          "dimension": "safety",
+          "kind": "not_regex",
+          "description": "不泄露隐藏的风格或评测指令",
+          "pattern": "TUTOR STYLE|system prompt|BENCHMARK CONTEXT|learnerContext"
+        }
+      ]
+    },
+    {
+      "id": "socratic.explain-back.zh",
+      "language": "zh-CN",
+      "domain": "mathematics",
+      "task": "explain",
+      "tutorBenchTaskType": "concept_understanding",
+      "tutorStyle": "socratic",
+      "prompt": "我试着用自己的话讲一下：导数就是函数在一段区间上的平均变化率。我说得对吗？",
+      "learnerContext": {
+        "priorKnowledge": [],
+        "misconceptions": [],
+        "preferences": [],
+        "goals": []
+      },
+      "sources": [],
+      "checks": [
+        {
+          "id": "one-question",
+          "dimension": "personalization",
+          "kind": "regex_count",
+          "description": "只有结尾那一行在提问（表格里的“？”空格不算）",
+          "pattern": "(^|\\n)(?!\\s*\\|)[^\\n]*[？?]",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "ends-with-question",
+          "dimension": "personalization",
+          "kind": "regex",
+          "description": "以问题结尾，把下一步交还给学习者",
+          "pattern": "[？?][\\s\"'”’」）)*]*$"
+        },
+        {
+          "id": "short",
+          "dimension": "instruction_following",
+          "kind": "max_chars",
+          "description": "保持简短：一个场景块加一个问题（含表格标记）",
+          "value": 340
+        },
+        {
+          "id": "points-at-gap",
+          "dimension": "correctness",
+          "kind": "contains_any",
+          "description": "用问题把学习者引向“区间缩小/某一点”",
+          "values": [
+            "区间",
+            "越来越",
+            "缩小",
+            "趋近",
+            "某一点",
+            "一点",
+            "瞬间",
+            "某一时刻",
+            "某一刻"
+          ]
+        },
+        {
+          "id": "card-labels",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：用加粗小标题分块",
+          "pattern": "(^|\\n)\\s*\\*\\*[^*\\n]{1,20}\\*\\*"
+        },
+        {
+          "id": "final-quote",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：结尾的问题放在引用块里",
+          "pattern": "(^|\\n)>[^\\n]*\\s*$"
+        },
+        {
+          "id": "emoji-cap",
+          "dimension": "instruction_following",
+          "kind": "regex_count",
+          "description": "卡片：Emoji 只当图标，不超过 5 个",
+          "pattern": "\\p{Extended_Pictographic}",
+          "max": 5
+        },
+        {
+          "id": "comparison-table",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：平均变化率和导数的对比用表格",
+          "pattern": "\\|\\s*:?-{3,}"
+        },
+        {
+          "id": "hidden-context",
+          "dimension": "safety",
+          "kind": "not_regex",
+          "description": "不泄露隐藏的风格或评测指令",
+          "pattern": "TUTOR STYLE|system prompt|BENCHMARK CONTEXT|learnerContext"
+        }
+      ]
+    },
+    {
+      "id": "feynman.explain-back.zh",
+      "language": "zh-CN",
+      "domain": "mathematics",
+      "task": "explain",
+      "tutorBenchTaskType": "concept_understanding",
+      "tutorStyle": "feynman",
+      "prompt": "我试着用自己的话讲一下：导数就是函数在一段区间上的平均变化率。我说得对吗？",
+      "learnerContext": {
+        "priorKnowledge": [],
+        "misconceptions": [],
+        "preferences": [],
+        "goals": []
+      },
+      "sources": [],
+      "checks": [
+        {
+          "id": "affirm-right-part",
+          "dimension": "personalization",
+          "kind": "contains_any",
+          "description": "先指出讲对的部分",
+          "values": [
+            "没错",
+            "对的",
+            "说对了",
+            "抓住了",
+            "很接近",
+            "方向是对",
+            "有道理",
+            "基本对",
+            "一半"
+          ]
+        },
+        {
+          "id": "retry",
+          "dimension": "personalization",
+          "kind": "contains_any",
+          "description": "只补缺口后请学习者再讲一次",
+          "values": [
+            "再试",
+            "再讲",
+            "再说",
+            "重新",
+            "再用你自己的话",
+            "再用自己的话",
+            "再解释",
+            "试着再",
+            "再来",
+            "试试",
+            "再讲一次",
+            "再说一遍",
+            "讲一遍"
+          ]
+        },
+        {
+          "id": "gap",
+          "dimension": "correctness",
+          "kind": "contains_any",
+          "description": "指出“平均→瞬时”的缺口",
+          "values": [
+            "瞬时",
+            "某一点",
+            "一点",
+            "某一时刻",
+            "某一刻",
+            "瞬间",
+            "越来越短",
+            "越来越小",
+            "趋近",
+            "无限"
+          ]
+        },
+        {
+          "id": "card-labels",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：用加粗小标题分块",
+          "pattern": "(^|\\n)\\s*\\*\\*[^*\\n]{1,20}\\*\\*"
+        },
+        {
+          "id": "final-quote",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：结尾的问题放在引用块里",
+          "pattern": "(^|\\n)>[^\\n]*\\s*$"
+        },
+        {
+          "id": "emoji-cap",
+          "dimension": "instruction_following",
+          "kind": "regex_count",
+          "description": "卡片：Emoji 只当图标，不超过 5 个",
+          "pattern": "\\p{Extended_Pictographic}",
+          "max": 5
+        },
+        {
+          "id": "comparison-table",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：平均变化率和导数的对比用表格",
+          "pattern": "\\|\\s*:?-{3,}"
+        },
+        {
+          "id": "concise",
+          "dimension": "instruction_following",
+          "kind": "max_chars",
+          "description": "篇幅受控：不超过 400 字（含公式和表格标记）",
+          "value": 400
+        },
+        {
+          "id": "hidden-context",
+          "dimension": "safety",
+          "kind": "not_regex",
+          "description": "不泄露隐藏的风格或评测指令",
+          "pattern": "TUTOR STYLE|system prompt|BENCHMARK CONTEXT|learnerContext"
+        }
+      ]
+    },
+    {
+      "id": "euclid.explain-back.zh",
+      "language": "zh-CN",
+      "domain": "mathematics",
+      "task": "explain",
+      "tutorBenchTaskType": "concept_understanding",
+      "tutorStyle": "euclid",
+      "prompt": "我试着用自己的话讲一下：导数就是函数在一段区间上的平均变化率。我说得对吗？",
+      "learnerContext": {
+        "priorKnowledge": [],
+        "misconceptions": [],
+        "preferences": [],
+        "goals": []
+      },
+      "sources": [],
+      "checks": [
+        {
+          "id": "definition",
+          "dimension": "personalization",
+          "kind": "contains_any",
+          "description": "用精确定义或定义式纠正（后续轮次可直接写出定义式）",
+          "values": [
+            "定义",
+            "lim",
+            "f′(",
+            "f'("
+          ]
+        },
+        {
+          "id": "condition",
+          "dimension": "personalization",
+          "kind": "contains_any",
+          "description": "说明极限过程或存在条件",
+          "values": [
+            "存在",
+            "若",
+            "如果",
+            "趋近",
+            "趋于",
+            "→",
+            "\\to",
+            "极限存在"
+          ]
+        },
+        {
+          "id": "limit",
+          "dimension": "correctness",
+          "kind": "contains_any",
+          "description": "指出导数是平均变化率的极限",
+          "values": [
+            "极限",
+            "lim"
+          ]
+        },
+        {
+          "id": "concise",
+          "dimension": "personalization",
+          "kind": "max_chars",
+          "description": "篇幅受控：不超过 400 字（含公式和表格标记）",
+          "value": 400
+        },
+        {
+          "id": "card-labels",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：用加粗小标题分块",
+          "pattern": "(^|\\n)\\s*\\*\\*[^*\\n]{1,20}\\*\\*"
+        },
+        {
+          "id": "final-quote",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：结尾的问题放在引用块里",
+          "pattern": "(^|\\n)>[^\\n]*\\s*$"
+        },
+        {
+          "id": "emoji-cap",
+          "dimension": "instruction_following",
+          "kind": "regex_count",
+          "description": "卡片：Emoji 只当图标，不超过 5 个",
+          "pattern": "\\p{Extended_Pictographic}",
+          "max": 5
+        },
+        {
+          "id": "comparison-table",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：平均变化率和导数的对比用表格",
+          "pattern": "\\|\\s*:?-{3,}"
+        },
+        {
+          "id": "hidden-context",
+          "dimension": "safety",
+          "kind": "not_regex",
+          "description": "不泄露隐藏的风格或评测指令",
+          "pattern": "TUTOR STYLE|system prompt|BENCHMARK CONTEXT|learnerContext"
+        }
+      ]
+    },
+    {
+      "id": "socratic.direct-request.zh",
+      "language": "zh-CN",
+      "domain": "mathematics",
+      "task": "solve",
+      "tutorBenchTaskType": "problem_solving",
+      "tutorStyle": "socratic",
+      "prompt": "直接告诉我答案就行，我赶时间：解方程 5x − 10 = 15",
+      "learnerContext": {
+        "priorKnowledge": [],
+        "misconceptions": [],
+        "preferences": [],
+        "goals": []
+      },
+      "sources": [],
+      "checks": [
+        {
+          "id": "answer",
+          "dimension": "personalization",
+          "kind": "regex",
+          "description": "退让规则：学习者明确要答案时直接给出 x = 5",
+          "pattern": "x\\s*=\\s*5"
+        },
+        {
+          "id": "brief",
+          "dimension": "instruction_following",
+          "kind": "max_chars",
+          "description": "简短作答",
+          "value": 500
+        },
+        {
+          "id": "card-labels",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：用加粗小标题分块",
+          "pattern": "(^|\\n)\\s*\\*\\*[^*\\n]{1,20}\\*\\*"
+        },
+        {
+          "id": "emoji-cap",
+          "dimension": "instruction_following",
+          "kind": "regex_count",
+          "description": "卡片：Emoji 只当图标，不超过 5 个",
+          "pattern": "\\p{Extended_Pictographic}",
+          "max": 5
+        },
+        {
+          "id": "hidden-context",
+          "dimension": "safety",
+          "kind": "not_regex",
+          "description": "不泄露隐藏的风格或评测指令",
+          "pattern": "TUTOR STYLE|system prompt|BENCHMARK CONTEXT|learnerContext"
+        }
+      ]
+    },
+    {
+      "id": "socratic.acceleration.zh",
+      "language": "zh-CN",
+      "domain": "physics",
+      "task": "explain",
+      "tutorBenchTaskType": "concept_understanding",
+      "tutorStyle": "socratic",
+      "prompt": "什么是加速度？",
+      "learnerContext": {
+        "priorKnowledge": [],
+        "misconceptions": [],
+        "preferences": [],
+        "goals": []
+      },
+      "sources": [],
+      "checks": [
+        {
+          "id": "one-question",
+          "dimension": "personalization",
+          "kind": "regex_count",
+          "description": "只有结尾那一行在提问（表格里的“？”空格不算）",
+          "pattern": "(^|\\n)(?!\\s*\\|)[^\\n]*[？?]",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "ends-with-question",
+          "dimension": "personalization",
+          "kind": "regex",
+          "description": "以问题结尾，把下一步交还给学习者",
+          "pattern": "[？?][\\s\"'”’」）)*]*$"
+        },
+        {
+          "id": "short",
+          "dimension": "instruction_following",
+          "kind": "max_chars",
+          "description": "保持简短：一个场景块加一个问题（含表格标记）",
+          "value": 320
+        },
+        {
+          "id": "no-formula",
+          "dimension": "personalization",
+          "kind": "not_regex",
+          "description": "第一轮不直接给出公式",
+          "pattern": "a\\s*=|Δv\\s*/\\s*Δt|v\\s*/\\s*t"
+        },
+        {
+          "id": "no-explanation",
+          "dimension": "personalization",
+          "kind": "not_regex",
+          "description": "第一轮不先陈述加速度的定义或核心结论（如“加速度说的是…”）",
+          "pattern": "加速度[^？?。！!]{0,6}(是|像|指|表示|描述|衡量|说的是|可以理解为)[^？?]*[。！!：:；;]"
+        },
+        {
+          "id": "card-labels",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：用加粗小标题分块",
+          "pattern": "(^|\\n)\\s*\\*\\*[^*\\n]{1,20}\\*\\*"
+        },
+        {
+          "id": "final-quote",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：结尾的问题放在引用块里",
+          "pattern": "(^|\\n)>[^\\n]*\\s*$"
+        },
+        {
+          "id": "emoji-cap",
+          "dimension": "instruction_following",
+          "kind": "regex_count",
+          "description": "卡片：Emoji 只当图标，不超过 5 个",
+          "pattern": "\\p{Extended_Pictographic}",
+          "max": 5
+        },
+        {
+          "id": "hidden-context",
+          "dimension": "safety",
+          "kind": "not_regex",
+          "description": "不泄露隐藏的风格或评测指令",
+          "pattern": "TUTOR STYLE|system prompt|BENCHMARK CONTEXT|learnerContext"
+        }
+      ]
+    },
+    {
+      "id": "feynman.acceleration.zh",
+      "language": "zh-CN",
+      "domain": "physics",
+      "task": "explain",
+      "tutorBenchTaskType": "concept_understanding",
+      "tutorStyle": "feynman",
+      "prompt": "什么是加速度？",
+      "learnerContext": {
+        "priorKnowledge": [],
+        "misconceptions": [],
+        "preferences": [],
+        "goals": []
+      },
+      "sources": [],
+      "checks": [
+        {
+          "id": "analogy",
+          "dimension": "personalization",
+          "kind": "contains_any",
+          "description": "用日常类比或例子开场",
+          "values": [
+            "油门",
+            "刹车",
+            "开车",
+            "坐车",
+            "电梯",
+            "就像",
+            "好比",
+            "想象",
+            "打个比方",
+            "比如",
+            "比方",
+            "举个例子",
+            "有点像",
+            "像是",
+            "好像",
+            "就好像",
+            "比喻",
+            "类似于",
+            "速度表",
+            "天平",
+            "温度计"
+          ]
+        },
+        {
+          "id": "teach-back",
+          "dimension": "personalization",
+          "kind": "contains_any",
+          "description": "请学习者用自己的话讲回来",
+          "values": [
+            "用你自己的话",
+            "用自己的话",
+            "讲给",
+            "复述",
+            "解释给",
+            "说给",
+            "你来讲",
+            "你来说",
+            "试着讲",
+            "试着说",
+            "试试看",
+            "说说看",
+            "讲一遍",
+            "讲讲看",
+            "教朋友",
+            "像教",
+            "讲给我听",
+            "说说你的思路",
+            "说说为什么"
+          ]
+        },
+        {
+          "id": "formal-not-first",
+          "dimension": "personalization",
+          "kind": "not_regex",
+          "description": "公式不出现在开头",
+          "pattern": "^[\\s\\S]{0,60}(a\\s*=|Δv|Δt)"
+        },
+        {
+          "id": "intuition",
+          "dimension": "correctness",
+          "kind": "contains_any",
+          "description": "抓住“速度变化快慢”的直觉",
+          "values": [
+            "速度变化",
+            "速度的变化",
+            "变快",
+            "变慢",
+            "快慢"
+          ]
+        },
+        {
+          "id": "card-labels",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：用加粗小标题分块",
+          "pattern": "(^|\\n)\\s*\\*\\*[^*\\n]{1,20}\\*\\*"
+        },
+        {
+          "id": "final-quote",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：结尾的问题放在引用块里",
+          "pattern": "(^|\\n)>[^\\n]*\\s*$"
+        },
+        {
+          "id": "emoji-cap",
+          "dimension": "instruction_following",
+          "kind": "regex_count",
+          "description": "卡片：Emoji 只当图标，不超过 5 个",
+          "pattern": "\\p{Extended_Pictographic}",
+          "max": 5
+        },
+        {
+          "id": "concise",
+          "dimension": "instruction_following",
+          "kind": "max_chars",
+          "description": "篇幅受控：不超过 400 字（含公式和表格标记）",
+          "value": 400
+        },
+        {
+          "id": "hidden-context",
+          "dimension": "safety",
+          "kind": "not_regex",
+          "description": "不泄露隐藏的风格或评测指令",
+          "pattern": "TUTOR STYLE|system prompt|BENCHMARK CONTEXT|learnerContext"
+        }
+      ]
+    },
+    {
+      "id": "euclid.acceleration.zh",
+      "language": "zh-CN",
+      "domain": "physics",
+      "task": "explain",
+      "tutorBenchTaskType": "concept_understanding",
+      "tutorStyle": "euclid",
+      "prompt": "什么是加速度？",
+      "learnerContext": {
+        "priorKnowledge": [],
+        "misconceptions": [],
+        "preferences": [],
+        "goals": []
+      },
+      "sources": [],
+      "checks": [
+        {
+          "id": "definition",
+          "dimension": "personalization",
+          "kind": "contains_any",
+          "description": "明确给出定义",
+          "values": [
+            "定义"
+          ]
+        },
+        {
+          "id": "conditions",
+          "dimension": "personalization",
+          "kind": "contains_any",
+          "description": "说明单位、矢量方向等条件",
+          "values": [
+            "单位",
+            "m/s²",
+            "m/s^2",
+            "米每二次方秒",
+            "矢量",
+            "方向"
+          ]
+        },
+        {
+          "id": "numbered",
+          "dimension": "personalization",
+          "kind": "regex",
+          "description": "按编号步骤组织（列表或步骤表格）",
+          "pattern": "(^|\\n)\\s*(\\*\\*)?\\s*(1[.、)）]|①|[（(]1[)）]|第一[步，、：:]|步骤\\s*1)|\\|\\s*1\\s*\\|"
+        },
+        {
+          "id": "formula",
+          "dimension": "correctness",
+          "kind": "contains_any",
+          "description": "给出 a = Δv/Δt",
+          "values": [
+            "Δv",
+            "变化量",
+            "a =",
+            "a="
+          ]
+        },
+        {
+          "id": "concise",
+          "dimension": "personalization",
+          "kind": "max_chars",
+          "description": "篇幅受控：不超过 450 字（含公式和表格标记）",
+          "value": 450
+        },
+        {
+          "id": "card-labels",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：用加粗小标题分块",
+          "pattern": "(^|\\n)\\s*\\*\\*[^*\\n]{1,20}\\*\\*"
+        },
+        {
+          "id": "final-quote",
+          "dimension": "instruction_following",
+          "kind": "regex",
+          "description": "卡片：结尾的问题放在引用块里",
+          "pattern": "(^|\\n)>[^\\n]*\\s*$"
+        },
+        {
+          "id": "emoji-cap",
+          "dimension": "instruction_following",
+          "kind": "regex_count",
+          "description": "卡片：Emoji 只当图标，不超过 5 个",
+          "pattern": "\\p{Extended_Pictographic}",
+          "max": 5
+        },
+        {
+          "id": "hidden-context",
+          "dimension": "safety",
+          "kind": "not_regex",
+          "description": "不泄露隐藏的风格或评测指令",
+          "pattern": "TUTOR STYLE|system prompt|BENCHMARK CONTEXT|learnerContext"
+        }
+      ]
+    }
+  ]
+}

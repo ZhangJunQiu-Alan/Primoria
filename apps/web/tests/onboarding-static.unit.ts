@@ -141,7 +141,7 @@ function main() {
   assert(styleRoute.includes("skipTutorStyle"), "style route supports step skip");
 
   const onboardingClient = src("components/onboarding/onboarding-client.tsx");
-  assert(onboardingClient.includes("normalizeTutorStyle"), "onboarding client normalizes tutor style");
+  assert(onboardingClient.includes("resolveTutorStyle("), "onboarding client resolves tutor style through the shared contract");
   assert(onboardingClient.includes("new window.Image()"), "onboarding client preloads tutor persona images");
   assert(onboardingClient.includes('goalStatus === "pending"'), "onboarding client handles pending background positioning");
   assert(onboardingClient.includes("finalClarify"), "onboarding client asks ambiguous goals at the final step");
@@ -177,8 +177,8 @@ function main() {
   assert(writer.includes("knowledgeBackgroundDirective"), "writer prompt includes background directive");
 
   const copilotRoute = src("app/api/copilotkit/route.ts");
-  assert(copilotRoute.includes("tutorStyleDirective"), "copilot route injects tutor style");
-  assert(copilotRoute.includes("dialogue only"), "tutor style stays dialogue-only");
+  assert(copilotRoute.includes("primoria_tutor_style: this.learnerProfile?.tutorStyle ?? null"), "copilot route passes tutor style as server-set run state");
+  assert(copilotRoute.includes("dialogue only"), "learner profile context stays dialogue-only");
 
   process.stdout.write("[onboarding-static.unit] ALL CHECKS PASSED\n");
 }
