@@ -7,10 +7,11 @@ loadLocalEnv();
 // Workers process one job at a time (plus a heartbeat), so they need very few
 // connections. Default low to avoid exhausting the shared Postgres connection
 // budget when web + agent + several workers run together locally. An explicit
-// DATABASE_POOL_MAX still wins.
-if (!process.env.DATABASE_POOL_MAX) process.env.DATABASE_POOL_MAX = "2";
+// DATABASE_POOL_MAX still wins; the Supabase session pooler keeps its
+// one-connection default (see getDatabasePoolMax).
+if (!process.env.DATABASE_POOL_MAX && !isSupabaseSessionPooler(process.env.DATABASE_URL ?? "")) process.env.DATABASE_POOL_MAX = "2";
 
-import { hasDatabaseUrl } from "../lib/db/client";
+import { hasDatabaseUrl, isSupabaseSessionPooler } from "../lib/db/client";
 import { classifyGenerationError } from "../lib/ai/course-generation/generation-errors";
 import {
   claimNextExtractorJob,

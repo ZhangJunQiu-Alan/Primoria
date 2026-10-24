@@ -20,7 +20,7 @@ function ownerIdFromInput(input) {
 /** @param {string | undefined} [databaseUrl] */
 export function createRunStore(databaseUrl = process.env.DATABASE_URL) {
   if (!databaseUrl) throw new Error("DATABASE_URL is required for Agent runtime persistence");
-  const sql = postgres(databaseUrl, { max: getAgentDatabasePoolMax(), prepare: false, onnotice: () => {} });
+  const sql = postgres(databaseUrl, { max: getAgentDatabasePoolMax(databaseUrl), prepare: false, onnotice: () => {} });
 
   return {
     async close() {
