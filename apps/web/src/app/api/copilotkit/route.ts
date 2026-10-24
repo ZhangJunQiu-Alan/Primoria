@@ -10,7 +10,7 @@ import { getAgentInternalToken } from "@/lib/ai/agent-internal-auth";
 import { getLearnerProfile } from "@/lib/learner-profile/store";
 import { listActiveFacts } from "@/lib/learner-facts/store";
 import { selectPlannerFacts } from "@/lib/courses/lesson-generation-context";
-import { factsDirective, tutorStyleDirective, type LearnerFact, type LearnerProfile } from "@/lib/learner-profile/types";
+import { factsDirective, type LearnerFact, type LearnerProfile } from "@/lib/learner-profile/types";
 
 import { requireAuthUser } from "@/lib/auth/guard";
 
@@ -70,19 +70,18 @@ function formatCourseDetailContextForAgent(context: unknown) {
   }
 }
 
-function formatLearnerProfileContextForAgent(profile: LearnerProfile | null, facts: LearnerFact[] = []) {
+// Tutor style is not part of this block: it travels as `primoria_tutor_style`
+// run state and the Agent renders it into the system prompt.
+function formatLearnerProfileContextForAgent(facts: LearnerFact[] = []) {
   // Same teaching-relevant facts the lesson Planner uses (preference /
   // prior_knowledge / learning_gap, ranked + capped); goal is profile-only.
   const selectedFacts = selectPlannerFacts(facts);
-  if (!profile?.tutorStyle && selectedFacts.length === 0) return "";
+  if (selectedFacts.length === 0) return "";
   return [
     "PRIMORIA LEARNER PROFILE - hidden context.",
-    profile?.tutorStyle ? tutorStyleDirective(profile.tutorStyle) : "",
-    selectedFacts.length ? factsDirective(selectedFacts) : "",
+    factsDirective(selectedFacts),
     "This profile affects AI Tutor dialogue only. Do not use it to create or modify course lesson content.",
-  ]
-    .filter(Boolean)
-    .join("\n");
+  ].join("\n");
 }
 
 function withHiddenAgentContext(content: unknown, contexts: string[]) {
@@ -118,7 +117,7 @@ function contentToText(content: unknown) {
   return String(content ?? "");
 }
 
-function normalizeAgentMessages(messages: any[] = [], context?: unknown, learnerProfile?: LearnerProfile | null, learnerFacts: LearnerFact[] = []) {
+function normalizeAgentMessages(messages: any[] = [], context?: unknown, learnerFacts: LearnerFact[] = []) {
   const normalized = messages
     .filter((message) => message?.role !== "reasoning" && message?.role !== "activity")
     .map((message) => {
@@ -128,7 +127,7 @@ function normalizeAgentMessages(messages: any[] = [], context?: unknown, learner
       return message;
     });
   const courseContext = formatCourseDetailContextForAgent(context);
-  const profileContext = formatLearnerProfileContextForAgent(learnerProfile ?? null, learnerFacts);
+  const profileContext = formatLearnerProfileContextForAgent(learnerFacts);
   if (!courseContext && !profileContext) return normalized;
   const lastUserIndex = normalized.findLastIndex((message) => message?.role === "user");
   if (lastUserIndex < 0) return normalized;
@@ -197,11 +196,13 @@ class PrimoriaHttpAgent extends LangGraphHttpAgent {
     return super.run({
       ...input,
       threadId: input.runId,
-      messages: normalizeAgentMessages(input?.messages, appContext, this.learnerProfile, this.learnerFacts),
+      messages: normalizeAgentMessages(input?.messages, appContext, this.learnerFacts),
       state: {
         ...sanitizedState,
         primoria_owner_id: ownerId,
         user_id: ownerId,
+        // Always set server-side so a client-supplied value never survives the spread.
+        primoria_tutor_style: this.learnerProfile?.tutorStyle ?? null,
         copilotkit: {
           ...(input?.state?.copilotkit ?? {}),
           context: appContext,

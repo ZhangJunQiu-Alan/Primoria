@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { TUTOR_STYLES } from "@primoria/contracts/tutor-style";
 
 export const TUTOR_BENCHMARK_DIMENSIONS = [
   "correctness",
@@ -90,6 +91,9 @@ const CaseSchema = z
     tutorBenchTaskType: z.enum(["concept_understanding", "problem_solving", "application", "comparison"]).optional(),
     learnerProfileId: z.string().regex(/^[a-z0-9][a-z0-9._-]+$/).optional(),
     knowledgeBaseId: z.string().regex(/^[a-z0-9][a-z0-9._-]+$/).optional(),
+    // Learner-selected persona; the live runner renders it exactly like the
+    // Agent middleware. Omitted cases run under the production default style.
+    tutorStyle: z.enum(TUTOR_STYLES).optional(),
     prompt: z.string().min(1),
     learnerContext: LearnerContextSchema,
     sources: z.array(SourceSchema).default([]),
@@ -315,6 +319,7 @@ export function evaluateTutorBenchmark(rawDataset, rawResponseSet) {
       tutorBenchTaskType: item.tutorBenchTaskType ?? null,
       learnerProfileId: item.learnerProfileId ?? null,
       knowledgeBaseId: item.knowledgeBaseId ?? null,
+      tutorStyle: item.tutorStyle ?? null,
       missingResponse: !responseByCase.has(item.id),
       score,
       passed: score >= dataset.casePassThreshold && failedDimensionGates.length === 0,

@@ -46,9 +46,8 @@ const CodeContentSchema = z.object({
   explanation: nonEmpty,
 });
 
-// The image writer emits a BRIEF, not an asset — the imaging stage generates the
-// asset later. The prompt must not request embedded text/labels/formulas (AI
-// images can't render those reliably; use a `visual` block instead).
+// The image writer emits a BRIEF, not an asset; the imaging stage generates it
+// later. Instructional text is allowed when it helps explain the concept.
 const ImageContentSchema = z.object({
   title: nonEmpty,
   learningGoal: nonEmpty,
