@@ -95,6 +95,9 @@ export function createModel(options = {}) {
     temperature: 0.2,
     maxTokens: 24000,
     streaming,
+    // DeepSeek defaults to thinking mode; the tutor runs without it for latency
+    // and output-token cost (decision 2026-10-24, checked with the style eval).
+    modelKwargs: model.startsWith("deepseek-") ? { thinking: { type: "disabled" } } : undefined,
     callbacks: usageLogCallbacks("tutor-agent"),
     configuration: { baseURL: baseUrl.replace(/\/$/, "") },
   });

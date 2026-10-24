@@ -11,6 +11,7 @@ import {
   primoriaContextMiddleware,
   primoriaCourseDetailMiddleware,
   primoriaHistoryTrimMiddleware,
+  primoriaTutorStyleMiddleware,
 } from "./middleware.mjs";
 import {
   planVisualizationTool,
@@ -57,8 +58,10 @@ export function createPrimoriaGraph({ checkpointer = new MemorySaver() } = {}) {
       searchInteractiveComponentsTool,
     ],
     systemPrompt: SYSTEM_PROMPT,
-    subagents,
-    middleware: [primoriaContextMiddleware, primoriaHistoryTrimMiddleware, primoriaCourseDetailMiddleware],
+    // concept-agent explains to the learner, so it follows the same persona.
+    subagents: subagents.map((subagent) =>
+      subagent.name === "concept-agent" ? { ...subagent, middleware: [primoriaTutorStyleMiddleware] } : subagent),
+    middleware: [primoriaContextMiddleware, primoriaHistoryTrimMiddleware, primoriaTutorStyleMiddleware, primoriaCourseDetailMiddleware],
     contextSchema: PrimoriaContextSchema,
     checkpointer,
     backend: new FilesystemBackend({

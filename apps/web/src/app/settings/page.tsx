@@ -3,9 +3,12 @@ import { redirect } from "next/navigation";
 import { TutorNavRail } from "@/components/tutor/nav-rail";
 import { ChevronRightIcon } from "@/components/profile/profile-icons";
 import { ContentLanguageSelect } from "@/components/profile/content-language-select";
+import { TutorStyleSelect } from "@/components/profile/tutor-style-select";
 import { LanguageSwitcher } from "@/components/i18n/language-switcher";
 import { getCurrentUserForRsc, isAuthEnabled } from "@/lib/auth/session";
 import { listActiveFacts } from "@/lib/learner-facts/store";
+import { getLearnerProfile } from "@/lib/learner-profile/store";
+import { DEFAULT_TUTOR_STYLE } from "@/lib/learner-profile/types";
 import { getUserPreferences } from "@/lib/settings/user-settings";
 import { getDictionaryForUser } from "@/lib/i18n/server";
 import { formatMessage } from "@/lib/i18n/format";
@@ -20,9 +23,9 @@ export default async function SettingsPage() {
   if (authEnabled && !user) redirect("/auth/sign-in?next=/settings");
 
   const settingsDataPromise = user
-    ? Promise.all([listActiveFacts(user.id), getUserPreferences(user.id)])
-    : Promise.all([Promise.resolve([]), getUserPreferences(null)]);
-  const [{ dictionary }, [facts, preferences]] = await Promise.all([
+    ? Promise.all([listActiveFacts(user.id), getUserPreferences(user.id), getLearnerProfile(user.id)])
+    : Promise.all([Promise.resolve([]), getUserPreferences(null), Promise.resolve(null)]);
+  const [{ dictionary }, [facts, preferences, learnerProfile]] = await Promise.all([
     getDictionaryForUser(user?.id ?? null),
     settingsDataPromise,
   ]);
@@ -59,6 +62,18 @@ export default async function SettingsPage() {
               </Link>
             </div>
           </article>
+
+          {user ? (
+            <article className="settings-card">
+              <div className="settings-card-copy">
+                <h2>{t.tutorStyleTitle}</h2>
+                <p>{t.tutorStyleCopy}</p>
+              </div>
+              <div className="settings-card-control">
+                <TutorStyleSelect initialValue={learnerProfile?.tutorStyle ?? DEFAULT_TUTOR_STYLE} />
+              </div>
+            </article>
+          ) : null}
 
           <article className="settings-card">
             <div className="settings-card-copy">
