@@ -1,6 +1,6 @@
 # Agent B 执行指令：全站盘点、可视化库与视觉验收
 
-状态：待执行。完整要求见 [总任务书](visualization-full-coverage-execution.md)。本文件可直接作为编码 Agent 的任务输入。
+状态：待执行。完整要求见 [总任务书](../../visualization-full-coverage-execution.md)。本文件可直接作为编码 Agent 的任务输入。
 
 ## 任务
 
