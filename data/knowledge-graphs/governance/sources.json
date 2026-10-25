@@ -34,131 +34,6 @@
       "notes_zh": "已核验 DOI、APS 出版信息、CC BY 4.0、山东/贵州/新疆多所中学 496 人参加（摘要称总体分析 492 人）、33 题诊断工具及结果段；SHA-256 对应本次保存于临时目录的 Crossref 元数据快照，研究全文不提交到仓库。M14 概率只限定于 194 名 A2 未掌握子样本。"
     },
     {
-      "source_id": "src_cambridge_9709_examiner_report_june_2024",
-      "title": "Cambridge International AS & A Level Mathematics 9709 June 2024 Principal Examiner Report for Teachers",
-      "publisher": "Cambridge University Press & Assessment",
-      "authority_tier": "A",
-      "verification_status": "verified",
-      "jurisdiction": "international",
-      "languages": [
-        "en"
-      ],
-      "resource_type": "examiner_report",
-      "landing_page_url": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-mathematics-9709/",
-      "document_url": "https://www.cambridgeinternational.org/Images/567737-june-2024-examiner-report.pdf",
-      "document_version": "9709 Mathematics June 2024 examiner report; 60 pages",
-      "issued_at": null,
-      "valid_from": null,
-      "valid_to": null,
-      "retrieved_at": "2026-07-20",
-      "sha256": "4c2d9912b610511cf7755c49f7d2c0df2463aa73d6e288b1ebee197ce2a57f8c",
-      "license_expression": "LicenseRef-Cambridge-Copyrighted-MetadataOnly",
-      "rights": {
-        "metadata": true,
-        "fulltext": false,
-        "excerpts": false,
-        "derivatives": false,
-        "redistribution": false,
-        "commercial_use": false
-      },
-      "storage_policy": "metadata_only",
-      "notes_zh": "官方阅卷报告逐页核验；只登记元数据、哈希和页码，不保存正文。报告描述 Cambridge 9709 当次考生作答，不能外推为新加坡学生发生率。"
-    },
-    {
-      "source_id": "src_nie_sg_logarithm_misconceptions_2005",
-      "title": "Working with Logarithms: Students' Misconceptions and Errors",
-      "publisher": "Association of Mathematics Educators; National Institute of Education, Nanyang Technological University",
-      "authority_tier": "B",
-      "verification_status": "verified",
-      "jurisdiction": "SG",
-      "languages": [
-        "en"
-      ],
-      "resource_type": "education_research",
-      "landing_page_url": "https://repository.nie.edu.sg/handle/10497/69",
-      "document_url": "https://repository.nie.edu.sg/server/api/core/bitstreams/8efe2924-628c-4058-9460-e2e4d8fde45f/content",
-      "document_version": "The Mathematics Educator 8(2), 53-70 (2005); NIE repository copy",
-      "issued_at": "2005-01-01",
-      "valid_from": null,
-      "valid_to": null,
-      "retrieved_at": "2026-07-20",
-      "sha256": "ce6bb15b55c29fa81e789951997d1beebf6d108cdf274d3b919977d244e6a6cd",
-      "license_expression": "LicenseRef-NIE-Repository-Copyrighted-MetadataOnly",
-      "rights": {
-        "metadata": true,
-        "fulltext": false,
-        "excerpts": false,
-        "derivatives": false,
-        "redistribution": false,
-        "commercial_use": false
-      },
-      "storage_policy": "metadata_only",
-      "notes_zh": "已核验 NIE 机构仓储 PDF、两所新加坡学校 81 名中三学生参加、79 份有效答卷进入分析、47 题 ToSUL 工具及期刊 pp.64-66 错误分析。仅保存元数据、哈希与页码定位。"
-    },
-    {
-      "source_id": "src_plos_virus_knowledge_2017",
-      "title": "The evil virus cell: Students' knowledge and beliefs about viruses",
-      "publisher": "PLOS ONE",
-      "authority_tier": "B",
-      "verification_status": "verified",
-      "jurisdiction": "AT",
-      "languages": [
-        "en",
-        "de"
-      ],
-      "resource_type": "education_research",
-      "landing_page_url": "https://doi.org/10.1371/journal.pone.0174402",
-      "document_url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0174402&type=printable",
-      "document_version": "PLOS ONE 12(3): e0174402; version of record",
-      "issued_at": "2017-03-28",
-      "valid_from": null,
-      "valid_to": null,
-      "retrieved_at": "2026-07-20",
-      "sha256": "30f298320402c0800c4860db0805f5eaa1191c61730f300b05185c3c04236c3e",
-      "license_expression": "CC-BY-4.0",
-      "rights": {
-        "metadata": true,
-        "fulltext": true,
-        "excerpts": true,
-        "derivatives": true,
-        "redistribution": true,
-        "commercial_use": true
-      },
-      "storage_policy": "licensed_fulltext",
-      "notes_zh": "已核验开放许可、样本构成、问卷与绘图方法及 PDF p.10 的细胞化病毒表征。研究对象为奥地利七年级、十年级及大学一年级学生，不外推为新加坡发生率。"
-    },
-    {
-      "source_id": "src_rsc_sg_acid_base_conceptions_2016",
-      "title": "On the prevalence of alternative conceptions on acid-base chemistry among secondary students: insights from cognitive and confidence measures",
-      "publisher": "Royal Society of Chemistry",
-      "authority_tier": "B",
-      "verification_status": "verified",
-      "jurisdiction": "SG",
-      "languages": [
-        "en"
-      ],
-      "resource_type": "education_research",
-      "landing_page_url": "https://pubs.rsc.org/en/content/articlehtml/2016/rp/c5rp00146c",
-      "document_url": "https://api.crossref.org/works/10.1039/C5RP00146C",
-      "document_version": "Chemistry Education Research and Practice 17, 263-282 (2016); Crossref metadata snapshot 2026-07-20",
-      "issued_at": "2015-12-11",
-      "valid_from": null,
-      "valid_to": null,
-      "retrieved_at": "2026-07-20",
-      "sha256": "e9c0b161bb7ace3df2809e19d139cf100729e7ecf0eb430160105c31c992bc44",
-      "license_expression": "LicenseRef-RSC-Copyrighted-MetadataOnly",
-      "rights": {
-        "metadata": true,
-        "fulltext": false,
-        "excerpts": false,
-        "derivatives": false,
-        "redistribution": false,
-        "commercial_use": false
-      },
-      "storage_policy": "metadata_only",
-      "notes_zh": "已在 RSC 正文页核验主研究招募 141 名新加坡九年级学生、以 92 份完整答卷分析、四层诊断工具、酸碱错误模型及结果段；SHA-256 对应 Crossref 元数据快照。Cloudflare 阻止命令行下载全文，故不保存正文，只登记 DOI、定位与校验快照。"
-    },
-    {
       "source_id": "src_berkeley_cs188_textbook_2026",
       "title": "UC Berkeley CS188 Introduction to Artificial Intelligence textbook",
       "publisher": "University of California, Berkeley",
@@ -469,6 +344,37 @@
       "notes_zh": "数学 syllabus 的官方更新页，必须与主 syllabus 一并审核。"
     },
     {
+      "source_id": "src_cambridge_9709_examiner_report_june_2024",
+      "title": "Cambridge International AS & A Level Mathematics 9709 June 2024 Principal Examiner Report for Teachers",
+      "publisher": "Cambridge University Press & Assessment",
+      "authority_tier": "A",
+      "verification_status": "verified",
+      "jurisdiction": "international",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "examiner_report",
+      "landing_page_url": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-mathematics-9709/",
+      "document_url": "https://www.cambridgeinternational.org/Images/567737-june-2024-examiner-report.pdf",
+      "document_version": "9709 Mathematics June 2024 examiner report; 60 pages",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-20",
+      "sha256": "4c2d9912b610511cf7755c49f7d2c0df2463aa73d6e288b1ebee197ce2a57f8c",
+      "license_expression": "LicenseRef-Cambridge-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "官方阅卷报告逐页核验；只登记元数据、哈希和页码，不保存正文。报告描述 Cambridge 9709 当次考生作答，不能外推为新加坡学生发生率。"
+    },
+    {
       "source_id": "src_cmu_15213_2026",
       "title": "CMU 15-213/15-503 Introduction to Computer Systems",
       "publisher": "Carnegie Mellon University",
@@ -528,7 +434,38 @@
         "commercial_use": false
       },
       "storage_policy": "metadata_only",
-      "notes_zh": "教育部官方通知与附件包已核验。sha256对应附件ZIP；生物学标准PDF单文件sha256为8408986334a8826e6c7e1486c1ef1430cf47ad9e10174fd08f65d590f4d302a4。只保存元数据、页码定位和释义。"
+      "notes_zh": "教育部官方通知与附件包已核验。sha256对应附件ZIP；生物学标准PDF单文件sha256为8408986334a8826e6c7e1486c1ef1430cf47ad9e10174fd08f65d590f4d302a4。只保存元数据、页码定位和释义。已被 2025 年 10 月印发的日常修订版（2017年版2025年修订）取代；仓库证据于 2026-10-25 迁至对应 *_2025 来源，本条仅作历史记录。"
+    },
+    {
+      "source_id": "src_cn_moe_senior_high_biology_2025",
+      "title": "普通高中生物学课程标准日常修订版（2017年版2025年修订）",
+      "publisher": "中华人民共和国教育部",
+      "authority_tier": "A",
+      "verification_status": "verified",
+      "jurisdiction": "CN-MAINLAND",
+      "languages": [
+        "zh-CN"
+      ],
+      "resource_type": "curriculum_standard",
+      "landing_page_url": null,
+      "document_url": "https://cdn.zizzs.com/zixunzhan/%E6%99%AE%E9%80%9A%E9%AB%98%E4%B8%AD%E7%94%9F%E7%89%A9%E8%AF%BE%E7%A8%8B%E6%A0%87%E5%87%86%E6%97%A5%E5%B8%B8%E4%BF%AE%E8%AE%A2%E7%89%88%EF%BC%882017%E5%B9%B4%E7%89%882025%E5%B9%B4%E4%BF%AE%E8%AE%A2%EF%BC%891762856973305.pdf",
+      "document_version": "2017年版2025年修订（日常修订版）；PDF 94 页，生成于 2025-10-31",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-10-25",
+      "sha256": "f5924aedf3b776a8031f159c90893384a876891f261d8eb00a5b8b7840199cbf",
+      "license_expression": "LicenseRef-China-MOE-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "教育部于 2025 年 10 月印发义务教育、普通高中课程方案和课程标准日常修订版（新华网 2026-01-05 年度盘点报道）。教育部官网未检索到通知原文与附件，本 PDF 取自第三方转载地址；四科 PDF 元数据一致（2025-10-31 生成、无转载水印），目录、章节编号与内容要求编号与 2020 修订版逐条对应。sha256 对应该 PDF 文件。只保存元数据、页码定位和释义；取得教育部官方原件后应复核校验值。"
     },
     {
       "source_id": "src_cn_moe_senior_high_chemistry_2020",
@@ -559,7 +496,38 @@
         "commercial_use": false
       },
       "storage_policy": "metadata_only",
-      "notes_zh": "教育部官方通知与附件包已核验。sha256对应附件ZIP；化学标准PDF单文件sha256为589b296ef47fb3b221a08e616dcb8f19546ed9cf770bd5b5b991ba1d2008274f。只保存元数据、页码定位和释义。"
+      "notes_zh": "教育部官方通知与附件包已核验。sha256对应附件ZIP；化学标准PDF单文件sha256为589b296ef47fb3b221a08e616dcb8f19546ed9cf770bd5b5b991ba1d2008274f。只保存元数据、页码定位和释义。已被 2025 年 10 月印发的日常修订版（2017年版2025年修订）取代；仓库证据于 2026-10-25 迁至对应 *_2025 来源，本条仅作历史记录。"
+    },
+    {
+      "source_id": "src_cn_moe_senior_high_chemistry_2025",
+      "title": "普通高中化学课程标准日常修订版（2017年版2025年修订）",
+      "publisher": "中华人民共和国教育部",
+      "authority_tier": "A",
+      "verification_status": "verified",
+      "jurisdiction": "CN-MAINLAND",
+      "languages": [
+        "zh-CN"
+      ],
+      "resource_type": "curriculum_standard",
+      "landing_page_url": null,
+      "document_url": "http://www.hxzxs.cn/uploads/soft/%EF%BC%882017%E5%B9%B4%E7%89%882025%E5%B9%B4%E4%BF%AE%E8%AE%A2%EF%BC%89%E6%99%AE%E9%80%9A%E9%AB%98%E4%B8%AD%E5%8C%96%E5%AD%A6%E8%AF%BE%E7%A8%8B%E6%A0%87%E5%87%86.pdf",
+      "document_version": "2017年版2025年修订（日常修订版）；PDF 108 页，生成于 2025-10-31",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-10-25",
+      "sha256": "f731543b5cd3fe3dc95657d410ab92d91fe081b31045ee62693cdad8eebeef7f",
+      "license_expression": "LicenseRef-China-MOE-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "教育部于 2025 年 10 月印发义务教育、普通高中课程方案和课程标准日常修订版（新华网 2026-01-05 年度盘点报道）。教育部官网未检索到通知原文与附件，本 PDF 取自第三方转载地址；四科 PDF 元数据一致（2025-10-31 生成、无转载水印），目录、章节编号与内容要求编号与 2020 修订版逐条对应。sha256 对应该 PDF 文件。只保存元数据、页码定位和释义；取得教育部官方原件后应复核校验值。"
     },
     {
       "source_id": "src_cn_moe_senior_high_math_2020",
@@ -590,7 +558,38 @@
         "commercial_use": false
       },
       "storage_policy": "metadata_only",
-      "notes_zh": "教育部官方通知与附件包已核验。sha256 对应36.8MB附件ZIP；其中数学标准PDF单文件sha256为cc4d3a20daa09f5185037e93fbacd58f7df1147392e3dae4bf261c3700ba4195。仓库只保存元数据、页码定位和释义，不保存附件正文。"
+      "notes_zh": "教育部官方通知与附件包已核验。sha256 对应36.8MB附件ZIP；其中数学标准PDF单文件sha256为cc4d3a20daa09f5185037e93fbacd58f7df1147392e3dae4bf261c3700ba4195。仓库只保存元数据、页码定位和释义，不保存附件正文。已被 2025 年 10 月印发的日常修订版（2017年版2025年修订）取代；仓库证据于 2026-10-25 迁至对应 *_2025 来源，本条仅作历史记录。"
+    },
+    {
+      "source_id": "src_cn_moe_senior_high_math_2025",
+      "title": "普通高中数学课程标准日常修订版（2017年版2025年修订）",
+      "publisher": "中华人民共和国教育部",
+      "authority_tier": "A",
+      "verification_status": "verified",
+      "jurisdiction": "CN-MAINLAND",
+      "languages": [
+        "zh-CN"
+      ],
+      "resource_type": "curriculum_standard",
+      "landing_page_url": null,
+      "document_url": "https://cdn.zizzs.com/zixunzhan/%E6%99%AE%E9%80%9A%E9%AB%98%E4%B8%AD%E6%95%B0%E5%AD%A6%E8%AF%BE%E7%A8%8B%E6%A0%87%E5%87%86%E6%97%A5%E5%B8%B8%E4%BF%AE%E8%AE%A2%E7%89%88%EF%BC%882017%E5%B9%B4%E7%89%882025%E5%B9%B4%E4%BF%AE%E8%AE%A2%EF%BC%891762759330338.pdf",
+      "document_version": "2017年版2025年修订（日常修订版）；PDF 171 页，生成于 2025-10-31",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-10-25",
+      "sha256": "fc9258bb37ed2e052a4b1be608865a5481f770ae7e28ce536e835d2354353f86",
+      "license_expression": "LicenseRef-China-MOE-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "教育部于 2025 年 10 月印发义务教育、普通高中课程方案和课程标准日常修订版（新华网 2026-01-05 年度盘点报道）。教育部官网未检索到通知原文与附件，本 PDF 取自第三方转载地址；四科 PDF 元数据一致（2025-10-31 生成、无转载水印），目录、章节编号与内容要求编号与 2020 修订版逐条对应。sha256 对应该 PDF 文件。只保存元数据、页码定位和释义；取得教育部官方原件后应复核校验值。"
     },
     {
       "source_id": "src_cn_moe_senior_high_physics_2020",
@@ -621,7 +620,38 @@
         "commercial_use": false
       },
       "storage_policy": "metadata_only",
-      "notes_zh": "教育部官方通知与附件包已核验。sha256对应附件ZIP；物理标准PDF单文件sha256为a64204bc3b5532b44fbc82b560945d3df3c0bb081aa1d69df028a7591bb983f5。只保存元数据、页码定位和释义。"
+      "notes_zh": "教育部官方通知与附件包已核验。sha256对应附件ZIP；物理标准PDF单文件sha256为a64204bc3b5532b44fbc82b560945d3df3c0bb081aa1d69df028a7591bb983f5。只保存元数据、页码定位和释义。已被 2025 年 10 月印发的日常修订版（2017年版2025年修订）取代；仓库证据于 2026-10-25 迁至对应 *_2025 来源，本条仅作历史记录。"
+    },
+    {
+      "source_id": "src_cn_moe_senior_high_physics_2025",
+      "title": "普通高中物理课程标准日常修订版（2017年版2025年修订）",
+      "publisher": "中华人民共和国教育部",
+      "authority_tier": "A",
+      "verification_status": "verified",
+      "jurisdiction": "CN-MAINLAND",
+      "languages": [
+        "zh-CN"
+      ],
+      "resource_type": "curriculum_standard",
+      "landing_page_url": null,
+      "document_url": "https://cdn.zizzs.com/zixunzhan/%E6%99%AE%E9%80%9A%E9%AB%98%E4%B8%AD%E7%89%A9%E7%90%86%E8%AF%BE%E7%A8%8B%E6%A0%87%E5%87%86%E6%97%A5%E5%B8%B8%E4%BF%AE%E8%AE%A2%E7%89%88%EF%BC%882017%E5%B9%B4%E7%89%882025%E5%B9%B4%E4%BF%AE%E8%AE%A2%EF%BC%891762761470592.pdf",
+      "document_version": "2017年版2025年修订（日常修订版）；PDF 74 页，生成于 2025-10-31",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-10-25",
+      "sha256": "bd3df92fb779dbac6ce5bbc55dd4f5f0c9cecd45d34a14b99245739db88ab559",
+      "license_expression": "LicenseRef-China-MOE-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "教育部于 2025 年 10 月印发义务教育、普通高中课程方案和课程标准日常修订版（新华网 2026-01-05 年度盘点报道）。教育部官网未检索到通知原文与附件，本 PDF 取自第三方转载地址；四科 PDF 元数据一致（2025-10-31 生成、无转载水印），目录、章节编号与内容要求编号与 2020 修订版逐条对应。sha256 对应该 PDF 文件。只保存元数据、页码定位和释义；取得教育部官方原件后应复核校验值。"
     },
     {
       "source_id": "src_cn_nhc_assisted_reproduction_ethics_2003",
@@ -1149,6 +1179,37 @@
       },
       "storage_policy": "metadata_only",
       "notes_zh": "NCBI Bookshelf 可核验的本科/医学神经科学教材。第27章覆盖大脑皮层语言功能，第31章覆盖学习与记忆的神经基础；版权受限，仅保存元数据、快照校验值和章节定位。"
+    },
+    {
+      "source_id": "src_nie_sg_logarithm_misconceptions_2005",
+      "title": "Working with Logarithms: Students' Misconceptions and Errors",
+      "publisher": "Association of Mathematics Educators; National Institute of Education, Nanyang Technological University",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "SG",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "education_research",
+      "landing_page_url": "https://repository.nie.edu.sg/handle/10497/69",
+      "document_url": "https://repository.nie.edu.sg/server/api/core/bitstreams/8efe2924-628c-4058-9460-e2e4d8fde45f/content",
+      "document_version": "The Mathematics Educator 8(2), 53-70 (2005); NIE repository copy",
+      "issued_at": "2005-01-01",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-20",
+      "sha256": "ce6bb15b55c29fa81e789951997d1beebf6d108cdf274d3b919977d244e6a6cd",
+      "license_expression": "LicenseRef-NIE-Repository-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "已核验 NIE 机构仓储 PDF、两所新加坡学校 81 名中三学生参加、79 份有效答卷进入分析、47 题 ToSUL 工具及期刊 pp.64-66 错误分析。仅保存元数据、哈希与页码定位。"
     },
     {
       "source_id": "src_node_learn_2026",
@@ -1709,6 +1770,38 @@
       "notes_zh": "官方教学设计明确覆盖充分条件、必要条件和充要条件。SHA-256 对应官方PDF；版权受限，仅提交元数据与精确页码。"
     },
     {
+      "source_id": "src_plos_virus_knowledge_2017",
+      "title": "The evil virus cell: Students' knowledge and beliefs about viruses",
+      "publisher": "PLOS ONE",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "AT",
+      "languages": [
+        "en",
+        "de"
+      ],
+      "resource_type": "education_research",
+      "landing_page_url": "https://doi.org/10.1371/journal.pone.0174402",
+      "document_url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0174402&type=printable",
+      "document_version": "PLOS ONE 12(3): e0174402; version of record",
+      "issued_at": "2017-03-28",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-20",
+      "sha256": "30f298320402c0800c4860db0805f5eaa1191c61730f300b05185c3c04236c3e",
+      "license_expression": "CC-BY-4.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": true,
+        "excerpts": true,
+        "derivatives": true,
+        "redistribution": true,
+        "commercial_use": true
+      },
+      "storage_policy": "licensed_fulltext",
+      "notes_zh": "已核验开放许可、样本构成、问卷与绘图方法及 PDF p.10 的细胞化病毒表征。研究对象为奥地利七年级、十年级及大学一年级学生，不外推为新加坡发生率。"
+    },
+    {
       "source_id": "src_pmc_apiaceae_protoplast_somatic_hybridisation_2023",
       "title": "Protoplast Technology and Somatic Hybridisation in the Family Apiaceae",
       "publisher": "Plants (MDPI); archived by PubMed Central",
@@ -1833,6 +1926,37 @@
       "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
     },
     {
+      "source_id": "src_rsc_sg_acid_base_conceptions_2016",
+      "title": "On the prevalence of alternative conceptions on acid-base chemistry among secondary students: insights from cognitive and confidence measures",
+      "publisher": "Royal Society of Chemistry",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "SG",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "education_research",
+      "landing_page_url": "https://pubs.rsc.org/en/content/articlehtml/2016/rp/c5rp00146c",
+      "document_url": "https://api.crossref.org/works/10.1039/C5RP00146C",
+      "document_version": "Chemistry Education Research and Practice 17, 263-282 (2016); Crossref metadata snapshot 2026-07-20",
+      "issued_at": "2015-12-11",
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-20",
+      "sha256": "e9c0b161bb7ace3df2809e19d139cf100729e7ecf0eb430160105c31c992bc44",
+      "license_expression": "LicenseRef-RSC-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "已在 RSC 正文页核验主研究招募 141 名新加坡九年级学生、以 92 份完整答卷分析、四层诊断工具、酸碱错误模型及结果段；SHA-256 对应 Crossref 元数据快照。Cloudflare 阻止命令行下载全文，故不保存正文，只登记 DOI、定位与校验快照。"
+    },
+    {
       "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
       "title": "G2/G3 Lower Secondary Science Syllabuses",
       "publisher": "Singapore Ministry of Education, Curriculum Planning and Development Division",
@@ -1911,7 +2035,7 @@
       "issued_at": null,
       "valid_from": "2026-01-01",
       "valid_to": null,
-      "retrieved_at": "2026-07-19",
+      "retrieved_at": "2026-10-25",
       "sha256": "3dd2aa5d410754830e85bd0bdea64a7cdcb2ff351294b6c9958545144fa5cb6f",
       "license_expression": "LicenseRef-SG-MOE-Cambridge-Copyrighted-MetadataOnly",
       "rights": {
@@ -1923,7 +2047,7 @@
         "commercial_use": false
       },
       "storage_policy": "metadata_only",
-      "notes_zh": "采用 2026 首次考试的新 Syllabus 9477；已逐项复核 101 项内容 outcome 和 Practical Assessment。只保存元数据、校验值、页码定位和中文释义。"
+      "notes_zh": "采用 2026 首次考试的新 Syllabus 9477；已逐项复核 101 项内容 outcome 和 Practical Assessment。只保存元数据、校验值、页码定位和中文释义。2026-10-25 复核：原文件仍可访问且 sha256 不变；SEAB 2026 页面现链接重新上传版（isomer …/3fed64fd…/9477_y26_sy.pdf，sha256 062d049c1bcb…），仅修正字体嵌入，逐页内容一致。2027 考试版 9477_y27_sy.pdf（sha256 8c2744bc2253…）除年份外内容一致。"
     },
     {
       "source_id": "src_sg_seab_h2_chemistry_9476_2026",
@@ -1942,7 +2066,7 @@
       "issued_at": null,
       "valid_from": "2026-01-01",
       "valid_to": null,
-      "retrieved_at": "2026-07-19",
+      "retrieved_at": "2026-10-25",
       "sha256": "14dc57b6504a9121911eeff53d98a3dca6fb19e7a01a1de9801c0a5a44da2145",
       "license_expression": "LicenseRef-SG-MOE-Cambridge-Copyrighted-MetadataOnly",
       "rights": {
@@ -1954,7 +2078,7 @@
         "commercial_use": false
       },
       "storage_policy": "metadata_only",
-      "notes_zh": "2026 首次考试的新版 9476 官方 PDF 已通过 SEAB 页面、官方 Isomer 内容地址和 46 页正文逐项复核；仅保存元数据、校验值、页码定位和中文释义，不保存正文。"
+      "notes_zh": "2026 首次考试的新版 9476 官方 PDF 已通过 SEAB 页面、官方 Isomer 内容地址和 46 页正文逐项复核；仅保存元数据、校验值、页码定位和中文释义，不保存正文。2026-10-25 复核：文件与 sha256 不变。2027 考试版 9476_y27_sy.pdf（sha256 e18154a09e0c…）除年份与版权年外内容一致。"
     },
     {
       "source_id": "src_sg_seab_h2_math_9758_2026",
@@ -1968,12 +2092,12 @@
       ],
       "resource_type": "curriculum_standard",
       "landing_page_url": "https://www.seab.gov.sg/gce-a-level/a-level-syllabuses-examined-for-school-candidates-2026/",
-      "document_url": "https://www.seab.gov.sg/files/A%20Level%20Syllabus%20Sch%20Cddts/2026/9758_y26_sy.pdf",
+      "document_url": "https://isomer-user-content.by.gov.sg/334/f27e37f7-f0ec-4a35-b1e8-3a5e88ae2f81/9758_y26_sy.pdf",
       "document_version": "Syllabus 9758; examination year 2026; document © 2024",
       "issued_at": null,
       "valid_from": "2026-01-01",
       "valid_to": "2026-12-31",
-      "retrieved_at": "2026-07-19",
+      "retrieved_at": "2026-10-25",
       "sha256": "2f43bb5cc5cd857b8509713d7e9ef59920f0fa963b5ac3192baa2254dd966db1",
       "license_expression": "LicenseRef-SG-MOE-Cambridge-Copyrighted-MetadataOnly",
       "rights": {
@@ -1985,7 +2109,7 @@
         "commercial_use": false
       },
       "storage_policy": "metadata_only",
-      "notes_zh": "2026 学校考生官方页面与 SEAB /files PDF 已由内置浏览器复核；isomer-user-content 旧地址现对终端请求返回 403。仓库只保存元数据、页码定位和释义。"
+      "notes_zh": "2026 学校考生官方页面与 SEAB /files PDF 已由内置浏览器复核；isomer-user-content 旧地址现对终端请求返回 403。仓库只保存元数据、页码定位和释义。2026-10-25 复核：原 seab.gov.sg/files 地址已 404，SEAB 2026 页面现链接 isomer 地址，文件 sha256 不变。2027 考试版 9758_y27_sy.pdf（sha256 42f4f83c184f…）除年份外内容一致。"
     },
     {
       "source_id": "src_sg_seab_h2_physics_9478_2026",
@@ -1999,12 +2123,12 @@
       ],
       "resource_type": "curriculum_standard",
       "landing_page_url": "https://www.seab.gov.sg/gce-a-level/a-level-syllabuses-examined-for-school-candidates-2026/",
-      "document_url": "https://www.seab.gov.sg/files/A%20Level%20Syllabus%20Sch%20Cddts/2026/9478_y26_sy.pdf",
+      "document_url": "https://isomer-user-content.by.gov.sg/334/2dc32e71-8fb4-4272-9262-f21be46fbaeb/9478_y26_sy.pdf",
       "document_version": "Syllabus 9478; first examination in 2026; document © 2024",
       "issued_at": null,
       "valid_from": "2026-01-01",
       "valid_to": null,
-      "retrieved_at": "2026-07-19",
+      "retrieved_at": "2026-10-25",
       "sha256": "3357dbd709a3abae624f01d3089951b6809cf672c5a590995a5514d6c30db628",
       "license_expression": "LicenseRef-SG-MOE-Cambridge-Copyrighted-MetadataOnly",
       "rights": {
@@ -2016,7 +2140,7 @@
         "commercial_use": false
       },
       "storage_policy": "metadata_only",
-      "notes_zh": "2026 学校考生官方 PDF 已通过内置浏览器及 isomer 内容地址复核；仓库仅保存元数据、校验值、页码定位和中文释义。"
+      "notes_zh": "2026 学校考生官方 PDF 已通过内置浏览器及 isomer 内容地址复核；仓库仅保存元数据、校验值、页码定位和中文释义。2026-10-25 复核：原 seab.gov.sg/files 地址已 404，SEAB 2026 页面现链接 isomer 地址，文件 sha256 不变。2027 考试版 9478_y27_sy.pdf（sha256 50d3ae46fcb9…）除年份与版权年外内容一致。"
     },
     {
       "source_id": "src_stanford_cs144_2026",

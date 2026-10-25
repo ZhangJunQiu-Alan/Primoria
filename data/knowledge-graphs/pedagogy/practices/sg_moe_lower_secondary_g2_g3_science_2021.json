@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.2",
   "practice_set_id": "cpk_sg_moe_lower_secondary_g2_g3_science_2021",
   "framework_id": "cfw_sg_moe_lower_secondary_g2_g3_science_2021_outcomes",
   "curriculum_id": "cur_sg_moe_lower_secondary_g2_g3_science_2021",
@@ -9,12 +9,22 @@
     "src_sg_moe_lower_secondary_g2_g3_science_2021"
   ],
   "generated_at": "2026-07-19",
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "将 46 项科学实践与 33 项价值伦理成果按主题归并到教学与评测知识层。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-10-25",
+      "summary_zh": "按 2026-10-25 官方来源复核更新证据定位（中国课标迁至 2025 日常修订版、新加坡页码校正），状态保持 needs_review。"
+    },
+    {
+      "version": "0.1.2",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准。"
     }
   ],
   "items": [
@@ -39,10 +49,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.30, The Scientific Endeavour learning outcomes；本组覆盖 8 项"
+          "locator": "PDF p.31, The Scientific Endeavour learning outcomes；本组覆盖 8 项"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_se_practice",
@@ -67,10 +77,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.30, The Scientific Endeavour learning outcomes；本组覆盖 10 项，其中 1 项对 G2 可选"
+          "locator": "PDF p.31, The Scientific Endeavour learning outcomes；本组覆盖 10 项，其中 1 项对 G2 可选"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_2_practice",
@@ -93,10 +103,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.32, topic 2 learning outcomes；本组覆盖 8 项，其中 1 项对 G2 可选"
+          "locator": "PDF p.33, topic 2 learning outcomes；本组覆盖 8 项，其中 1 项对 G2 可选"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_2_value",
@@ -113,10 +123,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.32, topic 2 learning outcomes；本组覆盖 2 项"
+          "locator": "PDF p.33, topic 2 learning outcomes；本组覆盖 2 项"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_3_practice",
@@ -134,10 +144,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.33, topic 3 learning outcomes；本组覆盖 3 项"
+          "locator": "PDF p.34, topic 3 learning outcomes；本组覆盖 3 项"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_3_value",
@@ -154,10 +164,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.33, topic 3 learning outcomes；本组覆盖 2 项"
+          "locator": "PDF p.34, topic 3 learning outcomes；本组覆盖 2 项"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_4_practice",
@@ -173,10 +183,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.34, topic 4 learning outcomes；本组覆盖 1 项"
+          "locator": "PDF p.35, topic 4 learning outcomes；本组覆盖 1 项"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_4_value",
@@ -193,10 +203,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.34, topic 4 learning outcomes；本组覆盖 2 项"
+          "locator": "PDF p.35, topic 4 learning outcomes；本组覆盖 2 项"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_5_practice",
@@ -213,10 +223,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.36, topic 5 learning outcomes；本组覆盖 2 项，其中 1 项对 G2 可选"
+          "locator": "PDF p.37, topic 5 learning outcomes；本组覆盖 2 项，其中 1 项对 G2 可选"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_5_value",
@@ -233,10 +243,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.36, topic 5 learning outcomes；本组覆盖 2 项"
+          "locator": "PDF p.37, topic 5 learning outcomes；本组覆盖 2 项"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_6_practice",
@@ -253,10 +263,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.37, topic 6 learning outcomes；本组覆盖 2 项"
+          "locator": "PDF p.38, topic 6 learning outcomes；本组覆盖 2 项"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_6_value",
@@ -272,10 +282,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.37, topic 6 learning outcomes；本组覆盖 1 项"
+          "locator": "PDF p.38, topic 6 learning outcomes；本组覆盖 1 项"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_7_value",
@@ -291,10 +301,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.38, topic 7 learning outcomes；本组覆盖 1 项"
+          "locator": "PDF p.39, topic 7 learning outcomes；本组覆盖 1 项"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_8_practice",
@@ -311,10 +321,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.39, topic 8 learning outcomes；本组覆盖 2 项"
+          "locator": "PDF p.40, topic 8 learning outcomes；本组覆盖 2 项"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_8_value",
@@ -331,10 +341,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.39, topic 8 learning outcomes；本组覆盖 2 项，其中 1 项对 G2 可选"
+          "locator": "PDF p.40, topic 8 learning outcomes；本组覆盖 2 项，其中 1 项对 G2 可选"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_9_practice",
@@ -353,10 +363,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.41, topic 9 learning outcomes；本组覆盖 4 项，其中 1 项对 G2 可选"
+          "locator": "PDF p.42, topic 9 learning outcomes；本组覆盖 4 项，其中 1 项对 G2 可选"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_9_value",
@@ -373,10 +383,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.41, topic 9 learning outcomes；本组覆盖 2 项"
+          "locator": "PDF p.42, topic 9 learning outcomes；本组覆盖 2 项"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_10_practice",
@@ -394,10 +404,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.43, topic 10 learning outcomes；本组覆盖 3 项"
+          "locator": "PDF p.44, topic 10 learning outcomes；本组覆盖 3 项"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_10_value",
@@ -413,10 +423,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.43, topic 10 learning outcomes；本组覆盖 1 项"
+          "locator": "PDF p.44, topic 10 learning outcomes；本组覆盖 1 项"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_11_practice",
@@ -434,10 +444,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.44, topic 11 learning outcomes；本组覆盖 3 项"
+          "locator": "PDF p.45, topic 11 learning outcomes；本组覆盖 3 项"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_11_value",
@@ -453,10 +463,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.44, topic 11 learning outcomes；本组覆盖 1 项"
+          "locator": "PDF p.45, topic 11 learning outcomes；本组覆盖 1 项"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_12_practice",
@@ -472,10 +482,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.45, topic 12 learning outcomes；本组覆盖 1 项，其中 1 项对 G2 可选"
+          "locator": "PDF p.46, topic 12 learning outcomes；本组覆盖 1 项，其中 1 项对 G2 可选"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_12_value",
@@ -492,10 +502,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.45, topic 12 learning outcomes；本组覆盖 2 项，其中 1 项对 G2 可选"
+          "locator": "PDF p.46, topic 12 learning outcomes；本组覆盖 2 项，其中 1 项对 G2 可选"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_13_practice",
@@ -514,10 +524,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.47, topic 13 learning outcomes；本组覆盖 4 项，其中 3 项对 G2 可选"
+          "locator": "PDF p.48, topic 13 learning outcomes；本组覆盖 4 项，其中 3 项对 G2 可选"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_13_value",
@@ -533,10 +543,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.47, topic 13 learning outcomes；本组覆盖 1 项"
+          "locator": "PDF p.48, topic 13 learning outcomes；本组覆盖 1 项"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_14_practice",
@@ -552,10 +562,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.48, topic 14 learning outcomes；本组覆盖 1 项，其中 1 项对 G2 可选"
+          "locator": "PDF p.49, topic 14 learning outcomes；本组覆盖 1 项，其中 1 项对 G2 可选"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_14_value",
@@ -572,10 +582,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.48, topic 14 learning outcomes；本组覆盖 2 项"
+          "locator": "PDF p.49, topic 14 learning outcomes；本组覆盖 2 项"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_15_practice",
@@ -591,10 +601,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.49, topic 15 learning outcomes；本组覆盖 1 项，其中 1 项对 G2 可选"
+          "locator": "PDF p.50, topic 15 learning outcomes；本组覆盖 1 项，其中 1 项对 G2 可选"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_15_value",
@@ -611,10 +621,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.49, topic 15 learning outcomes；本组覆盖 2 项"
+          "locator": "PDF p.50, topic 15 learning outcomes；本组覆盖 2 项"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_16_practice",
@@ -630,10 +640,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.50, topic 16 learning outcomes；本组覆盖 1 项"
+          "locator": "PDF p.51, topic 16 learning outcomes；本组覆盖 1 项"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_lss_science_2021_16_value",
@@ -650,10 +660,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.50, topic 16 learning outcomes；本组覆盖 2 项，其中 1 项对 G2 可选"
+          "locator": "PDF p.51, topic 16 learning outcomes；本组覆盖 2 项，其中 1 项对 G2 可选"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ]
 }

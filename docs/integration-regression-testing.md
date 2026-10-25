@@ -274,7 +274,9 @@ PR jobs to provider secrets or model drift.
 
 Snapshot publication is blocked until the repository contains a minimal
 governance decision record referencing the external authorization evidence for
-the 10 runtime graphs whose current source review status is `needs_review`.
+the runtime graphs whose current source review status is `needs_review`. Since
+the 2026-10-25 China/Singapore approval that set is empty, so
+`covered_graph_ids` must be `[]`; the record itself is still required.
 Sensitive authorization material stays outside the repository. The decision
 record contains only the approver or approving role, date, covered graph IDs,
 allowed artifact contents, and external evidence reference.
@@ -303,7 +305,7 @@ contains an approved decision with these fields:
   "status": "approved",
   "approved_by_role": "approving role",
   "approved_at": "ISO-8601 date or timestamp",
-  "covered_graph_ids": ["the exact 10 needs_review graph IDs"],
+  "covered_graph_ids": ["the exact current needs_review graph IDs; currently none"],
   "allowed_artifact_contents": [
     "fixed_query_vectors",
     "manifest",
@@ -513,24 +515,15 @@ commit/push permission requirement is now satisfied.
    runtime evidence on GitHub without modifying the local VM.
 3. **KG artifact authorization evidence.** Supply the decision identifier,
    approving person/role, approval date, and an external evidence reference
-   permitting the snapshot contents listed in the contract above for the ten
+   permitting the snapshot contents listed in the contract above for the
    graphs below. Keep sensitive documents and provider keys out of chat and the
    repository. Approval to run tests alone is not a source-authorization record.
 
-The exact current `needs_review` graph IDs are:
-
-```text
-senior_secondary_biology
-senior_secondary_chemistry
-senior_secondary_mathematics
-senior_secondary_physics
-singapore_h2_biology
-singapore_h2_chemistry
-singapore_h2_mathematics
-singapore_h2_physics
-singapore_lower_secondary_science
-singapore_secondary_mathematics
-```
+There are currently no `needs_review` graph IDs: the ten China/Singapore graphs
+previously listed here were approved on 2026-10-25
+(`data/knowledge-graphs/review/approved/cn-sg-2026-10/`). A snapshot must be
+exported from the post-approval sources and the re-embedded shared database,
+because four of those graphs changed embedding inputs.
 
 ### Remaining implementation and verification owned by the agent
 

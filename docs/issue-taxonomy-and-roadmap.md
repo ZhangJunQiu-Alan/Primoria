@@ -131,8 +131,8 @@ but they must not become mastery evidence or change the remediation decision.
 ### Completed baseline: China/Singapore Routing Coverage
 
 The runtime registry now contains 31 graphs, including 10 China/Singapore
-secondary and H2 graphs. The protected fixture now contains 1,718 bilingual
-cases across all 31 graphs, with curriculum-specific labels and English/Chinese
+secondary and H2 graphs, all source-approved since 2026-10-25. The protected
+fixture now contains 1,726 bilingual cases across all 31 graphs, with curriculum-specific labels and English/Chinese
 manual boundary coverage for each new graph. The structural gate passes with a
 1,718-case minimum and unchanged gold policies.
 

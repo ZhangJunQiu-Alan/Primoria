@@ -94,9 +94,9 @@ Region may only narrow uncommitted onboarding candidates. The Agent and browser
 never receive raw Facts for this decision; Web derives only a bounded
 curriculum system/region value.
 
-The runtime topic-graph registry currently contains 31 source-derived graphs.
-The original 21 source graphs are approved; 10 China/Singapore secondary and H2
-graphs are registered while their source status remains `needs_review`.
+The runtime topic-graph registry currently contains 31 source-derived graphs,
+all source-approved: the original 21 since 2026-07 and the 10 China/Singapore
+secondary and H2 graphs since the 2026-10-25 owner review.
 Governance evidence under `data/knowledge-graphs/{governance,curricula,pedagogy}`
 stays separate from the runtime artifact registry, and current build/import
 code does not automatically enforce a review-status publication gate. See

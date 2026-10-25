@@ -89,7 +89,7 @@ const graphs = new Map(
 describe("pedagogical knowledge governance", () => {
   it("provides a balanced manually curated core batch for China and Singapore", () => {
     expect(profileSet.profile_set_id).toBe("pps_cn_sg_core_pedagogy_v1");
-    expect(profileSet.review_status).toBe("needs_review");
+    expect(profileSet.review_status).toBe("approved");
     expect(profileSet.profiles).toHaveLength(48);
     expect(profileSet.profiles.filter((profile) => profile.jurisdictions.includes("CN-MAINLAND"))).toHaveLength(24);
     expect(profileSet.profiles.filter((profile) => profile.jurisdictions.includes("SG"))).toHaveLength(24);
@@ -108,7 +108,7 @@ describe("pedagogical knowledge governance", () => {
       expect(
         new Set(profile.evidence_refs.map((ref) => sourceById.get(ref.source_id)?.resource_type)).size,
       ).toBeGreaterThanOrEqual(2);
-      expect(profile.review_status).toBe("needs_review");
+      expect(profile.review_status).toBe("approved");
     }
   });
 

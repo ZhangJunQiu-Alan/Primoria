@@ -1,6 +1,6 @@
 {
   "schema_version": "3.0.0",
-  "content_version": "0.4.0",
+  "content_version": "0.4.2",
   "mapping_set_id": "cms_sg_seab_h2_biology_9477_2026_outcomes",
   "framework_id": "cfw_sg_seab_h2_biology_9477_2026_outcomes",
   "curriculum_id": "cur_sg_seab_h2_biology_9477_2026",
@@ -10,7 +10,7 @@
   ],
   "mapping_scope": "outcome_coverage",
   "generated_at": "2026-07-19",
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.3.0",
@@ -21,6 +21,16 @@
       "version": "0.4.0",
       "date": "2026-07-19",
       "summary_zh": "将 45 项 H2 生物缺口解析为 42 个概念；101 项内容成果全部达到 full，7 项通用实验能力保持 excluded。"
+    },
+    {
+      "version": "0.4.1",
+      "date": "2026-10-25",
+      "summary_zh": "依据 2026-10 联网复核修正描述、证据定位与映射覆盖，状态保持 needs_review。"
+    },
+    {
+      "version": "0.4.2",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准。"
     }
   ],
   "mappings": [
@@ -41,7 +51,7 @@
           "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_1_b",
@@ -61,7 +71,7 @@
           "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_1_c",
@@ -80,7 +90,7 @@
           "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_1_d",
@@ -99,7 +109,7 @@
           "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_1_e",
@@ -118,7 +128,7 @@
           "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_1_f",
@@ -137,7 +147,7 @@
           "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_1_g",
@@ -159,7 +169,7 @@
           "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_1_h",
@@ -181,7 +191,7 @@
           "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_1_i",
@@ -201,7 +211,7 @@
           "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_1_j",
@@ -220,7 +230,7 @@
           "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_1_k",
@@ -239,7 +249,7 @@
           "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_1_l",
@@ -260,7 +270,7 @@
           "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (l)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_1_m",
@@ -279,7 +289,7 @@
           "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (m)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_1_n",
@@ -298,7 +308,7 @@
           "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (n)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_1_o",
@@ -318,7 +328,7 @@
           "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (o)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_1_p",
@@ -337,7 +347,7 @@
           "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (p)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_1_q",
@@ -356,7 +366,7 @@
           "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (q)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_1_r",
@@ -375,7 +385,7 @@
           "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (r)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_1_s",
@@ -394,7 +404,7 @@
           "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (s)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_1_t",
@@ -413,7 +423,7 @@
           "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (t)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_1_u",
@@ -432,7 +442,7 @@
           "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (u)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_a",
@@ -452,7 +462,7 @@
           "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_b",
@@ -471,7 +481,7 @@
           "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_c",
@@ -491,7 +501,7 @@
           "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_d",
@@ -510,7 +520,7 @@
           "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_e",
@@ -529,7 +539,7 @@
           "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_f",
@@ -548,7 +558,7 @@
           "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_g",
@@ -567,7 +577,7 @@
           "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_h",
@@ -586,7 +596,7 @@
           "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_i",
@@ -605,13 +615,14 @@
           "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_j",
       "requirement_id": "req_sg_h2_biology_9477_2026_o_2_j",
       "canonical_ids": [
-        "pc_c83a8b007ebf17728bb76b2ece193f67"
+        "pc_c83a8b007ebf17728bb76b2ece193f67",
+        "pc_0185ccac3ad47cd14f266d12099ab528"
       ],
       "coverage_status": "full",
       "relation": "required",
@@ -624,7 +635,7 @@
           "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_k",
@@ -644,7 +655,7 @@
           "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_l",
@@ -663,7 +674,7 @@
           "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (l)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_m",
@@ -682,7 +693,7 @@
           "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (m)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_n",
@@ -701,7 +712,7 @@
           "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (n)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_o",
@@ -720,7 +731,7 @@
           "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (o)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_p",
@@ -739,7 +750,7 @@
           "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (p)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_q",
@@ -758,7 +769,7 @@
           "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (q)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_r",
@@ -777,7 +788,7 @@
           "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (r)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_s",
@@ -796,7 +807,7 @@
           "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (s)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_t",
@@ -816,7 +827,7 @@
           "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (t)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_u",
@@ -835,7 +846,7 @@
           "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (u)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_v",
@@ -854,7 +865,7 @@
           "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (v)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_w",
@@ -874,7 +885,7 @@
           "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (w)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_x",
@@ -894,7 +905,7 @@
           "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (x)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_y",
@@ -913,7 +924,7 @@
           "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (y)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_z",
@@ -932,7 +943,7 @@
           "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (z)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_aa",
@@ -951,7 +962,7 @@
           "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (aa)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_bb",
@@ -970,7 +981,7 @@
           "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (bb)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_cc",
@@ -989,7 +1000,7 @@
           "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (cc)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_2_dd",
@@ -1008,7 +1019,7 @@
           "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (dd)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_3_a",
@@ -1027,7 +1038,7 @@
           "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_3_b",
@@ -1046,7 +1057,7 @@
           "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_3_c",
@@ -1065,7 +1076,7 @@
           "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_3_d",
@@ -1084,7 +1095,7 @@
           "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_3_e",
@@ -1103,7 +1114,7 @@
           "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_3_f",
@@ -1122,7 +1133,7 @@
           "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_3_g",
@@ -1141,7 +1152,7 @@
           "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_3_h",
@@ -1160,7 +1171,7 @@
           "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_3_i",
@@ -1179,7 +1190,7 @@
           "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_3_j",
@@ -1198,7 +1209,7 @@
           "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_3_k",
@@ -1220,7 +1231,7 @@
           "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_3_l",
@@ -1240,7 +1251,7 @@
           "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (l)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_3_m",
@@ -1259,7 +1270,7 @@
           "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (m)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_3_n",
@@ -1278,7 +1289,7 @@
           "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (n)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_3_o",
@@ -1297,7 +1308,7 @@
           "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (o)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_3_p",
@@ -1316,7 +1327,7 @@
           "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (p)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_4_a",
@@ -1336,7 +1347,7 @@
           "locator": "PDF p.19, topic 4 Biological Evolution, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_4_b",
@@ -1355,7 +1366,7 @@
           "locator": "PDF p.19, topic 4 Biological Evolution, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_4_c",
@@ -1374,7 +1385,7 @@
           "locator": "PDF p.19, topic 4 Biological Evolution, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_4_d",
@@ -1394,7 +1405,7 @@
           "locator": "PDF p.19, topic 4 Biological Evolution, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_4_e",
@@ -1413,7 +1424,7 @@
           "locator": "PDF p.19, topic 4 Biological Evolution, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_4_f",
@@ -1432,7 +1443,7 @@
           "locator": "PDF p.19, topic 4 Biological Evolution, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_4_g",
@@ -1451,7 +1462,7 @@
           "locator": "PDF p.19, topic 4 Biological Evolution, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_4_h",
@@ -1470,7 +1481,7 @@
           "locator": "PDF p.19, topic 4 Biological Evolution, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_4_i",
@@ -1489,7 +1500,7 @@
           "locator": "PDF p.19, topic 4 Biological Evolution, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_4_j",
@@ -1508,7 +1519,7 @@
           "locator": "PDF p.19, topic 4 Biological Evolution, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_4_k",
@@ -1527,7 +1538,7 @@
           "locator": "PDF p.19, topic 4 Biological Evolution, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_4_l",
@@ -1546,7 +1557,7 @@
           "locator": "PDF p.19, topic 4 Biological Evolution, outcome (l)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_4_m",
@@ -1565,7 +1576,7 @@
           "locator": "PDF p.19, topic 4 Biological Evolution, outcome (m)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_4_n",
@@ -1584,7 +1595,7 @@
           "locator": "PDF p.19, topic 4 Biological Evolution, outcome (n)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_a_a",
@@ -1604,7 +1615,7 @@
           "locator": "PDF p.20, topic A Infectious Diseases, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_a_b",
@@ -1623,7 +1634,7 @@
           "locator": "PDF p.20, topic A Infectious Diseases, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_a_c",
@@ -1642,7 +1653,7 @@
           "locator": "PDF p.20, topic A Infectious Diseases, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_a_d",
@@ -1661,7 +1672,7 @@
           "locator": "PDF p.20, topic A Infectious Diseases, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_a_e",
@@ -1680,7 +1691,7 @@
           "locator": "PDF p.20, topic A Infectious Diseases, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_a_f",
@@ -1699,7 +1710,7 @@
           "locator": "PDF p.20, topic A Infectious Diseases, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_a_g",
@@ -1718,7 +1729,7 @@
           "locator": "PDF p.20, topic A Infectious Diseases, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_a_h",
@@ -1737,7 +1748,7 @@
           "locator": "PDF p.20, topic A Infectious Diseases, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_a_i",
@@ -1756,7 +1767,7 @@
           "locator": "PDF p.20, topic A Infectious Diseases, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_a_j",
@@ -1775,7 +1786,7 @@
           "locator": "PDF p.20, topic A Infectious Diseases, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_a_k",
@@ -1794,7 +1805,7 @@
           "locator": "PDF p.20, topic A Infectious Diseases, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_b_a",
@@ -1813,7 +1824,7 @@
           "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_b_b",
@@ -1832,7 +1843,7 @@
           "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_b_c",
@@ -1851,7 +1862,7 @@
           "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_b_d",
@@ -1870,7 +1881,7 @@
           "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_b_e",
@@ -1889,7 +1900,7 @@
           "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_b_f",
@@ -1908,7 +1919,7 @@
           "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_b_g",
@@ -1927,7 +1938,7 @@
           "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_b_h",
@@ -1946,7 +1957,7 @@
           "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_b_i",
@@ -1965,7 +1976,7 @@
           "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_practice_planning",
@@ -1982,7 +1993,7 @@
           "locator": "PDF p.22, Practical Assessment, Planning"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_practice_risk",
@@ -1999,7 +2010,7 @@
           "locator": "PDF p.22, Practical Assessment, Planning"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_practice_manipulation_measurement",
@@ -2016,7 +2027,7 @@
           "locator": "PDF p.22, Practical Assessment, MMO"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_practice_data_presentation",
@@ -2033,7 +2044,7 @@
           "locator": "PDF p.22, Practical Assessment, PDO"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_practice_analysis",
@@ -2050,7 +2061,7 @@
           "locator": "PDF p.22, Practical Assessment, ACE"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_practice_conclusion_prediction",
@@ -2067,7 +2078,7 @@
           "locator": "PDF p.22, Practical Assessment, ACE"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_biology_9477_2026_o_practice_evaluation_improvement",
@@ -2084,7 +2095,7 @@
           "locator": "PDF p.22, Practical Assessment, ACE"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ]
 }

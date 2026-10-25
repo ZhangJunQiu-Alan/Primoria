@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.2",
   "resolution_set_id": "cgr_sg_seab_h2_math_9758_2026_outcomes",
   "gap_set_id": "cgs_sg_seab_h2_math_9758_2026_outcomes",
   "framework_id": "cfw_sg_seab_h2_math_9758_2026_outcomes",
@@ -16,12 +16,22 @@
     "src_berkeley_cs70_summer_2026"
   ],
   "generated_at": "2026-07-19",
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "完成 33 项 H2 数学概念缺口的全库查重、最小诊断粒度新增和双类权威证据登记。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-10-25",
+      "summary_zh": "依据 2026-10 联网复核修正描述、证据定位与映射覆盖，状态保持 needs_review。"
+    },
+    {
+      "version": "0.1.2",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准。"
     }
   ],
   "resolutions": [
@@ -47,7 +57,7 @@
           "locator": "PDF §1.7 Inverse Functions, printed pp.130-149"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_standard_graph_characteristics",
@@ -75,7 +85,7 @@
           "locator": "PDF §§3.2 and 3.7, printed pp.255-274 and 340-364; §§10.1-10.3, printed pp.1010-1055"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_parametric_graphs",
@@ -98,7 +108,7 @@
           "locator": "PDF §§8.6-8.7 Parametric Equations and Graphs, printed pp.839-863"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_formulate_equations",
@@ -123,7 +133,7 @@
           "locator": "PDF §2.3 Modeling with Linear Functions, printed pp.206-219; §§9.1-9.3, printed pp.896-936"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_rational_quadratic_inequalities",
@@ -147,7 +157,7 @@
           "locator": "PDF §3.7 Rational Functions, printed pp.340-364; §9.3 Nonlinear Equations and Inequalities, printed pp.925-936"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_recurrence_sequences",
@@ -170,7 +180,7 @@
           "locator": "PDF §11.1 Sequences and Their Notations, printed pp.1089-1103"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_series_operations_convergence",
@@ -194,7 +204,7 @@
           "locator": "PDF §11.4 Series and Their Notations, printed pp.1124-1136"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_vector_operations_geometry",
@@ -218,7 +228,7 @@
           "locator": "Unit 1 Part A, Sessions 1-4: vectors, dot products, lengths, angles and components"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_vector_types_magnitude",
@@ -243,7 +253,7 @@
           "locator": "Unit 1 Part A, Sessions 1-4: vector components, lengths and directions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_collinearity_ratio",
@@ -267,7 +277,7 @@
           "locator": "Unit 1 Part A, Sessions 1-4: vector components and geometric vector reasoning"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_point_line_plane_distance",
@@ -292,7 +302,7 @@
           "locator": "Unit 1 Sessions 3, 8, 12, 15 and 16: projections, planes, lines and intersections"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_relative_positions_3d",
@@ -316,7 +326,7 @@
           "locator": "Unit 1 Sessions 8, 12, 15 and 16: equations and intersections of lines and planes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_complex_extension_roots",
@@ -341,7 +351,7 @@
           "locator": "PDF §§3.1 and 3.6 Complex Numbers and Polynomial Zeros, printed pp.245-254 and 326-339"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_complex_mod_arg_conjugate",
@@ -366,7 +376,7 @@
           "locator": "PDF §3.1 Complex Numbers, printed pp.245-254; complex plane, modulus and conjugates"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_conjugate_polynomial_roots",
@@ -390,7 +400,7 @@
           "locator": "PDF §3.6 Zeros of Polynomial Functions, printed pp.326-339"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_complex_geometric_effects",
@@ -415,7 +425,7 @@
           "locator": "Chapter 9 §9.4, printed pp.425-426 (PDF pp.14-15): complex operations and vector geometry"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_derivative_graph_relations",
@@ -439,7 +449,7 @@
           "locator": "Unit 2 Part A, Sessions 27-28: curve sketching from first and second derivatives"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_series_approximations",
@@ -463,7 +473,7 @@
           "locator": "Unit 5 Part B, Sessions 98-99: Taylor series and approximation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_separable_ode_solutions",
@@ -487,7 +497,7 @@
           "locator": "Unit 2 Part C, Sessions 39-40: introduction to differential equations and separation of variables"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_interpret_ode_solution",
@@ -512,7 +522,7 @@
           "locator": "Unit 2 Part C, Sessions 39-40 and worked examples on differential equations"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_counting_arrangements",
@@ -536,7 +546,7 @@
           "locator": "PDF §11.5 Counting Principles, printed pp.1137-1147"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_probability_representations",
@@ -563,7 +573,7 @@
           "locator": "PDF §11.7 Probability, printed pp.1154-1164"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_normal_probabilities_parameters",
@@ -587,7 +597,7 @@
           "locator": "PDF §§6.1-6.2 The Standard Normal Distribution and Using the Normal Distribution, printed pp.336-346"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_linear_transform_moments",
@@ -612,7 +622,7 @@
           "locator": "Summer 2026 Notes 16-17: Random Variables I (Distribution and Expectation) and II (Variance and Covariance)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_independent_sum_moments",
@@ -637,7 +647,7 @@
           "locator": "Summer 2026 Notes 16-17: Random Variables I (Distribution and Expectation) and II (Variance and Covariance)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_hypothesis_test_concepts",
@@ -661,7 +671,7 @@
           "locator": "PDF §§9.1 and 9.4, printed pp.462-463 and 467-468"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_one_mean_hypothesis_test",
@@ -687,7 +697,7 @@
           "locator": "PDF §§9.3 and 9.6, printed pp.466 and 483-485"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_one_two_tailed_tests",
@@ -711,7 +721,7 @@
           "locator": "PDF §§9.1 and 9.4-9.5, printed pp.462-463 and 467-482"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_interpret_hypothesis_result",
@@ -735,7 +745,7 @@
           "locator": "PDF §§9.4-9.5 Rare Events, Decision and Full Examples, printed pp.467-482"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_scatter_linear_plausibility",
@@ -759,7 +769,7 @@
           "locator": "PDF §12.2 Scatter Plots, printed pp.620-622"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_pmcc_interpretation",
@@ -783,20 +793,19 @@
           "locator": "PDF §§12.3-12.4 Regression and Correlation, printed pp.623-634"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_least_squares_regression",
       "resolution_action": "add_or_alias_concepts",
       "canonical_ids": [
-        "pc_8c40d58addedb33cf22ac1efd9905af4",
-        "pc_ed18cde6c3d7e08e9e371061418a7424"
+        "pc_8c40d58addedb33cf22ac1efd9905af4"
       ],
       "created_node_ids": [
         "sg_h2_math_least_squares_regression"
       ],
       "practice_ids": [],
-      "rationale_zh": "全库反向查重后，现有概念只能覆盖基础或更宽范围；新增一个与官方成果一致的最小可诊断概念，并保留相关 canonical 作为基础映射。",
+      "rationale_zh": "2026-10 复核：不再复用更高层级概念，改由同层级最小可诊断概念解析。",
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_math_9758_2026",
@@ -807,7 +816,7 @@
           "locator": "PDF §12.3 The Regression Equation, printed pp.623-630"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_transform_to_linearity",
@@ -831,7 +840,7 @@
           "locator": "PDF §§2.4 and 4.7 Fitting and Modeling, printed pp.220-232 and 484-502"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ]
 }

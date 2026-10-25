@@ -3,6 +3,8 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
+import { refuseOwnerApprovedTargets } from "./kg-approval-guard.mjs";
+
 const ROOT = resolve(import.meta.dirname, "../../..");
 const TODAY = "2026-07-19";
 const SOURCE_ID = "src_sg_seab_h2_physics_9478_2026";
@@ -17,6 +19,7 @@ const paths = {
   registry: resolve(ROOT, "data/knowledge-graphs/governance/concept-registry.json"),
   sources: resolve(ROOT, "data/knowledge-graphs/governance/sources.json"),
 };
+refuseOwnerApprovedTargets(paths);
 
 const registry = JSON.parse(readFileSync(paths.registry, "utf8"));
 const aliasToCanonical = new Map(
@@ -281,7 +284,6 @@ add(18, "d", "induction_experimental_inferences", "Experimental inferences about
 add(18, "e", "faraday_lenz_laws", "Faraday's and Lenz's laws", "应用法拉第电磁感应定律与楞次定律", ids("phy_faraday", "phy_lenz"));
 add(18, "f", "induction_applications", "Applications of electromagnetic induction", "解释简单电磁感应应用", ids("phy_faraday", "phy_lenz"));
 add(18, "g", "transformer_principle_equations", "Transformer principle and equations", "解释铁芯变压器原理并应用匝数、电压和电流关系", ids("phy_transformers"));
-add(18, "h", "transformer_power_transmission", "Transformer efficiency and power transmission", "分析变压器与输电中的功率、效率和能量损失", ids("phy_transformers", "phy_power_efficiency"));
 
 add(19, "a", "wave_particle_evidence", "Wave and particle evidence for radiation", "用光电效应阈频支持电磁辐射粒子性，用干涉衍射支持波动性", ids("phy_photoelectric", "phy_wave_particle"));
 add(19, "b", "photon_energy", "Photon energy", "把光子视为电磁辐射能量子并应用 E=hf", ids("phy_photon"));
@@ -323,7 +325,7 @@ for (let index = 0; index < expectedCounts.length; index += 1) {
   const actual = outcomes.filter((outcome) => outcome.topic === String(index + 1)).length;
   if (actual !== expectedCounts[index]) throw new Error(`Topic ${index + 1}: expected ${expectedCounts[index]}, got ${actual}`);
 }
-if (outcomes.length !== 205) throw new Error(`Expected 205 content outcomes, got ${outcomes.length}`);
+if (outcomes.length !== 204) throw new Error(`Expected 204 content outcomes, got ${outcomes.length}`);
 
 const globalPractices = [
   ["pos_wotd", "Ways of thinking and doing", "提出问题、设计和实施调查、分析数据、以证据交流和辩护、作负责任决定、使用模型并建构解释或方案。", "PDF p.4, Practices of Science 1.1-1.8"],

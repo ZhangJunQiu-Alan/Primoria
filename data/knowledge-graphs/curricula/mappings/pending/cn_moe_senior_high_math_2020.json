@@ -1,15 +1,15 @@
 {
   "schema_version": "3.0.0",
-  "content_version": "0.2.1",
+  "content_version": "0.2.3",
   "mapping_set_id": "cms_cn_moe_senior_high_math_2020",
   "framework_id": "cfw_cn_moe_senior_high_math_2020_topics",
   "curriculum_id": "cur_cn_moe_senior_high_math_2020",
   "subject": "Mathematics",
   "source_ids": [
-    "src_cn_moe_senior_high_math_2020"
+    "src_cn_moe_senior_high_math_2025"
   ],
   "generated_at": "2026-07-18",
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.1.0",
@@ -25,6 +25,16 @@
       "version": "0.2.1",
       "date": "2026-07-18",
       "summary_zh": "第二轮逐项复核：校正必修概率与选择性必修导数边界，删除未列出的联立方程、链式法则和相关变化率。"
+    },
+    {
+      "version": "0.2.2",
+      "date": "2026-10-25",
+      "summary_zh": "按 2026-10-25 官方来源复核更新证据定位（中国课标迁至 2025 日常修订版、新加坡页码校正），状态保持 needs_review。"
+    },
+    {
+      "version": "0.2.3",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准。"
     }
   ],
   "mappings": [
@@ -39,11 +49,11 @@
       "rationale_zh": "当前统一数学 KG 没有集合概念，不能以函数等相邻内容代替。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.23（正文p.15），主题一‘集合’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.17-18（正文p.14-15），主题一‘集合’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_cn_sh_math_2020_r_logic",
@@ -56,11 +66,11 @@
       "rationale_zh": "当前统一数学 KG 没有充分必要条件、量词或命题否定等逻辑概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.24（正文p.16），主题一‘常用逻辑用语’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.18-19（正文p.15-16），主题一‘常用逻辑用语’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_cn_sh_math_2020_r_equations_inequalities",
@@ -77,11 +87,11 @@
       "rationale_zh": "已覆盖二次函数、二次方程和不等式；课标本主题未列联立方程，基本不等式及课程特定应用仍缺失。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF pp.24-25（正文pp.16-17）"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF pp.19-20（正文pp.16-17）"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_cn_sh_math_2020_r_function_concepts",
@@ -96,11 +106,11 @@
       "rationale_zh": "现有复合概念可支撑函数概念，但同时包含本主题未要求的反函数；复合函数和图像变换不等价于定义域、值域、单调性、奇偶性与最值，故已移除。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF pp.27-28（正文pp.19-20）"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF pp.21-22（正文pp.18-19）"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_cn_sh_math_2020_r_power_exp_log",
@@ -117,11 +127,11 @@
       "rationale_zh": "指数、对数及其方程已有对应；幂函数未形成独立概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF pp.28-29（正文pp.20-21）"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF pp.22-23（正文pp.19-20）"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_cn_sh_math_2020_r_trigonometry",
@@ -140,11 +150,11 @@
       "rationale_zh": "任意角三角函数、弧度、恒等变换、方程和和差倍角公式均有直接对应。 该判断仅表示主题级对齐，未逐条证明官方学习成果全覆盖。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF pp.29-30（正文pp.21-22）"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF pp.23-24（正文pp.20-21）"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_cn_sh_math_2020_r_function_applications",
@@ -161,11 +171,11 @@
       "rationale_zh": "已有图像、指数与对数工具，但零点、二分法和课程要求的函数建模过程未完整覆盖。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF pp.31-33（正文pp.23-25）"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF pp.25-27（正文pp.22-24）"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_cn_sh_math_2020_r_plane_vectors",
@@ -182,11 +192,11 @@
       "rationale_zh": "向量运算、大小方向和数量积有对应，但现有概念同时覆盖二维与三维，未单独表达平面向量课程深度。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF pp.33-34（正文pp.25-26）"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF pp.27-29（正文pp.24-26）"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_cn_sh_math_2020_r_complex",
@@ -202,11 +212,11 @@
       "rationale_zh": "复数运算与几何表示已有对应，课程中的数系扩充背景未形成独立概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.35（正文p.27）"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.29-32（正文p.26-29）"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_cn_sh_math_2020_r_solid_geometry",
@@ -219,11 +229,11 @@
       "rationale_zh": "当前数学 KG 没有空间几何体、直线和平面位置关系或空间几何证明概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF pp.35-38（正文pp.27-30）"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF pp.29-32（正文pp.26-29）"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_cn_sh_math_2020_r_probability",
@@ -238,11 +248,11 @@
       "rationale_zh": "概率法则可支撑古典概型；条件概率属于选择性必修，已从本必修主题移除，随机试验、样本空间和频率稳定性仍没有独立概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.39（正文p.31）"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.33（正文p.30）"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_cn_sh_math_2020_r_statistics",
@@ -259,11 +269,11 @@
       "rationale_zh": "数据表示、集中离散和抽样有对应；分层抽样、百分位数等课程细项未完整拆分。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF pp.40-42（正文pp.32-34）"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF pp.34-36（正文pp.31-33）"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_cn_sh_math_2020_r_modeling_inquiry",
@@ -276,11 +286,11 @@
       "rationale_zh": "数学建模活动和数学探究是实践要求，当前 KG 只有学科概念，没有对应的可复用实践概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF pp.42-44（正文pp.34-36）"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF pp.36-39（正文pp.33-36）"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_cn_sh_math_2020_sr_sequences",
@@ -296,11 +306,11 @@
       "rationale_zh": "等差与等比数列、级数已有直接对应。 该判断仅表示主题级对齐，未逐条证明官方学习成果全覆盖。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF pp.46-49（正文pp.38-41）"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF pp.39-42（正文pp.36-39）"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_cn_sh_math_2020_sr_derivatives",
@@ -318,11 +328,11 @@
       "rationale_zh": "导数概念、幂函数求导、切线和极值应用有对应；课标未列链式法则和相关变化率，已删除，特定函数与优化情境仍需逐项核对。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF pp.47-49（正文pp.39-41）"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF pp.40-42（正文pp.37-39）"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_cn_sh_math_2020_sr_spatial_vectors",
@@ -340,11 +350,11 @@
       "rationale_zh": "三维向量、大小方向、数量积和直线方程有对应；平面向量方程及空间距离关系缺失。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF pp.50-51（正文pp.42-43）"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF pp.44-45（正文pp.41-42）"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_cn_sh_math_2020_sr_analytic_geometry",
@@ -361,11 +371,11 @@
       "rationale_zh": "直线与圆已有对应；椭圆、双曲线、抛物线等圆锥曲线尚未进入统一 KG。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF pp.51-54（正文pp.43-46）"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF pp.45-48（正文pp.42-45）"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_cn_sh_math_2020_sr_counting",
@@ -381,19 +391,19 @@
       "rationale_zh": "排列组合与正整数指数二项展开已有直接对应。 该判断仅表示主题级对齐，未逐条证明官方学习成果全覆盖。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF pp.54-55（正文pp.46-47）"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.48（正文p.45）"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_cn_sh_math_2020_sr_probability_distributions",
       "requirement_id": "req_cn_sh_math_2020_sr_probability_distributions",
-    "canonical_ids": [
-      "pc_cf8dbc5bcf596f0c4db74ea9886540a1",
-      "pc_e49409332f2ff6e17899d2b7d3e6d7fe",
-      "pc_bd3e94ad62025e9a58ab6e2016182924",
+      "canonical_ids": [
+        "pc_cf8dbc5bcf596f0c4db74ea9886540a1",
+        "pc_e49409332f2ff6e17899d2b7d3e6d7fe",
+        "pc_bd3e94ad62025e9a58ab6e2016182924",
         "pc_dab02572a5e34659342ea1fb544803f8",
         "pc_23858effd2dd68284bd0c6b645607386"
       ],
@@ -401,14 +411,14 @@
       "relation": "required",
       "mapping_basis": "explicit_term",
       "confidence": "high",
-    "rationale_zh": "条件概率、事件独立性、离散随机变量、二项分布与正态分布均有直接对应；当前仍是主题级导航映射，未逐条证明官方学习成果全覆盖。",
+      "rationale_zh": "条件概率、事件独立性、离散随机变量、二项分布与正态分布均有直接对应；当前仍是主题级导航映射，未逐条证明官方学习成果全覆盖。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF pp.55-56（正文pp.47-48）"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.49（正文p.46）"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_cn_sh_math_2020_sr_statistics_regression",
@@ -425,11 +435,11 @@
       "rationale_zh": "抽样、统计估计和假设检验已有对应；成对数据、相关分析与线性回归缺失。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF pp.56-57（正文pp.48-49）"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF pp.50-51（正文pp.47-48）"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ],
   "mapping_scope": "topic_alignment"

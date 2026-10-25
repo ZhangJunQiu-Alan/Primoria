@@ -71,7 +71,10 @@ afterAll(() => rmSync(directory, { recursive: true, force: true }));
 describe("KG snapshot authorization and integrity", () => {
   it("requires external authorization and exact reviewed graph coverage", () => {
     expect(() => requireSnapshotAuthorization(join(directory, "missing.json"))).toThrow("missing authorization decision");
-    writeJson(authorizationPath, { ...authorization, covered_graph_ids: [] });
+    writeJson(authorizationPath, {
+      ...authorization,
+      covered_graph_ids: [...authorization.covered_graph_ids, "not_a_needs_review_graph"],
+    });
     expect(() => requireSnapshotAuthorization(authorizationPath)).toThrow("must cover exactly");
   });
 

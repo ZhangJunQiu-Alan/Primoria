@@ -108,15 +108,19 @@ The Agent runtime persists AG-UI events, run state, leases, cancellation, retry 
 
 ### Knowledge graph catalog and governance
 
-The runtime topic-graph registry currently contains 31 source-derived graphs:
-21 source-approved graphs plus 10 China/Singapore secondary and H2 graphs whose
-runtime artifacts are registered while source `review_status` remains
-`needs_review`. Runtime registration, DB import, source approval, curriculum
-mapping approval, and pedagogy approval are separate states; current build and
-import scripts do not automatically enforce a review-status gate. Canonical
-inventory: `docs/knowledge-graph/catalog.md`.
+The runtime topic-graph registry currently contains 31 source-derived graphs,
+all source-approved: the original 21 since 2026-07 and the 10 China/Singapore
+secondary and H2 graphs (with their curricula and pedagogy records) since the
+2026-10-25 owner review (`data/knowledge-graphs/review/approved/cn-sg-2026-10/`).
+Runtime registration, DB import, source approval, curriculum mapping approval,
+and pedagogy approval are separate states; current build and import scripts do
+not automatically enforce a review-status gate. Pre-approval migration scripts
+refuse to overwrite approved files (`apps/web/scripts/kg-approval-guard.mjs`);
+change approved content through a new review record. Cold-start goal routing
+anchors only to approved graphs by default (`PRIMORIA_REQUIRE_APPROVED_KG=0`
+opts out). Canonical inventory: `docs/knowledge-graph/catalog.md`.
 
-The permanent learning-goal fixture contains 1,718 bilingual cases across all
+The permanent learning-goal fixture contains 1,726 bilingual cases across all
 31 runtime graphs. Its generator requires bilingual subject labels and English
 plus Chinese manual boundary coverage for every China/Singapore graph. Keep the
 1,718-case floor and all existing gold policies intact.

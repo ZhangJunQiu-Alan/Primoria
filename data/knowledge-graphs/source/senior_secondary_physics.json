@@ -1,19 +1,19 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "0.1.1",
+  "content_version": "0.1.3",
   "graph_id": "senior_secondary_physics",
   "subject": "Physics",
   "jurisdictions": [
     "CN"
   ],
   "source_ids": [
-    "src_cn_moe_senior_high_physics_2020",
+    "src_cn_moe_senior_high_physics_2025",
     "src_openstax_university_physics_v1_2016",
     "src_openstax_university_physics_v3_2016",
     "src_openstax_university_physics_v2_2016",
     "src_openstax_college_physics_2e_2022"
   ],
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.1.0",
@@ -24,6 +24,16 @@
       "version": "0.1.1",
       "date": "2026-08-27",
       "summary_zh": "依据官方课程成果顺序补充 30 条同图前置边（含 2 条硬前置），状态保持 needs_review。"
+    },
+    {
+      "version": "0.1.2",
+      "date": "2026-10-25",
+      "summary_zh": "按 2026-10-25 官方来源复核更新证据定位（中国课标迁至 2025 日常修订版、新加坡页码校正），状态保持 needs_review。"
+    },
+    {
+      "version": "0.1.3",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网核验与人工批准：删除 23 条不成立的先修边，新增 1 条，调整 0 条强度，改写 8 条先修理由。"
     }
   ],
   "nodes": [
@@ -36,23 +46,23 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.20（正文对应内容要求 1.1.2），必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.13（正文对应内容要求 1.1.2），必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §§1.1-1.2 The Scope and Scale of Physics; Units and Standards"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.22（正文对应内容要求 1.2.4），必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.15（正文对应内容要求 1.2.4），必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §§1.2-1.4 Units and Standards; Unit Conversion; Dimensional Analysis"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_kinematics_common_forces",
@@ -63,16 +73,16 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.21（正文对应内容要求 1.1.4），必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.14（正文对应内容要求 1.1.4），必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §§3.4-3.5 Motion with Constant Acceleration; Free Fall"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.21（正文对应内容要求 1.2.1），必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.14（正文对应内容要求 1.2.1），必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
@@ -83,7 +93,7 @@
           "locator": "Web §6.2 Friction"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_force_motion_analysis",
@@ -94,31 +104,31 @@
       "default_order": 3,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.21（正文对应内容要求 1.2.2），必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.14（正文对应内容要求 1.2.2），必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §§2.1-2.3 Scalars and Vectors; Components; Algebra of Vectors"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.22（正文对应内容要求 1.2.3），必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.15（正文对应内容要求 1.2.3），必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §6.1 Solving Problems with Newton's Laws; Chapter 6 conceptual questions on free-fall scale readings"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.24（正文对应内容要求 2.2.1），必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.17（正文对应内容要求 2.2.1），必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §§4.1-4.4 Motion in Two and Three Dimensions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_work_energy",
@@ -129,16 +139,16 @@
       "default_order": 4,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.23（正文对应内容要求 2.1.2），必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.16-17（正文对应内容要求 2.1.2），必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §§7.2-7.4 Kinetic Energy and the Work-Energy Theorem"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.23（正文对应内容要求 2.1.3），必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.17（正文对应内容要求 2.1.3），必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
@@ -149,7 +159,7 @@
           "locator": "Web §8.2 Conservative and Non-Conservative Forces; spring potential energy"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_circular_cosmic_motion",
@@ -160,23 +170,23 @@
       "default_order": 5,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.24（正文对应内容要求 2.2.3），必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.17（正文对应内容要求 2.2.3），必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §6.3 Centripetal Force"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.25（正文对应内容要求 2.2.5），必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.18（正文对应内容要求 2.2.5），必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §§13.3-13.5 Gravitational Potential Energy; Satellite Orbits; Kepler's Laws"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_relativity_cosmology",
@@ -187,31 +197,31 @@
       "default_order": 6,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.25（正文对应内容要求 2.3.1），必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.18（正文对应内容要求 2.3.1），必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §5.1 Invariance of Physical Laws; classical-limit discussion"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.25（正文对应内容要求 2.3.2），必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.18（正文对应内容要求 2.3.2），必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §§5.3-5.7 Time Dilation, Length Contraction, Lorentz Transformation and Relativistic Velocity"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.25（正文对应内容要求 2.3.3），必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.18（正文对应内容要求 2.3.3），必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §§11.5-11.7 Cosmology, The Big Bang and Evolution of the Early Universe"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_electrostatic_models",
@@ -222,31 +232,31 @@
       "default_order": 7,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.1），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.20（正文对应内容要求 3.1.1），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §5.1 Electric Charge"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.2），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.20（正文对应内容要求 3.1.2），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §5.2 Conductors, Insulators, and Charging by Induction; §5.3 Coulomb's Law"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.3），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.20（正文对应内容要求 3.1.3），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §5.6 Electric Field Lines"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_electric_field_applications",
@@ -257,16 +267,16 @@
       "default_order": 8,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.4），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.20（正文对应内容要求 3.1.4），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §§5.2 and 6.4 Charging by Induction; Conductors in Electrostatic Equilibrium"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.5），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21（正文对应内容要求 3.1.5），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
@@ -277,7 +287,7 @@
           "locator": "Web §§5.4-5.5 Electric Field and Calculating Electric Fields"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_capacitors_components",
@@ -288,8 +298,8 @@
       "default_order": 9,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.6），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21（正文对应内容要求 3.1.6），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
@@ -300,15 +310,15 @@
           "locator": "Web §10.5 RC Circuits"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.1），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21（正文对应内容要求 3.2.1），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web Chapter 10 introduction and §§10.1-10.5 Direct-Current Circuits"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_dc_circuit_analysis",
@@ -319,31 +329,31 @@
       "default_order": 10,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.2），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21（正文对应内容要求 3.2.2），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §§9.3-9.4 Resistivity and Resistance; Ohm's Law"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.4），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21（正文对应内容要求 3.2.4），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §10.1 Electromotive Force; internal resistance and terminal voltage"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.5），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21-22（正文对应内容要求 3.2.5），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §9.5 Electrical Energy and Power"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_electrical_heating_safety",
@@ -354,23 +364,23 @@
       "default_order": 11,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.5），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21-22（正文对应内容要求 3.2.5），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §9.5 Electrical Energy and Power; resistive heating"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.29（正文对应内容要求 3.2.6），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.22（正文对应内容要求 3.2.6），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §10.6 Household Wiring and Electrical Safety"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_magnetism_em_waves",
@@ -381,31 +391,31 @@
       "default_order": 12,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.29（正文对应内容要求 3.3.1），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.22（正文对应内容要求 3.3.1），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web Chapter 11 introduction and §§11.1-11.5 Magnetic Forces and Fields"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.30（正文对应内容要求 3.3.4），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.22（正文对应内容要求 3.3.4），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §§16.1-16.2 Maxwell's Equations and Electromagnetic Waves"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.30（正文对应内容要求 3.3.5），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.22（正文对应内容要求 3.3.5），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §16.5 The Electromagnetic Spectrum"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_quantum_wave_particle",
@@ -416,23 +426,23 @@
       "default_order": 13,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.30（正文对应内容要求 3.3.6），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.23（正文对应内容要求 3.3.6），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §§6.1-6.2 Blackbody Radiation and Photoelectric Effect; photon energy"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.43（正文对应内容要求 3.4.2），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.36（正文对应内容要求 3.4.2），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §§6.5-6.6 De Broglie's Matter Waves and Wave-Particle Duality"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_energy_technologies",
@@ -443,8 +453,8 @@
       "default_order": 14,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.1），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.23（正文对应内容要求 3.4.1），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
@@ -455,7 +465,7 @@
           "locator": "Web §§10.5-10.6 Fission and Nuclear Fusion"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_thermodynamic_directionality",
@@ -466,23 +476,23 @@
       "default_order": 15,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.2），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.23（正文对应内容要求 3.4.2），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web Chapter 4 The Second Law of Thermodynamics, especially §§4.5-4.7"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.42（正文对应内容要求 3.2.3），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.35（正文对应内容要求 3.2.3），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web Chapter 4 The Second Law of Thermodynamics, §§4.1-4.7"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_energy_environment",
@@ -493,19 +503,19 @@
       "default_order": 16,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.3），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.23（正文对应内容要求 3.4.3），必修 3"
         },
         {
           "source_id": "src_openstax_college_physics_2e_2022",
           "locator": "Web §7.9 World Energy Use; renewable/nonrenewable resources, sustainability and environmental effects"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.4），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.23（正文对应内容要求 3.4.4），必修 3"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_oscillations_sound",
@@ -516,31 +526,31 @@
       "default_order": 17,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.2），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.27（正文对应内容要求 1.2.2），选择性必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §15.4 Pendulums"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.3），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.27（正文对应内容要求 1.2.3），选择性必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §15.6 Forced Oscillations"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.6），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.27（正文对应内容要求 1.2.6），选择性必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §17.7 The Doppler Effect"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_wave_refraction",
@@ -551,31 +561,31 @@
       "default_order": 18,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.5），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.27（正文对应内容要求 1.2.5），选择性必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web Chapter 16 Waves, §§16.4-16.6 boundary behaviour, interference and standing waves"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.34（正文对应内容要求 1.3.1），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.27（正文对应内容要求 1.3.1），选择性必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §1.3 Refraction"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.2），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.27-28（正文对应内容要求 1.3.2），选择性必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §1.4 Total Internal Reflection"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_optical_applications",
@@ -586,31 +596,31 @@
       "default_order": 19,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.2），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.27-28（正文对应内容要求 1.3.2），选择性必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §1.4 Total Internal Reflection; optical-fibre applications"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.3），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.28（正文对应内容要求 1.3.3），选择性必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §1.7 Polarization"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.4），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.28（正文对应内容要求 1.3.4），选择性必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §8.6 Lasers"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_induction_ac",
@@ -621,8 +631,8 @@
       "default_order": 20,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.3），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.30-31（正文对应内容要求 2.2.3），选择性必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
@@ -633,15 +643,15 @@
           "locator": "Web §13.6 Eddy Currents"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.4），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.31（正文对应内容要求 2.2.4），选择性必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §§15.1-15.5 AC Sources and RLC Circuits"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_power_machines",
@@ -652,23 +662,23 @@
       "default_order": 21,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.5），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.31（正文对应内容要求 2.2.5），选择性必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §15.6 Transformers"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.6），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.31（正文对应内容要求 2.2.6），选择性必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §§13.7-13.8 Electric Generators, Motors and Back EMF"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_electromagnetic_theory",
@@ -679,31 +689,31 @@
       "default_order": 22,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.3.1），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.31（正文对应内容要求 2.3.1），选择性必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §16.1 Maxwell's Equations and Electromagnetic Waves"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.3.2），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.31（正文对应内容要求 2.3.2），选择性必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §14.6 RLC Series Circuits; electromagnetic energy exchange"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.3.3），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.31（正文对应内容要求 2.3.3），选择性必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §§16.2-16.4 Plane Electromagnetic Waves, Energy and Momentum"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_sensor_systems",
@@ -714,23 +724,23 @@
       "default_order": 23,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.39（正文对应内容要求 2.4.1），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.32（正文对应内容要求 2.4.1），选择性必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §10.4 Electrical Measuring Instruments; measurement conversion chain"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.39（正文对应内容要求 2.4.3），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.32（正文对应内容要求 2.4.3），选择性必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §§9.6-9.7 Semiconductors, Doping and Semiconductor Devices"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_molecular_kinetic_evidence",
@@ -741,16 +751,16 @@
       "default_order": 24,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.1），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.34（正文对应内容要求 3.1.1），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §§2.1-2.3 Molecular Model, Pressure and Temperature in the Kinetic Theory of Gases"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.2），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.34（正文对应内容要求 3.1.2），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
@@ -761,7 +771,7 @@
           "locator": "Web §2.4 Distribution of Molecular Speeds"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_states_of_matter",
@@ -772,8 +782,8 @@
       "default_order": 25,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.3），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.34（正文对应内容要求 3.1.3），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
@@ -784,15 +794,15 @@
           "locator": "Web §1.7 Polarization; Liquid Crystals and Other Polarization Effects in Materials"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.42（正文对应内容要求 3.1.5），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.34（正文对应内容要求 3.1.5），选择性必修 3"
         },
         {
           "source_id": "src_openstax_college_physics_2e_2022",
           "locator": "Web §11.8 Cohesion and Adhesion in Liquids: Surface Tension and Capillary Action"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_advanced_materials",
@@ -803,8 +813,8 @@
       "default_order": 26,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.4），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.34（正文对应内容要求 3.1.4），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
@@ -815,7 +825,7 @@
           "locator": "Web §§6.6 and 7.6 Electron microscopy, nanotechnology and quantum tunnelling devices"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_nuclear_structure",
@@ -826,16 +836,16 @@
       "default_order": 27,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.1），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.35（正文对应内容要求 3.3.1），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §6.4 Bohr's Model of the Hydrogen Atom; Rutherford nuclear model"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.2），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.35（正文对应内容要求 3.3.2），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
@@ -846,7 +856,7 @@
           "locator": "Web §11.1 Introduction to Particle Physics; fundamental interactions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_topic_nuclear_reactions",
@@ -857,23 +867,23 @@
       "default_order": 28,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.2），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.35（正文对应内容要求 3.3.2），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §10.4 Nuclear Reactions"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.3），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.36（正文对应内容要求 3.3.3），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §§10.3 and 10.7 Radioactive Decay; Medical Applications and Biological Effects"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_particle_model",
@@ -886,15 +896,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.20（正文对应内容要求 1.1.2），必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.13（正文对应内容要求 1.1.2），必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §§1.1-1.2 The Scope and Scale of Physics; Units and Standards"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_free_fall",
@@ -907,15 +917,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.21（正文对应内容要求 1.1.4），必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.14（正文对应内容要求 1.1.4），必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §§3.4-3.5 Motion with Constant Acceleration; Free Fall"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_gravity_elastic_force",
@@ -928,15 +938,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.21（正文对应内容要求 1.2.1），必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.14（正文对应内容要求 1.2.1），必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §5.6 Common Forces; §12.3 Stress, Strain, and Elastic Modulus"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_friction",
@@ -949,15 +959,15 @@
       "default_order": 3,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.21（正文对应内容要求 1.2.1），必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.14（正文对应内容要求 1.2.1），必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §6.2 Friction"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_force_composition_vectors",
@@ -970,15 +980,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.21（正文对应内容要求 1.2.2），必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.14（正文对应内容要求 1.2.2），必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §§2.1-2.3 Scalars and Vectors; Components; Algebra of Vectors"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_overweight_weightlessness",
@@ -991,15 +1001,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.22（正文对应内容要求 1.2.3），必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.15（正文对应内容要求 1.2.3），必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §6.1 Solving Problems with Newton's Laws; Chapter 6 conceptual questions on free-fall scale readings"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_si_mechanics_units",
@@ -1012,15 +1022,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.22（正文对应内容要求 1.2.4），必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.15（正文对应内容要求 1.2.4），必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §§1.2-1.4 Units and Standards; Unit Conversion; Dimensional Analysis"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_kinetic_energy_theorem",
@@ -1033,15 +1043,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.23（正文对应内容要求 2.1.2），必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.16-17（正文对应内容要求 2.1.2），必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §§7.2-7.4 Kinetic Energy and the Work-Energy Theorem"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_gravitational_potential_energy",
@@ -1054,15 +1064,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.23（正文对应内容要求 2.1.3），必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.17（正文对应内容要求 2.1.3），必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §8.1 Potential Energy of a System"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_elastic_potential_energy",
@@ -1075,15 +1085,15 @@
       "default_order": 3,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.23（正文对应内容要求 2.1.3），必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.17（正文对应内容要求 2.1.3），必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §8.2 Conservative and Non-Conservative Forces; spring potential energy"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_curvilinear_motion_condition",
@@ -1096,15 +1106,15 @@
       "default_order": 3,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.24（正文对应内容要求 2.2.1），必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.17（正文对应内容要求 2.2.1），必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §§4.1-4.4 Motion in Two and Three Dimensions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_centrifugal_phenomena",
@@ -1117,15 +1127,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.24（正文对应内容要求 2.2.3），必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.17（正文对应内容要求 2.2.3），必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §6.3 Centripetal Force"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_cosmic_velocities",
@@ -1138,15 +1148,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.25（正文对应内容要求 2.2.5），必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.18（正文对应内容要求 2.2.5），必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §§13.3-13.5 Gravitational Potential Energy; Satellite Orbits; Kepler's Laws"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_newtonian_limits",
@@ -1159,15 +1169,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.25（正文对应内容要求 2.3.1），必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.18（正文对应内容要求 2.3.1），必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §5.1 Invariance of Physical Laws; classical-limit discussion"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_relativistic_spacetime",
@@ -1180,15 +1190,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.25（正文对应内容要求 2.3.2），必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.18（正文对应内容要求 2.3.2），必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §§5.3-5.7 Time Dilation, Length Contraction, Lorentz Transformation and Relativistic Velocity"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_cosmic_evolution",
@@ -1201,15 +1211,15 @@
       "default_order": 3,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.25（正文对应内容要求 2.3.3），必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.18（正文对应内容要求 2.3.3），必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §§11.5-11.7 Cosmology, The Big Bang and Evolution of the Early Universe"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_electrostatic_charge_conservation",
@@ -1222,15 +1232,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.1），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.20（正文对应内容要求 3.1.1），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §5.1 Electric Charge"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_point_charge_model",
@@ -1243,15 +1253,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.2），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.20（正文对应内容要求 3.1.2），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §5.2 Conductors, Insulators, and Charging by Induction; §5.3 Coulomb's Law"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_electric_field_lines",
@@ -1264,15 +1274,15 @@
       "default_order": 3,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.3），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.20（正文对应内容要求 3.1.3），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §5.6 Electric Field Lines"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_electrostatic_applications",
@@ -1285,15 +1295,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.4），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.20（正文对应内容要求 3.1.4），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §§5.2 and 6.4 Charging by Induction; Conductors in Electrostatic Equilibrium"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_electric_potential_quantities",
@@ -1306,15 +1316,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.5），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21（正文对应内容要求 3.1.5），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §§7.1-7.5 Electric Potential Energy, Potential and Equipotential Surfaces"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_charged_particle_electric_motion",
@@ -1327,15 +1337,15 @@
       "default_order": 3,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.5），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21（正文对应内容要求 3.1.5），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §§5.4-5.5 Electric Field and Calculating Electric Fields"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_capacitance",
@@ -1348,15 +1358,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.6），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21（正文对应内容要求 3.1.6），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §§8.1-8.2 Capacitors and Capacitance; Capacitors in Series and Parallel"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_capacitor_charge_discharge",
@@ -1369,15 +1379,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.6），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21（正文对应内容要求 3.1.6），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §10.5 RC Circuits"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_circuit_components",
@@ -1390,15 +1400,15 @@
       "default_order": 3,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.1），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21（正文对应内容要求 3.2.1），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web Chapter 10 introduction and §§10.1-10.5 Direct-Current Circuits"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_resistance_geometry_material",
@@ -1411,15 +1421,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.2），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21（正文对应内容要求 3.2.2），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §§9.3-9.4 Resistivity and Resistance; Ohm's Law"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_closed_circuit_ohm",
@@ -1432,15 +1442,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.4），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21（正文对应内容要求 3.2.4），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §10.1 Electromotive Force; internal resistance and terminal voltage"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_electrical_work_power",
@@ -1453,15 +1463,15 @@
       "default_order": 3,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.5），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21-22（正文对应内容要求 3.2.5），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §9.5 Electrical Energy and Power"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_joule_law",
@@ -1474,15 +1484,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.5），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21-22（正文对应内容要求 3.2.5），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §9.5 Electrical Energy and Power; resistive heating"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_household_electricity_safety",
@@ -1495,15 +1505,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.29（正文对应内容要求 3.2.6），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.22（正文对应内容要求 3.2.6），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §10.6 Household Wiring and Electrical Safety"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_magnetism_applications_history",
@@ -1516,15 +1526,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.29（正文对应内容要求 3.3.1），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.22（正文对应内容要求 3.3.1），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web Chapter 11 introduction and §§11.1-11.5 Magnetic Forces and Fields"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_electromagnetic_field_waves",
@@ -1537,15 +1547,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.30（正文对应内容要求 3.3.4），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.22（正文对应内容要求 3.3.4），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §§16.1-16.2 Maxwell's Equations and Electromagnetic Waves"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_electromagnetic_wave_applications",
@@ -1558,15 +1568,15 @@
       "default_order": 3,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.30（正文对应内容要求 3.3.5），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.22（正文对应内容要求 3.3.5），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §16.5 The Electromagnetic Spectrum"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_light_energy_quantisation",
@@ -1579,15 +1589,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.30（正文对应内容要求 3.3.6），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.23（正文对应内容要求 3.3.6），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §§6.1-6.2 Blackbody Radiation and Photoelectric Effect; photon energy"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_renewable_energy_technologies",
@@ -1600,15 +1610,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.1），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.23（正文对应内容要求 3.4.1），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §8.5 Sources of Energy; hydropower, wind power and solar power"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_nuclear_energy_intro",
@@ -1621,15 +1631,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.1），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.23（正文对应内容要求 3.4.1），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §§10.5-10.6 Fission and Nuclear Fusion"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_energy_conversion_directionality",
@@ -1642,15 +1652,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.2），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.23（正文对应内容要求 3.4.2），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web Chapter 4 The Second Law of Thermodynamics, especially §§4.5-4.7"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_renewable_environment",
@@ -1663,15 +1673,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.3），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.23（正文对应内容要求 3.4.3），必修 3"
         },
         {
           "source_id": "src_openstax_college_physics_2e_2022",
           "locator": "Web §7.9 World Energy Use; renewable/nonrenewable resources, sustainability and environmental effects"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_pollution_sustainable_development",
@@ -1684,15 +1694,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.4），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.23（正文对应内容要求 3.4.4），必修 3"
         },
         {
           "source_id": "src_openstax_college_physics_2e_2022",
           "locator": "Web §7.9 World Energy Use; renewable/nonrenewable resources, sustainability and environmental effects"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_simple_pendulum_period",
@@ -1705,15 +1715,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.2），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.27（正文对应内容要求 1.2.2），选择性必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §15.4 Pendulums"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_forced_vibration",
@@ -1726,15 +1736,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.3），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.27（正文对应内容要求 1.2.3），选择性必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §15.6 Forced Oscillations"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_wave_reflection_refraction",
@@ -1747,15 +1757,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.5），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.27（正文对应内容要求 1.2.5），选择性必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web Chapter 16 Waves, §§16.4-16.6 boundary behaviour, interference and standing waves"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_doppler_effect",
@@ -1768,15 +1778,15 @@
       "default_order": 3,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.6），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.27（正文对应内容要求 1.2.6），选择性必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §17.7 The Doppler Effect"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_light_refraction_law",
@@ -1789,15 +1799,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.34（正文对应内容要求 1.3.1），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.27（正文对应内容要求 1.3.1），选择性必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §1.3 Refraction"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_total_internal_reflection",
@@ -1810,15 +1820,15 @@
       "default_order": 3,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.2），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.27-28（正文对应内容要求 1.3.2），选择性必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §1.4 Total Internal Reflection"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_optical_fibre",
@@ -1831,15 +1841,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.2），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.27-28（正文对应内容要求 1.3.2），选择性必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §1.4 Total Internal Reflection; optical-fibre applications"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_light_polarisation",
@@ -1852,15 +1862,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.3），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.28（正文对应内容要求 1.3.3），选择性必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §1.7 Polarization"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_laser",
@@ -1873,15 +1883,15 @@
       "default_order": 3,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.4），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.28（正文对应内容要求 1.3.4），选择性必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §8.6 Lasers"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_self_induction",
@@ -1894,15 +1904,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.3），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.30-31（正文对应内容要求 2.2.3），选择性必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §14.2 Self-Inductance and Inductors"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_eddy_currents",
@@ -1915,15 +1925,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.3），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.30-31（正文对应内容要求 2.2.3），选择性必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §13.6 Eddy Currents"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_sinusoidal_ac",
@@ -1936,15 +1946,15 @@
       "default_order": 3,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.4），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.31（正文对应内容要求 2.2.4），选择性必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §§15.1-15.5 AC Sources and RLC Circuits"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_high_voltage_transmission",
@@ -1957,15 +1967,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.5），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.31（正文对应内容要求 2.2.5），选择性必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §15.6 Transformers"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_generator_motor_energy",
@@ -1978,15 +1988,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.6），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.31（正文对应内容要求 2.2.6），选择性必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §§13.7-13.8 Electric Generators, Motors and Back EMF"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_maxwell_field_theory",
@@ -1999,15 +2009,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.3.1），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.31（正文对应内容要求 2.3.1），选择性必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §16.1 Maxwell's Equations and Electromagnetic Waves"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_electromagnetic_oscillation",
@@ -2020,15 +2030,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.3.2），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.31（正文对应内容要求 2.3.2），选择性必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §14.6 RLC Series Circuits; electromagnetic energy exchange"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_em_wave_transmission",
@@ -2041,15 +2051,15 @@
       "default_order": 3,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.3.3），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.31（正文对应内容要求 2.3.3），选择性必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §§16.2-16.4 Plane Electromagnetic Waves, Energy and Momentum"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_sensor_conversion",
@@ -2062,15 +2072,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.39（正文对应内容要求 2.4.1），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.32（正文对应内容要求 2.4.1），选择性必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §10.4 Electrical Measuring Instruments; measurement conversion chain"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_sensor_applications",
@@ -2083,15 +2093,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.39（正文对应内容要求 2.4.3），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.32（正文对应内容要求 2.4.3），选择性必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §§9.6-9.7 Semiconductors, Doping and Semiconductor Devices"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_molecular_kinetic_theory_evidence",
@@ -2104,15 +2114,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.1），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.34（正文对应内容要求 3.1.1），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §§2.1-2.3 Molecular Model, Pressure and Temperature in the Kinetic Theory of Gases"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_diffusion_brownian",
@@ -2125,15 +2135,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.2），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.34（正文对应内容要求 3.1.2），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §2.1 Molecular Model of an Ideal Gas; microscopic evidence for molecular motion"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_molecular_speed_distribution",
@@ -2146,15 +2156,15 @@
       "default_order": 3,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.2），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.34（正文对应内容要求 3.1.2），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §2.4 Distribution of Molecular Speeds"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_crystalline_amorphous",
@@ -2167,15 +2177,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.3），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.34（正文对应内容要求 3.1.3），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §9.3 Bonding in Crystalline Solids; amorphous-solid comparison"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_liquid_crystals",
@@ -2188,15 +2198,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.3），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.34（正文对应内容要求 3.1.3），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §1.7 Polarization; Liquid Crystals and Other Polarization Effects in Materials"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_semiconductor_materials",
@@ -2209,15 +2219,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.4），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.34（正文对应内容要求 3.1.4），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §§9.5-9.7 Band Theory, Semiconductors and Semiconductor Devices"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_nanomaterials",
@@ -2230,15 +2240,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.4），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.34（正文对应内容要求 3.1.4），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §§6.6 and 7.6 Electron microscopy, nanotechnology and quantum tunnelling devices"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_surface_tension_capillarity",
@@ -2251,15 +2261,15 @@
       "default_order": 3,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.42（正文对应内容要求 3.1.5），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.34（正文对应内容要求 3.1.5），选择性必修 3"
         },
         {
           "source_id": "src_openstax_college_physics_2e_2022",
           "locator": "Web §11.8 Cohesion and Adhesion in Liquids: Surface Tension and Capillary Action"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_second_law_thermodynamics",
@@ -2272,15 +2282,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.42（正文对应内容要求 3.2.3），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.35（正文对应内容要求 3.2.3），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web Chapter 4 The Second Law of Thermodynamics, §§4.1-4.7"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_atomic_nuclear_model",
@@ -2293,15 +2303,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.1），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.35（正文对应内容要求 3.3.1），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §6.4 Bohr's Model of the Hydrogen Atom; Rutherford nuclear model"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_nuclear_composition_force",
@@ -2314,15 +2324,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.2），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.35（正文对应内容要求 3.3.2），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §§10.1-10.2 Properties of Nuclei and Nuclear Binding Energy"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_fundamental_interactions",
@@ -2335,15 +2345,15 @@
       "default_order": 3,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.2），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.35（正文对应内容要求 3.3.2），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §11.1 Introduction to Particle Physics; fundamental interactions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_nuclear_reaction_equations",
@@ -2356,15 +2366,15 @@
       "default_order": 1,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.2），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.35（正文对应内容要求 3.3.2），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §10.4 Nuclear Reactions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_radioisotope_application_safety",
@@ -2377,15 +2387,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.3），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.36（正文对应内容要求 3.3.3），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §§10.3 and 10.7 Radioactive Decay; Medical Applications and Biological Effects"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "cn_sh_physics_matter_waves_quantisation",
@@ -2398,15 +2408,15 @@
       "default_order": 2,
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.43（正文对应内容要求 3.4.2），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.36（正文对应内容要求 3.4.2），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §§6.5-6.6 De Broglie's Matter Waves and Wave-Particle Duality"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ],
   "edges": [
@@ -2418,23 +2428,23 @@
       "reason": "自由落体建模需要先判断研究对象何时可抽象为质点。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.20（正文对应内容要求 1.1.2），必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.13（正文对应内容要求 1.1.2），必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §§1.1-1.2 The Scope and Scale of Physics; Units and Standards"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.21（正文对应内容要求 1.1.4），必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.14（正文对应内容要求 1.1.4），必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §§3.4-3.5 Motion with Constant Acceleration; Free Fall"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "cn_sh_physics_force_composition_vectors",
@@ -2444,23 +2454,23 @@
       "reason": "分析支持力变化前需要能合成竖直方向上的力。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.21（正文对应内容要求 1.2.2），必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.14（正文对应内容要求 1.2.2），必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §§2.1-2.3 Scalars and Vectors; Components; Algebra of Vectors"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.22（正文对应内容要求 1.2.3），必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.15（正文对应内容要求 1.2.3），必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §6.1 Solving Problems with Newton's Laws; Chapter 6 conceptual questions on free-fall scale readings"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "cn_sh_physics_curvilinear_motion_condition",
@@ -2470,23 +2480,23 @@
       "reason": "解释离心现象需要先理解速度方向与合力方向不共线时的曲线运动。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.24（正文对应内容要求 2.2.1），必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.17（正文对应内容要求 2.2.1），必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §§4.1-4.4 Motion in Two and Three Dimensions"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.24（正文对应内容要求 2.2.3），必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.17（正文对应内容要求 2.2.3），必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §6.3 Centripetal Force"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "cn_sh_physics_capacitance",
@@ -2496,8 +2506,8 @@
       "reason": "分析充放电过程需要先理解电容和储电能力。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.6），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21（正文对应内容要求 3.1.6），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
@@ -2508,7 +2518,7 @@
           "locator": "Web §10.5 RC Circuits"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "cn_sh_physics_circuit_components",
@@ -2518,23 +2528,23 @@
       "reason": "闭合电路分析需要先识别电源、负载和测量元件的作用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.1），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21（正文对应内容要求 3.2.1），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web Chapter 10 introduction and §§10.1-10.5 Direct-Current Circuits"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.4），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21（正文对应内容要求 3.2.4），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §10.1 Electromotive Force; internal resistance and terminal voltage"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "cn_sh_physics_resistance_geometry_material",
@@ -2544,23 +2554,23 @@
       "reason": "分析闭合电路电流需要理解外电路电阻的来源和变化。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.2），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21（正文对应内容要求 3.2.2），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §§9.3-9.4 Resistivity and Resistance; Ohm's Law"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.4），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21（正文对应内容要求 3.2.4），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §10.1 Electromotive Force; internal resistance and terminal voltage"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "cn_sh_physics_electrical_work_power",
@@ -2570,8 +2580,8 @@
       "reason": "焦耳热计算建立在电能转化和电功率关系上。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.5），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21-22（正文对应内容要求 3.2.5），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
@@ -2582,7 +2592,7 @@
           "locator": "Web §9.5 Electrical Energy and Power; resistive heating"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "cn_sh_physics_light_refraction_law",
@@ -2592,23 +2602,23 @@
       "reason": "判断全反射临界条件需要先掌握折射定律。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.34（正文对应内容要求 1.3.1），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.27（正文对应内容要求 1.3.1），选择性必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §1.3 Refraction"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.2），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.27-28（正文对应内容要求 1.3.2），选择性必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §1.4 Total Internal Reflection"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "cn_sh_physics_total_internal_reflection",
@@ -2618,8 +2628,8 @@
       "reason": "光纤导光原理直接依赖全反射条件。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.2），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.27-28（正文对应内容要求 1.3.2），选择性必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
@@ -2630,33 +2640,7 @@
           "locator": "Web §1.4 Total Internal Reflection; optical-fibre applications"
         }
       ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "cn_sh_physics_maxwell_field_theory",
-      "to": "cn_sh_physics_electromagnetic_oscillation",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "理解振荡电场与磁场的耦合需要先掌握电磁场统一观点。",
-      "evidence_refs": [
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.3.1），选择性必修 2"
-        },
-        {
-          "source_id": "src_openstax_university_physics_v2_2016",
-          "locator": "Web §16.1 Maxwell's Equations and Electromagnetic Waves"
-        },
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.3.2），选择性必修 2"
-        },
-        {
-          "source_id": "src_openstax_university_physics_v2_2016",
-          "locator": "Web §14.6 RLC Series Circuits; electromagnetic energy exchange"
-        }
-      ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "cn_sh_physics_electromagnetic_oscillation",
@@ -2666,23 +2650,23 @@
       "reason": "说明电磁波发射需要先理解振荡电荷和电磁振荡。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.3.2），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.31（正文对应内容要求 2.3.2），选择性必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §14.6 RLC Series Circuits; electromagnetic energy exchange"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.3.3），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.31（正文对应内容要求 2.3.3），选择性必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §§16.2-16.4 Plane Electromagnetic Waves, Energy and Momentum"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "cn_sh_physics_sensor_conversion",
@@ -2692,23 +2676,23 @@
       "reason": "解释传感器应用需要先理解非电学量到电学量的转换链路。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.39（正文对应内容要求 2.4.1），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.32（正文对应内容要求 2.4.1），选择性必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §10.4 Electrical Measuring Instruments; measurement conversion chain"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.39（正文对应内容要求 2.4.3），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.32（正文对应内容要求 2.4.3），选择性必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §§9.6-9.7 Semiconductors, Doping and Semiconductor Devices"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "cn_sh_physics_molecular_kinetic_theory_evidence",
@@ -2718,23 +2702,23 @@
       "reason": "用分子热运动解释扩散和布朗运动需要先掌握分子动理论。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.1），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.34（正文对应内容要求 3.1.1），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §§2.1-2.3 Molecular Model, Pressure and Temperature in the Kinetic Theory of Gases"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.2），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.34（正文对应内容要求 3.1.2），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §2.1 Molecular Model of an Ideal Gas; microscopic evidence for molecular motion"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "cn_sh_physics_molecular_kinetic_theory_evidence",
@@ -2744,23 +2728,23 @@
       "reason": "理解分子速率分布需要先掌握大量分子无规则运动的统计模型。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.1），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.34（正文对应内容要求 3.1.1），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §§2.1-2.3 Molecular Model, Pressure and Temperature in the Kinetic Theory of Gases"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.2），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.34（正文对应内容要求 3.1.2），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §2.4 Distribution of Molecular Speeds"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "cn_sh_physics_crystalline_amorphous",
@@ -2770,23 +2754,23 @@
       "reason": "理解半导体能带与材料性质需要先认识固体微观结构。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.3），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.34（正文对应内容要求 3.1.3），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §9.3 Bonding in Crystalline Solids; amorphous-solid comparison"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.4），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.34（正文对应内容要求 3.1.4），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §§9.5-9.7 Band Theory, Semiconductors and Semiconductor Devices"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "cn_sh_physics_atomic_nuclear_model",
@@ -2796,23 +2780,23 @@
       "reason": "核力和核组成建立在原子核式结构模型上。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.1），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.35（正文对应内容要求 3.3.1），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §6.4 Bohr's Model of the Hydrogen Atom; Rutherford nuclear model"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.2），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.35（正文对应内容要求 3.3.2），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
           "locator": "Web §§10.1-10.2 Properties of Nuclei and Nuclear Binding Energy"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "cn_sh_physics_nuclear_composition_force",
@@ -2822,8 +2806,8 @@
       "reason": "书写核反应方程需要先识别核子组成、质量数和电荷数。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.2），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.35（正文对应内容要求 3.3.2），选择性必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v3_2016",
@@ -2834,7 +2818,7 @@
           "locator": "Web §10.4 Nuclear Reactions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "cn_sh_physics_energy_conversion_directionality",
@@ -2844,519 +2828,165 @@
       "reason": "评价能源环境影响需要理解能量转化中的不可逆损耗和资源品质变化。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.2），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.23（正文对应内容要求 3.4.2），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web Chapter 4 The Second Law of Thermodynamics, especially §§4.5-4.7"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.3），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.23（正文对应内容要求 3.4.3），必修 3"
         },
         {
           "source_id": "src_openstax_college_physics_2e_2022",
           "locator": "Web §7.9 World Energy Use; renewable/nonrenewable resources, sustainability and environmental effects"
         }
       ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "cn_sh_physics_friction",
-      "to": "cn_sh_physics_force_composition_vectors",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修 1·1.2.1c 为 必修 1·1.2.2a 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.21（正文对应内容要求 1.2.1），必修 1"
-        },
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.21（正文对应内容要求 1.2.2），必修 1"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "cn_sh_physics_kinetic_energy_theorem",
-      "to": "cn_sh_physics_gravitational_potential_energy",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修 2·2.1.2 为 必修 2·2.1.3a 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.23（正文对应内容要求 2.1.2），必修 2"
-        },
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.23（正文对应内容要求 2.1.3），必修 2"
-        }
-      ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "cn_sh_physics_gravitational_potential_energy",
       "to": "cn_sh_physics_elastic_potential_energy",
       "type": "prereq",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修 2·2.1.3a 为 必修 2·2.1.3b 的前置要求。",
+      "reason": "弹性势能可类比“重力做功与重力势能变化”的关系来理解弹力做功与形变储能。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.23（正文对应内容要求 2.1.3），必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.17（正文对应内容要求 2.1.3），必修 2"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "cn_sh_physics_newtonian_limits",
       "to": "cn_sh_physics_relativistic_spacetime",
       "type": "prereq",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修 2·2.3.1 为 必修 2·2.3.2 的前置要求。",
+      "reason": "相对论时空观是为突破牛顿力学在高速情形下的局限而建立的。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.25（正文对应内容要求 2.3.1），必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.18（正文对应内容要求 2.3.1），必修 2"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.25（正文对应内容要求 2.3.2），必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.18（正文对应内容要求 2.3.2），必修 2"
         }
       ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "cn_sh_physics_relativistic_spacetime",
-      "to": "cn_sh_physics_cosmic_evolution",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修 2·2.3.2 为 必修 2·2.3.3 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.25（正文对应内容要求 2.3.2），必修 2"
-        },
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.25（正文对应内容要求 2.3.3），必修 2"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "cn_sh_physics_electrostatic_charge_conservation",
-      "to": "cn_sh_physics_point_charge_model",
-      "type": "prereq",
-      "strength": "hard",
-      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.1.1 为 必修 3·3.1.2a 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.1），必修 3"
-        },
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.2），必修 3"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "cn_sh_physics_electric_field_lines",
-      "to": "cn_sh_physics_electrostatic_applications",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.1.3b 为 必修 3·3.1.4 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.3），必修 3"
-        },
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.4），必修 3"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "cn_sh_physics_electrostatic_applications",
-      "to": "cn_sh_physics_electric_potential_quantities",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.1.4 为 必修 3·3.1.5a 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.4），必修 3"
-        },
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.5），必修 3"
-        }
-      ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "cn_sh_physics_electric_potential_quantities",
       "to": "cn_sh_physics_charged_particle_electric_motion",
       "type": "prereq",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.1.5a 为 必修 3·3.1.5b 的前置要求。",
+      "reason": "用能量方法分析带电粒子在电场中的加速，需要用到电势差与电势能变化。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.5），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21（正文对应内容要求 3.1.5），必修 3"
         }
       ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "cn_sh_physics_charged_particle_electric_motion",
-      "to": "cn_sh_physics_capacitance",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.1.5b 为 必修 3·3.1.6a 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.5），必修 3"
-        },
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.6），必修 3"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "cn_sh_physics_circuit_components",
-      "to": "cn_sh_physics_resistance_geometry_material",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.2.1a 为 必修 3·3.2.2a 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.1），必修 3"
-        },
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.2），必修 3"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "cn_sh_physics_closed_circuit_ohm",
-      "to": "cn_sh_physics_electrical_work_power",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.2.4a 为 必修 3·3.2.5a 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.4），必修 3"
-        },
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.5），必修 3"
-        }
-      ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "cn_sh_physics_joule_law",
       "to": "cn_sh_physics_household_electricity_safety",
       "type": "prereq",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.2.5b 为 必修 3·3.2.6 的前置要求。",
+      "reason": "分析家庭电路过载发热、保险丝熔断等安全问题需要先掌握焦耳定律。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.5），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21-22（正文对应内容要求 3.2.5），必修 3"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.29（正文对应内容要求 3.2.6），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.22（正文对应内容要求 3.2.6），必修 3"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "cn_sh_physics_electromagnetic_field_waves",
       "to": "cn_sh_physics_electromagnetic_wave_applications",
       "type": "prereq",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.3.4 为 必修 3·3.3.5 的前置要求。",
+      "reason": "讨论电磁波的通信等应用及其影响，需要先认识电磁波及电磁场的物质性。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.30（正文对应内容要求 3.3.4），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.22（正文对应内容要求 3.3.4），必修 3"
         },
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.30（正文对应内容要求 3.3.5），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.22（正文对应内容要求 3.3.5），必修 3"
         }
       ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "cn_sh_physics_renewable_energy_technologies",
-      "to": "cn_sh_physics_nuclear_energy_intro",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.4.1a 为 必修 3·3.4.1b 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.1），必修 3"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "cn_sh_physics_renewable_environment",
-      "to": "cn_sh_physics_pollution_sustainable_development",
-      "type": "prereq",
-      "strength": "hard",
-      "reason": "依据官方课程同一主题内的成果顺序，必修 3·3.4.3 为 必修 3·3.4.4 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.3），必修 3"
-        },
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.4），必修 3"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "cn_sh_physics_simple_pendulum_period",
-      "to": "cn_sh_physics_forced_vibration",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 1·1.2.2a 为 选择性必修 1·1.2.3a 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.2），选择性必修 1"
-        },
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.3），选择性必修 1"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "cn_sh_physics_light_polarisation",
-      "to": "cn_sh_physics_laser",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 1·1.3.3b 为 选择性必修 1·1.3.4 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.3），选择性必修 1"
-        },
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.4），选择性必修 1"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "cn_sh_physics_self_induction",
-      "to": "cn_sh_physics_eddy_currents",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 2·2.2.3a 为 选择性必修 2·2.2.3b 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.3），选择性必修 2"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "cn_sh_physics_eddy_currents",
-      "to": "cn_sh_physics_sinusoidal_ac",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 2·2.2.3b 为 选择性必修 2·2.2.4 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.3），选择性必修 2"
-        },
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.4），选择性必修 2"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "cn_sh_physics_high_voltage_transmission",
-      "to": "cn_sh_physics_generator_motor_energy",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 2·2.2.5b 为 选择性必修 2·2.2.6 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.5），选择性必修 2"
-        },
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.6），选择性必修 2"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "cn_sh_physics_diffusion_brownian",
-      "to": "cn_sh_physics_molecular_speed_distribution",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.1.2a 为 选择性必修 3·3.1.2b 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.2），选择性必修 3"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "cn_sh_physics_molecular_speed_distribution",
-      "to": "cn_sh_physics_crystalline_amorphous",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.1.2b 为 选择性必修 3·3.1.3a 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.2），选择性必修 3"
-        },
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.3），选择性必修 3"
-        }
-      ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "cn_sh_physics_crystalline_amorphous",
       "to": "cn_sh_physics_liquid_crystals",
       "type": "prereq",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.1.3a 为 选择性必修 3·3.1.3b 的前置要求。",
+      "reason": "液晶兼具液体流动性与晶体各向异性，理解它需要先认识晶体与非晶体的特点。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.3），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.34（正文对应内容要求 3.1.3），选择性必修 3"
         }
       ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "cn_sh_physics_liquid_crystals",
-      "to": "cn_sh_physics_semiconductor_materials",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.1.3b 为 选择性必修 3·3.1.4a 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.3），选择性必修 3"
-        },
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.4），选择性必修 3"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "cn_sh_physics_semiconductor_materials",
-      "to": "cn_sh_physics_nanomaterials",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.1.4a 为 选择性必修 3·3.1.4b 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.4），选择性必修 3"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "cn_sh_physics_atomic_nuclear_model",
-      "to": "cn_sh_physics_fundamental_interactions",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.3.2a 为 选择性必修 3·3.3.2b 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.2），选择性必修 3"
-        }
-      ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "cn_sh_physics_nuclear_composition_force",
       "to": "cn_sh_physics_fundamental_interactions",
       "type": "prereq",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.3.2a 为 选择性必修 3·3.3.2b 的前置要求。",
+      "reason": "核力（强相互作用）是四种基本相互作用之一，认识核力有助于理解基本相互作用的尺度差异。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.2），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.35（正文对应内容要求 3.3.2），选择性必修 3"
         }
       ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "cn_sh_physics_fundamental_interactions",
-      "to": "cn_sh_physics_nuclear_reaction_equations",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.3.2b 为 选择性必修 3·3.3.2c 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.2），选择性必修 3"
-        }
-      ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "cn_sh_physics_light_energy_quantisation",
       "to": "cn_sh_physics_matter_waves_quantisation",
       "type": "prereq",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修 3·3.4.1a 为 选择性必修 3·3.4.1b 的前置要求。",
+      "reason": "实物粒子波动性是把光的波粒二象性与能量量子化思想推广到实物粒子。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.43（正文对应内容要求 3.4.1），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.36（正文对应内容要求 3.4.1），选择性必修 3"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
+    },
+    {
+      "from": "cn_sh_physics_maxwell_field_theory",
+      "to": "cn_sh_physics_em_wave_transmission",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "电磁波的发射与传播以“变化的电场与磁场相互激发”这一麦克斯韦电磁场理论基本思想为基础。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.31（正文对应内容要求 2.3.1），选择性必修 2"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.31（正文对应内容要求 2.3.3），选择性必修 2"
+        }
+      ],
+      "review_status": "approved"
     }
   ]
 }

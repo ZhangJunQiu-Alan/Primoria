@@ -1,20 +1,30 @@
 {
   "schema_version": "1.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.2",
   "practice_set_id": "cpk_cn_moe_senior_high_physics_2020",
   "framework_id": "cfw_cn_moe_senior_high_physics_2020_outcomes",
   "curriculum_id": "cur_cn_moe_senior_high_physics_2020",
   "subject": "Physics",
   "source_ids": [
-    "src_cn_moe_senior_high_physics_2020"
+    "src_cn_moe_senior_high_physics_2025"
   ],
   "generated_at": "2026-07-19",
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "把 14 项科学史、证据与守恒方法要求分流到教学评测知识层。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-10-25",
+      "summary_zh": "按 2026-10-25 官方来源复核更新证据定位（中国课标迁至 2025 日常修订版、新加坡页码校正），状态保持 needs_review。"
+    },
+    {
+      "version": "0.1.2",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准。"
     }
   ],
   "items": [
@@ -31,11 +41,11 @@
       "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.20（正文对应内容要求 1.1.1），必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.13（正文对应内容要求 1.1.1），必修 1"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_cn_sh_physics_2020_r1_1_1_3c_investigate_uniform_acceleration",
@@ -50,11 +60,11 @@
       "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.20（正文对应内容要求 1.1.3），必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.14（正文对应内容要求 1.1.3），必修 1"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_cn_sh_physics_2020_r1_1_2_3a_investigate_newton_second",
@@ -69,11 +79,11 @@
       "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.22（正文对应内容要求 1.2.3），必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.15（正文对应内容要求 1.2.3），必修 1"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_cn_sh_physics_2020_r2_2_1_4b_verify_mechanical_energy",
@@ -88,11 +98,11 @@
       "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.24（正文对应内容要求 2.1.4），必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.17（正文对应内容要求 2.1.4），必修 2"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_cn_sh_physics_2020_r3_3_2_1b_multimeter_use",
@@ -107,11 +117,11 @@
       "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.1），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21（正文对应内容要求 3.2.1），必修 3"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_cn_sh_physics_2020_r3_3_2_2b_measure_resistivity",
@@ -126,11 +136,11 @@
       "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.2），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21（正文对应内容要求 3.2.2），必修 3"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_cn_sh_physics_2020_r3_3_2_4b_measure_emf_internal_resistance",
@@ -145,11 +155,11 @@
       "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.4），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21（正文对应内容要求 3.2.4），必修 3"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_cn_sh_physics_2020_sr1_1_1_3_conservation_reasoning",
@@ -164,11 +174,11 @@
       "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.33（正文对应内容要求 1.1.3），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.26（正文对应内容要求 1.1.3），选择性必修 1"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_cn_sh_physics_2020_sr1_1_2_2b_measure_g_pendulum",
@@ -183,11 +193,11 @@
       "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.2），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.27（正文对应内容要求 1.2.2），选择性必修 1"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_cn_sh_physics_2020_sr1_1_3_1b_measure_refractive_index",
@@ -202,11 +212,11 @@
       "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.34（正文对应内容要求 1.3.1），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.27（正文对应内容要求 1.3.1），选择性必修 1"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_cn_sh_physics_2020_sr1_1_3_3c_double_slit_wavelength",
@@ -221,11 +231,11 @@
       "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.3），选择性必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.28（正文对应内容要求 1.3.3），选择性必修 1"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_cn_sh_physics_2020_sr2_2_4_2b_build_sensor_control",
@@ -240,11 +250,11 @@
       "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.39（正文对应内容要求 2.4.2），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.32（正文对应内容要求 2.4.2），选择性必修 2"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_cn_sh_physics_2020_sr3_3_1_1a_oil_film_molecule_size",
@@ -259,11 +269,11 @@
       "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.1），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.34（正文对应内容要求 3.1.1），选择性必修 3"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_cn_sh_physics_2020_sr3_3_3_5_matter_exploration_history",
@@ -278,11 +288,11 @@
       "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.5），选择性必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.36（正文对应内容要求 3.3.5），选择性必修 3"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ]
 }

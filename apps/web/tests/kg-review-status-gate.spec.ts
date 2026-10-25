@@ -33,47 +33,23 @@ describe("knowledge-graph review-status gate", () => {
     }
   });
 
-  it("registers both approved and needs_review graphs", () => {
-    const ids = listTopicGraphIds();
-    const pending = ids.filter((id) => getTopicGraphReviewStatus(id) === "needs_review");
+  it("registers only approved graphs after the CN/SG owner review", () => {
     // Registration is deliberately not filtered: the full registry stays
-    // resolvable so existing courses and explicit graph ids keep working.
-    expect(pending.length).toBeGreaterThan(0);
-    expect(ids.length).toBeGreaterThan(pending.length);
+    // resolvable so existing courses and explicit graph ids keep working. The
+    // gate's exclusion behavior is covered against a synthetic registry in
+    // kg-review-status-gate-fixture.spec.ts.
+    const ids = listTopicGraphIds();
+    expect(ids.length).toBeGreaterThan(0);
+    for (const graphId of ids) expect(getTopicGraphReviewStatus(graphId), graphId).toBe("approved");
   });
 
-  it("defaults to permissive so routing coverage does not silently narrow", () => {
+  it("enables the approved-only gate by default and allows an explicit opt-out", () => {
+    expect(requiresApprovedGraphsForRouting()).toBe(true);
+    process.env.PRIMORIA_REQUIRE_APPROVED_KG = "0";
     expect(requiresApprovedGraphsForRouting()).toBe(false);
+  });
+
+  it("keeps the full library routable under the gate because every graph is approved", () => {
     expect(listRoutableTopicGraphIds()).toEqual(listTopicGraphIds());
-  });
-
-  it("excludes needs_review graphs from routing when the gate is enabled", () => {
-    process.env.PRIMORIA_REQUIRE_APPROVED_KG = "1";
-    const routable = listRoutableTopicGraphIds();
-
-    expect(routable.length).toBeGreaterThan(0);
-    expect(routable.length).toBeLessThan(listTopicGraphIds().length);
-    for (const graphId of routable) {
-      expect(getTopicGraphReviewStatus(graphId), graphId).toBe("approved");
-    }
-  });
-
-  it("keeps gated-out graphs registered and directly resolvable", () => {
-    process.env.PRIMORIA_REQUIRE_APPROVED_KG = "1";
-    const pending = listTopicGraphIds().filter(
-      (id) => getTopicGraphReviewStatus(id) === "needs_review",
-    );
-    const routable = new Set(listRoutableTopicGraphIds());
-
-    for (const graphId of pending) {
-      expect(routable.has(graphId), graphId).toBe(false);
-      // Still in the registry: an existing course on this graph must not break.
-      expect(listTopicGraphIds()).toContain(graphId);
-    }
-  });
-
-  it("never returns an empty library, so the gate cannot cause an outage", () => {
-    process.env.PRIMORIA_REQUIRE_APPROVED_KG = "1";
-    expect(listRoutableTopicGraphIds().length).toBeGreaterThan(0);
   });
 });

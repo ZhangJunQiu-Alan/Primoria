@@ -1,20 +1,35 @@
 {
   "schema_version": "1.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.3",
   "gap_set_id": "cgs_cn_moe_senior_high_chemistry_2020_outcomes",
   "framework_id": "cfw_cn_moe_senior_high_chemistry_2020_outcomes",
   "curriculum_id": "cur_cn_moe_senior_high_chemistry_2020",
   "subject": "Chemistry",
   "source_ids": [
-    "src_cn_moe_senior_high_chemistry_2020"
+    "src_cn_moe_senior_high_chemistry_2025"
   ],
   "generated_at": "2026-07-19",
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "逐成果反向查重并记录 partial 与 unmapped 缺口；实验和安全实践不进入概念缺口。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-10-25",
+      "summary_zh": "按 2026-10-25 官方来源复核更新证据定位（中国课标迁至 2025 日常修订版、新加坡页码校正），状态保持 needs_review。"
+    },
+    {
+      "version": "0.1.2",
+      "date": "2026-10-25",
+      "summary_zh": "依据 2026-10 联网复核修正描述、证据定位与映射覆盖，状态保持 needs_review。"
+    },
+    {
+      "version": "0.1.3",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准。"
     }
   ],
   "candidates": [
@@ -32,11 +47,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.19（正文对应内容要求 1.1），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.14（正文对应内容要求 1.1），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_2_1a_substance_classification_conversion",
@@ -52,11 +67,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.22（正文对应内容要求 2.1），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.17-18（正文对应内容要求 2.1），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_2_1b_element_valence_conversion",
@@ -74,11 +89,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.22（正文对应内容要求 2.1），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.17-18（正文对应内容要求 2.1），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_2_1c_colloidal_dispersions",
@@ -94,11 +109,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.22（正文对应内容要求 2.1），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.17-18（正文对应内容要求 2.1），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_2_2a_redox_electron_transfer",
@@ -117,11 +132,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.2），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18（正文对应内容要求 2.2），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_2_2b_oxidising_reducing_agents",
@@ -139,11 +154,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.2），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18（正文对应内容要求 2.2），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_2_3a_electrolyte_ionisation",
@@ -162,11 +177,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.3），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18（正文对应内容要求 2.3），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_2_3b_ionic_reaction_conditions",
@@ -182,11 +197,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.3），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18（正文对应内容要求 2.3），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_2_3c_common_ion_tests",
@@ -202,11 +217,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.3），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18（正文对应内容要求 2.3），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_2_4a_sodium_compounds",
@@ -222,11 +237,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.4），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18（正文对应内容要求 2.4），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_2_4b_iron_compounds",
@@ -244,11 +259,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.4），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18（正文对应内容要求 2.4），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_2_5b_nitrogen_compounds",
@@ -266,11 +281,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.5），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18（正文对应内容要求 2.5），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_2_5c_sulfur_compounds",
@@ -288,11 +303,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.5），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18（正文对应内容要求 2.5），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_2_6a_inorganic_conversion_pathways",
@@ -308,11 +323,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.6），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18（正文对应内容要求 2.6），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_2_6b_inorganic_stse_value",
@@ -328,11 +343,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.6），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18（正文对应内容要求 2.6），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_3_2c_bond_changes_reaction_energy",
@@ -350,11 +365,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.26（正文对应内容要求 3.2），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.21（正文对应内容要求 3.2），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_3_4c_fuel_battery_evaluation",
@@ -370,11 +385,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.26（正文对应内容要求 3.4），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.21-22（正文对应内容要求 3.4），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_4_1a_carbon_bonding_geometry",
@@ -393,11 +408,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.29（正文对应内容要求 4.1），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.24（正文对应内容要求 4.1），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_4_2c_intro_organic_reaction_types",
@@ -416,11 +431,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.29（正文对应内容要求 4.2），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.24（正文对应内容要求 4.2），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_4_3a_organic_synthesis_value",
@@ -436,11 +451,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.29（正文对应内容要求 4.3），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.24（正文对应内容要求 4.3），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_4_3b_intro_macromolecule_applications",
@@ -460,11 +475,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.29（正文对应内容要求 4.3），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.24（正文对应内容要求 4.3），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_5_1a_chemistry_sustainable_development",
@@ -480,11 +495,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.31（正文对应内容要求 5.1），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.26-27（正文对应内容要求 5.1），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_5_1b_green_chemistry_principles",
@@ -500,11 +515,19 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.31（正文对应内容要求 5.1），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.26-27（正文对应内容要求 5.1），必修"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.30（必修主题5【学业要求】第5条），必修"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.49（正文对应内容要求 2.3），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_5_2a_chemistry_materials",
@@ -520,11 +543,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.32（正文对应内容要求 5.2），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.27（正文对应内容要求 5.2），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_5_2b_chemistry_health",
@@ -540,11 +563,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.32（正文对应内容要求 5.2），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.27（正文对应内容要求 5.2），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_5_3a_fossil_resource_utilisation",
@@ -564,11 +587,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.32（正文对应内容要求 5.3），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.27（正文对应内容要求 5.3），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_5_3b_energy_resource_systems",
@@ -584,11 +607,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.32（正文对应内容要求 5.3），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.27（正文对应内容要求 5.3），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_5_4a_pollutant_detection_treatment",
@@ -604,11 +627,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.32（正文对应内容要求 5.4），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.27（正文对应内容要求 5.4），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_5_4b_clean_production_circularity",
@@ -624,11 +647,15 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.32（正文对应内容要求 5.4），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.26-27（正文对应内容要求 5.1），必修"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.27（正文对应内容要求 5.3），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_r_5_5a_chemical_rules_safe_use",
@@ -644,11 +671,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.32（正文对应内容要求 5.5），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.27（正文对应内容要求 5.5），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_se_1_1a_energy_forms_conservation",
@@ -667,11 +694,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.30（正文对应内容要求 1.1），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_se_1_1b_internal_energy_state",
@@ -687,11 +714,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.30（正文对应内容要求 1.1），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_se_1_3c_electrochemical_corrosion",
@@ -707,11 +734,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.36（正文对应内容要求 1.3），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.31（正文对应内容要求 1.3），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_se_2_1c_reaction_quotient_direction",
@@ -729,11 +756,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.38（正文对应内容要求 2.1），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.33（正文对应内容要求 2.1），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_se_2_2c_reaction_path_activation",
@@ -752,11 +779,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.39（正文对应内容要求 2.2），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.33（正文对应内容要求 2.2），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_se_2_3a_industrial_condition_optimisation",
@@ -772,11 +799,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.39（正文对应内容要求 2.3），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.33-34（正文对应内容要求 2.3），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_se_3_1a_aqueous_electrolyte_systems",
@@ -795,11 +822,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.41（正文对应内容要求 3.1），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.36（正文对应内容要求 3.1），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_se_3_2b_water_ionisation_ph",
@@ -817,11 +844,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.41（正文对应内容要求 3.2），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.36（正文对应内容要求 3.2），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_se_3_3a_salt_hydrolysis",
@@ -837,11 +864,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.42（正文对应内容要求 3.3），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.36（正文对应内容要求 3.3），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_se_3_5a_aqueous_equilibrium_applications",
@@ -857,11 +884,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.42（正文对应内容要求 3.5），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.36（正文对应内容要求 3.5），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_ss_1_1b_quantised_levels_transitions",
@@ -879,11 +906,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.44（正文对应内容要求 1.1），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.39（正文对应内容要求 1.1），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_ss_2_3b_structure_measurement",
@@ -902,11 +929,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.48（正文对应内容要求 2.3），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.42（正文对应内容要求 2.3），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_ss_2_3c_molecular_polarity_chirality",
@@ -925,11 +952,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.48（正文对应内容要求 2.3），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.42（正文对应内容要求 2.3），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_ss_2_4b_transitional_mixed_crystals",
@@ -945,11 +972,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.48（正文对应内容要求 2.4），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.42（正文对应内容要求 2.4），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_ss_2_4c_aggregation_state_materials",
@@ -965,11 +992,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.48（正文对应内容要求 2.4），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.42（正文对应内容要求 2.4），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_ss_3_2a_spectroscopy_xrd_methods",
@@ -988,11 +1015,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.51（正文对应内容要求 3.2），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.44-45（正文对应内容要求 3.2），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_ss_3_3a_structure_guided_material_design",
@@ -1008,11 +1035,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.51（正文对应内容要求 3.3），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.45（正文对应内容要求 3.3），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_ss_3_3b_structure_methods_life_science",
@@ -1028,11 +1055,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.51（正文对应内容要求 3.3），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.45（正文对应内容要求 3.3），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_so_1_1a_organic_connectivity_geometry",
@@ -1051,11 +1078,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.53（正文对应内容要求 1.1），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.47（正文对应内容要求 1.1），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_so_1_2b_functional_group_properties_conversion",
@@ -1074,11 +1101,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.53（正文对应内容要求 1.2），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.47（正文对应内容要求 1.2），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_so_1_2c_functional_group_tests",
@@ -1096,11 +1123,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.53（正文对应内容要求 1.2），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.47（正文对应内容要求 1.2），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_so_2_3b_organic_synthesis_routes",
@@ -1116,11 +1143,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.56（正文对应内容要求 2.3），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.49（正文对应内容要求 2.3），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_so_2_4a_organic_safety_green_synthesis",
@@ -1136,11 +1163,15 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.56（正文对应内容要求 2.4），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.50（正文对应内容要求 2.4），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.49（正文对应内容要求 2.3），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_so_3_1a_polymer_monomer_repeat_unit",
@@ -1159,11 +1190,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.58（正文对应内容要求 3.1），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.52（正文对应内容要求 3.1），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_so_3_2a_carbohydrates",
@@ -1179,11 +1210,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.59（正文对应内容要求 3.2），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.52（正文对应内容要求 3.2），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_so_3_2c_dna_rna",
@@ -1199,11 +1230,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.59（正文对应内容要求 3.2），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.52（正文对应内容要求 3.2），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_chem_2020_o_so_3_3a_synthetic_polymers_materials",
@@ -1222,11 +1253,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.59（正文对应内容要求 3.3），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.52（正文对应内容要求 3.3），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ]
 }

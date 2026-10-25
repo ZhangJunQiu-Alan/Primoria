@@ -35,11 +35,10 @@ components are likewise cross-disciplinary: STEM simulations sit alongside
 timelines, source comparison, close reading, argument maps, language, music,
 geography, policy, art, and experiment design.
 
-The runtime topic-graph catalog contains 31 source-derived graphs. The original
-21 are source-approved; 10 China/Singapore secondary and
-H2 graphs are runtime-registered while their source governance state remains
-`needs_review`. Registration is not approval. The exact graph list, counts, and
-review boundary live in
+The runtime topic-graph catalog contains 31 source-derived graphs, all
+source-approved: the original 21 since July 2026 and the 10 China/Singapore
+secondary and H2 graphs since the 2026-10-25 owner review. Registration is still
+not approval. The exact graph list, counts, and review boundary live in
 [`docs/knowledge-graph/catalog.md`](docs/knowledge-graph/catalog.md).
 
 ## Repository Layout
@@ -186,11 +185,10 @@ new environment, import every graph, cross-subject edge, and embedding with:
 pnpm db:initialize:kg
 ```
 
-This command currently imports all 31 source graphs, including the 10
-China/Singapore graphs whose source status is still `needs_review`. Runtime
-availability does not promote their governance status; production operators
-must make the review-state decision explicitly before running the all-graph
-initializer.
+This command currently imports all 31 source graphs, all of which are
+source-approved. It does not check review status itself, so a future
+`needs_review` graph would also be imported; runtime availability never promotes
+governance status.
 
 Individual maintenance commands remain available when updating one graph:
 
@@ -241,18 +239,18 @@ against a database without KG tables, set:
 PRIMORIA_ALLOW_KG_INFRA_FALLBACK=1
 ```
 
-Cold-start learning-goal routing anchors to every registered graph by default,
-including the 10 China/Singapore overlay graphs whose source `review_status` is
-still `needs_review`. To restrict routing to source-approved graphs only:
+Cold-start learning-goal routing anchors only to source-approved graphs by
+default; `needs_review` graphs stay registered and directly resolvable, so
+existing courses keep working. Every current runtime graph is approved, so the
+gate excludes nothing today; it guards against a future `needs_review` graph.
+To route to every registered graph instead:
 
 ```bash
-# Withhold `needs_review` graphs from cold-start goal routing. They stay
-# registered and directly resolvable, so existing courses keep working.
-PRIMORIA_REQUIRE_APPROVED_KG=1
+# Opt out of the approved-only cold-start routing gate (on by default).
+PRIMORIA_REQUIRE_APPROVED_KG=0
 ```
 
-Leave it unset until those graphs are approved: they are currently the only
-source of China/Singapore curriculum coverage. See
+See
 [`docs/knowledge-graph/catalog.md`](docs/knowledge-graph/catalog.md).
 
 The email/password session system stores `users`, `identities`, and `sessions`
@@ -424,8 +422,8 @@ pnpm eval:tutor:zh:check
 PRIMORIA_TUTOR_BENCH_LIVE=1 pnpm eval:tutor -- --live
 ```
 
-The permanent fixture contains 1,718 bilingual cases across all 31 runtime
-graphs. Its generator requires bilingual labels plus English and Chinese manual
+The permanent fixture contains 1,726 bilingual cases (floor 1,718) across all
+31 runtime graphs. Its generator requires bilingual labels plus English and Chinese manual
 boundary coverage for each of the 10 China/Singapore graphs, and this validation
 command passes without calling a model.
 
@@ -523,10 +521,8 @@ docker compose -f docker-compose.prod.yml run --rm migrate \
   pnpm --filter @primoria/web db:initialize:kg
 ```
 
-`db:initialize:kg` includes all 31 current source graphs. Before production
-initialization, explicitly accept or exclude the 10 runtime-registered
-China/Singapore graphs that remain `needs_review`; the command itself does not
-enforce that governance decision.
+`db:initialize:kg` includes all 31 current source graphs, all source-approved
+since 2026-10-25. The command itself does not enforce review status.
 
 Startup order is enforced by the compose file: postgres (healthcheck) →
 `migrate` (App/KG) → `agent-migrate` (`agent_runtime` tables plus LangGraph

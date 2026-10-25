@@ -7,9 +7,9 @@ Current source of truth: KG source JSON files live in
 in `data/knowledge-graphs/generated/`. Runtime topic DAG artifacts are generated
 under `apps/web/src/lib/knowledge-graph/data/`.
 
-The current runtime registry contains 31 source-derived graphs. The original 21
-source graphs are `approved`; 10 China/Singapore graphs are registered at
-runtime while their source records remain `needs_review`. Runtime registration,
+The current runtime registry contains 31 source-derived graphs, all `approved`:
+the original 21 since 2026-07 and the 10 China/Singapore graphs since the
+2026-10-25 owner review (`data/knowledge-graphs/review/approved/cn-sg-2026-10/`). Runtime registration,
 database import eligibility, and human approval are distinct states. The exact
 inventory and counts are maintained in [`catalog.md`](catalog.md).
 

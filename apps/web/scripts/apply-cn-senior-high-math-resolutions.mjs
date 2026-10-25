@@ -4,6 +4,8 @@ import { createHash } from "node:crypto";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
+import { refuseOwnerApprovedTargets } from "./kg-approval-guard.mjs";
+
 const REPO_ROOT = resolve(import.meta.dirname, "../../..");
 const DATA_ROOT = resolve(REPO_ROOT, "data/knowledge-graphs");
 const TODAY = "2026-07-19";
@@ -19,6 +21,7 @@ const paths = {
   sources: resolve(DATA_ROOT, "governance/sources.json"),
   review: resolve(DATA_ROOT, "review/pending/curriculum-mapping/cms_cn_moe_senior_high_math_2020_outcomes.implementation-review.zh-CN.md"),
 };
+refuseOwnerApprovedTargets(paths);
 
 const readJson = (path) => JSON.parse(readFileSync(path, "utf8"));
 const writeJson = (path, value) => {

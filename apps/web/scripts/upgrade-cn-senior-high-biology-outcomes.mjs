@@ -3,6 +3,8 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
+import { refuseOwnerApprovedTargets } from "./kg-approval-guard.mjs";
+
 const ROOT = resolve(import.meta.dirname, "../../..");
 const TODAY = "2026-07-19";
 const paths = {
@@ -11,6 +13,7 @@ const paths = {
   gaps: resolve(ROOT, "data/knowledge-graphs/curricula/gaps/pending/cn_moe_senior_high_biology_2020_outcomes.json"),
   practices: resolve(ROOT, "data/knowledge-graphs/pedagogy/practices/cn_moe_senior_high_biology_2020.json"),
 };
+refuseOwnerApprovedTargets(paths);
 
 const SOURCE_ID = "src_cn_moe_senior_high_biology_2020";
 const levels = {

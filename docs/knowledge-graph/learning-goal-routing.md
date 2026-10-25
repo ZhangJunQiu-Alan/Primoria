@@ -92,8 +92,8 @@ The corpus is a permanent product contract:
 - generator/invariant checks: `apps/web/scripts/generate-learning-goal-routing-dataset.ts`;
 - evaluator: `apps/web/scripts/eval-learning-goal-routing.ts`.
 
-The current fixture contains 1,718 cases: 859 English and 859 Chinese, covering
-all 31 runtime graphs, 579 topics, and 1,456 graph-local concepts. The generator
+The current fixture contains 1,726 cases: 863 English and 863 Chinese, covering
+all 31 runtime graphs, 583 topics, and 1,460 graph-local concepts. The generator
 requires at least one English and one Chinese manual boundary case for each of
 the 10 China/Singapore graphs.
 
@@ -101,7 +101,7 @@ Generation fails if the corpus shrinks below 1,718 cases, if a runtime graph
 loses bilingual labels or required boundary coverage, or if either reported
 regression changes its required policy. CI runs the validation on every pull
 request. `pnpm test:learning-goal-routing` currently verifies and validates all
-1,718 cases without calling a model.
+1,726 cases without calling a model.
 
 ```bash
 # Regenerate after adding reviewed seeds or KG content.

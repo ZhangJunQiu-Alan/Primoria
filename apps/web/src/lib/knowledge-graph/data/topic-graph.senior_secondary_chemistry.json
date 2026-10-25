@@ -1,9 +1,9 @@
 {
   "graphId": "senior_secondary_chemistry",
   "subject": "Chemistry",
-  "reviewStatus": "needs_review",
+  "reviewStatus": "approved",
   "generatedFrom": "data/knowledge-graphs/source/senior_secondary_chemistry.json",
-  "generatedAt": "2026-08-27",
+  "generatedAt": "2026-10-25",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -32,10 +32,6 @@
         }
       ],
       "successors": [
-        {
-          "topicId": "cn_sh_chem_topic_redox_ions",
-          "hard": false
-        },
         {
           "topicId": "cn_sh_chem_topic_inorganic_stse",
           "hard": false
@@ -75,10 +71,8 @@
           "hard": false
         }
       ],
-      "prereqTopics": [
-        "cn_sh_chem_topic_foundations"
-      ],
-      "isRoot": false
+      "prereqTopics": [],
+      "isRoot": true
     },
     {
       "topicId": "cn_sh_chem_topic_ionic_analysis",
@@ -105,12 +99,7 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [
-        {
-          "topicId": "cn_sh_chem_topic_inorganic_elements",
-          "hard": false
-        }
-      ],
+      "successors": [],
       "prereqTopics": [
         "cn_sh_chem_topic_redox_ions"
       ],
@@ -147,10 +136,8 @@
           "hard": false
         }
       ],
-      "prereqTopics": [
-        "cn_sh_chem_topic_ionic_analysis"
-      ],
-      "isRoot": false
+      "prereqTopics": [],
+      "isRoot": true
     },
     {
       "topicId": "cn_sh_chem_topic_inorganic_stse",
@@ -213,10 +200,6 @@
         {
           "topicId": "cn_sh_chem_topic_chemistry_society",
           "hard": false
-        },
-        {
-          "topicId": "cn_sh_chem_topic_organic_design",
-          "hard": false
         }
       ],
       "prereqTopics": [],
@@ -247,16 +230,7 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [
-        {
-          "topicId": "cn_sh_chem_topic_chemistry_society",
-          "hard": false
-        },
-        {
-          "topicId": "cn_sh_chem_topic_environment_safety",
-          "hard": false
-        }
-      ],
+      "successors": [],
       "prereqTopics": [],
       "isRoot": true
     },
@@ -285,15 +259,9 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [
-        {
-          "topicId": "cn_sh_chem_topic_environment_safety",
-          "hard": false
-        }
-      ],
+      "successors": [],
       "prereqTopics": [
-        "cn_sh_chem_topic_organic_intro",
-        "cn_sh_chem_topic_sustainability"
+        "cn_sh_chem_topic_organic_intro"
       ],
       "isRoot": false
     },
@@ -317,11 +285,8 @@
         }
       ],
       "successors": [],
-      "prereqTopics": [
-        "cn_sh_chem_topic_sustainability",
-        "cn_sh_chem_topic_chemistry_society"
-      ],
-      "isRoot": false
+      "prereqTopics": [],
+      "isRoot": true
     },
     {
       "topicId": "cn_sh_chem_topic_thermo_electrochem",
@@ -436,12 +401,7 @@
           "defaultOrder": 2
         }
       ],
-      "successors": [
-        {
-          "topicId": "cn_sh_chem_topic_materials_structure",
-          "hard": false
-        }
-      ],
+      "successors": [],
       "prereqTopics": [],
       "isRoot": true
     },
@@ -470,16 +430,9 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [
-        {
-          "topicId": "cn_sh_chem_topic_structure_applications",
-          "hard": false
-        }
-      ],
-      "prereqTopics": [
-        "cn_sh_chem_topic_atomic_structure_methods"
-      ],
-      "isRoot": false
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
     },
     {
       "topicId": "cn_sh_chem_topic_structure_applications",
@@ -507,10 +460,8 @@
         }
       ],
       "successors": [],
-      "prereqTopics": [
-        "cn_sh_chem_topic_materials_structure"
-      ],
-      "isRoot": false
+      "prereqTopics": [],
+      "isRoot": true
     },
     {
       "topicId": "cn_sh_chem_topic_organic_design",
@@ -543,10 +494,8 @@
           "hard": false
         }
       ],
-      "prereqTopics": [
-        "cn_sh_chem_topic_organic_intro"
-      ],
-      "isRoot": false
+      "prereqTopics": [],
+      "isRoot": true
     },
     {
       "topicId": "cn_sh_chem_topic_biomolecules_polymers",
@@ -600,34 +549,10 @@
       "reason": "使用水的离子积和 pH 前需要先建立电解质水溶液的平衡模型。"
     },
     {
-      "from": "cn_sh_chem_chemistry_materials",
-      "to": "cn_sh_chem_chemistry_health",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修·5.2a 为 必修·5.2b 的前置要求。"
-    },
-    {
       "from": "cn_sh_chem_chemistry_sustainable_development",
       "to": "cn_sh_chem_green_chemistry_principles",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修·5.1a 为 必修·5.1b 的前置要求。"
-    },
-    {
-      "from": "cn_sh_chem_clean_production_circularity",
-      "to": "cn_sh_chem_chemical_rules_safe_use",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修·5.4b 为 必修·5.5a 的前置要求。"
-    },
-    {
-      "from": "cn_sh_chem_common_ion_tests",
-      "to": "cn_sh_chem_sodium_compounds",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修·2.3c 为 必修·2.4a 的前置要求。"
-    },
-    {
-      "from": "cn_sh_chem_dna_rna",
-      "to": "cn_sh_chem_synthetic_polymers_materials",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·有机化学基础·3.2c 为 选择性必修·有机化学基础·3.3a 的前置要求。"
+      "reason": "绿色化学是实现化学可持续发展的具体取向，理解其原则需要先明确可持续发展的目标。"
     },
     {
       "from": "cn_sh_chem_electrolyte_ionisation",
@@ -642,28 +567,16 @@
       "reason": "判断氧化剂和还原剂需要先分析元素价态及其变化方向。"
     },
     {
-      "from": "cn_sh_chem_energy_resource_systems",
-      "to": "cn_sh_chem_pollutant_detection_treatment",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修·5.3b 为 必修·5.4a 的前置要求。"
-    },
-    {
       "from": "cn_sh_chem_fossil_resource_utilisation",
       "to": "cn_sh_chem_energy_resource_systems",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修·5.3a 为 必修·5.3b 的前置要求。"
+      "reason": "评价自然资源与能源利用方案时，煤、石油、天然气的加工与综合利用是主要分析对象。"
     },
     {
       "from": "cn_sh_chem_functional_group_properties_conversion",
       "to": "cn_sh_chem_functional_group_tests",
       "strength": "soft",
       "reason": "选择官能团检验需要先掌握其特征性质、相互影响和转化。"
-    },
-    {
-      "from": "cn_sh_chem_green_chemistry_principles",
-      "to": "cn_sh_chem_chemistry_materials",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修·5.1b 为 必修·5.2a 的前置要求。"
     },
     {
       "from": "cn_sh_chem_green_chemistry_principles",
@@ -690,34 +603,10 @@
       "reason": "设计离子检验需要先掌握特征离子反应及其发生条件。"
     },
     {
-      "from": "cn_sh_chem_nitrogen_compounds",
-      "to": "cn_sh_chem_sulfur_compounds",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修·2.5b 为 必修·2.5c 的前置要求。"
-    },
-    {
       "from": "cn_sh_chem_organic_synthesis_routes",
       "to": "cn_sh_chem_organic_safety_green_synthesis",
       "strength": "soft",
       "reason": "评价合成方案的安全性和绿色程度需要先能读懂并比较反应路线。"
-    },
-    {
-      "from": "cn_sh_chem_organic_synthesis_value",
-      "to": "cn_sh_chem_intro_macromolecule_applications",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修·4.3a 为 必修·4.3b 的前置要求。"
-    },
-    {
-      "from": "cn_sh_chem_organic_synthesis_value",
-      "to": "cn_sh_chem_organic_synthesis_routes",
-      "strength": "soft",
-      "reason": "比较具体合成路线前需要理解有机合成通过结构转化创造物质的基本价值。"
-    },
-    {
-      "from": "cn_sh_chem_oxidising_reducing_agents",
-      "to": "cn_sh_chem_electrolyte_ionisation",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修·2.2b 为 必修·2.3a 的前置要求。"
     },
     {
       "from": "cn_sh_chem_polymer_monomer_repeat_unit",
@@ -732,30 +621,6 @@
       "reason": "利用离子平衡解决物质转化问题需要先掌握盐类水解。"
     },
     {
-      "from": "cn_sh_chem_sodium_compounds",
-      "to": "cn_sh_chem_iron_compounds",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修·2.4a 为 必修·2.4b 的前置要求。"
-    },
-    {
-      "from": "cn_sh_chem_spectroscopy_xrd_methods",
-      "to": "cn_sh_chem_structure_guided_material_design",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·物质结构与性质·3.2a 为 选择性必修·物质结构与性质·3.3a 的前置要求。"
-    },
-    {
-      "from": "cn_sh_chem_structure_guided_material_design",
-      "to": "cn_sh_chem_structure_methods_life_science",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·物质结构与性质·3.3a 为 选择性必修·物质结构与性质·3.3b 的前置要求。"
-    },
-    {
-      "from": "cn_sh_chem_substance_classification_conversion",
-      "to": "cn_sh_chem_element_valence_conversion",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修·2.1a 为 必修·2.1b 的前置要求。"
-    },
-    {
       "from": "cn_sh_chem_substance_classification_conversion",
       "to": "cn_sh_chem_inorganic_conversion_pathways",
       "strength": "soft",
@@ -765,13 +630,7 @@
       "from": "cn_sh_chem_sulfur_compounds",
       "to": "cn_sh_chem_inorganic_conversion_pathways",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修·2.5c 为 必修·2.6a 的前置要求。"
-    },
-    {
-      "from": "cn_sh_chem_transitional_mixed_crystals",
-      "to": "cn_sh_chem_aggregation_state_materials",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·物质结构与性质·2.4b 为 选择性必修·物质结构与性质·2.4c 的前置要求。"
+      "reason": "设计无机物转化路径需要以硫等典型元素在不同价态间的转化（S→SO₂→SO₃→H₂SO₄）为具体依据。"
     },
     {
       "from": "cn_sh_chem_water_ionisation_ph",
@@ -783,7 +642,7 @@
       "from": "cn_sh_chem_water_ionisation_ph",
       "to": "cn_sh_chem_salt_hydrolysis",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·化学反应原理·3.2b 为 选择性必修·化学反应原理·3.3a 的前置要求。"
+      "reason": "解释盐溶液呈酸性或碱性，需要先理解水的电离、离子积以及 pH 的含义。"
     }
   ]
 }

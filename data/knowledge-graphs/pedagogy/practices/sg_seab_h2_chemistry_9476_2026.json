@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.2",
   "practice_set_id": "cpk_sg_seab_h2_chemistry_9476_2026",
   "framework_id": "cfw_sg_seab_h2_chemistry_9476_2026_outcomes",
   "curriculum_id": "cur_sg_seab_h2_chemistry_9476_2026",
@@ -9,12 +9,22 @@
     "src_sg_seab_h2_chemistry_9476_2026"
   ],
   "generated_at": "2026-07-19",
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "把 1 项内容内实验设计和 7 项跨主题实践转为教学评测知识。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-10-25",
+      "summary_zh": "按 2026-10-25 官方来源复核更新证据定位（中国课标迁至 2025 日常修订版、新加坡页码校正），状态保持 needs_review。"
+    },
+    {
+      "version": "0.1.2",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准。"
     }
   ],
   "items": [
@@ -35,7 +45,7 @@
           "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_chemistry_9476_2026_pos_wotd",
@@ -54,7 +64,7 @@
           "locator": "PDF p.4, Practices of Science, component 1"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_chemistry_9476_2026_pos_nos",
@@ -73,7 +83,7 @@
           "locator": "PDF p.4, Practices of Science, component 2"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_chemistry_9476_2026_pos_stse",
@@ -92,7 +102,7 @@
           "locator": "PDF p.4, Practices of Science, component 3"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_chemistry_9476_2026_practical_planning",
@@ -108,10 +118,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.36, Practical Assessment, Planning; assessment summary on p.9"
+          "locator": "PDF p.35, Practical Assessment, Planning; assessment summary on p.9"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_chemistry_9476_2026_practical_mmo",
@@ -127,10 +137,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.36, Practical Assessment, MMO; assessment summary on p.9"
+          "locator": "PDF p.35, Practical Assessment, MMO; assessment summary on p.9"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_chemistry_9476_2026_practical_pdo",
@@ -146,10 +156,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.37, Practical Assessment, PDO; assessment summary on p.9"
+          "locator": "PDF p.35, Practical Assessment, PDO; assessment summary on p.9"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_chemistry_9476_2026_practical_ace",
@@ -165,10 +175,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.37, Practical Assessment, ACE; assessment summary on p.9"
+          "locator": "PDF p.35, Practical Assessment, ACE; assessment summary on p.9"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ]
 }

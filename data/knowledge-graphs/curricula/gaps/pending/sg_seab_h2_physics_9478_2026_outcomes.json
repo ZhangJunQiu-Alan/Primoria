@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.1",
   "gap_set_id": "cgs_sg_seab_h2_physics_9478_2026_outcomes",
   "framework_id": "cfw_sg_seab_h2_physics_9478_2026_outcomes",
   "curriculum_id": "cur_sg_seab_h2_physics_9478_2026",
@@ -9,12 +9,17 @@
     "src_sg_seab_h2_physics_9478_2026"
   ],
   "generated_at": "2026-07-19",
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "记录全部 partial 与 unmapped 物理概念缺口；实践要求不作为 KG 缺口。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准。"
     }
   ],
   "candidates": [
@@ -39,7 +44,7 @@
           "locator": "PDF p.14, topic 4 Energy and Fields, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_physics_9478_2026_o_17_crossed_field_velocity_selector",
@@ -62,7 +67,7 @@
           "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (m)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_physics_9478_2026_o_19_wavefunction_probability_density",
@@ -82,7 +87,7 @@
           "locator": "PDF p.28, topic 19 Quantum Physics, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_physics_9478_2026_o_19_wavefunction_superposition",
@@ -102,7 +107,7 @@
           "locator": "PDF p.28, topic 19 Quantum Physics, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_physics_9478_2026_o_19_heisenberg_uncertainty",
@@ -122,7 +127,7 @@
           "locator": "PDF p.28, topic 19 Quantum Physics, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_physics_9478_2026_o_19_infinite_well_wavefunctions",
@@ -142,7 +147,7 @@
           "locator": "PDF p.28, topic 19 Quantum Physics, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_physics_9478_2026_o_19_infinite_well_energy_levels",
@@ -162,7 +167,7 @@
           "locator": "PDF p.28, topic 19 Quantum Physics, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_physics_9478_2026_o_20_background_radiation",
@@ -184,7 +189,7 @@
           "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_physics_9478_2026_o_20_alpha_beta_gamma_properties",
@@ -206,7 +211,7 @@
           "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_physics_9478_2026_o_20_nuclear_equations",
@@ -229,7 +234,7 @@
           "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (m)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_physics_9478_2026_o_20_nuclear_conservation_laws",
@@ -252,7 +257,7 @@
           "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (n)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_physics_9478_2026_o_20_neutrino_prediction",
@@ -272,7 +277,7 @@
           "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (o)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ]
 }

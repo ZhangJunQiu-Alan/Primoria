@@ -3,6 +3,8 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
+import { refuseOwnerApprovedTargets } from "./kg-approval-guard.mjs";
+
 const ROOT = resolve(import.meta.dirname, "../../..");
 const TODAY = "2026-07-19";
 const SOURCE_ID = "src_sg_seab_h2_math_9758_2026";
@@ -15,6 +17,7 @@ const paths = {
   practices: resolve(ROOT, "data/knowledge-graphs/pedagogy/practices/sg_seab_h2_math_9758_2026.json"),
   sources: resolve(ROOT, "data/knowledge-graphs/governance/sources.json"),
 };
+refuseOwnerApprovedTargets(paths);
 
 const C = {
   function: "pc_d547d8eb03df4b28cc0357c7cae1d164",

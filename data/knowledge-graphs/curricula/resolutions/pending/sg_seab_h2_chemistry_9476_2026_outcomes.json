@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.2",
   "resolution_set_id": "cgr_sg_seab_h2_chemistry_9476_2026_outcomes",
   "gap_set_id": "cgs_sg_seab_h2_chemistry_9476_2026_outcomes",
   "framework_id": "cfw_sg_seab_h2_chemistry_9476_2026_outcomes",
@@ -12,12 +12,22 @@
     "src_openstax_organic_chemistry_2023"
   ],
   "generated_at": "2026-07-19",
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "完成 21 项 H2 化学缺口的反向查重、概念归并、稳定 ID 和双类证据登记。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-10-25",
+      "summary_zh": "按 2026-10-25 官方来源复核更新证据定位（中国课标迁至 2025 日常修订版、新加坡页码校正），状态保持 needs_review。"
+    },
+    {
+      "version": "0.1.2",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准。"
     }
   ],
   "resolutions": [
@@ -42,7 +52,7 @@
           "locator": "OpenStax Chemistry 2e §9.3, Stoichiometry of Gaseous Substances, Mixtures, and Reactions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_4_a",
@@ -69,7 +79,7 @@
           "locator": "OpenStax Chemistry 2e §14.1, Brønsted-Lowry Acids and Bases, historical Arrhenius model; §15.2, Lewis Acids and Bases"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_4_c",
@@ -96,7 +106,7 @@
           "locator": "OpenStax Chemistry 2e §14.1, Brønsted-Lowry Acids and Bases, historical Arrhenius model; §15.2, Lewis Acids and Bases"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_7_e",
@@ -119,7 +129,7 @@
           "locator": "OpenStax Chemistry 2e §7.1, Ionic Bonding, lattice energy and ionic charge-distance effects"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_7_l",
@@ -146,7 +156,7 @@
           "locator": "OpenStax Chemistry 2e §16.4, Free Energy; §17.4, Potential, Free Energy, and Equilibrium"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_8_k",
@@ -169,7 +179,7 @@
           "locator": "OpenStax Chemistry 2e §12.7, Catalysis, Enzyme Structure and Function"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_10_1_b",
@@ -192,7 +202,7 @@
           "locator": "OpenStax Chemistry 2e §§14.1-14.3, Brønsted-Lowry Acids and Bases; pH and pOH; Relative Strengths of Acids and Bases"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_10_1_d",
@@ -219,7 +229,7 @@
           "locator": "OpenStax Chemistry 2e §14.7, Acid-Base Titrations"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_10_1_e",
@@ -246,7 +256,7 @@
           "locator": "OpenStax Chemistry 2e §14.7, Acid-Base Titrations"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_10_1_f",
@@ -269,7 +279,7 @@
           "locator": "OpenStax Chemistry 2e §14.6, Buffers; §15.3, Coupled Equilibria, ocean acidification"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_10_2_c",
@@ -292,7 +302,7 @@
           "locator": "OpenStax Chemistry 2e §§15.2-15.3, Lewis Acids and Bases; Coupled Equilibria"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_11_3_b",
@@ -315,7 +325,7 @@
           "locator": "OpenStax Organic Chemistry §§6.2, 7.9 and 11.3, mechanisms, electronic effects and steric effects in substitution"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_11_4_h",
@@ -331,14 +341,14 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.29, topic 11_4 Hydrocarbons, outcome (h)"
+          "locator": "PDF p.28, topic 11_4 Hydrocarbons, outcome (h)"
         },
         {
           "source_id": "src_openstax_chemistry_2e_2019",
           "locator": "OpenStax Chemistry 2e §§12.7 and 18.9, catalytic converters; atmospheric oxygen compounds and combustion impacts"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_11_5_b",
@@ -361,7 +371,7 @@
           "locator": "OpenStax Organic Chemistry §§11.2 and 11.4, The SN2 Reaction; The SN1 Reaction"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_11_5_e",
@@ -384,7 +394,7 @@
           "locator": "OpenStax Chemistry 2e §18.8, Occurrence, Preparation, and Properties of the Halogens, halocarbon environmental context"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_11_10_g",
@@ -400,14 +410,14 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.33, topic 11_10 Polymers, outcome (g)"
+          "locator": "PDF p.32, topic 11_10 Polymers, outcome (g)"
         },
         {
           "source_id": "src_openstax_organic_chemistry_2023",
           "locator": "OpenStax Organic Chemistry Chapter 31, Synthetic Polymers; Chapter 11 Chemistry Matters—Green Chemistry"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_12_g",
@@ -434,7 +444,7 @@
           "locator": "OpenStax Chemistry 2e §16.4, Free Energy; §17.4, Potential, Free Energy, and Equilibrium"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_12_j",
@@ -457,7 +467,7 @@
           "locator": "OpenStax Chemistry 2e §17.4, Potential, Free Energy, and Equilibrium, nonstandard conditions and the Nernst equation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_12_o",
@@ -480,7 +490,7 @@
           "locator": "OpenStax Chemistry 2e §17.7, Electrolysis, electroplating and metal purification applications"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_13_c",
@@ -503,7 +513,7 @@
           "locator": "OpenStax Chemistry 2e §§6.5 and 19.1, Periodic Variations in Element Properties; Properties of Transition Metals"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_13_j",
@@ -526,7 +536,7 @@
           "locator": "OpenStax Chemistry 2e §19.2, Coordination Chemistry of Transition Metals, ligand substitution and complex formation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ]
 }

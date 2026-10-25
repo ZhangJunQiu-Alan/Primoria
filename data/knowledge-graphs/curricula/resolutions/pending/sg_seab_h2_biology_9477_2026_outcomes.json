@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.2",
   "resolution_set_id": "cgr_sg_seab_h2_biology_9477_2026_outcomes",
   "gap_set_id": "cgs_sg_seab_h2_biology_9477_2026_outcomes",
   "framework_id": "cfw_sg_seab_h2_biology_9477_2026_outcomes",
@@ -13,12 +13,22 @@
     "src_openstax_anatomy_physiology_2e_2022"
   ],
   "generated_at": "2026-07-19",
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "完成 45 项 H2 生物缺口的反向查重、概念归并、稳定 ID 和双类证据登记。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-10-25",
+      "summary_zh": "依据 2026-10 联网复核修正描述、证据定位与映射覆盖，状态保持 needs_review。"
+    },
+    {
+      "version": "0.1.2",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准。"
     }
   ],
   "resolutions": [
@@ -43,7 +53,7 @@
           "locator": "OpenStax Biology 2e §4.1, Studying Cells, cell theory"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_1_f",
@@ -66,7 +76,7 @@
           "locator": "OpenStax Microbiology §6.1, Viruses, noncellular infectious agents and host dependence"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_1_t",
@@ -89,7 +99,7 @@
           "locator": "OpenStax Anatomy and Physiology 2e §3.6, Cellular Differentiation, stem-cell potency hierarchy"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_1_u",
@@ -112,7 +122,7 @@
           "locator": "OpenStax Anatomy and Physiology 2e §§3.6 and 18.2, Cellular Differentiation; Production of the Formed Elements"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_b",
@@ -135,7 +145,7 @@
           "locator": "OpenStax Biology 2e §14.3, DNA Replication in Eukaryotes, telomeres and telomerase"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_d",
@@ -158,7 +168,7 @@
           "locator": "OpenStax Biology 2e §§14.1 and 17.3, DNA structure; whole-genome sequencing and genome organisation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_e",
@@ -181,7 +191,7 @@
           "locator": "OpenStax Microbiology §§6.2-6.3, Viral Life Cycle; Isolation, Culture, and Identification of Viruses"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_f",
@@ -204,7 +214,7 @@
           "locator": "OpenStax Microbiology §6.2, The Viral Life Cycle, influenza antigenic drift and shift"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_g",
@@ -227,7 +237,7 @@
           "locator": "OpenStax Microbiology §11.6, How Asexual Prokaryotes Achieve Genetic Diversity"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_h",
@@ -250,7 +260,7 @@
           "locator": "OpenStax Biology 2e §§14.3 and 16.3, telomeres; eukaryotic transcriptional regulation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_i",
@@ -273,13 +283,14 @@
           "locator": "OpenStax Biology 2e §§16.2-16.5, Eukaryotic Epigenetic, Transcriptional, Post-transcriptional and Translational Regulation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_j",
       "resolution_action": "add_or_alias_concepts",
       "canonical_ids": [
-        "pc_c83a8b007ebf17728bb76b2ece193f67"
+        "pc_c83a8b007ebf17728bb76b2ece193f67",
+        "pc_0185ccac3ad47cd14f266d12099ab528"
       ],
       "created_node_ids": [
         "sg_h2_biology_southern_blot_hybridisation"
@@ -296,7 +307,7 @@
           "locator": "OpenStax Biology 2e §17.1, Biotechnology, nucleic-acid probes, hybridisation and DNA analysis"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_m",
@@ -319,7 +330,7 @@
           "locator": "OpenStax Biology 2e §17.4, Applying Genomics, genetic testing and ethical implications"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_o",
@@ -346,7 +357,7 @@
           "locator": "OpenStax Biology 2e §10.4, Cancer and the Cell Cycle"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_p",
@@ -373,7 +384,7 @@
           "locator": "OpenStax Biology 2e §10.4, Cancer and the Cell Cycle"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_q",
@@ -396,7 +407,7 @@
           "locator": "OpenStax Biology 2e §10.4, Proto-oncogenes and Tumor-Suppressor Genes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_r",
@@ -419,7 +430,7 @@
           "locator": "OpenStax Biology 2e §10.4, Cancer and the Cell Cycle, tumour progression and metastasis"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_aa",
@@ -442,7 +453,7 @@
           "locator": "OpenStax Biology 2e §12.3, Laws of Inheritance, gene interactions and epistasis"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_bb",
@@ -465,7 +476,7 @@
           "locator": "OpenStax Biology 2e §12.3, Laws of Inheritance, environmental effects on phenotype"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_3_m",
@@ -488,7 +499,7 @@
           "locator": "OpenStax Biology 2e §§9.1-9.3, Signaling Molecules and Cellular Receptors; Propagation of the Signal; Response to the Signal"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_3_n",
@@ -511,7 +522,7 @@
           "locator": "OpenStax Biology 2e §9.2, Propagation of the Signal, second messengers and cyclic AMP"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_3_o",
@@ -534,7 +545,7 @@
           "locator": "OpenStax Biology 2e §9.2, Propagation of the Signal, phosphorylation cascades"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_3_p",
@@ -557,7 +568,7 @@
           "locator": "OpenStax Biology 2e §§9.1 and 37.3, receptor signalling; regulation of body processes by insulin and glucagon"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_4_e",
@@ -580,7 +591,7 @@
           "locator": "OpenStax Biology 2e §19.1, Population Evolution, selection and maintenance of variation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_4_f",
@@ -603,7 +614,7 @@
           "locator": "OpenStax Biology 2e §§18.1 and 19.1, Understanding Evolution; Population Evolution"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_4_g",
@@ -626,7 +637,7 @@
           "locator": "OpenStax Biology 2e §18.1, Understanding Evolution, evidence from fossils, anatomy, biogeography and molecules"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_4_h",
@@ -649,7 +660,7 @@
           "locator": "OpenStax Biology 2e §18.2, Formation of New Species, biological species concept"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_4_k",
@@ -676,7 +687,7 @@
           "locator": "OpenStax Biology 2e §§20.1-20.2, Organizing Life on Earth; Determining Evolutionary Relationships"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_4_l",
@@ -703,7 +714,7 @@
           "locator": "OpenStax Biology 2e §§20.1-20.2, Organizing Life on Earth; Determining Evolutionary Relationships"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_a_b",
@@ -726,7 +737,7 @@
           "locator": "OpenStax Microbiology §§18.3 and 18.5, T Lymphocytes and Cellular Immunity; Vaccines"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_a_d",
@@ -749,7 +760,7 @@
           "locator": "OpenStax Microbiology §18.4, B Lymphocytes and Humoral Immunity, antibody diversity"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_a_e",
@@ -776,7 +787,7 @@
           "locator": "OpenStax Microbiology §18.5, Vaccines, herd immunity, benefits and adverse effects"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_a_f",
@@ -803,7 +814,7 @@
           "locator": "OpenStax Microbiology §18.5, Vaccines, herd immunity, benefits and adverse effects"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_a_g",
@@ -826,7 +837,7 @@
           "locator": "OpenStax Microbiology §§22.3 and 25.3, Viral Infections of the Respiratory Tract; Viral Infections of the Circulatory and Lymphatic Systems"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_a_j",
@@ -849,7 +860,7 @@
           "locator": "OpenStax Microbiology §16.1, Characteristics of Infectious Disease, disease transmission and epidemiological measures"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_a_k",
@@ -872,7 +883,7 @@
           "locator": "OpenStax Microbiology §16.1, Characteristics of Infectious Disease, epidemiological patterns"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_b_a",
@@ -895,7 +906,7 @@
           "locator": "OpenStax Biology 2e §44.5, Climate and the Effects of Global Climate Change"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_b_b",
@@ -918,7 +929,7 @@
           "locator": "OpenStax Biology 2e §44.5, Climate and the Effects of Global Climate Change"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_b_c",
@@ -941,7 +952,7 @@
           "locator": "OpenStax Biology 2e §§44.3 and 47.1, Aquatic Biomes; The Biodiversity Crisis, coastal ecosystems and carbon storage context"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_b_d",
@@ -964,7 +975,7 @@
           "locator": "OpenStax Biology 2e §44.5, Climate and the Effects of Global Climate Change, anthropogenic emissions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_b_e",
@@ -987,7 +998,7 @@
           "locator": "OpenStax Biology 2e §44.5, Climate and the Effects of Global Climate Change, agriculture and food security"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_b_f",
@@ -1010,7 +1021,7 @@
           "locator": "OpenStax Biology 2e §§44.1 and 44.5, The Scope of Ecology; Climate and the Effects of Global Climate Change"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_b_g",
@@ -1033,7 +1044,7 @@
           "locator": "OpenStax Biology 2e §47.2, The Importance of Biodiversity to Human Life"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_b_h",
@@ -1056,7 +1067,7 @@
           "locator": "OpenStax Biology 2e §§28.6 and 44.5, Superphylum Ecdysozoa; climate effects on organisms"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_b_i",
@@ -1079,7 +1090,7 @@
           "locator": "OpenStax Microbiology §§16.3 and 25.3, Modes of Disease Transmission; vector-borne infections"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ]
 }

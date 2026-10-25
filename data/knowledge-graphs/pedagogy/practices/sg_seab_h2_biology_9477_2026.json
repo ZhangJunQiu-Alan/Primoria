@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.1",
   "practice_set_id": "cpk_sg_seab_h2_biology_9477_2026",
   "framework_id": "cfw_sg_seab_h2_biology_9477_2026_outcomes",
   "curriculum_id": "cur_sg_seab_h2_biology_9477_2026",
@@ -9,12 +9,17 @@
     "src_sg_seab_h2_biology_9477_2026"
   ],
   "generated_at": "2026-07-19",
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "把 3 项内容内探究和 7 项实验评测能力转为教学评测知识。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准。"
     }
   ],
   "items": [
@@ -35,7 +40,7 @@
           "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (q)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_biology_9477_2026_3_e",
@@ -54,7 +59,7 @@
           "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_biology_9477_2026_3_k",
@@ -73,7 +78,7 @@
           "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_biology_9477_2026_planning",
@@ -92,7 +97,7 @@
           "locator": "PDF p.22, Practical Assessment, Planning"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_biology_9477_2026_risk",
@@ -111,7 +116,7 @@
           "locator": "PDF p.22, Practical Assessment, Planning"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_biology_9477_2026_manipulation_measurement",
@@ -130,7 +135,7 @@
           "locator": "PDF p.22, Practical Assessment, MMO"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_biology_9477_2026_data_presentation",
@@ -149,7 +154,7 @@
           "locator": "PDF p.22, Practical Assessment, PDO"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_biology_9477_2026_analysis",
@@ -168,7 +173,7 @@
           "locator": "PDF p.22, Practical Assessment, ACE"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_biology_9477_2026_conclusion_prediction",
@@ -187,7 +192,7 @@
           "locator": "PDF p.22, Practical Assessment, ACE"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_biology_9477_2026_evaluation_improvement",
@@ -206,7 +211,7 @@
           "locator": "PDF p.22, Practical Assessment, ACE"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ]
 }

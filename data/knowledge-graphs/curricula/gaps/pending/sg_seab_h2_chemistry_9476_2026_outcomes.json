@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.2",
   "gap_set_id": "cgs_sg_seab_h2_chemistry_9476_2026_outcomes",
   "framework_id": "cfw_sg_seab_h2_chemistry_9476_2026_outcomes",
   "curriculum_id": "cur_sg_seab_h2_chemistry_9476_2026",
@@ -9,12 +9,22 @@
     "src_sg_seab_h2_chemistry_9476_2026"
   ],
   "generated_at": "2026-07-19",
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "登记 21 项需新增或收窄概念的 H2 化学成果。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-10-25",
+      "summary_zh": "按 2026-10-25 官方来源复核更新证据定位（中国课标迁至 2025 日常修订版、新加坡页码校正），状态保持 needs_review。"
+    },
+    {
+      "version": "0.1.2",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准。"
     }
   ],
   "candidates": [
@@ -38,7 +48,7 @@
           "locator": "PDF p.15, topic 3 The Gaseous State, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_4_a",
@@ -58,7 +68,7 @@
           "locator": "PDF p.15, topic 4 Theories of Acids and Bases, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_4_c",
@@ -78,7 +88,7 @@
           "locator": "PDF p.16, topic 4 Theories of Acids and Bases, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_7_e",
@@ -100,7 +110,7 @@
           "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_7_l",
@@ -122,7 +132,7 @@
           "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (l)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_8_k",
@@ -144,7 +154,7 @@
           "locator": "PDF p.21, topic 8 Reaction Kinetics, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_10_1_b",
@@ -166,7 +176,7 @@
           "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_10_1_d",
@@ -188,7 +198,7 @@
           "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_10_1_e",
@@ -210,7 +220,7 @@
           "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_10_1_f",
@@ -232,7 +242,7 @@
           "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_10_2_c",
@@ -255,7 +265,7 @@
           "locator": "PDF p.23, topic 10_2 Solubility Equilibria, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_11_3_b",
@@ -277,7 +287,7 @@
           "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_11_4_h",
@@ -296,10 +306,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.29, topic 11_4 Hydrocarbons, outcome (h)"
+          "locator": "PDF p.28, topic 11_4 Hydrocarbons, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_11_5_b",
@@ -321,7 +331,7 @@
           "locator": "PDF p.29, topic 11_5 Halogen Derivatives, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_11_5_e",
@@ -341,7 +351,7 @@
           "locator": "PDF p.29, topic 11_5 Halogen Derivatives, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_11_10_g",
@@ -361,10 +371,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.33, topic 11_10 Polymers, outcome (g)"
+          "locator": "PDF p.32, topic 11_10 Polymers, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_12_g",
@@ -386,7 +396,7 @@
           "locator": "PDF p.33, topic 12 Electrochemistry, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_12_j",
@@ -408,7 +418,7 @@
           "locator": "PDF p.33, topic 12 Electrochemistry, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_12_o",
@@ -430,7 +440,7 @@
           "locator": "PDF p.34, topic 12 Electrochemistry, outcome (o)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_13_c",
@@ -452,7 +462,7 @@
           "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_chemistry_9476_2026_o_13_j",
@@ -474,7 +484,7 @@
           "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ]
 }

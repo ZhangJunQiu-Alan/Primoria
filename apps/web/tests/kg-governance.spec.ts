@@ -293,7 +293,7 @@ const approvedAddedConceptKeys = new Set([
 ]);
 
 describe("KG governance baseline", () => {
-  it("keeps 944 legacy aliases and 59 approved A-Level additions while adding pending China and Singapore graphs", () => {
+  it("keeps 944 legacy aliases and 59 approved A-Level additions alongside the owner-approved China and Singapore graphs", () => {
     const conceptNodes = graphs.flatMap((graph) =>
       graph.nodes
         .filter((node) => node.kind === "concept")
@@ -348,31 +348,31 @@ describe("KG governance baseline", () => {
     );
 
     expect(graphs).toHaveLength(31);
-    expect(chinaMathConcepts).toHaveLength(70);
-    expect(chinaMathConcepts.every((node) => node.review_status === "needs_review")).toBe(true);
+    expect(chinaMathConcepts).toHaveLength(71);
+    expect(chinaMathConcepts.every((node) => node.review_status === "approved")).toBe(true);
     expect(singaporeH2MathConcepts).toHaveLength(33);
-    expect(singaporeH2MathConcepts.every((node) => node.review_status === "needs_review")).toBe(true);
+    expect(singaporeH2MathConcepts.every((node) => node.review_status === "approved")).toBe(true);
     expect(singaporeH2ChemistryConcepts).toHaveLength(18);
-    expect(singaporeH2ChemistryConcepts.every((node) => node.review_status === "needs_review")).toBe(true);
+    expect(singaporeH2ChemistryConcepts.every((node) => node.review_status === "approved")).toBe(true);
     expect(singaporeH2PhysicsConcepts).toHaveLength(8);
-    expect(singaporeH2PhysicsConcepts.every((node) => node.review_status === "needs_review")).toBe(true);
+    expect(singaporeH2PhysicsConcepts.every((node) => node.review_status === "approved")).toBe(true);
     expect(singaporeH2BiologyConcepts).toHaveLength(42);
-    expect(singaporeH2BiologyConcepts.every((node) => node.review_status === "needs_review")).toBe(true);
-    expect(singaporeSecondaryMathConcepts).toHaveLength(53);
-    expect(singaporeSecondaryMathConcepts.every((node) => node.review_status === "needs_review")).toBe(true);
+    expect(singaporeH2BiologyConcepts.every((node) => node.review_status === "approved")).toBe(true);
+    expect(singaporeSecondaryMathConcepts).toHaveLength(56);
+    expect(singaporeSecondaryMathConcepts.every((node) => node.review_status === "approved")).toBe(true);
     expect(singaporeLowerScienceConcepts).toHaveLength(32);
-    expect(singaporeLowerScienceConcepts.every((node) => node.review_status === "needs_review")).toBe(true);
+    expect(singaporeLowerScienceConcepts.every((node) => node.review_status === "approved")).toBe(true);
     expect(chinaPhysicsConcepts).toHaveLength(73);
-    expect(chinaPhysicsConcepts.every((node) => node.review_status === "needs_review")).toBe(true);
+    expect(chinaPhysicsConcepts.every((node) => node.review_status === "approved")).toBe(true);
     expect(chinaChemistryConcepts).toHaveLength(49);
-    expect(chinaChemistryConcepts.every((node) => node.review_status === "needs_review")).toBe(true);
+    expect(chinaChemistryConcepts.every((node) => node.review_status === "approved")).toBe(true);
     expect(chinaBiologyConcepts).toHaveLength(75);
-    expect(chinaBiologyConcepts.every((node) => node.review_status === "needs_review")).toBe(true);
+    expect(chinaBiologyConcepts.every((node) => node.review_status === "approved")).toBe(true);
     expect(legacyConcepts).toHaveLength(944);
-    expect(conceptNodes).toHaveLength(1456);
-    expect(aliases).toHaveLength(1456);
-    expect(new Set(conceptNodes.map((node) => `${node.graph_id}:${node.node_id}`)).size).toBe(1456);
-    expect(new Set(aliases.map((alias) => `${alias.graph_id}:${alias.node_id}`)).size).toBe(1456);
+    expect(conceptNodes).toHaveLength(1460);
+    expect(aliases).toHaveLength(1460);
+    expect(new Set(conceptNodes.map((node) => `${node.graph_id}:${node.node_id}`)).size).toBe(1460);
+    expect(new Set(aliases.map((alias) => `${alias.graph_id}:${alias.node_id}`)).size).toBe(1460);
     expect(
       aliases
         .map((alias) => `${alias.graph_id}:${alias.node_id}:${alias.canonical_id}`)

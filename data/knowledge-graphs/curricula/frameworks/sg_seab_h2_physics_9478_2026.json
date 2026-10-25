@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "0.3.0",
+  "content_version": "0.3.2",
   "framework_id": "cfw_sg_seab_h2_physics_9478_2026_outcomes",
   "curriculum_id": "cur_sg_seab_h2_physics_9478_2026",
   "curriculum_kind": "examination_syllabus",
@@ -26,7 +26,7 @@
   ],
   "valid_from": "2026-01-01",
   "valid_to": "2026-12-31",
-  "review_status": "needs_review",
+  "review_status": "approved",
   "scope_exclusions": [
     {
       "scope": "coefficients of friction and viscosity",
@@ -94,6 +94,16 @@
       "version": "0.3.0",
       "date": "2026-07-19",
       "summary_zh": "人工拆分 205 条内容成果，并加入 10 项科学实践、实验和电子表格能力；保留五组明确排除边界。"
+    },
+    {
+      "version": "0.3.1",
+      "date": "2026-10-25",
+      "summary_zh": "按 2026-10-25 官方来源复核更新证据定位（中国课标迁至 2025 日常修订版、新加坡页码校正），状态保持 needs_review。"
+    },
+    {
+      "version": "0.3.2",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准。"
     }
   ],
   "requirements": [
@@ -116,7 +126,7 @@
           "locator": "PDF p.11, topic 1 Quantities and Measurement, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_1_si_prefixes",
@@ -137,7 +147,7 @@
           "locator": "PDF p.11, topic 1 Quantities and Measurement, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_1_derived_units",
@@ -158,7 +168,7 @@
           "locator": "PDF p.11, topic 1 Quantities and Measurement, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_1_dimensional_homogeneity",
@@ -179,7 +189,7 @@
           "locator": "PDF p.11, topic 1 Quantities and Measurement, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_1_estimate_physical_quantities",
@@ -201,7 +211,7 @@
           "locator": "PDF p.11, topic 1 Quantities and Measurement, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_1_random_systematic_errors",
@@ -222,7 +232,7 @@
           "locator": "PDF p.11, topic 1 Quantities and Measurement, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_1_derived_uncertainty",
@@ -243,7 +253,7 @@
           "locator": "PDF p.11, topic 1 Quantities and Measurement, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_1_scalar_vector_distinction",
@@ -264,7 +274,7 @@
           "locator": "PDF p.11, topic 1 Quantities and Measurement, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_1_coplanar_vector_operations",
@@ -285,7 +295,7 @@
           "locator": "PDF p.11, topic 1 Quantities and Measurement, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_1_perpendicular_vector_components",
@@ -306,7 +316,7 @@
           "locator": "PDF p.11, topic 1 Quantities and Measurement, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_2_forces_in_fields",
@@ -327,7 +337,7 @@
           "locator": "PDF p.12, topic 2 Forces and Moments, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_2_qualitative_common_forces",
@@ -348,7 +358,7 @@
           "locator": "PDF p.12, topic 2 Forces and Moments, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_2_hookes_law",
@@ -369,7 +379,7 @@
           "locator": "PDF p.12, topic 2 Forces and Moments, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_2_moment_torque",
@@ -390,7 +400,7 @@
           "locator": "PDF p.12, topic 2 Forces and Moments, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_2_couple_rotation",
@@ -411,7 +421,7 @@
           "locator": "PDF p.12, topic 2 Forces and Moments, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_2_centre_of_gravity",
@@ -432,7 +442,7 @@
           "locator": "PDF p.12, topic 2 Forces and Moments, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_2_principle_of_moments",
@@ -453,7 +463,7 @@
           "locator": "PDF p.12, topic 2 Forces and Moments, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_2_translational_rotational_equilibrium",
@@ -474,7 +484,7 @@
           "locator": "PDF p.12, topic 2 Forces and Moments, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_2_free_body_vector_triangles",
@@ -496,7 +506,7 @@
           "locator": "PDF p.12, topic 2 Forces and Moments, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_3_kinematic_quantities",
@@ -517,7 +527,7 @@
           "locator": "PDF p.13, topic 3 Motion and Forces, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_3_kinematic_graphs",
@@ -538,7 +548,7 @@
           "locator": "PDF p.13, topic 3 Motion and Forces, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_3_graph_gradients_areas",
@@ -559,7 +569,7 @@
           "locator": "PDF p.13, topic 3 Motion and Forces, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_3_derive_suvat",
@@ -580,7 +590,7 @@
           "locator": "PDF p.13, topic 3 Motion and Forces, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_3_apply_suvat_free_fall",
@@ -601,7 +611,7 @@
           "locator": "PDF p.13, topic 3 Motion and Forces, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_3_mass_inertia",
@@ -622,7 +632,7 @@
           "locator": "PDF p.13, topic 3 Motion and Forces, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_3_linear_momentum",
@@ -643,7 +653,7 @@
           "locator": "PDF p.13, topic 3 Motion and Forces, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_3_newton_laws",
@@ -664,7 +674,7 @@
           "locator": "PDF p.13, topic 3 Motion and Forces, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_3_resultant_force_ma",
@@ -685,7 +695,7 @@
           "locator": "PDF p.13, topic 3 Motion and Forces, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_4_energy_stores_transfers",
@@ -706,7 +716,7 @@
           "locator": "PDF p.14, topic 4 Energy and Fields, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_4_conservation_energy_examples",
@@ -727,7 +737,7 @@
           "locator": "PDF p.14, topic 4 Energy and Fields, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_4_work_mechanical_transfer",
@@ -748,7 +758,7 @@
           "locator": "PDF p.14, topic 4 Energy and Fields, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_4_derive_kinetic_energy",
@@ -769,7 +779,7 @@
           "locator": "PDF p.14, topic 4 Energy and Fields, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_4_apply_kinetic_energy",
@@ -790,7 +800,7 @@
           "locator": "PDF p.14, topic 4 Energy and Fields, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_4_field_concept",
@@ -811,7 +821,7 @@
           "locator": "PDF p.14, topic 4 Energy and Fields, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_4_gravitational_electric_field_strength_definitions",
@@ -832,7 +842,7 @@
           "locator": "PDF p.14, topic 4 Energy and Fields, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_4_field_lines_equipotentials",
@@ -853,7 +863,7 @@
           "locator": "PDF p.14, topic 4 Energy and Fields, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_4_field_force_work_potential",
@@ -874,7 +884,7 @@
           "locator": "PDF p.14, topic 4 Energy and Fields, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_4_potential_energy_types",
@@ -895,7 +905,7 @@
           "locator": "PDF p.14, topic 4 Energy and Fields, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_4_elastic_energy_force_extension",
@@ -916,7 +926,7 @@
           "locator": "PDF p.14, topic 4 Energy and Fields, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_4_power_rate_energy_transfer",
@@ -937,7 +947,7 @@
           "locator": "PDF p.14, topic 4 Energy and Fields, outcome (l)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_4_mechanical_power_force_velocity",
@@ -958,7 +968,7 @@
           "locator": "PDF p.14, topic 4 Energy and Fields, outcome (m)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_4_efficiency_energy_losses",
@@ -979,7 +989,7 @@
           "locator": "PDF p.14, topic 4 Energy and Fields, outcome (n)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_5_weight_in_gravity",
@@ -1000,7 +1010,7 @@
           "locator": "PDF p.15, topic 5 Projectile Motion, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_5_perpendicular_projectile_components",
@@ -1021,7 +1031,7 @@
           "locator": "PDF p.15, topic 5 Projectile Motion, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_5_derive_uniform_gravity_potential",
@@ -1042,7 +1052,7 @@
           "locator": "PDF p.15, topic 5 Projectile Motion, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_5_apply_uniform_gravity_potential",
@@ -1063,7 +1073,7 @@
           "locator": "PDF p.15, topic 5 Projectile Motion, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_5_falling_with_drag_terminal_velocity",
@@ -1084,7 +1094,7 @@
           "locator": "PDF p.15, topic 5 Projectile Motion, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_6_impulse_force_time_area",
@@ -1105,7 +1115,7 @@
           "locator": "PDF p.15, topic 6 Collisions, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_6_momentum_conservation",
@@ -1126,7 +1136,7 @@
           "locator": "PDF p.15, topic 6 Collisions, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_6_one_dimensional_collisions",
@@ -1147,7 +1157,7 @@
           "locator": "PDF p.15, topic 6 Collisions, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_6_elastic_relative_speeds",
@@ -1168,7 +1178,7 @@
           "locator": "PDF p.15, topic 6 Collisions, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_6_momentum_vs_kinetic_energy",
@@ -1189,7 +1199,7 @@
           "locator": "PDF p.15, topic 6 Collisions, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_7_angular_displacement_radians",
@@ -1210,7 +1220,7 @@
           "locator": "PDF p.16, topic 7 Circular Motion, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_7_angular_velocity",
@@ -1231,7 +1241,7 @@
           "locator": "PDF p.16, topic 7 Circular Motion, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_7_linear_angular_speed_relation",
@@ -1252,7 +1262,7 @@
           "locator": "PDF p.16, topic 7 Circular Motion, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_7_centripetal_acceleration_concept",
@@ -1273,7 +1283,7 @@
           "locator": "PDF p.16, topic 7 Circular Motion, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_7_centripetal_acceleration_formula",
@@ -1294,7 +1304,7 @@
           "locator": "PDF p.16, topic 7 Circular Motion, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_7_centripetal_force_formula",
@@ -1315,7 +1325,7 @@
           "locator": "PDF p.16, topic 7 Circular Motion, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_8_newton_gravitation",
@@ -1336,7 +1346,7 @@
           "locator": "PDF p.17, topic 8 Gravitational Fields, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_8_derive_point_mass_gravity",
@@ -1357,7 +1367,7 @@
           "locator": "PDF p.17, topic 8 Gravitational Fields, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_8_point_mass_gravity_formula",
@@ -1378,7 +1388,7 @@
           "locator": "PDF p.17, topic 8 Gravitational Fields, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_8_near_earth_uniform_gravity",
@@ -1399,7 +1409,7 @@
           "locator": "PDF p.17, topic 8 Gravitational Fields, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_8_gravitational_potential_definition",
@@ -1420,7 +1430,7 @@
           "locator": "PDF p.17, topic 8 Gravitational Fields, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_8_point_mass_gravitational_potential",
@@ -1441,7 +1451,7 @@
           "locator": "PDF p.17, topic 8 Gravitational Fields, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_8_two_mass_gravitational_energy",
@@ -1462,7 +1472,7 @@
           "locator": "PDF p.17, topic 8 Gravitational Fields, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_8_gravity_potential_gradient",
@@ -1483,7 +1493,7 @@
           "locator": "PDF p.17, topic 8 Gravitational Fields, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_8_escape_velocity_energy",
@@ -1504,7 +1514,7 @@
           "locator": "PDF p.17, topic 8 Gravitational Fields, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_8_circular_orbits_inverse_square",
@@ -1525,7 +1535,7 @@
           "locator": "PDF p.17, topic 8 Gravitational Fields, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_8_geostationary_satellites",
@@ -1546,7 +1556,7 @@
           "locator": "PDF p.17, topic 8 Gravitational Fields, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_9_free_oscillations",
@@ -1567,7 +1577,7 @@
           "locator": "PDF p.18, topic 9 Oscillations, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_9_investigate_oscillator",
@@ -1589,7 +1599,7 @@
           "locator": "PDF p.18, topic 9 Oscillations, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_9_oscillation_terms",
@@ -1610,7 +1620,7 @@
           "locator": "PDF p.18, topic 9 Oscillations, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_9_shm_acceleration_displacement",
@@ -1631,7 +1641,7 @@
           "locator": "PDF p.18, topic 9 Oscillations, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_9_shm_displacement_equation",
@@ -1652,7 +1662,7 @@
           "locator": "PDF p.18, topic 9 Oscillations, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_9_shm_velocity_equations",
@@ -1673,7 +1683,7 @@
           "locator": "PDF p.18, topic 9 Oscillations, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_9_shm_graph_relations",
@@ -1694,7 +1704,7 @@
           "locator": "PDF p.18, topic 9 Oscillations, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_9_shm_energy_interchange",
@@ -1715,7 +1725,7 @@
           "locator": "PDF p.18, topic 9 Oscillations, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_9_damping_regimes_applications",
@@ -1736,7 +1746,7 @@
           "locator": "PDF p.18, topic 9 Oscillations, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_9_forced_response_resonance",
@@ -1757,7 +1767,7 @@
           "locator": "PDF p.18, topic 9 Oscillations, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_9_damping_resonance_sharpness",
@@ -1778,7 +1788,7 @@
           "locator": "PDF p.18, topic 9 Oscillations, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_9_resonance_useful_harmful",
@@ -1799,7 +1809,7 @@
           "locator": "PDF p.18, topic 9 Oscillations, outcome (l)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_10_mechanical_em_waves",
@@ -1820,7 +1830,7 @@
           "locator": "PDF p.19, topic 10 Wave Motion, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_10_wave_quantities",
@@ -1841,7 +1851,7 @@
           "locator": "PDF p.19, topic 10 Wave Motion, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_10_derive_wave_equation",
@@ -1862,7 +1872,7 @@
           "locator": "PDF p.19, topic 10 Wave Motion, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_10_apply_wave_equation",
@@ -1883,7 +1893,7 @@
           "locator": "PDF p.19, topic 10 Wave Motion, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_10_transverse_longitudinal_graphs",
@@ -1904,7 +1914,7 @@
           "locator": "PDF p.19, topic 10 Wave Motion, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_10_wave_energy_not_matter",
@@ -1925,7 +1935,7 @@
           "locator": "PDF p.19, topic 10 Wave Motion, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_10_wave_intensity_amplitude",
@@ -1946,7 +1956,7 @@
           "locator": "PDF p.19, topic 10 Wave Motion, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_10_inverse_square_wave_intensity",
@@ -1967,7 +1977,7 @@
           "locator": "PDF p.19, topic 10 Wave Motion, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_10_polarisation_transverse",
@@ -1988,7 +1998,7 @@
           "locator": "PDF p.19, topic 10 Wave Motion, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_10_malus_law",
@@ -2009,7 +2019,7 @@
           "locator": "PDF p.19, topic 10 Wave Motion, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_11_superposition_principle",
@@ -2030,7 +2040,7 @@
           "locator": "PDF p.20, topic 11 Superposition, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_11_standing_wave_experiments",
@@ -2051,7 +2061,7 @@
           "locator": "PDF p.20, topic 11 Superposition, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_11_standing_wave_nodes_antinodes",
@@ -2072,7 +2082,7 @@
           "locator": "PDF p.20, topic 11 Superposition, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_11_sound_wavelength_standing_waves",
@@ -2093,7 +2103,7 @@
           "locator": "PDF p.20, topic 11 Superposition, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_11_diffraction_interference_terms",
@@ -2114,7 +2124,7 @@
           "locator": "PDF p.20, topic 11 Superposition, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_11_two_source_interference_phenomena",
@@ -2135,7 +2145,7 @@
           "locator": "PDF p.20, topic 11 Superposition, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_11_interference_fringe_conditions",
@@ -2156,7 +2166,7 @@
           "locator": "PDF p.20, topic 11 Superposition, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_11_double_slit_fringe_equation",
@@ -2177,7 +2187,7 @@
           "locator": "PDF p.20, topic 11 Superposition, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_11_diffraction_grating_equation",
@@ -2198,7 +2208,7 @@
           "locator": "PDF p.20, topic 11 Superposition, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_11_grating_wavelength_measurement",
@@ -2219,7 +2229,7 @@
           "locator": "PDF p.20, topic 11 Superposition, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_11_single_aperture_edge_diffraction",
@@ -2240,7 +2250,7 @@
           "locator": "PDF p.20, topic 11 Superposition, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_11_single_slit_minima",
@@ -2261,7 +2271,7 @@
           "locator": "PDF p.20, topic 11 Superposition, outcome (l)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_11_rayleigh_criterion",
@@ -2282,7 +2292,7 @@
           "locator": "PDF p.20, topic 11 Superposition, outcome (m)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_12_thermodynamic_temperature_scale",
@@ -2303,7 +2313,7 @@
           "locator": "PDF p.21, topic 12 Temperature and Ideal Gases, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_12_celsius_kelvin_conversion",
@@ -2324,7 +2334,7 @@
           "locator": "PDF p.21, topic 12 Temperature and Ideal Gases, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_12_ideal_gas_particle_equation",
@@ -2345,7 +2355,7 @@
           "locator": "PDF p.21, topic 12 Temperature and Ideal Gases, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_12_avogadro_boltzmann_gas_constant",
@@ -2366,7 +2376,7 @@
           "locator": "PDF p.21, topic 12 Temperature and Ideal Gases, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_12_kinetic_theory_assumptions",
@@ -2387,7 +2397,7 @@
           "locator": "PDF p.21, topic 12 Temperature and Ideal Gases, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_12_derive_kinetic_pressure",
@@ -2408,7 +2418,7 @@
           "locator": "PDF p.21, topic 12 Temperature and Ideal Gases, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_12_mean_kinetic_energy_temperature",
@@ -2429,7 +2439,7 @@
           "locator": "PDF p.21, topic 12 Temperature and Ideal Gases, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_13_internal_energy_microstates",
@@ -2450,7 +2460,7 @@
           "locator": "PDF p.22, topic 13 Thermodynamic Systems, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_13_temperature_mean_kinetic_energy",
@@ -2471,7 +2481,7 @@
           "locator": "PDF p.22, topic 13 Thermodynamic Systems, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_13_thermal_contact_equilibrium",
@@ -2492,7 +2502,7 @@
           "locator": "PDF p.22, topic 13 Thermodynamic Systems, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_13_gas_work_sign_convention",
@@ -2513,7 +2523,7 @@
           "locator": "PDF p.22, topic 13 Thermodynamic Systems, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_13_zeroth_law",
@@ -2534,7 +2544,7 @@
           "locator": "PDF p.22, topic 13 Thermodynamic Systems, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_13_first_law",
@@ -2555,7 +2565,7 @@
           "locator": "PDF p.22, topic 13 Thermodynamic Systems, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_13_specific_heat_latent_heat",
@@ -2576,7 +2586,7 @@
           "locator": "PDF p.22, topic 13 Thermodynamic Systems, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_14_coulomb_law",
@@ -2597,7 +2607,7 @@
           "locator": "PDF p.23, topic 14 Electric Fields, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_14_point_charge_field_strength",
@@ -2618,7 +2628,7 @@
           "locator": "PDF p.23, topic 14 Electric Fields, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_14_electric_potential_definition",
@@ -2639,7 +2649,7 @@
           "locator": "PDF p.23, topic 14 Electric Fields, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_14_point_charge_potential",
@@ -2660,7 +2670,7 @@
           "locator": "PDF p.23, topic 14 Electric Fields, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_14_two_charge_potential_energy",
@@ -2681,7 +2691,7 @@
           "locator": "PDF p.23, topic 14 Electric Fields, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_14_electric_potential_gradient",
@@ -2702,7 +2712,7 @@
           "locator": "PDF p.23, topic 14 Electric Fields, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_14_parallel_plate_uniform_field",
@@ -2723,7 +2733,7 @@
           "locator": "PDF p.23, topic 14 Electric Fields, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_14_charge_force_uniform_field",
@@ -2744,7 +2754,7 @@
           "locator": "PDF p.23, topic 14 Electric Fields, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_14_charged_particle_uniform_electric_motion",
@@ -2765,7 +2775,7 @@
           "locator": "PDF p.23, topic 14 Electric Fields, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_14_capacitance_definition",
@@ -2786,7 +2796,7 @@
           "locator": "PDF p.23, topic 14 Electric Fields, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_14_capacitor_energy",
@@ -2807,7 +2817,7 @@
           "locator": "PDF p.23, topic 14 Electric Fields, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_15_current_charge_rate",
@@ -2828,7 +2838,7 @@
           "locator": "PDF p.24, topic 15 Currents, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_15_drift_current_equation",
@@ -2849,7 +2859,7 @@
           "locator": "PDF p.24, topic 15 Currents, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_15_potential_difference_work_charge",
@@ -2870,7 +2880,7 @@
           "locator": "PDF p.24, topic 15 Currents, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_15_electrical_power_equations",
@@ -2891,7 +2901,7 @@
           "locator": "PDF p.24, topic 15 Currents, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_15_emf_pd_energy",
@@ -2912,7 +2922,7 @@
           "locator": "PDF p.24, topic 15 Currents, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_15_ac_quantities",
@@ -2933,7 +2943,7 @@
           "locator": "PDF p.24, topic 15 Currents, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_15_sinusoidal_ac_equation",
@@ -2954,7 +2964,7 @@
           "locator": "PDF p.24, topic 15 Currents, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_15_mean_resistive_ac_power",
@@ -2975,7 +2985,7 @@
           "locator": "PDF p.24, topic 15 Currents, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_15_rms_peak_relations",
@@ -2996,7 +3006,7 @@
           "locator": "PDF p.24, topic 15 Currents, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_15_half_wave_rectification",
@@ -3017,7 +3027,7 @@
           "locator": "PDF p.24, topic 15 Currents, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_16_circuit_symbols",
@@ -3038,7 +3048,7 @@
           "locator": "PDF p.25, topic 16 Circuits, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_16_draw_interpret_circuits",
@@ -3059,7 +3069,7 @@
           "locator": "PDF p.25, topic 16 Circuits, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_16_resistance_definition_ohm",
@@ -3080,7 +3090,7 @@
           "locator": "PDF p.25, topic 16 Circuits, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_16_resistance_resistivity_geometry",
@@ -3101,7 +3111,7 @@
           "locator": "PDF p.25, topic 16 Circuits, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_16_component_iv_characteristics",
@@ -3122,7 +3132,7 @@
           "locator": "PDF p.25, topic 16 Circuits, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_16_temperature_resistivity_carriers",
@@ -3143,7 +3153,7 @@
           "locator": "PDF p.25, topic 16 Circuits, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_16_internal_resistance_terminal_power",
@@ -3164,7 +3174,7 @@
           "locator": "PDF p.25, topic 16 Circuits, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_16_series_resistance",
@@ -3185,7 +3195,7 @@
           "locator": "PDF p.25, topic 16 Circuits, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_16_parallel_resistance",
@@ -3206,7 +3216,7 @@
           "locator": "PDF p.25, topic 16 Circuits, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_16_resistor_network_potential_divider",
@@ -3227,7 +3237,7 @@
           "locator": "PDF p.25, topic 16 Circuits, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_16_capacitor_networks",
@@ -3248,7 +3258,7 @@
           "locator": "PDF p.25, topic 16 Circuits, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_16_rc_charge_discharge",
@@ -3269,7 +3279,7 @@
           "locator": "PDF p.25, topic 16 Circuits, outcome (l)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_17_magnetic_field_sources",
@@ -3290,7 +3300,7 @@
           "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_17_current_magnetic_field_patterns",
@@ -3311,7 +3321,7 @@
           "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_17_current_field_equations",
@@ -3332,7 +3342,7 @@
           "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_17_ferrous_core_solenoid",
@@ -3353,7 +3363,7 @@
           "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_17_force_current_conductor",
@@ -3374,7 +3384,7 @@
           "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_17_conductor_force_equation",
@@ -3395,7 +3405,7 @@
           "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_17_flux_density_definition",
@@ -3416,7 +3426,7 @@
           "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_17_current_balance_measurement",
@@ -3438,7 +3448,7 @@
           "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_17_forces_parallel_currents",
@@ -3459,7 +3469,7 @@
           "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_17_moving_charge_force_direction",
@@ -3480,7 +3490,7 @@
           "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_17_moving_charge_force_equation",
@@ -3501,7 +3511,7 @@
           "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_17_charged_beam_deflections",
@@ -3522,7 +3532,7 @@
           "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (l)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_17_crossed_field_velocity_selector",
@@ -3543,7 +3553,7 @@
           "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (m)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_18_magnetic_flux",
@@ -3564,7 +3574,7 @@
           "locator": "PDF p.27, topic 18 Electromagnetic Induction, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_18_flux_linkage",
@@ -3585,7 +3595,7 @@
           "locator": "PDF p.27, topic 18 Electromagnetic Induction, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_18_flux_linkage_equation",
@@ -3606,7 +3616,7 @@
           "locator": "PDF p.27, topic 18 Electromagnetic Induction, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_18_induction_experimental_inferences",
@@ -3627,7 +3637,7 @@
           "locator": "PDF p.27, topic 18 Electromagnetic Induction, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_18_faraday_lenz_laws",
@@ -3648,7 +3658,7 @@
           "locator": "PDF p.27, topic 18 Electromagnetic Induction, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_18_induction_applications",
@@ -3669,7 +3679,7 @@
           "locator": "PDF p.27, topic 18 Electromagnetic Induction, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_18_transformer_principle_equations",
@@ -3690,28 +3700,7 @@
           "locator": "PDF p.27, topic 18 Electromagnetic Induction, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
-    },
-    {
-      "requirement_id": "req_sg_h2_physics_9478_2026_o_18_transformer_power_transmission",
-      "parent_requirement_id": null,
-      "code": "18.h",
-      "title": "Transformer efficiency and power transmission",
-      "title_zh": "分析变压器与输电中的功率、效率和能量损失",
-      "summary_zh": "分析变压器与输电中的功率、效率和能量损失",
-      "requirement_type": "knowledge",
-      "level_id": "h2_9478",
-      "cognitive_processes": [
-        "understand",
-        "apply"
-      ],
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_seab_h2_physics_9478_2026",
-          "locator": "PDF p.27, topic 18 Electromagnetic Induction, outcome (h)"
-        }
-      ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_19_wave_particle_evidence",
@@ -3732,7 +3721,7 @@
           "locator": "PDF p.28, topic 19 Quantum Physics, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_19_photon_energy",
@@ -3753,7 +3742,7 @@
           "locator": "PDF p.28, topic 19 Quantum Physics, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_19_photon_momentum",
@@ -3774,7 +3763,7 @@
           "locator": "PDF p.28, topic 19 Quantum Physics, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_19_matter_wave_evidence",
@@ -3795,7 +3784,7 @@
           "locator": "PDF p.28, topic 19 Quantum Physics, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_19_de_broglie_wavelength",
@@ -3816,7 +3805,7 @@
           "locator": "PDF p.28, topic 19 Quantum Physics, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_19_wavefunction_probability_density",
@@ -3838,7 +3827,7 @@
           "locator": "PDF p.28, topic 19 Quantum Physics, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_19_wavefunction_superposition",
@@ -3859,7 +3848,7 @@
           "locator": "PDF p.28, topic 19 Quantum Physics, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_19_heisenberg_uncertainty",
@@ -3880,7 +3869,7 @@
           "locator": "PDF p.28, topic 19 Quantum Physics, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_19_infinite_well_wavefunctions",
@@ -3901,7 +3890,7 @@
           "locator": "PDF p.28, topic 19 Quantum Physics, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_19_infinite_well_energy_levels",
@@ -3922,7 +3911,7 @@
           "locator": "PDF p.28, topic 19 Quantum Physics, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_19_atomic_discrete_levels_spectra",
@@ -3943,7 +3932,7 @@
           "locator": "PDF p.28, topic 19 Quantum Physics, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_19_emission_absorption_spectra",
@@ -3964,7 +3953,7 @@
           "locator": "PDF p.28, topic 19 Quantum Physics, outcome (l)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_19_photon_atomic_transitions",
@@ -3985,7 +3974,7 @@
           "locator": "PDF p.28, topic 19 Quantum Physics, outcome (m)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_20_rutherford_nucleus",
@@ -4006,7 +3995,7 @@
           "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_20_nucleon_proton_numbers",
@@ -4027,7 +4016,7 @@
           "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_20_isotopes_nuclide_notation",
@@ -4048,7 +4037,7 @@
           "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_20_spontaneous_random_decay",
@@ -4069,7 +4058,7 @@
           "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_20_count_rate_fluctuation_randomness",
@@ -4090,7 +4079,7 @@
           "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_20_background_radiation",
@@ -4111,7 +4100,7 @@
           "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_20_alpha_beta_gamma_properties",
@@ -4132,7 +4121,7 @@
           "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_20_activity_decay_constant",
@@ -4153,7 +4142,7 @@
           "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_20_exponential_decay",
@@ -4174,7 +4163,7 @@
           "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_20_half_life_definition",
@@ -4195,7 +4184,7 @@
           "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_20_half_life_decay_constant",
@@ -4216,7 +4205,7 @@
           "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_20_radioactivity_uses_hazards",
@@ -4237,7 +4226,7 @@
           "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (l)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_20_nuclear_equations",
@@ -4258,7 +4247,7 @@
           "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (m)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_20_nuclear_conservation_laws",
@@ -4279,7 +4268,7 @@
           "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (n)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_20_neutrino_prediction",
@@ -4300,7 +4289,7 @@
           "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (o)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_20_mass_defect",
@@ -4321,7 +4310,7 @@
           "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (p)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_20_mass_energy_equivalence",
@@ -4339,10 +4328,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_physics_9478_2026",
-          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (q)"
+          "locator": "PDF p.30, topic 20 Nuclear Physics, outcome (q)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_20_binding_energy_mass_defect",
@@ -4360,10 +4349,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_physics_9478_2026",
-          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (r)"
+          "locator": "PDF p.30, topic 20 Nuclear Physics, outcome (r)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_20_binding_energy_per_nucleon_curve",
@@ -4381,10 +4370,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_physics_9478_2026",
-          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (s)"
+          "locator": "PDF p.30, topic 20 Nuclear Physics, outcome (s)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_20_binding_energy_fission_fusion",
@@ -4402,10 +4391,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_physics_9478_2026",
-          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (t)"
+          "locator": "PDF p.30, topic 20 Nuclear Physics, outcome (t)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_practice_pos_wotd",
@@ -4427,7 +4416,7 @@
           "locator": "PDF p.4, Practices of Science 1.1-1.8"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_practice_pos_nos",
@@ -4449,7 +4438,7 @@
           "locator": "PDF p.4, Practices of Science 2.1-2.4"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_practice_pos_stse",
@@ -4471,7 +4460,7 @@
           "locator": "PDF p.4, Practices of Science 3.1-3.3"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_practice_practical_planning",
@@ -4493,7 +4482,7 @@
           "locator": "PDF p.31, Practical Assessment: Planning"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_practice_practical_mmo",
@@ -4515,7 +4504,7 @@
           "locator": "PDF p.31, Practical Assessment: MMO"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_practice_practical_pdo",
@@ -4537,7 +4526,7 @@
           "locator": "PDF p.31, Practical Assessment: PDO"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_practice_practical_ace",
@@ -4559,7 +4548,7 @@
           "locator": "PDF p.31, Practical Assessment: ACE"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_practice_spreadsheet_data",
@@ -4581,7 +4570,7 @@
           "locator": "PDF p.36, Spreadsheet requirements: Data input"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_practice_spreadsheet_operations",
@@ -4603,7 +4592,7 @@
           "locator": "PDF p.36, Spreadsheet requirements: Functions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_sg_h2_physics_9478_2026_o_practice_spreadsheet_graphs",
@@ -4625,7 +4614,7 @@
           "locator": "PDF p.36, Spreadsheet requirements: Graphs"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ]
 }

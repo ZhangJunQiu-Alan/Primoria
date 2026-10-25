@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.1",
   "resolution_set_id": "cgr_sg_seab_h2_physics_9478_2026_outcomes",
   "gap_set_id": "cgs_sg_seab_h2_physics_9478_2026_outcomes",
   "framework_id": "cfw_sg_seab_h2_physics_9478_2026_outcomes",
@@ -13,12 +13,17 @@
     "src_openstax_university_physics_v3_2016"
   ],
   "generated_at": "2026-07-19",
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "完成 12 项 H2 物理知识缺口的反向查重、概念归并、稳定 ID 和双类证据登记。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准。"
     }
   ],
   "resolutions": [
@@ -47,7 +52,7 @@
           "locator": "OpenStax College Physics 2e §19.4, Equipotential Lines"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_physics_9478_2026_o_17_crossed_field_velocity_selector",
@@ -70,7 +75,7 @@
           "locator": "OpenStax College Physics 2e §22.5, Force on a Moving Charge in a Magnetic Field: Examples and Applications"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_physics_9478_2026_o_19_wavefunction_probability_density",
@@ -97,7 +102,7 @@
           "locator": "OpenStax University Physics Volume 3 §7.1, Wave Functions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_physics_9478_2026_o_19_wavefunction_superposition",
@@ -124,7 +129,7 @@
           "locator": "OpenStax University Physics Volume 3 §7.1, Wave Functions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_physics_9478_2026_o_19_heisenberg_uncertainty",
@@ -147,7 +152,7 @@
           "locator": "OpenStax University Physics Volume 3 §7.2, The Heisenberg Uncertainty Principle"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_physics_9478_2026_o_19_infinite_well_wavefunctions",
@@ -174,7 +179,7 @@
           "locator": "OpenStax University Physics Volume 3 §7.4, The Quantum Particle in a Box"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_physics_9478_2026_o_19_infinite_well_energy_levels",
@@ -201,7 +206,7 @@
           "locator": "OpenStax University Physics Volume 3 §7.4, The Quantum Particle in a Box"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_physics_9478_2026_o_20_background_radiation",
@@ -228,7 +233,7 @@
           "locator": "OpenStax University Physics Volume 3 §§10.3-10.4, Radioactive Decay; Nuclear Reactions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_physics_9478_2026_o_20_alpha_beta_gamma_properties",
@@ -255,7 +260,7 @@
           "locator": "OpenStax University Physics Volume 3 §§10.3-10.4, Radioactive Decay; Nuclear Reactions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_physics_9478_2026_o_20_nuclear_equations",
@@ -282,7 +287,7 @@
           "locator": "OpenStax University Physics Volume 3 §10.4, Nuclear Reactions; §11.2, Particle Conservation Laws"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_physics_9478_2026_o_20_nuclear_conservation_laws",
@@ -309,7 +314,7 @@
           "locator": "OpenStax University Physics Volume 3 §10.4, Nuclear Reactions; §11.2, Particle Conservation Laws"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_physics_9478_2026_o_20_neutrino_prediction",
@@ -332,7 +337,7 @@
           "locator": "OpenStax University Physics Volume 3 §10.4, Nuclear Reactions; §11.2, Particle Conservation Laws"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ]
 }

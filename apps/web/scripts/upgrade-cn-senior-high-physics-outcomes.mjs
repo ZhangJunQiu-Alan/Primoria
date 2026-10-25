@@ -3,6 +3,8 @@
 import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
+import { refuseOwnerApprovedTargets } from "./kg-approval-guard.mjs";
+
 const ROOT = resolve(import.meta.dirname, "../../..");
 const TODAY = "2026-07-19";
 const SOURCE_ID = "src_cn_moe_senior_high_physics_2020";
@@ -14,6 +16,7 @@ const paths = {
   gaps: resolve(ROOT, "data/knowledge-graphs/curricula/gaps/pending/cn_moe_senior_high_physics_2020_outcomes.json"),
   practices: resolve(ROOT, "data/knowledge-graphs/pedagogy/practices/cn_moe_senior_high_physics_2020.json"),
 };
+refuseOwnerApprovedTargets(paths);
 
 const C = {
   displacement: "pc_b1d5952208604e883f66b4659242fea1",

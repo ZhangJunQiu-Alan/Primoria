@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.3",
   "gap_set_id": "cgs_sg_moe_secondary_g2_g3_math_2020_outcomes",
   "framework_id": "cfw_sg_moe_secondary_g2_g3_math_2020_outcomes",
   "curriculum_id": "cur_sg_moe_secondary_g2_g3_math_2020",
@@ -9,12 +9,27 @@
     "src_sg_moe_secondary_g2_g3_math_2020"
   ],
   "generated_at": "2026-07-19",
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "逐项反向查重后记录 partial 与 unmapped 候选；不同层级的同一知识边界在后续 resolution 中合并。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-10-25",
+      "summary_zh": "按 2026-10-25 官方来源复核更新证据定位（中国课标迁至 2025 日常修订版、新加坡页码校正），状态保持 needs_review。"
+    },
+    {
+      "version": "0.1.2",
+      "date": "2026-10-25",
+      "summary_zh": "依据 2026-10 联网复核修正描述、证据定位与映射覆盖，状态保持 needs_review。"
+    },
+    {
+      "version": "0.1.3",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准。"
     }
   ],
   "candidates": [
@@ -33,10 +48,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.13, g3 secondary all, Personal and household finance"
+          "locator": "PDF p.15, g3 secondary all, Personal and household finance"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_secondary_all_motion_data_graphs",
@@ -56,10 +71,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.14, g3 secondary all, Distance-time and speed-time graphs"
+          "locator": "PDF p.16, g3 secondary all, Distance-time and speed-time graphs"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec1_prime_factorisation",
@@ -76,10 +91,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Prime factorisation, HCF, LCM and roots"
+          "locator": "PDF p.17, g3 sec1, Prime factorisation, HCF, LCM and roots"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec1_real_number_operations",
@@ -98,10 +113,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Real-number operations and order"
+          "locator": "PDF p.17, g3 sec1, Real-number operations and order"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec1_approximation_estimation",
@@ -118,10 +133,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Approximation and estimation"
+          "locator": "PDF p.17, g3 sec1, Approximation and estimation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec1_ratio",
@@ -138,10 +153,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Ratios with rational quantities"
+          "locator": "PDF p.17, g3 sec1, Ratios with rational quantities"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec1_percentage",
@@ -158,10 +173,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Percentage comparison and change"
+          "locator": "PDF p.17, g3 sec1, Percentage comparison and change"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec1_rate_speed",
@@ -178,10 +193,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Rate and speed"
+          "locator": "PDF p.17, g3 sec1, Rate and speed"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec1_algebra_notation_evaluation",
@@ -198,10 +213,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Algebraic notation and evaluation"
+          "locator": "PDF p.17, g3 sec1, Algebraic notation and evaluation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec1_algebra_translation",
@@ -220,10 +235,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Translating situations into algebra"
+          "locator": "PDF p.17, g3 sec1, Translating situations into algebra"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec1_nth_term_patterns",
@@ -242,10 +257,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Algebraic nth-term patterns"
+          "locator": "PDF p.17, g3 sec1, Algebraic nth-term patterns"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec1_linear_expressions",
@@ -262,10 +277,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Operations on linear expressions"
+          "locator": "PDF p.17, g3 sec1, Operations on linear expressions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec1_coordinate_relationships",
@@ -284,10 +299,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Coordinates and variable relationships"
+          "locator": "PDF p.18, g3 sec1, Coordinates and variable relationships"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec1_linear_fractional_equations",
@@ -304,10 +319,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Linear and reducible fractional equations"
+          "locator": "PDF p.18, g3 sec1, Linear and reducible fractional equations"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec1_angle_relationships",
@@ -324,10 +339,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Angle relationships"
+          "locator": "PDF p.18, g3 sec1, Angle relationships"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec1_triangle_properties",
@@ -344,10 +359,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Triangle properties"
+          "locator": "PDF p.18, g3 sec1, Triangle properties"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec1_polygon_properties",
@@ -364,10 +379,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Quadrilaterals and regular polygons"
+          "locator": "PDF p.18, g3 sec1, Quadrilaterals and regular polygons"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec1_geometric_construction",
@@ -384,10 +399,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Geometric construction"
+          "locator": "PDF p.18, g3 sec1, Geometric construction"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec1_plane_mensuration",
@@ -404,10 +419,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Area and composite plane figures"
+          "locator": "PDF p.18, g3 sec1, Area and composite plane figures"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec1_solid_mensuration",
@@ -426,10 +441,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Prisms, cylinders and composite solids"
+          "locator": "PDF p.18, g3 sec1, Prisms, cylinders and composite solids"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec1_data_collection",
@@ -446,10 +461,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Collecting, classifying and tabulating data"
+          "locator": "PDF p.18, g3 sec1, Collecting, classifying and tabulating data"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec1_statistical_representations",
@@ -468,10 +483,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Reading and choosing statistical representations"
+          "locator": "PDF p.18, g3 sec1, Reading and choosing statistical representations"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec1_misleading_diagrams",
@@ -490,10 +505,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Misleading statistical diagrams"
+          "locator": "PDF p.18, g3 sec1, Misleading statistical diagrams"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec2_scale_proportion",
@@ -510,10 +525,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Map scales and proportion"
+          "locator": "PDF p.19, g3 sec2, Map scales and proportion"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec2_algebra_expansion_identities",
@@ -530,10 +545,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Expansion and algebraic identities"
+          "locator": "PDF p.19, g3 sec2, Expansion and algebraic identities"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec2_formula_rearrangement",
@@ -550,10 +565,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Changing the subject of a formula"
+          "locator": "PDF p.19, g3 sec2, Changing the subject of a formula"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec2_factorisation",
@@ -570,10 +585,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Linear and quadratic factorisation"
+          "locator": "PDF p.19, g3 sec2, Linear and quadratic factorisation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec2_algebraic_fractions_multiply_divide",
@@ -590,10 +605,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Multiplying and dividing algebraic fractions"
+          "locator": "PDF p.19, g3 sec2, Multiplying and dividing algebraic fractions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec2_algebraic_fractions_add_subtract",
@@ -610,10 +625,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Adding and subtracting algebraic fractions"
+          "locator": "PDF p.19, g3 sec2, Adding and subtracting algebraic fractions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec2_simple_linear_inequalities",
@@ -633,10 +648,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Simple linear inequalities"
+          "locator": "PDF p.19, g3 sec2, Simple linear inequalities"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec2_quadratic_factorisation_solve",
@@ -653,10 +668,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Solving quadratics by factorisation"
+          "locator": "PDF p.19, g3 sec2, Solving quadratics by factorisation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec2_congruence_similarity_foundations",
@@ -673,10 +688,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Congruence and similarity foundations"
+          "locator": "PDF p.20, g3 sec2, Congruence and similarity foundations"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec2_congruence_similarity_enlargement",
@@ -693,10 +708,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Enlargement and reduction"
+          "locator": "PDF p.20, g3 sec2, Enlargement and reduction"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec2_pythagoras",
@@ -713,10 +728,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Pythagoras theorem and converse"
+          "locator": "PDF p.20, g3 sec2, Pythagoras theorem and converse"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec2_right_triangle_trig",
@@ -735,10 +750,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Trigonometry in right triangles"
+          "locator": "PDF p.20, g3 sec2, Trigonometry in right triangles"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec2_distribution_diagrams",
@@ -757,10 +772,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Dot plots, histograms and stem-and-leaf diagrams"
+          "locator": "PDF p.20, g3 sec2, Dot plots, histograms and stem-and-leaf diagrams"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec2_central_tendency",
@@ -779,10 +794,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Measures of central tendency"
+          "locator": "PDF p.20, g3 sec2, Measures of central tendency"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_standard_form",
@@ -799,10 +814,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Standard form"
+          "locator": "PDF p.21, g3 sec3 4, Standard form"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_indices",
@@ -821,10 +836,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Indices and their laws"
+          "locator": "PDF p.21, g3 sec3 4, Indices and their laws"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_tangent_gradient",
@@ -841,10 +856,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Estimating curve gradient with a tangent"
+          "locator": "PDF p.21, g3 sec3 4, Estimating curve gradient with a tangent"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_quadratic_formula_complete_graph",
@@ -861,10 +876,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Solving quadratic equations by standard methods"
+          "locator": "PDF p.21, g3 sec3 4, Solving quadratic equations by standard methods"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_fractional_quadratic_equations",
@@ -881,10 +896,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Fractional equations reducible to quadratics"
+          "locator": "PDF p.21, g3 sec3 4, Fractional equations reducible to quadratics"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_congruence_similarity_enlargement",
@@ -901,10 +916,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Scale drawings, enlargement and reduction"
+          "locator": "PDF p.22, g3 sec3 4, Scale drawings, enlargement and reduction"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_bisector_construction",
@@ -921,10 +936,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Perpendicular and angle bisectors"
+          "locator": "PDF p.22, g3 sec3 4, Perpendicular and angle bisectors"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_circle_chord_tangent",
@@ -943,10 +958,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Chord and tangent properties"
+          "locator": "PDF p.22, g3 sec3 4, Chord and tangent properties"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_circle_angles",
@@ -965,10 +980,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Circle angle properties"
+          "locator": "PDF p.22, g3 sec3 4, Circle angle properties"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_triangle_trigonometry",
@@ -987,10 +1002,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Trigonometry for general triangles"
+          "locator": "PDF p.22, g3 sec3 4, Trigonometry for general triangles"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_spatial_trigonometry",
@@ -1009,10 +1024,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Two- and three-dimensional trigonometric problems"
+          "locator": "PDF p.22, g3 sec3 4, Two- and three-dimensional trigonometric problems"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_circle_mensuration",
@@ -1029,10 +1044,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Arc, sector and segment measures"
+          "locator": "PDF p.22, g3 sec3 4, Arc, sector and segment measures"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_quartiles_spread",
@@ -1052,10 +1067,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.21, g3 sec3 4, Quartiles, percentiles and spread"
+          "locator": "PDF p.23, g3 sec3 4, Quartiles, percentiles and spread"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_cumulative_box",
@@ -1075,10 +1090,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.21, g3 sec3 4, Cumulative-frequency and box plots"
+          "locator": "PDF p.23, g3 sec3 4, Cumulative-frequency and box plots"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_standard_deviation_compare",
@@ -1097,10 +1112,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.21, g3 sec3 4, Calculating and comparing standard deviation"
+          "locator": "PDF p.23, g3 sec3 4, Calculating and comparing standard deviation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_combined_probability",
@@ -1120,10 +1135,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.21, g3 sec3 4, Combined-event probability representations"
+          "locator": "PDF p.23, g3 sec3 4, Combined-event probability representations"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_compound_linear_inequalities",
@@ -1143,10 +1158,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Compound linear inequalities"
+          "locator": "PDF p.21, g3 sec3 4, Compound linear inequalities"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_elementary_matrices",
@@ -1165,10 +1180,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Elementary matrix representation and operations"
+          "locator": "PDF p.21, g3 sec3 4, Elementary matrix representation and operations"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_congruence_similarity_tests",
@@ -1185,10 +1200,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Triangle congruence, similarity and scale ratios"
+          "locator": "PDF p.22, g3 sec3 4, Triangle congruence, similarity and scale ratios"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_vector_representation",
@@ -1207,10 +1222,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Plane-vector representation"
+          "locator": "PDF p.22, g3 sec3 4, Plane-vector representation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_vector_operations",
@@ -1229,10 +1244,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Plane-vector operations"
+          "locator": "PDF p.22, g3 sec3 4, Plane-vector operations"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_secondary_all_personal_finance",
@@ -1249,10 +1264,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.23, g2 secondary all, Personal and household finance"
+          "locator": "PDF p.25, g2 secondary all, Personal and household finance"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_secondary_all_motion_data_graphs",
@@ -1272,10 +1287,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.24, g2 secondary all, Distance-time and speed-time graphs"
+          "locator": "PDF p.26, g2 secondary all, Distance-time and speed-time graphs"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec1_prime_factorisation",
@@ -1292,10 +1307,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Prime factorisation, HCF, LCM and roots"
+          "locator": "PDF p.27, g2 sec1, Prime factorisation, HCF, LCM and roots"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec1_real_number_operations",
@@ -1314,10 +1329,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Real-number operations and order"
+          "locator": "PDF p.27, g2 sec1, Real-number operations and order"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec1_approximation_estimation",
@@ -1334,10 +1349,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Approximation and estimation"
+          "locator": "PDF p.27, g2 sec1, Approximation and estimation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec1_ratio",
@@ -1354,10 +1369,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Ratio, fractions and division"
+          "locator": "PDF p.27, g2 sec1, Ratio, fractions and division"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec1_percentage",
@@ -1374,10 +1389,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Percentage forms and change"
+          "locator": "PDF p.27, g2 sec1, Percentage forms and change"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec1_rate_speed",
@@ -1394,10 +1409,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Distance, time, rate and speed"
+          "locator": "PDF p.27, g2 sec1, Distance, time, rate and speed"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec1_algebra_notation_evaluation",
@@ -1414,10 +1429,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Algebraic notation and evaluation"
+          "locator": "PDF p.27, g2 sec1, Algebraic notation and evaluation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec1_algebra_translation",
@@ -1436,10 +1451,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Translating situations into algebra"
+          "locator": "PDF p.28, g2 sec1, Translating situations into algebra"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec1_nth_term_patterns",
@@ -1458,10 +1473,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Algebraic nth-term patterns"
+          "locator": "PDF p.28, g2 sec1, Algebraic nth-term patterns"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec1_linear_expressions",
@@ -1478,10 +1493,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Operations on linear expressions"
+          "locator": "PDF p.28, g2 sec1, Operations on linear expressions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec1_linear_integer_equations",
@@ -1498,10 +1513,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Linear equations with integer coefficients"
+          "locator": "PDF p.28, g2 sec1, Linear equations with integer coefficients"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec1_angle_relationships",
@@ -1518,10 +1533,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Angle relationships"
+          "locator": "PDF p.28, g2 sec1, Angle relationships"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec1_triangle_properties",
@@ -1538,10 +1553,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Triangle properties"
+          "locator": "PDF p.28, g2 sec1, Triangle properties"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec1_plane_mensuration",
@@ -1558,10 +1573,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Area and composite plane figures"
+          "locator": "PDF p.28, g2 sec1, Area and composite plane figures"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec1_solid_mensuration",
@@ -1580,10 +1595,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Prisms, cylinders and composite solids"
+          "locator": "PDF p.28, g2 sec1, Prisms, cylinders and composite solids"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec1_data_collection",
@@ -1600,10 +1615,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Collecting, classifying and tabulating data"
+          "locator": "PDF p.28, g2 sec1, Collecting, classifying and tabulating data"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec1_statistical_representations",
@@ -1622,10 +1637,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Reading and choosing statistical representations"
+          "locator": "PDF p.28, g2 sec1, Reading and choosing statistical representations"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec1_misleading_diagrams",
@@ -1644,10 +1659,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Misleading statistical diagrams"
+          "locator": "PDF p.28, g2 sec1, Misleading statistical diagrams"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec2_scale_proportion",
@@ -1664,10 +1679,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Map scales and proportion"
+          "locator": "PDF p.29, g2 sec2, Map scales and proportion"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec2_linear_fractional_coefficients",
@@ -1684,10 +1699,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Linear expressions with fractional coefficients"
+          "locator": "PDF p.29, g2 sec2, Linear expressions with fractional coefficients"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec2_algebra_expansion_identities",
@@ -1704,10 +1719,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Expansion and algebraic identities"
+          "locator": "PDF p.29, g2 sec2, Expansion and algebraic identities"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec2_factorisation",
@@ -1724,10 +1739,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Common-factor and quadratic factorisation"
+          "locator": "PDF p.29, g2 sec2, Common-factor and quadratic factorisation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec2_algebraic_fractions_multiply_divide",
@@ -1744,10 +1759,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Multiplying and dividing algebraic fractions"
+          "locator": "PDF p.29, g2 sec2, Multiplying and dividing algebraic fractions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec2_linear_fractional_equations",
@@ -1764,10 +1779,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Linear and reducible fractional equations"
+          "locator": "PDF p.29, g2 sec2, Linear and reducible fractional equations"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec2_simple_linear_inequalities",
@@ -1787,10 +1802,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Simple linear inequalities"
+          "locator": "PDF p.29, g2 sec2, Simple linear inequalities"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec2_polygon_properties",
@@ -1807,10 +1822,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Quadrilaterals and regular polygons"
+          "locator": "PDF p.30, g2 sec2, Quadrilaterals and regular polygons"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec2_geometric_construction",
@@ -1827,10 +1842,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Geometric construction"
+          "locator": "PDF p.30, g2 sec2, Geometric construction"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec2_congruence_similarity_foundations",
@@ -1847,10 +1862,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Congruence and similarity foundations"
+          "locator": "PDF p.30, g2 sec2, Congruence and similarity foundations"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec2_pythagoras",
@@ -1867,10 +1882,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Pythagoras theorem and converse"
+          "locator": "PDF p.30, g2 sec2, Pythagoras theorem and converse"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec2_distribution_diagrams",
@@ -1889,10 +1904,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Dot plots, histograms and stem-and-leaf diagrams"
+          "locator": "PDF p.30, g2 sec2, Dot plots, histograms and stem-and-leaf diagrams"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec2_central_tendency",
@@ -1911,10 +1926,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Measures of central tendency"
+          "locator": "PDF p.30, g2 sec2, Measures of central tendency"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_standard_form",
@@ -1931,10 +1946,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Standard form"
+          "locator": "PDF p.31, g2 sec3 4, Standard form"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_indices",
@@ -1953,10 +1968,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Indices and their laws"
+          "locator": "PDF p.31, g2 sec3 4, Indices and their laws"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_tangent_gradient",
@@ -1973,10 +1988,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Estimating curve gradient with a tangent"
+          "locator": "PDF p.31, g2 sec3 4, Estimating curve gradient with a tangent"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_quadratic_methods",
@@ -1993,10 +2008,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Solving quadratic equations by standard methods"
+          "locator": "PDF p.31, g2 sec3 4, Solving quadratic equations by standard methods"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_fractional_quadratic_equations",
@@ -2013,10 +2028,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Fractional equations reducible to quadratics"
+          "locator": "PDF p.31, g2 sec3 4, Fractional equations reducible to quadratics"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_grouped_linear_factorisation",
@@ -2033,10 +2048,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Factorising grouped linear expressions"
+          "locator": "PDF p.31, g2 sec3 4, Factorising grouped linear expressions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_algebra_expansion_identities",
@@ -2053,10 +2068,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Expansion of algebraic expressions"
+          "locator": "PDF p.31, g2 sec3 4, Expansion of algebraic expressions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_formula_rearrangement",
@@ -2073,10 +2088,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Changing the subject and evaluating formulae"
+          "locator": "PDF p.31, g2 sec3 4, Changing the subject and evaluating formulae"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_algebraic_fractions_add_subtract",
@@ -2093,10 +2108,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Adding and subtracting algebraic fractions"
+          "locator": "PDF p.31, g2 sec3 4, Adding and subtracting algebraic fractions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_congruence_similarity_enlargement",
@@ -2113,10 +2128,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Scale drawings, enlargement and reduction"
+          "locator": "PDF p.32, g2 sec3 4, Scale drawings, enlargement and reduction"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_bisector_construction",
@@ -2133,10 +2148,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Perpendicular and angle bisectors"
+          "locator": "PDF p.32, g2 sec3 4, Perpendicular and angle bisectors"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_circle_chord_tangent",
@@ -2155,10 +2170,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Chord and tangent properties"
+          "locator": "PDF p.32, g2 sec3 4, Chord and tangent properties"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_circle_angles",
@@ -2177,10 +2192,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Circle angle properties"
+          "locator": "PDF p.32, g2 sec3 4, Circle angle properties"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_triangle_trigonometry",
@@ -2199,10 +2214,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Trigonometry for general triangles"
+          "locator": "PDF p.32, g2 sec3 4, Trigonometry for general triangles"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_spatial_trigonometry",
@@ -2221,10 +2236,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Two- and three-dimensional trigonometric problems"
+          "locator": "PDF p.32, g2 sec3 4, Two- and three-dimensional trigonometric problems"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_circle_mensuration",
@@ -2241,10 +2256,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Arc, sector and segment measures"
+          "locator": "PDF p.32, g2 sec3 4, Arc, sector and segment measures"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_quartiles_spread",
@@ -2264,10 +2279,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.31, g2 sec3 4, Quartiles, percentiles and spread"
+          "locator": "PDF p.32, g2 sec3 4, Quartiles, percentiles and spread"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_cumulative_box",
@@ -2287,10 +2302,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.31, g2 sec3 4, Cumulative-frequency and box plots"
+          "locator": "PDF p.32, g2 sec3 4, Cumulative-frequency and box plots"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_standard_deviation_compare",
@@ -2309,10 +2324,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.31, g2 sec3 4, Calculating and comparing standard deviation"
+          "locator": "PDF p.33, g2 sec3 4, Calculating and comparing standard deviation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_combined_probability",
@@ -2332,10 +2347,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.31, g2 sec3 4, Combined-event probability representations"
+          "locator": "PDF p.33, g2 sec3 4, Combined-event probability representations"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_congruence_similarity_problems",
@@ -2352,10 +2367,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Congruence and similarity problems"
+          "locator": "PDF p.32, g2 sec3 4, Congruence and similarity problems"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_right_triangle_trig",
@@ -2374,10 +2389,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Trigonometry in right triangles"
+          "locator": "PDF p.32, g2 sec3 4, Trigonometry in right triangles"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec5_bridge_compound_linear_inequalities",
@@ -2397,10 +2412,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.32, g2 sec5 bridge, Compound linear inequalities"
+          "locator": "PDF p.34, g2 sec5 bridge, Compound linear inequalities"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec5_bridge_elementary_matrices",
@@ -2419,10 +2434,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.32, g2 sec5 bridge, Elementary matrix representation and operations"
+          "locator": "PDF p.34, g2 sec5 bridge, Elementary matrix representation and operations"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec5_bridge_congruence_similarity_tests",
@@ -2439,10 +2454,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.33, g2 sec5 bridge, Triangle congruence, similarity and scale ratios"
+          "locator": "PDF p.35, g2 sec5 bridge, Triangle congruence, similarity and scale ratios"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec5_bridge_vector_representation",
@@ -2461,10 +2476,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.33, g2 sec5 bridge, Plane-vector representation"
+          "locator": "PDF p.35, g2 sec5 bridge, Plane-vector representation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_sec_math_2020_g2_sec5_bridge_vector_operations",
@@ -2483,10 +2498,113 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.33, g2 sec5 bridge, Plane-vector operations"
+          "locator": "PDF p.35, g2 sec5 bridge, Plane-vector operations"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_formulate_linear_equations",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec1_formulate_linear_equation",
+        "req_sg_sec_math_2020_g2_sec1_formulate_linear_equation"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Formulating linear equations and systems from context",
+      "proposed_name_zh": "从情境建立一次方程与方程组",
+      "scope_zh": "从问题情境选择未知量，建立一元一次方程，求解、检验并解释解的现实意义。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "2026-10 复核发现该成果原映射到更高层级概念，改由同层级最小可诊断概念覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec1, Formulating a linear equation"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec1, Formulating a linear equation"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_formulate_quadratic_equations",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec3_4_formulate_quadratic",
+        "req_sg_sec_math_2020_g2_sec3_4_formulate_quadratic"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Formulating quadratic equations from context",
+      "proposed_name_zh": "从情境建立一元二次方程",
+      "scope_zh": "从问题情境建立一元二次方程，求解后按情境约束取舍并解释有效解。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "2026-10 复核发现该成果原映射到更高层级概念，改由同层级最小可诊断概念覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Formulating a quadratic equation"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.31, g2 sec3 4, Formulating a quadratic equation"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_single_event_probability",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec2_single_event_probability",
+        "req_sg_sec_math_2020_g2_sec2_single_event_probability"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Probability of single events",
+      "proposed_name_zh": "单一事件概率",
+      "scope_zh": "把概率理解为 0 到 1 之间的机会度量，列出等可能结果并计算单一事件概率。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "2026-10 复核发现该成果原映射到更高层级概念，改由同层级最小可诊断概念覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec2, Probability of single events"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec2, Probability of single events"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_formulate_linear_systems",
+      "requirement_ids": [
+        "req_sg_sec_math_2020_g3_sec2_formulate_pair_linear",
+        "req_sg_sec_math_2020_g2_sec2_formulate_linear_systems"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Formulating linear equations and systems from context",
+      "proposed_name_zh": "从情境建立一次方程与方程组",
+      "scope_zh": "从问题情境建立二元一次方程组，求解并解释解的现实意义。",
+      "existing_canonical_ids": [
+        "pc_f3ce171bf3b9bda56a7170bd96232766",
+        "pc_204206c0b72ea40b72d3055124b579af"
+      ],
+      "suggested_graph_id": "singapore_secondary_mathematics",
+      "rationale_zh": "2026-10 复核发现该成果原映射到更高层级概念，改由同层级最小可诊断概念覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec2, Formulating a pair of linear equations"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec2, Formulating linear equations and systems"
+        }
+      ],
+      "review_status": "approved"
     }
   ]
 }

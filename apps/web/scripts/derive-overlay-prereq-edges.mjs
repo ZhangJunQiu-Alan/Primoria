@@ -34,6 +34,8 @@
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
+import { refuseOwnerApprovedTargets } from "./kg-approval-guard.mjs";
+
 const ROOT = resolve(import.meta.dirname, "../../..");
 const DATA = resolve(ROOT, "data/knowledge-graphs");
 const TODAY = new Date().toISOString().slice(0, 10);
@@ -329,6 +331,10 @@ if (!APPLY) {
 }
 
 // -------------------------------------------------------------------- write
+
+refuseOwnerApprovedTargets(
+  Object.fromEntries(graphIds.map((graphId) => [graphId, resolve(DATA, `source/${graphId}.json`)])),
+);
 
 const bump = (version) => {
   const parts = String(version).split(".").map(Number);
