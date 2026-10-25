@@ -109,10 +109,9 @@ capability restrictions in `docker-compose.prod.yml`.
 6. Confirm that long-running services use `primoria_runtime`, never
    `primoria_migrator`.
 7. On the first deployment only, initialize KG data and embeddings.
-   `db:initialize:kg` currently includes all 31 source graphs, including 10
-   China/Singapore graphs whose source status remains `needs_review`. Record the
-   production review-state decision before running the all-graph command; the
-   importer does not enforce it automatically.
+   `db:initialize:kg` currently includes all 31 source graphs, all
+   source-approved since 2026-10-25. The importer does not enforce review status
+   itself, so confirm no `needs_review` graph has been added since.
 8. Verify health, authentication, course access, one quiz submission/replay,
    Tutor streaming, Worker queue consumption, email delivery, and public TLS.
    Include one onboarding or Settings Facts intake: the request should return

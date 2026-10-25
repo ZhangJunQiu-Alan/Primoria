@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-10-25",
+  "required": false,
+  "graph_ids": [
+    "senior_secondary_mathematics",
+    "singapore_h2_biology",
+    "singapore_h2_physics",
+    "singapore_secondary_mathematics"
+  ],
+  "reasons_zh": [
+    "这四张图新增了 Concept/Topic，或修改了 Concept 名称、描述或所属 Topic 名称（embed_text 的输入），发布到数据库前必须重建 embeddings。",
+    "其余 6 张图只变更来源、证据定位、先修边、审核状态与映射，不需要因本批次单独重嵌入；但先修边与审核状态变化仍需重新导入 KG（pnpm db:initialize:kg 或等效导入）。"
+  ],
+  "release_note_zh": "2026-10-25 已在共享 Supabase 库完成：10 张图与跨图边重新导入（db:seed:kg / db:seed:kg-cross），4 张图重建 embeddings（db:seed:kg-embeddings，minimax:embo-01:1536）；只读比对 31 张图零差异。KG embedding 快照未导出。",
+  "completed_at": "2026-10-25"
+}

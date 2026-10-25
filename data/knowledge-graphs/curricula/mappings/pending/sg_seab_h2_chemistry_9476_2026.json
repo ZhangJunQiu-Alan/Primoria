@@ -1,6 +1,6 @@
 {
   "schema_version": "3.0.0",
-  "content_version": "0.4.0",
+  "content_version": "0.4.3",
   "mapping_set_id": "cms_sg_seab_h2_chemistry_9476_2026_outcomes",
   "framework_id": "cfw_sg_seab_h2_chemistry_9476_2026_outcomes",
   "curriculum_id": "cur_sg_seab_h2_chemistry_9476_2026",
@@ -10,7 +10,7 @@
   ],
   "mapping_scope": "outcome_coverage",
   "generated_at": "2026-07-19",
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.3.0",
@@ -21,6 +21,21 @@
       "version": "0.4.0",
       "date": "2026-07-19",
       "summary_zh": "将 21 项 H2 化学缺口解析为 18 个概念；193 项非实践成果全部达到 full，8 项实践继续保持 excluded。"
+    },
+    {
+      "version": "0.4.1",
+      "date": "2026-10-25",
+      "summary_zh": "按 2026-10-25 官方来源复核更新证据定位（中国课标迁至 2025 日常修订版、新加坡页码校正），状态保持 needs_review。"
+    },
+    {
+      "version": "0.4.2",
+      "date": "2026-10-25",
+      "summary_zh": "依据 2026-10 联网复核修正描述、证据定位与映射覆盖，状态保持 needs_review。"
+    },
+    {
+      "version": "0.4.3",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准。"
     }
   ],
   "mappings": [
@@ -41,7 +56,7 @@
           "locator": "PDF p.13, topic 1 Atomic Structure, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_1_b",
@@ -60,7 +75,7 @@
           "locator": "PDF p.13, topic 1 Atomic Structure, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_1_c",
@@ -79,7 +94,7 @@
           "locator": "PDF p.13, topic 1 Atomic Structure, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_1_d",
@@ -98,7 +113,7 @@
           "locator": "PDF p.13, topic 1 Atomic Structure, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_1_e",
@@ -118,7 +133,7 @@
           "locator": "PDF p.13, topic 1 Atomic Structure, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_1_f",
@@ -137,7 +152,7 @@
           "locator": "PDF p.13, topic 1 Atomic Structure, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_1_g",
@@ -156,7 +171,7 @@
           "locator": "PDF p.13, topic 1 Atomic Structure, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_1_h",
@@ -175,7 +190,7 @@
           "locator": "PDF p.13, topic 1 Atomic Structure, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_1_i",
@@ -194,7 +209,7 @@
           "locator": "PDF p.13, topic 1 Atomic Structure, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_1_j",
@@ -214,7 +229,7 @@
           "locator": "PDF p.13, topic 1 Atomic Structure, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_1_k",
@@ -234,7 +249,7 @@
           "locator": "PDF p.13, topic 1 Atomic Structure, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_a",
@@ -255,7 +270,7 @@
           "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_b",
@@ -275,7 +290,7 @@
           "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_c",
@@ -294,7 +309,7 @@
           "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_d",
@@ -313,7 +328,7 @@
           "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_e",
@@ -332,7 +347,7 @@
           "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_f",
@@ -351,7 +366,7 @@
           "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_g",
@@ -371,7 +386,7 @@
           "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_h",
@@ -390,7 +405,7 @@
           "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_i",
@@ -409,7 +424,7 @@
           "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_j",
@@ -428,7 +443,7 @@
           "locator": "PDF p.15, topic 2 Chemical Bonding, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_k",
@@ -448,7 +463,7 @@
           "locator": "PDF p.15, topic 2 Chemical Bonding, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_l",
@@ -467,7 +482,7 @@
           "locator": "PDF p.15, topic 2 Chemical Bonding, outcome (l)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_m",
@@ -486,7 +501,7 @@
           "locator": "PDF p.15, topic 2 Chemical Bonding, outcome (m)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_2_n",
@@ -505,7 +520,7 @@
           "locator": "PDF p.15, topic 2 Chemical Bonding, outcome (n)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_3_a",
@@ -524,7 +539,7 @@
           "locator": "PDF p.15, topic 3 The Gaseous State, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_3_b",
@@ -543,7 +558,7 @@
           "locator": "PDF p.15, topic 3 The Gaseous State, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_3_c",
@@ -562,7 +577,7 @@
           "locator": "PDF p.15, topic 3 The Gaseous State, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_3_d",
@@ -581,7 +596,7 @@
           "locator": "PDF p.15, topic 3 The Gaseous State, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_4_a",
@@ -600,7 +615,7 @@
           "locator": "PDF p.15, topic 4 Theories of Acids and Bases, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_4_b",
@@ -619,7 +634,7 @@
           "locator": "PDF p.16, topic 4 Theories of Acids and Bases, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_4_c",
@@ -638,7 +653,7 @@
           "locator": "PDF p.16, topic 4 Theories of Acids and Bases, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_5_a",
@@ -658,7 +673,7 @@
           "locator": "PDF p.16, topic 5 The Periodic Table, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_5_b",
@@ -678,7 +693,7 @@
           "locator": "PDF p.16, topic 5 The Periodic Table, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_5_c",
@@ -698,7 +713,7 @@
           "locator": "PDF p.16, topic 5 The Periodic Table, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_5_d",
@@ -718,7 +733,7 @@
           "locator": "PDF p.16, topic 5 The Periodic Table, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_5_e",
@@ -737,7 +752,7 @@
           "locator": "PDF p.16, topic 5 The Periodic Table, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_5_f",
@@ -758,7 +773,7 @@
           "locator": "PDF p.17, topic 5 The Periodic Table, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_5_g",
@@ -779,7 +794,7 @@
           "locator": "PDF p.17, topic 5 The Periodic Table, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_5_h",
@@ -798,7 +813,7 @@
           "locator": "PDF p.17, topic 5 The Periodic Table, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_5_i",
@@ -817,7 +832,7 @@
           "locator": "PDF p.17, topic 5 The Periodic Table, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_6_a",
@@ -836,7 +851,7 @@
           "locator": "PDF p.18, topic 6 The Mole Concept and Stoichiometry, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_6_b",
@@ -855,7 +870,7 @@
           "locator": "PDF p.18, topic 6 The Mole Concept and Stoichiometry, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_6_c",
@@ -875,7 +890,7 @@
           "locator": "PDF p.18, topic 6 The Mole Concept and Stoichiometry, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_6_d",
@@ -894,7 +909,7 @@
           "locator": "PDF p.18, topic 6 The Mole Concept and Stoichiometry, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_6_e",
@@ -913,7 +928,7 @@
           "locator": "PDF p.18, topic 6 The Mole Concept and Stoichiometry, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_6_f",
@@ -933,7 +948,7 @@
           "locator": "PDF p.18, topic 6 The Mole Concept and Stoichiometry, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_6_g",
@@ -953,7 +968,7 @@
           "locator": "PDF p.18, topic 6 The Mole Concept and Stoichiometry, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_6_h",
@@ -972,7 +987,7 @@
           "locator": "PDF p.18, topic 6 The Mole Concept and Stoichiometry, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_a",
@@ -992,7 +1007,7 @@
           "locator": "PDF p.18, topic 7 Chemical Energetics, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_b",
@@ -1011,7 +1026,7 @@
           "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_c",
@@ -1032,7 +1047,7 @@
           "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_d",
@@ -1051,7 +1066,7 @@
           "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_e",
@@ -1070,7 +1085,7 @@
           "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_f",
@@ -1090,7 +1105,7 @@
           "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_g",
@@ -1109,7 +1124,7 @@
           "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_h",
@@ -1128,7 +1143,7 @@
           "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_i",
@@ -1147,7 +1162,7 @@
           "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_j",
@@ -1166,7 +1181,7 @@
           "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_k",
@@ -1185,7 +1200,7 @@
           "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_l",
@@ -1204,7 +1219,7 @@
           "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (l)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_7_m",
@@ -1223,7 +1238,7 @@
           "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (m)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_8_a",
@@ -1245,7 +1260,7 @@
           "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_8_b",
@@ -1265,7 +1280,7 @@
           "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_8_c",
@@ -1284,7 +1299,7 @@
           "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_8_d",
@@ -1303,7 +1318,7 @@
           "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_8_e",
@@ -1320,7 +1335,7 @@
           "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_8_f",
@@ -1339,7 +1354,7 @@
           "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_8_g",
@@ -1358,7 +1373,7 @@
           "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_8_h",
@@ -1378,7 +1393,7 @@
           "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_8_i",
@@ -1398,7 +1413,7 @@
           "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_8_j",
@@ -1418,7 +1433,7 @@
           "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_8_k",
@@ -1437,7 +1452,7 @@
           "locator": "PDF p.21, topic 8 Reaction Kinetics, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_9_a",
@@ -1456,7 +1471,7 @@
           "locator": "PDF p.21, topic 9 Chemical Equilibria, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_9_b",
@@ -1475,7 +1490,7 @@
           "locator": "PDF p.21, topic 9 Chemical Equilibria, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_9_c",
@@ -1495,7 +1510,7 @@
           "locator": "PDF p.21, topic 9 Chemical Equilibria, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_9_d",
@@ -1514,7 +1529,7 @@
           "locator": "PDF p.21, topic 9 Chemical Equilibria, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_9_e",
@@ -1533,7 +1548,7 @@
           "locator": "PDF p.21, topic 9 Chemical Equilibria, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_9_f",
@@ -1552,7 +1567,7 @@
           "locator": "PDF p.21, topic 9 Chemical Equilibria, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_9_g",
@@ -1572,7 +1587,7 @@
           "locator": "PDF p.21, topic 9 Chemical Equilibria, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_10_1_a",
@@ -1591,7 +1606,7 @@
           "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_10_1_b",
@@ -1610,7 +1625,7 @@
           "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_10_1_c",
@@ -1630,7 +1645,7 @@
           "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_10_1_d",
@@ -1649,7 +1664,7 @@
           "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_10_1_e",
@@ -1668,7 +1683,7 @@
           "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_10_1_f",
@@ -1687,7 +1702,7 @@
           "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_10_1_g",
@@ -1707,7 +1722,7 @@
           "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_10_2_a",
@@ -1726,7 +1741,7 @@
           "locator": "PDF p.22, topic 10_2 Solubility Equilibria, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_10_2_b",
@@ -1745,7 +1760,7 @@
           "locator": "PDF p.22, topic 10_2 Solubility Equilibria, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_10_2_c",
@@ -1764,7 +1779,7 @@
           "locator": "PDF p.23, topic 10_2 Solubility Equilibria, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_1_a",
@@ -1781,10 +1796,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.25, topic 11_1 Organic Chemistry Introduction, outcome (a)"
+          "locator": "PDF p.24, topic 11_1 Organic Chemistry Introduction, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_1_b",
@@ -1803,7 +1818,7 @@
           "locator": "PDF p.25, topic 11_1 Organic Chemistry Introduction, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_1_c",
@@ -1823,7 +1838,7 @@
           "locator": "PDF p.25, topic 11_1 Organic Chemistry Introduction, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_1_d",
@@ -1843,7 +1858,7 @@
           "locator": "PDF p.25, topic 11_1 Organic Chemistry Introduction, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_2_a",
@@ -1859,10 +1874,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (a)"
+          "locator": "PDF p.25, topic 11_2 Isomerism, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_2_b",
@@ -1878,10 +1893,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (b)"
+          "locator": "PDF p.25, topic 11_2 Isomerism, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_2_c",
@@ -1897,10 +1912,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (c)"
+          "locator": "PDF p.25, topic 11_2 Isomerism, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_2_d",
@@ -1916,10 +1931,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (d)"
+          "locator": "PDF p.25, topic 11_2 Isomerism, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_2_e",
@@ -1935,10 +1950,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (e)"
+          "locator": "PDF p.25, topic 11_2 Isomerism, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_2_f",
@@ -1954,10 +1969,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (f)"
+          "locator": "PDF p.25, topic 11_2 Isomerism, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_2_g",
@@ -1973,10 +1988,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (g)"
+          "locator": "PDF p.25, topic 11_2 Isomerism, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_2_h",
@@ -1992,10 +2007,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (h)"
+          "locator": "PDF p.25, topic 11_2 Isomerism, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_2_i",
@@ -2011,10 +2026,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (i)"
+          "locator": "PDF p.25, topic 11_2 Isomerism, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_2_j",
@@ -2030,10 +2045,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (j)"
+          "locator": "PDF p.25, topic 11_2 Isomerism, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_a",
@@ -2053,7 +2068,7 @@
           "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_b",
@@ -2072,7 +2087,7 @@
           "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_c",
@@ -2091,7 +2106,7 @@
           "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_d",
@@ -2110,7 +2125,7 @@
           "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_e",
@@ -2129,7 +2144,7 @@
           "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_f",
@@ -2148,7 +2163,7 @@
           "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_g",
@@ -2168,7 +2183,7 @@
           "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_h",
@@ -2188,7 +2203,7 @@
           "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_i",
@@ -2208,7 +2223,7 @@
           "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_j",
@@ -2227,7 +2242,7 @@
           "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_k",
@@ -2247,7 +2262,7 @@
           "locator": "PDF p.27, topic 11_3 Organic Reactions and Mechanisms, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_l",
@@ -2267,7 +2282,7 @@
           "locator": "PDF p.27, topic 11_3 Organic Reactions and Mechanisms, outcome (l)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_m",
@@ -2287,7 +2302,7 @@
           "locator": "PDF p.27, topic 11_3 Organic Reactions and Mechanisms, outcome (m)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_n",
@@ -2306,7 +2321,7 @@
           "locator": "PDF p.27, topic 11_3 Organic Reactions and Mechanisms, outcome (n)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_3_o",
@@ -2326,7 +2341,7 @@
           "locator": "PDF p.27, topic 11_3 Organic Reactions and Mechanisms, outcome (o)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_4_a",
@@ -2343,10 +2358,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.28, topic 11_4 Hydrocarbons, outcome (a)"
+          "locator": "PDF p.27, topic 11_4 Hydrocarbons, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_4_b",
@@ -2362,10 +2377,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.28, topic 11_4 Hydrocarbons, outcome (b)"
+          "locator": "PDF p.27, topic 11_4 Hydrocarbons, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_4_c",
@@ -2381,10 +2396,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.29, topic 11_4 Hydrocarbons, outcome (c)"
+          "locator": "PDF p.28, topic 11_4 Hydrocarbons, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_4_d",
@@ -2401,10 +2416,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.29, topic 11_4 Hydrocarbons, outcome (d)"
+          "locator": "PDF p.28, topic 11_4 Hydrocarbons, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_4_e",
@@ -2421,10 +2436,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.29, topic 11_4 Hydrocarbons, outcome (e)"
+          "locator": "PDF p.28, topic 11_4 Hydrocarbons, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_4_f",
@@ -2441,10 +2456,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.29, topic 11_4 Hydrocarbons, outcome (f)"
+          "locator": "PDF p.28, topic 11_4 Hydrocarbons, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_4_g",
@@ -2460,10 +2475,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.29, topic 11_4 Hydrocarbons, outcome (g)"
+          "locator": "PDF p.28, topic 11_4 Hydrocarbons, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_4_h",
@@ -2479,10 +2494,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.29, topic 11_4 Hydrocarbons, outcome (h)"
+          "locator": "PDF p.28, topic 11_4 Hydrocarbons, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_5_a",
@@ -2501,10 +2516,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.29, topic 11_5 Halogen Derivatives, outcome (a)"
+          "locator": "PDF p.28, topic 11_5 Halogen Derivatives, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_5_b",
@@ -2523,7 +2538,7 @@
           "locator": "PDF p.29, topic 11_5 Halogen Derivatives, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_5_c",
@@ -2543,13 +2558,14 @@
           "locator": "PDF p.29, topic 11_5 Halogen Derivatives, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_5_d",
       "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_5_d",
       "canonical_ids": [
-        "pc_0d3043e5274fde266129817ca29a57f7"
+        "pc_0d3043e5274fde266129817ca29a57f7",
+        "pc_b35d6548b40342a4e7e95af4650c7349"
       ],
       "coverage_status": "full",
       "relation": "required",
@@ -2562,7 +2578,7 @@
           "locator": "PDF p.29, topic 11_5 Halogen Derivatives, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_5_e",
@@ -2581,7 +2597,7 @@
           "locator": "PDF p.29, topic 11_5 Halogen Derivatives, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_6_a",
@@ -2601,7 +2617,7 @@
           "locator": "PDF p.29, topic 11_6 Hydroxy Compounds, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_6_b",
@@ -2621,7 +2637,7 @@
           "locator": "PDF p.29, topic 11_6 Hydroxy Compounds, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_6_c",
@@ -2640,7 +2656,7 @@
           "locator": "PDF p.29, topic 11_6 Hydroxy Compounds, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_6_d",
@@ -2660,7 +2676,7 @@
           "locator": "PDF p.30, topic 11_6 Hydroxy Compounds, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_6_e",
@@ -2680,7 +2696,7 @@
           "locator": "PDF p.30, topic 11_6 Hydroxy Compounds, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_7_a",
@@ -2697,10 +2713,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.31, topic 11_7 Carbonyl Compounds, outcome (a)"
+          "locator": "PDF p.30, topic 11_7 Carbonyl Compounds, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_7_b",
@@ -2717,10 +2733,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.31, topic 11_7 Carbonyl Compounds, outcome (b)"
+          "locator": "PDF p.30, topic 11_7 Carbonyl Compounds, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_7_c",
@@ -2736,10 +2752,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.31, topic 11_7 Carbonyl Compounds, outcome (c)"
+          "locator": "PDF p.30, topic 11_7 Carbonyl Compounds, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_7_d",
@@ -2755,10 +2771,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.31, topic 11_7 Carbonyl Compounds, outcome (d)"
+          "locator": "PDF p.30, topic 11_7 Carbonyl Compounds, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_7_e",
@@ -2775,10 +2791,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.31, topic 11_7 Carbonyl Compounds, outcome (e)"
+          "locator": "PDF p.30, topic 11_7 Carbonyl Compounds, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_8_a",
@@ -2798,7 +2814,7 @@
           "locator": "PDF p.31, topic 11_8 Carboxylic Acids and Derivatives, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_8_b",
@@ -2818,7 +2834,7 @@
           "locator": "PDF p.31, topic 11_8 Carboxylic Acids and Derivatives, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_8_c",
@@ -2837,7 +2853,7 @@
           "locator": "PDF p.31, topic 11_8 Carboxylic Acids and Derivatives, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_8_d",
@@ -2856,7 +2872,7 @@
           "locator": "PDF p.31, topic 11_8 Carboxylic Acids and Derivatives, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_8_e",
@@ -2876,7 +2892,7 @@
           "locator": "PDF p.31, topic 11_8 Carboxylic Acids and Derivatives, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_8_f",
@@ -2896,7 +2912,7 @@
           "locator": "PDF p.31, topic 11_8 Carboxylic Acids and Derivatives, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_8_g",
@@ -2915,7 +2931,7 @@
           "locator": "PDF p.31, topic 11_8 Carboxylic Acids and Derivatives, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_8_h",
@@ -2934,7 +2950,7 @@
           "locator": "PDF p.31, topic 11_8 Carboxylic Acids and Derivatives, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_9_a",
@@ -2955,7 +2971,7 @@
           "locator": "PDF p.31, topic 11_9 Nitrogen Compounds, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_9_b",
@@ -2974,7 +2990,7 @@
           "locator": "PDF p.31, topic 11_9 Nitrogen Compounds, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_9_c",
@@ -2993,7 +3009,7 @@
           "locator": "PDF p.31, topic 11_9 Nitrogen Compounds, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_9_d",
@@ -3012,7 +3028,7 @@
           "locator": "PDF p.32, topic 11_9 Nitrogen Compounds, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_9_e",
@@ -3031,7 +3047,7 @@
           "locator": "PDF p.32, topic 11_9 Nitrogen Compounds, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_9_f",
@@ -3050,7 +3066,7 @@
           "locator": "PDF p.32, topic 11_9 Nitrogen Compounds, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_9_g",
@@ -3069,7 +3085,7 @@
           "locator": "PDF p.32, topic 11_9 Nitrogen Compounds, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_9_h",
@@ -3088,7 +3104,7 @@
           "locator": "PDF p.32, topic 11_9 Nitrogen Compounds, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_9_i",
@@ -3107,7 +3123,7 @@
           "locator": "PDF p.32, topic 11_9 Nitrogen Compounds, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_10_a",
@@ -3127,7 +3143,7 @@
           "locator": "PDF p.32, topic 11_10 Polymers, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_10_b",
@@ -3147,7 +3163,7 @@
           "locator": "PDF p.32, topic 11_10 Polymers, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_10_c",
@@ -3167,7 +3183,7 @@
           "locator": "PDF p.32, topic 11_10 Polymers, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_10_d",
@@ -3186,7 +3202,7 @@
           "locator": "PDF p.32, topic 11_10 Polymers, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_10_e",
@@ -3205,7 +3221,7 @@
           "locator": "PDF p.32, topic 11_10 Polymers, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_10_f",
@@ -3224,7 +3240,7 @@
           "locator": "PDF p.32, topic 11_10 Polymers, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_10_g",
@@ -3240,10 +3256,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.33, topic 11_10 Polymers, outcome (g)"
+          "locator": "PDF p.32, topic 11_10 Polymers, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_a",
@@ -3263,7 +3279,7 @@
           "locator": "PDF p.33, topic 12 Electrochemistry, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_b",
@@ -3283,7 +3299,7 @@
           "locator": "PDF p.33, topic 12 Electrochemistry, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_c",
@@ -3302,7 +3318,7 @@
           "locator": "PDF p.33, topic 12 Electrochemistry, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_d",
@@ -3321,7 +3337,7 @@
           "locator": "PDF p.33, topic 12 Electrochemistry, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_e",
@@ -3341,7 +3357,7 @@
           "locator": "PDF p.33, topic 12 Electrochemistry, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_f",
@@ -3360,7 +3376,7 @@
           "locator": "PDF p.33, topic 12 Electrochemistry, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_g",
@@ -3379,7 +3395,7 @@
           "locator": "PDF p.33, topic 12 Electrochemistry, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_h",
@@ -3398,7 +3414,7 @@
           "locator": "PDF p.33, topic 12 Electrochemistry, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_i",
@@ -3418,7 +3434,7 @@
           "locator": "PDF p.33, topic 12 Electrochemistry, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_j",
@@ -3437,7 +3453,7 @@
           "locator": "PDF p.33, topic 12 Electrochemistry, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_k",
@@ -3456,7 +3472,7 @@
           "locator": "PDF p.33, topic 12 Electrochemistry, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_l",
@@ -3476,7 +3492,7 @@
           "locator": "PDF p.33, topic 12 Electrochemistry, outcome (l)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_m",
@@ -3495,7 +3511,7 @@
           "locator": "PDF p.33, topic 12 Electrochemistry, outcome (m)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_n",
@@ -3514,7 +3530,7 @@
           "locator": "PDF p.34, topic 12 Electrochemistry, outcome (n)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_12_o",
@@ -3533,7 +3549,7 @@
           "locator": "PDF p.34, topic 12 Electrochemistry, outcome (o)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_a",
@@ -3552,7 +3568,7 @@
           "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_b",
@@ -3572,7 +3588,7 @@
           "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_c",
@@ -3591,7 +3607,7 @@
           "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_d",
@@ -3610,7 +3626,7 @@
           "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_e",
@@ -3629,7 +3645,7 @@
           "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_f",
@@ -3649,7 +3665,7 @@
           "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_g",
@@ -3669,7 +3685,7 @@
           "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_h",
@@ -3689,7 +3705,7 @@
           "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_i",
@@ -3708,7 +3724,7 @@
           "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_j",
@@ -3727,7 +3743,7 @@
           "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_k",
@@ -3746,7 +3762,7 @@
           "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_l",
@@ -3765,7 +3781,7 @@
           "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (l)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_13_m",
@@ -3785,7 +3801,7 @@
           "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (m)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_practice_pos_wotd",
@@ -3802,7 +3818,7 @@
           "locator": "PDF p.4, Practices of Science, component 1"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_practice_pos_nos",
@@ -3819,7 +3835,7 @@
           "locator": "PDF p.4, Practices of Science, component 2"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_practice_pos_stse",
@@ -3836,7 +3852,7 @@
           "locator": "PDF p.4, Practices of Science, component 3"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_practice_practical_planning",
@@ -3850,10 +3866,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.36, Practical Assessment, Planning; assessment summary on p.9"
+          "locator": "PDF p.35, Practical Assessment, Planning; assessment summary on p.9"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_practice_practical_mmo",
@@ -3867,10 +3883,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.36, Practical Assessment, MMO; assessment summary on p.9"
+          "locator": "PDF p.35, Practical Assessment, MMO; assessment summary on p.9"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_practice_practical_pdo",
@@ -3884,10 +3900,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.37, Practical Assessment, PDO; assessment summary on p.9"
+          "locator": "PDF p.35, Practical Assessment, PDO; assessment summary on p.9"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_h2_chemistry_9476_2026_o_practice_practical_ace",
@@ -3901,10 +3917,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.37, Practical Assessment, ACE; assessment summary on p.9"
+          "locator": "PDF p.35, Practical Assessment, ACE; assessment summary on p.9"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ]
 }

@@ -156,11 +156,11 @@ const singaporeLowerSecondaryScience = readJson<Graph>(
 );
 
 // Edge counts include the prerequisite edges derived from official syllabus
-// outcome order by scripts/derive-overlay-prereq-edges.mjs. Those edges are
-// review_status: needs_review and inert at runtime until a reviewer approves
-// them; they still belong to the authored corpus these assertions guard.
+// outcome order by scripts/derive-overlay-prereq-edges.mjs that survived the
+// edge-by-edge owner review in data/knowledge-graphs/review/approved/cn-sg-2026-10;
+// rejected non-dependencies were removed from the source graphs.
 describe("curriculum governance", () => {
-  it("covers only the approved jurisdictions and keeps all proposals pending", () => {
+  it("covers only the approved jurisdictions and records owner approval on every proposal", () => {
     expect(new Set(frameworks.map((framework) => framework.jurisdiction))).toEqual(
       new Set(["CN-MAINLAND", "SG"]),
     );
@@ -169,16 +169,16 @@ describe("curriculum governance", () => {
     expect(frameworks.reduce((sum, framework) => sum + framework.requirements.length, 0)).toBe(
       mappingSets.reduce((sum, mappingSet) => sum + mappingSet.mappings.length, 0),
     );
-    expect(frameworks.every((framework) => framework.review_status === "needs_review")).toBe(true);
-    expect(mappingSets.every((mappingSet) => mappingSet.review_status === "needs_review")).toBe(true);
+    expect(frameworks.every((framework) => framework.review_status === "approved")).toBe(true);
+    expect(mappingSets.every((mappingSet) => mappingSet.review_status === "approved")).toBe(true);
     expect(
       frameworks.every((framework) =>
-        framework.requirements.every((requirement) => requirement.review_status === "needs_review"),
+        framework.requirements.every((requirement) => requirement.review_status === "approved"),
       ),
     ).toBe(true);
     expect(
       mappingSets.every((mappingSet) =>
-        mappingSet.mappings.every((mapping) => mapping.review_status === "needs_review"),
+        mappingSet.mappings.every((mapping) => mapping.review_status === "approved"),
       ),
     ).toBe(true);
   });
@@ -229,7 +229,7 @@ describe("curriculum governance", () => {
     expect(mappingSet?.mappings.filter((mapping) => mapping.coverage_status === "excluded")).toHaveLength(8);
     expect(mappingSet?.mappings.filter((mapping) => mapping.coverage_status === "partial")).toHaveLength(0);
     expect(mappingSet?.mappings.filter((mapping) => mapping.coverage_status === "unmapped")).toHaveLength(0);
-    expect(gapSet?.review_status).toBe("needs_review");
+    expect(gapSet?.review_status).toBe("approved");
     expect(gapSet?.candidates).toHaveLength(101);
     expect(gapSet?.candidates.filter((candidate) => candidate.action === "add_concept")).toHaveLength(30);
     expect(
@@ -238,22 +238,22 @@ describe("curriculum governance", () => {
     expect(
       gapSet?.candidates.filter((candidate) => candidate.action === "not_knowledge_concept"),
     ).toHaveLength(8);
-    expect(resolutionSet?.review_status).toBe("needs_review");
+    expect(resolutionSet?.review_status).toBe("approved");
     expect(resolutionSet?.resolutions).toHaveLength(101);
     expect(
       resolutionSet?.resolutions.filter((resolution) => resolution.resolution_action === "reuse_existing"),
-    ).toHaveLength(29);
+    ).toHaveLength(28);
     expect(
       resolutionSet?.resolutions.filter(
         (resolution) => resolution.resolution_action === "add_or_alias_concepts",
       ),
-    ).toHaveLength(64);
+    ).toHaveLength(65);
     expect(
       resolutionSet?.resolutions.filter((resolution) => resolution.resolution_action === "route_practice"),
     ).toHaveLength(8);
-    expect(practiceSet?.review_status).toBe("needs_review");
+    expect(practiceSet?.review_status).toBe("approved");
     expect(practiceSet?.items).toHaveLength(8);
-    expect(seniorSecondaryMathematics.nodes.filter((node) => node.kind === "concept")).toHaveLength(70);
+    expect(seniorSecondaryMathematics.nodes.filter((node) => node.kind === "concept")).toHaveLength(71);
   });
 
   it("resolves China senior-high physics at diagnostic-outcome granularity", () => {
@@ -291,7 +291,7 @@ describe("curriculum governance", () => {
     expect(practiceSet?.items).toHaveLength(14);
     expect(seniorSecondaryPhysics.nodes.filter((node) => node.kind === "concept")).toHaveLength(73);
     expect(seniorSecondaryPhysics.nodes.filter((node) => node.kind === "topic")).toHaveLength(28);
-    expect(seniorSecondaryPhysics.edges).toHaveLength(48);
+    expect(seniorSecondaryPhysics.edges).toHaveLength(26);
     expect(seniorSecondaryPhysics.edges.every((edge) => edge.reason.length > 0)).toBe(true);
     expect(
       seniorSecondaryPhysics.nodes
@@ -353,7 +353,7 @@ describe("curriculum governance", () => {
     expect(practiceSet?.items).toHaveLength(30);
     expect(seniorSecondaryChemistry.nodes.filter((node) => node.kind === "concept")).toHaveLength(49);
     expect(seniorSecondaryChemistry.nodes.filter((node) => node.kind === "topic")).toHaveLength(17);
-    expect(seniorSecondaryChemistry.edges).toHaveLength(34);
+    expect(seniorSecondaryChemistry.edges).toHaveLength(19);
     expect(seniorSecondaryChemistry.edges.every((edge) => edge.reason.length > 0)).toBe(true);
     expect(
       seniorSecondaryChemistry.nodes
@@ -398,7 +398,7 @@ describe("curriculum governance", () => {
     expect(practiceSet?.items).toHaveLength(2);
     expect(seniorSecondaryBiology.nodes.filter((node) => node.kind === "concept")).toHaveLength(75);
     expect(seniorSecondaryBiology.nodes.filter((node) => node.kind === "topic")).toHaveLength(26);
-    expect(seniorSecondaryBiology.edges).toHaveLength(50);
+    expect(seniorSecondaryBiology.edges).toHaveLength(36);
     expect(seniorSecondaryBiology.edges.every((edge) => edge.reason.length > 0)).toBe(true);
 
     const mappings = new Map(mappingSet?.mappings.map((mapping) => [mapping.requirement_id, mapping] as const));
@@ -452,7 +452,7 @@ describe("curriculum governance", () => {
     expect(practiceSet?.items).toHaveLength(6);
     expect(singaporeH2Mathematics.nodes.filter((node) => node.kind === "concept")).toHaveLength(33);
     expect(singaporeH2Mathematics.nodes.filter((node) => node.kind === "topic")).toHaveLength(14);
-    expect(singaporeH2Mathematics.edges).toHaveLength(20);
+    expect(singaporeH2Mathematics.edges).toHaveLength(15);
     expect(singaporeH2Mathematics.edges.every((edge) => edge.reason.length > 0)).toBe(true);
 
     const practiceRequirementIds = new Set(practiceSet?.items.flatMap((item) => item.requirement_ids));
@@ -525,7 +525,7 @@ describe("curriculum governance", () => {
     const concepts = singaporeLowerSecondaryScience.nodes.filter((node) => node.kind === "concept");
     expect(concepts).toHaveLength(32);
     expect(singaporeLowerSecondaryScience.nodes.filter((node) => node.kind === "topic")).toHaveLength(15);
-    expect(singaporeLowerSecondaryScience.edges).toHaveLength(19);
+    expect(singaporeLowerSecondaryScience.edges).toHaveLength(16);
     expect(singaporeLowerSecondaryScience.edges.every((edge) => edge.reason.length > 0)).toBe(true);
     expect(
       concepts.every((concept) => {
@@ -552,13 +552,13 @@ describe("curriculum governance", () => {
     const practiceSet = practiceSets.find((candidate) => candidate.framework_id === frameworkId);
 
     expect(framework?.requirement_granularity).toBe("outcome");
-    expect(framework?.requirements).toHaveLength(215);
-    expect(framework?.requirements.filter((requirement) => requirement.requirement_type === "knowledge")).toHaveLength(201);
+    expect(framework?.requirements).toHaveLength(214);
+    expect(framework?.requirements.filter((requirement) => requirement.requirement_type === "knowledge")).toHaveLength(200);
     expect(framework?.requirements.filter((requirement) => requirement.requirement_type === "practice")).toHaveLength(14);
     expect(framework?.scope_exclusions).toHaveLength(5);
     expect(mappingSet?.mapping_scope).toBe("outcome_coverage");
-    expect(mappingSet?.mappings).toHaveLength(215);
-    expect(mappingSet?.mappings.filter((mapping) => mapping.coverage_status === "full")).toHaveLength(201);
+    expect(mappingSet?.mappings).toHaveLength(214);
+    expect(mappingSet?.mappings.filter((mapping) => mapping.coverage_status === "full")).toHaveLength(200);
     expect(mappingSet?.mappings.filter((mapping) => mapping.coverage_status === "excluded")).toHaveLength(14);
     expect(
       mappingSet?.mappings.filter((mapping) => ["partial", "unmapped"].includes(mapping.coverage_status)),
@@ -582,7 +582,7 @@ describe("curriculum governance", () => {
     const concepts = singaporeH2Physics.nodes.filter((node) => node.kind === "concept");
     expect(concepts).toHaveLength(8);
     expect(singaporeH2Physics.nodes.filter((node) => node.kind === "topic")).toHaveLength(3);
-    expect(singaporeH2Physics.edges).toHaveLength(4);
+    expect(singaporeH2Physics.edges).toHaveLength(3);
     expect(singaporeH2Physics.edges.every((edge) => edge.reason.length > 0)).toBe(true);
     expect(
       concepts.every((concept) => {
@@ -639,7 +639,7 @@ describe("curriculum governance", () => {
     const concepts = singaporeH2Chemistry.nodes.filter((node) => node.kind === "concept");
     expect(concepts).toHaveLength(18);
     expect(singaporeH2Chemistry.nodes.filter((node) => node.kind === "topic")).toHaveLength(7);
-    expect(singaporeH2Chemistry.edges).toHaveLength(6);
+    expect(singaporeH2Chemistry.edges).toHaveLength(4);
     expect(singaporeH2Chemistry.edges.every((edge) => edge.reason.length > 0)).toBe(true);
     expect(
       concepts.every((concept) => {
@@ -701,8 +701,8 @@ describe("curriculum governance", () => {
 
     const concepts = singaporeH2Biology.nodes.filter((node) => node.kind === "concept");
     expect(concepts).toHaveLength(42);
-    expect(singaporeH2Biology.nodes.filter((node) => node.kind === "topic")).toHaveLength(14);
-    expect(singaporeH2Biology.edges).toHaveLength(31);
+    expect(singaporeH2Biology.nodes.filter((node) => node.kind === "topic")).toHaveLength(16);
+    expect(singaporeH2Biology.edges).toHaveLength(18);
     expect(singaporeH2Biology.edges.every((edge) => edge.reason.length > 0)).toBe(true);
     expect(
       concepts.every((concept) => {
@@ -759,20 +759,20 @@ describe("curriculum governance", () => {
     expect(
       mappingSet?.mappings.filter((mapping) => ["partial", "unmapped"].includes(mapping.coverage_status)),
     ).toHaveLength(0);
-    expect(gapSet?.candidates).toHaveLength(118);
-    expect(resolutionSet?.resolutions).toHaveLength(118);
+    expect(gapSet?.candidates).toHaveLength(122);
+    expect(resolutionSet?.resolutions).toHaveLength(122);
     expect(
       resolutionSet?.resolutions.filter((resolution) => resolution.resolution_action === "reuse_existing"),
-    ).toHaveLength(6);
+    ).toHaveLength(7);
     expect(
       resolutionSet?.resolutions.filter(
         (resolution) => resolution.resolution_action === "add_or_alias_concepts",
       ),
-    ).toHaveLength(112);
+    ).toHaveLength(115);
     expect(practiceSet?.items).toHaveLength(10);
-    expect(singaporeSecondaryMathematics.nodes.filter((node) => node.kind === "concept")).toHaveLength(53);
-    expect(singaporeSecondaryMathematics.nodes.filter((node) => node.kind === "topic")).toHaveLength(18);
-    expect(singaporeSecondaryMathematics.edges).toHaveLength(58);
+    expect(singaporeSecondaryMathematics.nodes.filter((node) => node.kind === "concept")).toHaveLength(56);
+    expect(singaporeSecondaryMathematics.nodes.filter((node) => node.kind === "topic")).toHaveLength(20);
+    expect(singaporeSecondaryMathematics.edges).toHaveLength(39);
 
     expect(
       mappings.get("req_sg_sec_math_2020_g3_sec1_prime_factorisation")?.canonical_ids,
@@ -788,14 +788,18 @@ describe("curriculum governance", () => {
     ).not.toContain(concepts.get("sg_sec_math_quadratic_factorisation_solve")?.canonical_id);
   });
 
-  it("reuses audited bisection and regression concepts and preserves restricted derivative scope", () => {
+  it("reuses the audited bisection concept, keeps regression at senior-high level, and preserves restricted derivative scope", () => {
     const frameworkId = "cfw_cn_moe_senior_high_math_2020_outcomes";
     const mappingSet = mappingSets.find((candidate) => candidate.framework_id === frameworkId);
     const mappings = new Map(mappingSet?.mappings.map((mapping) => [mapping.requirement_id, mapping]));
     expect(mappings.get("req_cn_sh_math_2020_o_bisection_method")?.canonical_ids).toContain(
       "pc_d14f06a56976778d0616245d88284721",
     );
-    expect(mappings.get("req_cn_sh_math_2020_o_linear_regression")?.canonical_ids).toContain(
+    expect(mappings.get("req_cn_sh_math_2020_o_linear_regression")?.canonical_ids).toEqual([
+      seniorSecondaryMathematics.nodes.find((node) => node.id === "cn_sh_math_linear_regression_least_squares")
+        ?.canonical_id,
+    ]);
+    expect(mappings.get("req_cn_sh_math_2020_o_linear_regression")?.canonical_ids).not.toContain(
       "pc_ed18cde6c3d7e08e9e371061418a7424",
     );
     expect(mappings.get("req_cn_sh_math_2020_o_simple_linear_composites")?.canonical_ids).not.toContain(
@@ -811,11 +815,11 @@ describe("curriculum governance", () => {
     ]);
   });
 
-  it("requires two authority types for resolved knowledge and keeps new content pending", () => {
+  it("requires two authority types for resolved knowledge and records owner approval", () => {
     const sourceById = new Map(sourceRegistry.sources.map((source) => [source.source_id, source]));
     for (const resolutionSet of resolutionSets) {
       for (const resolution of resolutionSet.resolutions) {
-        expect(resolution.review_status).toBe("needs_review");
+        expect(resolution.review_status).toBe("approved");
         if (resolution.resolution_action === "route_practice") continue;
         expect(
           new Set(resolution.evidence_refs.map((ref) => sourceById.get(ref.source_id)?.resource_type)).size,
@@ -835,7 +839,7 @@ describe("curriculum governance", () => {
       singaporeLowerSecondaryScience,
     ]) {
       for (const node of graph.nodes.filter((candidate) => candidate.kind === "concept")) {
-        expect(node.review_status).toBe("needs_review");
+        expect(node.review_status).toBe("approved");
         expect(
           new Set(node.evidence_refs.map((ref) => sourceById.get(ref.source_id)?.resource_type)).size,
         ).toBeGreaterThanOrEqual(2);

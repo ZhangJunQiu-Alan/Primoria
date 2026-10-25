@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "content_version": "0.2.0",
+  "content_version": "0.2.3",
   "profile_set_id": "pps_cn_sg_core_pedagogy_v1",
   "jurisdictions": [
     "CN-MAINLAND",
@@ -17,10 +17,10 @@
     "src_berkeley_cs70_summer_2026",
     "src_cambridge_9709_2026_2027",
     "src_cambridge_9709_examiner_report_june_2024",
-    "src_cn_moe_senior_high_biology_2020",
-    "src_cn_moe_senior_high_chemistry_2020",
-    "src_cn_moe_senior_high_math_2020",
-    "src_cn_moe_senior_high_physics_2020",
+    "src_cn_moe_senior_high_biology_2025",
+    "src_cn_moe_senior_high_chemistry_2025",
+    "src_cn_moe_senior_high_math_2025",
+    "src_cn_moe_senior_high_physics_2025",
     "src_mit_ocw_18_01sc_fall_2010",
     "src_mit_ocw_18_02sc_fall_2010",
     "src_mit_ocw_strang_calculus_ch9_2023",
@@ -45,7 +45,7 @@
     "src_sg_seab_h2_physics_9478_2026"
   ],
   "generated_at": "2026-07-20",
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.1.0",
@@ -56,6 +56,21 @@
       "version": "0.2.0",
       "date": "2026-07-20",
       "summary_zh": "人工新增 24 个概念教学档案，并用教育研究与官方阅卷报告将 5 条有直接证据的错误模型提升为 empirically_documented；所有统计结论保留样本与外推限制。"
+    },
+    {
+      "version": "0.2.1",
+      "date": "2026-10-25",
+      "summary_zh": "按 2026-10-25 官方来源复核更新证据定位（中国课标迁至 2025 日常修订版、新加坡页码校正），状态保持 needs_review。"
+    },
+    {
+      "version": "0.2.2",
+      "date": "2026-10-25",
+      "summary_zh": "依据 2026-10 联网复核修正描述、证据定位与映射覆盖，状态保持 needs_review。"
+    },
+    {
+      "version": "0.2.3",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准；诊断假设仍不声称发生率。"
     }
   ],
   "profiles": [
@@ -78,15 +93,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.29（正文p.26），必修主题三·2‘复数’"
             },
             {
               "source_id": "src_mit_ocw_strang_calculus_ch9_2023",
               "locator": "Chapter 9 §9.4, printed pp.425-426 (PDF pp.14-15): four operations and conjugate factor for division"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_cn_math_complex_arithmetic_divide_components",
@@ -96,15 +111,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.29（正文p.26），必修主题三·2‘复数’"
             },
             {
               "source_id": "src_mit_ocw_strang_calculus_ch9_2023",
               "locator": "Chapter 9 §9.4, printed pp.425-426 (PDF pp.14-15): four operations and conjugate factor for division"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -120,15 +135,15 @@
           "evidence_basis": "concept_boundary_design",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.29（正文p.26），必修主题三·2‘复数’"
             },
             {
               "source_id": "src_mit_ocw_strang_calculus_ch9_2023",
               "locator": "Chapter 9 §9.4, printed pp.425-426 (PDF pp.14-15): four operations and conjugate factor for division"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -147,15 +162,15 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.29（正文p.26），必修主题三·2‘复数’"
             },
             {
               "source_id": "src_mit_ocw_strang_calculus_ch9_2023",
               "locator": "Chapter 9 §9.4, printed pp.425-426 (PDF pp.14-15): four operations and conjugate factor for division"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_cn_math_complex_arithmetic_inverse_check",
@@ -172,28 +187,28 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.29（正文p.26），必修主题三·2‘复数’"
             },
             {
               "source_id": "src_mit_ocw_strang_calculus_ch9_2023",
               "locator": "Chapter 9 §9.4, printed pp.425-426 (PDF pp.14-15): four operations and conjugate factor for division"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.29（正文p.26），必修主题三·2‘复数’"
         },
         {
           "source_id": "src_mit_ocw_strang_calculus_ch9_2023",
           "locator": "Chapter 9 §9.4, printed pp.425-426 (PDF pp.14-15): four operations and conjugate factor for division"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_cn_math_derivative_optimisation",
@@ -214,15 +229,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.40-42（正文p.37-39），选择性必修主题一·2‘一元函数导数及其应用’"
             },
             {
               "source_id": "src_mit_ocw_18_01sc_fall_2010",
               "locator": "Unit 2 Part B, Sessions 29-30: Optimization Problems"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_cn_math_derivative_optimisation_optimise_wrong_quantity",
@@ -232,15 +247,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.40-42（正文p.37-39），选择性必修主题一·2‘一元函数导数及其应用’"
             },
             {
               "source_id": "src_mit_ocw_18_01sc_fall_2010",
               "locator": "Unit 2 Part B, Sessions 29-30: Optimization Problems"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -256,15 +271,15 @@
           "evidence_basis": "concept_boundary_design",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.40-42（正文p.37-39），选择性必修主题一·2‘一元函数导数及其应用’"
             },
             {
               "source_id": "src_mit_ocw_18_01sc_fall_2010",
               "locator": "Unit 2 Part B, Sessions 29-30: Optimization Problems"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -282,15 +297,15 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.40-42（正文p.37-39），选择性必修主题一·2‘一元函数导数及其应用’"
             },
             {
               "source_id": "src_mit_ocw_18_01sc_fall_2010",
               "locator": "Unit 2 Part B, Sessions 29-30: Optimization Problems"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_cn_math_derivative_optimisation_model_choice",
@@ -307,28 +322,28 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.40-42（正文p.37-39），选择性必修主题一·2‘一元函数导数及其应用’"
             },
             {
               "source_id": "src_mit_ocw_18_01sc_fall_2010",
               "locator": "Unit 2 Part B, Sessions 29-30: Optimization Problems"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.40-42（正文p.37-39），选择性必修主题一·2‘一元函数导数及其应用’"
         },
         {
           "source_id": "src_mit_ocw_18_01sc_fall_2010",
           "locator": "Unit 2 Part B, Sessions 29-30: Optimization Problems"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_cn_math_regression_limits",
@@ -349,15 +364,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.50-51（正文p.47-48），选择性必修主题三·3‘统计’"
             },
             {
               "source_id": "src_openstax_introductory_statistics_2e_2026",
               "locator": "PDF §§12.3 and 12.5-12.6, pp.623-643; regression, prediction and outliers"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_cn_math_regression_limits_extrapolation_safe",
@@ -367,15 +382,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.50-51（正文p.47-48），选择性必修主题三·3‘统计’"
             },
             {
               "source_id": "src_openstax_introductory_statistics_2e_2026",
               "locator": "PDF §§12.3 and 12.5-12.6, pp.623-643; regression, prediction and outliers"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -391,15 +406,15 @@
           "evidence_basis": "concept_boundary_design",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.50-51（正文p.47-48），选择性必修主题三·3‘统计’"
             },
             {
               "source_id": "src_openstax_introductory_statistics_2e_2026",
               "locator": "PDF §§12.3 and 12.5-12.6, pp.623-643; regression, prediction and outliers"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -417,15 +432,15 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.50-51（正文p.47-48），选择性必修主题三·3‘统计’"
             },
             {
               "source_id": "src_openstax_introductory_statistics_2e_2026",
               "locator": "PDF §§12.3 and 12.5-12.6, pp.623-643; regression, prediction and outliers"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_cn_math_regression_limits_range_judgement",
@@ -441,28 +456,28 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.50-51（正文p.47-48），选择性必修主题三·3‘统计’"
             },
             {
               "source_id": "src_openstax_introductory_statistics_2e_2026",
               "locator": "PDF §§12.3 and 12.5-12.6, pp.623-643; regression, prediction and outliers"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.50-51（正文p.47-48），选择性必修主题三·3‘统计’"
         },
         {
           "source_id": "src_openstax_introductory_statistics_2e_2026",
           "locator": "PDF §§12.3 and 12.5-12.6, pp.623-643; regression, prediction and outliers"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_sg_math_quadratic_methods",
@@ -484,18 +499,18 @@
           "evidence_refs": [
             {
               "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-              "locator": "PDF p.19, g3 sec3 4, Solving quadratic equations by standard methods"
+              "locator": "PDF p.21, g3 sec3 4, Solving quadratic equations by standard methods"
             },
             {
               "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-              "locator": "PDF p.29, g2 sec3 4, Solving quadratic equations by standard methods"
+              "locator": "PDF p.31, g2 sec3 4, Solving quadratic equations by standard methods"
             },
             {
               "source_id": "src_openstax_contemporary_mathematics_2026",
               "locator": "PDF §5.6 Quadratic Equations in One Variable, printed pp.403-426"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_sg_math_quadratic_methods_graph_root_integer",
@@ -506,18 +521,18 @@
           "evidence_refs": [
             {
               "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-              "locator": "PDF p.19, g3 sec3 4, Solving quadratic equations by standard methods"
+              "locator": "PDF p.21, g3 sec3 4, Solving quadratic equations by standard methods"
             },
             {
               "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-              "locator": "PDF p.29, g2 sec3 4, Solving quadratic equations by standard methods"
+              "locator": "PDF p.31, g2 sec3 4, Solving quadratic equations by standard methods"
             },
             {
               "source_id": "src_openstax_contemporary_mathematics_2026",
               "locator": "PDF §5.6 Quadratic Equations in One Variable, printed pp.403-426"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -534,18 +549,18 @@
           "evidence_refs": [
             {
               "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-              "locator": "PDF p.19, g3 sec3 4, Solving quadratic equations by standard methods"
+              "locator": "PDF p.21, g3 sec3 4, Solving quadratic equations by standard methods"
             },
             {
               "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-              "locator": "PDF p.29, g2 sec3 4, Solving quadratic equations by standard methods"
+              "locator": "PDF p.31, g2 sec3 4, Solving quadratic equations by standard methods"
             },
             {
               "source_id": "src_openstax_contemporary_mathematics_2026",
               "locator": "PDF §5.6 Quadratic Equations in One Variable, printed pp.403-426"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -564,18 +579,18 @@
           "evidence_refs": [
             {
               "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-              "locator": "PDF p.19, g3 sec3 4, Solving quadratic equations by standard methods"
+              "locator": "PDF p.21, g3 sec3 4, Solving quadratic equations by standard methods"
             },
             {
               "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-              "locator": "PDF p.29, g2 sec3 4, Solving quadratic equations by standard methods"
+              "locator": "PDF p.31, g2 sec3 4, Solving quadratic equations by standard methods"
             },
             {
               "source_id": "src_openstax_contemporary_mathematics_2026",
               "locator": "PDF §5.6 Quadratic Equations in One Variable, printed pp.403-426"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_sg_math_quadratic_methods_graph_precision",
@@ -592,35 +607,35 @@
           "evidence_refs": [
             {
               "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-              "locator": "PDF p.19, g3 sec3 4, Solving quadratic equations by standard methods"
+              "locator": "PDF p.21, g3 sec3 4, Solving quadratic equations by standard methods"
             },
             {
               "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-              "locator": "PDF p.29, g2 sec3 4, Solving quadratic equations by standard methods"
+              "locator": "PDF p.31, g2 sec3 4, Solving quadratic equations by standard methods"
             },
             {
               "source_id": "src_openstax_contemporary_mathematics_2026",
               "locator": "PDF §5.6 Quadratic Equations in One Variable, printed pp.403-426"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Solving quadratic equations by standard methods"
+          "locator": "PDF p.21, g3 sec3 4, Solving quadratic equations by standard methods"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Solving quadratic equations by standard methods"
+          "locator": "PDF p.31, g2 sec3 4, Solving quadratic equations by standard methods"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §5.6 Quadratic Equations in One Variable, printed pp.403-426"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_sg_math_rational_inequalities",
@@ -649,7 +664,7 @@
               "locator": "PDF §3.7 Rational Functions, printed pp.340-364; §9.3 Nonlinear Equations and Inequalities, printed pp.925-936"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_sg_math_rational_inequalities_include_denominator_zero",
@@ -667,7 +682,7 @@
               "locator": "PDF §3.7 Rational Functions, printed pp.340-364; §9.3 Nonlinear Equations and Inequalities, printed pp.925-936"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -691,7 +706,7 @@
               "locator": "PDF §3.7 Rational Functions, printed pp.340-364; §9.3 Nonlinear Equations and Inequalities, printed pp.925-936"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -717,7 +732,7 @@
               "locator": "PDF §3.7 Rational Functions, printed pp.340-364; §9.3 Nonlinear Equations and Inequalities, printed pp.925-936"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_sg_math_rational_inequalities_method_critique",
@@ -741,7 +756,7 @@
               "locator": "PDF §3.7 Rational Functions, printed pp.340-364; §9.3 Nonlinear Equations and Inequalities, printed pp.925-936"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
@@ -754,7 +769,7 @@
           "locator": "PDF §3.7 Rational Functions, printed pp.340-364; §9.3 Nonlinear Equations and Inequalities, printed pp.925-936"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_sg_math_probability_representations",
@@ -783,7 +798,7 @@
               "locator": "PDF §11.7 Probability, printed pp.1154-1164"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_sg_math_probability_representations_add_along_path",
@@ -801,7 +816,7 @@
               "locator": "PDF §11.7 Probability, printed pp.1154-1164"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -825,7 +840,7 @@
               "locator": "PDF §11.7 Probability, printed pp.1154-1164"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -851,7 +866,7 @@
               "locator": "PDF §11.7 Probability, printed pp.1154-1164"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_sg_math_probability_representations_representation_check",
@@ -875,7 +890,7 @@
               "locator": "PDF §11.7 Probability, printed pp.1154-1164"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
@@ -888,7 +903,7 @@
           "locator": "PDF §11.7 Probability, printed pp.1154-1164"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_cn_physics_force_vectors",
@@ -909,15 +924,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.21（正文对应内容要求 1.2.2），必修 1"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.14（正文对应内容要求 1.2.2），必修 1"
             },
             {
               "source_id": "src_openstax_university_physics_v1_2016",
               "locator": "Web §§2.1-2.3 Scalars and Vectors; Components; Algebra of Vectors"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_cn_physics_force_vectors_components_extra_forces",
@@ -927,15 +942,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.21（正文对应内容要求 1.2.2），必修 1"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.14（正文对应内容要求 1.2.2），必修 1"
             },
             {
               "source_id": "src_openstax_university_physics_v1_2016",
               "locator": "Web §§2.1-2.3 Scalars and Vectors; Components; Algebra of Vectors"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -951,15 +966,15 @@
           "evidence_basis": "concept_boundary_design",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.21（正文对应内容要求 1.2.2），必修 1"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.14（正文对应内容要求 1.2.2），必修 1"
             },
             {
               "source_id": "src_openstax_university_physics_v1_2016",
               "locator": "Web §§2.1-2.3 Scalars and Vectors; Components; Algebra of Vectors"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -977,15 +992,15 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.21（正文对应内容要求 1.2.2），必修 1"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.14（正文对应内容要求 1.2.2），必修 1"
             },
             {
               "source_id": "src_openstax_university_physics_v1_2016",
               "locator": "Web §§2.1-2.3 Scalars and Vectors; Components; Algebra of Vectors"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_cn_physics_force_vectors_diagram_audit",
@@ -1001,28 +1016,28 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.21（正文对应内容要求 1.2.2），必修 1"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.14（正文对应内容要求 1.2.2），必修 1"
             },
             {
               "source_id": "src_openstax_university_physics_v1_2016",
               "locator": "Web §§2.1-2.3 Scalars and Vectors; Components; Algebra of Vectors"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.21（正文对应内容要求 1.2.2），必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.14（正文对应内容要求 1.2.2），必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §§2.1-2.3 Scalars and Vectors; Components; Algebra of Vectors"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_cn_physics_kinetic_energy",
@@ -1043,15 +1058,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.23（正文对应内容要求 2.1.2），必修 2"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.16-17（正文对应内容要求 2.1.2），必修 2"
             },
             {
               "source_id": "src_openstax_university_physics_v1_2016",
               "locator": "Web §§7.2-7.4 Kinetic Energy and the Work-Energy Theorem"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_cn_physics_kinetic_energy_negative_work_negative_energy",
@@ -1061,15 +1076,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.23（正文对应内容要求 2.1.2），必修 2"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.16-17（正文对应内容要求 2.1.2），必修 2"
             },
             {
               "source_id": "src_openstax_university_physics_v1_2016",
               "locator": "Web §§7.2-7.4 Kinetic Energy and the Work-Energy Theorem"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -1085,15 +1100,15 @@
           "evidence_basis": "concept_boundary_design",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.23（正文对应内容要求 2.1.2），必修 2"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.16-17（正文对应内容要求 2.1.2），必修 2"
             },
             {
               "source_id": "src_openstax_university_physics_v1_2016",
               "locator": "Web §§7.2-7.4 Kinetic Energy and the Work-Energy Theorem"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -1111,15 +1126,15 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.23（正文对应内容要求 2.1.2），必修 2"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.16-17（正文对应内容要求 2.1.2），必修 2"
             },
             {
               "source_id": "src_openstax_university_physics_v1_2016",
               "locator": "Web §§7.2-7.4 Kinetic Energy and the Work-Energy Theorem"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_cn_physics_kinetic_energy_negative_net_work",
@@ -1135,28 +1150,28 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.23（正文对应内容要求 2.1.2），必修 2"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.16-17（正文对应内容要求 2.1.2），必修 2"
             },
             {
               "source_id": "src_openstax_university_physics_v1_2016",
               "locator": "Web §§7.2-7.4 Kinetic Energy and the Work-Energy Theorem"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.23（正文对应内容要求 2.1.2），必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.16-17（正文对应内容要求 2.1.2），必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
           "locator": "Web §§7.2-7.4 Kinetic Energy and the Work-Energy Theorem"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_cn_physics_electric_potential",
@@ -1177,15 +1192,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.28（正文对应内容要求 3.1.5），必修 3"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.21（正文对应内容要求 3.1.5），必修 3"
             },
             {
               "source_id": "src_openstax_university_physics_v2_2016",
               "locator": "Web §§7.1-7.5 Electric Potential Energy, Potential and Equipotential Surfaces"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_cn_physics_electric_potential_field_always_high_to_low_for_charge",
@@ -1195,15 +1210,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.28（正文对应内容要求 3.1.5），必修 3"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.21（正文对应内容要求 3.1.5），必修 3"
             },
             {
               "source_id": "src_openstax_university_physics_v2_2016",
               "locator": "Web §§7.1-7.5 Electric Potential Energy, Potential and Equipotential Surfaces"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -1219,15 +1234,15 @@
           "evidence_basis": "concept_boundary_design",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.28（正文对应内容要求 3.1.5），必修 3"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.21（正文对应内容要求 3.1.5），必修 3"
             },
             {
               "source_id": "src_openstax_university_physics_v2_2016",
               "locator": "Web §§7.1-7.5 Electric Potential Energy, Potential and Equipotential Surfaces"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -1245,15 +1260,15 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.28（正文对应内容要求 3.1.5），必修 3"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.21（正文对应内容要求 3.1.5），必修 3"
             },
             {
               "source_id": "src_openstax_university_physics_v2_2016",
               "locator": "Web §§7.1-7.5 Electric Potential Energy, Potential and Equipotential Surfaces"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_cn_physics_electric_potential_negative_charge_motion",
@@ -1269,28 +1284,28 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.28（正文对应内容要求 3.1.5），必修 3"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.21（正文对应内容要求 3.1.5），必修 3"
             },
             {
               "source_id": "src_openstax_university_physics_v2_2016",
               "locator": "Web §§7.1-7.5 Electric Potential Energy, Potential and Equipotential Surfaces"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.5），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.21（正文对应内容要求 3.1.5），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §§7.1-7.5 Electric Potential Energy, Potential and Equipotential Surfaces"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_sg_physics_velocity_selector",
@@ -1319,7 +1334,7 @@
               "locator": "OpenStax College Physics 2e §22.5, Force on a Moving Charge in a Magnetic Field: Examples and Applications"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_sg_physics_velocity_selector_selected_speed_charge_mass",
@@ -1337,7 +1352,7 @@
               "locator": "OpenStax College Physics 2e §22.5, Force on a Moving Charge in a Magnetic Field: Examples and Applications"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -1361,7 +1376,7 @@
               "locator": "OpenStax College Physics 2e §22.5, Force on a Moving Charge in a Magnetic Field: Examples and Applications"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -1388,7 +1403,7 @@
               "locator": "OpenStax College Physics 2e §22.5, Force on a Moving Charge in a Magnetic Field: Examples and Applications"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_sg_physics_velocity_selector_parameter_change",
@@ -1412,7 +1427,7 @@
               "locator": "OpenStax College Physics 2e §22.5, Force on a Moving Charge in a Magnetic Field: Examples and Applications"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
@@ -1425,7 +1440,7 @@
           "locator": "OpenStax College Physics 2e §22.5, Force on a Moving Charge in a Magnetic Field: Examples and Applications"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_sg_physics_wavefunction_probability",
@@ -1458,7 +1473,7 @@
               "locator": "OpenStax University Physics Volume 3 §7.1, Wave Functions"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_sg_physics_wavefunction_probability_superpose_probabilities",
@@ -1480,7 +1495,7 @@
               "locator": "OpenStax University Physics Volume 3 §7.1, Wave Functions"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -1508,7 +1523,7 @@
               "locator": "OpenStax University Physics Volume 3 §7.1, Wave Functions"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -1538,7 +1553,7 @@
               "locator": "OpenStax University Physics Volume 3 §7.1, Wave Functions"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_sg_physics_wavefunction_probability_interference_term",
@@ -1566,7 +1581,7 @@
               "locator": "OpenStax University Physics Volume 3 §7.1, Wave Functions"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
@@ -1583,7 +1598,7 @@
           "locator": "OpenStax University Physics Volume 3 §7.1, Wave Functions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_sg_physics_beta_neutrino",
@@ -1612,7 +1627,7 @@
               "locator": "OpenStax University Physics Volume 3 §10.4, Nuclear Reactions; §11.2, Particle Conservation Laws"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_sg_physics_beta_neutrino_neutrino_added_by_formula",
@@ -1630,7 +1645,7 @@
               "locator": "OpenStax University Physics Volume 3 §10.4, Nuclear Reactions; §11.2, Particle Conservation Laws"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -1654,7 +1669,7 @@
               "locator": "OpenStax University Physics Volume 3 §10.4, Nuclear Reactions; §11.2, Particle Conservation Laws"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -1680,7 +1695,7 @@
               "locator": "OpenStax University Physics Volume 3 §10.4, Nuclear Reactions; §11.2, Particle Conservation Laws"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_sg_physics_beta_neutrino_conservation_audit",
@@ -1704,7 +1719,7 @@
               "locator": "OpenStax University Physics Volume 3 §10.4, Nuclear Reactions; §11.2, Particle Conservation Laws"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
@@ -1717,7 +1732,7 @@
           "locator": "OpenStax University Physics Volume 3 §10.4, Nuclear Reactions; §11.2, Particle Conservation Laws"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_cn_chem_redox_agents",
@@ -1738,15 +1753,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.23（正文对应内容要求 2.2），必修"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.18（正文对应内容要求 2.2），必修"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web §4.2 Classifying Chemical Reactions; §17.1 Review of Redox Chemistry"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_cn_chem_redox_agents_oxygen_required",
@@ -1756,15 +1771,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.23（正文对应内容要求 2.2），必修"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.18（正文对应内容要求 2.2），必修"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web §4.2 Classifying Chemical Reactions; §17.1 Review of Redox Chemistry"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -1780,15 +1795,15 @@
           "evidence_basis": "concept_boundary_design",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.23（正文对应内容要求 2.2），必修"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.18（正文对应内容要求 2.2），必修"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web §4.2 Classifying Chemical Reactions; §17.1 Review of Redox Chemistry"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -1806,15 +1821,15 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.23（正文对应内容要求 2.2），必修"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.18（正文对应内容要求 2.2），必修"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web §4.2 Classifying Chemical Reactions; §17.1 Review of Redox Chemistry"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_cn_chem_redox_agents_oxygen_free",
@@ -1830,28 +1845,28 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.23（正文对应内容要求 2.2），必修"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.18（正文对应内容要求 2.2），必修"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web §4.2 Classifying Chemical Reactions; §17.1 Review of Redox Chemistry"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.2），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18（正文对应内容要求 2.2），必修"
         },
         {
           "source_id": "src_openstax_chemistry_2e_2019",
           "locator": "Web §4.2 Classifying Chemical Reactions; §17.1 Review of Redox Chemistry"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_cn_chem_aqueous_equilibria",
@@ -1872,15 +1887,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.42（正文对应内容要求 3.5），选择性必修·化学反应原理"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.36（正文对应内容要求 3.5），选择性必修·化学反应原理"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web Chapters 14-15 acid-base, buffer, precipitation and complex-ion equilibria"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_cn_chem_aqueous_equilibria_k_changes_concentration",
@@ -1890,15 +1905,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.42（正文对应内容要求 3.5），选择性必修·化学反应原理"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.36（正文对应内容要求 3.5），选择性必修·化学反应原理"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web Chapters 14-15 acid-base, buffer, precipitation and complex-ion equilibria"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -1914,15 +1929,15 @@
           "evidence_basis": "concept_boundary_design",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.42（正文对应内容要求 3.5），选择性必修·化学反应原理"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.36（正文对应内容要求 3.5），选择性必修·化学反应原理"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web Chapters 14-15 acid-base, buffer, precipitation and complex-ion equilibria"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -1940,15 +1955,15 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.42（正文对应内容要求 3.5），选择性必修·化学反应原理"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.36（正文对应内容要求 3.5），选择性必修·化学反应原理"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web Chapters 14-15 acid-base, buffer, precipitation and complex-ion equilibria"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_cn_chem_aqueous_equilibria_q_k_change",
@@ -1964,28 +1979,28 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.42（正文对应内容要求 3.5），选择性必修·化学反应原理"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.36（正文对应内容要求 3.5），选择性必修·化学反应原理"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web Chapters 14-15 acid-base, buffer, precipitation and complex-ion equilibria"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.42（正文对应内容要求 3.5），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.36（正文对应内容要求 3.5），选择性必修·化学反应原理"
         },
         {
           "source_id": "src_openstax_chemistry_2e_2019",
           "locator": "Web Chapters 14-15 acid-base, buffer, precipitation and complex-ion equilibria"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_cn_chem_internal_energy",
@@ -2006,15 +2021,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.30（正文对应内容要求 1.1），选择性必修·化学反应原理"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web Chapter 5 Thermochemistry; Chapter 16 Thermodynamics"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_cn_chem_internal_energy_temperature_only",
@@ -2024,15 +2039,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.30（正文对应内容要求 1.1），选择性必修·化学反应原理"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web Chapter 5 Thermochemistry; Chapter 16 Thermodynamics"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -2048,15 +2063,15 @@
           "evidence_basis": "concept_boundary_design",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.30（正文对应内容要求 1.1），选择性必修·化学反应原理"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web Chapter 5 Thermochemistry; Chapter 16 Thermodynamics"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -2074,15 +2089,15 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.30（正文对应内容要求 1.1），选择性必修·化学反应原理"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web Chapter 5 Thermochemistry; Chapter 16 Thermodynamics"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_cn_chem_internal_energy_same_temperature",
@@ -2098,28 +2113,28 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.30（正文对应内容要求 1.1），选择性必修·化学反应原理"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web Chapter 5 Thermochemistry; Chapter 16 Thermodynamics"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.30（正文对应内容要求 1.1），选择性必修·化学反应原理"
         },
         {
           "source_id": "src_openstax_chemistry_2e_2019",
           "locator": "Web Chapter 5 Thermochemistry; Chapter 16 Thermodynamics"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_sg_chem_acid_base_models",
@@ -2152,7 +2167,7 @@
               "locator": "OpenStax Chemistry 2e §14.1, Brønsted-Lowry Acids and Bases, historical Arrhenius model; §15.2, Lewis Acids and Bases"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_sg_chem_acid_base_models_base_must_oh",
@@ -2174,7 +2189,7 @@
               "locator": "OpenStax Chemistry 2e §14.1, Brønsted-Lowry Acids and Bases, historical Arrhenius model; §15.2, Lewis Acids and Bases"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -2202,7 +2217,7 @@
               "locator": "OpenStax Chemistry 2e §14.1, Brønsted-Lowry Acids and Bases, historical Arrhenius model; §15.2, Lewis Acids and Bases"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -2233,7 +2248,7 @@
               "locator": "OpenStax Chemistry 2e §14.1, Brønsted-Lowry Acids and Bases, historical Arrhenius model; §15.2, Lewis Acids and Bases"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_sg_chem_acid_base_models_model_scope",
@@ -2261,7 +2276,7 @@
               "locator": "OpenStax Chemistry 2e §14.1, Brønsted-Lowry Acids and Bases, historical Arrhenius model; §15.2, Lewis Acids and Bases"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
@@ -2278,7 +2293,7 @@
           "locator": "OpenStax Chemistry 2e §14.1, Brønsted-Lowry Acids and Bases, historical Arrhenius model; §15.2, Lewis Acids and Bases"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_sg_chem_titration_indicators",
@@ -2311,7 +2326,7 @@
               "locator": "OpenStax Chemistry 2e §14.7, Acid-Base Titrations"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_sg_chem_titration_indicators_indicator_midpoint_equivalence",
@@ -2333,7 +2348,7 @@
               "locator": "OpenStax Chemistry 2e §14.7, Acid-Base Titrations"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -2361,7 +2376,7 @@
               "locator": "OpenStax Chemistry 2e §14.7, Acid-Base Titrations"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -2391,7 +2406,7 @@
               "locator": "OpenStax Chemistry 2e §14.7, Acid-Base Titrations"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_sg_chem_titration_indicators_indicator_range",
@@ -2419,7 +2434,7 @@
               "locator": "OpenStax Chemistry 2e §14.7, Acid-Base Titrations"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
@@ -2436,7 +2451,7 @@
           "locator": "OpenStax Chemistry 2e §14.7, Acid-Base Titrations"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_sg_chem_substitution_stereochemistry",
@@ -2465,7 +2480,7 @@
               "locator": "OpenStax Organic Chemistry §§11.2 and 11.4, The SN2 Reaction; The SN1 Reaction"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_sg_chem_substitution_stereochemistry_sn1_single_inversion",
@@ -2483,7 +2498,7 @@
               "locator": "OpenStax Organic Chemistry §§11.2 and 11.4, The SN2 Reaction; The SN1 Reaction"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -2507,7 +2522,7 @@
               "locator": "OpenStax Organic Chemistry §§11.2 and 11.4, The SN2 Reaction; The SN1 Reaction"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -2533,7 +2548,7 @@
               "locator": "OpenStax Organic Chemistry §§11.2 and 11.4, The SN2 Reaction; The SN1 Reaction"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_sg_chem_substitution_stereochemistry_sn1_faces",
@@ -2557,7 +2572,7 @@
               "locator": "OpenStax Organic Chemistry §§11.2 and 11.4, The SN2 Reaction; The SN1 Reaction"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
@@ -2570,7 +2585,7 @@
           "locator": "OpenStax Organic Chemistry §§11.2 and 11.4, The SN2 Reaction; The SN1 Reaction"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_cn_bio_gene_segment",
@@ -2591,15 +2606,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.1），必修·遗传与进化"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.20（正文对应内容要求 3.1.1），必修·遗传与进化"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web Chapter 14 DNA Structure and Function; Chapter 15 Genes and Proteins; §17.1 Biotechnology"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_cn_bio_gene_segment_gene_equals_chromosome",
@@ -2609,15 +2624,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.1），必修·遗传与进化"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.20（正文对应内容要求 3.1.1），必修·遗传与进化"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web Chapter 14 DNA Structure and Function; Chapter 15 Genes and Proteins; §17.1 Biotechnology"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -2633,15 +2648,15 @@
           "evidence_basis": "concept_boundary_design",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.1），必修·遗传与进化"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.20（正文对应内容要求 3.1.1），必修·遗传与进化"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web Chapter 14 DNA Structure and Function; Chapter 15 Genes and Proteins; §17.1 Biotechnology"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -2659,15 +2674,15 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.1），必修·遗传与进化"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.20（正文对应内容要求 3.1.1），必修·遗传与进化"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web Chapter 14 DNA Structure and Function; Chapter 15 Genes and Proteins; §17.1 Biotechnology"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_cn_bio_gene_segment_levels",
@@ -2683,28 +2698,28 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.1），必修·遗传与进化"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.20（正文对应内容要求 3.1.1），必修·遗传与进化"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web Chapter 14 DNA Structure and Function; Chapter 15 Genes and Proteins; §17.1 Biotechnology"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.1），必修·遗传与进化"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.20（正文对应内容要求 3.1.1），必修·遗传与进化"
         },
         {
           "source_id": "src_openstax_biology_2e_2018",
           "locator": "Web Chapter 14 DNA Structure and Function; Chapter 15 Genes and Proteins; §17.1 Biotechnology"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_cn_bio_immunity_types",
@@ -2725,15 +2740,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.30（正文对应内容要求 1.5.2），选择性必修·稳态与调节"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.25（正文对应内容要求 1.5.2），选择性必修·稳态与调节"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web Chapter 42 The Immune System, especially §§42.1-42.4 innate, adaptive and disrupted immunity"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_cn_bio_immunity_types_adaptive_immediate",
@@ -2743,15 +2758,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.30（正文对应内容要求 1.5.2），选择性必修·稳态与调节"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.25（正文对应内容要求 1.5.2），选择性必修·稳态与调节"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web Chapter 42 The Immune System, especially §§42.1-42.4 innate, adaptive and disrupted immunity"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -2767,15 +2782,15 @@
           "evidence_basis": "concept_boundary_design",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.30（正文对应内容要求 1.5.2），选择性必修·稳态与调节"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.25（正文对应内容要求 1.5.2），选择性必修·稳态与调节"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web Chapter 42 The Immune System, especially §§42.1-42.4 innate, adaptive and disrupted immunity"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -2793,15 +2808,15 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.30（正文对应内容要求 1.5.2），选择性必修·稳态与调节"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.25（正文对应内容要求 1.5.2），选择性必修·稳态与调节"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web Chapter 42 The Immune System, especially §§42.1-42.4 innate, adaptive and disrupted immunity"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_cn_bio_immunity_types_response_timeline",
@@ -2817,28 +2832,28 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.30（正文对应内容要求 1.5.2），选择性必修·稳态与调节"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.25（正文对应内容要求 1.5.2），选择性必修·稳态与调节"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web Chapter 42 The Immune System, especially §§42.1-42.4 innate, adaptive and disrupted immunity"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.30（正文对应内容要求 1.5.2），选择性必修·稳态与调节"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 1.5.2），选择性必修·稳态与调节"
         },
         {
           "source_id": "src_openstax_biology_2e_2018",
           "locator": "Web Chapter 42 The Immune System, especially §§42.1-42.4 innate, adaptive and disrupted immunity"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_cn_bio_matter_energy",
@@ -2859,15 +2874,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.3），选择性必修·生物与环境"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.28（正文对应内容要求 2.2.3），选择性必修·生物与环境"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web Chapter 46 Ecosystems; trophic structure, energy flow, biogeochemical cycles and ecosystem dynamics"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_cn_bio_matter_energy_matter_disappears",
@@ -2877,15 +2892,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.3），选择性必修·生物与环境"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.28（正文对应内容要求 2.2.3），选择性必修·生物与环境"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web Chapter 46 Ecosystems; trophic structure, energy flow, biogeochemical cycles and ecosystem dynamics"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -2901,15 +2916,15 @@
           "evidence_basis": "concept_boundary_design",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.3），选择性必修·生物与环境"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.28（正文对应内容要求 2.2.3），选择性必修·生物与环境"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web Chapter 46 Ecosystems; trophic structure, energy flow, biogeochemical cycles and ecosystem dynamics"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -2927,15 +2942,15 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.3），选择性必修·生物与环境"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.28（正文对应内容要求 2.2.3），选择性必修·生物与环境"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web Chapter 46 Ecosystems; trophic structure, energy flow, biogeochemical cycles and ecosystem dynamics"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_cn_bio_matter_energy_respiration_products",
@@ -2951,28 +2966,28 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.3），选择性必修·生物与环境"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.28（正文对应内容要求 2.2.3），选择性必修·生物与环境"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web Chapter 46 Ecosystems; trophic structure, energy flow, biogeochemical cycles and ecosystem dynamics"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.3），选择性必修·生物与环境"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.28（正文对应内容要求 2.2.3），选择性必修·生物与环境"
         },
         {
           "source_id": "src_openstax_biology_2e_2018",
           "locator": "Web Chapter 46 Ecosystems; trophic structure, energy flow, biogeochemical cycles and ecosystem dynamics"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_sg_bio_virus_life_boundary",
@@ -3012,7 +3027,7 @@
               "locator": "PDF p.10, Fig.4 and caption: first-year biology students represented/described viruses as prokaryotic or eukaryotic cells"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_sg_bio_virus_life_boundary_virus_not_living_simple",
@@ -3030,7 +3045,7 @@
               "locator": "OpenStax Microbiology §6.1, Viruses, noncellular infectious agents and host dependence"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -3054,7 +3069,7 @@
               "locator": "OpenStax Microbiology §6.1, Viruses, noncellular infectious agents and host dependence"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -3080,7 +3095,7 @@
               "locator": "OpenStax Microbiology §6.1, Viruses, noncellular infectious agents and host dependence"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_sg_bio_virus_life_boundary_qualified_judgement",
@@ -3104,7 +3119,7 @@
               "locator": "OpenStax Microbiology §6.1, Viruses, noncellular infectious agents and host dependence"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
@@ -3121,7 +3136,7 @@
           "locator": "PDF p.10, Fig.4 and caption: first-year biology students represented/described viruses as prokaryotic or eukaryotic cells"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_sg_bio_multilevel_gene_regulation",
@@ -3150,7 +3165,7 @@
               "locator": "OpenStax Biology 2e §§16.2-16.5, Eukaryotic Epigenetic, Transcriptional, Post-transcriptional and Translational Regulation"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_sg_bio_multilevel_gene_regulation_methylation_always_activate",
@@ -3168,7 +3183,7 @@
               "locator": "OpenStax Biology 2e §§16.2-16.5, Eukaryotic Epigenetic, Transcriptional, Post-transcriptional and Translational Regulation"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -3192,7 +3207,7 @@
               "locator": "OpenStax Biology 2e §§16.2-16.5, Eukaryotic Epigenetic, Transcriptional, Post-transcriptional and Translational Regulation"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -3218,7 +3233,7 @@
               "locator": "OpenStax Biology 2e §§16.2-16.5, Eukaryotic Epigenetic, Transcriptional, Post-transcriptional and Translational Regulation"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_sg_bio_multilevel_gene_regulation_mrna_protein_mismatch",
@@ -3243,7 +3258,7 @@
               "locator": "OpenStax Biology 2e §§16.2-16.5, Eukaryotic Epigenetic, Transcriptional, Post-transcriptional and Translational Regulation"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
@@ -3256,7 +3271,7 @@
           "locator": "OpenStax Biology 2e §§16.2-16.5, Eukaryotic Epigenetic, Transcriptional, Post-transcriptional and Translational Regulation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_sg_bio_vaccination_tradeoffs",
@@ -3289,7 +3304,7 @@
               "locator": "OpenStax Microbiology §18.5, Vaccines, herd immunity, benefits and adverse effects"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_sg_bio_vaccination_tradeoffs_herd_immunity_individual",
@@ -3311,7 +3326,7 @@
               "locator": "OpenStax Microbiology §18.5, Vaccines, herd immunity, benefits and adverse effects"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -3339,7 +3354,7 @@
               "locator": "OpenStax Microbiology §18.5, Vaccines, herd immunity, benefits and adverse effects"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -3369,7 +3384,7 @@
               "locator": "OpenStax Microbiology §18.5, Vaccines, herd immunity, benefits and adverse effects"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_sg_bio_vaccination_tradeoffs_network_effect",
@@ -3397,7 +3412,7 @@
               "locator": "OpenStax Microbiology §18.5, Vaccines, herd immunity, benefits and adverse effects"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
@@ -3414,7 +3429,7 @@
           "locator": "OpenStax Microbiology §18.5, Vaccines, herd immunity, benefits and adverse effects"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_cn_math_total_probability",
@@ -3435,15 +3450,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.49（正文p.46），选择性必修主题三·2‘概率’"
             },
             {
               "source_id": "src_berkeley_cs70_summer_2026",
               "locator": "Summer 2026 Note 14 §3-§3.2, PDF pp.4-6; Total Probability Rule and Eq. (4)"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_cn_math_total_probability_overlapping_partition",
@@ -3453,15 +3468,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.49（正文p.46），选择性必修主题三·2‘概率’"
             },
             {
               "source_id": "src_berkeley_cs70_summer_2026",
               "locator": "Summer 2026 Note 14 §3-§3.2, PDF pp.4-6; Total Probability Rule and Eq. (4)"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -3477,15 +3492,15 @@
           "evidence_basis": "concept_boundary_design",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.49（正文p.46），选择性必修主题三·2‘概率’"
             },
             {
               "source_id": "src_berkeley_cs70_summer_2026",
               "locator": "Summer 2026 Note 14 §3-§3.2, PDF pp.4-6; Total Probability Rule and Eq. (4)"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -3503,15 +3518,15 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.49（正文p.46），选择性必修主题三·2‘概率’"
             },
             {
               "source_id": "src_berkeley_cs70_summer_2026",
               "locator": "Summer 2026 Note 14 §3-§3.2, PDF pp.4-6; Total Probability Rule and Eq. (4)"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_cn_math_total_probability_partition_audit",
@@ -3527,28 +3542,28 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.49（正文p.46），选择性必修主题三·2‘概率’"
             },
             {
               "source_id": "src_berkeley_cs70_summer_2026",
               "locator": "Summer 2026 Note 14 §3-§3.2, PDF pp.4-6; Total Probability Rule and Eq. (4)"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.49（正文p.46），选择性必修主题三·2‘概率’"
         },
         {
           "source_id": "src_berkeley_cs70_summer_2026",
           "locator": "Summer 2026 Note 14 §3-§3.2, PDF pp.4-6; Total Probability Rule and Eq. (4)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_cn_math_vector_projection",
@@ -3569,15 +3584,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.27-29（正文p.24-26），必修主题三·1‘平面向量及其应用’"
             },
             {
               "source_id": "src_mit_ocw_18_02sc_fall_2010",
               "locator": "Unit 1 Part A, Sessions 2-4: Dot Products, Lengths/Angles and Vector Components"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_cn_math_vector_projection_divide_by_wrong_norm",
@@ -3587,15 +3602,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.27-29（正文p.24-26），必修主题三·1‘平面向量及其应用’"
             },
             {
               "source_id": "src_mit_ocw_18_02sc_fall_2010",
               "locator": "Unit 1 Part A, Sessions 2-4: Dot Products, Lengths/Angles and Vector Components"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -3611,15 +3626,15 @@
           "evidence_basis": "concept_boundary_design",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.27-29（正文p.24-26），必修主题三·1‘平面向量及其应用’"
             },
             {
               "source_id": "src_mit_ocw_18_02sc_fall_2010",
               "locator": "Unit 1 Part A, Sessions 2-4: Dot Products, Lengths/Angles and Vector Components"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -3637,15 +3652,15 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.27-29（正文p.24-26），必修主题三·1‘平面向量及其应用’"
             },
             {
               "source_id": "src_mit_ocw_18_02sc_fall_2010",
               "locator": "Unit 1 Part A, Sessions 2-4: Dot Products, Lengths/Angles and Vector Components"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_cn_math_vector_projection_vector_check",
@@ -3661,28 +3676,28 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.27-29（正文p.24-26），必修主题三·1‘平面向量及其应用’"
             },
             {
               "source_id": "src_mit_ocw_18_02sc_fall_2010",
               "locator": "Unit 1 Part A, Sessions 2-4: Dot Products, Lengths/Angles and Vector Components"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.27-29（正文p.24-26），必修主题三·1‘平面向量及其应用’"
         },
         {
           "source_id": "src_mit_ocw_18_02sc_fall_2010",
           "locator": "Unit 1 Part A, Sessions 2-4: Dot Products, Lengths/Angles and Vector Components"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_cn_math_logarithmic_behavior",
@@ -3703,15 +3718,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.28（正文p.20），必修主题二·2‘对数函数’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.22-23（正文p.19-20），必修主题二·2‘对数函数’"
             },
             {
               "source_id": "src_openstax_precalculus_2e_2026",
               "locator": "PDF §§4.3-4.5 Logarithmic Functions and Properties, pp.429-471"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_cn_math_logarithmic_behavior_cross_y_axis",
@@ -3721,15 +3736,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.28（正文p.20），必修主题二·2‘对数函数’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.22-23（正文p.19-20），必修主题二·2‘对数函数’"
             },
             {
               "source_id": "src_openstax_precalculus_2e_2026",
               "locator": "PDF §§4.3-4.5 Logarithmic Functions and Properties, pp.429-471"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -3745,15 +3760,15 @@
           "evidence_basis": "concept_boundary_design",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.28（正文p.20），必修主题二·2‘对数函数’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.22-23（正文p.19-20），必修主题二·2‘对数函数’"
             },
             {
               "source_id": "src_openstax_precalculus_2e_2026",
               "locator": "PDF §§4.3-4.5 Logarithmic Functions and Properties, pp.429-471"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -3771,15 +3786,15 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.28（正文p.20），必修主题二·2‘对数函数’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.22-23（正文p.19-20），必修主题二·2‘对数函数’"
             },
             {
               "source_id": "src_openstax_precalculus_2e_2026",
               "locator": "PDF §§4.3-4.5 Logarithmic Functions and Properties, pp.429-471"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_cn_math_logarithmic_behavior_domain_audit",
@@ -3795,28 +3810,28 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_math_2020",
-              "locator": "数学课程标准PDF p.28（正文p.20），必修主题二·2‘对数函数’"
+              "source_id": "src_cn_moe_senior_high_math_2025",
+              "locator": "数学课程标准PDF p.22-23（正文p.19-20），必修主题二·2‘对数函数’"
             },
             {
               "source_id": "src_openstax_precalculus_2e_2026",
               "locator": "PDF §§4.3-4.5 Logarithmic Functions and Properties, pp.429-471"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.28（正文p.20），必修主题二·2‘对数函数’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.22-23（正文p.19-20），必修主题二·2‘对数函数’"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §§4.3-4.5 Logarithmic Functions and Properties, pp.429-471"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_sg_math_log_laws",
@@ -3864,7 +3879,7 @@
               "locator": "PDF pp.7-8（期刊 pp.58-59）, 81 participants and 79 analysed scripts; PDF p.14（期刊 p.65）, cancelling log_a as a common factor"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_sg_math_log_laws_distribute_subtraction",
@@ -3901,7 +3916,7 @@
               "locator": "PDF p.20, Paper 9709/31, Question 2: most common error ln(x-5)=ln x-ln 5"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -3933,7 +3948,7 @@
               "locator": "PDF p.27; 3.2 outcome 2"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -3967,7 +3982,7 @@
               "locator": "PDF p.27; 3.2 outcome 2"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_sg_math_log_laws_subtraction_counterexample",
@@ -3999,7 +4014,7 @@
               "locator": "PDF p.27; 3.2 outcome 2"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
@@ -4028,7 +4043,7 @@
           "locator": "PDF p.20, Paper 9709/31, Question 2: most common error ln(x-5)=ln x-ln 5"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_sg_math_complex_mod_arg",
@@ -4057,7 +4072,7 @@
               "locator": "PDF §3.1 Complex Numbers, printed pp.245-254; complex plane, modulus and conjugates"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_sg_math_complex_mod_arg_conjugate_same_argument",
@@ -4075,7 +4090,7 @@
               "locator": "PDF §3.1 Complex Numbers, printed pp.245-254; complex plane, modulus and conjugates"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -4099,7 +4114,7 @@
               "locator": "PDF §3.1 Complex Numbers, printed pp.245-254; complex plane, modulus and conjugates"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -4125,7 +4140,7 @@
               "locator": "PDF §3.1 Complex Numbers, printed pp.245-254; complex plane, modulus and conjugates"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_sg_math_complex_mod_arg_conjugate_geometry",
@@ -4149,7 +4164,7 @@
               "locator": "PDF §3.1 Complex Numbers, printed pp.245-254; complex plane, modulus and conjugates"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
@@ -4162,7 +4177,7 @@
           "locator": "PDF §3.1 Complex Numbers, printed pp.245-254; complex plane, modulus and conjugates"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_sg_math_normal_parameters",
@@ -4191,7 +4206,7 @@
               "locator": "PDF §§6.1-6.2 The Standard Normal Distribution and Using the Normal Distribution, printed pp.336-346"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_sg_math_normal_parameters_z_keeps_units",
@@ -4209,7 +4224,7 @@
               "locator": "PDF §§6.1-6.2 The Standard Normal Distribution and Using the Normal Distribution, printed pp.336-346"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -4233,7 +4248,7 @@
               "locator": "PDF §§6.1-6.2 The Standard Normal Distribution and Using the Normal Distribution, printed pp.336-346"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -4259,7 +4274,7 @@
               "locator": "PDF §§6.1-6.2 The Standard Normal Distribution and Using the Normal Distribution, printed pp.336-346"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_sg_math_normal_parameters_unit_check",
@@ -4283,7 +4298,7 @@
               "locator": "PDF §§6.1-6.2 The Standard Normal Distribution and Using the Normal Distribution, printed pp.336-346"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
@@ -4296,7 +4311,7 @@
           "locator": "PDF §§6.1-6.2 The Standard Normal Distribution and Using the Normal Distribution, printed pp.336-346"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_cn_physics_friction",
@@ -4324,8 +4339,8 @@
           },
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.21（正文对应内容要求 1.2.1），必修 1"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.14（正文对应内容要求 1.2.1），必修 1"
             },
             {
               "source_id": "src_openstax_university_physics_v1_2016",
@@ -4336,7 +4351,7 @@
               "locator": "Article p.7 Participants: 496 students across schools in Shandong, Guizhou and Xinjiang; pp.10-12 Fig.7/A2: M14 p≈0.47 among 194 A2 non-mastery students; abstract: analysis of 492"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_cn_physics_friction_static_always_max",
@@ -4346,15 +4361,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.21（正文对应内容要求 1.2.1），必修 1"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.14（正文对应内容要求 1.2.1），必修 1"
             },
             {
               "source_id": "src_openstax_university_physics_v1_2016",
               "locator": "Web §6.2 Friction"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -4370,15 +4385,15 @@
           "evidence_basis": "concept_boundary_design",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.21（正文对应内容要求 1.2.1），必修 1"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.14（正文对应内容要求 1.2.1），必修 1"
             },
             {
               "source_id": "src_openstax_university_physics_v1_2016",
               "locator": "Web §6.2 Friction"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -4396,15 +4411,15 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.21（正文对应内容要求 1.2.1），必修 1"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.14（正文对应内容要求 1.2.1），必修 1"
             },
             {
               "source_id": "src_openstax_university_physics_v1_2016",
               "locator": "Web §6.2 Friction"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_cn_physics_friction_subcritical_force",
@@ -4420,21 +4435,21 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.21（正文对应内容要求 1.2.1），必修 1"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.14（正文对应内容要求 1.2.1），必修 1"
             },
             {
               "source_id": "src_openstax_university_physics_v1_2016",
               "locator": "Web §6.2 Friction"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.21（正文对应内容要求 1.2.1），必修 1"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.14（正文对应内容要求 1.2.1），必修 1"
         },
         {
           "source_id": "src_openstax_university_physics_v1_2016",
@@ -4445,7 +4460,7 @@
           "locator": "Article p.7 Participants: 496 students across schools in Shandong, Guizhou and Xinjiang; pp.10-12 Fig.7/A2: M14 p≈0.47 among 194 A2 non-mastery students; abstract: analysis of 492"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_cn_physics_electric_field_lines",
@@ -4466,15 +4481,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.27（正文对应内容要求 3.1.3），必修 3"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.20（正文对应内容要求 3.1.3），必修 3"
             },
             {
               "source_id": "src_openstax_university_physics_v2_2016",
               "locator": "Web §5.6 Electric Field Lines"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_cn_physics_electric_field_lines_line_crossing_allowed",
@@ -4484,15 +4499,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.27（正文对应内容要求 3.1.3），必修 3"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.20（正文对应内容要求 3.1.3），必修 3"
             },
             {
               "source_id": "src_openstax_university_physics_v2_2016",
               "locator": "Web §5.6 Electric Field Lines"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -4508,15 +4523,15 @@
           "evidence_basis": "concept_boundary_design",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.27（正文对应内容要求 3.1.3），必修 3"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.20（正文对应内容要求 3.1.3），必修 3"
             },
             {
               "source_id": "src_openstax_university_physics_v2_2016",
               "locator": "Web §5.6 Electric Field Lines"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -4534,15 +4549,15 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.27（正文对应内容要求 3.1.3），必修 3"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.20（正文对应内容要求 3.1.3），必修 3"
             },
             {
               "source_id": "src_openstax_university_physics_v2_2016",
               "locator": "Web §5.6 Electric Field Lines"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_cn_physics_electric_field_lines_crossing_contradiction",
@@ -4558,28 +4573,28 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.27（正文对应内容要求 3.1.3），必修 3"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.20（正文对应内容要求 3.1.3），必修 3"
             },
             {
               "source_id": "src_openstax_university_physics_v2_2016",
               "locator": "Web §5.6 Electric Field Lines"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.3），必修 3"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.20（正文对应内容要求 3.1.3），必修 3"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §5.6 Electric Field Lines"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_cn_physics_self_induction",
@@ -4600,15 +4615,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.38（正文对应内容要求 2.2.3），选择性必修 2"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.30-31（正文对应内容要求 2.2.3），选择性必修 2"
             },
             {
               "source_id": "src_openstax_university_physics_v2_2016",
               "locator": "Web §14.2 Self-Inductance and Inductors"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_cn_physics_self_induction_instant_current_change",
@@ -4618,15 +4633,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.38（正文对应内容要求 2.2.3），选择性必修 2"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.30-31（正文对应内容要求 2.2.3），选择性必修 2"
             },
             {
               "source_id": "src_openstax_university_physics_v2_2016",
               "locator": "Web §14.2 Self-Inductance and Inductors"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -4642,15 +4657,15 @@
           "evidence_basis": "concept_boundary_design",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.38（正文对应内容要求 2.2.3），选择性必修 2"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.30-31（正文对应内容要求 2.2.3），选择性必修 2"
             },
             {
               "source_id": "src_openstax_university_physics_v2_2016",
               "locator": "Web §14.2 Self-Inductance and Inductors"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -4668,15 +4683,15 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.38（正文对应内容要求 2.2.3），选择性必修 2"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.30-31（正文对应内容要求 2.2.3），选择性必修 2"
             },
             {
               "source_id": "src_openstax_university_physics_v2_2016",
               "locator": "Web §14.2 Self-Inductance and Inductors"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_cn_physics_self_induction_continuity",
@@ -4692,28 +4707,28 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_physics_2020",
-              "locator": "物理标准PDF p.38（正文对应内容要求 2.2.3），选择性必修 2"
+              "source_id": "src_cn_moe_senior_high_physics_2025",
+              "locator": "物理标准PDF p.30-31（正文对应内容要求 2.2.3），选择性必修 2"
             },
             {
               "source_id": "src_openstax_university_physics_v2_2016",
               "locator": "Web §14.2 Self-Inductance and Inductors"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_physics_2020",
-          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.3），选择性必修 2"
+          "source_id": "src_cn_moe_senior_high_physics_2025",
+          "locator": "物理标准PDF p.30-31（正文对应内容要求 2.2.3），选择性必修 2"
         },
         {
           "source_id": "src_openstax_university_physics_v2_2016",
           "locator": "Web §14.2 Self-Inductance and Inductors"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_sg_physics_field_equipotential",
@@ -4746,7 +4761,7 @@
               "locator": "OpenStax College Physics 2e §19.4, Equipotential Lines"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_sg_physics_field_equipotential_equal_spacing_equal_potential",
@@ -4768,7 +4783,7 @@
               "locator": "OpenStax College Physics 2e §19.4, Equipotential Lines"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -4796,7 +4811,7 @@
               "locator": "OpenStax College Physics 2e §19.4, Equipotential Lines"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -4826,7 +4841,7 @@
               "locator": "OpenStax College Physics 2e §19.4, Equipotential Lines"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_sg_physics_field_equipotential_gradient_compare",
@@ -4854,7 +4869,7 @@
               "locator": "OpenStax College Physics 2e §19.4, Equipotential Lines"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
@@ -4871,7 +4886,7 @@
           "locator": "OpenStax College Physics 2e §19.4, Equipotential Lines"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_sg_physics_infinite_well",
@@ -4904,7 +4919,7 @@
               "locator": "OpenStax University Physics Volume 3 §7.4, The Quantum Particle in a Box"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_sg_physics_infinite_well_psi_nonzero_wall",
@@ -4926,7 +4941,7 @@
               "locator": "OpenStax University Physics Volume 3 §7.4, The Quantum Particle in a Box"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -4954,7 +4969,7 @@
               "locator": "OpenStax University Physics Volume 3 §7.4, The Quantum Particle in a Box"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -4984,7 +4999,7 @@
               "locator": "OpenStax University Physics Volume 3 §7.4, The Quantum Particle in a Box"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_sg_physics_infinite_well_wall_nodes",
@@ -5012,7 +5027,7 @@
               "locator": "OpenStax University Physics Volume 3 §7.4, The Quantum Particle in a Box"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
@@ -5029,7 +5044,7 @@
           "locator": "OpenStax University Physics Volume 3 §7.4, The Quantum Particle in a Box"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_sg_physics_uncertainty",
@@ -5046,7 +5061,7 @@
           "misconception_id": "mis_sg_physics_uncertainty_always_equality",
           "statement_zh": "任何量子态都严格满足 ΔxΔp=ℏ/2。",
           "diagnostic_signal_zh": "把不等式下限写成所有状态的固定乘积。",
-          "correction_zh": "一般关系是 ΔxΔp≥ℏ/2；只有特定最小不确定态才取等号。",
+          "correction_zh": "一般关系是 ΔxΔp≥ℏ/2；只有特定最小不确定态才取等号。SEAB 9478 以 ΔxΔp ≳ h 的数量级形式考查，二者并不矛盾。",
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
@@ -5058,7 +5073,7 @@
               "locator": "OpenStax University Physics Volume 3 §7.2, The Heisenberg Uncertainty Principle"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_sg_physics_uncertainty_instrument_only",
@@ -5076,7 +5091,7 @@
               "locator": "OpenStax University Physics Volume 3 §7.2, The Heisenberg Uncertainty Principle"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -5100,7 +5115,7 @@
               "locator": "OpenStax University Physics Volume 3 §7.2, The Heisenberg Uncertainty Principle"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -5126,7 +5141,7 @@
               "locator": "OpenStax University Physics Volume 3 §7.2, The Heisenberg Uncertainty Principle"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_sg_physics_uncertainty_ideal_instrument",
@@ -5150,7 +5165,7 @@
               "locator": "OpenStax University Physics Volume 3 §7.2, The Heisenberg Uncertainty Principle"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
@@ -5163,7 +5178,7 @@
           "locator": "OpenStax University Physics Volume 3 §7.2, The Heisenberg Uncertainty Principle"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_cn_chem_energy_conservation",
@@ -5184,15 +5199,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.30（正文对应内容要求 1.1），选择性必修·化学反应原理"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web Chapter 5 Thermochemistry; Chapter 16 Thermodynamics"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_cn_chem_energy_conservation_bond_break_releases",
@@ -5202,15 +5217,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.30（正文对应内容要求 1.1），选择性必修·化学反应原理"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web Chapter 5 Thermochemistry; Chapter 16 Thermodynamics"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -5226,15 +5241,15 @@
           "evidence_basis": "concept_boundary_design",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.30（正文对应内容要求 1.1），选择性必修·化学反应原理"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web Chapter 5 Thermochemistry; Chapter 16 Thermodynamics"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -5252,15 +5267,15 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.30（正文对应内容要求 1.1），选择性必修·化学反应原理"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web Chapter 5 Thermochemistry; Chapter 16 Thermodynamics"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_cn_chem_energy_conservation_bond_ledger",
@@ -5276,28 +5291,28 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.30（正文对应内容要求 1.1），选择性必修·化学反应原理"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web Chapter 5 Thermochemistry; Chapter 16 Thermodynamics"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.30（正文对应内容要求 1.1），选择性必修·化学反应原理"
         },
         {
           "source_id": "src_openstax_chemistry_2e_2019",
           "locator": "Web Chapter 5 Thermochemistry; Chapter 16 Thermodynamics"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_cn_chem_quantised_levels",
@@ -5318,15 +5333,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.44（正文对应内容要求 1.1），选择性必修·物质结构与性质"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.39（正文对应内容要求 1.1），选择性必修·物质结构与性质"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web §§6.1-6.3 Electromagnetic Energy; The Bohr Model; Development of Quantum Theory"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_cn_chem_quantised_levels_emission_same_level",
@@ -5336,15 +5351,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.44（正文对应内容要求 1.1），选择性必修·物质结构与性质"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.39（正文对应内容要求 1.1），选择性必修·物质结构与性质"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web §§6.1-6.3 Electromagnetic Energy; The Bohr Model; Development of Quantum Theory"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -5360,15 +5375,15 @@
           "evidence_basis": "concept_boundary_design",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.44（正文对应内容要求 1.1），选择性必修·物质结构与性质"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.39（正文对应内容要求 1.1），选择性必修·物质结构与性质"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web §§6.1-6.3 Electromagnetic Energy; The Bohr Model; Development of Quantum Theory"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -5386,15 +5401,15 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.44（正文对应内容要求 1.1），选择性必修·物质结构与性质"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.39（正文对应内容要求 1.1），选择性必修·物质结构与性质"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web §§6.1-6.3 Electromagnetic Energy; The Bohr Model; Development of Quantum Theory"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_cn_chem_quantised_levels_emission_arrow",
@@ -5410,28 +5425,28 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.44（正文对应内容要求 1.1），选择性必修·物质结构与性质"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.39（正文对应内容要求 1.1），选择性必修·物质结构与性质"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web §§6.1-6.3 Electromagnetic Energy; The Bohr Model; Development of Quantum Theory"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.44（正文对应内容要求 1.1），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.39（正文对应内容要求 1.1），选择性必修·物质结构与性质"
         },
         {
           "source_id": "src_openstax_chemistry_2e_2019",
           "locator": "Web §§6.1-6.3 Electromagnetic Energy; The Bohr Model; Development of Quantum Theory"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_cn_chem_salt_hydrolysis",
@@ -5452,15 +5467,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.42（正文对应内容要求 3.3），选择性必修·化学反应原理"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.36（正文对应内容要求 3.3），选择性必修·化学反应原理"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web Chapter 14, acid-base properties and hydrolysis of salt solutions"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_cn_chem_salt_hydrolysis_spectator_hydrolyses",
@@ -5470,15 +5485,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.42（正文对应内容要求 3.3），选择性必修·化学反应原理"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.36（正文对应内容要求 3.3），选择性必修·化学反应原理"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web Chapter 14, acid-base properties and hydrolysis of salt solutions"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -5494,15 +5509,15 @@
           "evidence_basis": "concept_boundary_design",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.42（正文对应内容要求 3.3），选择性必修·化学反应原理"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.36（正文对应内容要求 3.3），选择性必修·化学反应原理"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web Chapter 14, acid-base properties and hydrolysis of salt solutions"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -5520,15 +5535,15 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.42（正文对应内容要求 3.3），选择性必修·化学反应原理"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.36（正文对应内容要求 3.3），选择性必修·化学反应原理"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web Chapter 14, acid-base properties and hydrolysis of salt solutions"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_cn_chem_salt_hydrolysis_nacl",
@@ -5544,28 +5559,28 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_chemistry_2020",
-              "locator": "化学标准PDF p.42（正文对应内容要求 3.3），选择性必修·化学反应原理"
+              "source_id": "src_cn_moe_senior_high_chemistry_2025",
+              "locator": "化学标准PDF p.36（正文对应内容要求 3.3），选择性必修·化学反应原理"
             },
             {
               "source_id": "src_openstax_chemistry_2e_2019",
               "locator": "Web Chapter 14, acid-base properties and hydrolysis of salt solutions"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.42（正文对应内容要求 3.3），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.36（正文对应内容要求 3.3），选择性必修·化学反应原理"
         },
         {
           "source_id": "src_openstax_chemistry_2e_2019",
           "locator": "Web Chapter 14, acid-base properties and hydrolysis of salt solutions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_sg_chem_base_dissociation",
@@ -5605,7 +5620,7 @@
               "locator": "Web article, Main study and Results, lines 366-411; Appendix D AC11, 10.87% of 92 complete scripts"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_sg_chem_base_dissociation_kw_is_h_concentration",
@@ -5623,7 +5638,7 @@
               "locator": "OpenStax Chemistry 2e §§14.1-14.3, Brønsted-Lowry Acids and Bases; pH and pOH; Relative Strengths of Acids and Bases"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -5647,7 +5662,7 @@
               "locator": "OpenStax Chemistry 2e §§14.1-14.3, Brønsted-Lowry Acids and Bases; pH and pOH; Relative Strengths of Acids and Bases"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -5673,7 +5688,7 @@
               "locator": "OpenStax Chemistry 2e §§14.1-14.3, Brønsted-Lowry Acids and Bases; pH and pOH; Relative Strengths of Acids and Bases"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_sg_chem_base_dissociation_kw_product",
@@ -5697,7 +5712,7 @@
               "locator": "OpenStax Chemistry 2e §§14.1-14.3, Brønsted-Lowry Acids and Bases; pH and pOH; Relative Strengths of Acids and Bases"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
@@ -5714,7 +5729,7 @@
           "locator": "Web article, Main study and Results, lines 366-411; Appendix D AC11, 10.87% of 92 complete scripts"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_sg_chem_partial_pressures",
@@ -5743,7 +5758,7 @@
               "locator": "OpenStax Chemistry 2e §9.3, Stoichiometry of Gaseous Substances, Mixtures, and Reactions"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_sg_chem_partial_pressures_partial_uses_component_volume",
@@ -5761,7 +5776,7 @@
               "locator": "OpenStax Chemistry 2e §9.3, Stoichiometry of Gaseous Substances, Mixtures, and Reactions"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -5785,7 +5800,7 @@
               "locator": "OpenStax Chemistry 2e §9.3, Stoichiometry of Gaseous Substances, Mixtures, and Reactions"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -5811,7 +5826,7 @@
               "locator": "OpenStax Chemistry 2e §9.3, Stoichiometry of Gaseous Substances, Mixtures, and Reactions"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_sg_chem_partial_pressures_same_volume",
@@ -5835,7 +5850,7 @@
               "locator": "OpenStax Chemistry 2e §9.3, Stoichiometry of Gaseous Substances, Mixtures, and Reactions"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
@@ -5848,7 +5863,7 @@
           "locator": "OpenStax Chemistry 2e §9.3, Stoichiometry of Gaseous Substances, Mixtures, and Reactions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_sg_chem_ocean_buffer",
@@ -5877,7 +5892,7 @@
               "locator": "OpenStax Chemistry 2e §14.6, Buffers; §15.3, Coupled Equilibria, ocean acidification"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_sg_chem_ocean_buffer_co2_only_carbonate_increase",
@@ -5895,7 +5910,7 @@
               "locator": "OpenStax Chemistry 2e §14.6, Buffers; §15.3, Coupled Equilibria, ocean acidification"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -5919,7 +5934,7 @@
               "locator": "OpenStax Chemistry 2e §14.6, Buffers; §15.3, Coupled Equilibria, ocean acidification"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -5945,7 +5960,7 @@
               "locator": "OpenStax Chemistry 2e §14.6, Buffers; §15.3, Coupled Equilibria, ocean acidification"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_sg_chem_ocean_buffer_carbonate_shift",
@@ -5969,7 +5984,7 @@
               "locator": "OpenStax Chemistry 2e §14.6, Buffers; §15.3, Coupled Equilibria, ocean acidification"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
@@ -5982,7 +5997,7 @@
           "locator": "OpenStax Chemistry 2e §14.6, Buffers; §15.3, Coupled Equilibria, ocean acidification"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_cn_bio_chromosomal_variation",
@@ -6003,15 +6018,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.5），必修·遗传与进化"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.21（正文对应内容要求 3.3.5），必修·遗传与进化"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web §13.2 Chromosomal Basis of Inherited Disorders"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_cn_bio_chromosomal_variation_aneuploid_all_genes",
@@ -6021,15 +6036,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.5），必修·遗传与进化"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.21（正文对应内容要求 3.3.5），必修·遗传与进化"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web §13.2 Chromosomal Basis of Inherited Disorders"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -6045,15 +6060,15 @@
           "evidence_basis": "concept_boundary_design",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.5），必修·遗传与进化"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.21（正文对应内容要求 3.3.5），必修·遗传与进化"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web §13.2 Chromosomal Basis of Inherited Disorders"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -6071,15 +6086,15 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.5），必修·遗传与进化"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.21（正文对应内容要求 3.3.5），必修·遗传与进化"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web §13.2 Chromosomal Basis of Inherited Disorders"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_cn_bio_chromosomal_variation_trisomy",
@@ -6095,28 +6110,28 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.5），必修·遗传与进化"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.21（正文对应内容要求 3.3.5），必修·遗传与进化"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web §13.2 Chromosomal Basis of Inherited Disorders"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.5），必修·遗传与进化"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 3.3.5），必修·遗传与进化"
         },
         {
           "source_id": "src_openstax_biology_2e_2018",
           "locator": "Web §13.2 Chromosomal Basis of Inherited Disorders"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_cn_bio_genetic_screening",
@@ -6137,15 +6152,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.6），必修·遗传与进化"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.21（正文对应内容要求 3.3.6），必修·遗传与进化"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web §17.1 Biotechnology; genetic diagnosis and gene therapy"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_cn_bio_genetic_screening_negative_zero_risk",
@@ -6155,15 +6170,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.6），必修·遗传与进化"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.21（正文对应内容要求 3.3.6），必修·遗传与进化"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web §17.1 Biotechnology; genetic diagnosis and gene therapy"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -6179,15 +6194,15 @@
           "evidence_basis": "concept_boundary_design",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.6），必修·遗传与进化"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.21（正文对应内容要求 3.3.6），必修·遗传与进化"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web §17.1 Biotechnology; genetic diagnosis and gene therapy"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -6205,15 +6220,15 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.6），必修·遗传与进化"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.21（正文对应内容要求 3.3.6），必修·遗传与进化"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web §17.1 Biotechnology; genetic diagnosis and gene therapy"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_cn_bio_genetic_screening_coverage_limit",
@@ -6229,28 +6244,28 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.6），必修·遗传与进化"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.21（正文对应内容要求 3.3.6），必修·遗传与进化"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web §17.1 Biotechnology; genetic diagnosis and gene therapy"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.6），必修·遗传与进化"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 3.3.6），必修·遗传与进化"
         },
         {
           "source_id": "src_openstax_biology_2e_2018",
           "locator": "Web §17.1 Biotechnology; genetic diagnosis and gene therapy"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_cn_bio_ecosystem_stability",
@@ -6271,15 +6286,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.1），选择性必修·生物与环境"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.28（正文对应内容要求 2.3.1），选择性必修·生物与环境"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web §§46.1-46.3 ecosystem dynamics, trophic interactions and biogeochemical cycles"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_cn_bio_ecosystem_stability_more_species_always_stable",
@@ -6289,15 +6304,15 @@
           "prevalence_basis": "diagnostic_hypothesis",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.1），选择性必修·生物与环境"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.28（正文对应内容要求 2.3.1），选择性必修·生物与环境"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web §§46.1-46.3 ecosystem dynamics, trophic interactions and biogeochemical cycles"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -6313,15 +6328,15 @@
           "evidence_basis": "concept_boundary_design",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.1），选择性必修·生物与环境"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.28（正文对应内容要求 2.3.1），选择性必修·生物与环境"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web §§46.1-46.3 ecosystem dynamics, trophic interactions and biogeochemical cycles"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -6339,15 +6354,15 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.1），选择性必修·生物与环境"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.28（正文对应内容要求 2.3.1），选择性必修·生物与环境"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web §§46.1-46.3 ecosystem dynamics, trophic interactions and biogeochemical cycles"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_cn_bio_ecosystem_stability_invasive_species",
@@ -6363,28 +6378,28 @@
           "evidence_basis": "curriculum_assessment_alignment",
           "evidence_refs": [
             {
-              "source_id": "src_cn_moe_senior_high_biology_2020",
-              "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.1），选择性必修·生物与环境"
+              "source_id": "src_cn_moe_senior_high_biology_2025",
+              "locator": "生物学标准PDF p.28（正文对应内容要求 2.3.1），选择性必修·生物与环境"
             },
             {
               "source_id": "src_openstax_biology_2e_2018",
               "locator": "Web §§46.1-46.3 ecosystem dynamics, trophic interactions and biogeochemical cycles"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.1），选择性必修·生物与环境"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.28（正文对应内容要求 2.3.1），选择性必修·生物与环境"
         },
         {
           "source_id": "src_openstax_biology_2e_2018",
           "locator": "Web §§46.1-46.3 ecosystem dynamics, trophic interactions and biogeochemical cycles"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_sg_bio_cell_signalling",
@@ -6413,7 +6428,7 @@
               "locator": "OpenStax Biology 2e §§9.1-9.3, Signaling Molecules and Cellular Receptors; Propagation of the Signal; Response to the Signal"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_sg_bio_cell_signalling_amplification_creates_signal",
@@ -6431,7 +6446,7 @@
               "locator": "OpenStax Biology 2e §§9.1-9.3, Signaling Molecules and Cellular Receptors; Propagation of the Signal; Response to the Signal"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -6455,7 +6470,7 @@
               "locator": "OpenStax Biology 2e §§9.1-9.3, Signaling Molecules and Cellular Receptors; Propagation of the Signal; Response to the Signal"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -6481,7 +6496,7 @@
               "locator": "OpenStax Biology 2e §§9.1-9.3, Signaling Molecules and Cellular Receptors; Propagation of the Signal; Response to the Signal"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_sg_bio_cell_signalling_cascade_count",
@@ -6505,7 +6520,7 @@
               "locator": "OpenStax Biology 2e §§9.1-9.3, Signaling Molecules and Cellular Receptors; Propagation of the Signal; Response to the Signal"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
@@ -6518,7 +6533,7 @@
           "locator": "OpenStax Biology 2e §§9.1-9.3, Signaling Molecules and Cellular Receptors; Propagation of the Signal; Response to the Signal"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_sg_bio_phylogeny",
@@ -6551,7 +6566,7 @@
               "locator": "OpenStax Biology 2e §§20.1-20.2, Organizing Life on Earth; Determining Evolutionary Relationships"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_sg_bio_phylogeny_similarity_single_trait",
@@ -6573,7 +6588,7 @@
               "locator": "OpenStax Biology 2e §§20.1-20.2, Organizing Life on Earth; Determining Evolutionary Relationships"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -6601,7 +6616,7 @@
               "locator": "OpenStax Biology 2e §§20.1-20.2, Organizing Life on Earth; Determining Evolutionary Relationships"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -6631,7 +6646,7 @@
               "locator": "OpenStax Biology 2e §§20.1-20.2, Organizing Life on Earth; Determining Evolutionary Relationships"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_sg_bio_phylogeny_convergence",
@@ -6659,7 +6674,7 @@
               "locator": "OpenStax Biology 2e §§20.1-20.2, Organizing Life on Earth; Determining Evolutionary Relationships"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
@@ -6676,7 +6691,7 @@
           "locator": "OpenStax Biology 2e §§20.1-20.2, Organizing Life on Earth; Determining Evolutionary Relationships"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "profile_id": "ped_profile_sg_bio_climate_redistribution",
@@ -6705,7 +6720,7 @@
               "locator": "OpenStax Biology 2e §§44.1 and 44.5, The Scope of Ecology; Climate and the Effects of Global Climate Change"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "misconception_id": "mis_sg_bio_climate_redistribution_range_shift_is_adaptation",
@@ -6723,7 +6738,7 @@
               "locator": "OpenStax Biology 2e §§44.1 and 44.5, The Scope of Ecology; Climate and the Effects of Global Climate Change"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "instructional_strategies": [
@@ -6747,7 +6762,7 @@
               "locator": "OpenStax Biology 2e §§44.1 and 44.5, The Scope of Ecology; Climate and the Effects of Global Climate Change"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "assessment_probes": [
@@ -6773,7 +6788,7 @@
               "locator": "OpenStax Biology 2e §§44.1 and 44.5, The Scope of Ecology; Climate and the Effects of Global Climate Change"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         },
         {
           "probe_id": "probe_sg_bio_climate_redistribution_migration_vs_evolution",
@@ -6797,7 +6812,7 @@
               "locator": "OpenStax Biology 2e §§44.1 and 44.5, The Scope of Ecology; Climate and the Effects of Global Climate Change"
             }
           ],
-          "review_status": "needs_review"
+          "review_status": "approved"
         }
       ],
       "evidence_refs": [
@@ -6810,7 +6825,7 @@
           "locator": "OpenStax Biology 2e §§44.1 and 44.5, The Scope of Ecology; Climate and the Effects of Global Climate Change"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ]
 }

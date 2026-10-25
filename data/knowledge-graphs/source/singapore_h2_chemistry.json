@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "0.1.1",
+  "content_version": "0.1.3",
   "graph_id": "singapore_h2_chemistry",
   "subject": "Chemistry",
   "jurisdictions": [
@@ -11,7 +11,7 @@
     "src_openstax_chemistry_2e_2019",
     "src_openstax_organic_chemistry_2023"
   ],
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.1.0",
@@ -22,6 +22,16 @@
       "version": "0.1.1",
       "date": "2026-08-27",
       "summary_zh": "依据官方课程成果顺序补充 1 条同图前置边（含 0 条硬前置），状态保持 needs_review。"
+    },
+    {
+      "version": "0.1.2",
+      "date": "2026-10-25",
+      "summary_zh": "按 2026-10-25 官方来源复核更新证据定位（中国课标迁至 2025 日常修订版、新加坡页码校正），状态保持 needs_review。"
+    },
+    {
+      "version": "0.1.3",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网核验与人工批准：删除 2 条不成立的先修边，新增 0 条，调整 0 条强度，改写 0 条先修理由。"
     }
   ],
   "nodes": [
@@ -66,7 +76,7 @@
           "locator": "OpenStax Chemistry 2e §14.7, Acid-Base Titrations"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_h2_chemistry_topic_aqueous_contexts",
@@ -93,7 +103,7 @@
           "locator": "OpenStax Chemistry 2e §§15.2-15.3, Lewis Acids and Bases; Coupled Equilibria"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_h2_chemistry_topic_physical_chemistry_models",
@@ -132,7 +142,7 @@
           "locator": "OpenStax Chemistry 2e §16.4, Free Energy; §17.4, Potential, Free Energy, and Equilibrium"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_h2_chemistry_topic_mechanism_selectivity",
@@ -167,7 +177,7 @@
           "locator": "OpenStax Organic Chemistry §§11.2 and 11.4, The SN2 Reaction; The SN1 Reaction"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_h2_chemistry_topic_environmental_chemistry",
@@ -179,7 +189,7 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.29, topic 11_4 Hydrocarbons, outcome (h)"
+          "locator": "PDF p.28, topic 11_4 Hydrocarbons, outcome (h)"
         },
         {
           "source_id": "src_openstax_chemistry_2e_2019",
@@ -195,14 +205,14 @@
         },
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.33, topic 11_10 Polymers, outcome (g)"
+          "locator": "PDF p.32, topic 11_10 Polymers, outcome (g)"
         },
         {
           "source_id": "src_openstax_organic_chemistry_2023",
           "locator": "OpenStax Organic Chemistry Chapter 31, Synthetic Polymers; Chapter 11 Chemistry Matters—Green Chemistry"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_h2_chemistry_topic_electrochemical_applications",
@@ -229,7 +239,7 @@
           "locator": "OpenStax Chemistry 2e §17.7, Electrolysis, electroplating and metal purification applications"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_h2_chemistry_topic_transition_elements",
@@ -256,7 +266,7 @@
           "locator": "OpenStax Chemistry 2e §19.2, Coordination Chemistry of Transition Metals, ligand substitution and complex formation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_h2_chemistry_ideal_gas_mixture_partial_pressures",
@@ -277,7 +287,7 @@
           "locator": "OpenStax Chemistry 2e §9.3, Stoichiometry of Gaseous Substances, Mixtures, and Reactions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_h2_chemistry_acid_base_models_arrhenius_lewis",
@@ -302,7 +312,7 @@
           "locator": "OpenStax Chemistry 2e §14.1, Brønsted-Lowry Acids and Bases, historical Arrhenius model; §15.2, Lewis Acids and Bases"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_h2_chemistry_lattice_energy_ionic_factors",
@@ -323,7 +333,7 @@
           "locator": "OpenStax Chemistry 2e §7.1, Ionic Bonding, lattice energy and ionic charge-distance effects"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_h2_chemistry_standard_state_prediction_limits",
@@ -348,7 +358,7 @@
           "locator": "OpenStax Chemistry 2e §16.4, Free Energy; §17.4, Potential, Free Energy, and Equilibrium"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_h2_chemistry_enzyme_catalysis_specificity_conditions",
@@ -369,7 +379,7 @@
           "locator": "OpenStax Chemistry 2e §12.7, Catalysis, Enzyme Structure and Function"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_h2_chemistry_base_dissociation_water_ionic_product",
@@ -390,7 +400,7 @@
           "locator": "OpenStax Chemistry 2e §§14.1-14.3, Brønsted-Lowry Acids and Bases; pH and pOH; Relative Strengths of Acids and Bases"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_h2_chemistry_titration_curves_indicator_selection",
@@ -415,7 +425,7 @@
           "locator": "OpenStax Chemistry 2e §14.7, Acid-Base Titrations"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_h2_chemistry_ocean_carbonate_buffer_acidification",
@@ -436,7 +446,7 @@
           "locator": "OpenStax Chemistry 2e §14.6, Buffers; §15.3, Coupled Equilibria, ocean acidification"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_h2_chemistry_complex_ion_solubility_control",
@@ -457,7 +467,7 @@
           "locator": "OpenStax Chemistry 2e §§15.2-15.3, Lewis Acids and Bases; Coupled Equilibria"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_h2_chemistry_organic_electronic_steric_effects",
@@ -478,7 +488,7 @@
           "locator": "OpenStax Organic Chemistry §§6.2, 7.9 and 11.3, mechanisms, electronic effects and steric effects in substitution"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_h2_chemistry_nucleophilic_substitution_stereochemistry",
@@ -499,7 +509,7 @@
           "locator": "OpenStax Organic Chemistry §§11.2 and 11.4, The SN2 Reaction; The SN1 Reaction"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_h2_chemistry_combustion_pollutants_greenhouse",
@@ -513,14 +523,14 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.29, topic 11_4 Hydrocarbons, outcome (h)"
+          "locator": "PDF p.28, topic 11_4 Hydrocarbons, outcome (h)"
         },
         {
           "source_id": "src_openstax_chemistry_2e_2019",
           "locator": "OpenStax Chemistry 2e §§12.7 and 18.9, catalytic converters; atmospheric oxygen compounds and combustion impacts"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_h2_chemistry_halocarbon_environmental_impacts",
@@ -541,7 +551,7 @@
           "locator": "OpenStax Chemistry 2e §18.8, Occurrence, Preparation, and Properties of the Halogens, halocarbon environmental context"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_h2_chemistry_polymer_recycling_sustainability",
@@ -555,14 +565,14 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.33, topic 11_10 Polymers, outcome (g)"
+          "locator": "PDF p.32, topic 11_10 Polymers, outcome (g)"
         },
         {
           "source_id": "src_openstax_organic_chemistry_2023",
           "locator": "OpenStax Organic Chemistry Chapter 31, Synthetic Polymers; Chapter 11 Chemistry Matters—Green Chemistry"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_h2_chemistry_electrode_potential_concentration_trends",
@@ -583,7 +593,7 @@
           "locator": "OpenStax Chemistry 2e §17.4, Potential, Free Energy, and Equilibrium, nonstandard conditions and the Nernst equation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_h2_chemistry_industrial_electrolysis_applications",
@@ -604,7 +614,7 @@
           "locator": "OpenStax Chemistry 2e §17.7, Electrolysis, electroplating and metal purification applications"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_h2_chemistry_transition_periodic_invariance",
@@ -625,7 +635,7 @@
           "locator": "OpenStax Chemistry 2e §§6.5 and 19.1, Periodic Variations in Element Properties; Properties of Transition Metals"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_h2_chemistry_ligand_exchange_complex_contexts",
@@ -646,40 +656,10 @@
           "locator": "OpenStax Chemistry 2e §19.2, Coordination Chemistry of Transition Metals, ligand substitution and complex formation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ],
   "edges": [
-    {
-      "from": "sg_h2_chemistry_acid_base_models_arrhenius_lewis",
-      "to": "sg_h2_chemistry_base_dissociation_water_ionic_product",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "使用 Kb、Kw 和共轭酸碱关系前，需要先区分酸碱定义及适用体系。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.15, topic 4 Theories of Acids and Bases, outcome (a)"
-        },
-        {
-          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.16, topic 4 Theories of Acids and Bases, outcome (c)"
-        },
-        {
-          "source_id": "src_openstax_chemistry_2e_2019",
-          "locator": "OpenStax Chemistry 2e §14.1, Brønsted-Lowry Acids and Bases, historical Arrhenius model; §15.2, Lewis Acids and Bases"
-        },
-        {
-          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (b)"
-        },
-        {
-          "source_id": "src_openstax_chemistry_2e_2019",
-          "locator": "OpenStax Chemistry 2e §§14.1-14.3, Brønsted-Lowry Acids and Bases; pH and pOH; Relative Strengths of Acids and Bases"
-        }
-      ],
-      "review_status": "needs_review"
-    },
     {
       "from": "sg_h2_chemistry_base_dissociation_water_ionic_product",
       "to": "sg_h2_chemistry_titration_curves_indicator_selection",
@@ -708,7 +688,7 @@
           "locator": "OpenStax Chemistry 2e §14.7, Acid-Base Titrations"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_h2_chemistry_base_dissociation_water_ionic_product",
@@ -734,7 +714,7 @@
           "locator": "OpenStax Chemistry 2e §14.6, Buffers; §15.3, Coupled Equilibria, ocean acidification"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_h2_chemistry_organic_electronic_steric_effects",
@@ -760,7 +740,7 @@
           "locator": "OpenStax Organic Chemistry §§11.2 and 11.4, The SN2 Reaction; The SN1 Reaction"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_h2_chemistry_standard_state_prediction_limits",
@@ -790,25 +770,7 @@
           "locator": "OpenStax Chemistry 2e §17.4, Potential, Free Energy, and Equilibrium, nonstandard conditions and the Nernst equation"
         }
       ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_h2_chemistry_titration_curves_indicator_selection",
-      "to": "sg_h2_chemistry_ocean_carbonate_buffer_acidification",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，10_1.e 为 10_1.f 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (e)"
-        },
-        {
-          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
-          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (f)"
-        }
-      ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ]
 }

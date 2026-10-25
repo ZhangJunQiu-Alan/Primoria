@@ -1,6 +1,6 @@
 {
   "schema_version": "3.0.0",
-  "content_version": "0.4.0",
+  "content_version": "0.4.2",
   "mapping_set_id": "cms_sg_moe_lower_secondary_g2_g3_science_2021_outcomes",
   "framework_id": "cfw_sg_moe_lower_secondary_g2_g3_science_2021_outcomes",
   "curriculum_id": "cur_sg_moe_lower_secondary_g2_g3_science_2021",
@@ -10,7 +10,7 @@
     "src_sg_moe_lower_secondary_g2_g3_science_2021"
   ],
   "generated_at": "2026-07-19",
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.1.0",
@@ -31,6 +31,16 @@
       "version": "0.4.0",
       "date": "2026-07-19",
       "summary_zh": "将 62 项知识缺口解析为 32 个低年级科学概念；80 项 Core Ideas 均达到 full，79 项实践和价值要求继续保持 excluded。"
+    },
+    {
+      "version": "0.4.1",
+      "date": "2026-10-25",
+      "summary_zh": "按 2026-10-25 官方来源复核更新证据定位（中国课标迁至 2025 日常修订版、新加坡页码校正），状态保持 needs_review。"
+    },
+    {
+      "version": "0.4.2",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准。"
     }
   ],
   "mappings": [
@@ -46,10 +56,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+          "locator": "PDF p.31, The Scientific Endeavour learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_se_curiosity_natural_phenomena",
@@ -63,10 +73,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+          "locator": "PDF p.31, The Scientific Endeavour learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_se_science_human_endeavour",
@@ -80,10 +90,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+          "locator": "PDF p.31, The Scientific Endeavour learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_se_evidence_types_senses_instruments",
@@ -97,10 +107,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+          "locator": "PDF p.31, The Scientific Endeavour learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_se_evidence_reasoning_knowledge_building",
@@ -114,10 +124,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+          "locator": "PDF p.31, The Scientific Endeavour learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_se_multiple_evidence_interpretations",
@@ -131,10 +141,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+          "locator": "PDF p.31, The Scientific Endeavour learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_se_scientific_inquiry_cycle",
@@ -148,10 +158,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+          "locator": "PDF p.31, The Scientific Endeavour learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_se_measurement_accuracy",
@@ -165,10 +175,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+          "locator": "PDF p.31, The Scientific Endeavour learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_se_measurement_precision",
@@ -182,10 +192,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+          "locator": "PDF p.31, The Scientific Endeavour learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_se_zero_error",
@@ -199,10 +209,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+          "locator": "PDF p.31, The Scientific Endeavour learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_se_parallax_error",
@@ -216,10 +226,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+          "locator": "PDF p.31, The Scientific Endeavour learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_se_unpredictable_consistent_errors",
@@ -233,10 +243,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+          "locator": "PDF p.31, The Scientific Endeavour learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_se_inquiry_dispositions",
@@ -250,10 +260,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+          "locator": "PDF p.31, The Scientific Endeavour learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_se_investigation_safety",
@@ -267,10 +277,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+          "locator": "PDF p.31, The Scientific Endeavour learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_se_technology_benefits_harms",
@@ -284,10 +294,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+          "locator": "PDF p.31, The Scientific Endeavour learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_se_science_social_ethics",
@@ -301,10 +311,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+          "locator": "PDF p.31, The Scientific Endeavour learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_se_science_technology_limitations",
@@ -318,10 +328,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+          "locator": "PDF p.31, The Scientific Endeavour learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_se_responsible_science_technology",
@@ -335,10 +345,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+          "locator": "PDF p.31, The Scientific Endeavour learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_2_observable_measurable_physical_properties",
@@ -354,10 +364,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.32, topic 2 learning outcomes"
+          "locator": "PDF p.33, topic 2 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_2_mass_volume_density_relation",
@@ -373,10 +383,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.32, topic 2 learning outcomes"
+          "locator": "PDF p.33, topic 2 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_2_classify_everyday_objects",
@@ -390,10 +400,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.32, topic 2 learning outcomes"
+          "locator": "PDF p.33, topic 2 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_2_evaluate_material_use",
@@ -407,10 +417,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.32, topic 2 learning outcomes"
+          "locator": "PDF p.33, topic 2 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_2_communicate_classification",
@@ -424,10 +434,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.32, topic 2 learning outcomes"
+          "locator": "PDF p.33, topic 2 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_2_estimate_length_mass_volume",
@@ -441,10 +451,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.32, topic 2 learning outcomes"
+          "locator": "PDF p.33, topic 2 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_2_measure_length_mass_volume",
@@ -458,10 +468,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.32, topic 2 learning outcomes"
+          "locator": "PDF p.33, topic 2 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_2_volume_displacement",
@@ -475,10 +485,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.32, topic 2 learning outcomes"
+          "locator": "PDF p.33, topic 2 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_2_density_sink_float_prediction",
@@ -492,10 +502,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.32, topic 2 learning outcomes"
+          "locator": "PDF p.33, topic 2 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_2_density_calculation_units",
@@ -509,10 +519,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.32, topic 2 learning outcomes"
+          "locator": "PDF p.33, topic 2 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_2_sustainable_material_choices",
@@ -526,10 +536,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.32, topic 2 learning outcomes"
+          "locator": "PDF p.33, topic 2 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_2_alternative_materials_environment",
@@ -543,10 +553,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.32, topic 2 learning outcomes"
+          "locator": "PDF p.33, topic 2 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_3_elements_building_blocks",
@@ -562,10 +572,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.33, topic 3 learning outcomes"
+          "locator": "PDF p.34, topic 3 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_3_element_types_periodic_table",
@@ -581,10 +591,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.33, topic 3 learning outcomes"
+          "locator": "PDF p.34, topic 3 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_3_compound_definition",
@@ -600,10 +610,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.33, topic 3 learning outcomes"
+          "locator": "PDF p.34, topic 3 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_3_compound_properties",
@@ -619,10 +629,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.33, topic 3 learning outcomes"
+          "locator": "PDF p.34, topic 3 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_3_mixture_definition",
@@ -638,10 +648,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.33, topic 3 learning outcomes"
+          "locator": "PDF p.34, topic 3 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_3_mixture_constituent_properties",
@@ -657,10 +667,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.33, topic 3 learning outcomes"
+          "locator": "PDF p.34, topic 3 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_3_solute_solvent_solution",
@@ -676,10 +686,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.33, topic 3 learning outcomes"
+          "locator": "PDF p.34, topic 3 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_3_solutions_suspensions_mixtures",
@@ -695,10 +705,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.33, topic 3 learning outcomes"
+          "locator": "PDF p.34, topic 3 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_3_distinguish_element_compound_mixture",
@@ -712,10 +722,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.33, topic 3 learning outcomes"
+          "locator": "PDF p.34, topic 3 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_3_classify_by_chemical_composition",
@@ -729,10 +739,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.33, topic 3 learning outcomes"
+          "locator": "PDF p.34, topic 3 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_3_dissolving_rate_solubility_factors",
@@ -746,10 +756,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.33, topic 3 learning outcomes"
+          "locator": "PDF p.34, topic 3 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_3_waste_classification_recycling",
@@ -763,10 +773,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.33, topic 3 learning outcomes"
+          "locator": "PDF p.34, topic 3 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_3_composition_benefits_harms",
@@ -780,10 +790,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.33, topic 3 learning outcomes"
+          "locator": "PDF p.34, topic 3 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_4_separation_by_properties",
@@ -799,10 +809,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.34, topic 4 learning outcomes"
+          "locator": "PDF p.35, topic 4 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_4_separation_applications",
@@ -818,10 +828,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.34, topic 4 learning outcomes"
+          "locator": "PDF p.35, topic 4 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_4_investigate_mixture_separation",
@@ -835,10 +845,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.34, topic 4 learning outcomes"
+          "locator": "PDF p.35, topic 4 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_4_water_precious_conservation",
@@ -852,10 +862,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.34, topic 4 learning outcomes"
+          "locator": "PDF p.35, topic 4 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_4_singapore_sustainable_water",
@@ -869,10 +879,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.34, topic 4 learning outcomes"
+          "locator": "PDF p.35, topic 4 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_5_ray_model_path",
@@ -888,10 +898,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.36, topic 5 learning outcomes"
+          "locator": "PDF p.37, topic 5 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_5_reflecting_surfaces_effects_uses",
@@ -907,10 +917,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.36, topic 5 learning outcomes"
+          "locator": "PDF p.37, topic 5 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_5_smooth_rough_reflection",
@@ -926,10 +936,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.36, topic 5 learning outcomes"
+          "locator": "PDF p.37, topic 5 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_5_refraction_speed_media",
@@ -945,10 +955,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.36, topic 5 learning outcomes"
+          "locator": "PDF p.37, topic 5 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_5_refraction_effects",
@@ -964,10 +974,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.36, topic 5 learning outcomes"
+          "locator": "PDF p.37, topic 5 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_5_white_light_dispersion",
@@ -983,10 +993,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.36, topic 5 learning outcomes"
+          "locator": "PDF p.37, topic 5 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_5_plane_mirror_image_investigation",
@@ -1000,10 +1010,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.36, topic 5 learning outcomes"
+          "locator": "PDF p.37, topic 5 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_5_law_of_reflection_investigation",
@@ -1017,10 +1027,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.36, topic 5 learning outcomes"
+          "locator": "PDF p.37, topic 5 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_5_em_radiation_benefits_harms",
@@ -1034,10 +1044,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.36, topic 5 learning outcomes"
+          "locator": "PDF p.37, topic 5 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_5_technology_light_impact",
@@ -1051,10 +1061,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.36, topic 5 learning outcomes"
+          "locator": "PDF p.37, topic 5 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_6_typical_cell_part_functions",
@@ -1070,10 +1080,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.37, topic 6 learning outcomes"
+          "locator": "PDF p.38, topic 6 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_6_plant_animal_cell_models",
@@ -1089,10 +1099,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.37, topic 6 learning outcomes"
+          "locator": "PDF p.38, topic 6 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_6_cells_tissues_organs_systems",
@@ -1108,10 +1118,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.37, topic 6 learning outcomes"
+          "locator": "PDF p.38, topic 6 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_6_cellular_division_of_labour",
@@ -1127,10 +1137,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.37, topic 6 learning outcomes"
+          "locator": "PDF p.38, topic 6 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_6_microscope_cell_identification",
@@ -1144,10 +1154,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.37, topic 6 learning outcomes"
+          "locator": "PDF p.38, topic 6 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_6_infer_plant_or_animal_cell",
@@ -1161,10 +1171,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.37, topic 6 learning outcomes"
+          "locator": "PDF p.38, topic 6 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_6_microscope_technology_knowledge",
@@ -1178,10 +1188,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.37, topic 6 learning outcomes"
+          "locator": "PDF p.38, topic 6 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_7_particulate_model_random_motion",
@@ -1197,10 +1207,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.38, topic 7 learning outcomes"
+          "locator": "PDF p.39, topic 7 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_7_particle_arrangement_states",
@@ -1216,10 +1226,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.38, topic 7 learning outcomes"
+          "locator": "PDF p.39, topic 7 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_7_diffusion_concentration_gradient",
@@ -1236,10 +1246,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.38, topic 7 learning outcomes"
+          "locator": "PDF p.39, topic 7 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_7_thermal_expansion_mass_conservation_model",
@@ -1255,10 +1265,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.38, topic 7 learning outcomes"
+          "locator": "PDF p.39, topic 7 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_7_state_changes_particle_model",
@@ -1274,10 +1284,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.38, topic 7 learning outcomes"
+          "locator": "PDF p.39, topic 7 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_7_model_creativity_revision",
@@ -1291,10 +1301,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.38, topic 7 learning outcomes"
+          "locator": "PDF p.39, topic 7 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_8_neutral_atom_structure",
@@ -1311,10 +1321,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.39, topic 8 learning outcomes"
+          "locator": "PDF p.40, topic 8 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_8_atomic_mass_nucleus",
@@ -1330,10 +1340,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.39, topic 8 learning outcomes"
+          "locator": "PDF p.40, topic 8 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_8_element_unique_proton_number",
@@ -1349,10 +1359,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.39, topic 8 learning outcomes"
+          "locator": "PDF p.40, topic 8 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_8_molecule_definition",
@@ -1368,10 +1378,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.39, topic 8 learning outcomes"
+          "locator": "PDF p.40, topic 8 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_8_read_atoms_from_symbols_formulae",
@@ -1387,10 +1397,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.39, topic 8 learning outcomes"
+          "locator": "PDF p.40, topic 8 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_8_compare_atom_everyday_size",
@@ -1404,10 +1414,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.39, topic 8 learning outcomes"
+          "locator": "PDF p.40, topic 8 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_8_compare_atoms_molecules",
@@ -1421,10 +1431,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.39, topic 8 learning outcomes"
+          "locator": "PDF p.40, topic 8 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_8_atomic_models_revision",
@@ -1438,10 +1448,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.39, topic 8 learning outcomes"
+          "locator": "PDF p.40, topic 8 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_8_atomic_technology_ethics",
@@ -1455,10 +1465,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.39, topic 8 learning outcomes"
+          "locator": "PDF p.40, topic 8 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_9_contact_noncontact_forces",
@@ -1474,10 +1484,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.41, topic 9 learning outcomes"
+          "locator": "PDF p.42, topic 9 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_9_force_effects_energy_transfer",
@@ -1493,10 +1503,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.41, topic 9 learning outcomes"
+          "locator": "PDF p.42, topic 9 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_9_pressure_everyday_phenomena",
@@ -1512,10 +1522,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.41, topic 9 learning outcomes"
+          "locator": "PDF p.42, topic 9 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_9_joule_unit_work_energy",
@@ -1531,10 +1541,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.41, topic 9 learning outcomes"
+          "locator": "PDF p.42, topic 9 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_9_work_as_energy_transfer",
@@ -1550,10 +1560,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.41, topic 9 learning outcomes"
+          "locator": "PDF p.42, topic 9 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_9_energy_conservation_transfer_conversion",
@@ -1569,10 +1579,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.42, topic 9 learning outcomes"
+          "locator": "PDF p.43, topic 9 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_9_measure_force_newton",
@@ -1586,10 +1596,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.41, topic 9 learning outcomes"
+          "locator": "PDF p.42, topic 9 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_9_compare_mass_weight",
@@ -1603,10 +1613,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.41, topic 9 learning outcomes"
+          "locator": "PDF p.42, topic 9 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_9_investigate_pressure_formula",
@@ -1620,10 +1630,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.41, topic 9 learning outcomes"
+          "locator": "PDF p.42, topic 9 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_9_infer_energy_conversion",
@@ -1637,10 +1647,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.41, topic 9 learning outcomes"
+          "locator": "PDF p.42, topic 9 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_9_natural_force_hazards_curiosity",
@@ -1654,10 +1664,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.41, topic 9 learning outcomes"
+          "locator": "PDF p.42, topic 9 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_9_energy_sources_environment",
@@ -1671,10 +1681,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.41, topic 9 learning outcomes"
+          "locator": "PDF p.42, topic 9 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_10_kelvin_temperature_unit",
@@ -1690,10 +1700,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.43, topic 10 learning outcomes"
+          "locator": "PDF p.44, topic 10 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_10_thermal_expansion_applications",
@@ -1709,10 +1719,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.43, topic 10 learning outcomes"
+          "locator": "PDF p.44, topic 10 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_10_heat_transfer_modes",
@@ -1728,10 +1738,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.43, topic 10 learning outcomes"
+          "locator": "PDF p.44, topic 10 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_10_radiation_rate_surface_temperature",
@@ -1747,10 +1757,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.43, topic 10 learning outcomes"
+          "locator": "PDF p.44, topic 10 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_10_conduction_convection_applications",
@@ -1766,10 +1776,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.43, topic 10 learning outcomes"
+          "locator": "PDF p.44, topic 10 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_10_radiation_applications",
@@ -1785,10 +1795,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.43, topic 10 learning outcomes"
+          "locator": "PDF p.44, topic 10 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_10_infer_thermal_expansion",
@@ -1802,10 +1812,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.43, topic 10 learning outcomes"
+          "locator": "PDF p.44, topic 10 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_10_infer_expansion_density_change",
@@ -1819,10 +1829,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.43, topic 10 learning outcomes"
+          "locator": "PDF p.44, topic 10 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_10_compare_heat_transfer_rates",
@@ -1836,10 +1846,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.43, topic 10 learning outcomes"
+          "locator": "PDF p.44, topic 10 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_10_climate_change_causes",
@@ -1853,10 +1863,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.43, topic 10 learning outcomes"
+          "locator": "PDF p.44, topic 10 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_11_chemical_change_new_substances",
@@ -1872,10 +1882,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.44, topic 11 learning outcomes"
+          "locator": "PDF p.45, topic 11 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_11_word_equations",
@@ -1891,10 +1901,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.44, topic 11 learning outcomes"
+          "locator": "PDF p.45, topic 11 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_11_reaction_atomic_rearrangement",
@@ -1910,10 +1920,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.44, topic 11 learning outcomes"
+          "locator": "PDF p.45, topic 11 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_11_reaction_mass_conservation",
@@ -1929,10 +1939,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.44, topic 11 learning outcomes"
+          "locator": "PDF p.45, topic 11 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_11_types_of_chemical_change",
@@ -1948,10 +1958,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.44, topic 11 learning outcomes"
+          "locator": "PDF p.45, topic 11 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_11_investigate_acid_reactions",
@@ -1965,10 +1975,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.44, topic 11 learning outcomes"
+          "locator": "PDF p.45, topic 11 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_11_investigate_indicators",
@@ -1982,10 +1992,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.44, topic 11 learning outcomes"
+          "locator": "PDF p.45, topic 11 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_11_investigate_chemical_change_conditions",
@@ -1999,10 +2009,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.44, topic 11 learning outcomes"
+          "locator": "PDF p.45, topic 11 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_11_chemical_reactions_benefit_harm",
@@ -2016,10 +2026,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.44, topic 11 learning outcomes"
+          "locator": "PDF p.45, topic 11 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_12_environmental_conservation_importance",
@@ -2035,10 +2045,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.45, topic 12 learning outcomes"
+          "locator": "PDF p.46, topic 12 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_12_abiotic_factors_survival",
@@ -2054,10 +2064,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.45, topic 12 learning outcomes"
+          "locator": "PDF p.46, topic 12 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_12_adaptation_environment_survival",
@@ -2073,10 +2083,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.45, topic 12 learning outcomes"
+          "locator": "PDF p.46, topic 12 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_12_ecosystem_community_environment",
@@ -2092,10 +2102,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.45, topic 12 learning outcomes"
+          "locator": "PDF p.46, topic 12 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_12_community_interrelationships",
@@ -2111,10 +2121,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.45, topic 12 learning outcomes"
+          "locator": "PDF p.46, topic 12 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_12_food_web_energy_flow",
@@ -2131,10 +2141,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.45, topic 12 learning outcomes"
+          "locator": "PDF p.46, topic 12 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_12_decomposer_nutrient_recycling",
@@ -2150,10 +2160,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.45, topic 12 learning outcomes"
+          "locator": "PDF p.46, topic 12 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_12_measure_environmental_factors",
@@ -2167,10 +2177,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.45, topic 12 learning outcomes"
+          "locator": "PDF p.46, topic 12 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_12_human_technology_environment_impact",
@@ -2184,10 +2194,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.45, topic 12 learning outcomes"
+          "locator": "PDF p.46, topic 12 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_12_cultural_sustainable_living",
@@ -2201,10 +2211,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.45, topic 12 learning outcomes"
+          "locator": "PDF p.46, topic 12 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_13_current_voltage_resistance_units",
@@ -2222,10 +2232,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.47, topic 13 learning outcomes"
+          "locator": "PDF p.48, topic 13 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_13_current_chemical_heating_magnetic_effects",
@@ -2242,10 +2252,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.47, topic 13 learning outcomes"
+          "locator": "PDF p.48, topic 13 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_13_electrical_hazards_from_system_changes",
@@ -2261,10 +2271,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.47, topic 13 learning outcomes"
+          "locator": "PDF p.48, topic 13 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_13_household_electrical_precautions",
@@ -2280,10 +2290,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.47, topic 13 learning outcomes"
+          "locator": "PDF p.48, topic 13 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_13_electrical_power_output_unit",
@@ -2299,10 +2309,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.47, topic 13 learning outcomes"
+          "locator": "PDF p.48, topic 13 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_13_draw_build_measure_circuits",
@@ -2316,10 +2326,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.47, topic 13 learning outcomes"
+          "locator": "PDF p.48, topic 13 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_13_series_parallel_resistor_investigation",
@@ -2333,10 +2343,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.47, topic 13 learning outcomes"
+          "locator": "PDF p.48, topic 13 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_13_resistance_current_investigation",
@@ -2350,10 +2360,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.47, topic 13 learning outcomes"
+          "locator": "PDF p.48, topic 13 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_13_electricity_cost_kwh",
@@ -2367,10 +2377,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.47, topic 13 learning outcomes"
+          "locator": "PDF p.48, topic 13 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_13_reduce_household_electricity",
@@ -2384,10 +2394,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.47, topic 13 learning outcomes"
+          "locator": "PDF p.48, topic 13 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_14_digestive_system_importance",
@@ -2403,10 +2413,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.48, topic 14 learning outcomes"
+          "locator": "PDF p.49, topic 14 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_14_digestive_parts_system_function",
@@ -2422,10 +2432,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.48, topic 14 learning outcomes"
+          "locator": "PDF p.49, topic 14 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_14_digestion_of_food",
@@ -2441,10 +2451,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.48, topic 14 learning outcomes"
+          "locator": "PDF p.49, topic 14 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_14_digestion_products_cellular_use",
@@ -2460,10 +2470,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.48, topic 14 learning outcomes"
+          "locator": "PDF p.49, topic 14 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_14_digestive_enzyme_investigation",
@@ -2477,10 +2487,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.48, topic 14 learning outcomes"
+          "locator": "PDF p.49, topic 14 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_14_food_lifestyle_diabetes",
@@ -2494,10 +2504,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.48, topic 14 learning outcomes"
+          "locator": "PDF p.49, topic 14 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_14_gut_bacteria_benefits_harms",
@@ -2511,10 +2521,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.48, topic 14 learning outcomes"
+          "locator": "PDF p.49, topic 14 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_15_blood_vessel_transport_functions",
@@ -2530,10 +2540,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.49, topic 15 learning outcomes"
+          "locator": "PDF p.50, topic 15 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_15_xylem_phloem_transport",
@@ -2550,10 +2560,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.49, topic 15 learning outcomes"
+          "locator": "PDF p.50, topic 15 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_15_need_multicellular_transport",
@@ -2569,10 +2579,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.49, topic 15 learning outcomes"
+          "locator": "PDF p.50, topic 15 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_15_diffusion_human_transport",
@@ -2588,10 +2598,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.49, topic 15 learning outcomes"
+          "locator": "PDF p.50, topic 15 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_15_diffusion_plant_transport",
@@ -2607,10 +2617,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.49, topic 15 learning outcomes"
+          "locator": "PDF p.50, topic 15 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_15_osmosis_root_water_absorption",
@@ -2627,10 +2637,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.49, topic 15 learning outcomes"
+          "locator": "PDF p.50, topic 15 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_15_investigate_xylem_transport",
@@ -2644,10 +2654,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.49, topic 15 learning outcomes"
+          "locator": "PDF p.50, topic 15 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_15_drug_abuse_transport_system",
@@ -2661,10 +2671,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.49, topic 15 learning outcomes"
+          "locator": "PDF p.50, topic 15 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_15_heart_transplant_ethics",
@@ -2678,10 +2688,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.49, topic 15 learning outcomes"
+          "locator": "PDF p.50, topic 15 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_16_fertilisation_new_individual",
@@ -2697,10 +2707,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.50, topic 16 learning outcomes"
+          "locator": "PDF p.51, topic 16 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_16_sexual_reproduction_heredity",
@@ -2716,10 +2726,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.50, topic 16 learning outcomes"
+          "locator": "PDF p.51, topic 16 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_16_unique_parental_genetic_combination",
@@ -2735,10 +2745,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.50, topic 16 learning outcomes"
+          "locator": "PDF p.51, topic 16 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_16_puberty_hormone_changes",
@@ -2754,10 +2764,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.50, topic 16 learning outcomes"
+          "locator": "PDF p.51, topic 16 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_16_reproductive_parts_fertilisation",
@@ -2773,10 +2783,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.50, topic 16 learning outcomes"
+          "locator": "PDF p.51, topic 16 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_16_female_parts_menstrual_cycle",
@@ -2792,10 +2802,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.50, topic 16 learning outcomes"
+          "locator": "PDF p.51, topic 16 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_16_birth_control_mechanisms",
@@ -2811,10 +2821,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.51, topic 16 learning outcomes"
+          "locator": "PDF p.52, topic 16 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_16_sti_harmful_consequences",
@@ -2830,10 +2840,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.51, topic 16 learning outcomes"
+          "locator": "PDF p.52, topic 16 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_16_bacterial_viral_sti_treatment",
@@ -2849,10 +2859,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.51, topic 16 learning outcomes"
+          "locator": "PDF p.52, topic 16 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_16_evaluate_abortion_premarital_sex",
@@ -2866,10 +2876,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.50, topic 16 learning outcomes"
+          "locator": "PDF p.51, topic 16 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_16_substance_abuse_foetus",
@@ -2883,10 +2893,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.50, topic 16 learning outcomes"
+          "locator": "PDF p.51, topic 16 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "mapping_id": "map_sg_lss_science_2021_o_16_human_population_growth_reasons",
@@ -2900,10 +2910,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
-          "locator": "PDF p.50, topic 16 learning outcomes"
+          "locator": "PDF p.51, topic 16 learning outcomes"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ]
 }

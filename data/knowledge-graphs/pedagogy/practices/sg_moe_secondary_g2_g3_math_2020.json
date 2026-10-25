@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.2",
   "practice_set_id": "cpk_sg_moe_secondary_g2_g3_math_2020",
   "framework_id": "cfw_sg_moe_secondary_g2_g3_math_2020_outcomes",
   "curriculum_id": "cur_sg_moe_secondary_g2_g3_math_2020",
@@ -9,12 +9,22 @@
     "src_sg_moe_secondary_g2_g3_math_2020"
   ],
   "generated_at": "2026-07-19",
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "把 10 项计算器和 G2/G3 数学建模过程要求从知识概念分流至教学与评测知识层。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-10-25",
+      "summary_zh": "按 2026-10-25 官方来源复核更新证据定位（中国课标迁至 2025 日常修订版、新加坡页码校正），状态保持 needs_review。"
+    },
+    {
+      "version": "0.1.2",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准。"
     }
   ],
   "items": [
@@ -32,10 +42,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.14, g3 secondary all, Formulating a real-world problem"
+          "locator": "PDF p.16, g3 secondary all, Formulating a real-world problem"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_sec_math_2020_g3_secondary_all_model_data",
@@ -51,10 +61,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.14, g3 secondary all, Making sense of real data"
+          "locator": "PDF p.16, g3 secondary all, Making sense of real data"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_sec_math_2020_g3_secondary_all_model_solve",
@@ -70,10 +80,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.14, g3 secondary all, Selecting methods and solving a model"
+          "locator": "PDF p.16, g3 secondary all, Selecting methods and solving a model"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_sec_math_2020_g3_secondary_all_model_interpret",
@@ -89,10 +99,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.14, g3 secondary all, Interpreting a mathematical solution"
+          "locator": "PDF p.16, g3 secondary all, Interpreting a mathematical solution"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_sec_math_2020_g3_sec1_calculator_computation",
@@ -108,10 +118,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Calculator computation"
+          "locator": "PDF p.17, g3 sec1, Calculator computation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_sec_math_2020_g2_secondary_all_model_formulate",
@@ -127,10 +137,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.24, g2 secondary all, Formulating a real-world problem"
+          "locator": "PDF p.26, g2 secondary all, Formulating a real-world problem"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_sec_math_2020_g2_secondary_all_model_data",
@@ -146,10 +156,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.24, g2 secondary all, Making sense of real data"
+          "locator": "PDF p.26, g2 secondary all, Making sense of real data"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_sec_math_2020_g2_secondary_all_model_solve",
@@ -165,10 +175,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.24, g2 secondary all, Selecting methods and solving a model"
+          "locator": "PDF p.26, g2 secondary all, Selecting methods and solving a model"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_sec_math_2020_g2_secondary_all_model_interpret",
@@ -184,10 +194,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.24, g2 secondary all, Interpreting a mathematical solution"
+          "locator": "PDF p.26, g2 secondary all, Interpreting a mathematical solution"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_sec_math_2020_g2_sec1_calculator_computation",
@@ -203,10 +213,10 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Calculator computation"
+          "locator": "PDF p.27, g2 sec1, Calculator computation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ]
 }

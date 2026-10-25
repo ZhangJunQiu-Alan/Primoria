@@ -1,20 +1,30 @@
 {
   "schema_version": "1.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.2",
   "gap_set_id": "cgs_cn_moe_senior_high_biology_2020_outcomes",
   "framework_id": "cfw_cn_moe_senior_high_biology_2020_outcomes",
   "curriculum_id": "cur_cn_moe_senior_high_biology_2020",
   "subject": "Biology",
   "source_ids": [
-    "src_cn_moe_senior_high_biology_2020"
+    "src_cn_moe_senior_high_biology_2025"
   ],
   "generated_at": "2026-07-19",
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "逐成果反向查重并记录 partial 与 unmapped 缺口；纯价值立场不进入概念缺口。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-10-25",
+      "summary_zh": "按 2026-10-25 官方来源复核更新证据定位（中国课标迁至 2025 日常修订版、新加坡页码校正），状态保持 needs_review。"
+    },
+    {
+      "version": "0.1.2",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准。"
     }
   ],
   "candidates": [
@@ -34,11 +44,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.21（正文对应内容要求 1.1.1），必修·分子与细胞"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.16（正文对应内容要求 1.1.1），必修·分子与细胞"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_rc_1_1_3_cellular_inorganic_salts",
@@ -54,11 +64,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.21（正文对应内容要求 1.1.3），必修·分子与细胞"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.16（正文对应内容要求 1.1.3），必修·分子与细胞"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_rc_1_2_1_plasma_membrane_functions",
@@ -76,11 +86,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.1），必修·分子与细胞"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.16（正文对应内容要求 1.2.1），必修·分子与细胞"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_rc_1_2_3_nucleus_genetic_information",
@@ -99,11 +109,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.3），必修·分子与细胞"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.17（正文对应内容要求 1.2.3），必修·分子与细胞"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_rc_1_2_4_organelle_coordination",
@@ -121,11 +131,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.4），必修·分子与细胞"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.17（正文对应内容要求 1.2.4），必修·分子与细胞"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_rc_1_3_1_cellular_unity_diversity",
@@ -141,11 +151,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.22（正文对应内容要求 1.3.1），必修·分子与细胞"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.17（正文对应内容要求 1.3.1），必修·分子与细胞"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_rc_2_1_1_selective_permeability",
@@ -164,11 +174,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.22（正文对应内容要求 2.1.1），必修·分子与细胞"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.17（正文对应内容要求 2.1.1），必修·分子与细胞"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_rc_2_1_3_endocytosis_exocytosis",
@@ -184,11 +194,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.22（正文对应内容要求 2.1.3），必修·分子与细胞"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.17（正文对应内容要求 2.1.3），必修·分子与细胞"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_rc_2_3_2_cell_differentiation",
@@ -206,11 +216,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.23（正文对应内容要求 2.3.2），必修·分子与细胞"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.18（正文对应内容要求 2.3.2），必修·分子与细胞"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_rc_2_3_3_cell_senescence_death",
@@ -226,11 +236,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.23（正文对应内容要求 2.3.3），必修·分子与细胞"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.18（正文对应内容要求 2.3.3），必修·分子与细胞"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_rg_3_1_1_gene_nucleic_acid_segment",
@@ -250,11 +260,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.1），必修·遗传与进化"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.20（正文对应内容要求 3.1.1），必修·遗传与进化"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_rg_3_1_5_epigenetic_phenomena",
@@ -270,11 +280,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.5），必修·遗传与进化"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.20（正文对应内容要求 3.1.5），必修·遗传与进化"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_rg_3_2_2_gametic_inheritance",
@@ -292,11 +302,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.25（正文对应内容要求 3.2.2），必修·遗传与进化"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.20（正文对应内容要求 3.2.2），必修·遗传与进化"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_rg_3_2_4_sex_linked_inheritance",
@@ -312,11 +322,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.25（正文对应内容要求 3.2.4），必修·遗传与进化"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.20（正文对应内容要求 3.2.4），必修·遗传与进化"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_rg_3_3_3_mutagens_cancer",
@@ -334,11 +344,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.3），必修·遗传与进化"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.20（正文对应内容要求 3.3.3），必修·遗传与进化"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_rg_3_3_5_chromosomal_variation",
@@ -357,11 +367,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.5），必修·遗传与进化"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 3.3.5），必修·遗传与进化"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_rg_3_3_6_genetic_disease_screening",
@@ -377,11 +387,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.6），必修·遗传与进化"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 3.3.6），必修·遗传与进化"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_rg_4_1_1_common_ancestry_fossil_anatomy",
@@ -397,11 +407,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.26（正文对应内容要求 4.1.1），必修·遗传与进化"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 4.1.1），必修·遗传与进化"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_rg_4_1_2_common_ancestry_cell_molecular",
@@ -417,11 +427,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.26（正文对应内容要求 4.1.2），必修·遗传与进化"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 4.1.2），必修·遗传与进化"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sh_1_1_1_internal_environment_fluids",
@@ -437,11 +447,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.1），选择性必修·稳态与调节"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.23（正文对应内容要求 1.1.1），选择性必修·稳态与调节"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sh_1_1_2_internal_external_exchange",
@@ -457,11 +467,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.2），选择性必修·稳态与调节"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.23（正文对应内容要求 1.1.2），选择性必修·稳态与调节"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sh_1_1_3_organ_system_exchange",
@@ -481,11 +491,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.3），选择性必修·稳态与调节"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.23（正文对应内容要求 1.1.3），选择性必修·稳态与调节"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sh_1_3_1_reflex_arc",
@@ -501,11 +511,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.1），选择性必修·稳态与调节"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.24（正文对应内容要求 1.3.1），选择性必修·稳态与调节"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sh_1_3_4_central_nervous_hierarchy",
@@ -523,11 +533,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.4），选择性必修·稳态与调节"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.24（正文对应内容要求 1.3.4），选择性必修·稳态与调节"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sh_1_3_5_autonomic_nervous_regulation",
@@ -543,11 +553,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.5），选择性必修·稳态与调节"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.24（正文对应内容要求 1.3.5），选择性必修·稳态与调节"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sh_1_3_6_cortical_higher_activity",
@@ -563,11 +573,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.6），选择性必修·稳态与调节"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.24（正文对应内容要求 1.3.6），选择性必修·稳态与调节"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sh_1_4_1_endocrine_system",
@@ -585,11 +595,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.1），选择性必修·稳态与调节"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.24（正文对应内容要求 1.4.1），选择性必修·稳态与调节"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sh_1_4_3_neuroendocrine_coordination",
@@ -609,11 +619,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.3），选择性必修·稳态与调节"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.24（正文对应内容要求 1.4.3），选择性必修·稳态与调节"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sh_1_4_4_humoral_respiratory_regulation",
@@ -632,11 +642,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.4），选择性必修·稳态与调节"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.24（正文对应内容要求 1.4.4），选择性必修·稳态与调节"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sh_1_5_2_innate_adaptive_immunity",
@@ -654,11 +664,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.30（正文对应内容要求 1.5.2），选择性必修·稳态与调节"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 1.5.2），选择性必修·稳态与调节"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sh_1_5_4_immune_disorders",
@@ -674,11 +684,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.30（正文对应内容要求 1.5.4），选择性必修·稳态与调节"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 1.5.4），选择性必修·稳态与调节"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sh_1_6_1_auxin_dual_effects",
@@ -696,11 +706,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.30（正文对应内容要求 1.6.1），选择性必修·稳态与调节"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 1.6.1），选择性必修·稳态与调节"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sh_1_6_3_plant_growth_regulator_applications",
@@ -719,11 +729,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.31（正文对应内容要求 1.6.3），选择性必修·稳态与调节"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 1.6.3），选择性必修·稳态与调节"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_se_2_1_1_population_characteristics",
@@ -739,11 +749,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.1），选择性必修·生物与环境"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.27（正文对应内容要求 2.1.1），选择性必修·生物与环境"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_se_2_1_2_population_growth_models",
@@ -759,11 +769,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.2），选择性必修·生物与环境"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.27（正文对应内容要求 2.1.2），选择性必修·生物与环境"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_se_2_1_3_population_limiting_factors",
@@ -781,11 +791,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.3），选择性必修·生物与环境"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.27（正文对应内容要求 2.1.3），选择性必修·生物与环境"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_se_2_1_4_community_structure",
@@ -803,11 +813,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.4），选择性必修·生物与环境"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.27（正文对应内容要求 2.1.4），选择性必修·生物与环境"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_se_2_1_5_ecological_succession",
@@ -823,11 +833,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.5），选择性必修·生物与环境"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.27（正文对应内容要求 2.1.5），选择性必修·生物与环境"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_se_2_2_2_food_chains_webs",
@@ -843,11 +853,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.2），选择性必修·生物与环境"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.28（正文对应内容要求 2.2.2），选择性必修·生物与环境"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_se_2_2_3_matter_cycles_energy_flow",
@@ -863,11 +873,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.3），选择性必修·生物与环境"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.28（正文对应内容要求 2.2.3），选择性必修·生物与环境"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_se_2_2_4_ecological_resource_use",
@@ -886,11 +896,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.4），选择性必修·生物与环境"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.28（正文对应内容要求 2.2.4），选择性必修·生物与环境"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_se_2_2_5_ecological_pyramids",
@@ -906,11 +916,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.5），选择性必修·生物与环境"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.28（正文对应内容要求 2.2.5），选择性必修·生物与环境"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_se_2_2_6_biomagnification",
@@ -926,11 +936,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.6），选择性必修·生物与环境"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.28（正文对应内容要求 2.2.6），选择性必修·生物与环境"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_se_2_2_7_ecosystem_information_transfer",
@@ -946,11 +956,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.7），选择性必修·生物与环境"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.28（正文对应内容要求 2.2.7），选择性必修·生物与环境"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_se_2_2_8_trophic_structure_factors",
@@ -968,11 +978,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.8），选择性必修·生物与环境"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.28（正文对应内容要求 2.2.8），选择性必修·生物与环境"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_se_2_3_1_ecosystem_stability",
@@ -988,11 +998,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.1），选择性必修·生物与环境"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.28（正文对应内容要求 2.3.1），选择性必修·生物与环境"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_se_2_3_2_ecosystem_disturbances",
@@ -1010,11 +1020,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.2），选择性必修·生物与环境"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.28（正文对应内容要求 2.3.2），选择性必修·生物与环境"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_se_2_3_3_ecosystem_self_regulation",
@@ -1030,11 +1040,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.3），选择性必修·生物与环境"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.28（正文对应内容要求 2.3.3），选择性必修·生物与环境"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_se_2_4_1_population_environment_pressure",
@@ -1050,11 +1060,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.1），选择性必修·生物与环境"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 2.4.1），选择性必修·生物与环境"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_se_2_4_2_global_environmental_change",
@@ -1072,11 +1082,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.2），选择性必修·生物与环境"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 2.4.2），选择性必修·生物与环境"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_se_2_4_4_ecological_engineering_circularity",
@@ -1095,11 +1105,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.4），选择性必修·生物与环境"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 2.4.4），选择性必修·生物与环境"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_3_1_1_sterilisation_microbe_culture",
@@ -1115,11 +1125,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.1），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.31（正文对应内容要求 3.1.1），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_3_1_2_aseptic_technique",
@@ -1135,11 +1145,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.2），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.31（正文对应内容要求 3.1.2），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_3_1_3_selective_culture_media",
@@ -1155,11 +1165,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.3），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.31（正文对应内容要求 3.1.3），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_3_1_4_microbial_isolation_methods",
@@ -1175,11 +1185,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.4），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.31（正文对应内容要求 3.1.4），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_3_1_5_microbial_counting_methods",
@@ -1195,11 +1205,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.5），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.31（正文对应内容要求 3.1.5），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_3_2_1_traditional_fermentation",
@@ -1215,11 +1225,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.1），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.31（正文对应内容要求 3.2.1），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_3_2_2_industrial_fermentation",
@@ -1235,11 +1245,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.2），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.31（正文对应内容要求 3.2.2），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_3_2_3_fermentation_applications",
@@ -1255,11 +1265,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.3），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.31（正文对应内容要求 3.2.3），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_4_1_1_plant_tissue_culture",
@@ -1275,11 +1285,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.1），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.31（正文对应内容要求 4.1.1），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_4_1_2_plant_somatic_hybridisation",
@@ -1295,11 +1305,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.2），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.31（正文对应内容要求 4.1.2），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_4_1_3_plant_cell_engineering_applications",
@@ -1315,11 +1325,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.3），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.31（正文对应内容要求 4.1.3），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_4_2_1_animal_cell_culture",
@@ -1335,11 +1345,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.37（正文对应内容要求 4.2.1），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.32（正文对应内容要求 4.2.1），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_4_2_2_somatic_cell_nuclear_transfer",
@@ -1357,11 +1367,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.2），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.32（正文对应内容要求 4.2.2），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_4_2_3_animal_cell_fusion",
@@ -1377,11 +1387,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.3），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.32（正文对应内容要求 4.2.3），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_4_2_4_monoclonal_antibody_production",
@@ -1399,11 +1409,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.4），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.32（正文对应内容要求 4.2.4），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_4_2_5_stem_cell_applications",
@@ -1419,11 +1429,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.5），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.32（正文对应内容要求 4.2.5），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_4_3_1_fertilisation_early_embryo",
@@ -1439,11 +1449,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.38（正文对应内容要求 4.3.1），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.32（正文对应内容要求 4.3.1），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_4_3_2_embryo_engineering",
@@ -1459,11 +1469,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.38（正文对应内容要求 4.3.2），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.32（正文对应内容要求 4.3.2），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_5_1_2_gene_engineering_tools",
@@ -1481,11 +1491,11 @@
       "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确复用。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.38（正文对应内容要求 5.1.2），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.32（正文对应内容要求 5.1.2），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_5_2_1_protein_engineering_design",
@@ -1501,11 +1511,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.38（正文对应内容要求 5.2.1），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.32-33（正文对应内容要求 5.2.1），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_5_2_2_protein_engineering_process",
@@ -1521,11 +1531,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.38（正文对应内容要求 5.2.2），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 5.2.2），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_6_1_2_gmo_impacts",
@@ -1541,11 +1551,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.38（正文对应内容要求 6.1.2），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 6.1.2），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_6_2_1_reproductive_cloning_ethics",
@@ -1561,11 +1571,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.38（正文对应内容要求 6.2.1），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 6.2.1），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_6_2_2_reproductive_cloning_china_policy",
@@ -1581,11 +1591,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.38（正文对应内容要求 6.2.2），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 6.2.2），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_cn_sh_bio_2020_o_sb_6_3_1_biological_weapons_harms",
@@ -1601,11 +1611,11 @@
       "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_biology_2020",
-          "locator": "生物学标准PDF p.38（正文对应内容要求 6.3.1），选择性必修·生物技术与工程"
+          "source_id": "src_cn_moe_senior_high_biology_2025",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 6.3.1），选择性必修·生物技术与工程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ]
 }

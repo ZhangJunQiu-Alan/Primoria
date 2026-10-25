@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.1",
   "practice_set_id": "cpk_sg_seab_h2_physics_9478_2026",
   "framework_id": "cfw_sg_seab_h2_physics_9478_2026_outcomes",
   "curriculum_id": "cur_sg_seab_h2_physics_9478_2026",
@@ -9,12 +9,17 @@
     "src_sg_seab_h2_physics_9478_2026"
   ],
   "generated_at": "2026-07-19",
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "将 14 项估测、表示、实验与电子表格要求分流到教学和评测知识层。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准。"
     }
   ],
   "items": [
@@ -35,7 +40,7 @@
           "locator": "PDF p.11, topic 1 Quantities and Measurement, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_physics_9478_2026_2_free_body_vector_triangles",
@@ -54,7 +59,7 @@
           "locator": "PDF p.12, topic 2 Forces and Moments, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_physics_9478_2026_9_investigate_oscillator",
@@ -73,7 +78,7 @@
           "locator": "PDF p.18, topic 9 Oscillations, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_physics_9478_2026_17_current_balance_measurement",
@@ -92,7 +97,7 @@
           "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_physics_9478_2026_practice_pos_wotd",
@@ -111,7 +116,7 @@
           "locator": "PDF p.4, Practices of Science 1.1-1.8"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_physics_9478_2026_practice_pos_nos",
@@ -130,7 +135,7 @@
           "locator": "PDF p.4, Practices of Science 2.1-2.4"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_physics_9478_2026_practice_pos_stse",
@@ -149,7 +154,7 @@
           "locator": "PDF p.4, Practices of Science 3.1-3.3"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_physics_9478_2026_practice_practical_planning",
@@ -168,7 +173,7 @@
           "locator": "PDF p.31, Practical Assessment: Planning"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_physics_9478_2026_practice_practical_mmo",
@@ -187,7 +192,7 @@
           "locator": "PDF p.31, Practical Assessment: MMO"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_physics_9478_2026_practice_practical_pdo",
@@ -206,7 +211,7 @@
           "locator": "PDF p.31, Practical Assessment: PDO"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_physics_9478_2026_practice_practical_ace",
@@ -225,7 +230,7 @@
           "locator": "PDF p.31, Practical Assessment: ACE"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_physics_9478_2026_practice_spreadsheet_data",
@@ -244,7 +249,7 @@
           "locator": "PDF p.36, Spreadsheet requirements: Data input"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_physics_9478_2026_practice_spreadsheet_operations",
@@ -263,7 +268,7 @@
           "locator": "PDF p.36, Spreadsheet requirements: Functions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "practice_id": "practice_sg_h2_physics_9478_2026_practice_spreadsheet_graphs",
@@ -282,7 +287,7 @@
           "locator": "PDF p.36, Spreadsheet requirements: Graphs"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ]
 }

@@ -1,8 +1,246 @@
 {
-  "contentVersion": "1.1.1",
+  "contentVersion": "1.1.3",
   "generatedFrom": "data/knowledge-graphs/source/cross_subject_edges.json",
   "note": "Approved cross-subject prerequisite edges used for deterministic learning-goal scope selection.",
   "edges": [
+    {
+      "from": "bio_aba_stomatal_closure",
+      "to": "cn_sh_bio_plant_growth_regulator_applications",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_antibodies",
+      "to": "cn_sh_bio_immune_disorders",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_chromosomes",
+      "to": "cn_sh_bio_gametic_inheritance",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_ecosystems_niches",
+      "to": "cn_sh_bio_community_structure",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_ecosystems_niches",
+      "to": "cn_sh_bio_ecological_pyramids",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_ecosystems_niches",
+      "to": "cn_sh_bio_ecosystem_self_regulation",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_ecosystems_niches",
+      "to": "cn_sh_bio_food_chains_webs",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_gene_applications",
+      "to": "cn_sh_bio_gmo_impacts",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_gene_control",
+      "to": "cn_sh_bio_epigenetic_phenomena",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_genetic_crosses",
+      "to": "cn_sh_bio_sex_linked_inheritance",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_glucose_control",
+      "to": "cn_sh_bio_neuroendocrine_coordination",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_hormonal",
+      "to": "cn_sh_bio_neuroendocrine_coordination",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_immune_response",
+      "to": "cn_sh_bio_immune_disorders",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_immune_response",
+      "to": "cn_sh_bio_innate_adaptive_immunity",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_meiosis",
+      "to": "cn_sh_bio_chromosomal_variation",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_meiosis",
+      "to": "cn_sh_bio_gametic_inheritance",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_mutation",
+      "to": "cn_sh_bio_mutagens_cancer",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_nervous",
+      "to": "cn_sh_bio_autonomic_nervous_regulation",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_nervous",
+      "to": "cn_sh_bio_humoral_respiratory_regulation",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_organelles",
+      "to": "cn_sh_bio_nucleus_genetic_information",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_organelles",
+      "to": "cn_sh_bio_organelle_coordination",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_plant_responses",
+      "to": "cn_sh_bio_plant_growth_regulator_applications",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_synapses",
+      "to": "cn_sh_bio_central_nervous_hierarchy",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_transcription",
+      "to": "cn_sh_bio_epigenetic_phenomena",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_variation",
+      "to": "cn_sh_bio_genetic_disease_screening",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "senior_secondary_biology"
+    },
+    {
+      "from": "bio_antibodies",
+      "to": "sg_h2_biology_antibody_diversity_mechanisms",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "singapore_h2_biology"
+    },
+    {
+      "from": "bio_dna_structure",
+      "to": "sg_h2_biology_dna_end_replication_problem",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "singapore_h2_biology"
+    },
+    {
+      "from": "bio_hardy_weinberg",
+      "to": "sg_h2_biology_recessive_allele_persistence",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "singapore_h2_biology"
+    },
+    {
+      "from": "bio_mitosis",
+      "to": "sg_h2_biology_cell_cycle_dysregulation_cancer_risk",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "singapore_h2_biology"
+    },
+    {
+      "from": "bio_mutation",
+      "to": "sg_h2_biology_maternal_genetic_screening_ethics",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "singapore_h2_biology"
+    },
+    {
+      "from": "bio_natural_selection",
+      "to": "sg_h2_biology_recessive_allele_persistence",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "singapore_h2_biology"
+    },
+    {
+      "from": "bio_speciation",
+      "to": "sg_h2_biology_phylogeny_and_molecular_classification",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "singapore_h2_biology"
+    },
+    {
+      "from": "bio_virus_structure_classification",
+      "to": "sg_h2_biology_virus_living_boundary",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "singapore_h2_biology"
+    },
+    {
+      "from": "bio_ecosystems_niches",
+      "to": "sg_lss_science_ecosystem_factors_adaptation_interactions",
+      "strength": "soft",
+      "fromGraphId": "a_level_biology",
+      "toGraphId": "singapore_lower_secondary_science"
+    },
     {
       "from": "che_amino_acids",
       "to": "bio_proteins",
@@ -30,6 +268,265 @@
       "strength": "hard",
       "fromGraphId": "a_level_chemistry",
       "toGraphId": "a_level_biology"
+    },
+    {
+      "from": "che_alkanes",
+      "to": "cn_sh_chem_energy_resource_systems",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "senior_secondary_chemistry"
+    },
+    {
+      "from": "che_cells",
+      "to": "cn_sh_chem_fuel_battery_evaluation",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "senior_secondary_chemistry"
+    },
+    {
+      "from": "che_collision",
+      "to": "cn_sh_chem_industrial_condition_optimisation",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "senior_secondary_chemistry"
+    },
+    {
+      "from": "che_condensation_polymer",
+      "to": "cn_sh_chem_carbohydrates",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "senior_secondary_chemistry"
+    },
+    {
+      "from": "che_electrolysis",
+      "to": "cn_sh_chem_electrochemical_corrosion",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "senior_secondary_chemistry"
+    },
+    {
+      "from": "che_elimination",
+      "to": "cn_sh_chem_organic_synthesis_routes",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "senior_secondary_chemistry"
+    },
+    {
+      "from": "che_kc_kp",
+      "to": "cn_sh_chem_reaction_quotient_direction",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "senior_secondary_chemistry"
+    },
+    {
+      "from": "che_ksp",
+      "to": "cn_sh_chem_aqueous_equilibrium_applications",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "senior_secondary_chemistry"
+    },
+    {
+      "from": "che_mechanism_types",
+      "to": "cn_sh_chem_functional_group_tests",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "senior_secondary_chemistry"
+    },
+    {
+      "from": "che_mechanism_types",
+      "to": "cn_sh_chem_organic_synthesis_routes",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "senior_secondary_chemistry"
+    },
+    {
+      "from": "che_nitrogen_sulfur",
+      "to": "cn_sh_chem_inorganic_conversion_pathways",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "senior_secondary_chemistry"
+    },
+    {
+      "from": "che_nucleophilic_sub",
+      "to": "cn_sh_chem_organic_synthesis_routes",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "senior_secondary_chemistry"
+    },
+    {
+      "from": "che_organic_representations",
+      "to": "cn_sh_chem_functional_group_properties_conversion",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "senior_secondary_chemistry"
+    },
+    {
+      "from": "che_organic_representations",
+      "to": "cn_sh_chem_functional_group_tests",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "senior_secondary_chemistry"
+    },
+    {
+      "from": "che_oxidation_number",
+      "to": "cn_sh_chem_oxidising_reducing_agents",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "senior_secondary_chemistry"
+    },
+    {
+      "from": "che_ph_ka",
+      "to": "cn_sh_chem_salt_hydrolysis",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "senior_secondary_chemistry"
+    },
+    {
+      "from": "che_redox_equations",
+      "to": "cn_sh_chem_oxidising_reducing_agents",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "senior_secondary_chemistry"
+    },
+    {
+      "from": "che_solids",
+      "to": "cn_sh_chem_transitional_mixed_crystals",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "senior_secondary_chemistry"
+    },
+    {
+      "from": "che_strong_weak",
+      "to": "cn_sh_chem_ionic_reaction_conditions",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "senior_secondary_chemistry"
+    },
+    {
+      "from": "che_bond_fission",
+      "to": "sg_h2_chemistry_organic_electronic_steric_effects",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "singapore_h2_chemistry"
+    },
+    {
+      "from": "che_bronsted",
+      "to": "sg_h2_chemistry_acid_base_models_arrhenius_lewis",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "singapore_h2_chemistry"
+    },
+    {
+      "from": "che_catalysis",
+      "to": "sg_h2_chemistry_enzyme_catalysis_specificity_conditions",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "singapore_h2_chemistry"
+    },
+    {
+      "from": "che_cells",
+      "to": "sg_h2_chemistry_electrode_potential_concentration_trends",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "singapore_h2_chemistry"
+    },
+    {
+      "from": "che_cells",
+      "to": "sg_h2_chemistry_standard_state_prediction_limits",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "singapore_h2_chemistry"
+    },
+    {
+      "from": "che_complex_ions",
+      "to": "sg_h2_chemistry_ligand_exchange_complex_contexts",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "singapore_h2_chemistry"
+    },
+    {
+      "from": "che_electrolysis",
+      "to": "sg_h2_chemistry_industrial_electrolysis_applications",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "singapore_h2_chemistry"
+    },
+    {
+      "from": "che_electron_config",
+      "to": "sg_h2_chemistry_transition_periodic_invariance",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "singapore_h2_chemistry"
+    },
+    {
+      "from": "che_gas_laws",
+      "to": "sg_h2_chemistry_ideal_gas_mixture_partial_pressures",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "singapore_h2_chemistry"
+    },
+    {
+      "from": "che_gibbs",
+      "to": "sg_h2_chemistry_standard_state_prediction_limits",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "singapore_h2_chemistry"
+    },
+    {
+      "from": "che_ksp",
+      "to": "sg_h2_chemistry_complex_ion_solubility_control",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "singapore_h2_chemistry"
+    },
+    {
+      "from": "che_mechanism_types",
+      "to": "sg_h2_chemistry_organic_electronic_steric_effects",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "singapore_h2_chemistry"
+    },
+    {
+      "from": "che_nucleophilic_sub",
+      "to": "sg_h2_chemistry_nucleophilic_substitution_stereochemistry",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "singapore_h2_chemistry"
+    },
+    {
+      "from": "che_ph_ka",
+      "to": "sg_h2_chemistry_titration_curves_indicator_selection",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "singapore_h2_chemistry"
+    },
+    {
+      "from": "che_strong_weak",
+      "to": "sg_h2_chemistry_base_dissociation_water_ionic_product",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "singapore_h2_chemistry"
+    },
+    {
+      "from": "che_strong_weak",
+      "to": "sg_h2_chemistry_titration_curves_indicator_selection",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "singapore_h2_chemistry"
+    },
+    {
+      "from": "che_transition_props",
+      "to": "sg_h2_chemistry_transition_periodic_invariance",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "singapore_h2_chemistry"
+    },
+    {
+      "from": "che_subatomic",
+      "to": "sg_lss_science_atomic_identity_mass",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "singapore_lower_secondary_science"
     },
     {
       "from": "mat_exp_func",
@@ -74,6 +571,356 @@
       "toGraphId": "a_level_physics"
     },
     {
+      "from": "mat_argand",
+      "to": "cn_sh_math_complex_addition_geometry",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_arithmetic",
+      "to": "cn_sh_math_arithmetic_linear_relation",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_arithmetic",
+      "to": "cn_sh_math_arithmetic_sequence_modelling",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_central_spread",
+      "to": "cn_sh_math_distribution_percentiles",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_central_spread",
+      "to": "cn_sh_math_stratified_sampling",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_conditional",
+      "to": "cn_sh_math_total_probability_formula",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_double_angle",
+      "to": "cn_sh_math_trig_product_sum_half_angle",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_exp_func",
+      "to": "cn_sh_math_interpret_model_parameters",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_exp_func",
+      "to": "cn_sh_math_logarithmic_function_behavior",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_geometric",
+      "to": "cn_sh_math_geometric_exponential_relation",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_geometric",
+      "to": "cn_sh_math_geometric_sequence_modelling",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_log_laws",
+      "to": "cn_sh_math_interpret_model_parameters",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_power_rule",
+      "to": "cn_sh_math_simple_linear_composites",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_prob_rules",
+      "to": "cn_sh_math_classical_probability",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_prob_rules",
+      "to": "cn_sh_math_total_probability_formula",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_sampling",
+      "to": "cn_sh_math_sampling_design",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_sampling",
+      "to": "cn_sh_math_simple_random_sampling",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_sampling",
+      "to": "cn_sh_math_stratified_sampling",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_scalar_product",
+      "to": "cn_sh_math_sine_cosine_laws",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_scalar_product",
+      "to": "cn_sh_math_vector_applications",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_scalar_product",
+      "to": "cn_sh_math_vector_geometry_proofs",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_scalar_product",
+      "to": "cn_sh_math_vector_projection",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_special_derivatives",
+      "to": "cn_sh_math_simple_linear_composites",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_stationary",
+      "to": "cn_sh_math_derivative_optimisation",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_straight_lines",
+      "to": "cn_sh_math_line_intersections_distances",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_trig_ratios",
+      "to": "cn_sh_math_trig_reduction_formulas",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_vector_basics",
+      "to": "cn_sh_math_sine_cosine_laws",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_vector_basics",
+      "to": "cn_sh_math_spatial_vector_basis",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_vector_basics",
+      "to": "cn_sh_math_vector_applications",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_vector_basics",
+      "to": "cn_sh_math_vector_projection",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_vector_lines",
+      "to": "cn_sh_math_vector_geometry_proofs",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "mat_newton_laws",
+      "to": "cn_sh_physics_centrifugal_phenomena",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "mat_newton_laws",
+      "to": "cn_sh_physics_overweight_weightlessness",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "mat_newton_laws",
+      "to": "cn_sh_physics_si_mechanics_units",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "mat_argand",
+      "to": "sg_h2_math_complex_geometric_effects",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "mat_complex_arith",
+      "to": "sg_h2_math_conjugate_polynomial_roots",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "mat_continuous_random_variables",
+      "to": "sg_h2_math_normal_probabilities_parameters",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "mat_form_de",
+      "to": "sg_h2_math_interpret_ode_solution",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "mat_functions",
+      "to": "sg_h2_math_inverse_existence_restriction",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "mat_hypothesis",
+      "to": "sg_h2_math_interpret_hypothesis_result",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "mat_hypothesis",
+      "to": "sg_h2_math_one_mean_hypothesis_test",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "mat_hypothesis",
+      "to": "sg_h2_math_one_two_tailed_tests",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "mat_inequalities",
+      "to": "sg_h2_math_rational_quadratic_inequalities",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "mat_normal_dist",
+      "to": "sg_h2_math_normal_probabilities_parameters",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "mat_prob_rules",
+      "to": "sg_h2_math_probability_representations",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "mat_scalar_product",
+      "to": "sg_h2_math_relative_positions_3d",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "mat_vector_basics",
+      "to": "sg_h2_math_collinearity_ratio",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "mat_vector_basics",
+      "to": "sg_h2_math_vector_types_magnitude",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "mat_vector_lines",
+      "to": "sg_h2_math_point_line_plane_distance",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "mat_vector_magnitude",
+      "to": "sg_h2_math_collinearity_ratio",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
       "from": "phy_energy_levels",
       "to": "che_electron_config",
       "strength": "hard",
@@ -100,6 +947,307 @@
       "strength": "hard",
       "fromGraphId": "a_level_physics",
       "toGraphId": "a_level_chemistry"
+    },
+    {
+      "from": "phy_binding_energy",
+      "to": "cn_sh_physics_nuclear_energy_intro",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_centripetal_force",
+      "to": "cn_sh_physics_centrifugal_phenomena",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_current_charge",
+      "to": "cn_sh_physics_point_charge_model",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_e_field_strength",
+      "to": "cn_sh_physics_charged_particle_electric_motion",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_e_field_strength",
+      "to": "cn_sh_physics_electric_field_lines",
+      "strength": "hard",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_e_potential",
+      "to": "cn_sh_physics_charged_particle_electric_motion",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_em_spectrum",
+      "to": "cn_sh_physics_electromagnetic_wave_applications",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_em_spectrum",
+      "to": "cn_sh_physics_light_energy_quantisation",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_energy_conservation",
+      "to": "cn_sh_physics_energy_conversion_directionality",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_energy_conservation",
+      "to": "cn_sh_physics_second_law_thermodynamics",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_faraday",
+      "to": "cn_sh_physics_electromagnetic_field_waves",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_faraday",
+      "to": "cn_sh_physics_self_induction",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_force_types",
+      "to": "cn_sh_physics_force_composition_vectors",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_half_life",
+      "to": "cn_sh_physics_radioisotope_application_safety",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_kinetic_theory",
+      "to": "cn_sh_physics_diffusion_brownian",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_kinetic_theory",
+      "to": "cn_sh_physics_molecular_speed_distribution",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_motion_graphs",
+      "to": "cn_sh_physics_free_fall",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_newton_gravitation",
+      "to": "cn_sh_physics_cosmic_velocities",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_newton_laws",
+      "to": "cn_sh_physics_centrifugal_phenomena",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_newton_laws",
+      "to": "cn_sh_physics_overweight_weightlessness",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_newton_laws",
+      "to": "cn_sh_physics_si_mechanics_units",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_orbits",
+      "to": "cn_sh_physics_cosmic_velocities",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_pd_emf",
+      "to": "cn_sh_physics_electrical_work_power",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_potential_divider",
+      "to": "cn_sh_physics_sensor_applications",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_progressive_waves",
+      "to": "cn_sh_physics_wave_reflection_refraction",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_radioactive_decay",
+      "to": "cn_sh_physics_radioisotope_application_safety",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_resistance_ohm",
+      "to": "cn_sh_physics_electrical_work_power",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_resistive_sensors",
+      "to": "cn_sh_physics_sensor_applications",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_series_parallel",
+      "to": "cn_sh_physics_closed_circuit_ohm",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_shm",
+      "to": "cn_sh_physics_simple_pendulum_period",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_suvat",
+      "to": "cn_sh_physics_free_fall",
+      "strength": "hard",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_transformers",
+      "to": "cn_sh_physics_high_voltage_transmission",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "senior_secondary_physics"
+    },
+    {
+      "from": "phy_e_field_strength",
+      "to": "sg_h2_physics_field_lines_equipotential_geometry",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "singapore_h2_physics"
+    },
+    {
+      "from": "phy_force_charge",
+      "to": "sg_h2_physics_crossed_field_velocity_selector",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "singapore_h2_physics"
+    },
+    {
+      "from": "phy_grav_field_strength",
+      "to": "sg_h2_physics_field_lines_equipotential_geometry",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "singapore_h2_physics"
+    },
+    {
+      "from": "phy_radioactive_decay",
+      "to": "sg_h2_physics_background_radiation_properties",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "singapore_h2_physics"
+    },
+    {
+      "from": "phy_wave_particle",
+      "to": "sg_h2_physics_wavefunction_probability_superposition",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "singapore_h2_physics"
+    },
+    {
+      "from": "phy_current_charge",
+      "to": "sg_lss_science_current_chemical_heating_effects",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "singapore_lower_secondary_science"
+    },
+    {
+      "from": "phy_current_charge",
+      "to": "sg_lss_science_current_magnetic_effect",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "singapore_lower_secondary_science"
+    },
+    {
+      "from": "phy_force_types",
+      "to": "sg_lss_science_force_effects_energy_transfer",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "singapore_lower_secondary_science"
+    },
+    {
+      "from": "phy_nuclear_structure",
+      "to": "sg_lss_science_atomic_identity_mass",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "singapore_lower_secondary_science"
+    },
+    {
+      "from": "phy_resistance_ohm",
+      "to": "sg_lss_science_current_chemical_heating_effects",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "singapore_lower_secondary_science"
+    },
+    {
+      "from": "phy_temperature",
+      "to": "sg_lss_science_thermal_expansion_density",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "singapore_lower_secondary_science"
     },
     {
       "from": "net_ip_addressing",
@@ -228,6 +1376,55 @@
       "toGraphId": "machine_learning"
     },
     {
+      "from": "conditional_probability",
+      "to": "cn_sh_math_total_probability_formula",
+      "strength": "hard",
+      "fromGraphId": "discrete_math_and_probability",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "probability_spaces",
+      "to": "cn_sh_math_classical_probability",
+      "strength": "soft",
+      "fromGraphId": "discrete_math_and_probability",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "variance_and_covariance",
+      "to": "cn_sh_math_sample_correlation",
+      "strength": "hard",
+      "fromGraphId": "discrete_math_and_probability",
+      "toGraphId": "senior_secondary_mathematics"
+    },
+    {
+      "from": "continuous_random_variables",
+      "to": "sg_h2_math_normal_probabilities_parameters",
+      "strength": "soft",
+      "fromGraphId": "discrete_math_and_probability",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "expectation",
+      "to": "sg_h2_math_independent_sum_moments",
+      "strength": "hard",
+      "fromGraphId": "discrete_math_and_probability",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "normal_distribution",
+      "to": "sg_h2_math_normal_probabilities_parameters",
+      "strength": "hard",
+      "fromGraphId": "discrete_math_and_probability",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "variance_and_covariance",
+      "to": "sg_h2_math_independent_sum_moments",
+      "strength": "hard",
+      "fromGraphId": "discrete_math_and_probability",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
       "from": "c_hash_tables",
       "to": "c_ucb61b_hash_code",
       "strength": "soft",
@@ -338,6 +1535,97 @@
       "strength": "soft",
       "fromGraphId": "mit_calculus",
       "toGraphId": "numerical_analysis"
+    },
+    {
+      "from": "c_1801_power_series",
+      "to": "sg_h2_math_series_approximations",
+      "strength": "soft",
+      "fromGraphId": "mit_calculus",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "c_1802_lines_planes",
+      "to": "sg_h2_math_point_line_plane_distance",
+      "strength": "soft",
+      "fromGraphId": "mit_calculus",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "c_1802_lines_planes",
+      "to": "sg_h2_math_relative_positions_3d",
+      "strength": "soft",
+      "fromGraphId": "mit_calculus",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "cn_sh_bio_innate_adaptive_immunity",
+      "to": "sg_h2_biology_adaptive_immune_cell_coordination",
+      "strength": "soft",
+      "fromGraphId": "senior_secondary_biology",
+      "toGraphId": "singapore_h2_biology"
+    },
+    {
+      "from": "cn_sh_bio_cellular_unity_diversity",
+      "to": "sg_lss_science_multicellular_organisation_labour",
+      "strength": "soft",
+      "fromGraphId": "senior_secondary_biology",
+      "toGraphId": "singapore_lower_secondary_science"
+    },
+    {
+      "from": "cn_sh_bio_food_chains_webs",
+      "to": "sg_lss_science_decomposers_nutrient_cycle",
+      "strength": "soft",
+      "fromGraphId": "senior_secondary_biology",
+      "toGraphId": "singapore_lower_secondary_science"
+    },
+    {
+      "from": "cn_sh_bio_matter_cycles_energy_flow",
+      "to": "sg_lss_science_decomposers_nutrient_cycle",
+      "strength": "soft",
+      "fromGraphId": "senior_secondary_biology",
+      "toGraphId": "singapore_lower_secondary_science"
+    },
+    {
+      "from": "cn_sh_math_complex_argand_representation",
+      "to": "sg_h2_math_complex_geometric_effects",
+      "strength": "hard",
+      "fromGraphId": "senior_secondary_mathematics",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "cn_sh_math_complex_arithmetic",
+      "to": "sg_h2_math_conjugate_polynomial_roots",
+      "strength": "soft",
+      "fromGraphId": "senior_secondary_mathematics",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "cn_sh_math_complex_introduction",
+      "to": "sg_h2_math_complex_mod_arg_conjugate",
+      "strength": "soft",
+      "fromGraphId": "senior_secondary_mathematics",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "cn_sh_math_regression_prediction_limits",
+      "to": "sg_h2_math_transform_to_linearity",
+      "strength": "hard",
+      "fromGraphId": "senior_secondary_mathematics",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "cn_sh_math_sequence_concept_representation",
+      "to": "sg_h2_math_recurrence_sequences",
+      "strength": "soft",
+      "fromGraphId": "senior_secondary_mathematics",
+      "toGraphId": "singapore_h2_mathematics"
+    },
+    {
+      "from": "cn_sh_physics_charged_particle_electric_motion",
+      "to": "sg_h2_physics_crossed_field_velocity_selector",
+      "strength": "soft",
+      "fromGraphId": "senior_secondary_physics",
+      "toGraphId": "singapore_h2_physics"
     },
     {
       "from": "oop",

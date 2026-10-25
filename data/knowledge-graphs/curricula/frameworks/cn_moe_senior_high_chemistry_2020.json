@@ -1,11 +1,11 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "0.3.0",
+  "content_version": "0.3.3",
   "framework_id": "cfw_cn_moe_senior_high_chemistry_2020_outcomes",
   "curriculum_id": "cur_cn_moe_senior_high_chemistry_2020",
   "curriculum_kind": "national_standard",
   "title": "China senior-high chemistry curriculum-standard outcome coverage",
-  "title_zh": "中国普通高中化学课程标准（2017 年版 2020 年修订）成果级覆盖",
+  "title_zh": "中国普通高中化学课程标准（2017 年版 2025 年修订）成果级覆盖",
   "subject": "Chemistry",
   "jurisdiction": "CN-MAINLAND",
   "education_stage": "senior_secondary",
@@ -37,11 +37,11 @@
     "en"
   ],
   "source_ids": [
-    "src_cn_moe_senior_high_chemistry_2020"
+    "src_cn_moe_senior_high_chemistry_2025"
   ],
   "valid_from": "2020-05-11",
   "valid_to": null,
-  "review_status": "needs_review",
+  "review_status": "approved",
   "scope_exclusions": [],
   "changelog": [
     {
@@ -58,6 +58,21 @@
       "version": "0.3.0",
       "date": "2026-07-19",
       "summary_zh": "按 63 个正式编号内容段落拆为 138 个可独立诊断成果，实验探究与安全实践不写入学科概念。"
+    },
+    {
+      "version": "0.3.1",
+      "date": "2026-10-25",
+      "summary_zh": "按 2026-10-25 官方来源复核更新证据定位（中国课标迁至 2025 日常修订版、新加坡页码校正），状态保持 needs_review。"
+    },
+    {
+      "version": "0.3.2",
+      "date": "2026-10-25",
+      "summary_zh": "依据 2026-10 联网复核修正描述、证据定位与映射覆盖，状态保持 needs_review。"
+    },
+    {
+      "version": "0.3.3",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准。"
     }
   ],
   "requirements": [
@@ -76,11 +91,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.19（正文对应内容要求 1.1），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.14（正文对应内容要求 1.1），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_1_1b_chemical_evidence_models",
@@ -98,11 +113,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.19（正文对应内容要求 1.1），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.14（正文对应内容要求 1.1），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_1_1c_amount_of_substance_quantities",
@@ -119,11 +134,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.19（正文对应内容要求 1.1），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.14（正文对应内容要求 1.1），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_1_2a_inquiry_question_hypothesis",
@@ -141,11 +156,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.20（正文对应内容要求 1.2），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.15（正文对应内容要求 1.2），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_1_2b_inquiry_design_evidence",
@@ -163,11 +178,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.20（正文对应内容要求 1.2），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.15（正文对应内容要求 1.2），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_1_3a_chemical_experiment_roles",
@@ -185,11 +200,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.20（正文对应内容要求 1.3），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.15（正文对应内容要求 1.3），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_1_3b_separation_purification_solution",
@@ -207,11 +222,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.20（正文对应内容要求 1.3），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.15（正文对应内容要求 1.3），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_1_3c_experimental_condition_control",
@@ -229,11 +244,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.20（正文对应内容要求 1.3），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.15（正文对应内容要求 1.3），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_1_4a_scientific_attitude_collaboration",
@@ -251,11 +266,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.20（正文对应内容要求 1.4），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.15（正文对应内容要求 1.4），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_1_4b_laboratory_safety_waste",
@@ -273,11 +288,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.20（正文对应内容要求 1.4），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.15（正文对应内容要求 1.4），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_1_5a_prepare_molar_solution",
@@ -295,11 +310,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.20（正文对应内容要求 1.5），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.15（正文对应内容要求 1.5），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_2_1a_substance_classification_conversion",
@@ -316,11 +331,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.22（正文对应内容要求 2.1），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.17-18（正文对应内容要求 2.1），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_2_1b_element_valence_conversion",
@@ -337,11 +352,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.22（正文对应内容要求 2.1），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.17-18（正文对应内容要求 2.1），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_2_1c_colloidal_dispersions",
@@ -358,11 +373,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.22（正文对应内容要求 2.1），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.17-18（正文对应内容要求 2.1），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_2_2a_redox_electron_transfer",
@@ -379,11 +394,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.2），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18（正文对应内容要求 2.2），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_2_2b_oxidising_reducing_agents",
@@ -400,11 +415,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.2），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18（正文对应内容要求 2.2），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_2_3a_electrolyte_ionisation",
@@ -421,11 +436,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.3），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18（正文对应内容要求 2.3），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_2_3b_ionic_reaction_conditions",
@@ -442,11 +457,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.3），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18（正文对应内容要求 2.3），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_2_3c_common_ion_tests",
@@ -463,11 +478,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.3），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18（正文对应内容要求 2.3），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_2_4a_sodium_compounds",
@@ -484,11 +499,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.4），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18（正文对应内容要求 2.4），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_2_4b_iron_compounds",
@@ -505,11 +520,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.4），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18（正文对应内容要求 2.4），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_2_5a_chlorine_compounds",
@@ -526,11 +541,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.5），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18（正文对应内容要求 2.5），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_2_5b_nitrogen_compounds",
@@ -547,11 +562,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.5），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18（正文对应内容要求 2.5），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_2_5c_sulfur_compounds",
@@ -568,11 +583,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.5），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18（正文对应内容要求 2.5），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_2_6a_inorganic_conversion_pathways",
@@ -589,11 +604,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.6），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18（正文对应内容要求 2.6），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_2_6b_inorganic_stse_value",
@@ -610,11 +625,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.6），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18（正文对应内容要求 2.6），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_2_7a_iron_compounds_lab",
@@ -632,11 +647,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.7），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18-19（正文对应内容要求 2.7），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_2_7b_sulfur_valence_lab",
@@ -654,11 +669,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.7），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18-19（正文对应内容要求 2.7），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_2_7c_coarse_salt_purification",
@@ -676,11 +691,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.23（正文对应内容要求 2.7），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.18-19（正文对应内容要求 2.7），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_3_1a_atomic_structure_nuclides",
@@ -697,11 +712,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.26（正文对应内容要求 3.1），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.21（正文对应内容要求 3.1），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_3_1b_periodic_table_structure_trends",
@@ -718,11 +733,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.26（正文对应内容要求 3.1），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.21（正文对应内容要求 3.1），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_3_1c_periodic_prediction",
@@ -739,11 +754,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.26（正文对应内容要求 3.1），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.21（正文对应内容要求 3.1），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_3_2a_ionic_covalent_bonding",
@@ -760,11 +775,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.26（正文对应内容要求 3.2），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.21（正文对应内容要求 3.2），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_3_2b_intro_molecular_geometry",
@@ -781,11 +796,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.26（正文对应内容要求 3.2），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.21（正文对应内容要求 3.2），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_3_2c_bond_changes_reaction_energy",
@@ -802,11 +817,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.26（正文对应内容要求 3.2），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.21（正文对应内容要求 3.2），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_3_3a_reversible_dynamic_equilibrium",
@@ -823,11 +838,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.26（正文对应内容要求 3.3），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.21（正文对应内容要求 3.3），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_3_3b_average_rate_factors",
@@ -844,11 +859,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.26（正文对应内容要求 3.3），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.21（正文对应内容要求 3.3），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_3_3c_rate_variable_control",
@@ -866,11 +881,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.26（正文对应内容要求 3.3），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.21（正文对应内容要求 3.3），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_3_4a_endo_exothermic_bond_energy",
@@ -887,11 +902,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.26（正文对应内容要求 3.4），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.21-22（正文对应内容要求 3.4），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_3_4b_intro_galvanic_cell",
@@ -908,11 +923,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.26（正文对应内容要求 3.4），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.21-22（正文对应内容要求 3.4），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_3_4c_fuel_battery_evaluation",
@@ -929,11 +944,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.26（正文对应内容要求 3.4），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.21-22（正文对应内容要求 3.4），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_3_5a_periodic_trends_lab",
@@ -951,11 +966,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.27（正文对应内容要求 3.5），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.22（正文对应内容要求 3.5），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_3_5b_rate_factors_lab",
@@ -973,11 +988,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.27（正文对应内容要求 3.5），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.22（正文对应内容要求 3.5），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_3_5c_chemical_to_electrical_lab",
@@ -995,11 +1010,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.27（正文对应内容要求 3.5），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.22（正文对应内容要求 3.5），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_4_1a_carbon_bonding_geometry",
@@ -1016,11 +1031,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.29（正文对应内容要求 4.1），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.24（正文对应内容要求 4.1），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_4_1b_intro_functional_groups",
@@ -1037,11 +1052,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.29（正文对应内容要求 4.1），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.24（正文对应内容要求 4.1），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_4_1c_intro_isomerism",
@@ -1058,11 +1073,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.29（正文对应内容要求 4.1），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.24（正文对应内容要求 4.1），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_4_2a_ethene_properties",
@@ -1079,11 +1094,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.29（正文对应内容要求 4.2），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.24（正文对应内容要求 4.2），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_4_2b_ethanol_ethanoic_properties",
@@ -1100,11 +1115,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.29（正文对应内容要求 4.2），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.24（正文对应内容要求 4.2），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_4_2c_intro_organic_reaction_types",
@@ -1121,11 +1136,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.29（正文对应内容要求 4.2），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.24（正文对应内容要求 4.2），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_4_3a_organic_synthesis_value",
@@ -1142,11 +1157,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.29（正文对应内容要求 4.3），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.24（正文对应内容要求 4.3），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_4_3b_intro_macromolecule_applications",
@@ -1163,11 +1178,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.29（正文对应内容要求 4.3），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.24（正文对应内容要求 4.3），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_4_4a_organic_model_building",
@@ -1185,11 +1200,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.30（正文对应内容要求 4.4），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.24（正文对应内容要求 4.4），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_4_4b_ethanol_ethanoic_lab",
@@ -1207,11 +1222,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.30（正文对应内容要求 4.4），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.24（正文对应内容要求 4.4），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_5_1a_chemistry_sustainable_development",
@@ -1228,11 +1243,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.31（正文对应内容要求 5.1），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.26-27（正文对应内容要求 5.1），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_5_1b_green_chemistry_principles",
@@ -1249,11 +1264,19 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.31（正文对应内容要求 5.1），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.26-27（正文对应内容要求 5.1），必修"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.30（必修主题5【学业要求】第5条），必修"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.49（正文对应内容要求 2.3），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_5_2a_chemistry_materials",
@@ -1270,11 +1293,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.32（正文对应内容要求 5.2），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.27（正文对应内容要求 5.2），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_5_2b_chemistry_health",
@@ -1291,11 +1314,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.32（正文对应内容要求 5.2），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.27（正文对应内容要求 5.2），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_5_3a_fossil_resource_utilisation",
@@ -1312,11 +1335,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.32（正文对应内容要求 5.3），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.27（正文对应内容要求 5.3），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_5_3b_energy_resource_systems",
@@ -1333,11 +1356,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.32（正文对应内容要求 5.3），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.27（正文对应内容要求 5.3），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_5_4a_pollutant_detection_treatment",
@@ -1354,11 +1377,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.32（正文对应内容要求 5.4），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.27（正文对应内容要求 5.4），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_5_4b_clean_production_circularity",
@@ -1375,11 +1398,15 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.32（正文对应内容要求 5.4），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.26-27（正文对应内容要求 5.1），必修"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.27（正文对应内容要求 5.3），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_r_5_5a_chemical_rules_safe_use",
@@ -1396,11 +1423,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.32（正文对应内容要求 5.5），必修"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.27（正文对应内容要求 5.5），必修"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_1_1a_energy_forms_conservation",
@@ -1417,11 +1444,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.30（正文对应内容要求 1.1），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_1_1b_internal_energy_state",
@@ -1438,11 +1465,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.30（正文对应内容要求 1.1），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_1_2a_enthalpy_thermochemical_equations",
@@ -1459,11 +1486,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.36（正文对应内容要求 1.2），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.31（正文对应内容要求 1.2），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_1_2b_hess_law_application",
@@ -1480,11 +1507,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.36（正文对应内容要求 1.2），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.31（正文对应内容要求 1.2），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_1_3a_electrochemical_cells_sources",
@@ -1501,11 +1528,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.36（正文对应内容要求 1.3），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.31（正文对应内容要求 1.3），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_1_3b_electrolytic_cells_applications",
@@ -1522,11 +1549,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.36（正文对应内容要求 1.3），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.31（正文对应内容要求 1.3），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_1_3c_electrochemical_corrosion",
@@ -1543,11 +1570,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.36（正文对应内容要求 1.3），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.31（正文对应内容要求 1.3），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_1_4a_electroplating_lab",
@@ -1565,11 +1592,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.36（正文对应内容要求 1.4），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.31（正文对应内容要求 1.4），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_1_4b_fuel_cell_build",
@@ -1587,11 +1614,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.36（正文对应内容要求 1.4），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.31（正文对应内容要求 1.4），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_2_1a_reaction_direction_enthalpy_entropy",
@@ -1608,11 +1635,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.38（正文对应内容要求 2.1），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.33（正文对应内容要求 2.1），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_2_1b_equilibrium_constant_extent",
@@ -1629,11 +1656,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.38（正文对应内容要求 2.1），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.33（正文对应内容要求 2.1），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_2_1c_reaction_quotient_direction",
@@ -1650,11 +1677,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.38（正文对应内容要求 2.1），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.33（正文对应内容要求 2.1），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_2_1d_equilibrium_factor_effects",
@@ -1671,11 +1698,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.38（正文对应内容要求 2.1），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.33（正文对应内容要求 2.1），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_2_2a_rate_representation_measurement",
@@ -1692,11 +1719,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.39（正文对应内容要求 2.2），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.33（正文对应内容要求 2.2），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_2_2b_rate_factor_models",
@@ -1713,11 +1740,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.39（正文对应内容要求 2.2），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.33（正文对应内容要求 2.2），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_2_2c_reaction_path_activation",
@@ -1734,11 +1761,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.39（正文对应内容要求 2.2），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.33（正文对应内容要求 2.2），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_2_3a_industrial_condition_optimisation",
@@ -1755,11 +1782,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.39（正文对应内容要求 2.3），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.33-34（正文对应内容要求 2.3），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_2_3b_catalyst_pathway_control",
@@ -1776,11 +1803,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.39（正文对应内容要求 2.3），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.33-34（正文对应内容要求 2.3），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_2_4a_equilibrium_shift_lab",
@@ -1798,11 +1825,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.39（正文对应内容要求 2.4），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.34（正文对应内容要求 2.4），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_3_1a_aqueous_electrolyte_systems",
@@ -1819,11 +1846,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.41（正文对应内容要求 3.1），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.36（正文对应内容要求 3.1），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_3_2a_weak_electrolyte_equilibrium",
@@ -1840,11 +1867,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.41（正文对应内容要求 3.2），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.36（正文对应内容要求 3.2），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_3_2b_water_ionisation_ph",
@@ -1861,11 +1888,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.41（正文对应内容要求 3.2），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.36（正文对应内容要求 3.2），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_3_2c_ph_measurement",
@@ -1883,11 +1910,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.41（正文对应内容要求 3.2），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.36（正文对应内容要求 3.2），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_3_3a_salt_hydrolysis",
@@ -1904,11 +1931,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.42（正文对应内容要求 3.3），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.36（正文对应内容要求 3.3），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_3_4a_precipitation_dissolution",
@@ -1925,11 +1952,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.42（正文对应内容要求 3.4），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.36（正文对应内容要求 3.4），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_3_5a_aqueous_equilibrium_applications",
@@ -1946,11 +1973,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.42（正文对应内容要求 3.5），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.36（正文对应内容要求 3.5），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_3_5b_ph_control_buffers",
@@ -1967,11 +1994,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.42（正文对应内容要求 3.5），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.36（正文对应内容要求 3.5），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_3_6a_acid_base_titration",
@@ -1989,11 +2016,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.42（正文对应内容要求 3.6），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.37（正文对应内容要求 3.6），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_se_3_6b_salt_hydrolysis_application_lab",
@@ -2011,19 +2038,19 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.42（正文对应内容要求 3.6），选择性必修·化学反应原理"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.37（正文对应内容要求 3.6），选择性必修·化学反应原理"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_ss_1_1a_electron_model_history",
       "parent_requirement_id": null,
       "code": "选择性必修·物质结构与性质·1.1a",
       "title": "History of electron models",
-      "title_zh": "核外电子运动模型演进",
-      "summary_zh": "用光谱等证据比较核外电子运动模型及其局限。",
+      "title_zh": "原子结构模型演进",
+      "summary_zh": "用光谱等证据比较原子结构模型的历史发展及其局限。",
       "requirement_type": "practice",
       "level_id": "ss",
       "cognitive_processes": [
@@ -2033,11 +2060,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.44（正文对应内容要求 1.1），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.39（正文对应内容要求 1.1），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_ss_1_1b_quantised_levels_transitions",
@@ -2054,11 +2081,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.44（正文对应内容要求 1.1），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.39（正文对应内容要求 1.1），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_ss_1_1c_orbitals_electron_clouds",
@@ -2075,11 +2102,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.44（正文对应内容要求 1.1），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.39（正文对应内容要求 1.1），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_ss_1_2a_aufbau_energy_order",
@@ -2096,11 +2123,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.45（正文对应内容要求 1.2），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.39（正文对应内容要求 1.2），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_ss_1_2b_pauli_hund_configurations",
@@ -2117,11 +2144,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.45（正文对应内容要求 1.2），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.39（正文对应内容要求 1.2），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_ss_1_3a_advanced_periodic_properties",
@@ -2138,11 +2165,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.45（正文对应内容要求 1.3），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.39（正文对应内容要求 1.3），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_ss_1_3b_periodic_blocks_valence",
@@ -2159,11 +2186,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.45（正文对应内容要求 1.3），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.39（正文对应内容要求 1.3），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_ss_2_1a_bonding_structure_properties",
@@ -2180,11 +2207,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.47（正文对应内容要求 2.1），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.41（正文对应内容要求 2.1），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_ss_2_1b_coordination_bonding",
@@ -2201,11 +2228,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.47（正文对应内容要求 2.1），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.41（正文对应内容要求 2.1），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_ss_2_1c_van_der_waals_hydrogen_bond",
@@ -2222,11 +2249,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.47（正文对应内容要求 2.1），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.41（正文对应内容要求 2.1），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_ss_2_2a_orbital_overlap_sigma_pi",
@@ -2243,11 +2270,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.47（正文对应内容要求 2.2），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.41-42（正文对应内容要求 2.2），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_ss_2_2b_bond_polarity_metrics",
@@ -2264,11 +2291,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.47（正文对应内容要求 2.2），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.41-42（正文对应内容要求 2.2），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_ss_2_3a_molecular_shape_models",
@@ -2285,11 +2312,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.48（正文对应内容要求 2.3），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.42（正文对应内容要求 2.3），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_ss_2_3b_structure_measurement",
@@ -2306,11 +2333,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.48（正文对应内容要求 2.3），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.42（正文对应内容要求 2.3），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_ss_2_3c_molecular_polarity_chirality",
@@ -2327,11 +2354,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.48（正文对应内容要求 2.3），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.42（正文对应内容要求 2.3），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_ss_2_4a_crystal_cells_types",
@@ -2348,11 +2375,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.48（正文对应内容要求 2.4），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.42（正文对应内容要求 2.4），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_ss_2_4b_transitional_mixed_crystals",
@@ -2369,11 +2396,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.48（正文对应内容要求 2.4），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.42（正文对应内容要求 2.4），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_ss_2_4c_aggregation_state_materials",
@@ -2390,11 +2417,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.48（正文对应内容要求 2.4），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.42（正文对应内容要求 2.4），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_ss_2_5a_prepare_complex_lab",
@@ -2412,11 +2439,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.48（正文对应内容要求 2.5），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.42（正文对应内容要求 2.5），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_ss_3_1a_structure_scale_model_evolution",
@@ -2434,11 +2461,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.51（正文对应内容要求 3.1），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.44（正文对应内容要求 3.1），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_ss_3_2a_spectroscopy_xrd_methods",
@@ -2455,11 +2482,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.51（正文对应内容要求 3.2），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.44-45（正文对应内容要求 3.2），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_ss_3_3a_structure_guided_material_design",
@@ -2476,11 +2503,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.51（正文对应内容要求 3.3），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.45（正文对应内容要求 3.3），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_ss_3_3b_structure_methods_life_science",
@@ -2497,11 +2524,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.51（正文对应内容要求 3.3），选择性必修·物质结构与性质"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.45（正文对应内容要求 3.3），选择性必修·物质结构与性质"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_so_1_1a_organic_connectivity_geometry",
@@ -2518,11 +2545,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.53（正文对应内容要求 1.1），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.47（正文对应内容要求 1.1），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_so_1_1b_constitutional_stereoisomerism",
@@ -2539,11 +2566,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.53（正文对应内容要求 1.1），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.47（正文对应内容要求 1.1），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_so_1_1c_organic_ir_nmr",
@@ -2560,11 +2587,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.53（正文对应内容要求 1.1），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.47（正文对应内容要求 1.1），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_so_1_2a_functional_groups_classification_naming",
@@ -2581,11 +2608,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.53（正文对应内容要求 1.2），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.47（正文对应内容要求 1.2），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_so_1_2b_functional_group_properties_conversion",
@@ -2602,11 +2629,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.53（正文对应内容要求 1.2），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.47（正文对应内容要求 1.2），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_so_1_2c_functional_group_tests",
@@ -2623,11 +2650,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.53（正文对应内容要求 1.2），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.47（正文对应内容要求 1.2），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_so_1_3a_organic_bond_polarity_reactivity",
@@ -2644,11 +2671,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.54（正文对应内容要求 1.3），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.47（正文对应内容要求 1.3），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_so_2_1a_hydrocarbon_classes",
@@ -2665,11 +2692,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.56（正文对应内容要求 2.1），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.49（正文对应内容要求 2.1），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_so_2_2a_halogenoalkanes_alcohols",
@@ -2686,11 +2713,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.56（正文对应内容要求 2.2），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.49（正文对应内容要求 2.2），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_so_2_2b_carbonyl_acid_ester",
@@ -2707,11 +2734,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.56（正文对应内容要求 2.2），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.49（正文对应内容要求 2.2），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_so_2_2c_phenols_amines_amides",
@@ -2728,11 +2755,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.56（正文对应内容要求 2.2），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.49（正文对应内容要求 2.2），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_so_2_3a_organic_reaction_patterns",
@@ -2749,11 +2776,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.56（正文对应内容要求 2.3），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.49（正文对应内容要求 2.3），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_so_2_3b_organic_synthesis_routes",
@@ -2770,11 +2797,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.56（正文对应内容要求 2.3），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.49（正文对应内容要求 2.3），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_so_2_4a_organic_safety_green_synthesis",
@@ -2791,11 +2818,15 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.56（正文对应内容要求 2.4），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.50（正文对应内容要求 2.4），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.49（正文对应内容要求 2.3），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_so_2_5a_ethyl_ethanoate_lab",
@@ -2813,11 +2844,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.56（正文对应内容要求 2.5），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.50（正文对应内容要求 2.5），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_so_2_5b_functional_group_test_lab",
@@ -2835,11 +2866,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.56（正文对应内容要求 2.5），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.50（正文对应内容要求 2.5），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_so_3_1a_polymer_monomer_repeat_unit",
@@ -2856,11 +2887,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.58（正文对应内容要求 3.1），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.52（正文对应内容要求 3.1），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_so_3_1b_addition_condensation_polymerisation",
@@ -2877,11 +2908,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.58（正文对应内容要求 3.1），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.52（正文对应内容要求 3.1），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_so_3_2a_carbohydrates",
@@ -2898,11 +2929,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.59（正文对应内容要求 3.2），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.52（正文对应内容要求 3.2），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_so_3_2b_amino_acids_proteins",
@@ -2919,11 +2950,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.59（正文对应内容要求 3.2），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.52（正文对应内容要求 3.2），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_so_3_2c_dna_rna",
@@ -2940,11 +2971,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.59（正文对应内容要求 3.2），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.52（正文对应内容要求 3.2），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_so_3_3a_synthetic_polymers_materials",
@@ -2961,11 +2992,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.59（正文对应内容要求 3.3），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.52（正文对应内容要求 3.3），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_chem_2020_o_so_3_4a_carbohydrate_properties_lab",
@@ -2983,11 +3014,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_chemistry_2020",
-          "locator": "化学标准PDF p.59（正文对应内容要求 3.4），选择性必修·有机化学基础"
+          "source_id": "src_cn_moe_senior_high_chemistry_2025",
+          "locator": "化学标准PDF p.52（正文对应内容要求 3.4），选择性必修·有机化学基础"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ]
 }

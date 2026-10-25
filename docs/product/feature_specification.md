@@ -93,10 +93,10 @@ cannot commit a curriculum. If several systems remain possible, onboarding asks
 inline before building. A first-time goal waiting on this choice is
 re-positioned behind a same-goal write fence.
 
-The runtime topic-graph registry currently contains 31 graphs: 21
-source-approved graphs and 10 China/Singapore graphs whose runtime artifacts are
-registered while their source governance state remains `needs_review`.
-Availability must not be described as approval. The canonical inventory is
+The runtime topic-graph registry currently contains 31 graphs, all
+source-approved: 21 since 2026-07 and the 10 China/Singapore graphs since the
+2026-10-25 owner review. Availability alone must still not be described as
+approval. The canonical inventory is
 `docs/knowledge-graph/catalog.md`.
 
 The Extractor writes supported statements directly as evidence-backed Facts.

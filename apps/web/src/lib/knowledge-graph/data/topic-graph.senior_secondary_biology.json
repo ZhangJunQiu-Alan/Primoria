@@ -1,9 +1,9 @@
 {
   "graphId": "senior_secondary_biology",
   "subject": "Biology",
-  "reviewStatus": "needs_review",
+  "reviewStatus": "approved",
   "generatedFrom": "data/knowledge-graphs/source/senior_secondary_biology.json",
-  "generatedAt": "2026-08-27",
+  "generatedAt": "2026-10-25",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -272,12 +272,7 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [
-        {
-          "topicId": "cn_sh_bio_topic_neuroendocrine",
-          "hard": false
-        }
-      ],
+      "successors": [],
       "prereqTopics": [],
       "isRoot": true
     },
@@ -306,16 +301,9 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [
-        {
-          "topicId": "cn_sh_bio_topic_homeostasis_immunity",
-          "hard": false
-        }
-      ],
-      "prereqTopics": [
-        "cn_sh_bio_topic_nervous_regulation"
-      ],
-      "isRoot": false
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
     },
     {
       "topicId": "cn_sh_bio_topic_homeostasis_immunity",
@@ -343,10 +331,8 @@
         }
       ],
       "successors": [],
-      "prereqTopics": [
-        "cn_sh_bio_topic_neuroendocrine"
-      ],
-      "isRoot": false
+      "prereqTopics": [],
+      "isRoot": true
     },
     {
       "topicId": "cn_sh_bio_topic_plant_regulation",
@@ -396,12 +382,7 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [
-        {
-          "topicId": "cn_sh_bio_topic_community_trophic",
-          "hard": false
-        }
-      ],
+      "successors": [],
       "prereqTopics": [],
       "isRoot": true
     },
@@ -440,10 +421,8 @@
           "hard": false
         }
       ],
-      "prereqTopics": [
-        "cn_sh_bio_topic_population_ecology"
-      ],
-      "isRoot": false
+      "prereqTopics": [],
+      "isRoot": true
     },
     {
       "topicId": "cn_sh_bio_topic_ecosystem_flows",
@@ -470,12 +449,7 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [
-        {
-          "topicId": "cn_sh_bio_topic_ecosystem_transfer",
-          "hard": false
-        }
-      ],
+      "successors": [],
       "prereqTopics": [
         "cn_sh_bio_topic_community_trophic"
       ],
@@ -508,8 +482,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "cn_sh_bio_topic_community_trophic",
-        "cn_sh_bio_topic_ecosystem_flows"
+        "cn_sh_bio_topic_community_trophic"
       ],
       "isRoot": false
     },
@@ -747,10 +720,6 @@
       ],
       "successors": [
         {
-          "topicId": "cn_sh_bio_topic_embryo_stem_cells",
-          "hard": false
-        },
-        {
           "topicId": "cn_sh_bio_topic_biotechnology_ethics",
           "hard": false
         }
@@ -786,10 +755,8 @@
         }
       ],
       "successors": [],
-      "prereqTopics": [
-        "cn_sh_bio_topic_animal_cell_engineering"
-      ],
-      "isRoot": false
+      "prereqTopics": [],
+      "isRoot": true
     },
     {
       "topicId": "cn_sh_bio_topic_molecular_engineering",
@@ -863,37 +830,13 @@
       "from": "cn_sh_bio_animal_cell_culture",
       "to": "cn_sh_bio_somatic_cell_nuclear_transfer",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物技术与工程·4.2.1 为 选择性必修·生物技术与工程·4.2.2 的前置要求。"
+      "reason": "核移植得到的重组细胞需经体外培养发育成早期胚胎，动物细胞培养是其技术基础。"
     },
     {
       "from": "cn_sh_bio_animal_cell_fusion",
       "to": "cn_sh_bio_monoclonal_antibody_production",
       "strength": "soft",
       "reason": "单克隆抗体制备需要先理解细胞融合形成杂交瘤的原理。"
-    },
-    {
-      "from": "cn_sh_bio_aseptic_technique",
-      "to": "cn_sh_bio_selective_culture_media",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物技术与工程·3.1.2 为 选择性必修·生物技术与工程·3.1.3 的前置要求。"
-    },
-    {
-      "from": "cn_sh_bio_autonomic_nervous_regulation",
-      "to": "cn_sh_bio_cortical_higher_activity",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·稳态与调节·1.3.5 为 选择性必修·稳态与调节·1.3.6 的前置要求。"
-    },
-    {
-      "from": "cn_sh_bio_biomagnification",
-      "to": "cn_sh_bio_ecosystem_information_transfer",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物与环境·2.2.6 为 选择性必修·生物与环境·2.2.7 的前置要求。"
-    },
-    {
-      "from": "cn_sh_bio_cell_differentiation",
-      "to": "cn_sh_bio_cell_senescence_death",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修·分子与细胞·2.3.2 为 必修·分子与细胞·2.3.3 的前置要求。"
     },
     {
       "from": "cn_sh_bio_central_nervous_hierarchy",
@@ -905,13 +848,7 @@
       "from": "cn_sh_bio_chromosomal_variation",
       "to": "cn_sh_bio_genetic_disease_screening",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修·遗传与进化·3.3.5 为 必修·遗传与进化·3.3.6 的前置要求。"
-    },
-    {
-      "from": "cn_sh_bio_common_ancestry_fossil_anatomy",
-      "to": "cn_sh_bio_common_ancestry_cell_molecular",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修·遗传与进化·4.1.1 为 必修·遗传与进化·4.1.2 的前置要求。"
+      "reason": "染色体异常遗传病（如 21 三体）的检测依赖先识别染色体结构与数量变异的类型。"
     },
     {
       "from": "cn_sh_bio_community_structure",
@@ -920,28 +857,10 @@
       "reason": "理解群落随时间替代需要先识别其垂直和水平结构。"
     },
     {
-      "from": "cn_sh_bio_ecological_pyramids",
-      "to": "cn_sh_bio_biomagnification",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物与环境·2.2.5 为 选择性必修·生物与环境·2.2.6 的前置要求。"
-    },
-    {
-      "from": "cn_sh_bio_ecological_resource_use",
-      "to": "cn_sh_bio_ecological_pyramids",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物与环境·2.2.4 为 选择性必修·生物与环境·2.2.5 的前置要求。"
-    },
-    {
       "from": "cn_sh_bio_ecosystem_disturbances",
       "to": "cn_sh_bio_ecosystem_self_regulation",
       "strength": "soft",
       "reason": "评价自我调节能力需要先识别扰动来源和强度。"
-    },
-    {
-      "from": "cn_sh_bio_ecosystem_information_transfer",
-      "to": "cn_sh_bio_trophic_structure_factors",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物与环境·2.2.7 为 选择性必修·生物与环境·2.2.8 的前置要求。"
     },
     {
       "from": "cn_sh_bio_ecosystem_self_regulation",
@@ -953,7 +872,7 @@
       "from": "cn_sh_bio_ecosystem_stability",
       "to": "cn_sh_bio_ecosystem_disturbances",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物与环境·2.3.1 为 选择性必修·生物与环境·2.3.2 的前置要求。"
+      "reason": "分析气候变化、外来物种等干扰的影响，需要先理解生态系统稳定性的含义。"
     },
     {
       "from": "cn_sh_bio_endocrine_system",
@@ -1025,31 +944,13 @@
       "from": "cn_sh_bio_matter_cycles_energy_flow",
       "to": "cn_sh_bio_ecological_resource_use",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物与环境·2.2.3 为 选择性必修·生物与环境·2.2.4 的前置要求。"
+      "reason": "科学利用生态系统资源需要先掌握物质循环与能量单向流动、逐级递减的规律。"
     },
     {
       "from": "cn_sh_bio_microbial_isolation_methods",
       "to": "cn_sh_bio_microbial_counting_methods",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物技术与工程·3.1.4 为 选择性必修·生物技术与工程·3.1.5 的前置要求。"
-    },
-    {
-      "from": "cn_sh_bio_monoclonal_antibody_production",
-      "to": "cn_sh_bio_stem_cell_applications",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物技术与工程·4.2.4 为 选择性必修·生物技术与工程·4.2.5 的前置要求。"
-    },
-    {
-      "from": "cn_sh_bio_neuroendocrine_coordination",
-      "to": "cn_sh_bio_humoral_respiratory_regulation",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·稳态与调节·1.4.3 为 选择性必修·稳态与调节·1.4.4 的前置要求。"
-    },
-    {
-      "from": "cn_sh_bio_nucleus_genetic_information",
-      "to": "cn_sh_bio_organelle_coordination",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，必修·分子与细胞·1.2.3 为 必修·分子与细胞·1.2.4 的前置要求。"
+      "reason": "用稀释涂布平板法计数需要先掌握该方法的稀释与涂布操作及单菌落形成原理。"
     },
     {
       "from": "cn_sh_bio_plant_somatic_hybridisation",
@@ -1085,7 +986,7 @@
       "from": "cn_sh_bio_population_characteristics",
       "to": "cn_sh_bio_population_growth_models",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物与环境·2.1.1 为 选择性必修·生物与环境·2.1.2 的前置要求。"
+      "reason": "建立种群数量变化模型要用到出生率、死亡率、迁入率和迁出率等种群特征。"
     },
     {
       "from": "cn_sh_bio_population_characteristics",
@@ -1094,22 +995,10 @@
       "reason": "分析限制因素的作用需要先明确种群密度、出生死亡和迁入迁出等响应变量。"
     },
     {
-      "from": "cn_sh_bio_population_environment_pressure",
-      "to": "cn_sh_bio_global_environmental_change",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物与环境·2.4.1 为 选择性必修·生物与环境·2.4.2 的前置要求。"
-    },
-    {
       "from": "cn_sh_bio_population_growth_models",
       "to": "cn_sh_bio_population_limiting_factors",
       "strength": "soft",
       "reason": "以指数和逻辑斯谛增长模型及环境容纳量为动态基线，有助于进一步分析各类限制因素如何改变种群数量。"
-    },
-    {
-      "from": "cn_sh_bio_population_limiting_factors",
-      "to": "cn_sh_bio_community_structure",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物与环境·2.1.3 为 选择性必修·生物与环境·2.1.4 的前置要求。"
     },
     {
       "from": "cn_sh_bio_reflex_arc",
@@ -1131,12 +1020,6 @@
     },
     {
       "from": "cn_sh_bio_somatic_cell_nuclear_transfer",
-      "to": "cn_sh_bio_animal_cell_fusion",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物技术与工程·4.2.2 为 选择性必修·生物技术与工程·4.2.3 的前置要求。"
-    },
-    {
-      "from": "cn_sh_bio_somatic_cell_nuclear_transfer",
       "to": "cn_sh_bio_reproductive_cloning_ethics",
       "strength": "soft",
       "reason": "评价生殖性克隆伦理问题需要先理解体细胞核移植技术。"
@@ -1151,7 +1034,7 @@
       "from": "cn_sh_bio_traditional_fermentation",
       "to": "cn_sh_bio_industrial_fermentation",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，选择性必修·生物技术与工程·3.2.1 为 选择性必修·生物技术与工程·3.2.2 的前置要求。"
+      "reason": "现代发酵工程把传统发酵中利用微生物代谢的原理扩展为工业化、可控的生产过程。"
     }
   ]
 }

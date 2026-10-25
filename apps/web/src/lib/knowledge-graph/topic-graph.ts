@@ -94,17 +94,14 @@ export function getTopicGraphReviewStatus(graphId: string): GraphReviewStatus {
 }
 
 /**
- * Whether cold-start goal routing may anchor to `needs_review` graphs.
+ * Whether cold-start goal routing is restricted to approved graphs.
  *
- * Defaults to permissive. The 10 China/Singapore graphs are currently the only
- * source of that curriculum coverage, and they are overlay supplements whose
- * cross-graph prerequisite edges are not authored yet, so excluding them today
- * would remove the coverage rather than improve it. Set
- * `PRIMORIA_REQUIRE_APPROVED_KG=1` once those edges land and the graphs are
- * approved, to make registration stop implying routability.
+ * On by default since every runtime graph was approved in the 2026-10
+ * China/Singapore review: a future `needs_review` graph stays registered but is
+ * not offered as a cold-start anchor. `PRIMORIA_REQUIRE_APPROVED_KG=0` opts out.
  */
 export function requiresApprovedGraphsForRouting(): boolean {
-  return process.env.PRIMORIA_REQUIRE_APPROVED_KG === "1";
+  return process.env.PRIMORIA_REQUIRE_APPROVED_KG !== "0";
 }
 
 /**

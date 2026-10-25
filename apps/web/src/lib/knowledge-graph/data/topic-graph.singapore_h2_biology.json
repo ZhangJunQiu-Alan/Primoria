@@ -1,9 +1,9 @@
 {
   "graphId": "singapore_h2_biology",
   "subject": "Biology",
-  "reviewStatus": "needs_review",
+  "reviewStatus": "approved",
   "generatedFrom": "data/knowledge-graphs/source/singapore_h2_biology.json",
-  "generatedAt": "2026-08-27",
+  "generatedAt": "2026-10-25",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -42,8 +42,8 @@
     },
     {
       "topicId": "sg_h2_biology_topic_stem_replication",
-      "name": "Stem-cell potency and chromosome ends",
-      "nameZh": "干细胞潜能与染色体末端",
+      "name": "Stem-cell potency and functions",
+      "nameZh": "干细胞潜能与功能",
       "defaultOrder": 2,
       "conceptIds": [
         {
@@ -57,12 +57,6 @@
           "name": "Normal functions of stem cells",
           "nameZh": "干细胞的正常生理功能",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "sg_h2_biology_dna_end_replication_problem",
-          "name": "The DNA end-replication problem",
-          "nameZh": "DNA 末端复制问题",
-          "defaultOrder": 3
         }
       ],
       "successors": [],
@@ -94,12 +88,7 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [
-        {
-          "topicId": "sg_h2_biology_topic_genome_regulation_analysis",
-          "hard": false
-        }
-      ],
+      "successors": [],
       "prereqTopics": [
         "sg_h2_biology_topic_cell_life_boundaries"
       ],
@@ -107,105 +96,113 @@
     },
     {
       "topicId": "sg_h2_biology_topic_genome_regulation_analysis",
-      "name": "Genome regulation and analysis",
-      "nameZh": "基因组调控与分析",
+      "name": "Eukaryotic genome maintenance and expression control",
+      "nameZh": "真核基因组维持与表达调控",
       "defaultOrder": 4,
       "conceptIds": [
+        {
+          "conceptId": "sg_h2_biology_dna_end_replication_problem",
+          "name": "The DNA end-replication problem",
+          "nameZh": "DNA 末端复制问题",
+          "defaultOrder": 1
+        },
         {
           "conceptId": "sg_h2_biology_noncoding_genome_elements",
           "name": "Functional non-coding genome elements",
           "nameZh": "功能性非编码基因组元件",
-          "defaultOrder": 1
+          "defaultOrder": 2
         },
         {
           "conceptId": "sg_h2_biology_multilevel_eukaryotic_gene_regulation",
           "name": "Multilevel regulation of eukaryotic gene expression",
           "nameZh": "真核基因表达的多层调控",
-          "defaultOrder": 2
-        },
-        {
-          "conceptId": "sg_h2_biology_southern_blot_hybridisation",
-          "name": "Southern blotting and nucleic-acid hybridisation",
-          "nameZh": "Southern 印迹与核酸杂交",
           "defaultOrder": 3
         }
       ],
       "successors": [],
-      "prereqTopics": [
-        "sg_h2_biology_topic_microbial_genome_change"
-      ],
-      "isRoot": false
+      "prereqTopics": [],
+      "isRoot": true
     },
     {
-      "topicId": "sg_h2_biology_topic_screening_cancer_control",
-      "name": "Screening and cancer control",
-      "nameZh": "遗传筛查与癌症控制",
+      "topicId": "sg_h2_biology_topic_molecular_analysis_screening",
+      "name": "Molecular detection and genetic-screening ethics",
+      "nameZh": "分子检测技术与遗传筛查伦理",
       "defaultOrder": 5,
       "conceptIds": [
+        {
+          "conceptId": "sg_h2_biology_southern_blot_hybridisation",
+          "name": "Southern blotting and nucleic-acid hybridisation",
+          "nameZh": "Southern 印迹与核酸杂交",
+          "defaultOrder": 1
+        },
         {
           "conceptId": "sg_h2_biology_maternal_genetic_screening_ethics",
           "name": "Ethics of maternal genetic screening",
           "nameZh": "母体遗传筛查伦理",
-          "defaultOrder": 1
-        },
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "sg_h2_biology_topic_screening_cancer_control",
+      "name": "Cell-cycle control and cancer",
+      "nameZh": "细胞周期调控与癌变",
+      "defaultOrder": 6,
+      "conceptIds": [
         {
           "conceptId": "sg_h2_biology_cell_cycle_dysregulation_cancer_risk",
           "name": "Cell-cycle dysregulation and cancer risk",
           "nameZh": "细胞周期失调与癌变风险",
-          "defaultOrder": 2
+          "defaultOrder": 1
         },
         {
           "conceptId": "sg_h2_biology_oncogene_tumour_suppressor_control",
           "name": "Oncogenes and tumour-suppressor genes",
           "nameZh": "原癌基因与抑癌基因",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sg_h2_biology_multistep_cancer_progression",
+          "name": "Multistep cancer progression",
+          "nameZh": "癌症的多步骤进展",
           "defaultOrder": 3
         }
       ],
-      "successors": [
-        {
-          "topicId": "sg_h2_biology_topic_cancer_complex_inheritance",
-          "hard": false
-        }
-      ],
+      "successors": [],
       "prereqTopics": [],
       "isRoot": true
     },
     {
       "topicId": "sg_h2_biology_topic_cancer_complex_inheritance",
-      "name": "Cancer progression and complex inheritance",
-      "nameZh": "癌症进展与复杂遗传",
-      "defaultOrder": 6,
+      "name": "Epistasis and environmental effects on phenotype",
+      "nameZh": "上位性与环境对表型的影响",
+      "defaultOrder": 7,
       "conceptIds": [
-        {
-          "conceptId": "sg_h2_biology_multistep_cancer_progression",
-          "name": "Multistep cancer progression",
-          "nameZh": "癌症的多步骤进展",
-          "defaultOrder": 1
-        },
         {
           "conceptId": "sg_h2_biology_epistasis_problem_solving",
           "name": "Epistasis problem solving",
           "nameZh": "上位性遗传问题求解",
-          "defaultOrder": 2
+          "defaultOrder": 1
         },
         {
           "conceptId": "sg_h2_biology_genotype_environment_phenotype",
           "name": "Genotype-environment effects on phenotype",
           "nameZh": "基因型、环境与表型",
-          "defaultOrder": 3
+          "defaultOrder": 2
         }
       ],
       "successors": [],
-      "prereqTopics": [
-        "sg_h2_biology_topic_screening_cancer_control"
-      ],
-      "isRoot": false
+      "prereqTopics": [],
+      "isRoot": true
     },
     {
       "topicId": "sg_h2_biology_topic_signal_transduction",
-      "name": "Cell signal transduction",
-      "nameZh": "细胞信号转导",
-      "defaultOrder": 7,
+      "name": "Signalling stages and second messengers",
+      "nameZh": "细胞信号传导阶段与第二信使",
+      "defaultOrder": 8,
       "conceptIds": [
         {
           "conceptId": "sg_h2_biology_cell_signalling_stages",
@@ -218,12 +215,6 @@
           "name": "Second messengers",
           "nameZh": "第二信使",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "sg_h2_biology_kinase_phosphatase_signalling",
-          "name": "Kinases and phosphatases in signalling",
-          "nameZh": "信号传导中的激酶与磷酸酶",
-          "defaultOrder": 3
         }
       ],
       "successors": [
@@ -237,45 +228,57 @@
     },
     {
       "topicId": "sg_h2_biology_topic_receptor_population_evolution",
-      "name": "Receptor pathways and population evolution",
-      "nameZh": "受体通路与种群进化",
-      "defaultOrder": 8,
+      "name": "Kinase cascades and blood-glucose receptor pathways",
+      "nameZh": "激酶级联与血糖受体通路",
+      "defaultOrder": 9,
       "conceptIds": [
+        {
+          "conceptId": "sg_h2_biology_kinase_phosphatase_signalling",
+          "name": "Kinases and phosphatases in signalling",
+          "nameZh": "信号传导中的激酶与磷酸酶",
+          "defaultOrder": 1
+        },
         {
           "conceptId": "sg_h2_biology_insulin_glucagon_receptor_pathways",
           "name": "Insulin and glucagon receptor pathways",
           "nameZh": "胰岛素与胰高血糖素受体通路",
-          "defaultOrder": 1
-        },
-        {
-          "conceptId": "sg_h2_biology_recessive_allele_persistence",
-          "name": "Persistence of harmful recessive alleles",
-          "nameZh": "有害隐性等位基因的保留",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "sg_h2_biology_microevolution_macroevolution_link",
-          "name": "Microevolution and macroevolution",
-          "nameZh": "微观进化与宏观进化的联系",
-          "defaultOrder": 3
         }
       ],
-      "successors": [
-        {
-          "topicId": "sg_h2_biology_topic_evolutionary_relationships",
-          "hard": false
-        }
-      ],
+      "successors": [],
       "prereqTopics": [
         "sg_h2_biology_topic_signal_transduction"
       ],
       "isRoot": false
     },
     {
+      "topicId": "sg_h2_biology_topic_population_evolution",
+      "name": "Population variation and evolutionary scale",
+      "nameZh": "种群遗传变异与进化尺度",
+      "defaultOrder": 10,
+      "conceptIds": [
+        {
+          "conceptId": "sg_h2_biology_recessive_allele_persistence",
+          "name": "Persistence of harmful recessive alleles",
+          "nameZh": "有害隐性等位基因的保留",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sg_h2_biology_microevolution_macroevolution_link",
+          "name": "Microevolution and macroevolution",
+          "nameZh": "微观进化与宏观进化的联系",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
       "topicId": "sg_h2_biology_topic_evolutionary_relationships",
       "name": "Evidence, species and phylogeny",
       "nameZh": "进化证据、物种与系统发育",
-      "defaultOrder": 9,
+      "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "sg_h2_biology_integrated_evolution_evidence",
@@ -297,16 +300,14 @@
         }
       ],
       "successors": [],
-      "prereqTopics": [
-        "sg_h2_biology_topic_receptor_population_evolution"
-      ],
-      "isRoot": false
+      "prereqTopics": [],
+      "isRoot": true
     },
     {
       "topicId": "sg_h2_biology_topic_adaptive_immunity",
       "name": "Adaptive immunity and vaccination",
       "nameZh": "适应性免疫与疫苗",
-      "defaultOrder": 10,
+      "defaultOrder": 12,
       "conceptIds": [
         {
           "conceptId": "sg_h2_biology_adaptive_immune_cell_coordination",
@@ -327,12 +328,7 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [
-        {
-          "topicId": "sg_h2_biology_topic_infection_epidemiology",
-          "hard": false
-        }
-      ],
+      "successors": [],
       "prereqTopics": [],
       "isRoot": true
     },
@@ -340,7 +336,7 @@
       "topicId": "sg_h2_biology_topic_infection_epidemiology",
       "name": "Viral pathogenesis and epidemiology",
       "nameZh": "病毒致病与流行病学",
-      "defaultOrder": 11,
+      "defaultOrder": 13,
       "conceptIds": [
         {
           "conceptId": "sg_h2_biology_viral_tissue_pathogenesis",
@@ -362,16 +358,14 @@
         }
       ],
       "successors": [],
-      "prereqTopics": [
-        "sg_h2_biology_topic_adaptive_immunity"
-      ],
-      "isRoot": false
+      "prereqTopics": [],
+      "isRoot": true
     },
     {
       "topicId": "sg_h2_biology_topic_climate_forcing",
       "name": "Climate forcing and footprint",
       "nameZh": "气候强迫与碳足迹",
-      "defaultOrder": 12,
+      "defaultOrder": 14,
       "conceptIds": [
         {
           "conceptId": "sg_h2_biology_greenhouse_gas_human_drivers",
@@ -409,7 +403,7 @@
       "topicId": "sg_h2_biology_topic_climate_mitigation_resources",
       "name": "Climate mitigation, food and biodiversity",
       "nameZh": "气候缓解、粮食与生物多样性",
-      "defaultOrder": 13,
+      "defaultOrder": 15,
       "conceptIds": [
         {
           "conceptId": "sg_h2_biology_mangrove_climate_mitigation",
@@ -430,12 +424,7 @@
           "defaultOrder": 3
         }
       ],
-      "successors": [
-        {
-          "topicId": "sg_h2_biology_topic_climate_vectors",
-          "hard": false
-        }
-      ],
+      "successors": [],
       "prereqTopics": [
         "sg_h2_biology_topic_climate_forcing"
       ],
@@ -445,7 +434,7 @@
       "topicId": "sg_h2_biology_topic_climate_vectors",
       "name": "Ecological redistribution and disease vectors",
       "nameZh": "生态重新分布与疾病媒介",
-      "defaultOrder": 14,
+      "defaultOrder": 16,
       "conceptIds": [
         {
           "conceptId": "sg_h2_biology_climate_ecological_redistribution",
@@ -468,8 +457,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "sg_h2_biology_topic_climate_forcing",
-        "sg_h2_biology_topic_climate_mitigation_resources"
+        "sg_h2_biology_topic_climate_forcing"
       ],
       "isRoot": false
     }
@@ -488,24 +476,6 @@
       "reason": "评价疫苗群体效果前，需要先理解免疫记忆和初次、二次应答。"
     },
     {
-      "from": "sg_h2_biology_anthropogenic_carbon_footprints",
-      "to": "sg_h2_biology_climate_stress_food_supply",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，B.d 为 B.e 的前置要求。"
-    },
-    {
-      "from": "sg_h2_biology_antibody_diversity_mechanisms",
-      "to": "sg_h2_biology_vaccination_population_control_tradeoffs",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，A.d 为 A.e 的前置要求。"
-    },
-    {
-      "from": "sg_h2_biology_basic_reproduction_number",
-      "to": "sg_h2_biology_outbreak_epidemic_pandemic",
-      "strength": "soft",
-      "reason": "区分疾病传播规模时，需要先理解传染性指标与病例增长趋势。"
-    },
-    {
       "from": "sg_h2_biology_biological_species_concept_limits",
       "to": "sg_h2_biology_phylogeny_and_molecular_classification",
       "strength": "soft",
@@ -516,6 +486,12 @@
       "to": "sg_h2_biology_oncogene_tumour_suppressor_control",
       "strength": "soft",
       "reason": "解释特定癌基因改变前，需要理解细胞周期控制失调与癌变的联系。"
+    },
+    {
+      "from": "sg_h2_biology_cell_signalling_stages",
+      "to": "sg_h2_biology_kinase_phosphatase_signalling",
+      "strength": "soft",
+      "reason": "解释激酶放大与磷酸酶终止信号前，需要先掌握“配体—受体结合、信号转导、细胞应答”三阶段框架。"
     },
     {
       "from": "sg_h2_biology_cell_signalling_stages",
@@ -530,12 +506,6 @@
       "reason": "判断病毒为何挑战生命定义，需要先明确细胞学说的核心断言。"
     },
     {
-      "from": "sg_h2_biology_climate_stress_food_supply",
-      "to": "sg_h2_biology_climate_ecological_redistribution",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，B.e 为 B.f 的前置要求。"
-    },
-    {
       "from": "sg_h2_biology_climate_system_ecological_impacts",
       "to": "sg_h2_biology_climate_ecological_redistribution",
       "strength": "soft",
@@ -545,7 +515,7 @@
       "from": "sg_h2_biology_climate_system_ecological_impacts",
       "to": "sg_h2_biology_mangrove_climate_mitigation",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，B.b 为 B.c 的前置要求。"
+      "reason": "理解红树林如何缓解气候变化影响，需要先知道温室气体排放带来的海平面上升、极端天气等影响。"
     },
     {
       "from": "sg_h2_biology_comparative_genome_architecture",
@@ -554,22 +524,10 @@
       "reason": "追踪病毒基因组继承前，需要先区分不同基因组的结构组织。"
     },
     {
-      "from": "sg_h2_biology_epistasis_problem_solving",
-      "to": "sg_h2_biology_genotype_environment_phenotype",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，2.aa 为 2.bb 的前置要求。"
-    },
-    {
       "from": "sg_h2_biology_greenhouse_gas_human_drivers",
       "to": "sg_h2_biology_climate_system_ecological_impacts",
       "strength": "soft",
       "reason": "解释气候系统和生态后果前，需要先建立人为温室气体来源的因果链。"
-    },
-    {
-      "from": "sg_h2_biology_integrated_evolution_evidence",
-      "to": "sg_h2_biology_biological_species_concept_limits",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，4.g 为 4.h 的前置要求。"
     },
     {
       "from": "sg_h2_biology_integrated_evolution_evidence",
@@ -584,18 +542,6 @@
       "reason": "比较两类血糖受体通路前，需要理解激酶与磷酸酶的通用调控作用。"
     },
     {
-      "from": "sg_h2_biology_microevolution_macroevolution_link",
-      "to": "sg_h2_biology_integrated_evolution_evidence",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，4.f 为 4.g 的前置要求。"
-    },
-    {
-      "from": "sg_h2_biology_multilevel_eukaryotic_gene_regulation",
-      "to": "sg_h2_biology_southern_blot_hybridisation",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，2.i 为 2.j 的前置要求。"
-    },
-    {
       "from": "sg_h2_biology_noncoding_genome_elements",
       "to": "sg_h2_biology_multilevel_eukaryotic_gene_regulation",
       "strength": "soft",
@@ -608,52 +554,16 @@
       "reason": "理解癌症多步骤进展，需要先掌握促进和抑制增殖的基因控制。"
     },
     {
-      "from": "sg_h2_biology_prokaryotic_horizontal_gene_transfer",
-      "to": "sg_h2_biology_noncoding_genome_elements",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，2.g 为 2.h 的前置要求。"
-    },
-    {
-      "from": "sg_h2_biology_recessive_allele_persistence",
-      "to": "sg_h2_biology_microevolution_macroevolution_link",
-      "strength": "soft",
-      "reason": "联系微观和宏观进化前，需要理解选择如何改变或保留种群等位基因。"
-    },
-    {
-      "from": "sg_h2_biology_second_messengers",
-      "to": "sg_h2_biology_kinase_phosphatase_signalling",
-      "strength": "soft",
-      "reason": "解释磷酸化级联的放大与终止，需要先理解第二信使如何启动下游通路。"
-    },
-    {
       "from": "sg_h2_biology_stem_cell_potency",
       "to": "sg_h2_biology_stem_cell_normal_functions",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，1.t 为 1.u 的前置要求。"
+      "reason": "解释胚胎干细胞与造血干细胞的正常功能，需要先用全能、多能、专能区分其分化潜能。"
     },
     {
       "from": "sg_h2_biology_temperature_insect_vector_lifecycle",
       "to": "sg_h2_biology_warming_vector_borne_range_shift",
       "strength": "soft",
       "reason": "解释疾病地理范围移动前，需要先理解温度对蚊媒存活和发育的作用。"
-    },
-    {
-      "from": "sg_h2_biology_tropical_biodiversity_resources",
-      "to": "sg_h2_biology_temperature_insect_vector_lifecycle",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，B.g 为 B.h 的前置要求。"
-    },
-    {
-      "from": "sg_h2_biology_vaccination_population_control_tradeoffs",
-      "to": "sg_h2_biology_viral_tissue_pathogenesis",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，A.f 为 A.g 的前置要求。"
-    },
-    {
-      "from": "sg_h2_biology_viral_genome_variation",
-      "to": "sg_h2_biology_prokaryotic_horizontal_gene_transfer",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，2.f 为 2.g 的前置要求。"
     },
     {
       "from": "sg_h2_biology_viral_reproductive_cycles",

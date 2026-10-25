@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.1",
   "gap_set_id": "cgs_sg_seab_h2_biology_9477_2026_outcomes",
   "framework_id": "cfw_sg_seab_h2_biology_9477_2026_outcomes",
   "curriculum_id": "cur_sg_seab_h2_biology_9477_2026",
@@ -9,12 +9,17 @@
     "src_sg_seab_h2_biology_9477_2026"
   ],
   "generated_at": "2026-07-19",
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "逐项登记不能由既有宽概念完整覆盖的 H2 生物成果。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准。"
     }
   ],
   "candidates": [
@@ -36,7 +41,7 @@
           "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_1_f",
@@ -58,7 +63,7 @@
           "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_1_t",
@@ -80,7 +85,7 @@
           "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (t)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_1_u",
@@ -102,7 +107,7 @@
           "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (u)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_b",
@@ -124,7 +129,7 @@
           "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_d",
@@ -147,7 +152,7 @@
           "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_e",
@@ -169,7 +174,7 @@
           "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_f",
@@ -191,7 +196,7 @@
           "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_g",
@@ -213,7 +218,7 @@
           "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_h",
@@ -236,7 +241,7 @@
           "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_i",
@@ -258,7 +263,7 @@
           "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_j",
@@ -280,7 +285,7 @@
           "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_m",
@@ -302,7 +307,7 @@
           "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (m)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_o",
@@ -325,7 +330,7 @@
           "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (o)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_p",
@@ -347,7 +352,7 @@
           "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (p)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_q",
@@ -369,7 +374,7 @@
           "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (q)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_r",
@@ -391,7 +396,7 @@
           "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (r)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_aa",
@@ -413,7 +418,7 @@
           "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (aa)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_2_bb",
@@ -435,7 +440,7 @@
           "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (bb)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_3_m",
@@ -455,7 +460,7 @@
           "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (m)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_3_n",
@@ -475,7 +480,7 @@
           "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (n)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_3_o",
@@ -495,7 +500,7 @@
           "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (o)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_3_p",
@@ -517,7 +522,7 @@
           "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (p)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_4_e",
@@ -539,7 +544,7 @@
           "locator": "PDF p.19, topic 4 Biological Evolution, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_4_f",
@@ -561,7 +566,7 @@
           "locator": "PDF p.19, topic 4 Biological Evolution, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_4_g",
@@ -584,7 +589,7 @@
           "locator": "PDF p.19, topic 4 Biological Evolution, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_4_h",
@@ -606,7 +611,7 @@
           "locator": "PDF p.19, topic 4 Biological Evolution, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_4_k",
@@ -628,7 +633,7 @@
           "locator": "PDF p.19, topic 4 Biological Evolution, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_4_l",
@@ -650,7 +655,7 @@
           "locator": "PDF p.19, topic 4 Biological Evolution, outcome (l)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_a_b",
@@ -672,7 +677,7 @@
           "locator": "PDF p.20, topic A Infectious Diseases, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_a_d",
@@ -694,7 +699,7 @@
           "locator": "PDF p.20, topic A Infectious Diseases, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_a_e",
@@ -716,7 +721,7 @@
           "locator": "PDF p.20, topic A Infectious Diseases, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_a_f",
@@ -738,7 +743,7 @@
           "locator": "PDF p.20, topic A Infectious Diseases, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_a_g",
@@ -760,7 +765,7 @@
           "locator": "PDF p.20, topic A Infectious Diseases, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_a_j",
@@ -780,7 +785,7 @@
           "locator": "PDF p.20, topic A Infectious Diseases, outcome (j)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_a_k",
@@ -800,7 +805,7 @@
           "locator": "PDF p.20, topic A Infectious Diseases, outcome (k)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_b_a",
@@ -822,7 +827,7 @@
           "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (a)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_b_b",
@@ -844,7 +849,7 @@
           "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (b)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_b_c",
@@ -866,7 +871,7 @@
           "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (c)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_b_d",
@@ -886,7 +891,7 @@
           "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (d)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_b_e",
@@ -908,7 +913,7 @@
           "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (e)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_b_f",
@@ -932,7 +937,7 @@
           "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (f)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_b_g",
@@ -954,7 +959,7 @@
           "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (g)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_b_h",
@@ -974,7 +979,7 @@
           "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (h)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_biology_9477_2026_o_b_i",
@@ -996,7 +1001,7 @@
           "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (i)"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ]
 }

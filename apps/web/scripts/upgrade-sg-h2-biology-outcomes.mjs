@@ -3,6 +3,8 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
+import { refuseOwnerApprovedTargets } from "./kg-approval-guard.mjs";
+
 const ROOT = resolve(import.meta.dirname, "../../..");
 const DATA = resolve(ROOT, "data/knowledge-graphs");
 const TODAY = "2026-07-19";
@@ -20,6 +22,7 @@ const paths = {
   aLevel: resolve(DATA, "source/a_level_biology.json"),
   senior: resolve(DATA, "source/senior_secondary_biology.json"),
 };
+refuseOwnerApprovedTargets(paths);
 
 const readJson = (path) => JSON.parse(readFileSync(path, "utf8"));
 const writeJson = (path, value) => {

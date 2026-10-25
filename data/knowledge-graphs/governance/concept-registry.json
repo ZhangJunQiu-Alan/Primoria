@@ -24,7 +24,7 @@
       "preferred_name": "Personal and household financial mathematics",
       "preferred_name_zh": "个人与家庭金融数学",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -50,7 +50,7 @@
       "preferred_name": "Cortical higher nervous activity",
       "preferred_name_zh": "大脑皮层高级神经活动",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -115,7 +115,7 @@
       "preferred_name": "Characteristics of standard algebraic graphs",
       "preferred_name_zh": "常见代数函数图像特征",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -154,7 +154,7 @@
       "preferred_name": "Independence test with contingency tables",
       "preferred_name_zh": "列联表独立性检验",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -180,7 +180,7 @@
       "preferred_name": "Sterilisation for pure culture",
       "preferred_name_zh": "纯培养中的灭菌",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -275,7 +275,7 @@
       "preferred_name": "Mutagens and cancer",
       "preferred_name_zh": "诱变因素与癌变",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -301,7 +301,7 @@
       "preferred_name": "Simple parametric equations and plane graphs",
       "preferred_name_zh": "简单参数方程与平面图像",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -327,7 +327,7 @@
       "preferred_name": "Arc length, sector area and segment area",
       "preferred_name_zh": "弧长、扇形面积与弓形面积",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -366,7 +366,7 @@
       "preferred_name": "Angle types and angle relationships",
       "preferred_name_zh": "角的类型与基本关系",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -444,7 +444,7 @@
       "preferred_name": "Autonomic nervous regulation",
       "preferred_name_zh": "自主神经调节内脏",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -496,7 +496,7 @@
       "preferred_name": "Water, wind and solar energy technologies",
       "preferred_name_zh": "水能、风能与太阳能利用",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -526,7 +526,7 @@
       "preferred_name": "Structure methods in life science",
       "preferred_name_zh": "结构理论与生命科学",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -539,7 +539,7 @@
       "preferred_name": "Function maxima and minima",
       "preferred_name_zh": "函数最大值与最小值",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -552,7 +552,7 @@
       "preferred_name": "Need for multicellular transport and blood-vessel exchange",
       "preferred_name_zh": "多细胞运输需求与血管交换",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -565,7 +565,7 @@
       "preferred_name": "Applications of plant growth regulators",
       "preferred_name_zh": "植物激素及类似物的生产应用",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -578,7 +578,7 @@
       "preferred_name": "Monoclonal-antibody production",
       "preferred_name_zh": "单克隆抗体制备",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -591,7 +591,7 @@
       "preferred_name": "Limits of standard-state spontaneity predictions",
       "preferred_name_zh": "标准态自发性预测的适用边界",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_chemistry",
@@ -630,7 +630,7 @@
       "preferred_name": "Ray model and reflection from surfaces",
       "preferred_name_zh": "射线模型与表面反射",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -643,7 +643,7 @@
       "preferred_name": "Applications of plane vectors",
       "preferred_name_zh": "平面向量应用",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -656,7 +656,7 @@
       "preferred_name": "Modulus and principal argument from Cartesian form",
       "preferred_name_zh": "由笛卡尔形式求模与主辐角",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -669,7 +669,7 @@
       "preferred_name": "Series operations, convergence and infinite sums",
       "preferred_name_zh": "级数运算、收敛与无穷和",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -695,7 +695,7 @@
       "preferred_name": "Transitional and mixed crystals",
       "preferred_name_zh": "过渡晶体与混合型晶体",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -929,7 +929,7 @@
       "preferred_name": "One-sample tests for a population mean",
       "preferred_name_zh": "单总体均值假设检验",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -942,7 +942,7 @@
       "preferred_name": "Applications of separation techniques",
       "preferred_name_zh": "分离技术的生活与工业应用",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -981,7 +981,7 @@
       "preferred_name": "Electronic and steric effects in organic reactivity",
       "preferred_name_zh": "有机反应性中的电子效应与位阻效应",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_chemistry",
@@ -1020,7 +1020,7 @@
       "preferred_name": "Digestive-system structure and the process of digestion",
       "preferred_name_zh": "消化系统结构与消化过程",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -1033,7 +1033,7 @@
       "preferred_name": "Real exponents and laws",
       "preferred_name_zh": "实数指数幂及运算性质",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -1046,7 +1046,7 @@
       "preferred_name": "Optical-fibre principle and applications",
       "preferred_name_zh": "光纤原理与应用",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -1059,7 +1059,7 @@
       "preferred_name": "Piecewise functions",
       "preferred_name_zh": "分段函数",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -1124,7 +1124,7 @@
       "preferred_name": "Chemistry and human health",
       "preferred_name_zh": "化学与人类健康",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -1189,7 +1189,7 @@
       "preferred_name": "Spatial parallelism criteria",
       "preferred_name_zh": "空间平行判定",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -1254,7 +1254,7 @@
       "preferred_name": "Generator and motor energy conversion",
       "preferred_name_zh": "发电机与电动机能量转化",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -1401,7 +1401,7 @@
       "preferred_name": "Comparing growth rates",
       "preferred_name_zh": "比较函数增长速度",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -1427,7 +1427,7 @@
       "preferred_name": "Force composition and decomposition",
       "preferred_name_zh": "力的合成分解与矢量",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -1440,7 +1440,7 @@
       "preferred_name": "Endocytosis and exocytosis",
       "preferred_name_zh": "胞吞与胞吐",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -1453,7 +1453,7 @@
       "preferred_name": "Joule's law",
       "preferred_name_zh": "焦耳定律",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -1479,7 +1479,7 @@
       "preferred_name": "Stem-cell potency",
       "preferred_name_zh": "干细胞潜能层级",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -1505,7 +1505,7 @@
       "preferred_name": "Closed-circuit Ohm's law",
       "preferred_name_zh": "闭合电路欧姆定律",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -1544,7 +1544,7 @@
       "preferred_name": "Stereochemical outcomes of SN1 and SN2 substitution",
       "preferred_name_zh": "SN1 与 SN2 取代的立体化学结果",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_chemistry",
@@ -1596,7 +1596,7 @@
       "preferred_name": "Map scales and direct or inverse proportion",
       "preferred_name_zh": "地图比例尺与正反比例",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -1609,7 +1609,7 @@
       "preferred_name": "Arithmetic sequences and linear functions",
       "preferred_name_zh": "等差数列与一次函数",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -1639,7 +1639,7 @@
       "preferred_name": "Maclaurin and small-angle approximations",
       "preferred_name_zh": "麦克劳林与小角近似",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -1678,7 +1678,7 @@
       "preferred_name": "Multiplying and dividing algebraic fractions",
       "preferred_name_zh": "代数分式乘除",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -1691,7 +1691,7 @@
       "preferred_name": "Proton number, nuclear mass and elemental identity",
       "preferred_name_zh": "质子数、原子核质量与元素身份",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -1730,7 +1730,7 @@
       "preferred_name": "Organ systems in material exchange",
       "preferred_name_zh": "器官系统参与内外环境物质交换",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -1795,7 +1795,7 @@
       "preferred_name": "Quadratic formula, completing the square and graphical solution",
       "preferred_name_zh": "公式、配方与图像法解二次方程",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -1821,7 +1821,7 @@
       "preferred_name": "Forced vibration",
       "preferred_name_zh": "受迫振动",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -1834,7 +1834,7 @@
       "preferred_name": "Solving quadratic equations by factorisation",
       "preferred_name_zh": "因式分解法解二次方程",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -1860,7 +1860,7 @@
       "preferred_name": "Chemical change, atomic rearrangement and mass conservation",
       "preferred_name_zh": "化学变化、原子重排与质量守恒",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -1899,7 +1899,7 @@
       "preferred_name": "Electromagnetic-wave applications",
       "preferred_name_zh": "电磁波应用与影响",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -1912,7 +1912,7 @@
       "preferred_name": "Basic inequality and optimisation",
       "preferred_name_zh": "基本不等式与最值",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -1925,7 +1925,7 @@
       "preferred_name": "Quantised energy levels and transitions",
       "preferred_name_zh": "电子能级、激发与跃迁",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -2016,7 +2016,7 @@
       "preferred_name": "Necessary and sufficient conditions",
       "preferred_name_zh": "必要、充分与充要条件",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -2068,7 +2068,7 @@
       "preferred_name": "Harms of biological weapons",
       "preferred_name_zh": "生物武器的威胁与伤害",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -2081,7 +2081,7 @@
       "preferred_name": "Fractional equations reducible to quadratics",
       "preferred_name_zh": "可化为二次方程的分式方程",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -2107,7 +2107,7 @@
       "preferred_name": "Representations of functions",
       "preferred_name_zh": "函数的表示方法",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -2133,7 +2133,7 @@
       "preferred_name": "Integer and fractional indices",
       "preferred_name_zh": "整数与分数指数及指数律",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -2176,7 +2176,7 @@
       "preferred_name": "Hypothesis-test concepts, critical regions and p-values",
       "preferred_name_zh": "假设检验概念、临界域与 p 值",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -2189,7 +2189,7 @@
       "preferred_name": "Overweight and weightlessness",
       "preferred_name_zh": "超重与失重",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -2202,7 +2202,7 @@
       "preferred_name": "Functional-group properties and conversion",
       "preferred_name_zh": "官能团性质、相互影响与转化",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -2215,7 +2215,7 @@
       "preferred_name": "Sulfur and its compounds",
       "preferred_name_zh": "硫及其重要化合物",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -2449,7 +2449,7 @@
       "preferred_name": "Applications of fermentation engineering",
       "preferred_name_zh": "发酵工程应用",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -2540,7 +2540,7 @@
       "preferred_name": "Real-number operations and order",
       "preferred_name_zh": "实数运算、数轴与大小关系",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -2553,7 +2553,7 @@
       "preferred_name": "Trigonometry for non-right triangles",
       "preferred_name_zh": "任意三角形的三角计算",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -2579,7 +2579,7 @@
       "preferred_name": "Normal functions of stem cells",
       "preferred_name_zh": "干细胞的正常生理功能",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -2592,7 +2592,7 @@
       "preferred_name": "Two-by-two contingency tables",
       "preferred_name_zh": "2×2 列联表",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -2618,7 +2618,7 @@
       "preferred_name": "Word equations and introductory reaction types",
       "preferred_name_zh": "文字方程式与基础反应类型",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -2674,7 +2674,7 @@
       "preferred_name": "Plant somatic hybridisation",
       "preferred_name_zh": "植物体细胞杂交",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -2700,7 +2700,7 @@
       "preferred_name": "Non-real roots of real-coefficient quadratic equations",
       "preferred_name_zh": "实系数二次方程的非实根",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -2713,7 +2713,7 @@
       "preferred_name": "Tools of genetic engineering",
       "preferred_name_zh": "限制酶、连接酶与载体",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -2726,7 +2726,7 @@
       "preferred_name": "Qualitative refraction and dispersion",
       "preferred_name_zh": "定性折射与色散",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -2778,7 +2778,7 @@
       "preferred_name": "Energy forms and conservation",
       "preferred_name_zh": "化学能转化与能量守恒",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -2791,7 +2791,7 @@
       "preferred_name": "Persistence of harmful recessive alleles",
       "preferred_name_zh": "有害隐性等位基因的保留",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -2847,7 +2847,7 @@
       "preferred_name": "Base dissociation and the ionic product of water",
       "preferred_name_zh": "碱解离与水的离子积",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_chemistry",
@@ -2886,7 +2886,7 @@
       "preferred_name": "Integrated use of fossil resources",
       "preferred_name_zh": "化石资源综合利用",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -2925,7 +2925,7 @@
       "preferred_name": "Genotype-environment effects on phenotype",
       "preferred_name_zh": "基因型、环境与表型",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -2951,7 +2951,7 @@
       "preferred_name": "Arithmetic sequence modelling",
       "preferred_name_zh": "等差数列建模",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -3029,7 +3029,7 @@
       "preferred_name": "Climate-system and ecological impacts",
       "preferred_name_zh": "气候系统与生态影响",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -3055,7 +3055,7 @@
       "preferred_name": "Viral tissue pathogenesis",
       "preferred_name_zh": "病毒对宿主组织的致病机制",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -3068,7 +3068,7 @@
       "preferred_name": "Distance-time and speed-time graph interpretation",
       "preferred_name_zh": "路程—时间与速度—时间图像",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -3107,7 +3107,7 @@
       "preferred_name": "Centrifugal phenomena and applications",
       "preferred_name_zh": "离心现象及应用",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -3120,7 +3120,7 @@
       "preferred_name": "Sampling design",
       "preferred_name_zh": "抽样方案选择",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -3215,7 +3215,7 @@
       "preferred_name": "Household circuits and electrical safety",
       "preferred_name_zh": "家庭电路与安全节约用电",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -3241,7 +3241,7 @@
       "preferred_name": "Vaccination, population control and trade-offs",
       "preferred_name_zh": "疫苗的群体控制与权衡",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -3293,7 +3293,7 @@
       "preferred_name": "Product-sum and half-angle transformations",
       "preferred_name_zh": "积化和差、和差化积与半角变换",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -3358,7 +3358,7 @@
       "preferred_name": "Renewable energy and environmental impact",
       "preferred_name_zh": "可再生能源与环境影响",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -3371,7 +3371,7 @@
       "preferred_name": "Field-line and equipotential geometry",
       "preferred_name_zh": "场线与等势面的几何关系",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_physics",
@@ -3384,7 +3384,7 @@
       "preferred_name": "Fertilisation and early embryonic development",
       "preferred_name_zh": "受精与早期胚胎发育",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -3423,7 +3423,7 @@
       "preferred_name": "Green chemistry principles",
       "preferred_name_zh": "绿色化学基本思想",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -3449,7 +3449,7 @@
       "preferred_name": "Conic contexts",
       "preferred_name_zh": "圆锥曲线背景与作用",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -3462,7 +3462,7 @@
       "preferred_name": "Formulating equations and inequalities from context",
       "preferred_name_zh": "从情境建立方程与不等式",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -3514,7 +3514,7 @@
       "preferred_name": "Data sources, populations and samples",
       "preferred_name_zh": "数据来源、总体与样本",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -3527,7 +3527,7 @@
       "preferred_name": "Tests for common ions",
       "preferred_name_zh": "常见离子的检验",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -3605,7 +3605,7 @@
       "preferred_name": "Genetic-disease screening and prevention",
       "preferred_name_zh": "人类遗传病检测与预防",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -3618,7 +3618,7 @@
       "preferred_name": "Rounding, approximation and estimation",
       "preferred_name_zh": "取整、近似与估算",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -3657,7 +3657,7 @@
       "preferred_name": "Perimeter and area of composite plane figures",
       "preferred_name_zh": "组合平面图形的周长与面积",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -3709,7 +3709,7 @@
       "preferred_name": "Ecological pyramids",
       "preferred_name_zh": "数量、生物量和能量金字塔",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -3757,6 +3757,19 @@
       ]
     },
     {
+      "canonical_id": "pc_30bb2c1ff3be4bdcb48b12057adbfbf2",
+      "preferred_name": "Probability of single events",
+      "preferred_name_zh": "单一事件概率",
+      "status": "active",
+      "review_status": "approved",
+      "aliases": [
+        {
+          "graph_id": "singapore_secondary_mathematics",
+          "node_id": "sg_sec_math_single_event_probability"
+        }
+      ]
+    },
+    {
       "canonical_id": "pc_30c4c0fd91c8d0f52169d9fb3e37d9be",
       "preferred_name": "Upthrust and Archimedes",
       "preferred_name_zh": "浮力与阿基米德",
@@ -3787,7 +3800,7 @@
       "preferred_name": "Ecological resource use",
       "preferred_name_zh": "生态规律与资源利用",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -3813,7 +3826,7 @@
       "preferred_name": "Semiconductor materials",
       "preferred_name_zh": "半导体材料",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -3826,7 +3839,7 @@
       "preferred_name": "Traditional fermentation",
       "preferred_name_zh": "传统发酵食品",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -3839,7 +3852,7 @@
       "preferred_name": "Human drivers of carbon dioxide and methane accumulation",
       "preferred_name_zh": "二氧化碳与甲烷累积的人为驱动",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -3891,7 +3904,7 @@
       "preferred_name": "Salt hydrolysis",
       "preferred_name_zh": "盐类水解平衡",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -3904,7 +3917,7 @@
       "preferred_name": "Industrial fermentation",
       "preferred_name_zh": "现代发酵工程",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -4051,7 +4064,7 @@
       "preferred_name": "Circle chord and tangent properties",
       "preferred_name_zh": "圆的弦与切线性质",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -4064,7 +4077,7 @@
       "preferred_name": "Representing simple combined-event probability",
       "preferred_name_zh": "复合事件概率表示",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -4090,7 +4103,7 @@
       "preferred_name": "Oxidising and reducing agents",
       "preferred_name_zh": "氧化剂与还原剂",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -4146,7 +4159,7 @@
       "preferred_name": "Expansion and elementary algebraic identities",
       "preferred_name_zh": "代数展开与基本恒等式",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -4224,7 +4237,7 @@
       "preferred_name": "Phylogeny and molecular classification",
       "preferred_name_zh": "系统发育与分子分类",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -4250,7 +4263,7 @@
       "preferred_name": "Separable differential equations with initial conditions and substitution",
       "preferred_name_zh": "含初值与给定换元的可分离微分方程",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -4263,7 +4276,7 @@
       "preferred_name": "Stages of cell signalling",
       "preferred_name_zh": "细胞信号传导阶段",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -4289,7 +4302,7 @@
       "preferred_name": "Auxin discovery and dual effects",
       "preferred_name_zh": "生长素发现与两重性",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -4341,7 +4354,7 @@
       "preferred_name": "Global environmental change",
       "preferred_name_zh": "全球环境问题与生物圈稳态",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -4354,7 +4367,7 @@
       "preferred_name": "Synthetic polymers and advanced materials",
       "preferred_name_zh": "合成高分子与新型材料",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -4367,7 +4380,7 @@
       "preferred_name": "Pollution and coordinated sustainable development",
       "preferred_name_zh": "污染防治与协调发展",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -4458,7 +4471,7 @@
       "preferred_name": "Ligand exchange in coordination complexes",
       "preferred_name_zh": "配位化合物中的配体交换",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_chemistry",
@@ -4549,7 +4562,7 @@
       "preferred_name": "Environmental impacts of CFC, HCFC and HFC compounds",
       "preferred_name_zh": "CFC、HCFC 与 HFC 的环境影响",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_chemistry",
@@ -4575,7 +4588,7 @@
       "preferred_name": "Selective culture media",
       "preferred_name_zh": "培养基配方与目的培养",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -4605,7 +4618,7 @@
       "preferred_name": "Solid, atmospheric and liquid pressure in context",
       "preferred_name_zh": "固体、大气与液体压强情境",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -4618,7 +4631,7 @@
       "preferred_name": "Ecological succession",
       "preferred_name_zh": "初生演替与次生演替",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -4644,7 +4657,7 @@
       "preferred_name": "Geometric effects of Cartesian complex operations",
       "preferred_name_zh": "复数运算的几何效果",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -4748,7 +4761,7 @@
       "preferred_name": "Coordinate representation of two-variable relationships",
       "preferred_name_zh": "二维坐标中的变量关系表示",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -4761,7 +4774,7 @@
       "preferred_name": "Trigonometric modelling",
       "preferred_name_zh": "三角函数建模",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -4839,7 +4852,7 @@
       "preferred_name": "Perpendicular feet and point-to-line or plane distance",
       "preferred_name_zh": "垂足及点到直线或平面的距离",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -4852,7 +4865,7 @@
       "preferred_name": "Second and third cosmic velocities",
       "preferred_name_zh": "第二与第三宇宙速度",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -4973,7 +4986,7 @@
       "preferred_name": "Reflexes and the reflex arc",
       "preferred_name_zh": "反射与反射弧",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -5081,7 +5094,7 @@
       "preferred_name": "Stratified random sampling",
       "preferred_name_zh": "分层随机抽样",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -5094,7 +5107,7 @@
       "preferred_name": "Rate, distance, time and speed",
       "preferred_name_zh": "率、路程、时间与速度",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -5120,7 +5133,7 @@
       "preferred_name": "Element valence-state conversion",
       "preferred_name_zh": "元素价态与物质转化",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -5185,7 +5198,7 @@
       "preferred_name": "Genes as nucleic-acid segments",
       "preferred_name_zh": "基因是核酸功能片段",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -5198,7 +5211,7 @@
       "preferred_name": "Cell-cycle dysregulation and cancer risk",
       "preferred_name_zh": "细胞周期失调与癌变风险",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -5263,7 +5276,7 @@
       "preferred_name": "Self-induction",
       "preferred_name_zh": "自感现象",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -5397,7 +5410,7 @@
       "preferred_name": "Background radiation and alpha-beta-gamma properties",
       "preferred_name_zh": "本底辐射与 α、β、γ 辐射性质",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_physics",
@@ -5449,7 +5462,7 @@
       "preferred_name": "Relations among a function and its derivative graphs",
       "preferred_name_zh": "函数与导函数图像关系",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -5462,7 +5475,7 @@
       "preferred_name": "Aqueous electrolyte systems",
       "preferred_name_zh": "电解质水溶液体系",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -5544,7 +5557,7 @@
       "preferred_name": "Kinases and phosphatases in signalling",
       "preferred_name_zh": "信号传导中的激酶与磷酸酶",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -5570,7 +5583,7 @@
       "preferred_name": "Selective permeability",
       "preferred_name_zh": "质膜的选择透过性",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -5596,7 +5609,7 @@
       "preferred_name": "Biological species concept and its limits",
       "preferred_name_zh": "生物学物种概念及局限",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -5622,7 +5635,7 @@
       "preferred_name": "Comparing anthropogenic carbon footprints",
       "preferred_name_zh": "人为活动碳足迹比较",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -5674,7 +5687,7 @@
       "preferred_name": "Gravitational potential energy",
       "preferred_name_zh": "重力势能",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -5687,7 +5700,7 @@
       "preferred_name": "Complex algebraic representation and equality",
       "preferred_name_zh": "复数代数表示与相等",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -5713,7 +5726,7 @@
       "preferred_name": "Nanomaterials",
       "preferred_name_zh": "纳米材料",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -5726,7 +5739,7 @@
       "preferred_name": "Spatial incidence axioms",
       "preferred_name_zh": "空间点线面基本事实",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -5765,7 +5778,7 @@
       "preferred_name": "Interpreting hypothesis-test decisions in context",
       "preferred_name_zh": "情境中解释假设检验结论",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -5860,7 +5873,7 @@
       "preferred_name": "Temporary and permanent contraception mechanisms",
       "preferred_name_zh": "临时与永久避孕机制",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -5899,7 +5912,7 @@
       "preferred_name": "Comparative genome architecture",
       "preferred_name_zh": "病毒、原核与真核基因组结构比较",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -5955,7 +5968,7 @@
       "preferred_name": "Cellular senescence and death",
       "preferred_name_zh": "细胞衰老与死亡",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -6007,7 +6020,7 @@
       "preferred_name": "Molecular-speed distribution",
       "preferred_name_zh": "分子运动速率分布",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -6020,7 +6033,7 @@
       "preferred_name": "Detecting misleading statistical diagrams",
       "preferred_name_zh": "识别误导性统计图",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -6046,7 +6059,7 @@
       "preferred_name": "Right-triangle trigonometric ratios",
       "preferred_name_zh": "直角三角形三角比",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -6085,7 +6098,7 @@
       "preferred_name": "Elementary matrix representation and operations",
       "preferred_name_zh": "初等矩阵表示与运算",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -6124,7 +6137,7 @@
       "preferred_name": "Elements, compounds and their distinguishing properties",
       "preferred_name_zh": "元素、化合物及其性质边界",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -6154,7 +6167,7 @@
       "preferred_name": "Elastic potential energy",
       "preferred_name_zh": "弹性势能",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -6180,7 +6193,7 @@
       "preferred_name": "Ionic charge and radius effects on lattice energy",
       "preferred_name_zh": "离子电荷、半径与晶格能",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_chemistry",
@@ -6206,7 +6219,7 @@
       "preferred_name": "Internal energy and state variables",
       "preferred_name_zh": "内能与体系状态",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -6232,7 +6245,7 @@
       "preferred_name": "Ellipse definition and equation",
       "preferred_name_zh": "椭圆定义、方程与性质",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -6258,7 +6271,7 @@
       "preferred_name": "The DNA end-replication problem",
       "preferred_name_zh": "DNA 末端复制问题",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -6284,7 +6297,7 @@
       "preferred_name": "Derivatives of simple linear composites",
       "preferred_name_zh": "简单线性复合函数求导",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -6392,7 +6405,7 @@
       "preferred_name": "Nuclear composition and nuclear force",
       "preferred_name_zh": "原子核组成与核力",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -6418,7 +6431,7 @@
       "preferred_name": "Analytic geometry method",
       "preferred_name_zh": "解析几何数形结合",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -6656,7 +6669,7 @@
       "preferred_name": "Algebraic notation and substitution",
       "preferred_name_zh": "代数记号与代入求值",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -6669,7 +6682,7 @@
       "preferred_name": "Determinants of trophic structure",
       "preferred_name_zh": "营养结构的生物与非生物决定因素",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -6708,7 +6721,7 @@
       "preferred_name": "Chemical application laws and rules",
       "preferred_name_zh": "化学应用法律法规与规则意识",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -6721,7 +6734,7 @@
       "preferred_name": "Ethics of maternal genetic screening",
       "preferred_name_zh": "母体遗传筛查伦理",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -6747,7 +6760,7 @@
       "preferred_name": "Inverse-function existence and domain restriction",
       "preferred_name_zh": "反函数存在条件与定义域限制",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -6790,7 +6803,7 @@
       "preferred_name": "Conduction, convection and thermal radiation",
       "preferred_name_zh": "传导、对流与热辐射",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -6833,7 +6846,7 @@
       "preferred_name": "Immune disorders",
       "preferred_name_zh": "免疫功能异常与疾病",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -6859,7 +6872,7 @@
       "preferred_name": "Puberty and the menstrual cycle",
       "preferred_name_zh": "青春期与月经周期",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -6885,7 +6898,7 @@
       "preferred_name": "Cell differentiation",
       "preferred_name_zh": "细胞分化",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -6980,7 +6993,7 @@
       "preferred_name": "Position and displacement vectors with point distance",
       "preferred_name_zh": "位置、位移向量与两点距离",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -7032,7 +7045,7 @@
       "preferred_name": "Sample correlation coefficient",
       "preferred_name_zh": "样本相关系数",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -7058,7 +7071,7 @@
       "preferred_name": "Electric field-line model",
       "preferred_name_zh": "电场线模型",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -7106,6 +7119,19 @@
       ]
     },
     {
+      "canonical_id": "pc_63cc006f02a5da8155f7f44248b724bc",
+      "preferred_name": "Formulating quadratic equations from context",
+      "preferred_name_zh": "从情境建立一元二次方程",
+      "status": "active",
+      "review_status": "approved",
+      "aliases": [
+        {
+          "graph_id": "singapore_secondary_mathematics",
+          "node_id": "sg_sec_math_formulate_quadratic_equations"
+        }
+      ]
+    },
+    {
       "canonical_id": "pc_63dfa087168bfb9834409155d515790e",
       "preferred_name": "Water",
       "preferred_name_zh": "水",
@@ -7123,7 +7149,7 @@
       "preferred_name": "Set relations and special sets",
       "preferred_name_zh": "集合关系、全集与空集",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -7149,7 +7175,7 @@
       "preferred_name": "Cellular unity and diversity",
       "preferred_name_zh": "细胞结构统一性与形态功能多样性",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -7214,7 +7240,7 @@
       "preferred_name": "Introductory macromolecule applications",
       "preferred_name_zh": "高分子与生物大分子应用初步",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -7279,7 +7305,7 @@
       "preferred_name": "Electrode reactions in anodising and copper purification",
       "preferred_name_zh": "阳极氧化与铜电解精炼的电极反应",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_chemistry",
@@ -7374,7 +7400,7 @@
       "preferred_name": "Effects of force and associated energy transfer",
       "preferred_name_zh": "力的效应及其能量转移",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -7400,7 +7426,7 @@
       "preferred_name": "Evidence from fossils and comparative anatomy",
       "preferred_name_zh": "化石、比较解剖与胚胎学的共同祖先证据",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -7413,7 +7439,7 @@
       "preferred_name": "Complex-ion control of solubility",
       "preferred_name_zh": "配离子形成对溶解度的调控",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_chemistry",
@@ -7534,7 +7560,7 @@
       "preferred_name": "Limits of Newtonian mechanics",
       "preferred_name_zh": "牛顿力学的局限性",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -7612,7 +7638,7 @@
       "preferred_name": "Warming-driven shifts in vector-borne disease range",
       "preferred_name_zh": "变暖驱动的蚊媒疾病范围变化",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -7651,7 +7677,7 @@
       "preferred_name": "Percentage representation, comparison and change",
       "preferred_name_zh": "百分数表示、比较与变化",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -7690,7 +7716,7 @@
       "preferred_name": "Plant tissue culture",
       "preferred_name_zh": "植物组织培养",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -7716,7 +7742,7 @@
       "preferred_name": "Dot plots, histograms and stem-and-leaf plots",
       "preferred_name_zh": "点图、直方图与茎叶图",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -7794,7 +7820,7 @@
       "preferred_name": "Viruses and the boundary of life",
       "preferred_name_zh": "病毒与生命边界",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -7820,7 +7846,7 @@
       "preferred_name": "Expectation and variance under an affine transformation",
       "preferred_name_zh": "随机变量线性变换的期望与方差",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -7846,7 +7872,7 @@
       "preferred_name": "Climate-driven ecological redistribution",
       "preferred_name_zh": "气候驱动的生态重新分布",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -7872,7 +7898,7 @@
       "preferred_name": "Trigonometric problems in two and three dimensions",
       "preferred_name_zh": "二维与三维三角问题",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -7937,7 +7963,7 @@
       "preferred_name": "Spatial perpendicularity properties",
       "preferred_name_zh": "空间垂直属性",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -7950,7 +7976,7 @@
       "preferred_name": "Radioisotope applications and radiation safety",
       "preferred_name_zh": "放射性同位素应用与射线防护",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -7976,7 +8002,7 @@
       "preferred_name": "Food chains and food webs",
       "preferred_name_zh": "食物链与食物网",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -7989,7 +8015,7 @@
       "preferred_name": "Thermal expansion, contraction and density change",
       "preferred_name_zh": "热胀冷缩与密度变化",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -8015,7 +8041,7 @@
       "preferred_name": "Heisenberg position-momentum uncertainty",
       "preferred_name_zh": "海森堡位置—动量不确定性",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_physics",
@@ -8054,7 +8080,7 @@
       "preferred_name": "Multicellular organisation and division of labour",
       "preferred_name_zh": "多细胞生物的结构层级与细胞分工",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -8080,7 +8106,7 @@
       "preferred_name": "Periodicity of functions",
       "preferred_name_zh": "函数周期性",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -8093,7 +8119,7 @@
       "preferred_name": "Classical probability",
       "preferred_name_zh": "古典概型",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -8149,7 +8175,7 @@
       "preferred_name": "Second law of thermodynamics",
       "preferred_name_zh": "热力学第二定律",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -8162,7 +8188,7 @@
       "preferred_name": "Inorganic conversion pathways",
       "preferred_name_zh": "无机物性质与转化路径",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -8175,7 +8201,7 @@
       "preferred_name": "Community structure",
       "preferred_name_zh": "群落垂直、水平结构及时间变化",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -8188,7 +8214,7 @@
       "preferred_name": "Liquid crystals",
       "preferred_name_zh": "液晶性质与应用",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -8214,7 +8240,7 @@
       "preferred_name": "Somatic-cell nuclear transfer",
       "preferred_name_zh": "动物体细胞核移植",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -8240,7 +8266,7 @@
       "preferred_name": "Endocrine-system organisation",
       "preferred_name_zh": "内分泌系统组成",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -8305,7 +8331,7 @@
       "preferred_name": "Molecules and reading chemical formulae",
       "preferred_name_zh": "分子及化学式信息读取",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -8361,7 +8387,7 @@
       "preferred_name": "Recurrence-generated sequences",
       "preferred_name_zh": "递推数列",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -8374,7 +8400,7 @@
       "preferred_name": "Mixtures, solutions and suspensions",
       "preferred_name_zh": "混合物、溶液与悬浊液",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -8413,7 +8439,7 @@
       "preferred_name": "Surface area and volume",
       "preferred_name_zh": "几何体表面积与体积",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -8426,7 +8452,7 @@
       "preferred_name": "Substance classification and conversion",
       "preferred_name_zh": "物质分类与类别转化",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -8452,7 +8478,7 @@
       "preferred_name": "Oblique drawings of solids",
       "preferred_name_zh": "空间图形直观图",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -8465,7 +8491,7 @@
       "preferred_name": "Enlargement, reduction and scale drawings",
       "preferred_name_zh": "放缩与比例作图",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -8478,7 +8504,7 @@
       "preferred_name": "Factors affecting populations",
       "preferred_name_zh": "种群特征的生物与非生物影响因素",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -8491,7 +8517,7 @@
       "preferred_name": "Parabola",
       "preferred_name_zh": "抛物线",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -8634,7 +8660,7 @@
       "preferred_name": "Coordination of spinal and brain centres",
       "preferred_name_zh": "脊髓与脑高级中枢协调",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -8647,7 +8673,7 @@
       "preferred_name": "Laser properties and applications",
       "preferred_name_zh": "激光特性与应用",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -8660,7 +8686,7 @@
       "preferred_name": "Pollutant detection and treatment",
       "preferred_name_zh": "污染物检测与治理",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -8673,7 +8699,7 @@
       "preferred_name": "Coordination among cell structures",
       "preferred_name_zh": "细胞结构的协调合作",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -8686,7 +8712,7 @@
       "preferred_name": "Point-charge model",
       "preferred_name_zh": "点电荷模型",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -8699,7 +8725,7 @@
       "preferred_name": "Introductory relativistic spacetime",
       "preferred_name_zh": "相对论时空观初步",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -8751,7 +8777,7 @@
       "preferred_name": "Eddy currents",
       "preferred_name_zh": "涡流现象",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -8777,7 +8803,7 @@
       "preferred_name": "Linear equations with integer coefficients",
       "preferred_name_zh": "整数系数一元一次方程",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -8924,7 +8950,7 @@
       "preferred_name": "Industrial condition optimisation",
       "preferred_name_zh": "化工反应条件综合优化",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -8963,7 +8989,7 @@
       "preferred_name": "Ideal-gas mixtures and partial pressures",
       "preferred_name_zh": "理想气体混合物与分压",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_chemistry",
@@ -9015,7 +9041,7 @@
       "preferred_name": "Multilevel regulation of eukaryotic gene expression",
       "preferred_name_zh": "真核基因表达的多层调控",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -9067,7 +9093,7 @@
       "preferred_name": "Fuel and battery evaluation",
       "preferred_name_zh": "燃料效率与化学电源价值",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -9093,7 +9119,7 @@
       "preferred_name": "Optimisation with derivatives",
       "preferred_name_zh": "导数解决实际优化",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -9106,7 +9132,7 @@
       "preferred_name": "Plasma-membrane functions",
       "preferred_name_zh": "质膜的边界、运输与交流功能",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -9145,7 +9171,7 @@
       "preferred_name": "Particle model and its conditions",
       "preferred_name_zh": "质点模型及适用条件",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -9262,7 +9288,7 @@
       "preferred_name": "Instrument-based geometric construction",
       "preferred_name_zh": "几何作图",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -9288,7 +9314,7 @@
       "preferred_name": "Operations on linear expressions",
       "preferred_name_zh": "一次式的运算与化简",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -9327,7 +9353,7 @@
       "preferred_name": "Outbreak, epidemic and pandemic",
       "preferred_name_zh": "暴发、流行与大流行",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -9418,7 +9444,7 @@
       "preferred_name": "Ratio reasoning and proportional division",
       "preferred_name_zh": "比与按比分配",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -9431,7 +9457,7 @@
       "preferred_name": "Antigenic drift and antigenic shift",
       "preferred_name_zh": "抗原漂移与抗原转变",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -9444,7 +9470,7 @@
       "preferred_name": "Simple-pendulum period",
       "preferred_name_zh": "单摆周期规律",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -9457,7 +9483,7 @@
       "preferred_name": "Spatial vector basis and coordinates",
       "preferred_name_zh": "空间向量基本定理与坐标",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -9496,7 +9522,7 @@
       "preferred_name": "Kinetic energy theorem",
       "preferred_name_zh": "动能与动能定理",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -9509,7 +9535,7 @@
       "preferred_name": "Electrode potential under concentration changes",
       "preferred_name_zh": "浓度变化下的电极电势趋势",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_chemistry",
@@ -9578,7 +9604,7 @@
       "preferred_name": "Sex-linked inheritance",
       "preferred_name_zh": "伴性遗传",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -9591,7 +9617,7 @@
       "preferred_name": "Electrostatic applications and protection",
       "preferred_name_zh": "静电利用与防护",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -9617,7 +9643,7 @@
       "preferred_name": "Regression prediction and limitations",
       "preferred_name_zh": "回归预测及其限制",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -9682,7 +9708,7 @@
       "preferred_name": "Particle explanation of thermal expansion and state change",
       "preferred_name_zh": "粒子模型解释热胀冷缩与物态变化",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -9695,7 +9721,7 @@
       "preferred_name": "Chromosomal variation",
       "preferred_name_zh": "染色体结构与数量变异",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -9708,7 +9734,7 @@
       "preferred_name": "DNA and RNA",
       "preferred_name_zh": "DNA、RNA 结构与功能",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -9734,7 +9760,7 @@
       "preferred_name": "Enzyme specificity and condition sensitivity",
       "preferred_name_zh": "酶催化的专一性与条件敏感性",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_chemistry",
@@ -9773,7 +9799,7 @@
       "preferred_name": "Polymer, monomer and repeat unit",
       "preferred_name_zh": "聚合物、单体与链节",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -9786,7 +9812,7 @@
       "preferred_name": "Magnetic applications and historical contributions",
       "preferred_name_zh": "磁现象应用与历史贡献",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -9825,7 +9851,7 @@
       "preferred_name": "Molecular kinetic theory and evidence",
       "preferred_name_zh": "分子动理论及实验证据",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -9838,7 +9864,7 @@
       "preferred_name": "Quantifiers and negation",
       "preferred_name_zh": "量词命题及其否定",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -9877,7 +9903,7 @@
       "preferred_name": "Reaction quotient and direction",
       "preferred_name_zh": "浓度商与反应方向",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -9903,7 +9929,7 @@
       "preferred_name": "Second messengers",
       "preferred_name_zh": "第二信使",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -9942,7 +9968,7 @@
       "preferred_name": "Trigonometric reduction formulas",
       "preferred_name_zh": "三角函数诱导公式",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -9998,7 +10024,7 @@
       "preferred_name": "Conjugate roots of real-coefficient polynomials",
       "preferred_name_zh": "实系数多项式的共轭根",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -10076,7 +10102,7 @@
       "preferred_name": "Tropical biodiversity as a biomedical and food resource",
       "preferred_name_zh": "热带生物多样性的医药与粮食资源价值",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -10089,7 +10115,7 @@
       "preferred_name": "Least-squares regression for bivariate data",
       "preferred_name_zh": "二元数据最小二乘回归",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -10102,7 +10128,7 @@
       "preferred_name": "Selecting and interpreting statistical representations",
       "preferred_name_zh": "选择和解释统计表示",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -10154,7 +10180,7 @@
       "preferred_name": "Acid-base titration curves and indicator selection",
       "preferred_name_zh": "酸碱滴定曲线与指示剂选择",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_chemistry",
@@ -10210,7 +10236,7 @@
       "preferred_name": "Doppler effect",
       "preferred_name_zh": "多普勒效应",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -10248,7 +10274,7 @@
       "preferred_name": "Elementary solid geometry proofs",
       "preferred_name_zh": "立体几何简单证明",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -10274,7 +10300,7 @@
       "preferred_name": "Epistasis problem solving",
       "preferred_name_zh": "上位性遗传问题求解",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -10300,7 +10326,7 @@
       "preferred_name": "Surface tension and capillarity",
       "preferred_name_zh": "表面张力与毛细现象",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -10330,7 +10356,7 @@
       "preferred_name": "Ethics of human reproductive cloning",
       "preferred_name_zh": "生殖性克隆人的伦理问题",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -10369,7 +10395,7 @@
       "preferred_name": "Human reproductive anatomy, fertilisation and heredity",
       "preferred_name_zh": "人类生殖结构、受精与遗传",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -10408,7 +10434,7 @@
       "preferred_name": "Nuclear reaction equations",
       "preferred_name_zh": "核反应方程",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -10421,7 +10447,7 @@
       "preferred_name": "Distribution patterns and percentiles",
       "preferred_name_zh": "取值规律与百分位数",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -10460,7 +10486,7 @@
       "preferred_name": "Uncertainty in statistical inference",
       "preferred_name_zh": "统计推断的或然性",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -10486,7 +10512,7 @@
       "preferred_name": "Changing the subject and evaluating formulae",
       "preferred_name_zh": "改变公式主项与未知量求值",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -10512,7 +10538,7 @@
       "preferred_name": "Relative invariance across the first transition series",
       "preferred_name_zh": "第一过渡系半径与第一电离能的相对稳定",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_chemistry",
@@ -10560,11 +10586,24 @@
       ]
     },
     {
+      "canonical_id": "pc_94ddb904aab035600ff7c2a18af19ccc",
+      "preferred_name": "Simple linear regression and least squares",
+      "preferred_name_zh": "一元线性回归模型与最小二乘",
+      "status": "active",
+      "review_status": "approved",
+      "aliases": [
+        {
+          "graph_id": "senior_secondary_mathematics",
+          "node_id": "cn_sh_math_linear_regression_least_squares"
+        }
+      ]
+    },
+    {
       "canonical_id": "pc_94f54f11e23c1c3e407c8036fb6321b6",
       "preferred_name": "Innate and adaptive immunity",
       "preferred_name_zh": "非特异性与特异性免疫",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -10590,7 +10629,7 @@
       "preferred_name": "Resistance, geometry and material",
       "preferred_name_zh": "电阻与材料、长度和横截面积",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -10629,7 +10668,7 @@
       "preferred_name": "Polymer recycling and sustainability trade-offs",
       "preferred_name_zh": "聚合物回收与可持续性权衡",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_chemistry",
@@ -10642,7 +10681,7 @@
       "preferred_name": "Value of organic synthesis",
       "preferred_name_zh": "有机合成创造新物质",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -10668,7 +10707,7 @@
       "preferred_name": "Multistep cancer progression",
       "preferred_name_zh": "癌症的多步骤进展",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -10720,7 +10759,7 @@
       "preferred_name": "Diffusion in plant transport",
       "preferred_name_zh": "植物运输中的扩散",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -10763,7 +10802,7 @@
       "preferred_name": "Organic safety and green synthesis",
       "preferred_name_zh": "有机物安全与绿色合成",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -10789,7 +10828,7 @@
       "preferred_name": "Internal-environment fluids",
       "preferred_name_zh": "内环境的细胞外液组成",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -10841,7 +10880,7 @@
       "preferred_name": "Function monotonicity",
       "preferred_name_zh": "函数单调性",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -10867,7 +10906,7 @@
       "preferred_name": "Ocean carbonate buffering and acidification",
       "preferred_name_zh": "海洋碳酸盐缓冲与酸化",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_chemistry",
@@ -10906,7 +10945,7 @@
       "preferred_name": "Parity of functions",
       "preferred_name_zh": "函数奇偶性",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -10932,7 +10971,7 @@
       "preferred_name": "Water ionisation, ionic product and pH",
       "preferred_name_zh": "水的电离、离子积与 pH",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -10945,7 +10984,7 @@
       "preferred_name": "Principles of mixture separation",
       "preferred_name_zh": "混合物分离原理",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -11036,7 +11075,7 @@
       "preferred_name": "Microbial isolation methods",
       "preferred_name_zh": "平板划线与稀释涂布分离",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -11062,7 +11101,7 @@
       "preferred_name": "Total internal reflection",
       "preferred_name_zh": "全反射及条件",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -11114,7 +11153,7 @@
       "preferred_name": "Spatial perpendicularity criteria",
       "preferred_name_zh": "空间垂直判定",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -11127,7 +11166,7 @@
       "preferred_name": "Spatial parallelism properties",
       "preferred_name_zh": "空间平行性质",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -11218,7 +11257,7 @@
       "preferred_name": "Mangrove climate mitigation",
       "preferred_name_zh": "红树林的气候缓解作用",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -11231,7 +11270,7 @@
       "preferred_name": "Neuroendocrine coordination",
       "preferred_name_zh": "神经与体液调节协调",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -11296,7 +11335,7 @@
       "preferred_name": "Matter cycling and energy flow",
       "preferred_name_zh": "物质循环与能量流动",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -11309,7 +11348,7 @@
       "preferred_name": "Set operations",
       "preferred_name_zh": "集合基本运算",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -11335,7 +11374,7 @@
       "preferred_name": "Introduction to complex numbers",
       "preferred_name_zh": "复数与数系扩充",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -11387,7 +11426,7 @@
       "preferred_name": "Power functions",
       "preferred_name_zh": "幂函数",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -11460,7 +11499,7 @@
       "preferred_name": "Electromagnetic waves and field materiality",
       "preferred_name_zh": "电磁波与电磁场物质性",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -11512,7 +11551,7 @@
       "preferred_name": "Conditions for ionic reactions",
       "preferred_name_zh": "离子反应及发生条件",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -11655,7 +11694,7 @@
       "preferred_name": "Wavefunction probability and superposition",
       "preferred_name_zh": "波函数概率解释与量子叠加",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_physics",
@@ -11772,7 +11811,7 @@
       "preferred_name": "Typical plant and animal cell structures and functions",
       "preferred_name_zh": "典型动植物细胞结构与功能",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -11802,7 +11841,7 @@
       "preferred_name": "Ecosystem stability",
       "preferred_name_zh": "生态系统稳定性",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -11867,7 +11906,7 @@
       "preferred_name": "Clean production and circularity",
       "preferred_name_zh": "清洁生产与循环利用",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -11880,7 +11919,7 @@
       "preferred_name": "Population characteristics",
       "preferred_name_zh": "种群特征",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -11997,7 +12036,7 @@
       "preferred_name": "Properties of inequalities",
       "preferred_name_zh": "不等式概念与性质",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -12036,7 +12075,7 @@
       "preferred_name": "Animal cell fusion",
       "preferred_name_zh": "动物细胞融合",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -12075,7 +12114,7 @@
       "preferred_name": "Climate stress and sustainable food supply",
       "preferred_name_zh": "气候压力与可持续食物供应",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -12101,7 +12140,7 @@
       "preferred_name": "Physical properties, mass, volume and density",
       "preferred_name_zh": "物理性质、质量、体积与密度",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -12114,7 +12153,7 @@
       "preferred_name": "Aggregation states and materials",
       "preferred_name_zh": "聚集状态、微粒作用与材料性质",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -12127,7 +12166,7 @@
       "preferred_name": "Product-moment correlation coefficient interpretation",
       "preferred_name_zh": "积矩相关系数解释",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -12179,7 +12218,7 @@
       "preferred_name": "Viral reproductive cycles and genome inheritance",
       "preferred_name_zh": "病毒繁殖周期与基因组继承",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -12205,7 +12244,7 @@
       "preferred_name": "Rational inequalities with linear and quadratic factors",
       "preferred_name_zh": "一次与二次因式构成的分式不等式",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -12218,7 +12257,7 @@
       "preferred_name": "Cellular elements and carbon skeletons",
       "preferred_name_zh": "细胞元素与碳链骨架",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -12287,7 +12326,7 @@
       "preferred_name": "Mean, median, mode and grouped mean",
       "preferred_name_zh": "平均数、中位数、众数与分组均值",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -12339,7 +12378,7 @@
       "preferred_name": "Tests for functional groups",
       "preferred_name_zh": "常见官能团检验",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -12352,7 +12391,7 @@
       "preferred_name": "Conversion of non-electrical to electrical quantities",
       "preferred_name_zh": "非电学量到电学量的转换",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -12538,7 +12577,7 @@
       "preferred_name": "Charged-particle motion in electric fields",
       "preferred_name_zh": "带电粒子在电场中的运动",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -12577,7 +12616,7 @@
       "preferred_name": "Total probability formula",
       "preferred_name_zh": "全概率公式",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -12642,7 +12681,7 @@
       "preferred_name": "Geometric sequence modelling",
       "preferred_name_zh": "等比数列建模",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -12681,7 +12720,7 @@
       "preferred_name": "Moments of independent linear combinations",
       "preferred_name_zh": "独立随机变量线性组合的期望与方差",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -12694,7 +12733,7 @@
       "preferred_name": "Plane vector basis and coordinates",
       "preferred_name_zh": "平面向量基本定理与坐标",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -12707,7 +12746,7 @@
       "preferred_name": "Vector projection",
       "preferred_name_zh": "向量投影",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -12720,7 +12759,7 @@
       "preferred_name": "Particle model of solids, liquids and gases",
       "preferred_name_zh": "固液气三态的粒子模型",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -12746,7 +12785,7 @@
       "preferred_name": "Scope of chemical science",
       "preferred_name_zh": "化学科学的研究对象与特征",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -12824,7 +12863,7 @@
       "preferred_name": "Translating simple situations into algebraic expressions",
       "preferred_name_zh": "把简单情境表示为代数式",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -12850,7 +12889,7 @@
       "preferred_name": "Capacitor charging, discharging and applications",
       "preferred_name_zh": "电容器充放电与应用",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -12876,7 +12915,7 @@
       "preferred_name": "Simple and compound linear inequalities",
       "preferred_name_zh": "简单与联立一元一次不等式",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -12941,7 +12980,7 @@
       "preferred_name": "Magnetic effect of electric current",
       "preferred_name_zh": "电流的磁效应",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -12984,7 +13023,7 @@
       "preferred_name": "Information transfer in ecosystems",
       "preferred_name_zh": "生态系统信息传递",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -12997,7 +13036,7 @@
       "preferred_name": "Circuit components and functions",
       "preferred_name_zh": "电路元件及作用",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -13010,7 +13049,7 @@
       "preferred_name": "Crossed-field velocity selector",
       "preferred_name_zh": "交叉电磁场速度选择器",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_physics",
@@ -13023,7 +13062,7 @@
       "preferred_name": "Scientific notation with integer powers",
       "preferred_name_zh": "整数次幂标准式",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -13036,7 +13075,7 @@
       "preferred_name": "Mechanisms of antibody diversity",
       "preferred_name_zh": "抗体多样性的形成机制",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -13049,7 +13088,7 @@
       "preferred_name": "Wave reflection and refraction",
       "preferred_name_zh": "波的反射与折射",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -13062,7 +13101,7 @@
       "preferred_name": "Interpreting differential equations and solutions in context",
       "preferred_name_zh": "情境中解释微分方程及其解",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -13153,7 +13192,7 @@
       "preferred_name": "Structure-guided material design",
       "preferred_name_zh": "结构—性质与材料设计",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -13166,7 +13205,7 @@
       "preferred_name": "Integrated evidence for evolution",
       "preferred_name_zh": "进化的综合证据",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -13179,7 +13218,7 @@
       "preferred_name": "Gravity and elastic force",
       "preferred_name_zh": "重力与弹力",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -13231,7 +13270,7 @@
       "preferred_name": "Polarisation and transverse nature of light",
       "preferred_name_zh": "光的偏振与横波性质",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -13244,7 +13283,7 @@
       "preferred_name": "Energy-resource systems",
       "preferred_name_zh": "自然资源与能源综合利用",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -13278,7 +13317,7 @@
       "preferred_name": "Microevolution and macroevolution",
       "preferred_name_zh": "微观进化与宏观进化的联系",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -13321,7 +13360,7 @@
       "preferred_name": "Combustion pollutants and greenhouse impacts",
       "preferred_name_zh": "燃烧污染物与温室效应影响",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_chemistry",
@@ -13334,7 +13373,7 @@
       "preferred_name": "Oncogenes and tumour-suppressor genes",
       "preferred_name_zh": "原癌基因与抑癌基因",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -13386,7 +13425,7 @@
       "preferred_name": "Line intersections and distances",
       "preferred_name_zh": "直线交点与距离",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -13399,7 +13438,7 @@
       "preferred_name": "Colloidal dispersions",
       "preferred_name_zh": "胶体与分散系",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -13464,7 +13503,7 @@
       "preferred_name": "Iron and its compounds",
       "preferred_name_zh": "铁及其重要化合物",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -13490,7 +13529,7 @@
       "preferred_name": "Geometric meaning of complex addition and subtraction",
       "preferred_name_zh": "复数加减的几何意义",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -13503,7 +13542,7 @@
       "preferred_name": "Inorganic salts in cells",
       "preferred_name_zh": "细胞中的无机盐",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -13533,7 +13572,7 @@
       "preferred_name": "Protein engineering",
       "preferred_name_zh": "蛋白质工程",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -13611,7 +13650,7 @@
       "preferred_name": "Venn diagrams",
       "preferred_name_zh": "Venn 图表达",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -13624,7 +13663,7 @@
       "preferred_name": "Free-fall motion",
       "preferred_name_zh": "自由落体运动",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -13689,7 +13728,7 @@
       "preferred_name": "Chemistry and sustainable development",
       "preferred_name_zh": "化学促进可持续发展",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -13715,7 +13754,7 @@
       "preferred_name": "Humoral regulation of breathing",
       "preferred_name_zh": "体液成分调节呼吸",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -13754,7 +13793,7 @@
       "preferred_name": "Impacts of genetically modified technology",
       "preferred_name_zh": "转基因技术影响",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -13823,7 +13862,7 @@
       "preferred_name": "Vector collinearity and ratio theorem",
       "preferred_name_zh": "向量共线与比例定理",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -13888,7 +13927,7 @@
       "preferred_name": "Emission, propagation and reception of electromagnetic waves",
       "preferred_name_zh": "电磁波的发射、传播与接收",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -13927,7 +13966,7 @@
       "preferred_name": "Infinite square-well wavefunctions and energy levels",
       "preferred_name_zh": "无限深方势阱波函数与能级",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_physics",
@@ -13979,7 +14018,7 @@
       "preferred_name": "Spectroscopic and X-ray structure determination",
       "preferred_name_zh": "光谱与晶体 X 射线结构测定",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -14031,7 +14070,7 @@
       "preferred_name": "Sensor applications",
       "preferred_name_zh": "传感器应用",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -14122,7 +14161,7 @@
       "preferred_name": "Southern blotting and nucleic-acid hybridisation",
       "preferred_name_zh": "Southern 印迹与核酸杂交",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -14174,7 +14213,7 @@
       "preferred_name": "Vector proofs in solid geometry",
       "preferred_name_zh": "向量法证明立体几何定理",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -14256,7 +14295,7 @@
       "preferred_name": "Prokaryotic horizontal gene transfer",
       "preferred_name_zh": "原核生物水平基因转移",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -14321,7 +14360,7 @@
       "preferred_name": "Diffusion and Brownian motion",
       "preferred_name_zh": "扩散与布朗运动",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -14360,7 +14399,7 @@
       "preferred_name": "Origin and evolution of the universe",
       "preferred_name_zh": "宇宙起源与演化",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -14451,7 +14490,7 @@
       "preferred_name": "Pythagoras theorem and its converse",
       "preferred_name_zh": "勾股定理及逆定理",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -14490,7 +14529,7 @@
       "preferred_name": "Basic reproduction number",
       "preferred_name_zh": "基本再生数 R0",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -14555,7 +14594,7 @@
       "preferred_name": "Ecosystem disturbances",
       "preferred_name_zh": "生态系统干扰因素",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -14568,7 +14607,7 @@
       "preferred_name": "Population-growth models",
       "preferred_name_zh": "种群数量变化模型",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -14581,7 +14620,7 @@
       "preferred_name": "Geometric sequences and exponential functions",
       "preferred_name_zh": "等比数列与指数函数",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -14607,7 +14646,7 @@
       "preferred_name": "Interpreting model parameters",
       "preferred_name_zh": "函数模型参数解释",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -14676,7 +14715,7 @@
       "preferred_name": "Value and impact of inorganic chemistry",
       "preferred_name_zh": "无机物应用价值与环境影响",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -14702,7 +14741,7 @@
       "preferred_name": "Probability representations and sample-space conversion",
       "preferred_name_zh": "概率表示与样本空间转换",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -14728,7 +14767,7 @@
       "preferred_name": "Estimating curve gradient with a tangent",
       "preferred_name_zh": "用切线估计曲线斜率",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -14741,7 +14780,7 @@
       "preferred_name": "SI mechanics units",
       "preferred_name_zh": "国际单位制中的力学单位",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -14793,7 +14832,7 @@
       "preferred_name": "Hyperbola",
       "preferred_name_zh": "双曲线",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -14845,7 +14884,7 @@
       "preferred_name": "Capacitors and capacitance",
       "preferred_name_zh": "电容器与电容",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -14858,7 +14897,7 @@
       "preferred_name": "Applications of plant-cell engineering",
       "preferred_name_zh": "植物细胞工程应用",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -14871,7 +14910,7 @@
       "preferred_name": "Ecological engineering and circularity",
       "preferred_name_zh": "生态工程与资源循环利用",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -14953,7 +14992,7 @@
       "preferred_name": "Normal probabilities and inverse parameter problems",
       "preferred_name_zh": "正态概率与参数反求",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -14966,7 +15005,7 @@
       "preferred_name": "Electrical work and power",
       "preferred_name_zh": "电功与电功率",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -14979,7 +15018,7 @@
       "preferred_name": "Consequences and treatment boundaries of sexually transmitted infections",
       "preferred_name_zh": "性传播感染的危害与治疗边界",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -15005,7 +15044,7 @@
       "preferred_name": "Circle angle properties",
       "preferred_name_zh": "圆的角性质",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -15018,7 +15057,7 @@
       "preferred_name": "Collecting, classifying and tabulating data",
       "preferred_name_zh": "数据收集、分类与制表",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -15031,7 +15070,7 @@
       "preferred_name": "Geometric interpretation of vector operations",
       "preferred_name_zh": "向量运算的几何解释",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -15113,7 +15152,7 @@
       "preferred_name": "Microbial counting methods",
       "preferred_name_zh": "稀释涂布与显微镜计数",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -15165,7 +15204,7 @@
       "preferred_name": "Sequence concept and representation",
       "preferred_name_zh": "数列概念与表示",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -15217,7 +15256,7 @@
       "preferred_name": "Abiotic factors, adaptations and community interactions",
       "preferred_name_zh": "非生物因素、适应与群落关系",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -15230,7 +15269,7 @@
       "preferred_name": "Population pressure on the environment",
       "preferred_name_zh": "人口增长的环境压力",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -15269,7 +15308,7 @@
       "preferred_name": "Cellular and molecular evidence of common ancestry",
       "preferred_name_zh": "细胞与分子层面的共同祖先证据",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -15295,7 +15334,7 @@
       "preferred_name": "Absorbed digestion products in cellular processes",
       "preferred_name_zh": "消化吸收产物在细胞过程中的用途",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -15321,7 +15360,7 @@
       "preferred_name": "Surface and temperature factors in thermal radiation",
       "preferred_name_zh": "影响热辐射速率的表面与温度因素",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -15334,7 +15373,7 @@
       "preferred_name": "Chemistry in materials science",
       "preferred_name_zh": "化学与材料科学",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -15347,7 +15386,7 @@
       "preferred_name": "Coordination of adaptive immune cells",
       "preferred_name_zh": "适应性免疫细胞协同",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -15360,7 +15399,7 @@
       "preferred_name": "Nuclear equations and conservation laws",
       "preferred_name_zh": "核方程与守恒定律",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_physics",
@@ -15412,7 +15451,7 @@
       "preferred_name": "Aseptic technique",
       "preferred_name_zh": "无菌技术",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -15425,7 +15464,7 @@
       "preferred_name": "High-voltage power transmission",
       "preferred_name_zh": "远距离高压输电",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -15455,7 +15494,7 @@
       "preferred_name": "Cumulative-frequency diagrams and box plots",
       "preferred_name_zh": "累积频数图与箱线图",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -15468,7 +15507,7 @@
       "preferred_name": "China policy on reproductive cloning",
       "preferred_name_zh": "中国禁止生殖性克隆人",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -15507,7 +15546,7 @@
       "preferred_name": "Functional non-coding genome elements",
       "preferred_name_zh": "功能性非编码基因组元件",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -15559,7 +15598,7 @@
       "preferred_name": "Epigenetic phenomena",
       "preferred_name_zh": "表观遗传现象",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -15654,7 +15693,7 @@
       "preferred_name": "Chemical and heating effects of electric current",
       "preferred_name_zh": "电流的化学效应与热效应",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -15719,7 +15758,7 @@
       "preferred_name": "Triangle properties and classification",
       "preferred_name_zh": "三角形性质与分类",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -15745,7 +15784,7 @@
       "preferred_name": "Insulin and glucagon receptor pathways",
       "preferred_name_zh": "胰岛素与胰高血糖素受体通路",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -15879,7 +15918,7 @@
       "preferred_name": "Animal cell culture",
       "preferred_name_zh": "动物细胞培养",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -15944,7 +15983,7 @@
       "preferred_name": "Curvilinear motion and its condition",
       "preferred_name_zh": "曲线运动及发生条件",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -15996,7 +16035,7 @@
       "preferred_name": "Introductory Maxwell electromagnetic-field theory",
       "preferred_name_zh": "麦克斯韦电磁场理论初步",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -16048,7 +16087,7 @@
       "preferred_name": "Electrostatic phenomena and charge conservation",
       "preferred_name_zh": "静电现象与电荷守恒",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -16061,7 +16100,7 @@
       "preferred_name": "Temperature effects on insect-vector life cycles",
       "preferred_name_zh": "温度对昆虫媒介生命周期的影响",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -16117,7 +16156,7 @@
       "preferred_name": "Carbohydrates",
       "preferred_name_zh": "糖类、葡萄糖、淀粉与纤维素",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -16130,7 +16169,7 @@
       "preferred_name": "Logarithmic function behaviour",
       "preferred_name_zh": "对数函数图像与单调性",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -16173,7 +16212,7 @@
       "preferred_name": "Organic synthesis routes",
       "preferred_name_zh": "有机合成路线设计",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -16186,7 +16225,7 @@
       "preferred_name": "Quartiles, percentiles and measures of spread",
       "preferred_name_zh": "四分位数、百分位数与离散程度",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -16212,7 +16251,7 @@
       "preferred_name": "Triangle congruence and similarity tests with scale ratios",
       "preferred_name_zh": "三角形全等相似判定与尺度比",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -16238,7 +16277,7 @@
       "preferred_name": "Arrhenius and Lewis acid-base models",
       "preferred_name_zh": "Arrhenius 与 Lewis 酸碱模型",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_chemistry",
@@ -16251,7 +16290,7 @@
       "preferred_name": "Transforming variables to achieve linearity",
       "preferred_name_zh": "变量变换实现线性化",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -16342,7 +16381,7 @@
       "preferred_name": "Simple random sampling",
       "preferred_name_zh": "简单随机抽样",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -16368,7 +16407,7 @@
       "preferred_name": "Scatter plots and plausibility of a linear relationship",
       "preferred_name_zh": "散点图与线性关系合理性",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -16407,7 +16446,7 @@
       "preferred_name": "Sodium and its compounds",
       "preferred_name_zh": "钠及其重要化合物",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -16420,7 +16459,7 @@
       "preferred_name": "Sine and cosine laws",
       "preferred_name_zh": "正弦定理与余弦定理",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -16446,7 +16485,7 @@
       "preferred_name": "Applications of aqueous equilibria",
       "preferred_name_zh": "水溶液离子平衡应用",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -16485,7 +16524,7 @@
       "preferred_name": "Relative positions of lines and planes in three dimensions",
       "preferred_name_zh": "三维直线与平面的相对位置",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -16498,7 +16537,7 @@
       "preferred_name": "Congruence and similarity foundations",
       "preferred_name_zh": "全等与相似基础",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -16576,7 +16615,7 @@
       "preferred_name": "Four fundamental interactions",
       "preferred_name_zh": "四种基本相互作用",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -16589,7 +16628,7 @@
       "preferred_name": "Ecosystem self-regulation",
       "preferred_name_zh": "生态系统自我调节",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -16749,7 +16788,7 @@
       "preferred_name": "Electromagnetic oscillation",
       "preferred_name_zh": "电磁振荡",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -16801,7 +16840,7 @@
       "preferred_name": "Electrochemical corrosion and protection",
       "preferred_name_zh": "金属电化学腐蚀与防护",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -17004,7 +17043,7 @@
       "preferred_name": "Adding and subtracting algebraic fractions",
       "preferred_name_zh": "代数分式加减",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -17043,7 +17082,7 @@
       "preferred_name": "Neutrino inference from beta decay",
       "preferred_name_zh": "由 β 衰变守恒缺口推断中微子",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_physics",
@@ -17056,7 +17095,7 @@
       "preferred_name": "Biomagnification",
       "preferred_name_zh": "食物链中的有害物质富集",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -17095,7 +17134,7 @@
       "preferred_name": "Restricted, repeated and circular arrangements",
       "preferred_name_zh": "受限、重复与圆周排列",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -17108,7 +17147,7 @@
       "preferred_name": "Prime factorisation, common factors and roots",
       "preferred_name_zh": "质因数分解、公因倍数与方根",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -17238,7 +17277,7 @@
       "preferred_name": "Factorising linear and quadratic expressions",
       "preferred_name_zh": "一次式与二次式因式分解",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -17290,7 +17329,7 @@
       "preferred_name": "Law of refraction",
       "preferred_name_zh": "光的折射定律",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -17316,7 +17355,7 @@
       "preferred_name": "Stem-cell applications",
       "preferred_name_zh": "干细胞的生物医学应用",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -17329,7 +17368,7 @@
       "preferred_name": "Nucleus and genetic information",
       "preferred_name_zh": "细胞核与遗传信息",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -17368,7 +17407,7 @@
       "preferred_name": "Crystalline and amorphous solids",
       "preferred_name_zh": "晶体与非晶体",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -17394,7 +17433,7 @@
       "preferred_name": "Electric potential energy, potential and potential difference",
       "preferred_name_zh": "电势能、电势与电势差",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -17407,7 +17446,7 @@
       "preferred_name": "Decomposers and nutrient recycling",
       "preferred_name_zh": "分解者与营养物质循环",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_lower_secondary_science",
@@ -17416,11 +17455,24 @@
       ]
     },
     {
+      "canonical_id": "pc_f3ce171bf3b9bda56a7170bd96232766",
+      "preferred_name": "Formulating linear equations and systems from context",
+      "preferred_name_zh": "从情境建立一次方程与方程组",
+      "status": "active",
+      "review_status": "approved",
+      "aliases": [
+        {
+          "graph_id": "singapore_secondary_mathematics",
+          "node_id": "sg_sec_math_formulate_linear_equations"
+        }
+      ]
+    },
+    {
       "canonical_id": "pc_f415daef0495c59dcc47d3019cc79bc6",
       "preferred_name": "One-tailed and two-tailed hypothesis tests",
       "preferred_name_zh": "单尾与双尾假设检验",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_mathematics",
@@ -17515,7 +17567,7 @@
       "preferred_name": "Calculating standard deviation and comparing datasets",
       "preferred_name_zh": "计算标准差并比较数据集",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -17528,7 +17580,7 @@
       "preferred_name": "Choosing function models",
       "preferred_name_zh": "选择函数模型",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -17541,7 +17593,7 @@
       "preferred_name": "Quadrilateral and polygon properties",
       "preferred_name_zh": "四边形与多边形性质",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -17567,7 +17619,7 @@
       "preferred_name": "Electrolyte ionisation",
       "preferred_name_zh": "电解质与电离",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -17580,7 +17632,7 @@
       "preferred_name": "Linear equations with fractional forms",
       "preferred_name_zh": "含分数形式的一次方程",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -17619,7 +17671,7 @@
       "preferred_name": "Directionality of energy conversion",
       "preferred_name_zh": "能量转化的方向性",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -17671,7 +17723,7 @@
       "preferred_name": "Inheritance through gametes",
       "preferred_name_zh": "遗传信息经配子传递",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -17723,7 +17775,7 @@
       "preferred_name": "Set membership and representation",
       "preferred_name_zh": "集合、元素与表示",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -17801,7 +17853,7 @@
       "preferred_name": "Nitrogen and its compounds",
       "preferred_name_zh": "氮及其重要化合物",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_chemistry",
@@ -17814,7 +17866,7 @@
       "preferred_name": "Algebraic nth terms for patterns",
       "preferred_name_zh": "用代数通项表示规律",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_secondary_mathematics",
@@ -17853,7 +17905,7 @@
       "preferred_name": "Structures of solids",
       "preferred_name_zh": "基本立体图形结构",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -17918,7 +17970,7 @@
       "preferred_name": "Spatial coordinates and distance",
       "preferred_name_zh": "空间直角坐标系与两点距离",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -17931,7 +17983,7 @@
       "preferred_name": "Cell theory",
       "preferred_name_zh": "细胞学说",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "singapore_h2_biology",
@@ -17970,7 +18022,7 @@
       "preferred_name": "Static and kinetic friction",
       "preferred_name_zh": "静摩擦与滑动摩擦",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -18061,7 +18113,7 @@
       "preferred_name": "Sinusoidal alternating current",
       "preferred_name_zh": "正弦交变电流",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_physics",
@@ -18152,7 +18204,7 @@
       "preferred_name": "Estimating probability by frequency",
       "preferred_name_zh": "用频率估计概率",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_mathematics",
@@ -18217,7 +18269,7 @@
       "preferred_name": "Exchange through the internal environment",
       "preferred_name_zh": "细胞经内环境与外界交换",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",
@@ -18230,7 +18282,7 @@
       "preferred_name": "Embryo engineering",
       "preferred_name_zh": "体外受精、胚胎移植与分割",
       "status": "active",
-      "review_status": "needs_review",
+      "review_status": "approved",
       "aliases": [
         {
           "graph_id": "senior_secondary_biology",

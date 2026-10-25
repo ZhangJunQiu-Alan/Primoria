@@ -3,6 +3,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
+import { refuseOwnerApprovedTargets } from "./kg-approval-guard.mjs";
 import { SECOND_BATCH_SPECS } from "./pedagogy-cn-sg-batch2.mjs";
 
 const ROOT = resolve(import.meta.dirname, "../../..");
@@ -10,6 +11,7 @@ const DATA = resolve(ROOT, "data/knowledge-graphs");
 const TODAY = "2026-07-20";
 const outputPath = resolve(DATA, "pedagogy/core/cn_sg_core_pedagogy.v1.json");
 const reviewPath = resolve(DATA, "review/pending/pedagogy/cn_sg_core_pedagogy.v1.review.zh-CN.md");
+refuseOwnerApprovedTargets({ outputPath });
 
 const readJson = (path) => JSON.parse(readFileSync(path, "utf8"));
 const writeJson = (path, value) => {

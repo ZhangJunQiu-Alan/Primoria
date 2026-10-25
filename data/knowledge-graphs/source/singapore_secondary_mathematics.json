@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "0.1.1",
+  "content_version": "0.1.4",
   "graph_id": "singapore_secondary_mathematics",
   "subject": "Mathematics",
   "jurisdictions": [
@@ -12,7 +12,7 @@
     "src_openstax_contemporary_mathematics_2026",
     "src_openstax_introductory_statistics_2e_2026"
   ],
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.1.0",
@@ -23,6 +23,21 @@
       "version": "0.1.1",
       "date": "2026-08-27",
       "summary_zh": "依据官方课程成果顺序补充 40 条同图前置边（含 1 条硬前置），状态保持 needs_review。"
+    },
+    {
+      "version": "0.1.2",
+      "date": "2026-10-25",
+      "summary_zh": "按 2026-10-25 官方来源复核更新证据定位（中国课标迁至 2025 日常修订版、新加坡页码校正），状态保持 needs_review。"
+    },
+    {
+      "version": "0.1.3",
+      "date": "2026-10-25",
+      "summary_zh": "依据 2026-10 联网复核修正描述、证据定位与映射覆盖，状态保持 needs_review。"
+    },
+    {
+      "version": "0.1.4",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网核验与人工批准：删除 27 条不成立的先修边，新增 3 条，调整 0 条强度，改写 13 条先修理由。"
     }
   ],
   "nodes": [
@@ -36,11 +51,11 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Prime factorisation, HCF, LCM and roots"
+          "locator": "PDF p.17, g3 sec1, Prime factorisation, HCF, LCM and roots"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Prime factorisation, HCF, LCM and roots"
+          "locator": "PDF p.27, g2 sec1, Prime factorisation, HCF, LCM and roots"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -48,11 +63,11 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Real-number operations and order"
+          "locator": "PDF p.17, g3 sec1, Real-number operations and order"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Real-number operations and order"
+          "locator": "PDF p.27, g2 sec1, Real-number operations and order"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -60,18 +75,18 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Approximation and estimation"
+          "locator": "PDF p.17, g3 sec1, Approximation and estimation"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Approximation and estimation"
+          "locator": "PDF p.27, g2 sec1, Approximation and estimation"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §3.9 Scientific Notation, printed pp.227-238"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_topic_ratio_percentage",
@@ -83,11 +98,11 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Ratios with rational quantities"
+          "locator": "PDF p.17, g3 sec1, Ratios with rational quantities"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Ratio, fractions and division"
+          "locator": "PDF p.27, g2 sec1, Ratio, fractions and division"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -95,11 +110,11 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Percentage comparison and change"
+          "locator": "PDF p.17, g3 sec1, Percentage comparison and change"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Percentage forms and change"
+          "locator": "PDF p.27, g2 sec1, Percentage forms and change"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -107,14 +122,14 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Map scales and proportion"
+          "locator": "PDF p.19, g3 sec2, Map scales and proportion"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Map scales and proportion"
+          "locator": "PDF p.29, g2 sec2, Map scales and proportion"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_topic_quantitative_contexts",
@@ -126,11 +141,11 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Rate and speed"
+          "locator": "PDF p.17, g3 sec1, Rate and speed"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Distance, time, rate and speed"
+          "locator": "PDF p.27, g2 sec1, Distance, time, rate and speed"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
@@ -138,11 +153,11 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.13, g3 secondary all, Personal and household finance"
+          "locator": "PDF p.15, g3 secondary all, Personal and household finance"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.23, g2 secondary all, Personal and household finance"
+          "locator": "PDF p.25, g2 secondary all, Personal and household finance"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -150,18 +165,18 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.14, g3 secondary all, Distance-time and speed-time graphs"
+          "locator": "PDF p.16, g3 secondary all, Distance-time and speed-time graphs"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.24, g2 secondary all, Distance-time and speed-time graphs"
+          "locator": "PDF p.26, g2 secondary all, Distance-time and speed-time graphs"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §§1.3 and 2.2, printed pp.27-39 and 189-205"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_topic_algebra_language",
@@ -173,11 +188,11 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Algebraic notation and evaluation"
+          "locator": "PDF p.17, g3 sec1, Algebraic notation and evaluation"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Algebraic notation and evaluation"
+          "locator": "PDF p.27, g2 sec1, Algebraic notation and evaluation"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -185,11 +200,11 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Translating situations into algebra"
+          "locator": "PDF p.17, g3 sec1, Translating situations into algebra"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Translating situations into algebra"
+          "locator": "PDF p.28, g2 sec1, Translating situations into algebra"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -197,18 +212,18 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Algebraic nth-term patterns"
+          "locator": "PDF p.17, g3 sec1, Algebraic nth-term patterns"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Algebraic nth-term patterns"
+          "locator": "PDF p.28, g2 sec1, Algebraic nth-term patterns"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §3.10 Arithmetic Sequences, printed pp.239-245"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_topic_linear_foundations",
@@ -220,15 +235,15 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Operations on linear expressions"
+          "locator": "PDF p.17, g3 sec1, Operations on linear expressions"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Operations on linear expressions"
+          "locator": "PDF p.28, g2 sec1, Operations on linear expressions"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Linear expressions with fractional coefficients"
+          "locator": "PDF p.29, g2 sec2, Linear expressions with fractional coefficients"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -236,7 +251,7 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Linear equations with integer coefficients"
+          "locator": "PDF p.28, g2 sec1, Linear equations with integer coefficients"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -244,18 +259,18 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Linear and reducible fractional equations"
+          "locator": "PDF p.18, g3 sec1, Linear and reducible fractional equations"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Linear and reducible fractional equations"
+          "locator": "PDF p.29, g2 sec2, Linear and reducible fractional equations"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §2.1 Linear Functions and §3.7 Rational Functions, printed pp.170-188 and 340-364"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_topic_expansion_factorisation",
@@ -267,15 +282,15 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Expansion and algebraic identities"
+          "locator": "PDF p.19, g3 sec2, Expansion and algebraic identities"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Expansion and algebraic identities"
+          "locator": "PDF p.29, g2 sec2, Expansion and algebraic identities"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Expansion of algebraic expressions"
+          "locator": "PDF p.31, g2 sec3 4, Expansion of algebraic expressions"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
@@ -283,15 +298,15 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Linear and quadratic factorisation"
+          "locator": "PDF p.19, g3 sec2, Linear and quadratic factorisation"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Common-factor and quadratic factorisation"
+          "locator": "PDF p.29, g2 sec2, Common-factor and quadratic factorisation"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Factorising grouped linear expressions"
+          "locator": "PDF p.31, g2 sec3 4, Factorising grouped linear expressions"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
@@ -299,18 +314,18 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Changing the subject of a formula"
+          "locator": "PDF p.19, g3 sec2, Changing the subject of a formula"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Changing the subject and evaluating formulae"
+          "locator": "PDF p.31, g2 sec3 4, Changing the subject and evaluating formulae"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §§5.1-5.2 Algebraic Expressions and Linear Equations, printed pp.334-355"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_topic_algebraic_fractions",
@@ -322,11 +337,11 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Multiplying and dividing algebraic fractions"
+          "locator": "PDF p.19, g3 sec2, Multiplying and dividing algebraic fractions"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Multiplying and dividing algebraic fractions"
+          "locator": "PDF p.29, g2 sec2, Multiplying and dividing algebraic fractions"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
@@ -334,14 +349,14 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Adding and subtracting algebraic fractions"
+          "locator": "PDF p.19, g3 sec2, Adding and subtracting algebraic fractions"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Adding and subtracting algebraic fractions"
+          "locator": "PDF p.31, g2 sec3 4, Adding and subtracting algebraic fractions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_topic_representations_constraints",
@@ -353,7 +368,7 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Coordinates and variable relationships"
+          "locator": "PDF p.18, g3 sec1, Coordinates and variable relationships"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
@@ -361,19 +376,19 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Simple linear inequalities"
+          "locator": "PDF p.19, g3 sec2, Simple linear inequalities"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Compound linear inequalities"
+          "locator": "PDF p.21, g3 sec3 4, Compound linear inequalities"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Simple linear inequalities"
+          "locator": "PDF p.29, g2 sec2, Simple linear inequalities"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.32, g2 sec5 bridge, Compound linear inequalities"
+          "locator": "PDF p.34, g2 sec5 bridge, Compound linear inequalities"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -381,18 +396,18 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Elementary matrix representation and operations"
+          "locator": "PDF p.21, g3 sec3 4, Elementary matrix representation and operations"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.32, g2 sec5 bridge, Elementary matrix representation and operations"
+          "locator": "PDF p.34, g2 sec5 bridge, Elementary matrix representation and operations"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §9.5 Matrices and Matrix Operations, printed pp.946-960"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_topic_indices_gradient",
@@ -404,11 +419,11 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Standard form"
+          "locator": "PDF p.21, g3 sec3 4, Standard form"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Standard form"
+          "locator": "PDF p.31, g2 sec3 4, Standard form"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -416,11 +431,11 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Indices and their laws"
+          "locator": "PDF p.21, g3 sec3 4, Indices and their laws"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Indices and their laws"
+          "locator": "PDF p.31, g2 sec3 4, Indices and their laws"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -428,18 +443,18 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Estimating curve gradient with a tangent"
+          "locator": "PDF p.21, g3 sec3 4, Estimating curve gradient with a tangent"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Estimating curve gradient with a tangent"
+          "locator": "PDF p.31, g2 sec3 4, Estimating curve gradient with a tangent"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §1.3 Rates of Change and Behavior of Graphs, printed pp.27-39"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_topic_quadratic_equations",
@@ -451,11 +466,11 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Solving quadratics by factorisation"
+          "locator": "PDF p.19, g3 sec2, Solving quadratics by factorisation"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Solving quadratic equations by standard methods"
+          "locator": "PDF p.31, g2 sec3 4, Solving quadratic equations by standard methods"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -463,22 +478,22 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Solving quadratic equations by standard methods"
+          "locator": "PDF p.21, g3 sec3 4, Solving quadratic equations by standard methods"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Fractional equations reducible to quadratics"
+          "locator": "PDF p.21, g3 sec3 4, Fractional equations reducible to quadratics"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Fractional equations reducible to quadratics"
+          "locator": "PDF p.31, g2 sec3 4, Fractional equations reducible to quadratics"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §§3.7 and 9.3, printed pp.340-364 and 925-936"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_topic_elementary_geometry",
@@ -486,15 +501,15 @@
       "name": "Angles, triangles and polygons",
       "name_zh": "角、三角形与多边形",
       "topic": null,
-      "default_order": 11,
+      "default_order": 12,
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Angle relationships"
+          "locator": "PDF p.18, g3 sec1, Angle relationships"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Angle relationships"
+          "locator": "PDF p.28, g2 sec1, Angle relationships"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -502,11 +517,11 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Triangle properties"
+          "locator": "PDF p.18, g3 sec1, Triangle properties"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Triangle properties"
+          "locator": "PDF p.28, g2 sec1, Triangle properties"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -514,18 +529,18 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Quadrilaterals and regular polygons"
+          "locator": "PDF p.18, g3 sec1, Quadrilaterals and regular polygons"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Quadrilaterals and regular polygons"
+          "locator": "PDF p.30, g2 sec2, Quadrilaterals and regular polygons"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §10.4 Polygons, Perimeter and Circumference, printed pp.1035-1051"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_topic_construction_similarity",
@@ -533,23 +548,23 @@
       "name": "Construction and similarity",
       "name_zh": "作图与相似",
       "topic": null,
-      "default_order": 12,
+      "default_order": 13,
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Geometric construction"
+          "locator": "PDF p.18, g3 sec1, Geometric construction"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Perpendicular and angle bisectors"
+          "locator": "PDF p.22, g3 sec3 4, Perpendicular and angle bisectors"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Geometric construction"
+          "locator": "PDF p.30, g2 sec2, Geometric construction"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Perpendicular and angle bisectors"
+          "locator": "PDF p.32, g2 sec3 4, Perpendicular and angle bisectors"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -557,15 +572,15 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Congruence and similarity foundations"
+          "locator": "PDF p.20, g3 sec2, Congruence and similarity foundations"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Congruence and similarity foundations"
+          "locator": "PDF p.30, g2 sec2, Congruence and similarity foundations"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Congruence and similarity problems"
+          "locator": "PDF p.32, g2 sec3 4, Congruence and similarity problems"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -573,22 +588,22 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Enlargement and reduction"
+          "locator": "PDF p.20, g3 sec2, Enlargement and reduction"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Scale drawings, enlargement and reduction"
+          "locator": "PDF p.22, g3 sec3 4, Scale drawings, enlargement and reduction"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Scale drawings, enlargement and reduction"
+          "locator": "PDF p.32, g2 sec3 4, Scale drawings, enlargement and reduction"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §§5.4 and 10.3-10.4, printed pp.366-375 and 1019-1051"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_topic_triangle_reasoning",
@@ -596,15 +611,15 @@
       "name": "Triangle measurement and reasoning",
       "name_zh": "三角形度量与推理",
       "topic": null,
-      "default_order": 13,
+      "default_order": 14,
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Area and composite plane figures"
+          "locator": "PDF p.18, g3 sec1, Area and composite plane figures"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Area and composite plane figures"
+          "locator": "PDF p.28, g2 sec1, Area and composite plane figures"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -612,11 +627,11 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Pythagoras theorem and converse"
+          "locator": "PDF p.20, g3 sec2, Pythagoras theorem and converse"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Pythagoras theorem and converse"
+          "locator": "PDF p.30, g2 sec2, Pythagoras theorem and converse"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -624,18 +639,18 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Trigonometry in right triangles"
+          "locator": "PDF p.20, g3 sec2, Trigonometry in right triangles"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Trigonometry in right triangles"
+          "locator": "PDF p.32, g2 sec3 4, Trigonometry in right triangles"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §10.8 Right Triangle Trigonometry, printed pp.1098-1116"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_topic_triangle_similarity_trig",
@@ -643,15 +658,15 @@
       "name": "Triangle similarity and trigonometry",
       "name_zh": "三角形相似与三角计算",
       "topic": null,
-      "default_order": 14,
+      "default_order": 15,
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Triangle congruence, similarity and scale ratios"
+          "locator": "PDF p.22, g3 sec3 4, Triangle congruence, similarity and scale ratios"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.33, g2 sec5 bridge, Triangle congruence, similarity and scale ratios"
+          "locator": "PDF p.35, g2 sec5 bridge, Triangle congruence, similarity and scale ratios"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
@@ -659,11 +674,11 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Trigonometry for general triangles"
+          "locator": "PDF p.22, g3 sec3 4, Trigonometry for general triangles"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Trigonometry for general triangles"
+          "locator": "PDF p.32, g2 sec3 4, Trigonometry for general triangles"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
@@ -671,18 +686,18 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Two- and three-dimensional trigonometric problems"
+          "locator": "PDF p.22, g3 sec3 4, Two- and three-dimensional trigonometric problems"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Two- and three-dimensional trigonometric problems"
+          "locator": "PDF p.32, g2 sec3 4, Two- and three-dimensional trigonometric problems"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §§7.2 and 8.1-8.2, printed pp.713-729 and 767-805"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_topic_circle_geometry",
@@ -690,15 +705,15 @@
       "name": "Circle geometry and measurement",
       "name_zh": "圆的几何与度量",
       "topic": null,
-      "default_order": 15,
+      "default_order": 16,
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Chord and tangent properties"
+          "locator": "PDF p.22, g3 sec3 4, Chord and tangent properties"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Chord and tangent properties"
+          "locator": "PDF p.32, g2 sec3 4, Chord and tangent properties"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -706,11 +721,11 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Circle angle properties"
+          "locator": "PDF p.22, g3 sec3 4, Circle angle properties"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Circle angle properties"
+          "locator": "PDF p.32, g2 sec3 4, Circle angle properties"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -718,18 +733,18 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Arc, sector and segment measures"
+          "locator": "PDF p.22, g3 sec3 4, Arc, sector and segment measures"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Arc, sector and segment measures"
+          "locator": "PDF p.32, g2 sec3 4, Arc, sector and segment measures"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §5.1 Angles, printed pp.507-520"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_topic_data_foundations",
@@ -737,15 +752,15 @@
       "name": "Data collection and representation",
       "name_zh": "数据收集与表示",
       "topic": null,
-      "default_order": 16,
+      "default_order": 17,
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Collecting, classifying and tabulating data"
+          "locator": "PDF p.18, g3 sec1, Collecting, classifying and tabulating data"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Collecting, classifying and tabulating data"
+          "locator": "PDF p.28, g2 sec1, Collecting, classifying and tabulating data"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -753,11 +768,11 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Reading and choosing statistical representations"
+          "locator": "PDF p.18, g3 sec1, Reading and choosing statistical representations"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Reading and choosing statistical representations"
+          "locator": "PDF p.28, g2 sec1, Reading and choosing statistical representations"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -765,14 +780,14 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Misleading statistical diagrams"
+          "locator": "PDF p.18, g3 sec1, Misleading statistical diagrams"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Misleading statistical diagrams"
+          "locator": "PDF p.28, g2 sec1, Misleading statistical diagrams"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_topic_distribution_description",
@@ -780,15 +795,15 @@
       "name": "Describing distributions",
       "name_zh": "描述数据分布",
       "topic": null,
-      "default_order": 17,
+      "default_order": 18,
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Dot plots, histograms and stem-and-leaf diagrams"
+          "locator": "PDF p.20, g3 sec2, Dot plots, histograms and stem-and-leaf diagrams"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Dot plots, histograms and stem-and-leaf diagrams"
+          "locator": "PDF p.30, g2 sec2, Dot plots, histograms and stem-and-leaf diagrams"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -796,11 +811,11 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Measures of central tendency"
+          "locator": "PDF p.20, g3 sec2, Measures of central tendency"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Measures of central tendency"
+          "locator": "PDF p.30, g2 sec2, Measures of central tendency"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -808,34 +823,34 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.21, g3 sec3 4, Quartiles, percentiles and spread"
+          "locator": "PDF p.23, g3 sec3 4, Quartiles, percentiles and spread"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.31, g2 sec3 4, Quartiles, percentiles and spread"
+          "locator": "PDF p.32, g2 sec3 4, Quartiles, percentiles and spread"
         },
         {
           "source_id": "src_openstax_introductory_statistics_2e_2026",
           "locator": "PDF §§2.2 and 2.5 Measures of Location and Spread, printed pp.77-93 and 99-111"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_topic_distribution_probability",
       "kind": "topic",
-      "name": "Distribution comparison and probability",
-      "name_zh": "分布比较与概率",
+      "name": "Cumulative frequency, box plots and spread comparison",
+      "name_zh": "累积频数、箱线图与离散比较",
       "topic": null,
-      "default_order": 18,
+      "default_order": 19,
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.21, g3 sec3 4, Cumulative-frequency and box plots"
+          "locator": "PDF p.23, g3 sec3 4, Cumulative-frequency and box plots"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.31, g2 sec3 4, Cumulative-frequency and box plots"
+          "locator": "PDF p.32, g2 sec3 4, Cumulative-frequency and box plots"
         },
         {
           "source_id": "src_openstax_introductory_statistics_2e_2026",
@@ -843,30 +858,18 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.21, g3 sec3 4, Calculating and comparing standard deviation"
+          "locator": "PDF p.23, g3 sec3 4, Calculating and comparing standard deviation"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.31, g2 sec3 4, Calculating and comparing standard deviation"
+          "locator": "PDF p.33, g2 sec3 4, Calculating and comparing standard deviation"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §8.4 Range and Standard Deviation, printed pp.873-878"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.21, g3 sec3 4, Combined-event probability representations"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.31, g2 sec3 4, Combined-event probability representations"
-        },
-        {
-          "source_id": "src_openstax_contemporary_mathematics_2026",
-          "locator": "PDF §§7.4-7.5 Tree Diagrams, Tables, Outcomes and Probability, printed pp.738-762"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_algebra_expansion_identities",
@@ -880,22 +883,22 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Expansion and algebraic identities"
+          "locator": "PDF p.19, g3 sec2, Expansion and algebraic identities"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Expansion and algebraic identities"
+          "locator": "PDF p.29, g2 sec2, Expansion and algebraic identities"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Expansion of algebraic expressions"
+          "locator": "PDF p.31, g2 sec3 4, Expansion of algebraic expressions"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §§3.2-3.4 Quadratic and Polynomial Functions, printed pp.255-315"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_algebra_notation_evaluation",
@@ -909,18 +912,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Algebraic notation and evaluation"
+          "locator": "PDF p.17, g3 sec1, Algebraic notation and evaluation"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Algebraic notation and evaluation"
+          "locator": "PDF p.27, g2 sec1, Algebraic notation and evaluation"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §5.1 Algebraic Expressions, printed pp.334-345"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_algebra_translation",
@@ -934,18 +937,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Translating situations into algebra"
+          "locator": "PDF p.17, g3 sec1, Translating situations into algebra"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Translating situations into algebra"
+          "locator": "PDF p.28, g2 sec1, Translating situations into algebra"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §§5.1-5.2 Algebraic Expressions and Applications, printed pp.334-355"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_algebraic_fractions_add_subtract",
@@ -959,18 +962,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Adding and subtracting algebraic fractions"
+          "locator": "PDF p.19, g3 sec2, Adding and subtracting algebraic fractions"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Adding and subtracting algebraic fractions"
+          "locator": "PDF p.31, g2 sec3 4, Adding and subtracting algebraic fractions"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §3.7 Rational Functions, printed pp.340-364"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_algebraic_fractions_multiply_divide",
@@ -984,18 +987,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Multiplying and dividing algebraic fractions"
+          "locator": "PDF p.19, g3 sec2, Multiplying and dividing algebraic fractions"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Multiplying and dividing algebraic fractions"
+          "locator": "PDF p.29, g2 sec2, Multiplying and dividing algebraic fractions"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §3.7 Rational Functions, printed pp.340-364"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_angle_relationships",
@@ -1009,18 +1012,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Angle relationships"
+          "locator": "PDF p.18, g3 sec1, Angle relationships"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Angle relationships"
+          "locator": "PDF p.28, g2 sec1, Angle relationships"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §10.2 Angles, printed pp.1007-1018"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_approximation_estimation",
@@ -1034,18 +1037,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Approximation and estimation"
+          "locator": "PDF p.17, g3 sec1, Approximation and estimation"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Approximation and estimation"
+          "locator": "PDF p.27, g2 sec1, Approximation and estimation"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §3.9 Scientific Notation, printed pp.227-238"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_central_tendency",
@@ -1059,18 +1062,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Measures of central tendency"
+          "locator": "PDF p.20, g3 sec2, Measures of central tendency"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Measures of central tendency"
+          "locator": "PDF p.30, g2 sec2, Measures of central tendency"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §8.3 Mean, Median and Mode, printed pp.857-872"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_circle_angles",
@@ -1084,18 +1087,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Circle angle properties"
+          "locator": "PDF p.22, g3 sec3 4, Circle angle properties"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Circle angle properties"
+          "locator": "PDF p.32, g2 sec3 4, Circle angle properties"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §§10.2-10.4 Angles, Triangles and Polygons, printed pp.1007-1051"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_circle_chord_tangent",
@@ -1109,18 +1112,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Chord and tangent properties"
+          "locator": "PDF p.22, g3 sec3 4, Chord and tangent properties"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Chord and tangent properties"
+          "locator": "PDF p.32, g2 sec3 4, Chord and tangent properties"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §§10.1-10.4 Euclidean Geometry Foundations, printed pp.994-1051"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_circle_mensuration",
@@ -1134,18 +1137,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Arc, sector and segment measures"
+          "locator": "PDF p.22, g3 sec3 4, Arc, sector and segment measures"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Arc, sector and segment measures"
+          "locator": "PDF p.32, g2 sec3 4, Arc, sector and segment measures"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §5.1 Angles, printed pp.507-520"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_combined_probability",
@@ -1153,24 +1156,24 @@
       "kind": "concept",
       "name": "Representing simple combined-event probability",
       "name_zh": "复合事件概率表示",
-      "topic": "sg_sec_math_topic_distribution_probability",
+      "topic": "sg_sec_math_topic_probability",
       "description": "Using possibility diagrams, tables or tree diagrams to enumerate simple combined events before applying probability rules.",
-      "default_order": 3,
+      "default_order": 2,
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.21, g3 sec3 4, Combined-event probability representations"
+          "locator": "PDF p.23, g3 sec3 4, Combined-event probability representations"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.31, g2 sec3 4, Combined-event probability representations"
+          "locator": "PDF p.33, g2 sec3 4, Combined-event probability representations"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §§7.4-7.5 Tree Diagrams, Tables, Outcomes and Probability, printed pp.738-762"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_linear_inequalities",
@@ -1184,26 +1187,26 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Simple linear inequalities"
+          "locator": "PDF p.19, g3 sec2, Simple linear inequalities"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Compound linear inequalities"
+          "locator": "PDF p.21, g3 sec3 4, Compound linear inequalities"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Simple linear inequalities"
+          "locator": "PDF p.29, g2 sec2, Simple linear inequalities"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.32, g2 sec5 bridge, Compound linear inequalities"
+          "locator": "PDF p.34, g2 sec5 bridge, Compound linear inequalities"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §5.3 Linear Inequalities in One Variable, printed pp.356-365"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_congruence_similarity_enlargement",
@@ -1217,22 +1220,22 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Enlargement and reduction"
+          "locator": "PDF p.20, g3 sec2, Enlargement and reduction"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Scale drawings, enlargement and reduction"
+          "locator": "PDF p.22, g3 sec3 4, Scale drawings, enlargement and reduction"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Scale drawings, enlargement and reduction"
+          "locator": "PDF p.32, g2 sec3 4, Scale drawings, enlargement and reduction"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §§5.4 and 10.3-10.4, printed pp.366-375 and 1019-1051"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_congruence_similarity_foundations",
@@ -1246,22 +1249,22 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Congruence and similarity foundations"
+          "locator": "PDF p.20, g3 sec2, Congruence and similarity foundations"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Congruence and similarity foundations"
+          "locator": "PDF p.30, g2 sec2, Congruence and similarity foundations"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Congruence and similarity problems"
+          "locator": "PDF p.32, g2 sec3 4, Congruence and similarity problems"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §§10.3-10.4 Triangles and Polygons, printed pp.1019-1051"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_congruence_similarity_tests",
@@ -1275,18 +1278,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Triangle congruence, similarity and scale ratios"
+          "locator": "PDF p.22, g3 sec3 4, Triangle congruence, similarity and scale ratios"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.33, g2 sec5 bridge, Triangle congruence, similarity and scale ratios"
+          "locator": "PDF p.35, g2 sec5 bridge, Triangle congruence, similarity and scale ratios"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §8.1-8.2 Non-right Triangles, printed pp.767-805"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_coordinate_relationships",
@@ -1300,14 +1303,14 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Coordinates and variable relationships"
+          "locator": "PDF p.18, g3 sec1, Coordinates and variable relationships"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §§1.1 and 2.2, printed pp.7-21 and 189-205"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_cumulative_box",
@@ -1321,18 +1324,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.21, g3 sec3 4, Cumulative-frequency and box plots"
+          "locator": "PDF p.23, g3 sec3 4, Cumulative-frequency and box plots"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.31, g2 sec3 4, Cumulative-frequency and box plots"
+          "locator": "PDF p.32, g2 sec3 4, Cumulative-frequency and box plots"
         },
         {
           "source_id": "src_openstax_introductory_statistics_2e_2026",
           "locator": "PDF §2.4 Box Plots, printed pp.94-98; cumulative-frequency tables in Chapter 1"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_data_collection",
@@ -1346,18 +1349,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Collecting, classifying and tabulating data"
+          "locator": "PDF p.18, g3 sec1, Collecting, classifying and tabulating data"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Collecting, classifying and tabulating data"
+          "locator": "PDF p.28, g2 sec1, Collecting, classifying and tabulating data"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §8.1 Gathering and Organizing Data, printed pp.816-826"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_distribution_diagrams",
@@ -1371,18 +1374,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Dot plots, histograms and stem-and-leaf diagrams"
+          "locator": "PDF p.20, g3 sec2, Dot plots, histograms and stem-and-leaf diagrams"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Dot plots, histograms and stem-and-leaf diagrams"
+          "locator": "PDF p.30, g2 sec2, Dot plots, histograms and stem-and-leaf diagrams"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §8.2 Visualizing Data, printed pp.827-856"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_elementary_matrices",
@@ -1396,18 +1399,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Elementary matrix representation and operations"
+          "locator": "PDF p.21, g3 sec3 4, Elementary matrix representation and operations"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.32, g2 sec5 bridge, Elementary matrix representation and operations"
+          "locator": "PDF p.34, g2 sec5 bridge, Elementary matrix representation and operations"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §9.5 Matrices and Matrix Operations, printed pp.946-960"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_geometric_construction",
@@ -1421,26 +1424,26 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Geometric construction"
+          "locator": "PDF p.18, g3 sec1, Geometric construction"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Perpendicular and angle bisectors"
+          "locator": "PDF p.22, g3 sec3 4, Perpendicular and angle bisectors"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Geometric construction"
+          "locator": "PDF p.30, g2 sec2, Geometric construction"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Perpendicular and angle bisectors"
+          "locator": "PDF p.32, g2 sec3 4, Perpendicular and angle bisectors"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §§10.1-10.3 Points, Lines, Angles and Triangles, printed pp.994-1034"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_factorisation",
@@ -1454,22 +1457,22 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Linear and quadratic factorisation"
+          "locator": "PDF p.19, g3 sec2, Linear and quadratic factorisation"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Common-factor and quadratic factorisation"
+          "locator": "PDF p.29, g2 sec2, Common-factor and quadratic factorisation"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Factorising grouped linear expressions"
+          "locator": "PDF p.31, g2 sec3 4, Factorising grouped linear expressions"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §§3.2-3.5 Quadratic and Polynomial Functions, printed pp.255-325"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_formula_rearrangement",
@@ -1483,18 +1486,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Changing the subject of a formula"
+          "locator": "PDF p.19, g3 sec2, Changing the subject of a formula"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Changing the subject and evaluating formulae"
+          "locator": "PDF p.31, g2 sec3 4, Changing the subject and evaluating formulae"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §§5.1-5.2 Algebraic Expressions and Linear Equations, printed pp.334-355"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_fractional_quadratic_equations",
@@ -1508,18 +1511,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Fractional equations reducible to quadratics"
+          "locator": "PDF p.21, g3 sec3 4, Fractional equations reducible to quadratics"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Fractional equations reducible to quadratics"
+          "locator": "PDF p.31, g2 sec3 4, Fractional equations reducible to quadratics"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §§3.7 and 9.3, printed pp.340-364 and 925-936"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_indices",
@@ -1533,18 +1536,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Indices and their laws"
+          "locator": "PDF p.21, g3 sec3 4, Indices and their laws"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Indices and their laws"
+          "locator": "PDF p.31, g2 sec3 4, Indices and their laws"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §3.8 Exponents, printed pp.218-226"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_linear_expressions",
@@ -1558,22 +1561,22 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Operations on linear expressions"
+          "locator": "PDF p.17, g3 sec1, Operations on linear expressions"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Operations on linear expressions"
+          "locator": "PDF p.28, g2 sec1, Operations on linear expressions"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Linear expressions with fractional coefficients"
+          "locator": "PDF p.29, g2 sec2, Linear expressions with fractional coefficients"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §5.1 Algebraic Expressions, printed pp.334-345"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_linear_fractional_equations",
@@ -1587,18 +1590,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Linear and reducible fractional equations"
+          "locator": "PDF p.18, g3 sec1, Linear and reducible fractional equations"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Linear and reducible fractional equations"
+          "locator": "PDF p.29, g2 sec2, Linear and reducible fractional equations"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §2.1 Linear Functions and §3.7 Rational Functions, printed pp.170-188 and 340-364"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_linear_integer_equations",
@@ -1612,14 +1615,14 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Linear equations with integer coefficients"
+          "locator": "PDF p.28, g2 sec1, Linear equations with integer coefficients"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §5.2 Linear Equations in One Variable, printed pp.346-355"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_misleading_diagrams",
@@ -1633,18 +1636,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Misleading statistical diagrams"
+          "locator": "PDF p.18, g3 sec1, Misleading statistical diagrams"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Misleading statistical diagrams"
+          "locator": "PDF p.28, g2 sec1, Misleading statistical diagrams"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §8.2 Visualizing Data, printed pp.827-856"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_motion_data_graphs",
@@ -1658,18 +1661,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.14, g3 secondary all, Distance-time and speed-time graphs"
+          "locator": "PDF p.16, g3 secondary all, Distance-time and speed-time graphs"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.24, g2 secondary all, Distance-time and speed-time graphs"
+          "locator": "PDF p.26, g2 secondary all, Distance-time and speed-time graphs"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §§1.3 and 2.2, printed pp.27-39 and 189-205"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_nth_term_patterns",
@@ -1683,18 +1686,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Algebraic nth-term patterns"
+          "locator": "PDF p.17, g3 sec1, Algebraic nth-term patterns"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Algebraic nth-term patterns"
+          "locator": "PDF p.28, g2 sec1, Algebraic nth-term patterns"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §3.10 Arithmetic Sequences, printed pp.239-245"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_percentage",
@@ -1708,18 +1711,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Percentage comparison and change"
+          "locator": "PDF p.17, g3 sec1, Percentage comparison and change"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Percentage forms and change"
+          "locator": "PDF p.27, g2 sec1, Percentage forms and change"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §§6.1-6.2 Percent, Discounts, Markups and Sales Tax, printed pp.544-565"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_personal_finance",
@@ -1733,18 +1736,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.13, g3 secondary all, Personal and household finance"
+          "locator": "PDF p.15, g3 secondary all, Personal and household finance"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.23, g2 secondary all, Personal and household finance"
+          "locator": "PDF p.25, g2 secondary all, Personal and household finance"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF Chapter 6 Money Management, printed pp.543-706"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_plane_mensuration",
@@ -1758,18 +1761,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Area and composite plane figures"
+          "locator": "PDF p.18, g3 sec1, Area and composite plane figures"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Area and composite plane figures"
+          "locator": "PDF p.28, g2 sec1, Area and composite plane figures"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §§9.2 and 10.6 Measuring Area, printed pp.952-959 and 1068-1086"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_polygon_properties",
@@ -1783,18 +1786,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Quadrilaterals and regular polygons"
+          "locator": "PDF p.18, g3 sec1, Quadrilaterals and regular polygons"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Quadrilaterals and regular polygons"
+          "locator": "PDF p.30, g2 sec2, Quadrilaterals and regular polygons"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §10.4 Polygons, Perimeter and Circumference, printed pp.1035-1051"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_prime_factorisation",
@@ -1808,18 +1811,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Prime factorisation, HCF, LCM and roots"
+          "locator": "PDF p.17, g3 sec1, Prime factorisation, HCF, LCM and roots"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Prime factorisation, HCF, LCM and roots"
+          "locator": "PDF p.27, g2 sec1, Prime factorisation, HCF, LCM and roots"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §3.1 Prime and Composite Numbers, printed pp.128-148"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_pythagoras",
@@ -1833,18 +1836,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Pythagoras theorem and converse"
+          "locator": "PDF p.20, g3 sec2, Pythagoras theorem and converse"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Pythagoras theorem and converse"
+          "locator": "PDF p.30, g2 sec2, Pythagoras theorem and converse"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §§10.3 and 10.8, printed pp.1019-1034 and 1098-1116"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_quadratic_factorisation_solve",
@@ -1858,18 +1861,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Solving quadratics by factorisation"
+          "locator": "PDF p.19, g3 sec2, Solving quadratics by factorisation"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Solving quadratic equations by standard methods"
+          "locator": "PDF p.31, g2 sec3 4, Solving quadratic equations by standard methods"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §5.6 Quadratic Equations in One Variable, printed pp.403-426"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_quadratic_formula_complete_graph",
@@ -1883,18 +1886,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Solving quadratic equations by standard methods"
+          "locator": "PDF p.21, g3 sec3 4, Solving quadratic equations by standard methods"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Solving quadratic equations by standard methods"
+          "locator": "PDF p.31, g2 sec3 4, Solving quadratic equations by standard methods"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §5.6 Quadratic Equations in One Variable, printed pp.403-426"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_quartiles_spread",
@@ -1908,18 +1911,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.21, g3 sec3 4, Quartiles, percentiles and spread"
+          "locator": "PDF p.23, g3 sec3 4, Quartiles, percentiles and spread"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.31, g2 sec3 4, Quartiles, percentiles and spread"
+          "locator": "PDF p.32, g2 sec3 4, Quartiles, percentiles and spread"
         },
         {
           "source_id": "src_openstax_introductory_statistics_2e_2026",
           "locator": "PDF §§2.2 and 2.5 Measures of Location and Spread, printed pp.77-93 and 99-111"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_rate_speed",
@@ -1933,18 +1936,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Rate and speed"
+          "locator": "PDF p.17, g3 sec1, Rate and speed"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Distance, time, rate and speed"
+          "locator": "PDF p.27, g2 sec1, Distance, time, rate and speed"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §1.3 Rates of Change and Behavior of Graphs, printed pp.27-39"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_ratio",
@@ -1958,18 +1961,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Ratios with rational quantities"
+          "locator": "PDF p.17, g3 sec1, Ratios with rational quantities"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Ratio, fractions and division"
+          "locator": "PDF p.27, g2 sec1, Ratio, fractions and division"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §5.4 Ratios and Proportions, printed pp.366-375"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_real_number_operations",
@@ -1983,18 +1986,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Real-number operations and order"
+          "locator": "PDF p.17, g3 sec1, Real-number operations and order"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Real-number operations and order"
+          "locator": "PDF p.27, g2 sec1, Real-number operations and order"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §§3.2-3.6 Real Number Systems, printed pp.149-210"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_right_triangle_trig",
@@ -2008,18 +2011,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Trigonometry in right triangles"
+          "locator": "PDF p.20, g3 sec2, Trigonometry in right triangles"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Trigonometry in right triangles"
+          "locator": "PDF p.32, g2 sec3 4, Trigonometry in right triangles"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §10.8 Right Triangle Trigonometry, printed pp.1098-1116"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_scale_proportion",
@@ -2033,18 +2036,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Map scales and proportion"
+          "locator": "PDF p.19, g3 sec2, Map scales and proportion"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Map scales and proportion"
+          "locator": "PDF p.29, g2 sec2, Map scales and proportion"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §5.4 Ratios and Proportions, printed pp.366-375"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_spatial_trigonometry",
@@ -2058,18 +2061,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Two- and three-dimensional trigonometric problems"
+          "locator": "PDF p.22, g3 sec3 4, Two- and three-dimensional trigonometric problems"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Two- and three-dimensional trigonometric problems"
+          "locator": "PDF p.32, g2 sec3 4, Two- and three-dimensional trigonometric problems"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §§7.2 and 8.1-8.2, printed pp.713-729 and 767-805"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_standard_deviation_compare",
@@ -2083,18 +2086,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.21, g3 sec3 4, Calculating and comparing standard deviation"
+          "locator": "PDF p.23, g3 sec3 4, Calculating and comparing standard deviation"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.31, g2 sec3 4, Calculating and comparing standard deviation"
+          "locator": "PDF p.33, g2 sec3 4, Calculating and comparing standard deviation"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §8.4 Range and Standard Deviation, printed pp.873-878"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_standard_form",
@@ -2108,18 +2111,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Standard form"
+          "locator": "PDF p.21, g3 sec3 4, Standard form"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Standard form"
+          "locator": "PDF p.31, g2 sec3 4, Standard form"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §3.9 Scientific Notation, printed pp.227-238"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_statistical_representations",
@@ -2133,18 +2136,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Reading and choosing statistical representations"
+          "locator": "PDF p.18, g3 sec1, Reading and choosing statistical representations"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Reading and choosing statistical representations"
+          "locator": "PDF p.28, g2 sec1, Reading and choosing statistical representations"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §8.2 Visualizing Data, printed pp.827-856"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_tangent_gradient",
@@ -2158,18 +2161,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Estimating curve gradient with a tangent"
+          "locator": "PDF p.21, g3 sec3 4, Estimating curve gradient with a tangent"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Estimating curve gradient with a tangent"
+          "locator": "PDF p.31, g2 sec3 4, Estimating curve gradient with a tangent"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §1.3 Rates of Change and Behavior of Graphs, printed pp.27-39"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_triangle_properties",
@@ -2183,18 +2186,18 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Triangle properties"
+          "locator": "PDF p.18, g3 sec1, Triangle properties"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Triangle properties"
+          "locator": "PDF p.28, g2 sec1, Triangle properties"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §10.3 Triangles, printed pp.1019-1034"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "id": "sg_sec_math_triangle_trigonometry",
@@ -2208,18 +2211,179 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Trigonometry for general triangles"
+          "locator": "PDF p.22, g3 sec3 4, Trigonometry for general triangles"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Trigonometry for general triangles"
+          "locator": "PDF p.32, g2 sec3 4, Trigonometry for general triangles"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §§8.1-8.2 Law of Sines and Law of Cosines, printed pp.767-805"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
+    },
+    {
+      "id": "sg_sec_math_formulate_linear_equations",
+      "canonical_id": "pc_f3ce171bf3b9bda56a7170bd96232766",
+      "kind": "concept",
+      "name": "Formulating linear equations and systems from context",
+      "name_zh": "从情境建立一次方程与方程组",
+      "topic": "sg_sec_math_topic_equation_modelling",
+      "description": "Choosing unknowns in a problem situation to form a one-variable linear equation or a pair of linear equations, then solving, checking and interpreting the solution in context.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec1, Formulating a linear equation"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec2, Formulating a pair of linear equations"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec1, Formulating a linear equation"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec2, Formulating linear equations and systems"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §5.2 Linear Equations in One Variable with Applications, printed pp.346-355; §5.9 Systems of Linear Equations in Two Variables, printed pp.473-489"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "sg_sec_math_formulate_quadratic_equations",
+      "canonical_id": "pc_63cc006f02a5da8155f7f44248b724bc",
+      "kind": "concept",
+      "name": "Formulating quadratic equations from context",
+      "name_zh": "从情境建立一元二次方程",
+      "topic": "sg_sec_math_topic_equation_modelling",
+      "description": "Forming a quadratic equation from a problem situation, solving it and rejecting roots that violate the contextual constraints before interpreting the valid solution.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Formulating a quadratic equation"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.31, g2 sec3 4, Formulating a quadratic equation"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §5.6 Quadratic Equations in One Variable with Applications, printed pp.403-426"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "sg_sec_math_single_event_probability",
+      "canonical_id": "pc_30bb2c1ff3be4bdcb48b12057adbfbf2",
+      "kind": "concept",
+      "name": "Probability of single events",
+      "name_zh": "单一事件概率",
+      "topic": "sg_sec_math_topic_probability",
+      "description": "Treating probability as a measure of chance between 0 and 1, listing equally likely outcomes of a simple experiment and calculating the probability of a single event.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec2, Probability of single events"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec2, Probability of single events"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §7.5 Basic Concepts of Probability, printed pp.751-762"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "sg_sec_math_topic_equation_modelling",
+      "kind": "topic",
+      "name": "Formulating equations from context",
+      "name_zh": "从情境建立方程",
+      "topic": null,
+      "default_order": 11,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec1, Formulating a linear equation"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec2, Formulating a pair of linear equations"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec1, Formulating a linear equation"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec2, Formulating linear equations and systems"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §5.2 Linear Equations in One Variable with Applications, printed pp.346-355; §5.9 Systems of Linear Equations in Two Variables, printed pp.473-489"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Formulating a quadratic equation"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.31, g2 sec3 4, Formulating a quadratic equation"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §5.6 Quadratic Equations in One Variable with Applications, printed pp.403-426"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "sg_sec_math_topic_probability",
+      "kind": "topic",
+      "name": "Probability",
+      "name_zh": "概率",
+      "topic": null,
+      "default_order": 20,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec2, Probability of single events"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec2, Probability of single events"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §7.5 Basic Concepts of Probability, printed pp.751-762"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.23, g3 sec3 4, Combined-event probability representations"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.33, g2 sec3 4, Combined-event probability representations"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§7.4-7.5 Tree Diagrams, Tables, Outcomes and Probability, printed pp.738-762"
+        }
+      ],
+      "review_status": "approved"
     }
   ],
   "edges": [
@@ -2232,11 +2396,11 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Ratios with rational quantities"
+          "locator": "PDF p.17, g3 sec1, Ratios with rational quantities"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Ratio, fractions and division"
+          "locator": "PDF p.27, g2 sec1, Ratio, fractions and division"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -2244,14 +2408,14 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Map scales and proportion"
+          "locator": "PDF p.19, g3 sec2, Map scales and proportion"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Map scales and proportion"
+          "locator": "PDF p.29, g2 sec2, Map scales and proportion"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_percentage",
@@ -2262,11 +2426,11 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Percentage comparison and change"
+          "locator": "PDF p.17, g3 sec1, Percentage comparison and change"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Percentage forms and change"
+          "locator": "PDF p.27, g2 sec1, Percentage forms and change"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -2274,18 +2438,18 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.13, g3 secondary all, Personal and household finance"
+          "locator": "PDF p.15, g3 secondary all, Personal and household finance"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.23, g2 secondary all, Personal and household finance"
+          "locator": "PDF p.25, g2 secondary all, Personal and household finance"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF Chapter 6 Money Management, printed pp.543-706"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_rate_speed",
@@ -2296,11 +2460,11 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Rate and speed"
+          "locator": "PDF p.17, g3 sec1, Rate and speed"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Distance, time, rate and speed"
+          "locator": "PDF p.27, g2 sec1, Distance, time, rate and speed"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
@@ -2308,18 +2472,18 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.14, g3 secondary all, Distance-time and speed-time graphs"
+          "locator": "PDF p.16, g3 secondary all, Distance-time and speed-time graphs"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.24, g2 secondary all, Distance-time and speed-time graphs"
+          "locator": "PDF p.26, g2 secondary all, Distance-time and speed-time graphs"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §§1.3 and 2.2, printed pp.27-39 and 189-205"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_algebra_notation_evaluation",
@@ -2330,11 +2494,11 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Algebraic notation and evaluation"
+          "locator": "PDF p.17, g3 sec1, Algebraic notation and evaluation"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.25, g2 sec1, Algebraic notation and evaluation"
+          "locator": "PDF p.27, g2 sec1, Algebraic notation and evaluation"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -2342,18 +2506,18 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Operations on linear expressions"
+          "locator": "PDF p.17, g3 sec1, Operations on linear expressions"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Operations on linear expressions"
+          "locator": "PDF p.28, g2 sec1, Operations on linear expressions"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Linear expressions with fractional coefficients"
+          "locator": "PDF p.29, g2 sec2, Linear expressions with fractional coefficients"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_linear_expressions",
@@ -2364,15 +2528,15 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Operations on linear expressions"
+          "locator": "PDF p.17, g3 sec1, Operations on linear expressions"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Operations on linear expressions"
+          "locator": "PDF p.28, g2 sec1, Operations on linear expressions"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Linear expressions with fractional coefficients"
+          "locator": "PDF p.29, g2 sec2, Linear expressions with fractional coefficients"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -2380,14 +2544,14 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Linear equations with integer coefficients"
+          "locator": "PDF p.28, g2 sec1, Linear equations with integer coefficients"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §5.2 Linear Equations in One Variable, printed pp.346-355"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_linear_integer_equations",
@@ -2398,7 +2562,7 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Linear equations with integer coefficients"
+          "locator": "PDF p.28, g2 sec1, Linear equations with integer coefficients"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -2406,18 +2570,18 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Linear and reducible fractional equations"
+          "locator": "PDF p.18, g3 sec1, Linear and reducible fractional equations"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Linear and reducible fractional equations"
+          "locator": "PDF p.29, g2 sec2, Linear and reducible fractional equations"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §2.1 Linear Functions and §3.7 Rational Functions, printed pp.170-188 and 340-364"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_algebra_expansion_identities",
@@ -2428,15 +2592,15 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Expansion and algebraic identities"
+          "locator": "PDF p.19, g3 sec2, Expansion and algebraic identities"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Expansion and algebraic identities"
+          "locator": "PDF p.29, g2 sec2, Expansion and algebraic identities"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Expansion of algebraic expressions"
+          "locator": "PDF p.31, g2 sec3 4, Expansion of algebraic expressions"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
@@ -2444,22 +2608,22 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Linear and quadratic factorisation"
+          "locator": "PDF p.19, g3 sec2, Linear and quadratic factorisation"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Common-factor and quadratic factorisation"
+          "locator": "PDF p.29, g2 sec2, Common-factor and quadratic factorisation"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Factorising grouped linear expressions"
+          "locator": "PDF p.31, g2 sec3 4, Factorising grouped linear expressions"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §§3.2-3.5 Quadratic and Polynomial Functions, printed pp.255-325"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_algebraic_fractions_multiply_divide",
@@ -2470,11 +2634,11 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Multiplying and dividing algebraic fractions"
+          "locator": "PDF p.19, g3 sec2, Multiplying and dividing algebraic fractions"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Multiplying and dividing algebraic fractions"
+          "locator": "PDF p.29, g2 sec2, Multiplying and dividing algebraic fractions"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
@@ -2482,14 +2646,14 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Adding and subtracting algebraic fractions"
+          "locator": "PDF p.19, g3 sec2, Adding and subtracting algebraic fractions"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Adding and subtracting algebraic fractions"
+          "locator": "PDF p.31, g2 sec3 4, Adding and subtracting algebraic fractions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_linear_integer_equations",
@@ -2500,7 +2664,7 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Linear equations with integer coefficients"
+          "locator": "PDF p.28, g2 sec1, Linear equations with integer coefficients"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -2508,26 +2672,26 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Simple linear inequalities"
+          "locator": "PDF p.19, g3 sec2, Simple linear inequalities"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Compound linear inequalities"
+          "locator": "PDF p.21, g3 sec3 4, Compound linear inequalities"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Simple linear inequalities"
+          "locator": "PDF p.29, g2 sec2, Simple linear inequalities"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.32, g2 sec5 bridge, Compound linear inequalities"
+          "locator": "PDF p.34, g2 sec5 bridge, Compound linear inequalities"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §5.3 Linear Inequalities in One Variable, printed pp.356-365"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_angle_relationships",
@@ -2538,11 +2702,11 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Angle relationships"
+          "locator": "PDF p.18, g3 sec1, Angle relationships"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Angle relationships"
+          "locator": "PDF p.28, g2 sec1, Angle relationships"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -2550,18 +2714,18 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Triangle properties"
+          "locator": "PDF p.18, g3 sec1, Triangle properties"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Triangle properties"
+          "locator": "PDF p.28, g2 sec1, Triangle properties"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §10.3 Triangles, printed pp.1019-1034"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_triangle_properties",
@@ -2572,11 +2736,11 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Triangle properties"
+          "locator": "PDF p.18, g3 sec1, Triangle properties"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Triangle properties"
+          "locator": "PDF p.28, g2 sec1, Triangle properties"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -2584,18 +2748,18 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Quadrilaterals and regular polygons"
+          "locator": "PDF p.18, g3 sec1, Quadrilaterals and regular polygons"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Quadrilaterals and regular polygons"
+          "locator": "PDF p.30, g2 sec2, Quadrilaterals and regular polygons"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §10.4 Polygons, Perimeter and Circumference, printed pp.1035-1051"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_congruence_similarity_foundations",
@@ -2606,15 +2770,15 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Congruence and similarity foundations"
+          "locator": "PDF p.20, g3 sec2, Congruence and similarity foundations"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Congruence and similarity foundations"
+          "locator": "PDF p.30, g2 sec2, Congruence and similarity foundations"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Congruence and similarity problems"
+          "locator": "PDF p.32, g2 sec3 4, Congruence and similarity problems"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -2622,18 +2786,18 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Triangle congruence, similarity and scale ratios"
+          "locator": "PDF p.22, g3 sec3 4, Triangle congruence, similarity and scale ratios"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.33, g2 sec5 bridge, Triangle congruence, similarity and scale ratios"
+          "locator": "PDF p.35, g2 sec5 bridge, Triangle congruence, similarity and scale ratios"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §8.1-8.2 Non-right Triangles, printed pp.767-805"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_pythagoras",
@@ -2644,11 +2808,11 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Pythagoras theorem and converse"
+          "locator": "PDF p.20, g3 sec2, Pythagoras theorem and converse"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Pythagoras theorem and converse"
+          "locator": "PDF p.30, g2 sec2, Pythagoras theorem and converse"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -2656,18 +2820,18 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Trigonometry in right triangles"
+          "locator": "PDF p.20, g3 sec2, Trigonometry in right triangles"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Trigonometry in right triangles"
+          "locator": "PDF p.32, g2 sec3 4, Trigonometry in right triangles"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §10.8 Right Triangle Trigonometry, printed pp.1098-1116"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_right_triangle_trig",
@@ -2678,11 +2842,11 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Trigonometry in right triangles"
+          "locator": "PDF p.20, g3 sec2, Trigonometry in right triangles"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Trigonometry in right triangles"
+          "locator": "PDF p.32, g2 sec3 4, Trigonometry in right triangles"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -2690,18 +2854,18 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Trigonometry for general triangles"
+          "locator": "PDF p.22, g3 sec3 4, Trigonometry for general triangles"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Trigonometry for general triangles"
+          "locator": "PDF p.32, g2 sec3 4, Trigonometry for general triangles"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §§8.1-8.2 Law of Sines and Law of Cosines, printed pp.767-805"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_triangle_trigonometry",
@@ -2712,11 +2876,11 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Trigonometry for general triangles"
+          "locator": "PDF p.22, g3 sec3 4, Trigonometry for general triangles"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Trigonometry for general triangles"
+          "locator": "PDF p.32, g2 sec3 4, Trigonometry for general triangles"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
@@ -2724,18 +2888,18 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Two- and three-dimensional trigonometric problems"
+          "locator": "PDF p.22, g3 sec3 4, Two- and three-dimensional trigonometric problems"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Two- and three-dimensional trigonometric problems"
+          "locator": "PDF p.32, g2 sec3 4, Two- and three-dimensional trigonometric problems"
         },
         {
           "source_id": "src_openstax_precalculus_2e_2026",
           "locator": "PDF §§7.2 and 8.1-8.2, printed pp.713-729 and 767-805"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_statistical_representations",
@@ -2746,11 +2910,11 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Reading and choosing statistical representations"
+          "locator": "PDF p.18, g3 sec1, Reading and choosing statistical representations"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Reading and choosing statistical representations"
+          "locator": "PDF p.28, g2 sec1, Reading and choosing statistical representations"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -2758,14 +2922,14 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Misleading statistical diagrams"
+          "locator": "PDF p.18, g3 sec1, Misleading statistical diagrams"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Misleading statistical diagrams"
+          "locator": "PDF p.28, g2 sec1, Misleading statistical diagrams"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_quartiles_spread",
@@ -2776,11 +2940,11 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.21, g3 sec3 4, Quartiles, percentiles and spread"
+          "locator": "PDF p.23, g3 sec3 4, Quartiles, percentiles and spread"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.31, g2 sec3 4, Quartiles, percentiles and spread"
+          "locator": "PDF p.32, g2 sec3 4, Quartiles, percentiles and spread"
         },
         {
           "source_id": "src_openstax_introductory_statistics_2e_2026",
@@ -2788,18 +2952,18 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.21, g3 sec3 4, Cumulative-frequency and box plots"
+          "locator": "PDF p.23, g3 sec3 4, Cumulative-frequency and box plots"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.31, g2 sec3 4, Cumulative-frequency and box plots"
+          "locator": "PDF p.32, g2 sec3 4, Cumulative-frequency and box plots"
         },
         {
           "source_id": "src_openstax_introductory_statistics_2e_2026",
           "locator": "PDF §2.4 Box Plots, printed pp.94-98; cumulative-frequency tables in Chapter 1"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_central_tendency",
@@ -2810,11 +2974,11 @@
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Measures of central tendency"
+          "locator": "PDF p.20, g3 sec2, Measures of central tendency"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Measures of central tendency"
+          "locator": "PDF p.30, g2 sec2, Measures of central tendency"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
@@ -2822,738 +2986,396 @@
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.21, g3 sec3 4, Calculating and comparing standard deviation"
+          "locator": "PDF p.23, g3 sec3 4, Calculating and comparing standard deviation"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.31, g2 sec3 4, Calculating and comparing standard deviation"
+          "locator": "PDF p.33, g2 sec3 4, Calculating and comparing standard deviation"
         },
         {
           "source_id": "src_openstax_contemporary_mathematics_2026",
           "locator": "PDF §8.4 Range and Standard Deviation, printed pp.873-878"
         }
       ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_personal_finance",
-      "to": "sg_sec_math_motion_data_graphs",
-      "type": "prereq",
-      "strength": "hard",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SECONDARY·ALL·01 为 G3·SECONDARY·ALL·02 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.13, g3 secondary all, Personal and household finance"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.14, g3 secondary all, Distance-time and speed-time graphs"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_prime_factorisation",
-      "to": "sg_sec_math_real_number_operations",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·01 为 G3·SEC1·02 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Prime factorisation, HCF, LCM and roots"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Real-number operations and order"
-        }
-      ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_real_number_operations",
       "to": "sg_sec_math_approximation_estimation",
       "type": "prereq",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·02 为 G3·SEC1·04 的前置要求。",
+      "reason": "按小数位或有效数字取整与估算，需要先能处理有理数与实数的运算和大小比较。",
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Real-number operations and order"
+          "locator": "PDF p.17, g3 sec1, Real-number operations and order"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Approximation and estimation"
+          "locator": "PDF p.17, g3 sec1, Approximation and estimation"
         }
       ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_approximation_estimation",
-      "to": "sg_sec_math_ratio",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·04 为 G3·SEC1·05 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Approximation and estimation"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Ratios with rational quantities"
-        }
-      ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_ratio",
       "to": "sg_sec_math_percentage",
       "type": "prereq",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·05 为 G3·SEC1·06 的前置要求。",
+      "reason": "百分数是以 100 为基准的比，百分比变化与反向百分数建立在比与分数的理解上。",
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Ratios with rational quantities"
+          "locator": "PDF p.17, g3 sec1, Ratios with rational quantities"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Percentage comparison and change"
+          "locator": "PDF p.17, g3 sec1, Percentage comparison and change"
         }
       ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_percentage",
-      "to": "sg_sec_math_rate_speed",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·06 为 G3·SEC1·07 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Percentage comparison and change"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Rate and speed"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_rate_speed",
-      "to": "sg_sec_math_algebra_notation_evaluation",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·07 为 G3·SEC1·08 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Rate and speed"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Algebraic notation and evaluation"
-        }
-      ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_algebra_notation_evaluation",
       "to": "sg_sec_math_algebra_translation",
       "type": "prereq",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·08 为 G3·SEC1·09 的前置要求。",
+      "reason": "把现实关系翻译为代数式，需要先理解用字母表示数及代数记号的约定。",
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Algebraic notation and evaluation"
+          "locator": "PDF p.17, g3 sec1, Algebraic notation and evaluation"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Translating situations into algebra"
+          "locator": "PDF p.17, g3 sec1, Translating situations into algebra"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_algebra_translation",
       "to": "sg_sec_math_nth_term_patterns",
       "type": "prereq",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·09 为 G3·SEC1·10 的前置要求。",
+      "reason": "写出规律的第 n 项需要先能把数量关系表示为含字母的代数式。",
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Translating situations into algebra"
+          "locator": "PDF p.17, g3 sec1, Translating situations into algebra"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Algebraic nth-term patterns"
+          "locator": "PDF p.17, g3 sec1, Algebraic nth-term patterns"
         }
       ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_nth_term_patterns",
-      "to": "sg_sec_math_linear_expressions",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·10 为 G3·SEC1·11 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Algebraic nth-term patterns"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Operations on linear expressions"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_linear_expressions",
-      "to": "sg_sec_math_coordinate_relationships",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·11 为 G3·SEC1·12 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.15, g3 sec1, Operations on linear expressions"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Coordinates and variable relationships"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_polygon_properties",
-      "to": "sg_sec_math_geometric_construction",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·18 为 G3·SEC1·19 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Quadrilaterals and regular polygons"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Geometric construction"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_geometric_construction",
-      "to": "sg_sec_math_plane_mensuration",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·19 为 G3·SEC1·20 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Geometric construction"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Area and composite plane figures"
-        }
-      ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_data_collection",
       "to": "sg_sec_math_statistical_representations",
       "type": "prereq",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC1·22 为 G3·SEC1·23 的前置要求。",
+      "reason": "选择和解释统计图表，需要先完成数据收集、分类与制表。",
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Collecting, classifying and tabulating data"
+          "locator": "PDF p.18, g3 sec1, Collecting, classifying and tabulating data"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.16, g3 sec1, Reading and choosing statistical representations"
+          "locator": "PDF p.18, g3 sec1, Reading and choosing statistical representations"
         }
       ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_scale_proportion",
-      "to": "sg_sec_math_algebra_expansion_identities",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC2·01 为 G3·SEC2·02 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Map scales and proportion"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Expansion and algebraic identities"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_algebra_expansion_identities",
-      "to": "sg_sec_math_formula_rearrangement",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC2·02 为 G3·SEC2·03 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Expansion and algebraic identities"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Changing the subject of a formula"
-        }
-      ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_factorisation",
       "to": "sg_sec_math_algebraic_fractions_multiply_divide",
       "type": "prereq",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC2·04 为 G3·SEC2·05 的前置要求。",
+      "reason": "约简与乘除代数分式需要先对分子、分母进行因式分解。",
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Linear and quadratic factorisation"
+          "locator": "PDF p.19, g3 sec2, Linear and quadratic factorisation"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.17, g3 sec2, Multiplying and dividing algebraic fractions"
+          "locator": "PDF p.19, g3 sec2, Multiplying and dividing algebraic fractions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_congruence_similarity_foundations",
       "to": "sg_sec_math_congruence_similarity_enlargement",
       "type": "prereq",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC2·13 为 G3·SEC2·14 的前置要求。",
+      "reason": "按比例因子放大或缩小图形，结果与原图相似，需要先理解对应角相等、对应边成比例。",
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Congruence and similarity foundations"
+          "locator": "PDF p.20, g3 sec2, Congruence and similarity foundations"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Enlargement and reduction"
+          "locator": "PDF p.20, g3 sec2, Enlargement and reduction"
         }
       ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_congruence_similarity_enlargement",
-      "to": "sg_sec_math_pythagoras",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC2·14 为 G3·SEC2·15 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Enlargement and reduction"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Pythagoras theorem and converse"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_distribution_diagrams",
-      "to": "sg_sec_math_central_tendency",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC2·18 为 G3·SEC2·19 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Dot plots, histograms and stem-and-leaf diagrams"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.18, g3 sec2, Measures of central tendency"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_standard_form",
-      "to": "sg_sec_math_indices",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·01 为 G3·SEC3·4·02 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Standard form"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Indices and their laws"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_tangent_gradient",
-      "to": "sg_sec_math_quadratic_formula_complete_graph",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·06 为 G3·SEC3·4·07 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Estimating curve gradient with a tangent"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Solving quadratic equations by standard methods"
-        }
-      ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_quadratic_formula_complete_graph",
       "to": "sg_sec_math_fractional_quadratic_equations",
       "type": "prereq",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·07 为 G3·SEC3·4·08 的前置要求。",
+      "reason": "分式方程去分母后得到一元二次方程，需要用公式法、配方法等求解。",
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Solving quadratic equations by standard methods"
+          "locator": "PDF p.21, g3 sec3 4, Solving quadratic equations by standard methods"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Fractional equations reducible to quadratics"
+          "locator": "PDF p.21, g3 sec3 4, Fractional equations reducible to quadratics"
         }
       ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_geometric_construction",
-      "to": "sg_sec_math_circle_chord_tangent",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·11 为 G3·SEC3·4·12 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Perpendicular and angle bisectors"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Chord and tangent properties"
-        }
-      ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_circle_chord_tangent",
       "to": "sg_sec_math_circle_angles",
       "type": "prereq",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·12 为 G3·SEC3·4·13 的前置要求。",
+      "reason": "切线与半径垂直等弦切性质在圆的角性质推理中反复使用。",
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Chord and tangent properties"
+          "locator": "PDF p.22, g3 sec3 4, Chord and tangent properties"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Circle angle properties"
+          "locator": "PDF p.22, g3 sec3 4, Circle angle properties"
         }
       ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_spatial_trigonometry",
-      "to": "sg_sec_math_circle_mensuration",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·15 为 G3·SEC3·4·16 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Two- and three-dimensional trigonometric problems"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Arc, sector and segment measures"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_cumulative_box",
-      "to": "sg_sec_math_standard_deviation_compare",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·20 为 G3·SEC3·4·21 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.21, g3 sec3 4, Cumulative-frequency and box plots"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.21, g3 sec3 4, Calculating and comparing standard deviation"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_standard_deviation_compare",
-      "to": "sg_sec_math_combined_probability",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·21 为 G3·SEC3·4·22 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.21, g3 sec3 4, Calculating and comparing standard deviation"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.21, g3 sec3 4, Combined-event probability representations"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_elementary_matrices",
-      "to": "sg_sec_math_congruence_similarity_tests",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G3·SEC3·4·27 为 G3·SEC3·4·28 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.19, g3 sec3 4, Elementary matrix representation and operations"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.20, g3 sec3 4, Triangle congruence, similarity and scale ratios"
-        }
-      ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_triangle_properties",
       "to": "sg_sec_math_plane_mensuration",
       "type": "prereq",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC1·15 为 G2·SEC1·16 的前置要求。",
+      "reason": "计算组合平面图形面积常把图形分割为三角形，需要先掌握三角形的边角性质。",
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Triangle properties"
+          "locator": "PDF p.28, g2 sec1, Triangle properties"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.26, g2 sec1, Area and composite plane figures"
+          "locator": "PDF p.28, g2 sec1, Area and composite plane figures"
         }
       ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_scale_proportion",
-      "to": "sg_sec_math_linear_expressions",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC2·01 为 G2·SEC2·02 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Map scales and proportion"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Linear expressions with fractional coefficients"
-        }
-      ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_linear_expressions",
       "to": "sg_sec_math_algebra_expansion_identities",
       "type": "prereq",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC2·02 为 G2·SEC2·03 的前置要求。",
+      "reason": "展开代数式乘积需要先能熟练合并同类项、去括号和化简一次式。",
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Linear expressions with fractional coefficients"
+          "locator": "PDF p.29, g2 sec2, Linear expressions with fractional coefficients"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Expansion and algebraic identities"
+          "locator": "PDF p.29, g2 sec2, Expansion and algebraic identities"
         }
       ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_linear_fractional_equations",
-      "to": "sg_sec_math_linear_inequalities",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC2·07 为 G2·SEC2·08 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Linear and reducible fractional equations"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.27, g2 sec2, Simple linear inequalities"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_geometric_construction",
-      "to": "sg_sec_math_congruence_similarity_foundations",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC2·13 为 G2·SEC2·14 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Geometric construction"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Congruence and similarity foundations"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_congruence_similarity_foundations",
-      "to": "sg_sec_math_pythagoras",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC2·14 为 G2·SEC2·15 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Congruence and similarity foundations"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.28, g2 sec2, Pythagoras theorem and converse"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_tangent_gradient",
-      "to": "sg_sec_math_quadratic_factorisation_solve",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC3·4·05 为 G2·SEC3·4·06 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Estimating curve gradient with a tangent"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Solving quadratic equations by standard methods"
-        }
-      ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_quadratic_factorisation_solve",
       "to": "sg_sec_math_fractional_quadratic_equations",
       "type": "prereq",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC3·4·06 为 G2·SEC3·4·07 的前置要求。",
+      "reason": "分式方程去分母后得到一元二次方程，可用因式分解法求解并检验分母限制。",
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Solving quadratic equations by standard methods"
+          "locator": "PDF p.31, g2 sec3 4, Solving quadratic equations by standard methods"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Fractional equations reducible to quadratics"
+          "locator": "PDF p.31, g2 sec3 4, Fractional equations reducible to quadratics"
         }
       ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_formula_rearrangement",
-      "to": "sg_sec_math_algebraic_fractions_add_subtract",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC3·4·11 为 G2·SEC3·4·12 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Changing the subject and evaluating formulae"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Adding and subtracting algebraic fractions"
-        }
-      ],
-      "review_status": "needs_review"
-    },
-    {
-      "from": "sg_sec_math_algebraic_fractions_add_subtract",
-      "to": "sg_sec_math_congruence_similarity_enlargement",
-      "type": "prereq",
-      "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC3·4·12 为 G2·SEC3·4·13 的前置要求。",
-      "evidence_refs": [
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.29, g2 sec3 4, Adding and subtracting algebraic fractions"
-        },
-        {
-          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Scale drawings, enlargement and reduction"
-        }
-      ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "from": "sg_sec_math_congruence_similarity_foundations",
       "to": "sg_sec_math_right_triangle_trig",
       "type": "prereq",
       "strength": "soft",
-      "reason": "依据官方课程同一主题内的成果顺序，G2·SEC3·4·28 为 G2·SEC3·4·29 的前置要求。",
+      "reason": "锐角三角比的定义依赖“相似直角三角形对应边之比相等”。",
       "evidence_refs": [
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Congruence and similarity problems"
+          "locator": "PDF p.32, g2 sec3 4, Congruence and similarity problems"
         },
         {
           "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
-          "locator": "PDF p.30, g2 sec3 4, Trigonometry in right triangles"
+          "locator": "PDF p.32, g2 sec3 4, Trigonometry in right triangles"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
+    },
+    {
+      "from": "sg_sec_math_algebra_translation",
+      "to": "sg_sec_math_formulate_linear_equations",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "从情境建立方程前需要先能把数量关系翻译为代数式。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec1, Translating situations into algebra"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec1, Formulating a linear equation"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "sg_sec_math_linear_integer_equations",
+      "to": "sg_sec_math_formulate_linear_equations",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "建立方程后需要求解并检验，依赖一元一次方程的解法。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec1, Linear equations with integer coefficients"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec1, Formulating a linear equation"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "sg_sec_math_formulate_linear_equations",
+      "to": "sg_sec_math_formulate_quadratic_equations",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "建立一元二次方程沿用从情境选未知量、写等量关系并检验解的建模步骤。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec1, Formulating a linear equation"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Formulating a quadratic equation"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "sg_sec_math_quadratic_factorisation_solve",
+      "to": "sg_sec_math_formulate_quadratic_equations",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "建立二次方程后需要求根并按情境取舍，依赖二次方程的解法。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec2, Solving quadratics by factorisation"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Formulating a quadratic equation"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "sg_sec_math_single_event_probability",
+      "to": "sg_sec_math_combined_probability",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "复合事件概率在可能性图或树状图中枚举结果，前提是会计算单一事件的概率。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec2, Probability of single events"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.23, g3 sec3 4, Combined-event probability representations"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "sg_sec_math_linear_integer_equations",
+      "to": "sg_sec_math_formula_rearrangement",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "改变公式主项沿用解一次方程时的等式两边同时运算与逆运算思路。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec1, Linear equations with integer coefficients"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec2, Changing the subject of a formula"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "sg_sec_math_factorisation",
+      "to": "sg_sec_math_quadratic_factorisation_solve",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "因式分解法解二次方程必须先把二次式写成因式乘积，再用零乘积性质。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec2, Linear and quadratic factorisation"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec2, Solving quadratics by factorisation"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "sg_sec_math_algebra_expansion_identities",
+      "to": "sg_sec_math_quadratic_formula_complete_graph",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "配方法依赖完全平方恒等式的正反使用，公式法亦由配方推出。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec2, Expansion and algebraic identities"
+        },
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Solving quadratic equations by standard methods"
+        }
+      ],
+      "review_status": "approved"
     }
   ]
 }

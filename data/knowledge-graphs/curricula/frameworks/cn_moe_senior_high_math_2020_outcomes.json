@@ -1,11 +1,11 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "0.2.0",
+  "content_version": "0.2.2",
   "framework_id": "cfw_cn_moe_senior_high_math_2020_outcomes",
   "curriculum_id": "cur_cn_moe_senior_high_math_2020",
   "curriculum_kind": "national_standard",
   "title": "General Senior High School Mathematics Curriculum Standard outcome coverage",
-  "title_zh": "普通高中数学课程标准（2017年版2020年修订）学习成果级覆盖",
+  "title_zh": "普通高中数学课程标准（2017 年版 2025 年修订）学习成果级覆盖",
   "subject": "Mathematics",
   "jurisdiction": "CN-MAINLAND",
   "education_stage": "senior_secondary",
@@ -26,11 +26,11 @@
     "zh-CN"
   ],
   "source_ids": [
-    "src_cn_moe_senior_high_math_2020"
+    "src_cn_moe_senior_high_math_2025"
   ],
   "valid_from": "2020-05-11",
   "valid_to": null,
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.1.0",
@@ -41,6 +41,16 @@
       "version": "0.2.0",
       "date": "2026-07-19",
       "summary_zh": "第二轮逐项人工式复核：校正成果顺序和精确页码，补入统计推断或然性与连续型随机变量初步，并明确排除选修和星号选学内容。"
+    },
+    {
+      "version": "0.2.1",
+      "date": "2026-10-25",
+      "summary_zh": "按 2026-10-25 官方来源复核更新证据定位（中国课标迁至 2025 日常修订版、新加坡页码校正），状态保持 needs_review。"
+    },
+    {
+      "version": "0.2.2",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准。"
     }
   ],
   "requirements": [
@@ -59,11 +69,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.23（正文p.15），必修主题一·1‘集合’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.17-18（正文p.14-15），必修主题一·1‘集合’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_set_relations_special_sets",
@@ -80,11 +90,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.23（正文p.15），必修主题一·1‘集合’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.17-18（正文p.14-15），必修主题一·1‘集合’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_set_operations",
@@ -101,11 +111,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.23（正文p.15），必修主题一·1‘集合’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.17-18（正文p.14-15），必修主题一·1‘集合’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_venn_diagrams",
@@ -122,11 +132,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.23（正文p.15），必修主题一·1‘集合’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.17-18（正文p.14-15），必修主题一·1‘集合’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_logical_conditions",
@@ -143,11 +153,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.23-24（正文p.15-16），必修主题一·2‘常用逻辑用语’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.18-19（正文p.15-16），必修主题一·2‘常用逻辑用语’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_quantifiers_negation",
@@ -164,11 +174,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.23-24（正文p.15-16），必修主题一·2‘常用逻辑用语’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.18-19（正文p.15-16），必修主题一·2‘常用逻辑用语’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_inequality_properties",
@@ -185,11 +195,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.24（正文p.16），必修主题一·3‘相等关系与不等关系’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.19（正文p.16），必修主题一·3‘相等关系与不等关系’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_basic_inequality_optimization",
@@ -206,11 +216,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.24（正文p.16），必修主题一·3‘相等关系与不等关系’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.19（正文p.16），必修主题一·3‘相等关系与不等关系’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_quadratic_roots_graph",
@@ -227,11 +237,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.24-25（正文p.16-17），必修主题一·4‘从函数观点看一元二次方程和一元二次不等式’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.19-20（正文p.16-17），必修主题一·4‘从函数观点看一元二次方程和一元二次不等式’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_quadratic_inequalities",
@@ -248,11 +258,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.24-25（正文p.16-17），必修主题一·4‘从函数观点看一元二次方程和一元二次不等式’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.19-20（正文p.16-17），必修主题一·4‘从函数观点看一元二次方程和一元二次不等式’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_function_equation_inequality_link",
@@ -269,11 +279,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.24-25（正文p.16-17），必修主题一·4‘从函数观点看一元二次方程和一元二次不等式’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.19-20（正文p.16-17），必修主题一·4‘从函数观点看一元二次方程和一元二次不等式’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_function_definition_domain",
@@ -290,11 +300,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.21-22（正文p.18-19），必修主题二·1‘函数概念与性质’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_function_representations",
@@ -311,11 +321,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.21-22（正文p.18-19），必修主题二·1‘函数概念与性质’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_piecewise_functions",
@@ -332,11 +342,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.21-22（正文p.18-19），必修主题二·1‘函数概念与性质’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_function_monotonicity_extrema",
@@ -353,11 +363,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.21-22（正文p.18-19），必修主题二·1‘函数概念与性质’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_function_parity",
@@ -374,11 +384,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.21-22（正文p.18-19），必修主题二·1‘函数概念与性质’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_function_periodicity",
@@ -395,11 +405,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.27（正文p.19），必修主题二·1‘函数概念与性质’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.21-22（正文p.18-19），必修主题二·1‘函数概念与性质’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_power_functions",
@@ -416,11 +426,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.27-28（正文p.19-20），必修主题二·2‘幂函数、指数函数、对数函数’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.22-23（正文p.19-20），必修主题二·2‘幂函数、指数函数、对数函数’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_real_exponents_laws",
@@ -437,11 +447,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.27-28（正文p.19-20），必修主题二·2‘幂函数、指数函数、对数函数’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.22-23（正文p.19-20），必修主题二·2‘幂函数、指数函数、对数函数’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_exponential_functions",
@@ -459,11 +469,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.27-28（正文p.19-20），必修主题二·2‘幂函数、指数函数、对数函数’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.22-23（正文p.19-20），必修主题二·2‘幂函数、指数函数、对数函数’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_logarithms",
@@ -481,11 +491,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.28（正文p.20），必修主题二·2‘对数函数’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.22-23（正文p.19-20），必修主题二·2‘对数函数’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_exp_log_inverse",
@@ -502,11 +512,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.28（正文p.20），必修主题二·2‘对数函数’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.22-23（正文p.19-20），必修主题二·2‘对数函数’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_radian_measure",
@@ -523,11 +533,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.23-24（正文p.20-21），必修主题二·3‘三角函数’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_trig_definition_graphs",
@@ -544,11 +554,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.23-24（正文p.20-21），必修主题二·3‘三角函数’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_trig_properties_reduction",
@@ -565,11 +575,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.23-24（正文p.20-21），必修主题二·3‘三角函数’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_sine_parameter_effects",
@@ -586,11 +596,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.23-24（正文p.20-21），必修主题二·3‘三角函数’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_trig_basic_identities",
@@ -607,11 +617,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.23-24（正文p.20-21），必修主题二·3‘三角函数’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_compound_double_angles",
@@ -628,11 +638,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.23-24（正文p.20-21），必修主题二·3‘三角函数’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_trig_transformations",
@@ -649,11 +659,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.23-24（正文p.20-21），必修主题二·3‘三角函数’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_trig_modelling",
@@ -670,11 +680,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.28-30（正文p.20-22），必修主题二·3‘三角函数’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.23-24（正文p.20-21），必修主题二·3‘三角函数’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_function_zeros_equations",
@@ -691,11 +701,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.29-30（正文p.21-22），必修主题二·4‘函数应用’·二分法"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.25（正文p.22），必修主题二·4‘函数应用’·二分法"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_bisection_method",
@@ -712,11 +722,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.29-30（正文p.21-22），必修主题二·4‘函数应用’·二分法"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.25（正文p.22），必修主题二·4‘函数应用’·二分法"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_choose_function_models",
@@ -733,11 +743,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.30-31（正文p.22-23），必修主题二·4‘函数应用’·函数与数学模型"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.25（正文p.22），必修主题二·4‘函数应用’·函数与数学模型"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_compare_growth_rates",
@@ -754,11 +764,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.30-31（正文p.22-23），必修主题二·4‘函数应用’·函数与数学模型"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.25（正文p.22），必修主题二·4‘函数应用’·函数与数学模型"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_interpret_model_parameters",
@@ -776,11 +786,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.30-31（正文p.22-23），必修主题二·4‘函数应用’·函数与数学模型"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.25（正文p.22），必修主题二·4‘函数应用’·函数与数学模型"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_plane_vector_concept",
@@ -797,11 +807,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.27-29（正文p.24-26），必修主题三·1‘平面向量及其应用’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_plane_vector_linear_operations",
@@ -818,11 +828,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.27-29（正文p.24-26），必修主题三·1‘平面向量及其应用’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_plane_dot_projection",
@@ -839,11 +849,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.27-29（正文p.24-26），必修主题三·1‘平面向量及其应用’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_plane_vector_basis_coordinates",
@@ -860,11 +870,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.27-29（正文p.24-26），必修主题三·1‘平面向量及其应用’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_plane_vector_coordinate_operations",
@@ -881,11 +891,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.27-29（正文p.24-26），必修主题三·1‘平面向量及其应用’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_vector_applications",
@@ -902,11 +912,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.27-29（正文p.24-26），必修主题三·1‘平面向量及其应用’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_sine_cosine_laws",
@@ -924,11 +934,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.33-34（正文p.25-26），必修主题三·1‘平面向量及其应用’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.27-29（正文p.24-26），必修主题三·1‘平面向量及其应用’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_complex_introduction",
@@ -945,11 +955,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.29（正文p.26），必修主题三·2‘复数’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_complex_representation",
@@ -966,11 +976,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.29（正文p.26），必修主题三·2‘复数’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_complex_arithmetic",
@@ -987,11 +997,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.34-35（正文p.26-27），必修主题三·2‘复数’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.29（正文p.26），必修主题三·2‘复数’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_solid_structures",
@@ -1008,11 +1018,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.29-32（正文p.26-29），必修主题三·3‘立体几何初步’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_solid_surface_volume",
@@ -1029,11 +1039,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.29-32（正文p.26-29），必修主题三·3‘立体几何初步’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_oblique_drawings",
@@ -1050,11 +1060,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.29-32（正文p.26-29），必修主题三·3‘立体几何初步’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_spatial_axioms",
@@ -1071,11 +1081,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.29-32（正文p.26-29），必修主题三·3‘立体几何初步’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_spatial_parallel_perpendicular_properties",
@@ -1092,11 +1102,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.29-32（正文p.26-29），必修主题三·3‘立体几何初步’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_spatial_parallel_perpendicular_criteria",
@@ -1113,11 +1123,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.29-32（正文p.26-29），必修主题三·3‘立体几何初步’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_solid_geometry_proofs",
@@ -1134,11 +1144,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.35-38（正文p.27-30），必修主题三·3‘立体几何初步’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.29-32（正文p.26-29），必修主题三·3‘立体几何初步’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_finite_sample_spaces_events",
@@ -1155,11 +1165,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.39（正文p.31），必修主题四·1‘概率’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.33（正文p.30），必修主题四·1‘概率’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_classical_probability",
@@ -1176,11 +1186,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.39（正文p.31），必修主题四·1‘概率’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.33（正文p.30），必修主题四·1‘概率’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_probability_properties",
@@ -1197,11 +1207,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.39（正文p.31），必修主题四·1‘概率’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.33（正文p.30），必修主题四·1‘概率’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_frequency_probability",
@@ -1218,11 +1228,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.39（正文p.31），必修主题四·1‘概率’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.33（正文p.30），必修主题四·1‘概率’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_event_independence_required",
@@ -1239,11 +1249,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.39（正文p.31），必修主题四·1‘概率’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.33（正文p.30），必修主题四·1‘概率’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_data_sources_population",
@@ -1260,11 +1270,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.34-36（正文p.31-33），必修主题四·2‘统计’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_simple_random_sampling",
@@ -1281,11 +1291,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.34-36（正文p.31-33），必修主题四·2‘统计’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_stratified_sampling",
@@ -1302,11 +1312,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.34-36（正文p.31-33），必修主题四·2‘统计’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_sampling_design",
@@ -1323,11 +1333,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.34-36（正文p.31-33），必修主题四·2‘统计’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_statistical_charts",
@@ -1344,11 +1354,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.34-36（正文p.31-33），必修主题四·2‘统计’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_central_tendency_estimation",
@@ -1365,11 +1375,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.34-36（正文p.31-33），必修主题四·2‘统计’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_dispersion_estimation",
@@ -1386,11 +1396,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.34-36（正文p.31-33），必修主题四·2‘统计’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_distribution_percentiles",
@@ -1407,11 +1417,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.39-40（正文p.31-32），必修主题四·2‘统计’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.34-36（正文p.31-33），必修主题四·2‘统计’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_statistical_inference_uncertainty",
@@ -1429,11 +1439,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.41（正文p.33），必修主题四‘概率与统计’学业要求"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.36（正文p.33），必修主题四‘概率与统计’学业要求"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_modelling_formulate",
@@ -1451,11 +1461,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.42-44（正文p.34-36），必修主题五‘数学建模活动与数学探究活动’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.36-39（正文p.33-36），必修主题五‘数学建模活动与数学探究活动’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_modelling_solve",
@@ -1473,11 +1483,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.42-44（正文p.34-36），必修主题五‘数学建模活动与数学探究活动’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.36-39（正文p.33-36），必修主题五‘数学建模活动与数学探究活动’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_modelling_validate",
@@ -1495,11 +1505,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.42-44（正文p.34-36），必修主题五‘数学建模活动与数学探究活动’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.36-39（正文p.33-36），必修主题五‘数学建模活动与数学探究活动’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_inquiry_pose_conjecture",
@@ -1516,11 +1526,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.42-44（正文p.34-36），必修主题五‘数学建模活动与数学探究活动’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.36-39（正文p.33-36），必修主题五‘数学建模活动与数学探究活动’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_inquiry_plan_prove",
@@ -1538,11 +1548,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.42-44（正文p.34-36），必修主题五‘数学建模活动与数学探究活动’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.36-39（正文p.33-36），必修主题五‘数学建模活动与数学探究活动’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_research_report_integrity",
@@ -1559,11 +1569,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.42-44（正文p.34-36），必修主题五‘数学建模活动与数学探究活动’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.36-39（正文p.33-36），必修主题五‘数学建模活动与数学探究活动’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_sequence_concept_representation",
@@ -1580,11 +1590,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.39-40（正文p.36-37），选择性必修主题一·1‘数列’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_arithmetic_sequence_formulae",
@@ -1601,11 +1611,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.39-40（正文p.36-37），选择性必修主题一·1‘数列’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_arithmetic_sequence_modelling",
@@ -1622,11 +1632,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.39-40（正文p.36-37），选择性必修主题一·1‘数列’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_arithmetic_linear_relation",
@@ -1643,11 +1653,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.39-40（正文p.36-37），选择性必修主题一·1‘数列’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_geometric_sequence_formulae",
@@ -1664,11 +1674,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.39-40（正文p.36-37），选择性必修主题一·1‘数列’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_geometric_sequence_modelling",
@@ -1685,11 +1695,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.39-40（正文p.36-37），选择性必修主题一·1‘数列’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_geometric_exponential_relation",
@@ -1706,11 +1716,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.46（正文p.38），选择性必修主题一·1‘数列’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.39-40（正文p.36-37），选择性必修主题一·1‘数列’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_derivative_rate_meaning",
@@ -1727,11 +1737,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.40-42（正文p.37-39），选择性必修主题一·2‘一元函数导数及其应用’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_derivative_limit_geometry",
@@ -1748,11 +1758,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.40-42（正文p.37-39），选择性必修主题一·2‘一元函数导数及其应用’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_differentiate_from_definition",
@@ -1769,11 +1779,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.40-42（正文p.37-39），选择性必修主题一·2‘一元函数导数及其应用’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_basic_derivative_rules",
@@ -1789,11 +1799,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.40-42（正文p.37-39），选择性必修主题一·2‘一元函数导数及其应用’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_simple_linear_composites",
@@ -1809,11 +1819,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.40-42（正文p.37-39），选择性必修主题一·2‘一元函数导数及其应用’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_derivative_monotonicity",
@@ -1830,11 +1840,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.40-42（正文p.37-39），选择性必修主题一·2‘一元函数导数及其应用’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_derivative_extrema",
@@ -1851,11 +1861,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.40-42（正文p.37-39），选择性必修主题一·2‘一元函数导数及其应用’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_derivative_optimisation",
@@ -1873,11 +1883,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.47-49（正文p.39-41），选择性必修主题一·2‘一元函数导数及其应用’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.40-42（正文p.37-39），选择性必修主题一·2‘一元函数导数及其应用’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_spatial_coordinates_distance",
@@ -1894,11 +1904,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.44-45（正文p.41-42），选择性必修主题二·1‘空间向量与立体几何’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_spatial_vectors_operations",
@@ -1915,11 +1925,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.44-45（正文p.41-42），选择性必修主题二·1‘空间向量与立体几何’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_spatial_vector_basis",
@@ -1936,11 +1946,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.44-45（正文p.41-42），选择性必修主题二·1‘空间向量与立体几何’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_spatial_coordinate_operations",
@@ -1956,11 +1966,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.44-45（正文p.41-42），选择性必修主题二·1‘空间向量与立体几何’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_spatial_projection",
@@ -1977,11 +1987,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.44-45（正文p.41-42），选择性必修主题二·1‘空间向量与立体几何’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_line_plane_vectors",
@@ -1998,11 +2008,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.44-45（正文p.41-42），选择性必修主题二·1‘空间向量与立体几何’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_spatial_angles_relations",
@@ -2019,11 +2029,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.44-45（正文p.41-42），选择性必修主题二·1‘空间向量与立体几何’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_vector_geometry_proofs",
@@ -2040,11 +2050,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.44-45（正文p.41-42），选择性必修主题二·1‘空间向量与立体几何’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_spatial_distance_angle_problems",
@@ -2061,11 +2071,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.50-51（正文p.42-43），选择性必修主题二·1‘空间向量与立体几何’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.44-45（正文p.41-42），选择性必修主题二·1‘空间向量与立体几何’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_line_gradient",
@@ -2082,11 +2092,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.51-52（正文p.43-44），选择性必修主题二·2‘平面解析几何’·直线与方程"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.45（正文p.42），选择性必修主题二·2‘平面解析几何’·直线与方程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_parallel_perpendicular_lines",
@@ -2103,11 +2113,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.51-52（正文p.43-44），选择性必修主题二·2‘平面解析几何’·直线与方程"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.45（正文p.42），选择性必修主题二·2‘平面解析几何’·直线与方程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_line_equations",
@@ -2124,11 +2134,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.51-52（正文p.43-44），选择性必修主题二·2‘平面解析几何’·直线与方程"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.45（正文p.42），选择性必修主题二·2‘平面解析几何’·直线与方程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_line_intersections_distances",
@@ -2144,11 +2154,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.51-52（正文p.43-44），选择性必修主题二·2‘平面解析几何’·直线与方程"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.45（正文p.42），选择性必修主题二·2‘平面解析几何’·直线与方程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_circle_equations",
@@ -2165,11 +2175,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.52（正文p.44），选择性必修主题二·2‘平面解析几何’·圆与方程"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.45（正文p.42），选择性必修主题二·2‘平面解析几何’·圆与方程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_circle_positional_relations",
@@ -2186,11 +2196,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.52（正文p.44），选择性必修主题二·2‘平面解析几何’·圆与方程"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.45（正文p.42），选择性必修主题二·2‘平面解析几何’·圆与方程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_conic_context",
@@ -2207,11 +2217,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.52-53（正文p.44-45），选择性必修主题二·2‘平面解析几何’·圆锥曲线与方程"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.45-46（正文p.42-43），选择性必修主题二·2‘平面解析几何’·圆锥曲线与方程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_ellipse",
@@ -2229,11 +2239,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.52-53（正文p.44-45），选择性必修主题二·2‘平面解析几何’·圆锥曲线与方程"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.45-46（正文p.42-43），选择性必修主题二·2‘平面解析几何’·圆锥曲线与方程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_parabola_hyperbola",
@@ -2250,11 +2260,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.52-53（正文p.44-45），选择性必修主题二·2‘平面解析几何’·圆锥曲线与方程"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.45-46（正文p.42-43），选择性必修主题二·2‘平面解析几何’·圆锥曲线与方程"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_analytic_geometry_method",
@@ -2272,11 +2282,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.51-54（正文p.43-46），选择性必修主题二·2‘平面解析几何’内容要求与学业要求"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.45-48（正文p.42-45），选择性必修主题二·2‘平面解析几何’内容要求与学业要求"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_counting_principles",
@@ -2293,11 +2303,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.54-55（正文p.46-47），选择性必修主题三·1‘计数原理’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.48（正文p.45），选择性必修主题三·1‘计数原理’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_permutations_combinations",
@@ -2314,11 +2324,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.54-55（正文p.46-47），选择性必修主题三·1‘计数原理’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.48（正文p.45），选择性必修主题三·1‘计数原理’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_binomial_theorem",
@@ -2335,11 +2345,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.54-55（正文p.46-47），选择性必修主题三·1‘计数原理’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.48（正文p.45），选择性必修主题三·1‘计数原理’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_conditional_probability",
@@ -2356,11 +2366,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.49（正文p.46），选择性必修主题三·2‘概率’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_conditional_independence_relation",
@@ -2377,11 +2387,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.49（正文p.46），选择性必修主题三·2‘概率’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_probability_multiplication_formula",
@@ -2397,11 +2407,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.49（正文p.46），选择性必修主题三·2‘概率’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_total_probability_formula",
@@ -2418,11 +2428,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.49（正文p.46），选择性必修主题三·2‘概率’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_discrete_random_variable_distribution",
@@ -2439,11 +2449,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.49（正文p.46），选择性必修主题三·2‘概率’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_bernoulli_binomial",
@@ -2461,11 +2471,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.49（正文p.46），选择性必修主题三·2‘概率’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_hypergeometric_distribution",
@@ -2483,11 +2493,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.49（正文p.46），选择性必修主题三·2‘概率’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_normal_distribution_features",
@@ -2504,11 +2514,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.49（正文p.46），选择性必修主题三·2‘概率’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_normal_mean_variance",
@@ -2525,11 +2535,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.49（正文p.46），选择性必修主题三·2‘概率’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_continuous_random_variable_context",
@@ -2546,11 +2556,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.55-56（正文p.47-48），选择性必修主题三·2‘概率’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.49（正文p.46），选择性必修主题三·2‘概率’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_sample_correlation",
@@ -2567,11 +2577,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.50-51（正文p.47-48），选择性必修主题三·3‘统计’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_compare_correlations",
@@ -2588,11 +2598,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.50-51（正文p.47-48），选择性必修主题三·3‘统计’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_linear_regression",
@@ -2610,11 +2620,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.50-51（正文p.47-48），选择性必修主题三·3‘统计’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_regression_prediction",
@@ -2632,11 +2642,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.50-51（正文p.47-48），选择性必修主题三·3‘统计’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_contingency_table",
@@ -2653,11 +2663,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.50-51（正文p.47-48），选择性必修主题三·3‘统计’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_contingency_independence_test",
@@ -2674,11 +2684,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.56-57（正文p.48-49），选择性必修主题三·3‘统计’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.50-51（正文p.47-48），选择性必修主题三·3‘统计’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_extended_research_project",
@@ -2696,11 +2706,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.58（正文p.50），选择性必修主题四‘数学建模活动与数学探究活动’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.52（正文p.49），选择性必修主题四‘数学建模活动与数学探究活动’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "requirement_id": "req_cn_sh_math_2020_o_extended_project_report",
@@ -2717,11 +2727,11 @@
       ],
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.58（正文p.50），选择性必修主题四‘数学建模活动与数学探究活动’"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.52（正文p.49），选择性必修主题四‘数学建模活动与数学探究活动’"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ],
   "scope_exclusions": [
@@ -2730,8 +2740,8 @@
       "rationale_zh": "选修课程由学校与学生按发展方向自主选择，不属于当前普通高中毕业与统一高考共同范围；后续应按具体选课方案另建框架。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF pp.58-75（正文pp.50-67），选修课程"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF pp.53-74（正文pp.50-71），选修课程"
         }
       ]
     },
@@ -2740,8 +2750,8 @@
       "rationale_zh": "课标明确这些内容不作为考试要求；本覆盖矩阵不把它们计入必修或选择性必修成果缺口。",
       "evidence_refs": [
         {
-          "source_id": "src_cn_moe_senior_high_math_2020",
-          "locator": "数学课程标准PDF p.27（正文p.19）脚注[1]及各星号条目"
+          "source_id": "src_cn_moe_senior_high_math_2025",
+          "locator": "数学课程标准PDF p.21（正文p.18），必修主题二·1‘函数概念与性质’选学说明（标有*的内容）及各星号条目"
         }
       ]
     }

@@ -27,36 +27,36 @@
   },
   "sourceSummary": {
     "graphCount": 31,
-    "topicCount": 579,
-    "conceptCount": 1456
+    "topicCount": 583,
+    "conceptCount": 1460
   },
   "stats": {
-    "total": 1718,
+    "total": 1726,
     "byCategory": {
       "ambiguous": 32,
       "invalid_or_vague": 46,
       "library_boundary": 36,
       "library_broad": 124,
       "library_concept": 186,
-      "library_topic": 1158,
+      "library_topic": 1166,
       "multi_scope": 32,
       "out_of_library": 104
     },
     "byLanguage": {
-      "en": 859,
-      "zh": 859
+      "en": 863,
+      "zh": 863
     },
     "bySplit": {
-      "dev": 330,
-      "test": 1388
+      "dev": 333,
+      "test": 1393
     },
     "bySuite": {
       "challenge": 248,
-      "core": 1468,
+      "core": 1476,
       "regression": 2
     },
     "byPolicyAction": {
-      "canonical_kg": 1494,
+      "canonical_kg": 1502,
       "clarify": 32,
       "composed_kg": 22,
       "fallback": 46,
@@ -69,7 +69,7 @@
       "generated_graph": 100,
       "goal_subgraph": 46,
       "not_applicable": 78,
-      "topic_closure": 1184
+      "topic_closure": 1192
     }
   },
   "cases": [
@@ -13238,7 +13238,7 @@
           "specific"
         ],
         "startTopicIds": [
-          "sg_sec_math_topic_distribution_probability"
+          "sg_sec_math_topic_probability"
         ],
         "targetConceptIds": [
           "sg_sec_math_combined_probability"
@@ -13254,7 +13254,7 @@
       },
       "reference": {
         "graphId": "singapore_secondary_mathematics",
-        "topicId": "sg_sec_math_topic_distribution_probability",
+        "topicId": "sg_sec_math_topic_probability",
         "conceptId": "sg_sec_math_combined_probability"
       },
       "origin": {
@@ -13286,7 +13286,7 @@
           "specific"
         ],
         "startTopicIds": [
-          "sg_sec_math_topic_distribution_probability"
+          "sg_sec_math_topic_probability"
         ],
         "targetConceptIds": [
           "sg_sec_math_combined_probability"
@@ -13302,7 +13302,7 @@
       },
       "reference": {
         "graphId": "singapore_secondary_mathematics",
-        "topicId": "sg_sec_math_topic_distribution_probability",
+        "topicId": "sg_sec_math_topic_probability",
         "conceptId": "sg_sec_math_combined_probability"
       },
       "origin": {
@@ -13316,6 +13316,102 @@
         "specific"
       ],
       "split": "dev"
+    },
+    {
+      "id": "kg-concept-singapore_secondary_mathematics-sg_sec_math_fractional_quadratic_equations-en",
+      "category": "library_concept",
+      "suite": "core",
+      "language": "en",
+      "input": "Within Singapore Secondary G2/G3 Mathematics, I want to understand Fractional equations reducible to quadratics in depth",
+      "expect": {
+        "branches": [
+          "positioned"
+        ],
+        "graphIds": [
+          "singapore_secondary_mathematics"
+        ],
+        "modes": [
+          "specific"
+        ],
+        "startTopicIds": [
+          "sg_sec_math_topic_quadratic_equations"
+        ],
+        "targetConceptIds": [
+          "sg_sec_math_fractional_quadratic_equations"
+        ]
+      },
+      "policy": {
+        "coverage": "full_single_graph",
+        "action": "canonical_kg",
+        "scope": "concept_closure",
+        "sourceGraphIds": [
+          "singapore_secondary_mathematics"
+        ]
+      },
+      "reference": {
+        "graphId": "singapore_secondary_mathematics",
+        "topicId": "sg_sec_math_topic_quadratic_equations",
+        "conceptId": "sg_sec_math_fractional_quadratic_equations"
+      },
+      "origin": {
+        "kind": "kg_template",
+        "sourceId": "singapore_secondary_mathematics:sg_sec_math_fractional_quadratic_equations",
+        "templateId": "concept_specific_en"
+      },
+      "tags": [
+        "kg_grounded",
+        "concept_level",
+        "specific"
+      ],
+      "split": "test"
+    },
+    {
+      "id": "kg-concept-singapore_secondary_mathematics-sg_sec_math_fractional_quadratic_equations-zh",
+      "category": "library_concept",
+      "suite": "core",
+      "language": "zh",
+      "input": "在新加坡中学 G2/G3 数学中，我想深入理解可化为二次方程的分式方程",
+      "expect": {
+        "branches": [
+          "positioned"
+        ],
+        "graphIds": [
+          "singapore_secondary_mathematics"
+        ],
+        "modes": [
+          "specific"
+        ],
+        "startTopicIds": [
+          "sg_sec_math_topic_quadratic_equations"
+        ],
+        "targetConceptIds": [
+          "sg_sec_math_fractional_quadratic_equations"
+        ]
+      },
+      "policy": {
+        "coverage": "full_single_graph",
+        "action": "canonical_kg",
+        "scope": "concept_closure",
+        "sourceGraphIds": [
+          "singapore_secondary_mathematics"
+        ]
+      },
+      "reference": {
+        "graphId": "singapore_secondary_mathematics",
+        "topicId": "sg_sec_math_topic_quadratic_equations",
+        "conceptId": "sg_sec_math_fractional_quadratic_equations"
+      },
+      "origin": {
+        "kind": "kg_template",
+        "sourceId": "singapore_secondary_mathematics:sg_sec_math_fractional_quadratic_equations",
+        "templateId": "concept_specific_zh"
+      },
+      "tags": [
+        "kg_grounded",
+        "concept_level",
+        "specific"
+      ],
+      "split": "test"
     },
     {
       "id": "kg-concept-singapore_secondary_mathematics-sg_sec_math_prime_factorisation-en",
@@ -13404,102 +13500,6 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_secondary_mathematics:sg_sec_math_prime_factorisation",
-        "templateId": "concept_specific_zh"
-      },
-      "tags": [
-        "kg_grounded",
-        "concept_level",
-        "specific"
-      ],
-      "split": "test"
-    },
-    {
-      "id": "kg-concept-singapore_secondary_mathematics-sg_sec_math_quadratic_factorisation_solve-en",
-      "category": "library_concept",
-      "suite": "core",
-      "language": "en",
-      "input": "Within Singapore Secondary G2/G3 Mathematics, I want to understand Solving quadratic equations by factorisation in depth",
-      "expect": {
-        "branches": [
-          "positioned"
-        ],
-        "graphIds": [
-          "singapore_secondary_mathematics"
-        ],
-        "modes": [
-          "specific"
-        ],
-        "startTopicIds": [
-          "sg_sec_math_topic_quadratic_equations"
-        ],
-        "targetConceptIds": [
-          "sg_sec_math_quadratic_factorisation_solve"
-        ]
-      },
-      "policy": {
-        "coverage": "full_single_graph",
-        "action": "canonical_kg",
-        "scope": "concept_closure",
-        "sourceGraphIds": [
-          "singapore_secondary_mathematics"
-        ]
-      },
-      "reference": {
-        "graphId": "singapore_secondary_mathematics",
-        "topicId": "sg_sec_math_topic_quadratic_equations",
-        "conceptId": "sg_sec_math_quadratic_factorisation_solve"
-      },
-      "origin": {
-        "kind": "kg_template",
-        "sourceId": "singapore_secondary_mathematics:sg_sec_math_quadratic_factorisation_solve",
-        "templateId": "concept_specific_en"
-      },
-      "tags": [
-        "kg_grounded",
-        "concept_level",
-        "specific"
-      ],
-      "split": "test"
-    },
-    {
-      "id": "kg-concept-singapore_secondary_mathematics-sg_sec_math_quadratic_factorisation_solve-zh",
-      "category": "library_concept",
-      "suite": "core",
-      "language": "zh",
-      "input": "在新加坡中学 G2/G3 数学中，我想深入理解因式分解法解二次方程",
-      "expect": {
-        "branches": [
-          "positioned"
-        ],
-        "graphIds": [
-          "singapore_secondary_mathematics"
-        ],
-        "modes": [
-          "specific"
-        ],
-        "startTopicIds": [
-          "sg_sec_math_topic_quadratic_equations"
-        ],
-        "targetConceptIds": [
-          "sg_sec_math_quadratic_factorisation_solve"
-        ]
-      },
-      "policy": {
-        "coverage": "full_single_graph",
-        "action": "canonical_kg",
-        "scope": "concept_closure",
-        "sourceGraphIds": [
-          "singapore_secondary_mathematics"
-        ]
-      },
-      "reference": {
-        "graphId": "singapore_secondary_mathematics",
-        "topicId": "sg_sec_math_topic_quadratic_equations",
-        "conceptId": "sg_sec_math_quadratic_factorisation_solve"
-      },
-      "origin": {
-        "kind": "kg_template",
-        "sourceId": "singapore_secondary_mathematics:sg_sec_math_quadratic_factorisation_solve",
         "templateId": "concept_specific_zh"
       },
       "tags": [
@@ -59538,7 +59538,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "en",
-      "input": "Teach me Adaptive immunity and vaccination as part of Singapore H2 Biology",
+      "input": "I already know the basics of Singapore H2 Biology; help me study Adaptive immunity and vaccination",
       "expect": {
         "branches": [
           "positioned"
@@ -59570,7 +59570,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_h2_biology:sg_h2_biology_topic_adaptive_immunity",
-        "templateId": "topic_en_1"
+        "templateId": "topic_en_3"
       },
       "tags": [
         "kg_grounded",
@@ -59584,7 +59584,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "zh",
-      "input": "请把适应性免疫与疫苗作为新加坡 H2 生物学课程的学习重点",
+      "input": "我已经了解新加坡 H2 生物学基础，想继续学习适应性免疫与疫苗",
       "expect": {
         "branches": [
           "positioned"
@@ -59616,7 +59616,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_h2_biology:sg_h2_biology_topic_adaptive_immunity",
-        "templateId": "topic_zh_1"
+        "templateId": "topic_zh_3"
       },
       "tags": [
         "kg_grounded",
@@ -59630,7 +59630,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "en",
-      "input": "Teach me Cancer progression and complex inheritance as part of Singapore H2 Biology",
+      "input": "Build a focused learning path for Epistasis and environmental effects on phenotype in Singapore H2 Biology",
       "expect": {
         "branches": [
           "positioned"
@@ -59662,7 +59662,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_h2_biology:sg_h2_biology_topic_cancer_complex_inheritance",
-        "templateId": "topic_en_1"
+        "templateId": "topic_en_2"
       },
       "tags": [
         "kg_grounded",
@@ -59676,7 +59676,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "zh",
-      "input": "请把癌症进展与复杂遗传作为新加坡 H2 生物学课程的学习重点",
+      "input": "帮我设计一条围绕上位性与环境对表型的影响的新加坡 H2 生物学学习路径",
       "expect": {
         "branches": [
           "positioned"
@@ -59708,7 +59708,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_h2_biology:sg_h2_biology_topic_cancer_complex_inheritance",
-        "templateId": "topic_zh_1"
+        "templateId": "topic_zh_2"
       },
       "tags": [
         "kg_grounded",
@@ -59814,7 +59814,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "en",
-      "input": "I already know the basics of Singapore H2 Biology; help me study Climate forcing and footprint",
+      "input": "Teach me Climate forcing and footprint as part of Singapore H2 Biology",
       "expect": {
         "branches": [
           "positioned"
@@ -59846,7 +59846,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_h2_biology:sg_h2_biology_topic_climate_forcing",
-        "templateId": "topic_en_3"
+        "templateId": "topic_en_1"
       },
       "tags": [
         "kg_grounded",
@@ -59860,7 +59860,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "zh",
-      "input": "我已经了解新加坡 H2 生物学基础，想继续学习气候强迫与碳足迹",
+      "input": "请把气候强迫与碳足迹作为新加坡 H2 生物学课程的学习重点",
       "expect": {
         "branches": [
           "positioned"
@@ -59892,7 +59892,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_h2_biology:sg_h2_biology_topic_climate_forcing",
-        "templateId": "topic_zh_3"
+        "templateId": "topic_zh_1"
       },
       "tags": [
         "kg_grounded",
@@ -59906,7 +59906,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "en",
-      "input": "Within Singapore H2 Biology, I want to focus on Climate mitigation, food and biodiversity",
+      "input": "Build a focused learning path for Climate mitigation, food and biodiversity in Singapore H2 Biology",
       "expect": {
         "branches": [
           "positioned"
@@ -59938,7 +59938,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_h2_biology:sg_h2_biology_topic_climate_mitigation_resources",
-        "templateId": "topic_en_0"
+        "templateId": "topic_en_2"
       },
       "tags": [
         "kg_grounded",
@@ -59952,7 +59952,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "zh",
-      "input": "我想在新加坡 H2 生物学中重点学习气候缓解、粮食与生物多样性",
+      "input": "帮我设计一条围绕气候缓解、粮食与生物多样性的新加坡 H2 生物学学习路径",
       "expect": {
         "branches": [
           "positioned"
@@ -59984,7 +59984,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_h2_biology:sg_h2_biology_topic_climate_mitigation_resources",
-        "templateId": "topic_zh_0"
+        "templateId": "topic_zh_2"
       },
       "tags": [
         "kg_grounded",
@@ -59998,7 +59998,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "en",
-      "input": "Teach me Ecological redistribution and disease vectors as part of Singapore H2 Biology",
+      "input": "I already know the basics of Singapore H2 Biology; help me study Ecological redistribution and disease vectors",
       "expect": {
         "branches": [
           "positioned"
@@ -60030,7 +60030,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_h2_biology:sg_h2_biology_topic_climate_vectors",
-        "templateId": "topic_en_1"
+        "templateId": "topic_en_3"
       },
       "tags": [
         "kg_grounded",
@@ -60044,7 +60044,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "zh",
-      "input": "请把生态重新分布与疾病媒介作为新加坡 H2 生物学课程的学习重点",
+      "input": "我已经了解新加坡 H2 生物学基础，想继续学习生态重新分布与疾病媒介",
       "expect": {
         "branches": [
           "positioned"
@@ -60076,7 +60076,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_h2_biology:sg_h2_biology_topic_climate_vectors",
-        "templateId": "topic_zh_1"
+        "templateId": "topic_zh_3"
       },
       "tags": [
         "kg_grounded",
@@ -60090,7 +60090,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "en",
-      "input": "Within Singapore H2 Biology, I want to focus on Evidence, species and phylogeny",
+      "input": "Build a focused learning path for Evidence, species and phylogeny in Singapore H2 Biology",
       "expect": {
         "branches": [
           "positioned"
@@ -60103,7 +60103,7 @@
           "specific"
         ],
         "startTopicIds": [
-          "sg_h2_biology_topic_receptor_population_evolution",
+          "sg_h2_biology_topic_population_evolution",
           "sg_h2_biology_topic_evolutionary_relationships"
         ]
       },
@@ -60122,7 +60122,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_h2_biology:sg_h2_biology_topic_evolutionary_relationships",
-        "templateId": "topic_en_0"
+        "templateId": "topic_en_2"
       },
       "tags": [
         "kg_grounded",
@@ -60136,7 +60136,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "zh",
-      "input": "我想在新加坡 H2 生物学中重点学习进化证据、物种与系统发育",
+      "input": "帮我设计一条围绕进化证据、物种与系统发育的新加坡 H2 生物学学习路径",
       "expect": {
         "branches": [
           "positioned"
@@ -60149,7 +60149,7 @@
           "specific"
         ],
         "startTopicIds": [
-          "sg_h2_biology_topic_receptor_population_evolution",
+          "sg_h2_biology_topic_population_evolution",
           "sg_h2_biology_topic_evolutionary_relationships"
         ]
       },
@@ -60168,7 +60168,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_h2_biology:sg_h2_biology_topic_evolutionary_relationships",
-        "templateId": "topic_zh_0"
+        "templateId": "topic_zh_2"
       },
       "tags": [
         "kg_grounded",
@@ -60182,7 +60182,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "en",
-      "input": "I already know the basics of Singapore H2 Biology; help me study Genome regulation and analysis",
+      "input": "I already know the basics of Singapore H2 Biology; help me study Eukaryotic genome maintenance and expression control",
       "expect": {
         "branches": [
           "positioned"
@@ -60228,7 +60228,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "zh",
-      "input": "我已经了解新加坡 H2 生物学基础，想继续学习基因组调控与分析",
+      "input": "我已经了解新加坡 H2 生物学基础，想继续学习真核基因组维持与表达调控",
       "expect": {
         "branches": [
           "positioned"
@@ -60274,7 +60274,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "en",
-      "input": "Build a focused learning path for Viral pathogenesis and epidemiology in Singapore H2 Biology",
+      "input": "Within Singapore H2 Biology, I want to focus on Viral pathogenesis and epidemiology",
       "expect": {
         "branches": [
           "positioned"
@@ -60306,7 +60306,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_h2_biology:sg_h2_biology_topic_infection_epidemiology",
-        "templateId": "topic_en_2"
+        "templateId": "topic_en_0"
       },
       "tags": [
         "kg_grounded",
@@ -60320,7 +60320,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "zh",
-      "input": "帮我设计一条围绕病毒致病与流行病学的新加坡 H2 生物学学习路径",
+      "input": "我想在新加坡 H2 生物学中重点学习病毒致病与流行病学",
       "expect": {
         "branches": [
           "positioned"
@@ -60352,7 +60352,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_h2_biology:sg_h2_biology_topic_infection_epidemiology",
-        "templateId": "topic_zh_2"
+        "templateId": "topic_zh_0"
       },
       "tags": [
         "kg_grounded",
@@ -60454,11 +60454,195 @@
       "split": "test"
     },
     {
+      "id": "kg-topic-singapore_h2_biology-sg_h2_biology_topic_molecular_analysis_screening-en",
+      "category": "library_topic",
+      "suite": "core",
+      "language": "en",
+      "input": "Within Singapore H2 Biology, I want to focus on Molecular detection and genetic-screening ethics",
+      "expect": {
+        "branches": [
+          "positioned"
+        ],
+        "graphIds": [
+          "singapore_h2_biology"
+        ],
+        "modes": [
+          "directed",
+          "specific"
+        ],
+        "startTopicIds": [
+          "sg_h2_biology_topic_genome_regulation_analysis",
+          "sg_h2_biology_topic_molecular_analysis_screening"
+        ]
+      },
+      "policy": {
+        "coverage": "full_single_graph",
+        "action": "canonical_kg",
+        "scope": "topic_closure",
+        "sourceGraphIds": [
+          "singapore_h2_biology"
+        ]
+      },
+      "reference": {
+        "graphId": "singapore_h2_biology",
+        "topicId": "sg_h2_biology_topic_molecular_analysis_screening"
+      },
+      "origin": {
+        "kind": "kg_template",
+        "sourceId": "singapore_h2_biology:sg_h2_biology_topic_molecular_analysis_screening",
+        "templateId": "topic_en_0"
+      },
+      "tags": [
+        "kg_grounded",
+        "topic_level",
+        "directed"
+      ],
+      "split": "test"
+    },
+    {
+      "id": "kg-topic-singapore_h2_biology-sg_h2_biology_topic_molecular_analysis_screening-zh",
+      "category": "library_topic",
+      "suite": "core",
+      "language": "zh",
+      "input": "我想在新加坡 H2 生物学中重点学习分子检测技术与遗传筛查伦理",
+      "expect": {
+        "branches": [
+          "positioned"
+        ],
+        "graphIds": [
+          "singapore_h2_biology"
+        ],
+        "modes": [
+          "directed",
+          "specific"
+        ],
+        "startTopicIds": [
+          "sg_h2_biology_topic_genome_regulation_analysis",
+          "sg_h2_biology_topic_molecular_analysis_screening"
+        ]
+      },
+      "policy": {
+        "coverage": "full_single_graph",
+        "action": "canonical_kg",
+        "scope": "topic_closure",
+        "sourceGraphIds": [
+          "singapore_h2_biology"
+        ]
+      },
+      "reference": {
+        "graphId": "singapore_h2_biology",
+        "topicId": "sg_h2_biology_topic_molecular_analysis_screening"
+      },
+      "origin": {
+        "kind": "kg_template",
+        "sourceId": "singapore_h2_biology:sg_h2_biology_topic_molecular_analysis_screening",
+        "templateId": "topic_zh_0"
+      },
+      "tags": [
+        "kg_grounded",
+        "topic_level",
+        "directed"
+      ],
+      "split": "dev"
+    },
+    {
+      "id": "kg-topic-singapore_h2_biology-sg_h2_biology_topic_population_evolution-en",
+      "category": "library_topic",
+      "suite": "core",
+      "language": "en",
+      "input": "Teach me Population variation and evolutionary scale as part of Singapore H2 Biology",
+      "expect": {
+        "branches": [
+          "positioned"
+        ],
+        "graphIds": [
+          "singapore_h2_biology"
+        ],
+        "modes": [
+          "directed",
+          "specific"
+        ],
+        "startTopicIds": [
+          "sg_h2_biology_topic_receptor_population_evolution",
+          "sg_h2_biology_topic_population_evolution"
+        ]
+      },
+      "policy": {
+        "coverage": "full_single_graph",
+        "action": "canonical_kg",
+        "scope": "topic_closure",
+        "sourceGraphIds": [
+          "singapore_h2_biology"
+        ]
+      },
+      "reference": {
+        "graphId": "singapore_h2_biology",
+        "topicId": "sg_h2_biology_topic_population_evolution"
+      },
+      "origin": {
+        "kind": "kg_template",
+        "sourceId": "singapore_h2_biology:sg_h2_biology_topic_population_evolution",
+        "templateId": "topic_en_1"
+      },
+      "tags": [
+        "kg_grounded",
+        "topic_level",
+        "directed"
+      ],
+      "split": "test"
+    },
+    {
+      "id": "kg-topic-singapore_h2_biology-sg_h2_biology_topic_population_evolution-zh",
+      "category": "library_topic",
+      "suite": "core",
+      "language": "zh",
+      "input": "请把种群遗传变异与进化尺度作为新加坡 H2 生物学课程的学习重点",
+      "expect": {
+        "branches": [
+          "positioned"
+        ],
+        "graphIds": [
+          "singapore_h2_biology"
+        ],
+        "modes": [
+          "directed",
+          "specific"
+        ],
+        "startTopicIds": [
+          "sg_h2_biology_topic_receptor_population_evolution",
+          "sg_h2_biology_topic_population_evolution"
+        ]
+      },
+      "policy": {
+        "coverage": "full_single_graph",
+        "action": "canonical_kg",
+        "scope": "topic_closure",
+        "sourceGraphIds": [
+          "singapore_h2_biology"
+        ]
+      },
+      "reference": {
+        "graphId": "singapore_h2_biology",
+        "topicId": "sg_h2_biology_topic_population_evolution"
+      },
+      "origin": {
+        "kind": "kg_template",
+        "sourceId": "singapore_h2_biology:sg_h2_biology_topic_population_evolution",
+        "templateId": "topic_zh_1"
+      },
+      "tags": [
+        "kg_grounded",
+        "topic_level",
+        "directed"
+      ],
+      "split": "test"
+    },
+    {
       "id": "kg-topic-singapore_h2_biology-sg_h2_biology_topic_receptor_population_evolution-en",
       "category": "library_topic",
       "suite": "core",
       "language": "en",
-      "input": "I already know the basics of Singapore H2 Biology; help me study Receptor pathways and population evolution",
+      "input": "Within Singapore H2 Biology, I want to focus on Kinase cascades and blood-glucose receptor pathways",
       "expect": {
         "branches": [
           "positioned"
@@ -60490,7 +60674,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_h2_biology:sg_h2_biology_topic_receptor_population_evolution",
-        "templateId": "topic_en_3"
+        "templateId": "topic_en_0"
       },
       "tags": [
         "kg_grounded",
@@ -60504,7 +60688,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "zh",
-      "input": "我已经了解新加坡 H2 生物学基础，想继续学习受体通路与种群进化",
+      "input": "我想在新加坡 H2 生物学中重点学习激酶级联与血糖受体通路",
       "expect": {
         "branches": [
           "positioned"
@@ -60536,7 +60720,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_h2_biology:sg_h2_biology_topic_receptor_population_evolution",
-        "templateId": "topic_zh_3"
+        "templateId": "topic_zh_0"
       },
       "tags": [
         "kg_grounded",
@@ -60550,7 +60734,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "en",
-      "input": "Within Singapore H2 Biology, I want to focus on Screening and cancer control",
+      "input": "Teach me Cell-cycle control and cancer as part of Singapore H2 Biology",
       "expect": {
         "branches": [
           "positioned"
@@ -60563,7 +60747,7 @@
           "specific"
         ],
         "startTopicIds": [
-          "sg_h2_biology_topic_genome_regulation_analysis",
+          "sg_h2_biology_topic_molecular_analysis_screening",
           "sg_h2_biology_topic_screening_cancer_control"
         ]
       },
@@ -60582,7 +60766,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_h2_biology:sg_h2_biology_topic_screening_cancer_control",
-        "templateId": "topic_en_0"
+        "templateId": "topic_en_1"
       },
       "tags": [
         "kg_grounded",
@@ -60596,7 +60780,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "zh",
-      "input": "我想在新加坡 H2 生物学中重点学习遗传筛查与癌症控制",
+      "input": "请把细胞周期调控与癌变作为新加坡 H2 生物学课程的学习重点",
       "expect": {
         "branches": [
           "positioned"
@@ -60609,7 +60793,7 @@
           "specific"
         ],
         "startTopicIds": [
-          "sg_h2_biology_topic_genome_regulation_analysis",
+          "sg_h2_biology_topic_molecular_analysis_screening",
           "sg_h2_biology_topic_screening_cancer_control"
         ]
       },
@@ -60628,7 +60812,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_h2_biology:sg_h2_biology_topic_screening_cancer_control",
-        "templateId": "topic_zh_0"
+        "templateId": "topic_zh_1"
       },
       "tags": [
         "kg_grounded",
@@ -60642,7 +60826,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "en",
-      "input": "Build a focused learning path for Cell signal transduction in Singapore H2 Biology",
+      "input": "I already know the basics of Singapore H2 Biology; help me study Signalling stages and second messengers",
       "expect": {
         "branches": [
           "positioned"
@@ -60674,7 +60858,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_h2_biology:sg_h2_biology_topic_signal_transduction",
-        "templateId": "topic_en_2"
+        "templateId": "topic_en_3"
       },
       "tags": [
         "kg_grounded",
@@ -60688,7 +60872,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "zh",
-      "input": "帮我设计一条围绕细胞信号转导的新加坡 H2 生物学学习路径",
+      "input": "我已经了解新加坡 H2 生物学基础，想继续学习细胞信号传导阶段与第二信使",
       "expect": {
         "branches": [
           "positioned"
@@ -60720,7 +60904,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_h2_biology:sg_h2_biology_topic_signal_transduction",
-        "templateId": "topic_zh_2"
+        "templateId": "topic_zh_3"
       },
       "tags": [
         "kg_grounded",
@@ -60734,7 +60918,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "en",
-      "input": "Teach me Stem-cell potency and chromosome ends as part of Singapore H2 Biology",
+      "input": "Teach me Stem-cell potency and functions as part of Singapore H2 Biology",
       "expect": {
         "branches": [
           "positioned"
@@ -60780,7 +60964,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "zh",
-      "input": "请把干细胞潜能与染色体末端作为新加坡 H2 生物学课程的学习重点",
+      "input": "请把干细胞潜能与功能作为新加坡 H2 生物学课程的学习重点",
       "expect": {
         "branches": [
           "positioned"
@@ -64598,7 +64782,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "en",
-      "input": "Build a focused learning path for Circle geometry and measurement in Singapore Secondary G2/G3 Mathematics",
+      "input": "I already know the basics of Singapore Secondary G2/G3 Mathematics; help me study Circle geometry and measurement",
       "expect": {
         "branches": [
           "positioned"
@@ -64630,7 +64814,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_secondary_mathematics:sg_sec_math_topic_circle_geometry",
-        "templateId": "topic_en_2"
+        "templateId": "topic_en_3"
       },
       "tags": [
         "kg_grounded",
@@ -64644,7 +64828,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "zh",
-      "input": "帮我设计一条围绕圆的几何与度量的新加坡中学 G2/G3 数学学习路径",
+      "input": "我已经了解新加坡中学 G2/G3 数学基础，想继续学习圆的几何与度量",
       "expect": {
         "branches": [
           "positioned"
@@ -64676,7 +64860,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_secondary_mathematics:sg_sec_math_topic_circle_geometry",
-        "templateId": "topic_zh_2"
+        "templateId": "topic_zh_3"
       },
       "tags": [
         "kg_grounded",
@@ -64690,7 +64874,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "en",
-      "input": "I already know the basics of Singapore Secondary G2/G3 Mathematics; help me study Construction and similarity",
+      "input": "Within Singapore Secondary G2/G3 Mathematics, I want to focus on Construction and similarity",
       "expect": {
         "branches": [
           "positioned"
@@ -64722,7 +64906,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_secondary_mathematics:sg_sec_math_topic_construction_similarity",
-        "templateId": "topic_en_3"
+        "templateId": "topic_en_0"
       },
       "tags": [
         "kg_grounded",
@@ -64736,7 +64920,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "zh",
-      "input": "我已经了解新加坡中学 G2/G3 数学基础，想继续学习作图与相似",
+      "input": "我想在新加坡中学 G2/G3 数学中重点学习作图与相似",
       "expect": {
         "branches": [
           "positioned"
@@ -64768,7 +64952,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_secondary_mathematics:sg_sec_math_topic_construction_similarity",
-        "templateId": "topic_zh_3"
+        "templateId": "topic_zh_0"
       },
       "tags": [
         "kg_grounded",
@@ -64782,7 +64966,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "en",
-      "input": "I already know the basics of Singapore Secondary G2/G3 Mathematics; help me study Data collection and representation",
+      "input": "Within Singapore Secondary G2/G3 Mathematics, I want to focus on Data collection and representation",
       "expect": {
         "branches": [
           "positioned"
@@ -64814,7 +64998,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_secondary_mathematics:sg_sec_math_topic_data_foundations",
-        "templateId": "topic_en_3"
+        "templateId": "topic_en_0"
       },
       "tags": [
         "kg_grounded",
@@ -64828,7 +65012,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "zh",
-      "input": "我已经了解新加坡中学 G2/G3 数学基础，想继续学习数据收集与表示",
+      "input": "我想在新加坡中学 G2/G3 数学中重点学习数据收集与表示",
       "expect": {
         "branches": [
           "positioned"
@@ -64860,7 +65044,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_secondary_mathematics:sg_sec_math_topic_data_foundations",
-        "templateId": "topic_zh_3"
+        "templateId": "topic_zh_0"
       },
       "tags": [
         "kg_grounded",
@@ -64874,7 +65058,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "en",
-      "input": "Within Singapore Secondary G2/G3 Mathematics, I want to focus on Describing distributions",
+      "input": "Teach me Describing distributions as part of Singapore Secondary G2/G3 Mathematics",
       "expect": {
         "branches": [
           "positioned"
@@ -64906,7 +65090,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_secondary_mathematics:sg_sec_math_topic_distribution_description",
-        "templateId": "topic_en_0"
+        "templateId": "topic_en_1"
       },
       "tags": [
         "kg_grounded",
@@ -64920,7 +65104,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "zh",
-      "input": "我想在新加坡中学 G2/G3 数学中重点学习描述数据分布",
+      "input": "请把描述数据分布作为新加坡中学 G2/G3 数学课程的学习重点",
       "expect": {
         "branches": [
           "positioned"
@@ -64952,7 +65136,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_secondary_mathematics:sg_sec_math_topic_distribution_description",
-        "templateId": "topic_zh_0"
+        "templateId": "topic_zh_1"
       },
       "tags": [
         "kg_grounded",
@@ -64966,7 +65150,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "en",
-      "input": "Teach me Distribution comparison and probability as part of Singapore Secondary G2/G3 Mathematics",
+      "input": "Build a focused learning path for Cumulative frequency, box plots and spread comparison in Singapore Secondary G2/G3 Mathematics",
       "expect": {
         "branches": [
           "positioned"
@@ -64998,7 +65182,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_secondary_mathematics:sg_sec_math_topic_distribution_probability",
-        "templateId": "topic_en_1"
+        "templateId": "topic_en_2"
       },
       "tags": [
         "kg_grounded",
@@ -65012,7 +65196,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "zh",
-      "input": "请把分布比较与概率作为新加坡中学 G2/G3 数学课程的学习重点",
+      "input": "帮我设计一条围绕累积频数、箱线图与离散比较的新加坡中学 G2/G3 数学学习路径",
       "expect": {
         "branches": [
           "positioned"
@@ -65044,7 +65228,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_secondary_mathematics:sg_sec_math_topic_distribution_probability",
-        "templateId": "topic_zh_1"
+        "templateId": "topic_zh_2"
       },
       "tags": [
         "kg_grounded",
@@ -65058,7 +65242,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "en",
-      "input": "Build a focused learning path for Angles, triangles and polygons in Singapore Secondary G2/G3 Mathematics",
+      "input": "I already know the basics of Singapore Secondary G2/G3 Mathematics; help me study Angles, triangles and polygons",
       "expect": {
         "branches": [
           "positioned"
@@ -65071,7 +65255,7 @@
           "specific"
         ],
         "startTopicIds": [
-          "sg_sec_math_topic_quadratic_equations",
+          "sg_sec_math_topic_equation_modelling",
           "sg_sec_math_topic_elementary_geometry"
         ]
       },
@@ -65090,7 +65274,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_secondary_mathematics:sg_sec_math_topic_elementary_geometry",
-        "templateId": "topic_en_2"
+        "templateId": "topic_en_3"
       },
       "tags": [
         "kg_grounded",
@@ -65104,7 +65288,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "zh",
-      "input": "帮我设计一条围绕角、三角形与多边形的新加坡中学 G2/G3 数学学习路径",
+      "input": "我已经了解新加坡中学 G2/G3 数学基础，想继续学习角、三角形与多边形",
       "expect": {
         "branches": [
           "positioned"
@@ -65117,7 +65301,7 @@
           "specific"
         ],
         "startTopicIds": [
-          "sg_sec_math_topic_quadratic_equations",
+          "sg_sec_math_topic_equation_modelling",
           "sg_sec_math_topic_elementary_geometry"
         ]
       },
@@ -65136,7 +65320,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_secondary_mathematics:sg_sec_math_topic_elementary_geometry",
-        "templateId": "topic_zh_2"
+        "templateId": "topic_zh_3"
       },
       "tags": [
         "kg_grounded",
@@ -65144,6 +65328,98 @@
         "directed"
       ],
       "split": "test"
+    },
+    {
+      "id": "kg-topic-singapore_secondary_mathematics-sg_sec_math_topic_equation_modelling-en",
+      "category": "library_topic",
+      "suite": "core",
+      "language": "en",
+      "input": "Build a focused learning path for Formulating equations from context in Singapore Secondary G2/G3 Mathematics",
+      "expect": {
+        "branches": [
+          "positioned"
+        ],
+        "graphIds": [
+          "singapore_secondary_mathematics"
+        ],
+        "modes": [
+          "directed",
+          "specific"
+        ],
+        "startTopicIds": [
+          "sg_sec_math_topic_quadratic_equations",
+          "sg_sec_math_topic_equation_modelling"
+        ]
+      },
+      "policy": {
+        "coverage": "full_single_graph",
+        "action": "canonical_kg",
+        "scope": "topic_closure",
+        "sourceGraphIds": [
+          "singapore_secondary_mathematics"
+        ]
+      },
+      "reference": {
+        "graphId": "singapore_secondary_mathematics",
+        "topicId": "sg_sec_math_topic_equation_modelling"
+      },
+      "origin": {
+        "kind": "kg_template",
+        "sourceId": "singapore_secondary_mathematics:sg_sec_math_topic_equation_modelling",
+        "templateId": "topic_en_2"
+      },
+      "tags": [
+        "kg_grounded",
+        "topic_level",
+        "directed"
+      ],
+      "split": "test"
+    },
+    {
+      "id": "kg-topic-singapore_secondary_mathematics-sg_sec_math_topic_equation_modelling-zh",
+      "category": "library_topic",
+      "suite": "core",
+      "language": "zh",
+      "input": "帮我设计一条围绕从情境建立方程的新加坡中学 G2/G3 数学学习路径",
+      "expect": {
+        "branches": [
+          "positioned"
+        ],
+        "graphIds": [
+          "singapore_secondary_mathematics"
+        ],
+        "modes": [
+          "directed",
+          "specific"
+        ],
+        "startTopicIds": [
+          "sg_sec_math_topic_quadratic_equations",
+          "sg_sec_math_topic_equation_modelling"
+        ]
+      },
+      "policy": {
+        "coverage": "full_single_graph",
+        "action": "canonical_kg",
+        "scope": "topic_closure",
+        "sourceGraphIds": [
+          "singapore_secondary_mathematics"
+        ]
+      },
+      "reference": {
+        "graphId": "singapore_secondary_mathematics",
+        "topicId": "sg_sec_math_topic_equation_modelling"
+      },
+      "origin": {
+        "kind": "kg_template",
+        "sourceId": "singapore_secondary_mathematics:sg_sec_math_topic_equation_modelling",
+        "templateId": "topic_zh_2"
+      },
+      "tags": [
+        "kg_grounded",
+        "topic_level",
+        "directed"
+      ],
+      "split": "dev"
     },
     {
       "id": "kg-topic-singapore_secondary_mathematics-sg_sec_math_topic_expansion_factorisation-en",
@@ -65510,6 +65786,98 @@
         "kg_grounded",
         "topic_level",
         "root_topic"
+      ],
+      "split": "dev"
+    },
+    {
+      "id": "kg-topic-singapore_secondary_mathematics-sg_sec_math_topic_probability-en",
+      "category": "library_topic",
+      "suite": "core",
+      "language": "en",
+      "input": "I already know the basics of Singapore Secondary G2/G3 Mathematics; help me study Probability",
+      "expect": {
+        "branches": [
+          "positioned"
+        ],
+        "graphIds": [
+          "singapore_secondary_mathematics"
+        ],
+        "modes": [
+          "directed",
+          "specific"
+        ],
+        "startTopicIds": [
+          "sg_sec_math_topic_distribution_probability",
+          "sg_sec_math_topic_probability"
+        ]
+      },
+      "policy": {
+        "coverage": "full_single_graph",
+        "action": "canonical_kg",
+        "scope": "topic_closure",
+        "sourceGraphIds": [
+          "singapore_secondary_mathematics"
+        ]
+      },
+      "reference": {
+        "graphId": "singapore_secondary_mathematics",
+        "topicId": "sg_sec_math_topic_probability"
+      },
+      "origin": {
+        "kind": "kg_template",
+        "sourceId": "singapore_secondary_mathematics:sg_sec_math_topic_probability",
+        "templateId": "topic_en_3"
+      },
+      "tags": [
+        "kg_grounded",
+        "topic_level",
+        "directed"
+      ],
+      "split": "test"
+    },
+    {
+      "id": "kg-topic-singapore_secondary_mathematics-sg_sec_math_topic_probability-zh",
+      "category": "library_topic",
+      "suite": "core",
+      "language": "zh",
+      "input": "我已经了解新加坡中学 G2/G3 数学基础，想继续学习概率",
+      "expect": {
+        "branches": [
+          "positioned"
+        ],
+        "graphIds": [
+          "singapore_secondary_mathematics"
+        ],
+        "modes": [
+          "directed",
+          "specific"
+        ],
+        "startTopicIds": [
+          "sg_sec_math_topic_distribution_probability",
+          "sg_sec_math_topic_probability"
+        ]
+      },
+      "policy": {
+        "coverage": "full_single_graph",
+        "action": "canonical_kg",
+        "scope": "topic_closure",
+        "sourceGraphIds": [
+          "singapore_secondary_mathematics"
+        ]
+      },
+      "reference": {
+        "graphId": "singapore_secondary_mathematics",
+        "topicId": "sg_sec_math_topic_probability"
+      },
+      "origin": {
+        "kind": "kg_template",
+        "sourceId": "singapore_secondary_mathematics:sg_sec_math_topic_probability",
+        "templateId": "topic_zh_3"
+      },
+      "tags": [
+        "kg_grounded",
+        "topic_level",
+        "directed"
       ],
       "split": "dev"
     },
@@ -65886,7 +66254,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "en",
-      "input": "Within Singapore Secondary G2/G3 Mathematics, I want to focus on Triangle measurement and reasoning",
+      "input": "Teach me Triangle measurement and reasoning as part of Singapore Secondary G2/G3 Mathematics",
       "expect": {
         "branches": [
           "positioned"
@@ -65918,7 +66286,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_secondary_mathematics:sg_sec_math_topic_triangle_reasoning",
-        "templateId": "topic_en_0"
+        "templateId": "topic_en_1"
       },
       "tags": [
         "kg_grounded",
@@ -65932,7 +66300,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "zh",
-      "input": "我想在新加坡中学 G2/G3 数学中重点学习三角形度量与推理",
+      "input": "请把三角形度量与推理作为新加坡中学 G2/G3 数学课程的学习重点",
       "expect": {
         "branches": [
           "positioned"
@@ -65964,7 +66332,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_secondary_mathematics:sg_sec_math_topic_triangle_reasoning",
-        "templateId": "topic_zh_0"
+        "templateId": "topic_zh_1"
       },
       "tags": [
         "kg_grounded",
@@ -65978,7 +66346,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "en",
-      "input": "Teach me Triangle similarity and trigonometry as part of Singapore Secondary G2/G3 Mathematics",
+      "input": "Build a focused learning path for Triangle similarity and trigonometry in Singapore Secondary G2/G3 Mathematics",
       "expect": {
         "branches": [
           "positioned"
@@ -66010,7 +66378,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_secondary_mathematics:sg_sec_math_topic_triangle_similarity_trig",
-        "templateId": "topic_en_1"
+        "templateId": "topic_en_2"
       },
       "tags": [
         "kg_grounded",
@@ -66024,7 +66392,7 @@
       "category": "library_topic",
       "suite": "core",
       "language": "zh",
-      "input": "请把三角形相似与三角计算作为新加坡中学 G2/G3 数学课程的学习重点",
+      "input": "帮我设计一条围绕三角形相似与三角计算的新加坡中学 G2/G3 数学学习路径",
       "expect": {
         "branches": [
           "positioned"
@@ -66056,7 +66424,7 @@
       "origin": {
         "kind": "kg_template",
         "sourceId": "singapore_secondary_mathematics:sg_sec_math_topic_triangle_similarity_trig",
-        "templateId": "topic_zh_1"
+        "templateId": "topic_zh_2"
       },
       "tags": [
         "kg_grounded",

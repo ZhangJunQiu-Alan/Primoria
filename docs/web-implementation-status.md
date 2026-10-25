@@ -22,9 +22,9 @@ AG-UI Agent runtime; it is not a static mock and has no Supabase runtime path.
 - KG positioning across a 31-graph runtime registry with canonical,
   topic/concept closure, and goal-scoped routes; deterministic cross-subject
   targets where approved; generated/hybrid fallback for missing outcomes; and
-  explicit infrastructure-failure handling. The original 21 source graphs are
-  approved; 10 China/Singapore graphs are runtime-registered but remain
-  `needs_review` at source level.
+  explicit infrastructure-failure handling. All 31 source graphs are approved;
+  the 10 China/Singapore graphs, with their curricula and pedagogy records,
+  were approved by the project owner on 2026-10-25.
 - Concept-frontier course outline initialization (mastery-aware 2–3 concept
   lesson bundles), background title/description enrichment, lazy lesson
   generation, job recovery, and Jump ahead generation.

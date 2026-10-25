@@ -4,6 +4,8 @@ import { createHash } from "node:crypto";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
+import { refuseOwnerApprovedTargets } from "./kg-approval-guard.mjs";
+
 const ROOT = resolve(import.meta.dirname, "../../..");
 const DATA = resolve(ROOT, "data/knowledge-graphs");
 const TODAY = "2026-07-19";
@@ -18,6 +20,7 @@ const paths = {
   registry: resolve(DATA, "governance/concept-registry.json"),
   review: resolve(DATA, "review/pending/curriculum-mapping/cms_sg_moe_lower_secondary_g2_g3_science_2021_outcomes.implementation-review.zh-CN.md"),
 };
+refuseOwnerApprovedTargets(paths);
 
 const SOURCES = {
   syllabus: "src_sg_moe_lower_secondary_g2_g3_science_2021",

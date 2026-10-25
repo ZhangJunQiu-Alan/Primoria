@@ -1,0 +1,2481 @@
+{
+  "schema_version": "1.0.0",
+  "review_id": "cn_sg_overlay_review_2026_10",
+  "prepared_at": "2026-10-25",
+  "prepared_by_zh": "Claude（AI 辅助核验：联网获取官方 PDF 逐页比对；不构成人工批准）",
+  "reviewer_id": "primoria_owner",
+  "scope_zh": "10 张中国/新加坡运行时图的节点与同图边、相关跨图边、11 个课程框架与映射集、10 个缺口与决议集、10 个课程实践集与 1 个核心教学法集。",
+  "corrections": {
+    "node_descriptions": [
+      {
+        "graph_id": "senior_secondary_mathematics",
+        "node_id": "cn_sh_math_plane_vector_basis_coordinates",
+        "description": "掌握平面向量基本定理，完成正交分解和坐标表示。",
+        "rationale_zh": "2025 日常修订把内容要求由“理解平面向量基本定理及其意义”提高为“掌握平面向量基本定理”，描述同步更新。"
+      },
+      {
+        "graph_id": "singapore_h2_physics",
+        "node_id": "sg_h2_physics_heisenberg_position_momentum_uncertainty",
+        "description": "Using the order-of-magnitude relation Δx·Δp ≳ h to explain why a localised particle needs a spread of momenta and to estimate limits on simultaneous position and momentum precision, distinguishing intrinsic quantum uncertainty from measurement error.",
+        "rationale_zh": "SEAB 9478 19(h) 以 ∆x∆p ≳ h 的数量级形式表述并强调“局域化粒子需要动量弥散”；原描述写成 ΔxΔp ≥ ℏ/2 的严格形式，与大纲口径不一致。"
+      }
+    ],
+    "node_evidence": [
+      {
+        "graph_id": "senior_secondary_chemistry",
+        "node_id": "cn_sh_chem_green_chemistry_principles",
+        "rationale_zh": "2025 日常修订把必修内容要求 5.1 的“树立‘绿色化学’的观念”改为“树立‘绿色发展’的观念”；“绿色化学”现见于必修主题5学业要求第5条与选择性必修有机 2.3，补充这两处证据，5.1 保留为绿色发展背景。",
+        "add": [
+          {
+            "source_id": "src_cn_moe_senior_high_chemistry_2025",
+            "locator": "化学标准PDF p.30（必修主题5【学业要求】第5条），必修"
+          },
+          {
+            "source_id": "src_cn_moe_senior_high_chemistry_2025",
+            "locator": "化学标准PDF p.49（正文对应内容要求 2.3），选择性必修·有机化学基础"
+          }
+        ]
+      },
+      {
+        "graph_id": "senior_secondary_chemistry",
+        "node_id": "cn_sh_chem_clean_production_circularity",
+        "rationale_zh": "清洁生产与“物能循环利用”出自必修 5.1，“废弃物循环利用”出自 5.3；原证据 5.4 是环境污染成因与防治，不支持该概念。",
+        "replace": [
+          {
+            "locator": "化学标准PDF p.27（正文对应内容要求 5.4），必修",
+            "with_refs": [
+              {
+                "source_id": "src_cn_moe_senior_high_chemistry_2025",
+                "locator": "化学标准PDF p.26-27（正文对应内容要求 5.1），必修"
+              },
+              {
+                "source_id": "src_cn_moe_senior_high_chemistry_2025",
+                "locator": "化学标准PDF p.27（正文对应内容要求 5.3），必修"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "graph_id": "senior_secondary_chemistry",
+        "node_id": "cn_sh_chem_organic_safety_green_synthesis",
+        "rationale_zh": "2025 修订把“体会‘绿色化学’思想在有机合成中的重要意义”从有机 2.4 移入 2.3；2.4 仍覆盖有机物对环境与健康的影响和安全使用，故两处并列引用。",
+        "add": [
+          {
+            "source_id": "src_cn_moe_senior_high_chemistry_2025",
+            "locator": "化学标准PDF p.49（正文对应内容要求 2.3），选择性必修·有机化学基础"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      {
+        "requirement_id": "req_cn_sh_chem_2020_o_r_5_1b_green_chemistry_principles",
+        "evidence_add": [
+          {
+            "source_id": "src_cn_moe_senior_high_chemistry_2025",
+            "locator": "化学标准PDF p.30（必修主题5【学业要求】第5条），必修"
+          },
+          {
+            "source_id": "src_cn_moe_senior_high_chemistry_2025",
+            "locator": "化学标准PDF p.49（正文对应内容要求 2.3），选择性必修·有机化学基础"
+          }
+        ],
+        "rationale_zh": "2025 修订把必修 5.1 的“绿色化学”观念改为“绿色发展”，“绿色化学”现见于必修主题5学业要求第5条与选择性必修有机 2.3。"
+      },
+      {
+        "requirement_id": "req_cn_sh_chem_2020_o_r_5_4b_clean_production_circularity",
+        "evidence_replace": [
+          {
+            "locator": "化学标准PDF p.27（正文对应内容要求 5.4），必修",
+            "with_refs": [
+              {
+                "source_id": "src_cn_moe_senior_high_chemistry_2025",
+                "locator": "化学标准PDF p.26-27（正文对应内容要求 5.1），必修"
+              },
+              {
+                "source_id": "src_cn_moe_senior_high_chemistry_2025",
+                "locator": "化学标准PDF p.27（正文对应内容要求 5.3），必修"
+              }
+            ]
+          }
+        ],
+        "rationale_zh": "清洁生产与物能循环利用出自 5.1，废弃物循环利用出自 5.3；5.4 是污染成因与防治。"
+      },
+      {
+        "requirement_id": "req_cn_sh_chem_2020_o_ss_1_1a_electron_model_history",
+        "title_zh": "原子结构模型演进",
+        "summary_zh": "用光谱等证据比较原子结构模型的历史发展及其局限。",
+        "rationale_zh": "2025 修订把“核外电子运动模型的历史发展”改为“原子结构模型的历史发展”。"
+      },
+      {
+        "requirement_id": "req_cn_sh_chem_2020_o_so_2_4a_organic_safety_green_synthesis",
+        "evidence_add": [
+          {
+            "source_id": "src_cn_moe_senior_high_chemistry_2025",
+            "locator": "化学标准PDF p.49（正文对应内容要求 2.3），选择性必修·有机化学基础"
+          }
+        ],
+        "rationale_zh": "2025 修订把有机合成中的“绿色化学”思想从 2.4 移入 2.3。"
+      }
+    ],
+    "mappings": [
+      {
+        "mapping_id": "map_sg_h2_biology_9477_2026_o_2_j",
+        "add_canonical": [
+          "pc_0185ccac3ad47cd14f266d12099ab528"
+        ],
+        "rationale_zh": "9477 2(j) 同时要求 PCR、凝胶电泳与 Southern 印迹；前两者由 A-Level“基因技术”覆盖，原映射只列 Southern 印迹。"
+      },
+      {
+        "mapping_id": "map_sg_h2_chemistry_9476_2026_o_11_5_d",
+        "add_canonical": [
+          "pc_b35d6548b40342a4e7e95af4650c7349"
+        ],
+        "rationale_zh": "9476 11.5(d) 以化学惰性解释氟代烷用途，依据是 C–F 键能，应补充“键能”。"
+      },
+      {
+        "requirement_id": "req_cn_sh_bio_2020_o_sb_4_2_2_somatic_cell_nuclear_transfer",
+        "remove_canonical": [
+          "pc_0185ccac3ad47cd14f266d12099ab528"
+        ],
+        "rationale_zh": "动物体细胞核移植不属于 A-Level“基因技术”（重组 DNA、PCR 等）范围，该附加映射不成立。"
+      }
+    ],
+    "pedagogy": [
+      {
+        "misconception_id": "mis_sg_physics_uncertainty_always_equality",
+        "correction_zh": "一般关系是 ΔxΔp≥ℏ/2；只有特定最小不确定态才取等号。SEAB 9478 以 ΔxΔp ≳ h 的数量级形式考查，二者并不矛盾。",
+        "rationale_zh": "与 9478 19(h) 的表述口径对齐，避免学习者误以为大纲公式错误。"
+      }
+    ],
+    "topics": [
+      {
+        "graph_id": "singapore_h2_biology",
+        "topic_id": "sg_h2_biology_topic_stem_replication",
+        "name": "Stem-cell potency and functions",
+        "name_zh": "干细胞潜能与功能"
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "topic_id": "sg_h2_biology_topic_genome_regulation_analysis",
+        "name": "Eukaryotic genome maintenance and expression control",
+        "name_zh": "真核基因组维持与表达调控"
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "topic_id": "sg_h2_biology_topic_screening_cancer_control",
+        "name": "Cell-cycle control and cancer",
+        "name_zh": "细胞周期调控与癌变"
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "topic_id": "sg_h2_biology_topic_cancer_complex_inheritance",
+        "name": "Epistasis and environmental effects on phenotype",
+        "name_zh": "上位性与环境对表型的影响"
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "topic_id": "sg_h2_biology_topic_signal_transduction",
+        "name": "Signalling stages and second messengers",
+        "name_zh": "细胞信号传导阶段与第二信使"
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "topic_id": "sg_h2_biology_topic_receptor_population_evolution",
+        "name": "Kinase cascades and blood-glucose receptor pathways",
+        "name_zh": "激酶级联与血糖受体通路"
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "topic_id": "sg_sec_math_topic_distribution_probability",
+        "name": "Cumulative frequency, box plots and spread comparison",
+        "name_zh": "累积频数、箱线图与离散比较"
+      }
+    ],
+    "topics_rationale_zh": "H2 生物原有 4 个主题把不相关概念打包；按生物学主题重新归组并新增 2 个主题（校验规则要求每个主题 2–3 个概念），原主题 ID 保持不变以保证稳定引用。新加坡中学数学因新增同层级概念新增“从情境建立方程”“概率”两个主题。",
+    "node_moves": [
+      {
+        "graph_id": "singapore_h2_biology",
+        "node_id": "sg_h2_biology_dna_end_replication_problem",
+        "topic": "sg_h2_biology_topic_genome_regulation_analysis",
+        "default_order": 1
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "node_id": "sg_h2_biology_noncoding_genome_elements",
+        "topic": "sg_h2_biology_topic_genome_regulation_analysis",
+        "default_order": 2
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "node_id": "sg_h2_biology_multilevel_eukaryotic_gene_regulation",
+        "topic": "sg_h2_biology_topic_genome_regulation_analysis",
+        "default_order": 3
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "node_id": "sg_h2_biology_southern_blot_hybridisation",
+        "topic": "sg_h2_biology_topic_molecular_analysis_screening",
+        "default_order": 1
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "node_id": "sg_h2_biology_maternal_genetic_screening_ethics",
+        "topic": "sg_h2_biology_topic_molecular_analysis_screening",
+        "default_order": 2
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "node_id": "sg_h2_biology_cell_cycle_dysregulation_cancer_risk",
+        "topic": "sg_h2_biology_topic_screening_cancer_control",
+        "default_order": 1
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "node_id": "sg_h2_biology_oncogene_tumour_suppressor_control",
+        "topic": "sg_h2_biology_topic_screening_cancer_control",
+        "default_order": 2
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "node_id": "sg_h2_biology_multistep_cancer_progression",
+        "topic": "sg_h2_biology_topic_screening_cancer_control",
+        "default_order": 3
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "node_id": "sg_h2_biology_epistasis_problem_solving",
+        "topic": "sg_h2_biology_topic_cancer_complex_inheritance",
+        "default_order": 1
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "node_id": "sg_h2_biology_genotype_environment_phenotype",
+        "topic": "sg_h2_biology_topic_cancer_complex_inheritance",
+        "default_order": 2
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "node_id": "sg_h2_biology_cell_signalling_stages",
+        "topic": "sg_h2_biology_topic_signal_transduction",
+        "default_order": 1
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "node_id": "sg_h2_biology_second_messengers",
+        "topic": "sg_h2_biology_topic_signal_transduction",
+        "default_order": 2
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "node_id": "sg_h2_biology_kinase_phosphatase_signalling",
+        "topic": "sg_h2_biology_topic_receptor_population_evolution",
+        "default_order": 1
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "node_id": "sg_h2_biology_insulin_glucagon_receptor_pathways",
+        "topic": "sg_h2_biology_topic_receptor_population_evolution",
+        "default_order": 2
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "node_id": "sg_h2_biology_recessive_allele_persistence",
+        "topic": "sg_h2_biology_topic_population_evolution",
+        "default_order": 1
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "node_id": "sg_h2_biology_microevolution_macroevolution_link",
+        "topic": "sg_h2_biology_topic_population_evolution",
+        "default_order": 2
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "node_id": "sg_sec_math_formulate_linear_equations",
+        "topic": "sg_sec_math_topic_equation_modelling",
+        "default_order": 1
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "node_id": "sg_sec_math_formulate_quadratic_equations",
+        "topic": "sg_sec_math_topic_equation_modelling",
+        "default_order": 2
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "node_id": "sg_sec_math_single_event_probability",
+        "topic": "sg_sec_math_topic_probability",
+        "default_order": 1
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "node_id": "sg_sec_math_combined_probability",
+        "topic": "sg_sec_math_topic_probability",
+        "default_order": 2
+      },
+      {
+        "graph_id": "senior_secondary_mathematics",
+        "node_id": "cn_sh_math_regression_prediction_limits",
+        "topic": "cn_sh_math_topic_quantitative_association",
+        "default_order": 3
+      }
+    ],
+    "new_concepts": [
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "id": "sg_sec_math_formulate_linear_equations",
+        "topic": "sg_sec_math_topic_equation_modelling",
+        "default_order": 1,
+        "name": "Formulating linear equations and systems from context",
+        "name_zh": "从情境建立一次方程与方程组",
+        "description": "Choosing unknowns in a problem situation to form a one-variable linear equation or a pair of linear equations, then solving, checking and interpreting the solution in context.",
+        "evidence_refs": [
+          {
+            "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+            "locator": "PDF p.18, g3 sec1, Formulating a linear equation"
+          },
+          {
+            "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+            "locator": "PDF p.19, g3 sec2, Formulating a pair of linear equations"
+          },
+          {
+            "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+            "locator": "PDF p.28, g2 sec1, Formulating a linear equation"
+          },
+          {
+            "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+            "locator": "PDF p.29, g2 sec2, Formulating linear equations and systems"
+          },
+          {
+            "source_id": "src_openstax_contemporary_mathematics_2026",
+            "locator": "PDF §5.2 Linear Equations in One Variable with Applications, printed pp.346-355; §5.9 Systems of Linear Equations in Two Variables, printed pp.473-489"
+          }
+        ],
+        "requirement_ids": [
+          "req_sg_sec_math_2020_g3_sec1_formulate_linear_equation",
+          "req_sg_sec_math_2020_g3_sec2_formulate_pair_linear",
+          "req_sg_sec_math_2020_g2_sec1_formulate_linear_equation",
+          "req_sg_sec_math_2020_g2_sec2_formulate_linear_systems"
+        ]
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "id": "sg_sec_math_formulate_quadratic_equations",
+        "topic": "sg_sec_math_topic_equation_modelling",
+        "default_order": 2,
+        "name": "Formulating quadratic equations from context",
+        "name_zh": "从情境建立一元二次方程",
+        "description": "Forming a quadratic equation from a problem situation, solving it and rejecting roots that violate the contextual constraints before interpreting the valid solution.",
+        "evidence_refs": [
+          {
+            "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+            "locator": "PDF p.21, g3 sec3 4, Formulating a quadratic equation"
+          },
+          {
+            "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+            "locator": "PDF p.31, g2 sec3 4, Formulating a quadratic equation"
+          },
+          {
+            "source_id": "src_openstax_contemporary_mathematics_2026",
+            "locator": "PDF §5.6 Quadratic Equations in One Variable with Applications, printed pp.403-426"
+          }
+        ],
+        "requirement_ids": [
+          "req_sg_sec_math_2020_g3_sec3_4_formulate_quadratic",
+          "req_sg_sec_math_2020_g2_sec3_4_formulate_quadratic"
+        ]
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "id": "sg_sec_math_single_event_probability",
+        "topic": "sg_sec_math_topic_probability",
+        "default_order": 1,
+        "name": "Probability of single events",
+        "name_zh": "单一事件概率",
+        "description": "Treating probability as a measure of chance between 0 and 1, listing equally likely outcomes of a simple experiment and calculating the probability of a single event.",
+        "evidence_refs": [
+          {
+            "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+            "locator": "PDF p.20, g3 sec2, Probability of single events"
+          },
+          {
+            "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+            "locator": "PDF p.30, g2 sec2, Probability of single events"
+          },
+          {
+            "source_id": "src_openstax_contemporary_mathematics_2026",
+            "locator": "PDF §7.5 Basic Concepts of Probability, printed pp.751-762"
+          }
+        ],
+        "requirement_ids": [
+          "req_sg_sec_math_2020_g3_sec2_single_event_probability",
+          "req_sg_sec_math_2020_g2_sec2_single_event_probability"
+        ]
+      },
+      {
+        "graph_id": "senior_secondary_mathematics",
+        "id": "cn_sh_math_linear_regression_least_squares",
+        "topic": "cn_sh_math_topic_quantitative_association",
+        "default_order": 2,
+        "name": "Simple linear regression and least squares",
+        "name_zh": "一元线性回归模型与最小二乘",
+        "description": "理解一元线性回归模型及参数的统计意义，用最小二乘原理估计回归系数并解释拟合直线。",
+        "evidence_refs": [
+          {
+            "source_id": "src_cn_moe_senior_high_math_2025",
+            "locator": "数学课程标准PDF p.50-51（正文p.47-48），选择性必修主题三·3‘统计’"
+          },
+          {
+            "source_id": "src_openstax_introductory_statistics_2e_2026",
+            "locator": "PDF §12.3 The Regression Equation, pp.623-630"
+          }
+        ],
+        "requirement_ids": [
+          "req_cn_sh_math_2020_o_linear_regression"
+        ]
+      }
+    ],
+    "new_concepts_rationale_zh": "原映射把中学/高中层级要求映射到 H2 预科概念、大学 AI 课程“概率基础”或大学“机器学习·线性回归”，层级错配会把高层级内容带入低层级课程；新增同层级最小可诊断概念替代。",
+    "new_edges": [
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "from": "sg_sec_math_algebra_translation",
+        "to": "sg_sec_math_formulate_linear_equations",
+        "strength": "soft",
+        "reason": "从情境建立方程前需要先能把数量关系翻译为代数式。",
+        "evidence": [
+          "PDF p.17, g3 sec1, Translating situations into algebra",
+          "PDF p.18, g3 sec1, Formulating a linear equation"
+        ]
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "from": "sg_sec_math_linear_integer_equations",
+        "to": "sg_sec_math_formulate_linear_equations",
+        "strength": "soft",
+        "reason": "建立方程后需要求解并检验，依赖一元一次方程的解法。",
+        "evidence": [
+          "PDF p.28, g2 sec1, Linear equations with integer coefficients",
+          "PDF p.28, g2 sec1, Formulating a linear equation"
+        ]
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "from": "sg_sec_math_formulate_linear_equations",
+        "to": "sg_sec_math_formulate_quadratic_equations",
+        "strength": "soft",
+        "reason": "建立一元二次方程沿用从情境选未知量、写等量关系并检验解的建模步骤。",
+        "evidence": [
+          "PDF p.18, g3 sec1, Formulating a linear equation",
+          "PDF p.21, g3 sec3 4, Formulating a quadratic equation"
+        ]
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "from": "sg_sec_math_quadratic_factorisation_solve",
+        "to": "sg_sec_math_formulate_quadratic_equations",
+        "strength": "soft",
+        "reason": "建立二次方程后需要求根并按情境取舍，依赖二次方程的解法。",
+        "evidence": [
+          "PDF p.19, g3 sec2, Solving quadratics by factorisation",
+          "PDF p.21, g3 sec3 4, Formulating a quadratic equation"
+        ]
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "from": "sg_sec_math_single_event_probability",
+        "to": "sg_sec_math_combined_probability",
+        "strength": "hard",
+        "reason": "复合事件概率在可能性图或树状图中枚举结果，前提是会计算单一事件的概率。",
+        "evidence": [
+          "PDF p.20, g3 sec2, Probability of single events",
+          "PDF p.23, g3 sec3 4, Combined-event probability representations"
+        ]
+      },
+      {
+        "graph_id": "senior_secondary_mathematics",
+        "from": "cn_sh_math_linear_regression_least_squares",
+        "to": "cn_sh_math_regression_prediction_limits",
+        "strength": "hard",
+        "reason": "用回归方程进行预测并讨论外推限制，前提是能用最小二乘建立一元线性回归模型。",
+        "evidence": [
+          "数学课程标准PDF p.50-51（正文p.47-48），选择性必修主题三·3‘统计’"
+        ]
+      }
+    ],
+    "mapping_replacements": [
+      {
+        "requirement_id": "req_sg_sec_math_2020_g3_sec1_formulate_linear_equation",
+        "canonical_new": [
+          "sg_sec_math_formulate_linear_equations"
+        ]
+      },
+      {
+        "requirement_id": "req_sg_sec_math_2020_g2_sec1_formulate_linear_equation",
+        "canonical_new": [
+          "sg_sec_math_formulate_linear_equations"
+        ]
+      },
+      {
+        "requirement_id": "req_sg_sec_math_2020_g3_sec2_formulate_pair_linear",
+        "canonical_new": [
+          "sg_sec_math_formulate_linear_equations"
+        ],
+        "keep": [
+          "pc_204206c0b72ea40b72d3055124b579af"
+        ]
+      },
+      {
+        "requirement_id": "req_sg_sec_math_2020_g2_sec2_formulate_linear_systems",
+        "canonical_new": [
+          "sg_sec_math_formulate_linear_equations"
+        ],
+        "keep": [
+          "pc_204206c0b72ea40b72d3055124b579af"
+        ]
+      },
+      {
+        "requirement_id": "req_sg_sec_math_2020_g3_sec3_4_formulate_quadratic",
+        "canonical_new": [
+          "sg_sec_math_formulate_quadratic_equations"
+        ]
+      },
+      {
+        "requirement_id": "req_sg_sec_math_2020_g2_sec3_4_formulate_quadratic",
+        "canonical_new": [
+          "sg_sec_math_formulate_quadratic_equations"
+        ]
+      },
+      {
+        "requirement_id": "req_sg_sec_math_2020_g3_sec2_single_event_probability",
+        "canonical_new": [
+          "sg_sec_math_single_event_probability"
+        ]
+      },
+      {
+        "requirement_id": "req_sg_sec_math_2020_g2_sec2_single_event_probability",
+        "canonical_new": [
+          "sg_sec_math_single_event_probability"
+        ]
+      },
+      {
+        "requirement_id": "req_cn_sh_math_2020_o_linear_regression",
+        "canonical_new": [
+          "cn_sh_math_linear_regression_least_squares"
+        ]
+      },
+      {
+        "requirement_id": "req_cn_sh_math_2020_o_regression_prediction",
+        "canonical_new": [
+          "cn_sh_math_linear_regression_least_squares"
+        ],
+        "keep": [
+          "pc_85acd13e8f4afec2979a3288f911c926"
+        ]
+      },
+      {
+        "requirement_id": "req_sg_h2_math_9758_2026_o_least_squares_regression",
+        "canonical_new": [],
+        "keep": [
+          "pc_8c40d58addedb33cf22ac1efd9905af4"
+        ]
+      }
+    ],
+    "gap_additions": [
+      {
+        "gap_set_file": "sg_moe_secondary_g2_g3_math_2020_outcomes.json",
+        "gap_id": "gap_sg_sec_math_2020_formulate_linear_equations",
+        "node_id": "sg_sec_math_formulate_linear_equations",
+        "creates": true,
+        "requirement_ids": [
+          "req_sg_sec_math_2020_g3_sec1_formulate_linear_equation",
+          "req_sg_sec_math_2020_g2_sec1_formulate_linear_equation"
+        ],
+        "keep": [],
+        "scope_zh": "从问题情境选择未知量，建立一元一次方程，求解、检验并解释解的现实意义。"
+      },
+      {
+        "gap_set_file": "sg_moe_secondary_g2_g3_math_2020_outcomes.json",
+        "gap_id": "gap_sg_sec_math_2020_formulate_linear_systems",
+        "node_id": "sg_sec_math_formulate_linear_equations",
+        "creates": false,
+        "requirement_ids": [
+          "req_sg_sec_math_2020_g3_sec2_formulate_pair_linear",
+          "req_sg_sec_math_2020_g2_sec2_formulate_linear_systems"
+        ],
+        "keep": [
+          "pc_204206c0b72ea40b72d3055124b579af"
+        ],
+        "scope_zh": "从问题情境建立二元一次方程组，求解并解释解的现实意义。"
+      },
+      {
+        "gap_set_file": "sg_moe_secondary_g2_g3_math_2020_outcomes.json",
+        "gap_id": "gap_sg_sec_math_2020_formulate_quadratic_equations",
+        "node_id": "sg_sec_math_formulate_quadratic_equations",
+        "creates": true,
+        "requirement_ids": [
+          "req_sg_sec_math_2020_g3_sec3_4_formulate_quadratic",
+          "req_sg_sec_math_2020_g2_sec3_4_formulate_quadratic"
+        ],
+        "keep": [],
+        "scope_zh": "从问题情境建立一元二次方程，求解后按情境约束取舍并解释有效解。"
+      },
+      {
+        "gap_set_file": "sg_moe_secondary_g2_g3_math_2020_outcomes.json",
+        "gap_id": "gap_sg_sec_math_2020_single_event_probability",
+        "node_id": "sg_sec_math_single_event_probability",
+        "creates": true,
+        "requirement_ids": [
+          "req_sg_sec_math_2020_g3_sec2_single_event_probability",
+          "req_sg_sec_math_2020_g2_sec2_single_event_probability"
+        ],
+        "keep": [],
+        "scope_zh": "把概率理解为 0 到 1 之间的机会度量，列出等可能结果并计算单一事件概率。"
+      }
+    ],
+    "new_topics": [
+      {
+        "graph_id": "singapore_h2_biology",
+        "id": "sg_h2_biology_topic_molecular_analysis_screening",
+        "name": "Molecular detection and genetic-screening ethics",
+        "name_zh": "分子检测技术与遗传筛查伦理"
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "id": "sg_h2_biology_topic_population_evolution",
+        "name": "Population variation and evolutionary scale",
+        "name_zh": "种群遗传变异与进化尺度"
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "id": "sg_sec_math_topic_equation_modelling",
+        "name": "Formulating equations from context",
+        "name_zh": "从情境建立方程"
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "id": "sg_sec_math_topic_probability",
+        "name": "Probability",
+        "name_zh": "概率"
+      }
+    ],
+    "topic_orders": [
+      {
+        "graph_id": "singapore_h2_biology",
+        "topic_id": "sg_h2_biology_topic_cell_life_boundaries",
+        "default_order": 1
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "topic_id": "sg_h2_biology_topic_stem_replication",
+        "default_order": 2
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "topic_id": "sg_h2_biology_topic_microbial_genome_change",
+        "default_order": 3
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "topic_id": "sg_h2_biology_topic_genome_regulation_analysis",
+        "default_order": 4
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "topic_id": "sg_h2_biology_topic_molecular_analysis_screening",
+        "default_order": 5
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "topic_id": "sg_h2_biology_topic_screening_cancer_control",
+        "default_order": 6
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "topic_id": "sg_h2_biology_topic_cancer_complex_inheritance",
+        "default_order": 7
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "topic_id": "sg_h2_biology_topic_signal_transduction",
+        "default_order": 8
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "topic_id": "sg_h2_biology_topic_receptor_population_evolution",
+        "default_order": 9
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "topic_id": "sg_h2_biology_topic_population_evolution",
+        "default_order": 10
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "topic_id": "sg_h2_biology_topic_evolutionary_relationships",
+        "default_order": 11
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "topic_id": "sg_h2_biology_topic_adaptive_immunity",
+        "default_order": 12
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "topic_id": "sg_h2_biology_topic_infection_epidemiology",
+        "default_order": 13
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "topic_id": "sg_h2_biology_topic_climate_forcing",
+        "default_order": 14
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "topic_id": "sg_h2_biology_topic_climate_mitigation_resources",
+        "default_order": 15
+      },
+      {
+        "graph_id": "singapore_h2_biology",
+        "topic_id": "sg_h2_biology_topic_climate_vectors",
+        "default_order": 16
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "topic_id": "sg_sec_math_topic_number_structure",
+        "default_order": 1
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "topic_id": "sg_sec_math_topic_ratio_percentage",
+        "default_order": 2
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "topic_id": "sg_sec_math_topic_quantitative_contexts",
+        "default_order": 3
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "topic_id": "sg_sec_math_topic_algebra_language",
+        "default_order": 4
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "topic_id": "sg_sec_math_topic_linear_foundations",
+        "default_order": 5
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "topic_id": "sg_sec_math_topic_expansion_factorisation",
+        "default_order": 6
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "topic_id": "sg_sec_math_topic_algebraic_fractions",
+        "default_order": 7
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "topic_id": "sg_sec_math_topic_representations_constraints",
+        "default_order": 8
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "topic_id": "sg_sec_math_topic_indices_gradient",
+        "default_order": 9
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "topic_id": "sg_sec_math_topic_quadratic_equations",
+        "default_order": 10
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "topic_id": "sg_sec_math_topic_equation_modelling",
+        "default_order": 11
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "topic_id": "sg_sec_math_topic_elementary_geometry",
+        "default_order": 12
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "topic_id": "sg_sec_math_topic_construction_similarity",
+        "default_order": 13
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "topic_id": "sg_sec_math_topic_triangle_reasoning",
+        "default_order": 14
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "topic_id": "sg_sec_math_topic_triangle_similarity_trig",
+        "default_order": 15
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "topic_id": "sg_sec_math_topic_circle_geometry",
+        "default_order": 16
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "topic_id": "sg_sec_math_topic_data_foundations",
+        "default_order": 17
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "topic_id": "sg_sec_math_topic_distribution_description",
+        "default_order": 18
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "topic_id": "sg_sec_math_topic_distribution_probability",
+        "default_order": 19
+      },
+      {
+        "graph_id": "singapore_secondary_mathematics",
+        "topic_id": "sg_sec_math_topic_probability",
+        "default_order": 20
+      }
+    ]
+  },
+  "graphs": {
+    "senior_secondary_biology": {
+      "edge_rejects": [
+        {
+          "edge": "cn_sh_bio_nucleus_genetic_information->cn_sh_bio_organelle_coordination",
+          "rationale_zh": "细胞各部分协调合作不以“遗传信息主要储存在细胞核”为前提；原边仅来自 1.2.3→1.2.4 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_bio_cell_differentiation->cn_sh_bio_cell_senescence_death",
+          "rationale_zh": "细胞衰老与死亡是并列的细胞生命历程，不依赖细胞分化。"
+        },
+        {
+          "edge": "cn_sh_bio_common_ancestry_fossil_anatomy->cn_sh_bio_common_ancestry_cell_molecular",
+          "rationale_zh": "化石/比较解剖证据与细胞/分子证据是并列的两类共同祖先证据，不存在依赖。"
+        },
+        {
+          "edge": "cn_sh_bio_autonomic_nervous_regulation->cn_sh_bio_cortical_higher_activity",
+          "rationale_zh": "语言与条件反射等大脑皮层高级活动不依赖自主神经调节内脏；原边仅来自 1.3.5→1.3.6 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_bio_neuroendocrine_coordination->cn_sh_bio_humoral_respiratory_regulation",
+          "rationale_zh": "二氧化碳等体液成分对呼吸的调节不以神经—体液协调为前提；原边仅来自 1.4.3→1.4.4 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_bio_population_limiting_factors->cn_sh_bio_community_structure",
+          "rationale_zh": "群落垂直、水平结构不依赖种群影响因素；原边跨越种群与群落层次，仅来自相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_bio_ecological_resource_use->cn_sh_bio_ecological_pyramids",
+          "rationale_zh": "生态金字塔依赖能量流动与物质循环（该边已保留），不依赖资源利用实例。"
+        },
+        {
+          "edge": "cn_sh_bio_ecological_pyramids->cn_sh_bio_biomagnification",
+          "rationale_zh": "有害物质富集依赖食物链摄食关系（该边已保留），不依赖生态金字塔。"
+        },
+        {
+          "edge": "cn_sh_bio_biomagnification->cn_sh_bio_ecosystem_information_transfer",
+          "rationale_zh": "生态系统信息传递与有害物质富集无依赖；原边仅来自 2.2.6→2.2.7 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_bio_ecosystem_information_transfer->cn_sh_bio_trophic_structure_factors",
+          "rationale_zh": "营养结构的决定因素不依赖信息传递；原边仅来自 2.2.7→2.2.8 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_bio_population_environment_pressure->cn_sh_bio_global_environmental_change",
+          "rationale_zh": "全球气候变化、臭氧层破坏等环境问题不以人口压力为前提；二者并列。"
+        },
+        {
+          "edge": "cn_sh_bio_aseptic_technique->cn_sh_bio_selective_culture_media",
+          "rationale_zh": "调整培养基配方进行目的培养不依赖无菌技术；原边仅来自 3.1.2→3.1.3 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_bio_somatic_cell_nuclear_transfer->cn_sh_bio_animal_cell_fusion",
+          "rationale_zh": "动物细胞融合不依赖体细胞核移植；二者都以动物细胞培养为基础（该边已保留）。"
+        },
+        {
+          "edge": "cn_sh_bio_monoclonal_antibody_production->cn_sh_bio_stem_cell_applications",
+          "rationale_zh": "干细胞的生物医学应用不依赖单克隆抗体制备；原边仅来自 4.2.4→4.2.5 相邻顺序。"
+        }
+      ],
+      "edge_strength_changes": [],
+      "edge_adds": [],
+      "topic_coherence_zh": [],
+      "notes_zh": [
+        "75 个概念均对照《普通高中生物学课程标准（2017年版2025年修订）》内容要求原文核对；2025 修订（如内分泌腺列举调整、个别行为动词变化）不改变本图概念集合，相关措辞在课程框架层另行同步。"
+      ],
+      "edge_reason_rewrites": [
+        {
+          "edge": "cn_sh_bio_chromosomal_variation->cn_sh_bio_genetic_disease_screening",
+          "reason": "染色体异常遗传病（如 21 三体）的检测依赖先识别染色体结构与数量变异的类型。"
+        },
+        {
+          "edge": "cn_sh_bio_population_characteristics->cn_sh_bio_population_growth_models",
+          "reason": "建立种群数量变化模型要用到出生率、死亡率、迁入率和迁出率等种群特征。"
+        },
+        {
+          "edge": "cn_sh_bio_matter_cycles_energy_flow->cn_sh_bio_ecological_resource_use",
+          "reason": "科学利用生态系统资源需要先掌握物质循环与能量单向流动、逐级递减的规律。"
+        },
+        {
+          "edge": "cn_sh_bio_ecosystem_stability->cn_sh_bio_ecosystem_disturbances",
+          "reason": "分析气候变化、外来物种等干扰的影响，需要先理解生态系统稳定性的含义。"
+        },
+        {
+          "edge": "cn_sh_bio_microbial_isolation_methods->cn_sh_bio_microbial_counting_methods",
+          "reason": "用稀释涂布平板法计数需要先掌握该方法的稀释与涂布操作及单菌落形成原理。"
+        },
+        {
+          "edge": "cn_sh_bio_traditional_fermentation->cn_sh_bio_industrial_fermentation",
+          "reason": "现代发酵工程把传统发酵中利用微生物代谢的原理扩展为工业化、可控的生产过程。"
+        },
+        {
+          "edge": "cn_sh_bio_animal_cell_culture->cn_sh_bio_somatic_cell_nuclear_transfer",
+          "reason": "核移植得到的重组细胞需经体外培养发育成早期胚胎，动物细胞培养是其技术基础。"
+        }
+      ]
+    },
+    "senior_secondary_chemistry": {
+      "edge_rejects": [
+        {
+          "edge": "cn_sh_chem_organic_synthesis_value->cn_sh_chem_organic_synthesis_routes",
+          "rationale_zh": "认识“合成新物质是有机化学的价值”不是设计合成路线的前提；路线设计依赖反应类型与官能团转化（A-Level 图已有）。"
+        },
+        {
+          "edge": "cn_sh_chem_substance_classification_conversion->cn_sh_chem_element_valence_conversion",
+          "rationale_zh": "物质类别与元素价态是认识物质转化的两个并列维度（“价—类”二维），不存在先修依赖；原边仅来自 2.1 内部顺序。"
+        },
+        {
+          "edge": "cn_sh_chem_oxidising_reducing_agents->cn_sh_chem_electrolyte_ionisation",
+          "rationale_zh": "电解质电离不依赖氧化剂与还原剂；原边仅来自 2.2→2.3 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_chem_common_ion_tests->cn_sh_chem_sodium_compounds",
+          "rationale_zh": "钠及其化合物的性质不依赖离子检验；原边仅来自 2.3→2.4 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_chem_sodium_compounds->cn_sh_chem_iron_compounds",
+          "rationale_zh": "钠与铁是并列的元素化合物学习对象，不存在依赖；原边仅来自 2.4 内部顺序。"
+        },
+        {
+          "edge": "cn_sh_chem_nitrogen_compounds->cn_sh_chem_sulfur_compounds",
+          "rationale_zh": "氮与硫是并列的非金属元素化合物，不存在依赖；原边仅来自 2.5 内部顺序。"
+        },
+        {
+          "edge": "cn_sh_chem_organic_synthesis_value->cn_sh_chem_intro_macromolecule_applications",
+          "rationale_zh": "高分子、油脂、糖类、蛋白质的应用与“合成新物质的价值”并列，不存在依赖；原边仅来自 4.3 内部顺序。"
+        },
+        {
+          "edge": "cn_sh_chem_green_chemistry_principles->cn_sh_chem_chemistry_materials",
+          "rationale_zh": "化学与材料科学不依赖绿色化学思想；原边仅来自 5.1→5.2 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_chem_chemistry_materials->cn_sh_chem_chemistry_health",
+          "rationale_zh": "化学与健康不依赖化学与材料；原边仅来自 5.2 内部顺序。"
+        },
+        {
+          "edge": "cn_sh_chem_energy_resource_systems->cn_sh_chem_pollutant_detection_treatment",
+          "rationale_zh": "污染物检测与治理不依赖能源方案评价；原边仅来自 5.3→5.4 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_chem_clean_production_circularity->cn_sh_chem_chemical_rules_safe_use",
+          "rationale_zh": "遵守化学品与环保法规的意识不依赖清洁生产原理；原边仅来自 5.4→5.5 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_chem_transitional_mixed_crystals->cn_sh_chem_aggregation_state_materials",
+          "rationale_zh": "过渡晶体与聚集状态是 2.4 中并列的两点，不存在依赖。"
+        },
+        {
+          "edge": "cn_sh_chem_spectroscopy_xrd_methods->cn_sh_chem_structure_guided_material_design",
+          "rationale_zh": "依据结构—性质关系指导材料设计并不以掌握光谱/X 射线测定方法为前提；原边仅来自 3.2→3.3 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_chem_structure_guided_material_design->cn_sh_chem_structure_methods_life_science",
+          "rationale_zh": "结构理论支持生命科学研究与材料设计是 3.3 中并列的两点，不存在依赖。"
+        },
+        {
+          "edge": "cn_sh_chem_dna_rna->cn_sh_chem_synthetic_polymers_materials",
+          "rationale_zh": "合成高分子材料不依赖核酸结构；原边仅来自 3.2→3.3 相邻顺序。"
+        }
+      ],
+      "edge_strength_changes": [],
+      "edge_adds": [],
+      "topic_coherence_zh": [],
+      "notes_zh": [
+        "49 个概念均对照《普通高中化学课程标准（2017年版2025年修订）》内容要求原文核对；除上述 3 个证据调整外，2025 修订对本图概念范围无影响。"
+      ],
+      "edge_reason_rewrites": [
+        {
+          "edge": "cn_sh_chem_sulfur_compounds->cn_sh_chem_inorganic_conversion_pathways",
+          "reason": "设计无机物转化路径需要以硫等典型元素在不同价态间的转化（S→SO₂→SO₃→H₂SO₄）为具体依据。"
+        },
+        {
+          "edge": "cn_sh_chem_chemistry_sustainable_development->cn_sh_chem_green_chemistry_principles",
+          "reason": "绿色化学是实现化学可持续发展的具体取向，理解其原则需要先明确可持续发展的目标。"
+        },
+        {
+          "edge": "cn_sh_chem_fossil_resource_utilisation->cn_sh_chem_energy_resource_systems",
+          "reason": "评价自然资源与能源利用方案时，煤、石油、天然气的加工与综合利用是主要分析对象。"
+        },
+        {
+          "edge": "cn_sh_chem_water_ionisation_ph->cn_sh_chem_salt_hydrolysis",
+          "reason": "解释盐溶液呈酸性或碱性，需要先理解水的电离、离子积以及 pH 的含义。"
+        }
+      ]
+    },
+    "senior_secondary_mathematics": {
+      "edge_rejects": [
+        {
+          "edge": "cn_sh_math_trig_reduction_formulas->cn_sh_math_trig_product_sum_half_angle",
+          "rationale_zh": "积化和差、和差化积与半角公式由两角和差与倍角公式推出，诱导公式不是其前提。"
+        },
+        {
+          "edge": "cn_sh_math_logical_conditions->cn_sh_math_quantifiers_negation",
+          "rationale_zh": "全称/存在量词命题及其否定不依赖充分必要条件；原边仅来自主题一条目相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_math_quantifiers_negation->cn_sh_math_inequality_properties",
+          "rationale_zh": "不等式性质不依赖量词命题；原边跨越单元，仅来自条目相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_math_piecewise_functions->cn_sh_math_function_monotonicity",
+          "rationale_zh": "函数单调性不以分段函数为前提，且被错误标为硬前置；原边仅来自主题二条目相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_math_piecewise_functions->cn_sh_math_function_extrema",
+          "rationale_zh": "最大值与最小值不以分段函数为前提，且被错误标为硬前置。"
+        },
+        {
+          "edge": "cn_sh_math_function_monotonicity->cn_sh_math_function_parity",
+          "rationale_zh": "奇偶性与单调性是并列的函数性质，不存在依赖。"
+        },
+        {
+          "edge": "cn_sh_math_function_extrema->cn_sh_math_function_parity",
+          "rationale_zh": "奇偶性不依赖最大(小)值，二者并列。"
+        },
+        {
+          "edge": "cn_sh_math_function_parity->cn_sh_math_function_periodicity",
+          "rationale_zh": "周期性不依赖奇偶性，二者并列（课标要求结合三角函数理解周期性）。"
+        },
+        {
+          "edge": "cn_sh_math_function_periodicity->cn_sh_math_power_functions",
+          "rationale_zh": "幂函数不依赖周期性；原边跨越单元，仅来自条目相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_math_power_functions->cn_sh_math_real_exponents_laws",
+          "rationale_zh": "实数指数幂的运算性质不以幂函数为前提（若有依赖也应反向）；原边仅来自条目相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_math_trig_product_sum_half_angle->cn_sh_math_trig_modelling",
+          "rationale_zh": "三角函数建模使用 y=Asin(ωx+φ) 等模型，不依赖积化和差与半角变换，且被错误标为硬前置。"
+        },
+        {
+          "edge": "cn_sh_math_compare_growth_rates->cn_sh_math_interpret_model_parameters",
+          "rationale_zh": "参数解释依赖“选择函数模型”（该边已保留），对增长速度比较的依赖只是间接的；删除冗余的硬前置。"
+        },
+        {
+          "edge": "cn_sh_math_sine_cosine_laws->cn_sh_math_complex_introduction",
+          "rationale_zh": "复数与数系扩充不依赖正弦、余弦定理；原边跨越单元，仅来自条目相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_math_complex_argand_representation->cn_sh_math_complex_arithmetic",
+          "rationale_zh": "复数代数形式的四则运算不依赖复平面表示，且被错误标为硬前置。"
+        },
+        {
+          "edge": "cn_sh_math_complex_arithmetic->cn_sh_math_solid_structures",
+          "rationale_zh": "立体图形结构与复数运算无关；原边跨越单元，仅来自条目相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_math_complex_addition_geometry->cn_sh_math_solid_structures",
+          "rationale_zh": "立体图形结构与复数几何意义无关；原边跨越单元。"
+        },
+        {
+          "edge": "cn_sh_math_solid_surface_volume->cn_sh_math_oblique_drawings",
+          "rationale_zh": "斜二测直观图不依赖表面积与体积公式，且被错误标为硬前置。"
+        },
+        {
+          "edge": "cn_sh_math_oblique_drawings->cn_sh_math_spatial_axioms",
+          "rationale_zh": "点线面基本事实不依赖直观图画法；原边仅来自条目相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_math_spatial_parallel_properties->cn_sh_math_spatial_parallel_criteria",
+          "rationale_zh": "课标中判定定理由直观感知“归纳”，性质定理需“证明”，二者并列，判定不以性质为前提。"
+        },
+        {
+          "edge": "cn_sh_math_spatial_perpendicular_properties->cn_sh_math_spatial_parallel_criteria",
+          "rationale_zh": "平行判定不依赖垂直性质；原边仅来自条目相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_math_spatial_parallel_properties->cn_sh_math_spatial_perpendicular_criteria",
+          "rationale_zh": "垂直判定不依赖平行性质；原边仅来自条目相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_math_spatial_perpendicular_properties->cn_sh_math_spatial_perpendicular_criteria",
+          "rationale_zh": "垂直判定由直观归纳得到，并不以垂直性质定理为前提，二者并列。"
+        },
+        {
+          "edge": "cn_sh_math_distribution_percentiles->cn_sh_math_statistical_inference_uncertainty",
+          "rationale_zh": "统计推断的或然性（统计与确定性思维的区别）不依赖百分位数，且被错误标为硬前置。"
+        },
+        {
+          "edge": "cn_sh_math_conic_context->cn_sh_math_ellipse",
+          "rationale_zh": "了解圆锥曲线实际背景属于学习动机，不是椭圆定义与方程的前提。"
+        },
+        {
+          "edge": "cn_sh_math_ellipse->cn_sh_math_parabola",
+          "rationale_zh": "抛物线的定义与标准方程不依赖椭圆，二者并列依赖“解析几何数形结合”。"
+        },
+        {
+          "edge": "cn_sh_math_regression_prediction_limits->cn_sh_math_contingency_table",
+          "rationale_zh": "2×2 列联表不依赖一元线性回归；原边仅来自主题三条目相邻顺序。"
+        }
+      ],
+      "edge_strength_changes": [
+        {
+          "edge": "cn_sh_math_vector_applications->cn_sh_math_sine_cosine_laws",
+          "strength": "soft",
+          "rationale_zh": "课标要求借助向量运算探索三角形边角关系，依赖成立；但真正的前提是向量运算而非“向量应用”本身，降为软前置。"
+        },
+        {
+          "edge": "cn_sh_math_complex_algebraic_representation->cn_sh_math_complex_addition_geometry",
+          "strength": "soft",
+          "rationale_zh": "依赖经由“四则运算”与“复平面表示”间接成立，降为软前置。"
+        }
+      ],
+      "edge_adds": [],
+      "topic_coherence_zh": [],
+      "notes_zh": [
+        "70 个概念均对照《普通高中数学课程标准（2017年版2025年修订）》对应单元核对；2025 修订仅在个别要求等级（如平面向量基本定理“理解→掌握”、立体图形结构“认识→掌握”）上有变化，不改变本图概念集合。"
+      ],
+      "edge_reason_rewrites": [
+        {
+          "edge": "cn_sh_math_venn_diagrams->cn_sh_math_logical_conditions",
+          "reason": "充分、必要条件可用集合包含关系刻画，借助 Venn 图表达 A⊆B 有助于理解“p⇒q”。"
+        },
+        {
+          "edge": "cn_sh_math_vector_applications->cn_sh_math_sine_cosine_laws",
+          "reason": "课标要求借助向量运算探索三角形边角关系并推导余弦定理、正弦定理。"
+        },
+        {
+          "edge": "cn_sh_math_complex_introduction->cn_sh_math_complex_argand_representation",
+          "reason": "把复数表示为复平面上的点或向量，需要先认识复数的概念与数系扩充。"
+        },
+        {
+          "edge": "cn_sh_math_complex_algebraic_representation->cn_sh_math_complex_addition_geometry",
+          "reason": "在复平面解释加减的几何意义，需要先能用 a+bi 表示复数并区分实部与虚部。"
+        },
+        {
+          "edge": "cn_sh_math_spatial_axioms->cn_sh_math_spatial_parallel_properties",
+          "reason": "证明线面、面面平行的性质定理要以空间点、线、面的基本事实为推理起点。"
+        },
+        {
+          "edge": "cn_sh_math_spatial_axioms->cn_sh_math_spatial_perpendicular_properties",
+          "reason": "证明线面、面面垂直的性质定理要以空间点、线、面的基本事实为推理起点。"
+        },
+        {
+          "edge": "cn_sh_math_simple_random_sampling->cn_sh_math_stratified_sampling",
+          "reason": "分层随机抽样在各层内部实施简单随机抽样，并据此计算样本均值与方差。"
+        },
+        {
+          "edge": "cn_sh_math_ellipse->cn_sh_math_hyperbola",
+          "reason": "双曲线（距离之差为定值）的定义与标准方程推导可类比椭圆（距离之和为定值）完成。"
+        }
+      ]
+    },
+    "senior_secondary_physics": {
+      "edge_rejects": [
+        {
+          "edge": "cn_sh_physics_maxwell_field_theory->cn_sh_physics_electromagnetic_oscillation",
+          "rationale_zh": "LC 电磁振荡中电场能与磁场能的转换不以麦克斯韦理论为前提（课标亦先学振荡）；麦克斯韦理论真正支撑的是电磁波，改为新增“麦克斯韦理论→电磁波的发射、传播与接收”。"
+        },
+        {
+          "edge": "cn_sh_physics_friction->cn_sh_physics_force_composition_vectors",
+          "rationale_zh": "力的合成分解与矢量概念不依赖摩擦力；原边仅来自 1.2.1→1.2.2 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_physics_kinetic_energy_theorem->cn_sh_physics_gravitational_potential_energy",
+          "rationale_zh": "重力势能依赖重力做功（A-Level 图“功”），不依赖动能定理；原边仅来自 2.1.2→2.1.3 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_physics_relativistic_spacetime->cn_sh_physics_cosmic_evolution",
+          "rationale_zh": "宇宙起源与恒星演化的研究进展不以相对论时空观为前提；原边仅来自 2.3.2→2.3.3 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_physics_electrostatic_charge_conservation->cn_sh_physics_point_charge_model",
+          "rationale_zh": "点电荷模型是理想化条件判断，不依赖起电方式与电荷守恒，且被错误标为硬前置。"
+        },
+        {
+          "edge": "cn_sh_physics_electric_field_lines->cn_sh_physics_electrostatic_applications",
+          "rationale_zh": "静电利用与防护不依赖电场线描述；原边仅来自 3.1.3→3.1.4 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_physics_electrostatic_applications->cn_sh_physics_electric_potential_quantities",
+          "rationale_zh": "电势能、电势与电势差不依赖静电应用；原边仅来自 3.1.4→3.1.5 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_physics_charged_particle_electric_motion->cn_sh_physics_capacitance",
+          "rationale_zh": "电容器与电容不依赖带电粒子在电场中的运动；原边仅来自 3.1.5→3.1.6 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_physics_circuit_components->cn_sh_physics_resistance_geometry_material",
+          "rationale_zh": "电阻定律不依赖识别电路元件；原边仅来自 3.2.1→3.2.2 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_physics_closed_circuit_ohm->cn_sh_physics_electrical_work_power",
+          "rationale_zh": "电功与电功率（W=UIt、P=UI）不依赖闭合电路欧姆定律；原边仅来自 3.2.4→3.2.5 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_physics_renewable_energy_technologies->cn_sh_physics_nuclear_energy_intro",
+          "rationale_zh": "核裂变与核聚变不依赖水能、风能、太阳能利用方式；二者并列。"
+        },
+        {
+          "edge": "cn_sh_physics_renewable_environment->cn_sh_physics_pollution_sustainable_development",
+          "rationale_zh": "环境污染危害与协调发展意识不依赖能源分类，且被错误标为硬前置。"
+        },
+        {
+          "edge": "cn_sh_physics_simple_pendulum_period->cn_sh_physics_forced_vibration",
+          "rationale_zh": "受迫振动与共振依赖固有频率与简谐运动（A-Level 图已有），不依赖单摆周期公式。"
+        },
+        {
+          "edge": "cn_sh_physics_light_polarisation->cn_sh_physics_laser",
+          "rationale_zh": "激光特性不依赖偏振；原边仅来自 1.3.3→1.3.4 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_physics_self_induction->cn_sh_physics_eddy_currents",
+          "rationale_zh": "自感与涡流是并列的电磁感应现象，共同依赖法拉第定律与楞次定律。"
+        },
+        {
+          "edge": "cn_sh_physics_eddy_currents->cn_sh_physics_sinusoidal_ac",
+          "rationale_zh": "正弦交变电流不依赖涡流；原边仅来自 2.2.3→2.2.4 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_physics_high_voltage_transmission->cn_sh_physics_generator_motor_energy",
+          "rationale_zh": "发电机与电动机的能量转化不依赖远距离输电；原边仅来自 2.2.5→2.2.6 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_physics_diffusion_brownian->cn_sh_physics_molecular_speed_distribution",
+          "rationale_zh": "速率分布统计规律与扩散、布朗运动并列，共同依赖分子动理论（该边已保留）。"
+        },
+        {
+          "edge": "cn_sh_physics_molecular_speed_distribution->cn_sh_physics_crystalline_amorphous",
+          "rationale_zh": "晶体与非晶体不依赖分子速率分布；原边仅来自 3.1.2→3.1.3 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_physics_liquid_crystals->cn_sh_physics_semiconductor_materials",
+          "rationale_zh": "半导体材料不依赖液晶；原边仅来自 3.1.3→3.1.4 相邻顺序。"
+        },
+        {
+          "edge": "cn_sh_physics_semiconductor_materials->cn_sh_physics_nanomaterials",
+          "rationale_zh": "纳米材料与半导体是 3.1.4 下并列的材料实例，不存在依赖。"
+        },
+        {
+          "edge": "cn_sh_physics_atomic_nuclear_model->cn_sh_physics_fundamental_interactions",
+          "rationale_zh": "四种基本相互作用与原子核式结构模型无直接依赖；与核力的联系已由“原子核组成与核力→四种基本相互作用”表达。"
+        },
+        {
+          "edge": "cn_sh_physics_fundamental_interactions->cn_sh_physics_nuclear_reaction_equations",
+          "rationale_zh": "核反应方程依据质量数与电荷守恒，不依赖四种基本相互作用。"
+        }
+      ],
+      "edge_strength_changes": [],
+      "edge_adds": [
+        {
+          "from": "cn_sh_physics_maxwell_field_theory",
+          "to": "cn_sh_physics_em_wave_transmission",
+          "strength": "soft",
+          "reason": "电磁波的发射与传播以“变化的电场与磁场相互激发”这一麦克斯韦电磁场理论基本思想为基础。",
+          "evidence": [
+            "物理标准PDF p.31（正文对应内容要求 2.3.1），选择性必修 2",
+            "物理标准PDF p.31（正文对应内容要求 2.3.3），选择性必修 2"
+          ],
+          "rationale_zh": "替代被拒绝的“麦克斯韦理论→电磁振荡”。"
+        }
+      ],
+      "topic_coherence_zh": [],
+      "notes_zh": [
+        "73 个概念均对照《普通高中物理课程标准（2017年版2025年修订）》内容要求及其例子核对（如 2.3.2 例 1–2、2.3.3 例 3、3.1.4 例 3–4）；2025 修订对本图概念范围无影响。"
+      ],
+      "edge_reason_rewrites": [
+        {
+          "edge": "cn_sh_physics_gravitational_potential_energy->cn_sh_physics_elastic_potential_energy",
+          "reason": "弹性势能可类比“重力做功与重力势能变化”的关系来理解弹力做功与形变储能。"
+        },
+        {
+          "edge": "cn_sh_physics_newtonian_limits->cn_sh_physics_relativistic_spacetime",
+          "reason": "相对论时空观是为突破牛顿力学在高速情形下的局限而建立的。"
+        },
+        {
+          "edge": "cn_sh_physics_electric_potential_quantities->cn_sh_physics_charged_particle_electric_motion",
+          "reason": "用能量方法分析带电粒子在电场中的加速，需要用到电势差与电势能变化。"
+        },
+        {
+          "edge": "cn_sh_physics_joule_law->cn_sh_physics_household_electricity_safety",
+          "reason": "分析家庭电路过载发热、保险丝熔断等安全问题需要先掌握焦耳定律。"
+        },
+        {
+          "edge": "cn_sh_physics_electromagnetic_field_waves->cn_sh_physics_electromagnetic_wave_applications",
+          "reason": "讨论电磁波的通信等应用及其影响，需要先认识电磁波及电磁场的物质性。"
+        },
+        {
+          "edge": "cn_sh_physics_crystalline_amorphous->cn_sh_physics_liquid_crystals",
+          "reason": "液晶兼具液体流动性与晶体各向异性，理解它需要先认识晶体与非晶体的特点。"
+        },
+        {
+          "edge": "cn_sh_physics_nuclear_composition_force->cn_sh_physics_fundamental_interactions",
+          "reason": "核力（强相互作用）是四种基本相互作用之一，认识核力有助于理解基本相互作用的尺度差异。"
+        },
+        {
+          "edge": "cn_sh_physics_light_energy_quantisation->cn_sh_physics_matter_waves_quantisation",
+          "reason": "实物粒子波动性是把光的波粒二象性与能量量子化思想推广到实物粒子。"
+        }
+      ]
+    },
+    "singapore_h2_biology": {
+      "edge_rejects": [
+        {
+          "edge": "sg_h2_biology_second_messengers->sg_h2_biology_kinase_phosphatase_signalling",
+          "rationale_zh": "磷酸化级联可不经第二信使（如受体酪氨酸激酶通路）；两者都是信号转导阶段的组成部分，应共同依赖“信号传导阶段”，而非相互依赖。"
+        },
+        {
+          "edge": "sg_h2_biology_recessive_allele_persistence->sg_h2_biology_microevolution_macroevolution_link",
+          "rationale_zh": "微观—宏观进化的联系依赖等位基因频率变化（A-Level 图的自然选择/遗传漂变），不依赖“有害隐性等位基因如何被保留”。"
+        },
+        {
+          "edge": "sg_h2_biology_basic_reproduction_number->sg_h2_biology_outbreak_epidemic_pandemic",
+          "rationale_zh": "暴发、流行、大流行按传播范围定义，不需要先理解 R0；原边仅来自 A(j)→(k) 的相邻顺序。"
+        },
+        {
+          "edge": "sg_h2_biology_viral_genome_variation->sg_h2_biology_prokaryotic_horizontal_gene_transfer",
+          "rationale_zh": "原核水平基因转移与流感抗原漂移/转变是并列的变异来源，不存在依赖；原边仅来自 2(f)→(g) 的相邻顺序。"
+        },
+        {
+          "edge": "sg_h2_biology_prokaryotic_horizontal_gene_transfer->sg_h2_biology_noncoding_genome_elements",
+          "rationale_zh": "真核非编码 DNA 的结构与功能不依赖原核水平基因转移；原边仅来自 2(g)→(h) 的相邻顺序。"
+        },
+        {
+          "edge": "sg_h2_biology_multilevel_eukaryotic_gene_regulation->sg_h2_biology_southern_blot_hybridisation",
+          "rationale_zh": "Southern 印迹与核酸杂交依赖 DNA 结构、凝胶电泳与探针互补配对，不依赖真核基因表达调控；原边仅来自 2(i)→(j) 的相邻顺序。"
+        },
+        {
+          "edge": "sg_h2_biology_epistasis_problem_solving->sg_h2_biology_genotype_environment_phenotype",
+          "rationale_zh": "环境对表型的影响（如蜜蜂饮食与分化）不以上位性问题求解为前提；原边仅来自 2(aa)→(bb) 的相邻顺序。"
+        },
+        {
+          "edge": "sg_h2_biology_microevolution_macroevolution_link->sg_h2_biology_integrated_evolution_evidence",
+          "rationale_zh": "分子同源、化石与生物地理证据支持进化论，并不以“微观—宏观进化的联系”为前提；原边仅来自 4(f)→(g) 的相邻顺序。"
+        },
+        {
+          "edge": "sg_h2_biology_integrated_evolution_evidence->sg_h2_biology_biological_species_concept_limits",
+          "rationale_zh": "生物学物种概念及其局限不依赖进化证据的整合；原边仅来自 4(g)→(h) 的相邻顺序。"
+        },
+        {
+          "edge": "sg_h2_biology_antibody_diversity_mechanisms->sg_h2_biology_vaccination_population_control_tradeoffs",
+          "rationale_zh": "疫苗控制疾病依赖免疫记忆与群体覆盖（已由“适应性免疫细胞协同”提供），不依赖体细胞重组与类别转换机制。"
+        },
+        {
+          "edge": "sg_h2_biology_vaccination_population_control_tradeoffs->sg_h2_biology_viral_tissue_pathogenesis",
+          "rationale_zh": "流感与 HIV 的致病机制不以疫苗知识为前提；原边仅来自 A(f)→(g) 的相邻顺序。"
+        },
+        {
+          "edge": "sg_h2_biology_anthropogenic_carbon_footprints->sg_h2_biology_climate_stress_food_supply",
+          "rationale_zh": "气候压力对食物供应的影响不依赖不同活动碳足迹的比较；原边仅来自 B(d)→(e) 的相邻顺序。"
+        },
+        {
+          "edge": "sg_h2_biology_climate_stress_food_supply->sg_h2_biology_climate_ecological_redistribution",
+          "rationale_zh": "生境、食物链与生态位的重新分布不依赖食物供应分析，二者并列依赖“气候系统与生态影响”（该边已保留）。"
+        },
+        {
+          "edge": "sg_h2_biology_tropical_biodiversity_resources->sg_h2_biology_temperature_insect_vector_lifecycle",
+          "rationale_zh": "温度对昆虫代谢与蚊媒生命周期的影响不依赖热带生物多样性的资源价值；原边仅来自 B(g)→(h) 的相邻顺序。"
+        }
+      ],
+      "edge_strength_changes": [],
+      "edge_adds": [
+        {
+          "from": "sg_h2_biology_cell_signalling_stages",
+          "to": "sg_h2_biology_kinase_phosphatase_signalling",
+          "strength": "soft",
+          "reason": "解释激酶放大与磷酸酶终止信号前，需要先掌握“配体—受体结合、信号转导、细胞应答”三阶段框架。",
+          "evidence": [
+            "PDF p.18, topic 3 Energy and Equilibrium, outcome (m)",
+            "PDF p.18, topic 3 Energy and Equilibrium, outcome (o)"
+          ],
+          "rationale_zh": "替代被拒绝的“第二信使→激酶与磷酸酶”，保留真实依赖，避免该概念失去前置。"
+        }
+      ],
+      "topic_coherence_zh": [
+        "T2 干细胞潜能与染色体末端：干细胞与 DNA 末端复制问题无关",
+        "T5 遗传筛查与癌症控制：母体筛查伦理与细胞周期/癌变混在一起",
+        "T6 癌症进展与复杂遗传：癌症多步骤进展与上位性、G×E 混在一起",
+        "T8 受体通路与种群进化：胰岛素/胰高血糖素信号与种群进化混在一起"
+      ],
+      "notes_zh": [
+        "42 个概念均逐条对照 SEAB 9477 outcome 原文（topic 1–4 与拓展主题 A、B），排除边界（如不含转座子、卫星 DNA、Hfr、细胞内受体）与大纲一致。"
+      ],
+      "edge_reason_rewrites": [
+        {
+          "edge": "sg_h2_biology_stem_cell_potency->sg_h2_biology_stem_cell_normal_functions",
+          "reason": "解释胚胎干细胞与造血干细胞的正常功能，需要先用全能、多能、专能区分其分化潜能。"
+        },
+        {
+          "edge": "sg_h2_biology_climate_system_ecological_impacts->sg_h2_biology_mangrove_climate_mitigation",
+          "reason": "理解红树林如何缓解气候变化影响，需要先知道温室气体排放带来的海平面上升、极端天气等影响。"
+        }
+      ]
+    },
+    "singapore_h2_chemistry": {
+      "edge_rejects": [
+        {
+          "edge": "sg_h2_chemistry_acid_base_models_arrhenius_lewis->sg_h2_chemistry_base_dissociation_water_ionic_product",
+          "rationale_zh": "Kb、pKb、Kw 与 KaKb=Kw 依赖的是 Brønsted–Lowry 共轭酸碱框架（A-Level 图已有），而非 Arrhenius/Lewis 模型的选择；不构成先修。"
+        },
+        {
+          "edge": "sg_h2_chemistry_titration_curves_indicator_selection->sg_h2_chemistry_ocean_carbonate_buffer_acidification",
+          "rationale_zh": "缓冲作用与海洋酸化只依赖弱酸平衡与 Ka/Kb，并不以滴定曲线和指示剂选择为前提；原边仅来自 10.1(e)→(f) 的相邻顺序。"
+        }
+      ],
+      "edge_strength_changes": [],
+      "edge_adds": [],
+      "topic_coherence_zh": [],
+      "notes_zh": [
+        "18 个概念均逐条对应 SEAB 9476 outcome 原文（3(d)、4(a)(c)、7(e)(l)、8(k)、10.1(b)(d)(e)(f)、10.2(c)、11.3(b)、11.4(h)、11.5(b)(e)、11.10(g)、12(g)(j)(o)、13(c)(j)）。"
+      ]
+    },
+    "singapore_h2_mathematics": {
+      "edge_rejects": [
+        {
+          "edge": "sg_h2_math_formulate_equations->sg_h2_math_rational_quadratic_inequalities",
+          "rationale_zh": "求解 f(x)/g(x)>0 型分式不等式只需符号分析或图像法，不以“从情境建立方程”为前提；原边仅来自 1.3 条目相邻顺序。"
+        },
+        {
+          "edge": "sg_h2_math_recurrence_sequences->sg_h2_math_series_operations_convergence",
+          "rationale_zh": "级数加减、收敛与无穷和不依赖由 u(n+1)=f(u(n)) 生成数列；原边仅来自 2.1 条目相邻顺序。"
+        },
+        {
+          "edge": "sg_h2_math_complex_extension_roots->sg_h2_math_complex_mod_arg_conjugate",
+          "rationale_zh": "由笛卡尔形式求模与主辐角只依赖复数及其表示，不需要先会解有复根的二次方程；原边仅来自 4.1 条目相邻顺序。"
+        },
+        {
+          "edge": "sg_h2_math_normal_probabilities_parameters->sg_h2_math_linear_transform_moments",
+          "rationale_zh": "E(aX+b)、Var(aX+b) 的运算法则适用于任意随机变量，不以正态概率计算为前提；原边仅来自 6.3 条目相邻顺序。"
+        },
+        {
+          "edge": "sg_h2_math_pmcc_interpretation->sg_h2_math_least_squares_regression",
+          "rationale_zh": "最小二乘回归线的求法与解释不以积矩相关系数解释为前提；两者并列建立在散点图之上，原边仅来自 6.6 条目相邻顺序。"
+        }
+      ],
+      "edge_strength_changes": [
+        {
+          "edge": "sg_h2_math_one_two_tailed_tests->sg_h2_math_interpret_hypothesis_result",
+          "strength": "soft",
+          "rationale_zh": "依赖经由“单总体均值检验”间接成立，检验结论解释不能被单尾/双尾选择直接阻断，降为软前置。"
+        }
+      ],
+      "edge_adds": [],
+      "topic_coherence_zh": [],
+      "notes_zh": [
+        "33 个概念均对照 SEAB 9758 内容表（PDF p.6–13）逐项核对，包含/排除边界（如复数不含极坐标式、检验不含 Type I/II 术语）与大纲一致。"
+      ],
+      "edge_reason_rewrites": [
+        {
+          "edge": "sg_h2_math_vector_types_magnitude->sg_h2_math_collinearity_ratio",
+          "reason": "判断共线与使用比例定理都以位置向量和位移向量 b−a 的表示为基础。"
+        },
+        {
+          "edge": "sg_h2_math_hypothesis_test_concepts->sg_h2_math_one_mean_hypothesis_test",
+          "reason": "进行总体均值检验必须先理解原假设、备择假设、检验统计量、临界域与 p 值。"
+        },
+        {
+          "edge": "sg_h2_math_one_two_tailed_tests->sg_h2_math_interpret_hypothesis_result",
+          "reason": "在情境中解释检验结论时，需要结合所用的单尾或双尾备择假设说明结论方向。"
+        }
+      ]
+    },
+    "singapore_h2_physics": {
+      "edge_rejects": [
+        {
+          "edge": "sg_h2_physics_heisenberg_position_momentum_uncertainty->sg_h2_physics_infinite_square_well_states",
+          "rationale_zh": "19(i)(j) 的驻波解与能级公式只依赖波函数与边界条件，不依赖不确定性原理；原边仅来自 outcome 相邻顺序。"
+        }
+      ],
+      "edge_strength_changes": [],
+      "edge_adds": [],
+      "topic_coherence_zh": [],
+      "notes_zh": [
+        "8 个缺口概念均逐条对应 SEAB 9478 outcome 原文（19(f)–(j)、20(f)(g)(m)–(o)、4(h)、17(m)）。"
+      ],
+      "edge_reason_rewrites": [
+        {
+          "edge": "sg_h2_physics_wavefunction_probability_superposition->sg_h2_physics_heisenberg_position_momentum_uncertainty",
+          "reason": "“局域化粒子需要动量弥散”可由波函数的叠加（波包）理解，需要先掌握波函数与叠加。"
+        }
+      ]
+    },
+    "singapore_lower_secondary_science": {
+      "edge_rejects": [
+        {
+          "edge": "sg_lss_science_thermal_expansion_density->sg_lss_science_heat_transfer_mechanisms",
+          "rationale_zh": "传导、对流、辐射三种热传递方式并不以热胀冷缩与密度变化为前提；原边仅来自 topic 10 outcome 相邻顺序。"
+        },
+        {
+          "edge": "sg_lss_science_multicellular_transport_blood_exchange->sg_lss_science_plant_diffusion_transport",
+          "rationale_zh": "植物细胞的气体与矿质离子扩散不依赖人体血管交换知识；两者共同依赖“扩散”本身，原边仅来自 topic 15 outcome 相邻顺序。"
+        },
+        {
+          "edge": "sg_lss_science_contraception_mechanisms->sg_lss_science_sti_consequences_treatment",
+          "rationale_zh": "STI 的危害及抗生素只对细菌性 STI 有效，并不以避孕机制为前提；原边仅来自 topic 16 outcome 相邻顺序。"
+        }
+      ],
+      "edge_strength_changes": [],
+      "edge_adds": [],
+      "topic_coherence_zh": [],
+      "notes_zh": [
+        "32 个概念均已对照 MOE 2021 G2/G3 Lower Secondary Science（PDF p.33–52）的 learning outcomes 原文，范围与 G2 可选（*）标注一致。"
+      ],
+      "edge_reason_rewrites": [
+        {
+          "edge": "sg_lss_science_puberty_menstrual_cycle->sg_lss_science_contraception_mechanisms",
+          "reason": "理解部分避孕方法如何中断排卵或受精，需要先了解月经周期中相关结构的作用。"
+        }
+      ]
+    },
+    "singapore_secondary_mathematics": {
+      "edge_rejects": [
+        {
+          "edge": "sg_sec_math_personal_finance->sg_sec_math_motion_data_graphs",
+          "rationale_zh": "运动图像解释与个人金融无依赖关系；原边仅来自 G3 Secondary All 条目相邻顺序，且被错误标为硬前置。"
+        },
+        {
+          "edge": "sg_sec_math_prime_factorisation->sg_sec_math_real_number_operations",
+          "rationale_zh": "实数运算、数轴与大小比较不以质因数分解为前提；原边仅来自 Sec1 条目相邻顺序。"
+        },
+        {
+          "edge": "sg_sec_math_approximation_estimation->sg_sec_math_ratio",
+          "rationale_zh": "比与按比分配不依赖取整与估算；原边仅来自 Sec1 条目相邻顺序。"
+        },
+        {
+          "edge": "sg_sec_math_percentage->sg_sec_math_rate_speed",
+          "rationale_zh": "率、路程与速度不依赖百分数；原边仅来自 Sec1 条目相邻顺序。"
+        },
+        {
+          "edge": "sg_sec_math_rate_speed->sg_sec_math_algebra_notation_evaluation",
+          "rationale_zh": "代数记号与代入求值不依赖速度问题；原边跨越“数与代数”内不同分支，仅来自条目相邻顺序。"
+        },
+        {
+          "edge": "sg_sec_math_nth_term_patterns->sg_sec_math_linear_expressions",
+          "rationale_zh": "一次式运算与化简不以通项规律为前提；原边仅来自 Sec1 条目相邻顺序。"
+        },
+        {
+          "edge": "sg_sec_math_linear_expressions->sg_sec_math_coordinate_relationships",
+          "rationale_zh": "用坐标表示两变量关系不依赖一次式化简；原边仅来自 Sec1 条目相邻顺序。"
+        },
+        {
+          "edge": "sg_sec_math_polygon_properties->sg_sec_math_geometric_construction",
+          "rationale_zh": "尺规作图（中垂线、角平分线等）不以多边形性质为前提；原边仅来自 Sec1 条目相邻顺序。"
+        },
+        {
+          "edge": "sg_sec_math_geometric_construction->sg_sec_math_plane_mensuration",
+          "rationale_zh": "组合图形周长与面积计算不依赖几何作图；原边仅来自 Sec1 条目相邻顺序。"
+        },
+        {
+          "edge": "sg_sec_math_scale_proportion->sg_sec_math_algebra_expansion_identities",
+          "rationale_zh": "代数展开与恒等式不依赖比例尺；原边跨分支，仅来自 Sec2 条目相邻顺序。"
+        },
+        {
+          "edge": "sg_sec_math_algebra_expansion_identities->sg_sec_math_formula_rearrangement",
+          "rationale_zh": "改变公式主项依赖的是等式变形（解方程），而非展开恒等式；以新增“整数系数一元一次方程→改变公式主项”替代。"
+        },
+        {
+          "edge": "sg_sec_math_congruence_similarity_enlargement->sg_sec_math_pythagoras",
+          "rationale_zh": "勾股定理不依赖放缩作图；原边仅来自 Sec2 条目相邻顺序。"
+        },
+        {
+          "edge": "sg_sec_math_distribution_diagrams->sg_sec_math_central_tendency",
+          "rationale_zh": "平均数、中位数、众数的计算与选择不以点图/直方图/茎叶图为前提；原边仅来自 Sec2 条目相邻顺序。"
+        },
+        {
+          "edge": "sg_sec_math_standard_form->sg_sec_math_indices",
+          "rationale_zh": "方向不成立：A×10ⁿ（含负整数 n）以指数概念为基础，而指数律并不依赖标准式；原边仅来自条目相邻顺序。"
+        },
+        {
+          "edge": "sg_sec_math_tangent_gradient->sg_sec_math_quadratic_formula_complete_graph",
+          "rationale_zh": "公式法、配方法与图像法解二次方程不依赖切线估计斜率；以新增“展开与恒等式→公式/配方/图像法”替代。"
+        },
+        {
+          "edge": "sg_sec_math_geometric_construction->sg_sec_math_circle_chord_tangent",
+          "rationale_zh": "圆的弦与切线性质不依赖几何作图；原边仅来自 Sec3/4 条目相邻顺序。"
+        },
+        {
+          "edge": "sg_sec_math_spatial_trigonometry->sg_sec_math_circle_mensuration",
+          "rationale_zh": "弧长、扇形与弓形面积不依赖二维/三维三角问题；原边仅来自 Sec3/4 条目相邻顺序。"
+        },
+        {
+          "edge": "sg_sec_math_cumulative_box->sg_sec_math_standard_deviation_compare",
+          "rationale_zh": "标准差的计算与比较不依赖累积频数图与箱线图（已由“集中趋势”提供前置）；原边仅来自条目相邻顺序。"
+        },
+        {
+          "edge": "sg_sec_math_standard_deviation_compare->sg_sec_math_combined_probability",
+          "rationale_zh": "复合事件概率表示与标准差无依赖；原边跨越统计与概率分支，仅来自条目相邻顺序。"
+        },
+        {
+          "edge": "sg_sec_math_elementary_matrices->sg_sec_math_congruence_similarity_tests",
+          "rationale_zh": "三角形全等相似判定与矩阵无依赖；原边仅来自 Sec3/4 条目相邻顺序。"
+        },
+        {
+          "edge": "sg_sec_math_scale_proportion->sg_sec_math_linear_expressions",
+          "rationale_zh": "一次式运算不依赖比例尺；原边仅来自 G2 Sec2 条目相邻顺序。"
+        },
+        {
+          "edge": "sg_sec_math_linear_fractional_equations->sg_sec_math_linear_inequalities",
+          "rationale_zh": "一元一次不等式已依赖整数系数一次方程，并不需要含分数形式的方程；原边仅来自 G2 Sec2 条目相邻顺序。"
+        },
+        {
+          "edge": "sg_sec_math_geometric_construction->sg_sec_math_congruence_similarity_foundations",
+          "rationale_zh": "全等与相似的识别不依赖尺规作图；原边仅来自 G2 Sec2 条目相邻顺序。"
+        },
+        {
+          "edge": "sg_sec_math_congruence_similarity_foundations->sg_sec_math_pythagoras",
+          "rationale_zh": "勾股定理的应用与逆定理不依赖全等相似；原边仅来自 G2 Sec2 条目相邻顺序。"
+        },
+        {
+          "edge": "sg_sec_math_tangent_gradient->sg_sec_math_quadratic_factorisation_solve",
+          "rationale_zh": "因式分解法解二次方程不依赖切线估计斜率；以新增“因式分解→因式分解法解二次方程”替代。"
+        },
+        {
+          "edge": "sg_sec_math_formula_rearrangement->sg_sec_math_algebraic_fractions_add_subtract",
+          "rationale_zh": "代数分式加减依赖因式分解与分式乘除，不依赖改变公式主项；原边仅来自 G2 Sec3/4 条目相邻顺序。"
+        },
+        {
+          "edge": "sg_sec_math_algebraic_fractions_add_subtract->sg_sec_math_congruence_similarity_enlargement",
+          "rationale_zh": "放缩与比例作图与代数分式无依赖；原边跨越代数与几何分支，仅来自条目相邻顺序。"
+        }
+      ],
+      "edge_strength_changes": [],
+      "edge_adds": [
+        {
+          "from": "sg_sec_math_linear_integer_equations",
+          "to": "sg_sec_math_formula_rearrangement",
+          "strength": "soft",
+          "reason": "改变公式主项沿用解一次方程时的等式两边同时运算与逆运算思路。",
+          "evidence": [
+            "PDF p.28, g2 sec1, Linear equations with integer coefficients",
+            "PDF p.19, g3 sec2, Changing the subject of a formula"
+          ],
+          "rationale_zh": "替代被拒绝的“展开与恒等式→改变公式主项”。"
+        },
+        {
+          "from": "sg_sec_math_factorisation",
+          "to": "sg_sec_math_quadratic_factorisation_solve",
+          "strength": "hard",
+          "reason": "因式分解法解二次方程必须先把二次式写成因式乘积，再用零乘积性质。",
+          "evidence": [
+            "PDF p.19, g3 sec2, Linear and quadratic factorisation",
+            "PDF p.19, g3 sec2, Solving quadratics by factorisation"
+          ],
+          "rationale_zh": "补上真实硬依赖；原派生边“用切线估计斜率→因式分解法解二次方程”不成立。"
+        },
+        {
+          "from": "sg_sec_math_algebra_expansion_identities",
+          "to": "sg_sec_math_quadratic_formula_complete_graph",
+          "strength": "soft",
+          "reason": "配方法依赖完全平方恒等式的正反使用，公式法亦由配方推出。",
+          "evidence": [
+            "PDF p.19, g3 sec2, Expansion and algebraic identities",
+            "PDF p.21, g3 sec3 4, Solving quadratic equations by standard methods"
+          ],
+          "rationale_zh": "补上真实依赖；原派生边“用切线估计斜率→公式/配方/图像法”不成立。"
+        }
+      ],
+      "topic_coherence_zh": [],
+      "notes_zh": [
+        "53 个概念均对照 MOE 2020 G2/G3 Mathematics 内容表（PDF p.15–35）；派生边多数跨越“数与代数/几何与度量/统计与概率”分支，系条目相邻顺序造成。"
+      ],
+      "edge_reason_rewrites": [
+        {
+          "edge": "sg_sec_math_real_number_operations->sg_sec_math_approximation_estimation",
+          "reason": "按小数位或有效数字取整与估算，需要先能处理有理数与实数的运算和大小比较。"
+        },
+        {
+          "edge": "sg_sec_math_ratio->sg_sec_math_percentage",
+          "reason": "百分数是以 100 为基准的比，百分比变化与反向百分数建立在比与分数的理解上。"
+        },
+        {
+          "edge": "sg_sec_math_algebra_notation_evaluation->sg_sec_math_algebra_translation",
+          "reason": "把现实关系翻译为代数式，需要先理解用字母表示数及代数记号的约定。"
+        },
+        {
+          "edge": "sg_sec_math_algebra_translation->sg_sec_math_nth_term_patterns",
+          "reason": "写出规律的第 n 项需要先能把数量关系表示为含字母的代数式。"
+        },
+        {
+          "edge": "sg_sec_math_data_collection->sg_sec_math_statistical_representations",
+          "reason": "选择和解释统计图表，需要先完成数据收集、分类与制表。"
+        },
+        {
+          "edge": "sg_sec_math_factorisation->sg_sec_math_algebraic_fractions_multiply_divide",
+          "reason": "约简与乘除代数分式需要先对分子、分母进行因式分解。"
+        },
+        {
+          "edge": "sg_sec_math_congruence_similarity_foundations->sg_sec_math_congruence_similarity_enlargement",
+          "reason": "按比例因子放大或缩小图形，结果与原图相似，需要先理解对应角相等、对应边成比例。"
+        },
+        {
+          "edge": "sg_sec_math_quadratic_formula_complete_graph->sg_sec_math_fractional_quadratic_equations",
+          "reason": "分式方程去分母后得到一元二次方程，需要用公式法、配方法等求解。"
+        },
+        {
+          "edge": "sg_sec_math_circle_chord_tangent->sg_sec_math_circle_angles",
+          "reason": "切线与半径垂直等弦切性质在圆的角性质推理中反复使用。"
+        },
+        {
+          "edge": "sg_sec_math_triangle_properties->sg_sec_math_plane_mensuration",
+          "reason": "计算组合平面图形面积常把图形分割为三角形，需要先掌握三角形的边角性质。"
+        },
+        {
+          "edge": "sg_sec_math_linear_expressions->sg_sec_math_algebra_expansion_identities",
+          "reason": "展开代数式乘积需要先能熟练合并同类项、去括号和化简一次式。"
+        },
+        {
+          "edge": "sg_sec_math_quadratic_factorisation_solve->sg_sec_math_fractional_quadratic_equations",
+          "reason": "分式方程去分母后得到一元二次方程，可用因式分解法求解并检验分母限制。"
+        },
+        {
+          "edge": "sg_sec_math_congruence_similarity_foundations->sg_sec_math_right_triangle_trig",
+          "reason": "锐角三角比的定义依赖“相似直角三角形对应边之比相等”。"
+        }
+      ]
+    }
+  },
+  "cross_subject_edges": {
+    "edge_rejects": [
+      {
+        "edge": "a_level_biology:bio_water->senior_secondary_biology:cn_sh_bio_cellular_inorganic_salts",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_dna_structure->senior_secondary_biology:cn_sh_bio_organelle_coordination",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_passive_transport->senior_secondary_biology:cn_sh_bio_endocytosis_exocytosis",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_active_transport->senior_secondary_biology:cn_sh_bio_endocytosis_exocytosis",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_mitosis->senior_secondary_biology:cn_sh_bio_cell_differentiation",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_gene_control->senior_secondary_biology:cn_sh_bio_cell_senescence_death",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_translation->senior_secondary_biology:cn_sh_bio_epigenetic_phenomena",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_translation->senior_secondary_biology:cn_sh_bio_mutagens_cancer",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_linkage->senior_secondary_biology:cn_sh_bio_chromosomal_variation",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_chromosomes->senior_secondary_biology:cn_sh_bio_genetic_disease_screening",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_hormonal->senior_secondary_biology:cn_sh_bio_humoral_respiratory_regulation",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_kidney->senior_secondary_biology:cn_sh_bio_humoral_respiratory_regulation",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_antibodies->senior_secondary_biology:cn_sh_bio_innate_adaptive_immunity",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_ecosystems_niches->senior_secondary_biology:cn_sh_bio_ecological_succession",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_conservation->senior_secondary_biology:cn_sh_bio_ecological_pyramids",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_biodiversity_sampling->senior_secondary_biology:cn_sh_bio_ecological_engineering_circularity",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_conservation->senior_secondary_biology:cn_sh_bio_ecological_engineering_circularity",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_gene_tech->senior_secondary_biology:cn_sh_bio_animal_cell_fusion",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_antibodies->senior_secondary_biology:cn_sh_bio_stem_cell_applications",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_gene_tech->senior_secondary_biology:cn_sh_bio_gene_engineering_tools",
+        "rationale_zh": "起点概念的范围已覆盖终点概念（课程映射已表达覆盖关系），作为先修边会在目标限定课程中重复引入同一内容。"
+      },
+      {
+        "edge": "a_level_chemistry:che_oxidation_number->senior_secondary_chemistry:cn_sh_chem_colloidal_dispersions",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_oxidation_number->senior_secondary_chemistry:cn_sh_chem_electrolyte_ionisation",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_bronsted->senior_secondary_chemistry:cn_sh_chem_ionic_reaction_conditions",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_group17->senior_secondary_chemistry:cn_sh_chem_nitrogen_compounds",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_nitrogen_sulfur->senior_secondary_chemistry:cn_sh_chem_sulfur_compounds",
+        "rationale_zh": "起点概念的范围已覆盖终点概念（课程映射已表达覆盖关系），作为先修边会在目标限定课程中重复引入同一内容。"
+      },
+      {
+        "edge": "a_level_chemistry:che_redox_equations->senior_secondary_chemistry:cn_sh_chem_fuel_battery_evaluation",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_mechanism_types->senior_secondary_chemistry:cn_sh_chem_organic_synthesis_value",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_addition_polymer->senior_secondary_chemistry:cn_sh_chem_organic_synthesis_value",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_alcohol_oxidation->senior_secondary_chemistry:cn_sh_chem_organic_synthesis_value",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_alkenes->senior_secondary_chemistry:cn_sh_chem_energy_resource_systems",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_benzene->senior_secondary_chemistry:cn_sh_chem_energy_resource_systems",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_enthalpy->senior_secondary_chemistry:cn_sh_chem_internal_energy_state",
+        "rationale_zh": "方向不成立：终点概念比起点概念更基础。"
+      },
+      {
+        "edge": "a_level_chemistry:che_cells->senior_secondary_chemistry:cn_sh_chem_internal_energy_state",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_rds->senior_secondary_chemistry:cn_sh_chem_industrial_condition_optimisation",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_strong_weak->senior_secondary_chemistry:cn_sh_chem_water_ionisation_ph",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_ph_ka->senior_secondary_chemistry:cn_sh_chem_water_ionisation_ph",
+        "rationale_zh": "起点概念的范围已覆盖终点概念（课程映射已表达覆盖关系），作为先修边会在目标限定课程中重复引入同一内容。"
+      },
+      {
+        "edge": "a_level_chemistry:che_vsepr->senior_secondary_chemistry:cn_sh_chem_spectroscopy_xrd_methods",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_ir->senior_secondary_chemistry:cn_sh_chem_structure_guided_material_design",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_nmr->senior_secondary_chemistry:cn_sh_chem_structure_guided_material_design",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_nomenclature->senior_secondary_chemistry:cn_sh_chem_functional_group_properties_conversion",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_addition_polymer->senior_secondary_chemistry:cn_sh_chem_carbohydrates",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_amino_acids->senior_secondary_chemistry:cn_sh_chem_dna_rna",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_functions->senior_secondary_mathematics:cn_sh_math_function_representations",
+        "rationale_zh": "方向不成立：终点概念比起点概念更基础。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_trig_identities->senior_secondary_mathematics:cn_sh_math_trig_modelling",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_double_angle->senior_secondary_mathematics:cn_sh_math_trig_modelling",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_locate_roots->senior_secondary_mathematics:cn_sh_math_choose_function_models",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_scalar_product->senior_secondary_mathematics:cn_sh_math_plane_vector_basis_coordinates",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_argand->senior_secondary_mathematics:cn_sh_math_complex_arithmetic",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_complex_arith->senior_secondary_mathematics:cn_sh_math_solid_structures",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_prob_rules->senior_secondary_mathematics:cn_sh_math_frequency_probability",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_central_spread->senior_secondary_mathematics:cn_sh_math_sampling_design",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_data_rep->senior_secondary_mathematics:cn_sh_math_statistical_inference_uncertainty",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_central_spread->senior_secondary_mathematics:cn_sh_math_statistical_inference_uncertainty",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_product_quotient->senior_secondary_mathematics:cn_sh_math_simple_linear_composites",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_circles->senior_secondary_mathematics:cn_sh_math_conic_context",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_straight_lines->senior_secondary_mathematics:cn_sh_math_conic_context",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_continuous_random_variables->senior_secondary_mathematics:cn_sh_math_sample_correlation",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_normal_dist->senior_secondary_mathematics:cn_sh_math_sample_correlation",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_discrete_rv->senior_secondary_mathematics:cn_sh_math_sample_correlation",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "discrete_math_and_probability:event_independence->senior_secondary_mathematics:cn_sh_math_data_sources_population",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "discrete_math_and_probability:continuous_random_variables->senior_secondary_mathematics:cn_sh_math_sample_correlation",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "discrete_math_and_probability:normal_distribution->senior_secondary_mathematics:cn_sh_math_sample_correlation",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "discrete_math_and_probability:discrete_random_variables->senior_secondary_mathematics:cn_sh_math_sample_correlation",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "machine_learning:ml_linear_reg->senior_secondary_mathematics:cn_sh_math_regression_prediction_limits",
+        "rationale_zh": "方向不成立：终点概念比起点概念更基础。（大学机器学习中的线性回归以高中回归为基础）"
+      },
+      {
+        "edge": "machine_learning:ml_linear_reg->senior_secondary_mathematics:cn_sh_math_contingency_table",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "mit_calculus:c_1801_curve_sketching->senior_secondary_mathematics:cn_sh_math_derivative_optimisation",
+        "rationale_zh": "起点为大学课程概念，且终点已由 A-Level 同类概念提供先修（第 122、126 条），属于冗余跨层级先修。"
+      },
+      {
+        "edge": "mit_calculus:c_1802_lines_planes->senior_secondary_mathematics:cn_sh_math_vector_geometry_proofs",
+        "rationale_zh": "起点为大学课程概念，且终点已由 A-Level 同类概念提供先修（第 122、126 条），属于冗余跨层级先修。"
+      },
+      {
+        "edge": "numerical_analysis:c_mit18330_bisection->senior_secondary_mathematics:cn_sh_math_choose_function_models",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_newton_laws->senior_secondary_physics:cn_sh_physics_capacitance",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_physics:phy_hookes_law->senior_secondary_physics:cn_sh_physics_friction",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_physics:phy_power_efficiency->senior_secondary_physics:cn_sh_physics_kinetic_energy_theorem",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_physics:phy_ke_pe->senior_secondary_physics:cn_sh_physics_gravitational_potential_energy",
+        "rationale_zh": "起点概念的范围已覆盖终点概念（课程映射已表达覆盖关系），作为先修边会在目标限定课程中重复引入同一内容。"
+      },
+      {
+        "edge": "a_level_physics:phy_ke_pe->senior_secondary_physics:cn_sh_physics_elastic_potential_energy",
+        "rationale_zh": "起点概念的范围已覆盖终点概念（课程映射已表达覆盖关系），作为先修边会在目标限定课程中重复引入同一内容。"
+      },
+      {
+        "edge": "a_level_physics:phy_e_field_strength->senior_secondary_physics:cn_sh_physics_electrostatic_applications",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_physics:phy_e_field_strength->senior_secondary_physics:cn_sh_physics_capacitance",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_physics:phy_newton_laws->senior_secondary_physics:cn_sh_physics_capacitance",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_physics:phy_superposition_principle->senior_secondary_physics:cn_sh_physics_doppler_effect",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_physics:phy_diffraction->senior_secondary_physics:cn_sh_physics_doppler_effect",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_physics:phy_interference->senior_secondary_physics:cn_sh_physics_light_polarisation",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_physics:phy_diffraction->senior_secondary_physics:cn_sh_physics_light_polarisation",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_physics:phy_transformers->senior_secondary_physics:cn_sh_physics_generator_motor_energy",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_physics:phy_kinetic_theory->senior_secondary_physics:cn_sh_physics_crystalline_amorphous",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_physics:phy_energy_levels->senior_secondary_physics:cn_sh_physics_atomic_nuclear_model",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_physics:phy_energy_levels->senior_secondary_physics:cn_sh_physics_nuclear_composition_force",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_physics:phy_nuclear_structure->senior_secondary_physics:cn_sh_physics_fundamental_interactions",
+        "rationale_zh": "起点“原子核结构”与本图“原子核式结构模型”为同一 canonical 概念；同图对应边已判定不成立。"
+      },
+      {
+        "edge": "a_level_physics:phy_photoelectric->senior_secondary_physics:cn_sh_physics_matter_waves_quantisation",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_physics:phy_photon->senior_secondary_physics:cn_sh_physics_matter_waves_quantisation",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_physics:phy_wave_particle->senior_secondary_physics:cn_sh_physics_matter_waves_quantisation",
+        "rationale_zh": "两端为同一 canonical 概念（实物粒子波动性/波粒二象性），不应表示为先修关系。"
+      },
+      {
+        "edge": "a_level_biology:bio_enzyme_inhibition->singapore_h2_biology:sg_h2_biology_stem_cell_potency",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_rna_structure->singapore_h2_biology:sg_h2_biology_dna_end_replication_problem",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_transcription->singapore_h2_biology:sg_h2_biology_comparative_genome_architecture",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_translation->singapore_h2_biology:sg_h2_biology_comparative_genome_architecture",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_linkage->singapore_h2_biology:sg_h2_biology_epistasis_problem_solving",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_light_dependent->singapore_h2_biology:sg_h2_biology_cell_signalling_stages",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_oxidative->singapore_h2_biology:sg_h2_biology_cell_signalling_stages",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_immune_response->singapore_h2_biology:sg_h2_biology_adaptive_immune_cell_coordination",
+        "rationale_zh": "起点概念的范围已覆盖终点概念（课程映射已表达覆盖关系），作为先修边会在目标限定课程中重复引入同一内容。"
+      },
+      {
+        "edge": "a_level_biology:bio_antibiotics->singapore_h2_biology:sg_h2_biology_basic_reproduction_number",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_calorimetry->singapore_h2_chemistry:sg_h2_chemistry_lattice_energy_ionic_factors",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_nitrogen_sulfur->singapore_h2_chemistry:sg_h2_chemistry_enzyme_catalysis_specificity_conditions",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_electrophilic_sub->singapore_h2_chemistry:sg_h2_chemistry_combustion_pollutants_greenhouse",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_elimination->singapore_h2_chemistry:sg_h2_chemistry_nucleophilic_substitution_stereochemistry",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_nitriles->singapore_h2_chemistry:sg_h2_chemistry_nucleophilic_substitution_stereochemistry",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_amines->singapore_h2_chemistry:sg_h2_chemistry_nucleophilic_substitution_stereochemistry",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_nucleophilic_sub->singapore_h2_chemistry:sg_h2_chemistry_halocarbon_environmental_impacts",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_condensation_polymer->singapore_h2_chemistry:sg_h2_chemistry_polymer_recycling_sustainability",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_chemistry:che_gibbs->singapore_h2_chemistry:sg_h2_chemistry_electrode_potential_concentration_trends",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_graph_transformations->singapore_h2_mathematics:sg_h2_math_parametric_graphs",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_modulus->singapore_h2_mathematics:sg_h2_math_parametric_graphs",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_functions->singapore_h2_mathematics:sg_h2_math_parametric_graphs",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_simultaneous->singapore_h2_mathematics:sg_h2_math_rational_quadratic_inequalities",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_complex_loci->singapore_h2_mathematics:sg_h2_math_complex_mod_arg_conjugate",
+        "rationale_zh": "方向不成立：终点概念比起点概念更基础。（A-Level 复数轨迹以模与辐角为基础）"
+      },
+      {
+        "edge": "a_level_mathematics:mat_normal_dist->singapore_h2_mathematics:sg_h2_math_linear_transform_moments",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_sampling->singapore_h2_mathematics:sg_h2_math_one_two_tailed_tests",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_normal_dist->singapore_h2_mathematics:sg_h2_math_one_two_tailed_tests",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "discrete_math_and_probability:normal_distribution->singapore_h2_mathematics:sg_h2_math_linear_transform_moments",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "discrete_math_and_probability:normal_distribution->singapore_h2_mathematics:sg_h2_math_one_two_tailed_tests",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "mit_calculus:c_1801_sequences->singapore_h2_mathematics:sg_h2_math_recurrence_sequences",
+        "rationale_zh": "大学课程“序列与级数”不是递推数列的先修，且已有中国课标“数列概念与表示”提供先修。"
+      },
+      {
+        "edge": "senior_secondary_mathematics:cn_sh_math_sample_correlation->singapore_h2_mathematics:sg_h2_math_pmcc_interpretation",
+        "rationale_zh": "起点概念的范围已覆盖终点概念（课程映射已表达覆盖关系），作为先修边会在目标限定课程中重复引入同一内容。"
+      },
+      {
+        "edge": "senior_secondary_mathematics:cn_sh_math_sample_correlation->singapore_h2_mathematics:sg_h2_math_least_squares_regression",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "senior_secondary_physics:cn_sh_physics_matter_waves_quantisation->singapore_h2_physics:sg_h2_physics_wavefunction_probability_superposition",
+        "rationale_zh": "与另一条跨图边指向同一 canonical 概念对，属于重复表达。（与第 290 条相同）"
+      },
+      {
+        "edge": "senior_secondary_physics:cn_sh_physics_radioisotope_application_safety->singapore_h2_physics:sg_h2_physics_nuclear_equations_conservation",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_passive_transport->singapore_lower_secondary_science:sg_lss_science_particle_model_thermal_changes",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_conservation->singapore_lower_secondary_science:sg_lss_science_ecosystem_factors_adaptation_interactions",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_xylem->singapore_lower_secondary_science:sg_lss_science_multicellular_transport_blood_exchange",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_biology:bio_phloem->singapore_lower_secondary_science:sg_lss_science_multicellular_transport_blood_exchange",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_physics:phy_pd_emf->singapore_lower_secondary_science:sg_lss_science_current_chemical_heating_effects",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_physics:phy_pd_emf->singapore_lower_secondary_science:sg_lss_science_current_magnetic_effect",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_physics:phy_resistance_ohm->singapore_lower_secondary_science:sg_lss_science_current_magnetic_effect",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "senior_secondary_biology:cn_sh_bio_fertilisation_early_embryo->singapore_lower_secondary_science:sg_lss_science_sexual_reproduction_heredity_anatomy",
+        "rationale_zh": "方向不成立：终点概念比起点概念更基础。（初中“生殖结构与受精”比高中“受精与早期胚胎发育”更基础）"
+      },
+      {
+        "edge": "senior_secondary_physics:cn_sh_physics_diffusion_brownian->singapore_lower_secondary_science:sg_lss_science_particle_model_thermal_changes",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "senior_secondary_physics:cn_sh_physics_atomic_nuclear_model->singapore_lower_secondary_science:sg_lss_science_atomic_identity_mass",
+        "rationale_zh": "与另一条跨图边指向同一 canonical 概念对，属于重复表达。（与第 301 条相同）"
+      },
+      {
+        "edge": "a_level_mathematics:mat_straight_lines->singapore_secondary_mathematics:sg_sec_math_linear_fractional_equations",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_quadratics->singapore_secondary_mathematics:sg_sec_math_linear_inequalities",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_simultaneous->singapore_secondary_mathematics:sg_sec_math_quadratic_factorisation_solve",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_simultaneous->singapore_secondary_mathematics:sg_sec_math_congruence_similarity_foundations",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_exp_func->singapore_secondary_mathematics:sg_sec_math_tangent_gradient",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_straight_lines->singapore_secondary_mathematics:sg_sec_math_quartiles_spread",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_parallel_perp->singapore_secondary_mathematics:sg_sec_math_quartiles_spread",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_prob_rules->singapore_secondary_mathematics:sg_sec_math_linear_inequalities",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_simultaneous->singapore_secondary_mathematics:sg_sec_math_polygon_properties",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_quadratics->singapore_secondary_mathematics:sg_sec_math_congruence_similarity_foundations",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "discrete_math_and_probability:event_independence->singapore_secondary_mathematics:sg_sec_math_linear_inequalities",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。"
+      },
+      {
+        "edge": "senior_secondary_mathematics:cn_sh_math_solid_surface_volume->singapore_secondary_mathematics:sg_sec_math_data_collection",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。（且起点为高中概念、终点为初中概念）"
+      },
+      {
+        "edge": "senior_secondary_mathematics:cn_sh_math_solid_surface_volume->singapore_secondary_mathematics:sg_sec_math_distribution_diagrams",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。（且起点为高中概念、终点为初中概念）"
+      },
+      {
+        "edge": "senior_secondary_mathematics:cn_sh_math_venn_diagrams->singapore_secondary_mathematics:sg_sec_math_elementary_matrices",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。（且起点为高中概念、终点为初中概念）"
+      },
+      {
+        "edge": "senior_secondary_mathematics:cn_sh_math_set_membership_representation->singapore_secondary_mathematics:sg_sec_math_elementary_matrices",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。（且起点为高中概念、终点为初中概念）"
+      },
+      {
+        "edge": "senior_secondary_mathematics:cn_sh_math_set_relations_special_sets->singapore_secondary_mathematics:sg_sec_math_elementary_matrices",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。（且起点为高中概念、终点为初中概念）"
+      },
+      {
+        "edge": "senior_secondary_mathematics:cn_sh_math_set_operations->singapore_secondary_mathematics:sg_sec_math_elementary_matrices",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。（且起点为高中概念、终点为初中概念）"
+      },
+      {
+        "edge": "singapore_h2_mathematics:sg_h2_math_formulate_equations->singapore_secondary_mathematics:sg_sec_math_angle_relationships",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。（且起点为 H2 预科概念、终点为初中概念，方向倒置）"
+      },
+      {
+        "edge": "singapore_h2_mathematics:sg_h2_math_formulate_equations->singapore_secondary_mathematics:sg_sec_math_congruence_similarity_foundations",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。（且起点为 H2 预科概念、终点为初中概念，方向倒置）"
+      },
+      {
+        "edge": "singapore_h2_mathematics:sg_h2_math_formulate_equations->singapore_secondary_mathematics:sg_sec_math_congruence_similarity_enlargement",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。（且起点为 H2 预科概念、终点为初中概念，方向倒置）"
+      },
+      {
+        "edge": "singapore_h2_mathematics:sg_h2_math_formulate_equations->singapore_secondary_mathematics:sg_sec_math_polygon_properties",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。（且起点为 H2 预科概念、终点为初中概念，方向倒置）"
+      },
+      {
+        "edge": "singapore_h2_mathematics:sg_h2_math_formulate_equations->singapore_secondary_mathematics:sg_sec_math_factorisation",
+        "rationale_zh": "仅来自官方大纲条目相邻顺序，两概念间不存在学习依赖。（且起点为 H2 预科概念、终点为初中概念，方向倒置）"
+      }
+    ],
+    "edge_strength_changes": [
+      {
+        "edge": "a_level_mathematics:mat_exp_func->senior_secondary_mathematics:cn_sh_math_interpret_model_parameters",
+        "strength": "soft",
+        "rationale_zh": "依赖成立但并非“无此前提无法开始”，派生时依据认知动词误标为硬前置，降为软前置。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_log_laws->senior_secondary_mathematics:cn_sh_math_interpret_model_parameters",
+        "strength": "soft",
+        "rationale_zh": "依赖成立但并非“无此前提无法开始”，派生时依据认知动词误标为硬前置，降为软前置。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_scalar_product->senior_secondary_mathematics:cn_sh_math_vector_applications",
+        "strength": "soft",
+        "rationale_zh": "依赖成立但并非“无此前提无法开始”，派生时依据认知动词误标为硬前置，降为软前置。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_vector_basics->senior_secondary_mathematics:cn_sh_math_sine_cosine_laws",
+        "strength": "soft",
+        "rationale_zh": "依赖成立但并非“无此前提无法开始”，派生时依据认知动词误标为硬前置，降为软前置。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_scalar_product->senior_secondary_mathematics:cn_sh_math_sine_cosine_laws",
+        "strength": "soft",
+        "rationale_zh": "依赖成立但并非“无此前提无法开始”，派生时依据认知动词误标为硬前置，降为软前置。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_sampling->senior_secondary_mathematics:cn_sh_math_simple_random_sampling",
+        "strength": "soft",
+        "rationale_zh": "依赖成立但并非“无此前提无法开始”，派生时依据认知动词误标为硬前置，降为软前置。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_sampling->senior_secondary_mathematics:cn_sh_math_stratified_sampling",
+        "strength": "soft",
+        "rationale_zh": "依赖成立但并非“无此前提无法开始”，派生时依据认知动词误标为硬前置，降为软前置。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_central_spread->senior_secondary_mathematics:cn_sh_math_stratified_sampling",
+        "strength": "soft",
+        "rationale_zh": "依赖成立但并非“无此前提无法开始”，派生时依据认知动词误标为硬前置，降为软前置。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_sampling->senior_secondary_mathematics:cn_sh_math_sampling_design",
+        "strength": "soft",
+        "rationale_zh": "依赖成立但并非“无此前提无法开始”，派生时依据认知动词误标为硬前置，降为软前置。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_central_spread->senior_secondary_mathematics:cn_sh_math_distribution_percentiles",
+        "strength": "soft",
+        "rationale_zh": "依赖成立但并非“无此前提无法开始”，派生时依据认知动词误标为硬前置，降为软前置。"
+      },
+      {
+        "edge": "a_level_physics:phy_motion_graphs->senior_secondary_physics:cn_sh_physics_free_fall",
+        "strength": "soft",
+        "rationale_zh": "依赖成立但并非“无此前提无法开始”，派生时依据认知动词误标为硬前置，降为软前置。"
+      },
+      {
+        "edge": "a_level_physics:phy_current_charge->senior_secondary_physics:cn_sh_physics_point_charge_model",
+        "strength": "soft",
+        "rationale_zh": "依赖成立但并非“无此前提无法开始”，派生时依据认知动词误标为硬前置，降为软前置。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_vector_magnitude->singapore_h2_mathematics:sg_h2_math_collinearity_ratio",
+        "strength": "soft",
+        "rationale_zh": "依赖成立但并非“无此前提无法开始”，派生时依据认知动词误标为硬前置，降为软前置。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_scalar_product->singapore_h2_mathematics:sg_h2_math_relative_positions_3d",
+        "strength": "soft",
+        "rationale_zh": "依赖成立但并非“无此前提无法开始”，派生时依据认知动词误标为硬前置，降为软前置。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_prob_rules->singapore_h2_mathematics:sg_h2_math_probability_representations",
+        "strength": "soft",
+        "rationale_zh": "依赖成立但并非“无此前提无法开始”，派生时依据认知动词误标为硬前置，降为软前置。"
+      },
+      {
+        "edge": "a_level_mathematics:mat_continuous_random_variables->singapore_h2_mathematics:sg_h2_math_normal_probabilities_parameters",
+        "strength": "soft",
+        "rationale_zh": "依赖成立但并非“无此前提无法开始”，派生时依据认知动词误标为硬前置，降为软前置。"
+      },
+      {
+        "edge": "discrete_math_and_probability:continuous_random_variables->singapore_h2_mathematics:sg_h2_math_normal_probabilities_parameters",
+        "strength": "soft",
+        "rationale_zh": "依赖成立但并非“无此前提无法开始”，派生时依据认知动词误标为硬前置，降为软前置。"
+      },
+      {
+        "edge": "mit_calculus:c_1802_lines_planes->singapore_h2_mathematics:sg_h2_math_point_line_plane_distance",
+        "strength": "soft",
+        "rationale_zh": "依赖成立但并非“无此前提无法开始”，派生时依据认知动词误标为硬前置，降为软前置。"
+      },
+      {
+        "edge": "mit_calculus:c_1802_lines_planes->singapore_h2_mathematics:sg_h2_math_relative_positions_3d",
+        "strength": "soft",
+        "rationale_zh": "依赖成立但并非“无此前提无法开始”，派生时依据认知动词误标为硬前置，降为软前置。"
+      },
+      {
+        "edge": "mit_calculus:c_1801_power_series->singapore_h2_mathematics:sg_h2_math_series_approximations",
+        "strength": "soft",
+        "rationale_zh": "依赖成立但并非“无此前提无法开始”，派生时依据认知动词误标为硬前置，降为软前置。"
+      }
+    ],
+    "notes_zh": [
+      "337 条跨图派生边逐条按“学习终点概念是否需要先掌握起点概念”判定；运行时仅用于目标限定课程的确定性先修目标选择。"
+    ]
+  },
+  "open_items_zh": [
+    "RSC 2016 实证标注：项目所有者决定保留（未取得全文复核）。",
+    "H2 生物主题已按所有者决定重组。",
+    "层级错配已按所有者决定新增 4 个同层级概念（所有者已过目，2026-10-25 随本包一并批准）。"
+  ]
+}

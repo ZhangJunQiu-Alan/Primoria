@@ -51,8 +51,12 @@ Agent startup respects inherited environment and does not run DDL; root
 `pnpm db:initialize:kg` imports all 31 graphs and calls the embedding provider.
 Do not repeat it just to start the app. The September 29 migration reused 2,035
 local MiniMax vectors after verifying every node key, embedding input text and
-model version against current sources. Ten registered China/Singapore graphs
-still have source status `needs_review`; import does not approve them.
+model version against current sources. On October 25 the ten approved
+China/Singapore graphs and the 234 cross-graph edges were re-imported with
+`db:seed:kg <graph>` / `db:seed:kg-cross`, and the four graphs whose embedding
+inputs changed were re-embedded with `db:seed:kg-embeddings <graph>` (2,043
+vectors); a read-only comparison then found no row or `embed_text` drift across
+all 31 graphs. Import never changes review status.
 
 ## Role and API boundary
 

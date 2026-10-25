@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "content_version": "0.1.0",
+  "content_version": "0.1.1",
   "gap_set_id": "cgs_sg_seab_h2_math_9758_2026_outcomes",
   "framework_id": "cfw_sg_seab_h2_math_9758_2026_outcomes",
   "curriculum_id": "cur_sg_seab_h2_math_9758_2026",
@@ -9,12 +9,17 @@
     "src_sg_seab_h2_math_9758_2026"
   ],
   "generated_at": "2026-07-19",
-  "review_status": "needs_review",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "0.1.0",
       "date": "2026-07-19",
       "summary_zh": "成果级反向查重后记录全部 partial 与 unmapped 候选；明确排除项只保留在覆盖矩阵，不作为 KG 缺口。"
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-10-25",
+      "summary_zh": "完成联网复核与人工批准。"
     }
   ],
   "candidates": [
@@ -38,7 +43,7 @@
           "locator": "PDF p.6, sub-topic 1.1 Functions"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_standard_graph_characteristics",
@@ -64,7 +69,7 @@
           "locator": "PDF p.6, sub-topic 1.2 Graphs and transformations"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_parametric_graphs",
@@ -84,7 +89,7 @@
           "locator": "PDF p.6, sub-topic 1.2 Graphs and transformations"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_formulate_equations",
@@ -107,7 +112,7 @@
           "locator": "PDF p.7, sub-topic 1.3 Equations and inequalities"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_rational_quadratic_inequalities",
@@ -129,7 +134,7 @@
           "locator": "PDF p.7, sub-topic 1.3 Equations and inequalities"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_recurrence_sequences",
@@ -149,7 +154,7 @@
           "locator": "PDF p.7, sub-topic 2.1 Sequences and series"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_series_operations_convergence",
@@ -171,7 +176,7 @@
           "locator": "PDF p.7, sub-topic 2.1 Sequences and series"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_vector_operations_geometry",
@@ -193,7 +198,7 @@
           "locator": "PDF p.7, sub-topic 3.1 Basic properties of vectors"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_vector_types_magnitude",
@@ -216,7 +221,7 @@
           "locator": "PDF p.7, sub-topic 3.1 Basic properties of vectors"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_collinearity_ratio",
@@ -238,7 +243,7 @@
           "locator": "PDF p.7, collinearity; PDF p.8, ratio theorem, sub-topic 3.1"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_point_line_plane_distance",
@@ -261,7 +266,7 @@
           "locator": "PDF p.8, sub-topic 3.3 Three-dimensional vector geometry"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_relative_positions_3d",
@@ -283,7 +288,7 @@
           "locator": "PDF p.8, sub-topic 3.3 Three-dimensional vector geometry"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_complex_extension_roots",
@@ -306,7 +311,7 @@
           "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_complex_mod_arg_conjugate",
@@ -329,7 +334,7 @@
           "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_conjugate_polynomial_roots",
@@ -351,7 +356,7 @@
           "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_complex_geometric_effects",
@@ -374,7 +379,7 @@
           "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_derivative_graph_relations",
@@ -396,7 +401,7 @@
           "locator": "PDF p.9, sub-topic 5.1 Differentiation"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_series_approximations",
@@ -418,7 +423,7 @@
           "locator": "PDF p.9, sub-topic 5.2 Maclaurin series"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_separable_ode_solutions",
@@ -440,7 +445,7 @@
           "locator": "PDF p.10, sub-topic 5.5 Differential equations"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_interpret_ode_solution",
@@ -463,7 +468,7 @@
           "locator": "PDF p.10, sub-topic 5.5 Differential equations"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_counting_arrangements",
@@ -485,7 +490,7 @@
           "locator": "PDF p.11, sub-topic 6.1 Probability"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_probability_representations",
@@ -510,7 +515,7 @@
           "locator": "PDF p.11, sub-topic 6.1 Probability"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_normal_probabilities_parameters",
@@ -532,7 +537,7 @@
           "locator": "PDF p.12, sub-topic 6.3 Normal distribution"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_linear_transform_moments",
@@ -555,7 +560,7 @@
           "locator": "PDF p.12, sub-topic 6.3 Normal distribution"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_independent_sum_moments",
@@ -578,7 +583,7 @@
           "locator": "PDF p.12, sub-topic 6.3 Normal distribution"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_hypothesis_test_concepts",
@@ -600,7 +605,7 @@
           "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_one_mean_hypothesis_test",
@@ -624,7 +629,7 @@
           "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_one_two_tailed_tests",
@@ -646,7 +651,7 @@
           "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_interpret_hypothesis_result",
@@ -668,7 +673,7 @@
           "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_scatter_linear_plausibility",
@@ -690,7 +695,7 @@
           "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_pmcc_interpretation",
@@ -712,7 +717,7 @@
           "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_least_squares_regression",
@@ -734,7 +739,7 @@
           "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     },
     {
       "gap_id": "gap_sg_h2_math_9758_2026_o_transform_to_linearity",
@@ -756,7 +761,7 @@
           "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
         }
       ],
-      "review_status": "needs_review"
+      "review_status": "approved"
     }
   ]
 }
