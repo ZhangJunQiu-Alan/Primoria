@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRef, useState } from "react";
+import { BrandLogo } from "@/components/brand-logo";
 import { FlowStageVisual } from "@/components/landing/flow-stage-visual";
 import { LanguageSwitcher } from "@/components/i18n/language-switcher";
 import { PUBLIC_LANDING_PATH } from "@/lib/auth/routes";
@@ -75,12 +76,7 @@ export function LandingPage() {
     <main className="landing-shell">
       <header className="landing-nav" aria-label="Primoria landing navigation">
         <Link href={PUBLIC_LANDING_PATH} className="landing-brand" aria-label="Primoria home">
-          <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
-            <circle cx="7" cy="19" r="4" fill="#c8881a" />
-            <circle cx="19" cy="7" r="4" fill="#1e4d40" />
-            <path d="M9.5 16.5 16.5 9.5" stroke="#1a1814" strokeWidth="1.6" strokeLinecap="round" />
-          </svg>
-          <span>{t.common.brand}</span>
+          <BrandLogo />
         </Link>
         <nav className="landing-nav-links" aria-label="Landing sections">
           <a href="#product">{t.landing.navProduct}</a>
@@ -295,7 +291,7 @@ export function LandingPage() {
       </section>
 
       <footer className="landing-footer">
-        <span>{t.common.brand}</span>
+        <span><BrandLogo /></span>
         <span>© 2026 Primoria</span>
       </footer>
     </main>

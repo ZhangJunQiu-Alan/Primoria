@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { BrandLogo } from "@/components/brand-logo";
 import { useEffect, useMemo, useState } from "react";
 
 import {
@@ -462,7 +463,7 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
             <button type="button" className="onboarding-back" onClick={goBack} disabled={index <= 0 || busy} aria-label={t.onboarding.back}>
               ←
             </button>
-            <span className="onboarding-brand">Primoria</span>
+            <span className="onboarding-brand"><BrandLogo /></span>
             <div className="onboarding-progress" aria-label={`Step ${Math.min(index + 1, STEP_ORDER.length)} of ${STEP_ORDER.length}`}>
               <span style={{ width: `${progress}%` }} />
             </div>

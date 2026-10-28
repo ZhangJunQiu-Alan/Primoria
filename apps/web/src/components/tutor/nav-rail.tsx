@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { BrandLogo } from "@/components/brand-logo";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { PUBLIC_LANDING_PATH } from "@/lib/auth/routes";
@@ -243,7 +244,7 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
   return (
     <aside className="nav-rail" aria-label={t.nav.aria}>
       <div className="nav-rail-head">
-        <Link href="/" className="nav-brand" onClick={() => setSidebarOpen(false)}>Primoria</Link>
+        <Link href="/" className="nav-brand" onClick={() => setSidebarOpen(false)}><BrandLogo /></Link>
         <button
           type="button"
           className="nav-menu-toggle"

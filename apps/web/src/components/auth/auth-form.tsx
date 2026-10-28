@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { BrandLogo } from "@/components/brand-logo";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { normalizeAuthRedirect } from "@/lib/auth/redirect";
@@ -204,7 +205,7 @@ export function AuthHero({ title, copy }: { title: string; copy: string }) {
           <circle cx="560" cy="380" r="18" fill="none" stroke="#d9603f" strokeWidth="4" />
         </g>
       </svg>
-      <span className="auth-hero-brand">{t.common.brand}</span>
+      <span className="auth-hero-brand"><BrandLogo inverse /></span>
       <div className="auth-hero-copy">
         <strong>{title}</strong>
         <p>{copy}</p>

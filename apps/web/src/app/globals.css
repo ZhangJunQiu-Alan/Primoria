@@ -8642,6 +8642,35 @@ a.auth-submit {
   padding-block: 20px;
 }
 
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  color: var(--pine);
+  font-family: var(--font-latin-display);
+  font-size: 1em;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.brand-logo-mark {
+  width: 1.05em;
+  height: auto;
+  flex: none;
+}
+
+.brand-logo--inverse {
+  color: var(--on-pine);
+}
+
+.brand-logo--inverse .brand-logo-mark {
+  filter: brightness(0) invert(1);
+}
+
 .landing-brand {
   display: flex;
   align-items: center;
