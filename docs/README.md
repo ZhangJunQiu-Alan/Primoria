@@ -16,10 +16,11 @@ use the priority order below and verify behavior against the code.
 
 ## Current product and architecture
 
+- [`product/feature-inventory.md`](product/feature-inventory.md) — Chinese code-checked feature inventory (2026-10-25): user entry points, implementation paths, limits, gated/internal capabilities, and verification boundaries.
 - [`product/feature_specification.md`](product/feature_specification.md) — current product behavior, ownership boundaries, implemented capabilities, and roadmap.
 - [`product/facts-intake.md`](product/facts-intake.md) — onboarding structured education context, optional background Facts intake, queue lifecycle, classification, and mastery boundary.
 - [`product/gamification.md`](product/gamification.md) — implemented private guild Profile, reward rules, and safe modification points.
-- [`product/learning-materials.md`](product/learning-materials.md) — learner-uploaded materials, owner-private `mat_*` graphs, material-grounded lessons, privacy boundaries, and phased roadmap (RAG Q&A, practice sets).
+- [`product/learning-materials.md`](product/learning-materials.md) — implemented learner uploads, owner-private `mat_*` graphs, grounded lessons and course-rail RAG Q&A; subject-folder quizzes/course sync, privacy boundaries, and remaining work.
 - [`product/subject-folders.md`](product/subject-folders.md) — NotebookLM-style subject folders; folders, per-lecture KGs assembled into one folder KG, weakness-weighted multiple-choice quizzes that feed mastery, and one course per folder KG with "sync new content" are all implemented.
 - [`product-architecture.md`](product-architecture.md) — current modular-monolith-plus ownership, data flow, workers, and adaptive-learning boundaries.
 - [`web-implementation-status.md`](web-implementation-status.md) — concise implementation inventory and remaining hardening work.

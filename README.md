@@ -10,6 +10,14 @@ direction is documented in
 while [docs/product-architecture.md](docs/product-architecture.md) separates the
 active personal-learning architecture from future classroom and ecosystem ideas.
 
+For a code-checked Chinese inventory of current features, entry points, limits,
+and implementation evidence, see
+[`docs/product/feature-inventory.md`](docs/product/feature-inventory.md)
+(checked 2026-10-25). It covers Tutor, courses and editing, 49 interactive
+components, private study-material folders and quizzes, material-grounded Q&A,
+sharing, progression, statistics, and weekly reports. Implementation inventory
+does not imply that external services or production deployment are verified.
+
 ## Product Focus
 
 Primoria is built for long-term learning rather than one-shot content generation. A learner can describe a goal in natural language, have that goal positioned in a multidisciplinary knowledge graph, receive a grounded course path, work through generated lessons, answer concept-level quizzes, and produce learning evidence that can update mastery, trigger remediation, and feed learner memory.
@@ -108,8 +116,9 @@ for quality-sensitive course content, `AI_MODEL_FAST=deepseek-flash` for Web
 utilities/planning/fact extraction, and `AI_MODEL_TUTOR=deepseek-flash` for the Agent. Use
 `deepseek-flash` rather than the legacy `deepseek-v4-flash` alias. DeepSeek
 utility calls explicitly disable thinking to preserve their short output
-budget; other Web fast-tier calls use low thinking effort. Course-content and
-Agent thinking defaults remain unchanged. Credentials stay server-side.
+budget; other Web fast-tier calls use low thinking effort. Structured course
+Block Writer calls and the Agent Tutor also disable thinking for DeepSeek.
+Credentials stay server-side.
 
 ```bash
 AI_PROVIDER=anthropic-compatible
@@ -662,7 +671,7 @@ with a focused tool surface:
 - `position_learning_goal` - the only main-tutor entry for creating a course from a learner goal.
 - `get_course_card` - restores a course card from persisted course data.
 - `render_chat_quiz` - creates a temporary quiz inside chat without creating a course block or changing mastery.
-- `open_interactive_component` - opens or patches one of 19 schema-validated,
+- `open_interactive_component` - opens or patches one of 49 schema-validated,
   pre-engineered React teaching components. This catalog path outranks generic
   renderers when a component fits.
 - `plan_visualization` + `widgetRenderer` - custom interactive HTML widget flow.
