@@ -10,6 +10,7 @@ import {
 } from "@/lib/ai/visual-schemas";
 import type { CourseBlock } from "@/lib/courses/types";
 import type { ImageBrief } from "@/lib/ai/media/image-brief";
+import { describeImageTextIssues, imageTextIssues } from "@/lib/ai/media/image-text-quality";
 import { makePendingImageBlock } from "@/lib/ai/media/image-builder";
 import { BlockCompileError } from "./generation-errors";
 import type { GeneratableBlockType } from "./lesson-plan-ir";
@@ -57,6 +58,9 @@ const ImageContentSchema = z.object({
   caption: nonEmpty,
   negativePrompt: z.string().optional(),
 });
+
+// A job with an existing image only titles it; the picture keeps its own brief.
+const ExistingImageContentSchema = z.object({ title: nonEmpty });
 
 const AlgorithmVizPayloadSchema = z
   .object({
@@ -326,9 +330,10 @@ function visualFailureDiagnostic(rawContent: unknown, normalized: unknown): stri
 }
 
 /** Parse one block's writer content and compile it into a final CourseBlock.
- * Throws BlockCompileError if a required semantic field is missing. */
-export function compileBlockContent(job: BlockGenerationJob, rawContent: unknown, lessonId: string): CourseBlock {
-  const schema = CONTENT_SCHEMAS[job.type];
+ * Throws BlockCompileError if a required semantic field is missing. `language`
+ * is the course language, so image text is checked by that language's rules. */
+export function compileBlockContent(job: BlockGenerationJob, rawContent: unknown, lessonId: string, language?: string | null): CourseBlock {
+  const schema = job.type === "image" && job.existingImage ? ExistingImageContentSchema : CONTENT_SCHEMAS[job.type];
   // Engine is pinned deterministically by the compiler (from the KG affordance).
   // Inject it and ignore whatever the writer emitted, so the model can NEVER
   // produce an unknown/invented engine — it only supplies the payload.
@@ -369,14 +374,21 @@ export function compileBlockContent(job: BlockGenerationJob, rawContent: unknown
 
   if (job.type === "image") {
     const content = parsed.data as z.infer<typeof ImageContentSchema>;
+    if (!job.existingImage) {
+      const problems = imageTextIssues({ alt: content.alt, caption: content.caption, language: language ?? undefined }).filter((issue) => issue.severity === "error");
+      if (problems.length) {
+        throw new BlockCompileError(`block ${job.order} (image) content invalid: ${describeImageTextIssues(problems)}`, { jobId: job.jobId });
+      }
+    }
+    const source = job.existingImage ?? content;
     const brief: ImageBrief = {
       conceptIds: job.conceptIds,
-      learningGoal: content.learningGoal,
-      imageKind: content.imageKind,
-      prompt: content.prompt,
-      alt: content.alt,
-      caption: content.caption,
-      negativePrompt: content.negativePrompt,
+      learningGoal: source.learningGoal,
+      imageKind: source.imageKind,
+      prompt: source.prompt,
+      alt: source.alt,
+      caption: source.caption,
+      negativePrompt: source.negativePrompt,
     };
     // Pending — the imaging stage resolves the asset and finalizes this block.
     return makePendingImageBlock({

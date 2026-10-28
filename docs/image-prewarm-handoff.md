@@ -27,7 +27,34 @@
 
 **教学质量优先**：是否准确、清楚地解释知识点是主要验收标准，不再要求图内无字。允许有教学价值的标签、箭头、数字、公式、化学式和简短说明；文字须准确、清晰、与图中对象对应。`caption` 是图下说明，`alt` 是替代文字，两者都不能补救错误的图像内容。
 
-## 本地执行入口与当前进度（2026-10-25）
+## 本地执行入口与当前进度（2026-10-27）
+
+**英文预热已全部完成并导入**：31 个图谱的 **1,456/1,456** 个概念均已在
+Supabase 私有 `lesson-media` bucket 中。2026-10-27 最后一批新增 231 张：
+中国高中物理 73、中国高中数学 70、新加坡初中数学 53、A-Level 物理 35；
+原有 1,225 张未覆盖。新增图片逐张读回并通过 SHA-256、大小与运行时缓存查询校验；
+最终只读审计确认全部 1,456 个缓存键及 Storage 对象路径、大小匹配。
+Storage 实际共 1,468 个对象、223,197,787 字节（包含此前 12 张非本清单素材），
+全部图片行已使用 Storage，无 Base64 字节副本。本次未验证登录后的图片 HTTP 路由
+或真实课程生成全流程。Codex 复核不代表用户逐张确认。
+
+当前云端覆盖以 `.private/image-prewarm/en/cloud-import-state.json` 和
+`import-runs/imported-assets-current.jsonl` 为准；最终报告为
+`.private/image-prewarm/en/SUPABASE-IMPORT-2026-10-27.md`，证据保存在
+`import-runs/reviewed-final-20261027/`。下方 2026-10-25 导入数字是历史记录。
+
+2026-10-28 图片描述修复已写入同一生产库：24 个图谱共 996 条 `alt`、98 条
+`caption` 修订，`media_assets` 独立列与 `brief` 内的副本同步。本地 `records/`、
+受影响的活动 manifest 和预览同步；历史导入快照、原始批次、被拒版本及原始提示词保留。
+1,456 张标准配图中，alt/caption 相同、模板化 alt 和已知正文数字粘连校验均为 0；
+少于 50 字符的 alt 也为 0，但长度本身不是内容质量判据。所有本地图像哈希复核，
+线上每个图谱抽一张（31 张）的 Storage 字节哈希复核通过；这不是新一轮逐图人工验收。
+
+用户授权丢弃既有课程后，事务删除了 3 门课程及 32 个课时；1,470 条图片资产、
+2 个用户、18 条掌握度记录和 5 条学习者事实保留。已先做完整数据库备份及回滚演练，
+再提交同一份带原值校验的事务并逐条回读。详细清单、备份、哈希、回读结果保存在
+`.private/audits/image-metadata-20261028/`，其中 `changes.json` 是逐条前后对照。
+新增文本质量规则和写手提示词在本地代码中；此次数据修复没有发布应用代码。
 
 已实现的辅助脚本：
 
@@ -47,12 +74,22 @@ pnpm --filter @primoria/web exec tsx scripts/image-prewarm/finalize-local.ts
 `progress.json` 与 `review.html` 由本地整理脚本生成；`NEXT-RUN.md` 保存续跑顺序。
 密钥仅保存在忽略的 `.env.supabase`，不进入 Git；图片文件也不进入 Git。
 
-截至本次检查，705 个概念已生成并通过 Codex 复核，751 个尚未生成，导入数量为 0。
-Codex 复核不代表用户逐张审图。下一科计算机系统的 55 份描述已保存，尚未出图。
-用户已要求每小时在本聊天自动续跑；账号切换后的 PCR 修订图已成功生成，旧账号的
-额度重置时间只作历史记录，当前剩余额度未报告。导入与命中验证脚本仍待实现，
-必须全量完成并复核后再统一执行线上写入。此次用户另行授权提交当前相关脚本和手册；
-自动续跑不包含后续自动 commit、push 或部署。
+2026-10-25 用户后续明确要求“先把目前的素材全部导入 Supabase”，因此本次按已复核
+素材先行导入，取代此前等待全部 1,456 张完成后统一导入的顺序。实际新增 **1,027 张**，
+覆盖 26 个图谱；其中 25 个图谱概念齐全，A-Level 数学导入已复核的 16 张。其余 429 个
+概念不在本次导入清单内；Codex 复核不代表用户逐张审图，待审核及被拒版本不上传。
+
+本次使用忽略目录中的 `.private/image-prewarm/en/import-current.ts` 固定素材快照，
+经现有 `resolveImageAsset()` 上传 WebP 并登记全局公共池。两个批次分别为
+`import-runs/reviewed-20261025-2035/`（1,023 张）和
+`import-runs/reviewed-20261025-2349/`（4 张补充）。全部逐张读回核对 SHA256，
+改变图片类型、描述和语言写法为 `en-US` 后，1,027/1,027 个缓存键仍命中。
+
+实际导入、assetId、Storage 路径和容量证据以
+`.private/image-prewarm/en/SUPABASE-IMPORT-2026-10-25.md` 及对应批次日志为准。
+`records/`、各学科交付文档和生成进度中的旧 `imported` 字段是制作阶段快照，未为此次
+导入改写其他 Agent 的文件。后续导入须查线上缓存及导入日志，不得用旧字段判断云端缺图。
+此次没有执行迁移、部署、commit、push 或数据清理；自动续跑授权也不包含这些操作。
 
 ## 1. 先读懂：预热的图怎样被命中
 
@@ -74,7 +111,7 @@ imageCacheKey(brief) = sha256({
 1. `conceptIds` 只放一个概念 id。
 2. `language` 写 `"en"`，图内标注、`alt` 和 `caption` 都用英文。
 3. **不要设置** `styleVersion`，让它用默认的 `STYLE_VERSION`；改了就永远对不上。
-4. `imageKind` 只能是 `educational_illustration`、`structure_diagram` 或 `realistic_scene`。它不进缓存键，命中后课程会沿用预热图的 kind、`alt`、`caption`。
+4. `imageKind` 只能是 `educational_illustration`、`structure_diagram` 或 `realistic_scene`。它不进缓存键，命中后课程会沿用预热图的 kind、`alt`、`caption`。课程生成在写作前会先查到这张图，把它的 `alt`、`caption` 交给写手：写手只为这张现成的图起标题，同批讲解按图中内容和记号来写，不会再自拟新图或改用类比图。因此 `alt` 要如实描述画面内容，它直接决定写手起的标题。
 5. 图片模型名不进缓存键，所以内置工具生成、按相同 brief 导入的图也能被运行时命中；模型来源必须如实记录。
 
 字节存放：`media_assets.storage_path` 指向私有 bucket（默认 `lesson-media`，环境变量 `PRIMORIA_MEDIA_BUCKET`），路径为 `lesson-images/{assetId}.{按实际 MIME 确定的扩展名}`。读写封装在 `apps/web/src/lib/ai/media/media-storage.ts`，只在服务端用 `SUPABASE_URL` + `SUPABASE_SECRET_KEY`。浏览器通过 `/api/media/assets/{assetId}` 读图。
@@ -153,6 +190,8 @@ imageCacheKey(brief) = sha256({
 - 1,456 条全部通过 schema 校验。
 - 随机抽 20 条打印出来给用户看。
 - `caption` 和 `alt` 都是英文且与实际画面一致；`prompt` 明确教学目标、关键结构关系和必要图中文字，不能含糊要求模型自行编造标注。
+- `alt` 描述实际对象、对比、箭头、代码值或图形关系；`caption` 解释应注意什么及原因，不能复制 `alt`，不能只把图内标题或通用概念名当作替代文字。正文与数字、公式间保留空格，正常的 `2x`、`CO2`、`IPv4` 等记号不拆开。
+- 运行 `pnpm --filter @primoria/web validate:image-metadata`（可加 `--graph=<graphId>`）。共用规则拒绝空值、重复、模板化替代文字，以及虚词或动词直接粘连数字（如 `of3seats`、`to2x`）和单词粘连分数（如 `integral1/2`），`area1`、`score2` 这类标识符不受影响；少于 50 字符和标题重复仅列为人工复核项，不设统一最小长度。校验不替代逐图内容审查。导入仍须经过 `resolveImageAsset()` 的新增资产校验，缓存命中沿用已有资产描述。
 
 ## 6. 第 4 步：试点出图（75 张，分小批审查）
 

@@ -12,6 +12,7 @@ import {
 } from "./lesson-plan-ir";
 import { assignMethodArms, type MethodArmAssignment, type MethodArmOptions } from "./method-arms";
 import type { PedagogicalRole } from "@/lib/courses/types";
+import type { ReusableImage } from "@/lib/ai/media/image-builder";
 import { searchInteractiveComponents } from "@primoria/contracts/artifacts/interactive-search";
 
 export { isCodeEligibleLessonContext };
@@ -63,6 +64,10 @@ export type BlockGenerationJob = {
    * writer emits only the payload, the compiler injects this engine. */
   engine?: VisualEngine;
   interactiveCandidates?: string[];
+  /** Set by the worker (never the planner) on an `image` job whose concept
+   * already has a cached image: the writer titles that picture instead of
+   * briefing a new one. */
+  existingImage?: ReusableImage;
 };
 
 export type CompiledLessonPlan = {

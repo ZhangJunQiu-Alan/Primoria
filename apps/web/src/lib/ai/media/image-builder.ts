@@ -1,8 +1,9 @@
 import type { CourseBlock, ImageBlock, PedagogicalRole } from "@/lib/courses/types";
-import type { ImageBrief } from "./image-brief";
+import type { ImageBrief, ImageKind } from "./image-brief";
 import { generateGeminiImage } from "./gemini-image";
 import {
   dbMediaAssetStore,
+  mediaAssetCacheKey,
   resolveImageAsset,
   type GeneratedImage,
   type MediaAssetStore,
@@ -79,6 +80,42 @@ function errorBlock(pending: PendingImageBlock, message: string): ImageBlock {
     aspectRatio: pending.aspectRatio,
     status: "error",
     errorMessage: message,
+  };
+}
+
+/** The cached concept image a new image block for these concepts will resolve
+ * to. Looked up before writing, so the text around the image (its title and the
+ * neighbouring blocks) describes the picture learners will actually see rather
+ * than one the writer imagined. */
+export type ReusableImage = Pick<ImageBrief, "learningGoal" | "prompt" | "alt" | "caption" | "negativePrompt"> & {
+  imageKind: Exclude<ImageKind, "analogy_illustration">;
+};
+
+export async function findReusableImage(
+  conceptIds: string[],
+  opts: { ownerId: string | null; language?: string | null; store?: MediaAssetStore },
+): Promise<ReusableImage | null> {
+  if (conceptIds.length === 0) return null;
+  // Every non-analogy kind shares the concept-level key, so one probe finds it.
+  const probe: ImageBrief = {
+    conceptIds,
+    imageKind: "educational_illustration",
+    learningGoal: "",
+    prompt: "",
+    alt: "",
+    caption: "",
+    language: opts.language ?? undefined,
+  };
+  const row = await (opts.store ?? dbMediaAssetStore).findByCacheKey(mediaAssetCacheKey(probe, opts.ownerId));
+  if (!row) return null;
+  const brief = row.brief as Partial<ImageBrief> | null;
+  return {
+    imageKind: brief?.imageKind && brief.imageKind !== "analogy_illustration" ? brief.imageKind : "educational_illustration",
+    learningGoal: brief?.learningGoal ?? "",
+    prompt: row.prompt,
+    alt: row.alt,
+    caption: row.caption,
+    negativePrompt: brief?.negativePrompt,
   };
 }
 

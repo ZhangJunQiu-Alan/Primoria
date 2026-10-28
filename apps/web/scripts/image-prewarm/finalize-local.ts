@@ -3,6 +3,7 @@ import { createRequire } from "node:module";
 import { copyFile, mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { imageCacheKey } from "../../src/lib/ai/media/image-brief";
+import { assertImageTextQuality } from "../../src/lib/ai/media/image-text-quality";
 
 async function main() {
   const root = resolve(__dirname, "../../../../.private/image-prewarm/en");
@@ -15,6 +16,7 @@ async function main() {
   for (const name of (await readdir(resolve(root, "records"))).filter((name) => name.endsWith(".json")).sort()) {
     const path = resolve(root, "records", name);
     const record = JSON.parse(await readFile(path, "utf8"));
+    assertImageTextQuality(record.brief);
     const concept = expected.get(record.conceptId);
     if (!concept || record.language !== "en" || record.brief.language !== "en") throw new Error(`Unexpected concept/language: ${name}`);
     if (record.brief.conceptIds.length !== 1 || record.brief.conceptIds[0] !== record.conceptId) throw new Error(`Concept mismatch: ${name}`);

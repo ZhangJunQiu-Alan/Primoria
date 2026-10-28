@@ -38,6 +38,7 @@
     "db:seed:kg-all": "node scripts/seed-kg.mjs all && node scripts/retire-kg-graph-ids.mjs && node scripts/seed-kg-cross.mjs",
     "db:initialize:kg": "pnpm db:seed:kg-all && pnpm db:seed:kg-embeddings all",
     "test:image": "tsx tests/image-block-static.unit.ts && tsx tests/media-assets.unit.ts && tsx tests/gemini-image.unit.ts && tsx tests/image-pipeline.unit.ts",
+    "validate:image-metadata": "tsx scripts/image-prewarm/validate-metadata.ts",
     "test:widget:e2e": "node tests/widget-renderer.e2e.mjs",
     "db:generate": "drizzle-kit generate --config drizzle.config.ts",
     "db:check:migrations": "drizzle-kit check --config drizzle.config.ts",

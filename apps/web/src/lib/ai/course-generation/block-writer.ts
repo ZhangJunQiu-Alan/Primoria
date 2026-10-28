@@ -83,7 +83,7 @@ const FIELD_HINTS: Record<GeneratableBlockType, string> = {
   analogy: `"title","source" (familiar thing),"target" (concept),"mapping"`,
   transfer: `"title","fromDomain","toDomain","explanation","example"`,
   visual: `"title","description","engine" plus the payload for that engine (see the engine directive on this block)`,
-  image: `"title","learningGoal","imageKind":"educational_illustration|structure_diagram|realistic_scene|analogy_illustration","prompt" (describe the scene/object/structure and the relationships that explain the concept; include exact label text, arrows, numbers, formulas, chemical notation, or short explanations in the teaching language when useful; prioritize factual accuracy and legibility, avoid decorative text and crowded labels),"alt" (describe the actual teaching content accessibly),"caption" (a short explanation BELOW the image, telling the learner what to notice and why; do not rely on it to repair an unclear or inaccurate image),"negativePrompt"?. You write a BRIEF; the image is generated later.`,
+  image: `"title","learningGoal","imageKind":"educational_illustration|structure_diagram|realistic_scene|analogy_illustration","prompt" (describe the scene/object/structure and the relationships that explain the concept; include exact label text, arrows, numbers, formulas, chemical notation, or short explanations in the teaching language when useful; prioritize factual accuracy and legibility, avoid decorative text and crowded labels),"alt" (describe the pictured objects, comparisons, arrows, code values or graph relationships accessibly; never only a title or generic topic label),"caption" (a DIFFERENT short explanation BELOW the image, telling the learner what to notice and why; do not copy alt, preserve spaces between prose and numbers/formulas, and do not rely on it to repair an unclear or inaccurate image),"negativePrompt"?. You write a BRIEF; the image is generated later.`,
   code: `"title","language","code","explanation"`,
   quiz: `"title","questions":[{"kind":"single","id","question","choices":[{"id","text"}] (2-4 options),"correctId","explanation"}] (1-3 focused questions). Use "kind":"single" (single correct choice) by default; do NOT attribute concepts — the system assigns conceptId automatically.`,
 };
@@ -134,6 +134,9 @@ function describeJob(job: BlockGenerationJob, kg: CourseContext): string {
       fields += `\nCATALOG FIRST: When a candidate below fully supports the teaching goal, prefer it to the fallback engine above. Emit "title","description","interactive":{"componentId":"...","configVersion":1,"config":{...}}. Do not emit fallback payloads or an engine field in that case. Match the supplied configVersion and schema; use concrete teaching content. If no candidate fits, emit only the fallback payload described above.\n${candidates.join("\n\n")}`;
     }
   }
+  if (job.type === "image" && job.existingImage) {
+    fields = `"title" ONLY. This concept already has an approved image that is shown exactly as-is, so do NOT design a new image and do NOT output any brief fields. The picture shows: "${job.existingImage.alt}". Caption under it: "${job.existingImage.caption}". Title what THIS picture shows; it replaces the image idea in the writer instruction`;
+  }
   if (job.type === "quiz") {
     // KG-authored per-concept assessment hints: what a good check looks like.
     // Guides question design only; concept attribution/mastery are unaffected.
@@ -172,7 +175,11 @@ Lesson: "${plan.title}" on topic "${kg.startTopic.name}".
 ${languageDirective(kg.language)}
 ${knowledgeBackgroundDirective(kg.knowledgeBackground)}${buildWriterSourceRules(kg)}${quizContract}`;
   const batchConceptIds = [...new Set(batch.jobs.flatMap((job) => job.conceptIds))];
-  const user = `Blocks to write:\n${batch.jobs.map((job) => describeJob(job, kg)).join("\n")}${buildWriterSourceSection(kg, batchConceptIds)}`;
+  const shownImages = batch.jobs.filter((job) => job.type === "image" && job.existingImage).map((job) => job.order);
+  const imageRule = shownImages.length
+    ? `\n\nFIXED IMAGES: block ${shownImages.join(", ")} shows the existing picture described above. Keep every other block consistent with it: never say it shows something it does not, and when a block works through the same idea, use the picture's notation and conventions.`
+    : "";
+  const user = `Blocks to write:\n${batch.jobs.map((job) => describeJob(job, kg)).join("\n")}${imageRule}${buildWriterSourceSection(kg, batchConceptIds)}`;
   return { system, user };
 }
 
@@ -266,7 +273,7 @@ async function generateBatch(
         continue;
       }
       try {
-        const block = compileBlockContent(job, content, lessonId);
+        const block = compileBlockContent(job, content, lessonId, kg.language);
         try {
           await assertPersistableCourseBlock(block);
         } catch (error) {
