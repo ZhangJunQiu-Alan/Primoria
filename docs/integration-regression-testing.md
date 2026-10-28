@@ -660,3 +660,26 @@ a running app (`visualization:eval:attach`) refuses a non-test database unless
 - SES password-reset delivery remains unconfigured and unaccepted. Automated
   release evidence does not imply human teaching-quality acceptance or release
   of any separately guarded product feature.
+
+### 2026-10-29 course-preparation timeout alignment
+
+- Tutor-triggered positioning and course preparation now share a browser
+  timeout policy with pending course-card recovery: 120 seconds for positioning,
+  180 seconds for preparation, and 330 seconds before a pending entry is stale.
+  The pending window includes both requests because freeform builds begin
+  tracking before positioning and do not reset that clock at the build stage.
+- Fake-clock regressions cover successful positioning at 100 seconds and
+  preparation at 150 seconds, cancellation at each actual deadline, pending
+  state across both request budgets, abandoned-entry recovery, and an eventual
+  server success replacing a stale timeout. These checks preserve finite
+  deadlines and do not change model limits, retry behavior or worker execution.
+- This is a browser wait/state fix, not faster routing or durable polling for
+  the initial preparation request. Tutor Web-to-Agent streaming deadlines and
+  the deferred STEM iframe sandbox change are outside this change. Validation
+  evidence is recorded separately from the earlier production release; this
+  change has not been deployed by writing this entry.
+- Validation passed: 11 focused timeout/session tests; all four deterministic
+  regression layers; 1,193 Web tests with 21 intentional skips; 1,726 routing
+  cases; isolated Web/Agent database tests; build/bundle budgets; all browser
+  journeys; and 49-component replay at three widths. Logs and source hashes are
+  retained under `.private/timeout-alignment-20261029/`.

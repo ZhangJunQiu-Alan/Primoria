@@ -262,8 +262,9 @@ async function main() {
   assert(generativeUi.includes("readSeenLessonFailureIds"), "home restore suppresses lesson failures already shown in this browser");
   assert(generativeUi.includes("resolveLessonGenerationTarget"), "lesson generation notices resolve the real lesson number and title");
   assert(!generativeUi.includes('"第一节课生成失败"'), "lesson failure notices do not hard-code the first lesson");
-  assert(generativeUi.includes("LEARNING_GOAL_POSITION_TIMEOUT_MS = 45_000"), "learning-goal positioning has a 45-second client deadline");
-  assert(generativeUi.includes("COURSE_BUILD_TIMEOUT_MS = 100_000"), "course creation has a 100-second client deadline");
+  assert(generativeUi.includes('from "@/lib/courses/course-build-timeouts"'), "learning-goal requests use the shared preparation deadlines");
+  assert(generativeUi.includes("LEARNING_GOAL_POSITION_TIMEOUT_MS,"), "learning-goal positioning uses its configured deadline");
+  assert(generativeUi.includes("COURSE_BUILD_TIMEOUT_MS,"), "course creation uses its configured deadline");
   assert(generativeUi.includes("retryCourseBuild"), "course creation failures expose a retry action");
 
   for (const blockType of ["quiz", "mind_map", "slide", "worksheet"]) {

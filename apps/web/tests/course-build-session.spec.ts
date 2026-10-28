@@ -1,6 +1,11 @@
 // @vitest-environment jsdom
 
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import {
+  COURSE_BUILD_TIMEOUT_MS,
+  LEARNING_GOAL_POSITION_TIMEOUT_MS,
+  PENDING_COURSE_BUILD_TIMEOUT_MS,
+} from "../src/lib/courses/course-build-timeouts";
 
 import {
   PENDING_COURSE_BUILDS_EVENT,
@@ -24,6 +29,8 @@ class MemoryStorage implements Storage {
 }
 
 describe("pending course build session state", () => {
+  afterEach(() => vi.useRealTimers());
+
   beforeEach(() => {
     Object.defineProperty(window, "localStorage", { value: new MemoryStorage(), configurable: true });
     Object.defineProperty(window, "sessionStorage", { value: new MemoryStorage(), configurable: true });
@@ -57,12 +64,40 @@ describe("pending course build session state", () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date("2026-07-14T00:00:00Z"));
     beginPendingCourseBuild({ id: "build-stale", topic: "Chemistry" });
-    vi.setSystemTime(new Date("2026-07-14T00:02:00Z"));
+    vi.setSystemTime(Date.now() + PENDING_COURSE_BUILD_TIMEOUT_MS + 1);
 
     expect(readPendingCourseBuilds()[0]).toMatchObject({
       status: "failed",
       errorCode: "course_build_timeout",
     });
+  });
+
+  it("keeps a freeform build pending across both request budgets and accepts its result", () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-10-29T00:00:00Z"));
+    beginPendingCourseBuild({ id: "build-freeform", topic: "A new subject" });
+    const startedAt = Date.now();
+
+    vi.setSystemTime(startedAt + 40_000 + 80_000);
+    expect(readPendingCourseBuilds()[0].status).toBe("building");
+
+    vi.setSystemTime(startedAt + LEARNING_GOAL_POSITION_TIMEOUT_MS + COURSE_BUILD_TIMEOUT_MS);
+    expect(readPendingCourseBuilds()[0].status).toBe("building");
+    markPendingCourseBuildReady("build-freeform", { courseId: "course-freeform", title: "A new subject" });
+
+    vi.setSystemTime(startedAt + PENDING_COURSE_BUILD_TIMEOUT_MS + 1);
+    expect(readPendingCourseBuilds()[0]).toMatchObject({ status: "ready", courseId: "course-freeform" });
+  });
+
+  it("allows an eventual server success to replace a stale timeout", () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-10-29T00:00:00Z"));
+    beginPendingCourseBuild({ id: "build-late", topic: "Chemistry" });
+    vi.setSystemTime(Date.now() + PENDING_COURSE_BUILD_TIMEOUT_MS + 1);
+    expect(readPendingCourseBuilds()[0].status).toBe("failed");
+
+    markPendingCourseBuildReady("build-late", { courseId: "course-late", title: "Chemistry" });
+    expect(readPendingCourseBuilds()[0]).toMatchObject({ status: "ready", courseId: "course-late", errorCode: null });
   });
 
   it("remembers a failed lesson job once without duplicating ids", () => {

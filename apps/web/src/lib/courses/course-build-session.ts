@@ -1,3 +1,5 @@
+import { PENDING_COURSE_BUILD_TIMEOUT_MS } from "./course-build-timeouts";
+
 export type PendingCourseBuildStatus = "building" | "ready" | "failed";
 
 export type PendingCourseBuildErrorCode =
@@ -22,7 +24,6 @@ export const PENDING_COURSE_BUILDS_STORAGE_KEY = "primoria:pending-course-builds
 export const SEEN_LESSON_FAILURES_STORAGE_KEY = "primoria:seen-lesson-failures:v1";
 
 const PENDING_BUILD_TTL_MS = 10 * 60_000;
-const PENDING_BUILD_STALE_MS = 110_000;
 const MAX_PENDING_BUILDS = 10;
 const MAX_SEEN_FAILURES = 100;
 
@@ -62,7 +63,7 @@ function normalizePendingBuilds(value: unknown, now = Date.now()): PendingCourse
     .filter(isPendingCourseBuild)
     .filter((build) => now - build.updatedAt <= PENDING_BUILD_TTL_MS)
     .map((build) => (
-      build.status === "building" && now - build.startedAt > PENDING_BUILD_STALE_MS
+      build.status === "building" && now - build.startedAt > PENDING_COURSE_BUILD_TIMEOUT_MS
         ? { ...build, status: "failed" as const, errorCode: "course_build_timeout" as const, updatedAt: now }
         : {
             ...build,

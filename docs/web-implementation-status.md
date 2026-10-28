@@ -236,6 +236,15 @@ clarification before course creation.
 
 ## Remaining hardening
 
+Tutor-triggered course preparation shares browser deadlines in
+`apps/web/src/lib/courses/course-build-timeouts.ts`: positioning waits up to
+120 seconds, outline preparation up to 180 seconds, and a pending course card
+becomes stale after their combined budget plus 30 seconds (330 seconds). These
+are maximum waits, not added delays. First-lesson generation remains an
+independent durable worker job. Server model deadlines, Tutor streaming and
+onboarding preparation retain their separate lifecycles; durable polling for
+the initial preparation request remains future work.
+
 1. Review the high root-concept counts reported by `validate:kg` for all 10 new
    graphs; add justified prerequisite coverage or explicitly approve the entry
    points rather than suppressing the warnings.
