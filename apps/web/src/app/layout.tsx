@@ -9,7 +9,7 @@ import { getDictionary } from "@/lib/i18n/dictionaries";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
-const newsreader = Newsreader({ subsets: ["latin"], style: ["normal", "italic"], variable: "--font-newsreader" });
+const newsreader = Newsreader({ subsets: ["latin"], style: ["normal", "italic"], axes: ["opsz"], variable: "--font-newsreader" });
 // CJK faces ship as unicode-range slices; there is no subset to preload.
 const notoSansSC = Noto_Sans_SC({ weight: ["400", "500"], preload: false, variable: "--font-noto-sans-sc" });
 const notoSerifSC = Noto_Serif_SC({ weight: ["400", "500", "600"], preload: false, variable: "--font-noto-serif-sc" });
