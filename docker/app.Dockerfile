@@ -3,7 +3,7 @@
 #   web    — Next.js app (next build + next start)
 #   agent  — LangGraph tutor graph server (internal only, never publish 2024)
 #   worker — background workers + db:migrate + operational scripts
-FROM node:20-bookworm-slim AS base
+FROM node:22-bookworm-slim AS base
 ENV PNPM_HOME=/pnpm
 ENV PATH=$PNPM_HOME:$PATH
 # Toolchain for native deps (e.g. better-sqlite3) whose prebuilt binaries may
@@ -28,7 +28,7 @@ COPY . .
 
 # Runtime images deliberately start from a clean Node base. Native build tools
 # remain in the build stage and are not available to a compromised service.
-FROM node:20-bookworm-slim AS runtime
+FROM node:22-bookworm-slim AS runtime
 ENV PNPM_HOME=/pnpm
 ENV PATH=$PNPM_HOME:$PATH
 ENV COREPACK_HOME=/opt/corepack

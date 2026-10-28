@@ -9,7 +9,8 @@ apply to both topologies.
 
 This is the release handoff for the single-server production stack. Do not put
 real credentials in this repository, commit messages, issue text, or logs.
-It reflects the modular-monolith-plus stack as of July 2026.
+It reflects the modular-monolith-plus stack, with the October 2026 managed
+Supabase deployment record in `supabase-deployment.md`.
 
 ## Deployment trigger
 
@@ -143,10 +144,14 @@ runtime role after both migration jobs and reapplies grants/default privileges.
 
 ## Rollback and recovery
 
-The initial recovery objectives are **RPO 24 hours** and **RTO 4 hours**. Daily
-`scripts/pg-backup.sh` runs are successful only after encrypted COS upload and
-checksum verification. Run the isolated restore drill weekly. PITR is not part
-of this first release; an RPO below 24 hours requires PostgreSQL WAL archival.
+The initial recovery objectives are **RPO 24 hours** and **RTO 4 hours**; the
+four-hour recovery objective has not been timed end-to-end. For the self-hosted
+database alternative, daily `scripts/pg-backup.sh` runs are successful only
+after encrypted COS upload and checksum verification. The selected managed
+Supabase deployment uses the daily custom-dump and incremental Storage backup
+workflow in `supabase-deployment.md`. Run the isolated restore drill weekly.
+PITR is not part of this first release; an RPO below 24 hours requires a
+separately configured continuous recovery service.
 
 - Application rollback: restore the recorded image tags or Git SHA and restart
   Compose without reversing migrations blindly.
@@ -181,9 +186,9 @@ The old dashboard base directory `hackathon` no longer exists. Root
 the root PNPM lockfile, builds `@primoria/web`, and publishes `apps/web/.next`
 through the Next.js adapter. It uses Node 22 and the repository PNPM version.
 PR previews can build the Web app;
-they do not host the self-hosted Agent or workers. Production auto-builds are
-explicitly ignored while the application server and domain are deferred.
-Revisit that guard only as part of an authorized deployment.
+they do not host the self-hosted Agent or workers. Production auto-builds remain
+explicitly ignored: production now runs on the Hostinger application server,
+independently of Netlify previews.
 
 Netlify configuration precedence:
 https://docs.netlify.com/build/configure-builds/monorepos/

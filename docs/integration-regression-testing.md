@@ -1,5 +1,19 @@
 # Integration Regression Testing
 
+Image metadata regression (`tests/image-text-quality.spec.ts`) covers fresh writer
+brief rejection and the media persistence boundary before generation/upload/insert.
+Empty text, duplicate alt/caption, generic template alt, and a function word or
+verb glued onto a number (`of3seats`, `to2x`) or any word glued onto a fraction
+(`integral1/2`) fail; identifiers such as `area1`, `score2`, `IPv4` and `CO2`,
+other notation, and Chinese descriptions remain valid. Fresh briefs are checked
+by the course language, and a failure returns a readable fix to the writer's
+repair round; the course editor gets one repair round and then reports an
+editor error (`tests/image-editor-brief.spec.ts`).
+Short alt and title repetition require review rather than automatic rejection.
+`pnpm --filter @primoria/web validate:image-metadata` checks local prewarm records
+with the same rules. It does not establish image-content accuracy or human approval.
+Existing valid cache hits remain reusable.
+
 Status: local deterministic implementation verified; external release gates pending
 
 Decision ID: `IRT-2026-08-27-01`
@@ -615,3 +629,34 @@ a running app (`visualization:eval:attach`) refuses a non-test database unless
   a Turbopack virtual Google-font-module resolution failure during its separate
   dev-server startup, returning 500 before the fixture became ready. The smoke
   keeps all widget assertions and the production prohibition on QA pages.
+
+### 2026-10-29 current-work production release
+
+- All four deterministic regression layers exited 0: `pnpm
+  test:regression:fast`, `pnpm test:regression:build`, `pnpm
+  test:regression:db`, and `REGRESSION_WEB_MODE=production pnpm
+  test:regression:browser`. Web reported 165 files / 1,186 tests passed, with
+  six files / 21 tests intentionally skipped; the separate isolated DB layer
+  passed. Agent unit/integration, 1,726 routing cases, 31 KG validations,
+  migration drift, bundle budgets and all browser journeys passed. Visualization
+  replay covered 49 components at three widths as a platform baseline.
+- Frozen dependency installation and the production dependency audit passed
+  under the existing dated audit-exception policy. The Docker daemon could not
+  start on the operator's Mac; all three production image targets were instead
+  built successfully on the Linux VPS. The resulting Node 22 worker image
+  passed the 23 image reuse/editor/text-quality tests before activation.
+- Release `20261029-current-work` passed live container hardening and health
+  checks, both migration jobs, public TLS/redirect/auth/origin checks, a real
+  Tutor stream, and SHA-256 image sampling across all 31 graphs. A real lesson
+  produced 19 blocks, including three hash-verified prewarmed images. All three
+  quiz blocks passed server grading and replay deduplication; lesson-generation,
+  learning-progress and extractor jobs completed without failures.
+- The fresh pre-deploy dump was actually restored into an isolated local DB
+  and checked for all 58 tables, 1,470 media rows and Agent checkpoint/event
+  tables. Synthetic live account/course/session data was then removed without
+  deleting global images or Agent audit records. Evidence is retained privately
+  under `.private/deployment/20261029/`; source publication used an uncommitted
+  working-tree snapshot and did not imply a commit, push, or remote CI result.
+- SES password-reset delivery remains unconfigured and unaccepted. Automated
+  release evidence does not imply human teaching-quality acceptance or release
+  of any separately guarded product feature.
