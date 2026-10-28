@@ -94,7 +94,7 @@ const rawBatchConcurrency = Number(process.env.LESSON_BATCH_CONCURRENCY ?? "");
 const BATCH_CONCURRENCY =
   Number.isInteger(rawBatchConcurrency) && rawBatchConcurrency >= 1 && rawBatchConcurrency <= 8
     ? rawBatchConcurrency
-    : 6;
+    : 8;
 
 function assertFenced(ok: boolean): void {
   if (!ok) throw new LeaseLostError();
@@ -325,16 +325,33 @@ async function writeMissingBatches(
   // Surface any batches restored from checkpoints before generating the rest.
   schedulePartialPublish();
 
+  // A writer slot frees as soon as its batch text is checkpointed; the batch's
+  // images then resolve alongside the remaining writes, so image latency never
+  // queues later batches. Imaging failures are caught at once (no unhandled
+  // rejection while writers run) and rethrown after every task settles.
   const missing = planned.filter(({ key }) => !results.has(key));
-  await mapLimit(missing, BATCH_CONCURRENCY, async ({ batch, key }) => {
-    const compiled = await generateBlockBatch({ batch, plan, kg: ctx.kg, lessonId: ctx.lesson.id, settings, invoke: writerInvoke });
-    // Checkpoint the pre-image compiled batch (text is the expensive part to
-    // recover); imaging happens after and re-derives on resume from the cache.
-    assertFenced(await store.upsertCheckpoint(fence, { checkpointKey: key, kind: "batch", payload: compiled, versions: CURRENT_CHECKPOINT_VERSIONS }));
-    results.set(key, await finalizeBatchImages(compiled, imaging));
-    assertFenced(await store.incrementProgress(fence));
-    schedulePartialPublish();
-  });
+  const imagingTasks: Promise<void>[] = [];
+  const imagingErrors: unknown[] = [];
+  try {
+    await mapLimit(missing, BATCH_CONCURRENCY, async ({ batch, key }) => {
+      const compiled = await generateBlockBatch({ batch, plan, kg: ctx.kg, lessonId: ctx.lesson.id, settings, invoke: writerInvoke });
+      // Checkpoint the pre-image compiled batch (text is the expensive part to
+      // recover); imaging happens after and re-derives on resume from the cache.
+      assertFenced(await store.upsertCheckpoint(fence, { checkpointKey: key, kind: "batch", payload: compiled, versions: CURRENT_CHECKPOINT_VERSIONS }));
+      imagingTasks.push(
+        (async () => {
+          results.set(key, await finalizeBatchImages(compiled, imaging));
+          assertFenced(await store.incrementProgress(fence));
+          schedulePartialPublish();
+        })().catch((error: unknown) => {
+          imagingErrors.push(error);
+        }),
+      );
+    });
+  } finally {
+    await Promise.all(imagingTasks);
+  }
+  if (imagingErrors.length > 0) throw imagingErrors[0];
 
   await partialChain;
   return results;

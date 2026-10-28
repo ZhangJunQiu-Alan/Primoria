@@ -34,7 +34,7 @@ const rawWorkerConcurrency = Number(process.env.LESSON_WORKER_CONCURRENCY ?? "")
 const WORKER_CONCURRENCY =
   Number.isInteger(rawWorkerConcurrency) && rawWorkerConcurrency >= 1 && rawWorkerConcurrency <= 4
     ? rawWorkerConcurrency
-    : 2;
+    : 4;
 
 let running = true;
 
