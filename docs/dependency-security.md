@@ -35,6 +35,7 @@ Remove an override once its direct owner resolves the vulnerable dependency.
 | `body-parser 1.x <1.20.9 -> 1.20.9`, `2.x <2.4.0 -> 2.4.0` | Platform/dependencies | Same-line patches for the Express request-body parsers. | All production owners require the patched versions. |
 | `dompurify <3.4.11 -> 3.4.11` | Web/rendering | Fix Mermaid sanitizer mutation, cross-realm, and `IN_PLACE` bypasses with available patches. | Mermaid directly resolves 3.4.11 or newer. |
 | `form-data <4.0.6 -> 4.0.6` | Platform/dependencies | Fix multipart field-name and filename CRLF injection. | No production path resolves a version below 4.0.6. |
+| `graphql-scalars <=2.0.0 -> 2.0.1` | Web/CopilotKit runtime | Fix `GHSA-x8rm-f576-gq67` PhoneNumber regex denial of service. The 2.x release requires GraphQL 16+ and drops Node 20 support; the application already uses GraphQL 16 and Node 22. CopilotKit JSON scalars and TypeGraphQL date-scalar interoperability require type, integration and build validation for this cross-major override. | CopilotKit and TypeGraphQL directly resolve a patched scalar package. |
 | `hono <4.12.25 -> 4.12.25` | Platform/dependencies | Fix credentialed CORS origin reflection in the middleware default. | CopilotKit, MCP SDK, and memory dependencies all resolve 4.12.25 or newer. |
 | `postcss 8.x <8.5.10 -> 8.5.10` | Web/build | Fix unsafe CSS stringification in the Next build dependency. | Next directly resolves 8.5.10 or newer. |
 | `prismjs <1.30.0 -> 1.30.0` | Web/rendering | Fix DOM clobbering in CopilotKit's refractor syntax-highlighting path. | Refractor directly resolves 1.30.0 or newer. |
@@ -69,3 +70,18 @@ on 2026-10-24 still has CopilotKit runtime 1.79.1 depending on Zod 3; a global
 Zod 4 substitution still requires upstream type interoperability. Recheck by
 2026-11-24. `audit:prod` continues to fail automatically after the exception
 expires and for any non-excepted advisory/version combination.
+
+## 2026-10-29 GraphQL scalar fix
+
+PR #77's fresh audit detected `GHSA-x8rm-f576-gq67` through CopilotKit's
+`graphql-scalars@1.25.0`. The override resolves 2.0.1, the
+[officially patched version](https://github.com/advisories/GHSA-x8rm-f576-gq67),
+without changing the audit threshold or adding an exception. The existing
+Zod 3 exception and its expiry remain unchanged.
+
+`copilot-scalar-compat.spec.ts` checks the JSON scalar APIs CopilotKit imports,
+TypeGraphQL's ISO date scalar, and adversarial PhoneNumber rejection in a child
+process capped at five seconds. Local fast, build/bundle and isolated database
+regressions passed (1,195 Web tests, 21 intentional skips). All browser journeys
+and 49-component replay at three widths passed; the Widget check used an
+isolated Next output directory after a local development-lock collision.
