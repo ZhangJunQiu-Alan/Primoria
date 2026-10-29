@@ -10,11 +10,13 @@ import {
   resolveCourseContextFromTopicAnchor,
 } from "@/lib/knowledge-graph/course-context";
 import { recordLearningEvent } from "@/lib/learning-events/store";
+import { getCourseIntake, attachCourseIntake, courseIntakePreparationKey } from "@/lib/courses/course-intake-store";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const AnchorRequestSchema = z.object({
+  intakeId: z.string().optional(),
   graphId: z.string().min(1),
   startTopicId: z.string().min(1),
   targetConceptId: z.string().min(1).nullable().optional(),
@@ -31,6 +33,7 @@ const AnchorRequestSchema = z.object({
 // designs a free-form outline with one model call, then reuses the normal
 // lesson-job pipeline.
 const FreeformRequestSchema = z.object({
+  intakeId: z.string().optional(),
   topic: z.string().min(1).max(200),
   language: z.string().min(1).optional(),
 }).strict();
@@ -55,25 +58,29 @@ export async function POST(request: Request) {
     if (!ownerId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const parsed = RequestSchema.parse(await request.json());
+    const prepared = parsed.intakeId ? await getCourseIntake(ownerId, parsed.intakeId) : null;
+    if (!prepared?.intake.ready) return NextResponse.json({ error: "Complete your course background questions first.", code: "course_intake_required" }, { status: 409 });
+    if (prepared.row.graphId && "graphId" in parsed && prepared.row.graphId !== parsed.graphId) return NextResponse.json({ error: "Course subject does not match your preparation." }, { status: 400 });
+    const language = prepared.intake.language;
 
     let outlineInput;
     if ("topic" in parsed) {
       // Out-of-library: reuse (or generate + persist) a topic graph for this
       // topic, then build the course exactly like a library-anchored one — the
       // gen_* graphId gives per-owner course dedup and cross-user graph reuse.
-      const generated = await getOrCreateGeneratedGraph({ topic: parsed.topic, language: parsed.language ?? null });
+      const generated = await getOrCreateGeneratedGraph({ topic: prepared.intake.goal, language });
       if (!generated) {
         throw new Error(`Generated graph creation failed for out-of-library topic: ${parsed.topic}`);
       }
       outlineInput = {
         ownerId,
-        topic: parsed.topic,
+        topic: prepared.intake.goal,
         source: "cold_start" as const,
-        language: parsed.language ?? null,
+        language,
         generatedGraph: generated.graph,
       };
     } else {
-      const anchor = parsed;
+      const anchor = { ...parsed, ...(parsed.scope === "goal" ? { learningGoal: prepared.intake.goal } : {}) };
       const courseContext = resolveCourseContextFromTopicAnchor(anchor);
 
       if (anchor.clarifySourceQuery) {
@@ -90,11 +97,12 @@ export async function POST(request: Request) {
         topic: courseContext.learningGoal ?? courseContext.startTopic.name,
         kgContext: courseContext,
         source: "cold_start" as const,
-        language: anchor.language ?? null,
+        language,
       };
     }
 
-    const { course, firstLesson, summary } = await initializeCourseOutline(outlineInput);
+    const { course, firstLesson, summary } = await initializeCourseOutline({ ...outlineInput, preparationKey: courseIntakePreparationKey(prepared.row) });
+    await attachCourseIntake(ownerId, prepared.row.id, course.id);
 
     const enqueued = await enqueueLessonGenerationJob({ ownerId, courseId: course.id, lessonId: firstLesson.id });
     const job = enqueued.job ? toLessonGenerationJobSummary(enqueued.job) : null;

@@ -237,6 +237,22 @@ export const courses = pgTable(
   }),
 );
 
+export const courseIntakes = pgTable("course_intakes", {
+  id: text("id").primaryKey(),
+  ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  fingerprint: text("fingerprint").notNull(),
+  query: text("query").notNull(),
+  graphId: text("graph_id"),
+  language: text("language").notNull(),
+  assessment: jsonb("assessment").notNull(),
+  answers: jsonb("answers"),
+  courseId: text("course_id").references(() => courses.id, { onDelete: "set null" }),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
+}, (table) => ({
+  ownerFingerprint: uniqueIndex("course_intakes_owner_fingerprint_uidx").on(table.ownerId, table.fingerprint),
+  courseIdx: index("course_intakes_course_idx").on(table.courseId),
+}));
+
 /** Stable series identity for public course shares. Immutable snapshots and
  * capability tokens live in course_share_versions. */
 export const courseShareLinks = pgTable(

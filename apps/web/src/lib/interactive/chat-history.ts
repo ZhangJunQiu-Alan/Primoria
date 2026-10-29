@@ -1,15 +1,16 @@
-import { OpenInteractiveComponentArgsSchema } from "@primoria/contracts/artifacts/schemas";
+import { OpenInteractiveComponentArgsSchema, PositionLearningGoalArgsSchema } from "@primoria/contracts/artifacts/schemas";
 
 type Message = { id?: string; role?: string; content?: unknown; toolCalls?: unknown; toolCallId?: string; metadata?: unknown };
-type Call = { id: string; type: "function"; function: { name: "open_interactive_component"; arguments: string } };
+type Call = { id: string; type: "function"; function: { name: "open_interactive_component" | "request_course_intake" | "position_learning_goal"; arguments: string } };
 
 function callsOf(value: unknown): Call[] {
   if (!Array.isArray(value)) return [];
   return value.flatMap((call) => {
-    if (!call || typeof call.id !== "string" || call.type !== "function" || call.function?.name !== "open_interactive_component") return [];
+    if (!call || typeof call.id !== "string" || call.type !== "function" || !["open_interactive_component", "request_course_intake", "position_learning_goal"].includes(call.function?.name)) return [];
     try {
-      OpenInteractiveComponentArgsSchema.parse(JSON.parse(call.function.arguments));
-      return [{ id: call.id, type: "function" as const, function: { name: "open_interactive_component" as const, arguments: call.function.arguments as string } }];
+      const schema = call.function.name === "open_interactive_component" ? OpenInteractiveComponentArgsSchema : PositionLearningGoalArgsSchema;
+      schema.parse(JSON.parse(call.function.arguments));
+      return [{ id: call.id, type: "function" as const, function: { name: call.function.name as Call["function"]["name"], arguments: call.function.arguments as string } }];
     } catch { return []; }
   });
 }
@@ -22,7 +23,9 @@ export function interactiveHistoryMetadata(message: Message, completedToolIds: S
   if (message.role === "tool" && message.toolCallId && completedToolIds.has(message.toolCallId)) {
     try {
       const result = JSON.parse(String(message.content));
-      if (result.type !== "interactive_component_request" || result.instanceId !== message.toolCallId) return null;
+      const interactive = result.type === "interactive_component_request" && result.instanceId === message.toolCallId;
+      const intake = ["course_intake", "learning_goal_position"].includes(result.type) && typeof result.query === "string";
+      if (!interactive && !intake) return null;
       return { source: "copilotkit", interactiveToolCallId: message.toolCallId };
     } catch { return null; }
   }

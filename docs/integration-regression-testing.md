@@ -1,5 +1,13 @@
 # Integration Regression Testing
 
+Tutor preparation coverage: `course-intake.spec.ts`, `course-intake-form.spec.ts`,
+`course-route-freeform.spec.ts`, isolated `course-intake.db.spec.ts`, and
+`e2e/tutor-runtime.smoke.mjs`. Gates cover exactly three options-based questions,
+no course before readiness, ownership, durable history recovery, first-answer
+immutability, English content/UI and course reuse on reload. Browser positioning
+is fixed and model output scripted; real-model question quality is not certified.
+See `docs/product/course-preparation.md`.
+
 Image metadata regression (`tests/image-text-quality.spec.ts`) covers fresh writer
 brief rejection and the media persistence boundary before generation/upload/insert.
 Empty text, duplicate alt/caption, generic template alt, and a function word or

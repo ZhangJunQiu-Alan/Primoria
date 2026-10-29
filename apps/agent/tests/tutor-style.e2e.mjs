@@ -78,14 +78,15 @@ async function run(style, threadId, mode = "single") {
   console.log = () => {};
   try {
     await graph.invoke(
-      { messages: [new HumanMessage("什么是导数？")], primoria_tutor_style: style },
-      { configurable: { thread_id: threadId }, context: { primoria_tutor_style: style } },
+      { messages: [new HumanMessage("什么是导数？")], primoria_tutor_style: style, primoria_content_language: "en" },
+      { configurable: { thread_id: threadId }, context: { primoria_tutor_style: style, primoria_content_language: "en" } },
     );
   } finally {
     console.log = origLog;
   }
   const main = captured.filter((body) => !systemText(body).includes("Primoria's Concept agent"));
   const concept = captured.filter((body) => systemText(body).includes("Primoria's Concept agent"));
+  for (const body of [...main, ...concept]) assert(systemText(body).includes("REPLY LANGUAGE: English"), "the resolved language overrides Chinese input on both main and concept agents");
   return { main, concept };
 }
 

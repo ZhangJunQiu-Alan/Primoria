@@ -180,6 +180,7 @@ function randomId(prefix: string) {
 
 export type InitializeCourseOutlineInput = {
   ownerId: string;
+  preparationKey?: string;
   topic: string;
   kgContext?: CourseContext;
   source?: "cold_start" | "profile";
@@ -203,8 +204,10 @@ export function buildCourseScopeKey(input: {
   targetConceptIds?: string[];
   scope?: "canonical" | "goal";
   learningGoal?: string | null;
-}) {
+  preparationKey?: string;
+}): string | null {
   if (!input.graphId) return null;
+  if (input.preparationKey) return `${buildCourseScopeKey({ ...input, preparationKey: undefined })}:prep:${input.preparationKey}`;
   const targets = [...new Set(input.targetConceptIds ?? [])].sort();
   if (input.scope === "goal") {
     const normalizedGoal = (input.learningGoal ?? "").normalize("NFKC").toLocaleLowerCase().replace(/\s+/g, " ").trim();
@@ -241,6 +244,7 @@ export async function initializeCourseOutline(
     targetConceptIds: input.kgContext?.targetConceptIds,
     scope: input.kgContext?.scope,
     learningGoal: input.kgContext?.learningGoal,
+    preparationKey: input.preparationKey,
   });
 
   // Reuse the learner's existing Course for this exact learning scope,

@@ -201,8 +201,8 @@ async function main() {
   assert(tutorChat.includes("restored-jobs-${threadId}"), "starting a new thread immediately remounts restored job notices");
   assert(generativeUi.includes("course-generation-notice"), "restored course generation jobs render as compact notices");
   assert(generativeUi.includes("course-generation-notice-actions"), "restored course generation notices expose clear actions");
-  assert(generativeUi.includes("打开课程"), "restored course generation notice uses learner-facing Chinese course action copy");
-  assert(generativeUi.includes("查看课程库"), "restored course generation notice uses learner-facing Chinese library action copy");
+  assert(generativeUi.includes("t.tutor.openCourse"), "restored course generation notice course action follows interface language");
+  assert(generativeUi.includes("t.tutor.viewLibrary"), "restored course generation notice library action follows interface language");
   assert(!generativeUi.includes("restored-course-job-status"), "restored course generation jobs no longer reuse generic tool-card status UI");
   assert(generativeUi.includes("function CourseGenerationNotice"), "course generation status UI is centralized in a compact notice component");
   assert(generativeUi.includes('className="learning-goal-progress"'), "learning-goal work no longer renders a floating status card");

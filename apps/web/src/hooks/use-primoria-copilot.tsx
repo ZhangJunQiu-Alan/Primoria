@@ -51,6 +51,8 @@ import { useLessonGenerationJobs } from "@/hooks/use-lesson-generation-jobs";
 import { msg, useT } from "@/lib/i18n/client";
 import { getTutorToolDisplay, getTutorToolIndicatorClass } from "@/lib/ai/tutor-tool-display";
 import { learningGoalProgressCopy } from "@/lib/ai/learning-goal-progress";
+import { CourseIntakeForm } from "@/components/tutor/course-intake-form";
+import type { CourseIntakeView } from "@/lib/courses/course-intake";
 
 const WriteTodosParams = z.object({
   todos: z.array(
@@ -445,8 +447,9 @@ type CourseTopicAnchor = {
   // Set when the build came from a subject-clarification chip click.
   clarifySourceQuery?: string;
 };
-type LearningPhase = "positioning" | "building" | "ready" | "clarify_subject" | "fallback" | "error";
+type LearningPhase = "preparing" | "intake" | "positioning" | "building" | "ready" | "clarify_subject" | "fallback" | "error";
 type LearningGoalSnapshot = {
+  intake: CourseIntakeView | null;
   phase: LearningPhase;
   artifact: CourseCardArtifact | null;
   courseSummary: CourseSummary | null;
@@ -461,7 +464,8 @@ const learningGoalTasks = new Map<string, LearningGoalTask>();
 
 function emptyLearningGoalSnapshot(): LearningGoalSnapshot {
   return {
-    phase: "positioning",
+    phase: "preparing",
+    intake: null,
     artifact: null,
     courseSummary: null,
     menu: [],
@@ -481,6 +485,7 @@ class LearningGoalTask {
   private snapshot = emptyLearningGoalSnapshot();
   private started = false;
   private buildAnchorKey = "";
+  private intake: CourseIntakeView | null = null;
   private readonly pendingBuildId = typeof crypto !== "undefined" && "randomUUID" in crypto
     ? `course-build-${crypto.randomUUID()}`
     : `course-build-${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
@@ -506,6 +511,26 @@ class LearningGoalTask {
   start() {
     if (this.started) return;
     this.started = true;
+    void this.prepare();
+  }
+
+  private async prepare() {
+    try {
+      const response = await fetchWithTimeout("/api/learning/intake", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ query: this.query, graphId: this.graphId }) }, 40_000);
+      if (!response.ok) throw new Error("intake_unavailable");
+      const intake = await response.json() as CourseIntakeView;
+      this.intake = intake;
+      if (intake.ready) this.continueAfterIntake(intake);
+      else this.update({ phase: "intake", intake });
+    } catch {
+      this.update({ phase: "error", errorCode: "positioning_failed" });
+    }
+  }
+
+  continueAfterIntake(intake: CourseIntakeView) {
+    if (!intake.ready) return;
+    this.intake = intake;
+    this.update({ phase: "positioning", intake });
     beginPendingCourseBuild({ id: this.pendingBuildId, topic: this.query });
     void this.positionLearningGoal();
   }
@@ -538,7 +563,7 @@ class LearningGoalTask {
         {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ query: this.query, graphId: this.graphId, language: detectKgLanguage(this.query) }),
+          body: JSON.stringify({ query: this.intake?.goal ?? this.query, graphId: this.graphId, language: this.intake?.language ?? detectKgLanguage(this.query) }),
         },
         LEARNING_GOAL_POSITION_TIMEOUT_MS,
       );
@@ -636,7 +661,7 @@ class LearningGoalTask {
         {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify(body),
+          body: JSON.stringify({ ...body, intakeId: this.intake?.id }),
         },
         COURSE_BUILD_TIMEOUT_MS,
       );
@@ -777,6 +802,7 @@ function CourseGenerationNotice({
   statusText: string;
   bodyText: string;
 }) {
+  const t = useT();
   const active = statusKind === "active";
   const courseHref = `/course/${encodeURIComponent(courseId)}/outline`;
 
@@ -792,8 +818,8 @@ function CourseGenerationNotice({
           <p>{bodyText}</p>
         </div>
         <div className="course-generation-notice-actions">
-          <a className="ghost-btn" href={courseHref}>打开课程</a>
-          <a className="soft-btn" href="/library">查看课程库</a>
+          <a className="ghost-btn" href={courseHref}>{t.tutor.openCourse}</a>
+          <a className="soft-btn" href="/library">{t.tutor.viewLibrary}</a>
         </div>
       </div>
     </article>
@@ -860,6 +886,9 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
     task.start();
     return task.subscribe(setSnapshot);
   }, [task]);
+
+  if (phase === "intake" && renderSnapshot.intake && task) return <CourseIntakeForm key={renderSnapshot.intake.id} intake={renderSnapshot.intake} onComplete={(intake) => task.continueAfterIntake(intake)} />;
+  if (phase === "preparing") return <div className="learning-goal-progress" role="status">{t.tutor.intake.preparing}</div>;
 
   if (phase === "ready" && artifact) {
     const failed = liveFirstJob?.status === "failed";
@@ -1043,9 +1072,15 @@ export function usePrimoriaGenerativeUI() {
   });
 
   useRenderTool({
+    name: "request_course_intake",
+    parameters: PositionLearningGoalArgsSchema,
+    render: ({ status, parameters }) => status === "complete" ? <LearningGoalCard query={parameters?.query} graphId={parameters?.graph_id} /> : <></>,
+  });
+
+  useRenderTool({
     name: "position_learning_goal",
     parameters: PositionLearningGoalArgsSchema,
-    render: ({ parameters }) => <LearningGoalCard query={parameters?.query} graphId={parameters?.graph_id} />,
+    render: ({ status, parameters }) => status === "complete" ? <LearningGoalCard query={parameters?.query} graphId={parameters?.graph_id} /> : <></>,
   });
 
   useRenderTool({

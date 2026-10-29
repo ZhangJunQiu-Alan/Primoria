@@ -16,6 +16,7 @@ use the priority order below and verify behavior against the code.
 
 ## Current product and architecture
 
+- [`product/course-preparation.md`](product/course-preparation.md) — Tutor background option questions, durable Web build gate, per-course background and reply-language resolution.
 - [`product/feature-inventory.md`](product/feature-inventory.md) — Chinese code-checked feature inventory (2026-10-25): user entry points, implementation paths, limits, gated/internal capabilities, and verification boundaries.
 - [`product/feature_specification.md`](product/feature_specification.md) — current product behavior, ownership boundaries, implemented capabilities, and roadmap.
 - [`product/facts-intake.md`](product/facts-intake.md) — onboarding structured education context, optional background Facts intake, queue lifecycle, classification, and mastery boundary.

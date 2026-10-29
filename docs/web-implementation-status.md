@@ -236,6 +236,11 @@ clarification before course creation.
 
 ## Remaining hardening
 
+Main Tutor requests enter a durable background gate before KG positioning/build.
+Insufficient goals show exactly three option questions; the learning-course API
+requires ready owner-scoped preparation. Tutor/content language is resolved
+server-side. Scope and release requirements: `docs/product/course-preparation.md`.
+
 ### Deferred AI endpoint limits — 2026-10-29
 
 User decision: defer review item 4 (AI endpoint rate limits) while the project

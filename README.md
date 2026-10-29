@@ -630,8 +630,10 @@ The legacy `POST /api/tutor/chat` stack is no longer an active runtime path. Do 
 The web app owns user state, course creation, learning events, mastery updates,
 personal progression, background jobs, and database writes. The tutor agent owns
 tool orchestration and structured interaction. In the main course-creation path,
-the agent expresses intent through `position_learning_goal`; the browser/web
-side performs KG positioning, creates the course, persists records, and enqueues
+the agent expresses intent through `request_course_intake` (legacy
+`position_learning_goal` shares its Web gate); the browser/web side confirms
+background with three option questions when needed, performs KG positioning,
+creates the course, persists records, and enqueues
 generation jobs.
 
 Learning-goal routing distinguishes full-graph, topic/concept closure,
@@ -668,7 +670,7 @@ modules — `prompts.mjs`, `model.mjs`, `middleware.mjs`, `widget-html.mjs`, and
 `tools/{course,interactive,quiz,renderers,visualization}.mjs`. It uses deepagents
 with a focused tool surface:
 
-- `position_learning_goal` - the only main-tutor entry for creating a course from a learner goal.
+- `request_course_intake` - prepares a learning goal through Web's durable background gate before course creation; `position_learning_goal` remains a compatibility entry using the same gate.
 - `get_course_card` - restores a course card from persisted course data.
 - `render_chat_quiz` - creates a temporary quiz inside chat without creating a course block or changing mastery.
 - `open_interactive_component` - opens or patches one of 49 schema-validated,
@@ -722,7 +724,7 @@ External widget dependencies are allowlisted in a single source: `packages/contr
 
 ### Course Generation and Learning Progress
 
-Course creation starts with `position_learning_goal`. The browser/web side performs knowledge-graph positioning, resolves the authoritative course context, initializes or reuses the course outline, persists it, and enqueues the first lesson-generation job through `POST /api/learning/course`.
+Course creation starts with `request_course_intake`. Web checks explicit relevant background and presents exactly three option questions when it is insufficient. `POST /api/learning/course` requires completed owner-scoped preparation before it creates/reuses an outline or enqueues a lesson. Confirmed answers refine scope and teaching depth without granting mastery. See [Tutor course preparation](docs/product/course-preparation.md).
 
 Lessons are made of blocks rather than one long article. Core generated block types include:
 
@@ -859,7 +861,7 @@ Create the account in the app before running the import command.
 
 - `apps/agent` is plain ESM (`.mjs`). Do not import from `apps/web`.
 - Course/user state mutations and DB writes belong in `apps/web` server-side code, scripts, or workers. Client components must never access the DB directly. Agent-side DB access should stay bounded to explicit read-only tool needs unless a new architecture decision says otherwise.
-- Main tutor course creation goes through `position_learning_goal` and the web-side KG/course flow.
+- Main tutor course creation goes through `request_course_intake` and the Web background gate, then the KG/course flow. The legacy `position_learning_goal` entry cannot bypass the gate.
 - Widgets must be iframe fragments and must only use allowlisted external dependencies.
 - Long-running course generation, progress updates, and learner-fact extraction run through workers and require `DATABASE_URL`.
 - Shared artifact contracts live in `packages/contracts`, not in app-local type files.

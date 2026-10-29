@@ -4,6 +4,10 @@
   "private": true,
   "type": "module",
   "exports": {
+    "./tutor-language": {
+      "types": "./src/tutor-language.d.mts",
+      "default": "./src/tutor-language.mjs"
+    },
     ".": "./src/index.ts",
     "./artifacts": "./src/artifacts/index.ts",
     "./artifacts/schemas": {

@@ -7,7 +7,11 @@ const mockState = vi.hoisted(() => ({
   enqueueLessonGenerationJob: vi.fn(),
   toLessonGenerationJobSummary: vi.fn(),
   recordLearningEvent: vi.fn(),
+  getCourseIntake: vi.fn(),
+  attachCourseIntake: vi.fn(),
 }));
+
+vi.mock("../src/lib/courses/course-intake-store", () => ({ getCourseIntake: mockState.getCourseIntake, attachCourseIntake: mockState.attachCourseIntake, courseIntakePreparationKey: () => "preparation_1" }));
 
 vi.mock("../src/lib/auth/guard", () => ({
   requireAuthUser: mockState.requireAuthUser,
@@ -34,7 +38,7 @@ function request(body: unknown) {
   return new Request("http://primoria.test/api/learning/course", {
     method: "POST",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify(body),
+    body: JSON.stringify({ intakeId: "intake_1", ...(body as object) }),
   });
 }
 
@@ -42,6 +46,7 @@ describe("learning course route freeform topics", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockState.requireAuthUser.mockResolvedValue({ denied: null, user: { id: "usr_1" } });
+    mockState.getCourseIntake.mockResolvedValue({ row: { id: "intake_1" }, intake: { ready: true, goal: "MCP 和 Agent 架构", language: "zh" } });
     mockState.initializeCourseOutline.mockResolvedValue({
       course: { id: "course_1" },
       firstLesson: { id: "lesson_1" },
@@ -104,7 +109,8 @@ describe("learning course route freeform topics", () => {
       ownerId: "usr_1",
       topic: "MCP 和 Agent 架构",
       source: "cold_start",
-      language: null,
+      language: "zh",
+      preparationKey: "preparation_1",
       generatedGraph: graph,
     });
     expect(mockState.enqueueLessonGenerationJob).toHaveBeenCalledWith({
@@ -116,6 +122,7 @@ describe("learning course route freeform topics", () => {
 
   it("validates and forwards a goal-scoped curated concept set", async () => {
     const learningGoal = "我想要学习面向深度学习的线性代数";
+    mockState.getCourseIntake.mockResolvedValue({ row: { id: "intake_1" }, intake: { ready: true, goal: learningGoal, language: "zh" } });
     const targetConceptIds = ["c_mit1806_matrix_ops", "c_mit1806_linear_transformations"];
     const { POST } = await import("../src/app/api/learning/course/route");
 
@@ -145,5 +152,17 @@ describe("learning course route freeform topics", () => {
         }),
       }),
     );
+  });
+
+  it("rejects missing, foreign and unanswered intakes before any model call or write", async () => {
+    const { POST } = await import("../src/app/api/learning/course/route");
+    for (const intake of [null, { row: { id: "intake_1" }, intake: { ready: false } }]) {
+      mockState.getCourseIntake.mockResolvedValue(intake);
+      const response = await POST(request({ topic: "Python" }));
+      expect(response.status).toBe(409);
+      expect(mockState.getOrCreateGeneratedGraph).not.toHaveBeenCalled();
+      expect(mockState.initializeCourseOutline).not.toHaveBeenCalled();
+      expect(mockState.enqueueLessonGenerationJob).not.toHaveBeenCalled();
+    }
   });
 });

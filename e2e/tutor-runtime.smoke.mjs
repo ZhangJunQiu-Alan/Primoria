@@ -138,6 +138,7 @@ try {
   await waitForWeb(web);
   browser = await browserType.launch({ headless: true });
   context = await browser.newContext();
+  await context.addCookies([{ name: "primoria_ui_language", value: "en", url: BASE_URL }]);
   page = await context.newPage();
   const pageErrors = [];
   const streamContentTypes = [];
@@ -164,6 +165,37 @@ try {
 
   await sendMessage(page, "TOOL_DIAGRAM_MARKER");
   await page.getByText("Regression path", { exact: true }).waitFor({ timeout: 45_000 });
+
+  const gateResponse = await page.request.post(`${BASE_URL}/api/learning/course`, { headers: { origin: BASE_URL }, data: { topic: "Python" } });
+  assert(gateResponse.status() === 409, `a direct course request must not bypass background preparation (got ${gateResponse.status()}: ${await gateResponse.text()})`);
+  await sendMessage(page, "I want to learn Python COURSE_INTAKE_MARKER");
+  const intake = page.locator(".course-intake-form");
+  await intake.waitFor({ state: "visible", timeout: 45_000 });
+  assert(await intake.locator("fieldset").count() === 3, "vague goals must show exactly three option questions");
+  assert(await intake.locator('button[type="submit"]').isDisabled(), "unanswered background questions cannot build a course");
+  const sql = postgres(process.env.DATABASE_URL, { prepare: false, onnotice: () => {} });
+  try {
+    const countCourses = async () => Number((await sql`select count(*) as count from courses where owner_id = ${USER_ID}`)[0].count);
+    assert(await countCourses() === 0, "presenting questions must not create a course");
+    await delay(1000);
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await intake.waitFor({ state: "visible", timeout: 30_000 });
+    assert(await intake.locator("fieldset").count() === 3, "question cards must restore from saved chat history");
+    await page.route("**/api/knowledge-graph/position", (route) => route.fulfill({ json: { plan: { branch: "positioned", courseContext: { graphId: "linear_algebra", startTopic: { topicId: "t_mit1806_linear_equations_mit1806_matrix_ops" }, targetConceptId: null, targetConceptIds: [], scope: "canonical", learningGoal: null } } } }));
+    for (const fieldset of await intake.locator("fieldset").all()) await fieldset.locator('input[type="radio"]').first().check();
+    const built = page.waitForResponse((response) => response.url().endsWith("/api/learning/course") && response.request().method() === "POST");
+    await intake.getByRole("button", { name: "Build my course", exact: true }).click();
+    assert((await built).status() === 202, "confirmed answers must allow course creation");
+    await page.getByRole("link", { name: "Open course", exact: true }).waitFor({ timeout: 30_000 });
+    assert(await page.getByRole("link", { name: "View library", exact: true }).isVisible(), "course actions must follow English interface language");
+    assert(await countCourses() === 1, "one submission creates one course");
+    const language = (await sql`select language from courses where owner_id = ${USER_ID}`)[0].language;
+    assert(language === "en", "English auto-detect must carry into the persisted course");
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await page.getByRole("link", { name: "Open course", exact: true }).waitFor({ timeout: 30_000 });
+    assert(await countCourses() === 1, "restoring submitted preparation must reuse its course");
+  } finally { await sql.end({ timeout: 5 }); }
+  assert(modelServer.requests.some((body) => JSON.stringify(body.messages).includes("REPLY LANGUAGE: English")), "server-resolved English must reach the model prompt");
 
   await assertOwnerReachedAgentRuntime();
   assert(pageErrors.length === 0, `unexpected page errors: ${pageErrors.join(" | ")}`);

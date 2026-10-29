@@ -15,6 +15,8 @@ import { buildCourseMaterialTutorContext, MATERIAL_CONTEXT_MARKER } from "@/lib/
 
 import { requireAuthUser } from "@/lib/auth/guard";
 import { exceedsAgentInputArrayLimit } from "@primoria/contracts/agent-input-limits";
+import { resolveTutorLanguage } from "@primoria/contracts/tutor-language";
+import { getUserPreferences, type ContentLanguage } from "@/lib/settings/user-settings";
 
 const agentRuntimeBaseUrl = process.env.PRIMORIA_AGENT_URL ?? "http://localhost:2024";
 const agentRuntimeUrl = `${agentRuntimeBaseUrl.replace(/\/$/, "")}/agent`;
@@ -64,7 +66,7 @@ function formatCourseDetailContextForAgent(context: unknown) {
       `Selected text: ${selectedText?.text ? `"${String(selectedText.text)}" (block id=${selectedText.blockId}, ${selectedText.blockType ?? "block"})` : "none"}`,
       `Available blocks: ${formatAvailableBlocks(course)}`,
       "If selected text is present, treat phrases like this, selected part, make this simpler, rewrite this, or explain this as referring to that exact selected text and its owning block.",
-      "For summarize/explain/practice questions, answer from this current course context. Only call generate_course if the learner explicitly asks for a new or different course.",
+      "For summarize/explain/practice questions, answer from this current course context. Only call request_course_intake if the learner explicitly asks for a new or different course.",
       "If asked to revise the selected text or selected block, call revise_selected_course_block.",
     ].join("\n");
   } catch {
@@ -162,9 +164,10 @@ class PrimoriaHttpAgent extends LangGraphHttpAgent {
   materialContext: string;
   runtimeBaseUrl: string;
   activeRunId: string | null;
+  contentLanguage: ContentLanguage;
 
-  constructor(config: ConstructorParameters<typeof LangGraphHttpAgent>[0] & { runtimeBaseUrl: string; ownerId?: string | null; learnerProfile?: LearnerProfile | null; learnerFacts?: LearnerFact[]; materialContext?: string }) {
-    const { runtimeBaseUrl, ownerId, learnerProfile, learnerFacts, materialContext, ...agentConfig } = config;
+  constructor(config: ConstructorParameters<typeof LangGraphHttpAgent>[0] & { runtimeBaseUrl: string; ownerId?: string | null; learnerProfile?: LearnerProfile | null; learnerFacts?: LearnerFact[]; materialContext?: string; contentLanguage?: ContentLanguage }) {
+    const { runtimeBaseUrl, ownerId, learnerProfile, learnerFacts, materialContext, contentLanguage, ...agentConfig } = config;
     super(agentConfig);
     this.runtimeBaseUrl = runtimeBaseUrl;
     this.ownerId = ownerId ?? null;
@@ -172,6 +175,7 @@ class PrimoriaHttpAgent extends LangGraphHttpAgent {
     this.learnerFacts = learnerFacts ?? [];
     this.materialContext = materialContext ?? "";
     this.activeRunId = null;
+    this.contentLanguage = contentLanguage ?? "auto";
   }
 
   clone() {
@@ -182,6 +186,7 @@ class PrimoriaHttpAgent extends LangGraphHttpAgent {
     cloned.learnerFacts = this.learnerFacts;
     cloned.materialContext = this.materialContext;
     cloned.activeRunId = this.activeRunId;
+    cloned.contentLanguage = this.contentLanguage;
     return cloned;
   }
 
@@ -211,6 +216,7 @@ class PrimoriaHttpAgent extends LangGraphHttpAgent {
         user_id: ownerId,
         // Always set server-side so a client-supplied value never survives the spread.
         primoria_tutor_style: this.learnerProfile?.tutorStyle ?? null,
+        primoria_content_language: resolveTutorLanguage(this.contentLanguage, input?.messages),
         copilotkit: {
           ...(input?.state?.copilotkit ?? {}),
           context: appContext,
@@ -257,9 +263,9 @@ export const POST = async (req: NextRequest) => {
   const json = await readJsonBody(req);
   if (exceedsAgentInputArrayLimit(json?.body)) return Response.json({ error: "agent_input_too_large" }, { status: 413 });
 
-  const [learnerProfile, learnerFacts, materialContext] = user?.id
-    ? await Promise.all([getLearnerProfile(user.id), listActiveFacts(user.id), materialContextFor(user.id, json?.body)])
-    : [null, [] as LearnerFact[], ""];
+  const [learnerProfile, learnerFacts, materialContext, preferences] = user?.id
+    ? await Promise.all([getLearnerProfile(user.id), listActiveFacts(user.id), materialContextFor(user.id, json?.body), getUserPreferences(user.id)])
+    : [null, [] as LearnerFact[], "", { contentLanguage: "auto" as const }];
   const normalizedRequest = json ? await requestWithNormalizedAttachments(req, json.body) : req;
   const primoriaAgent = new PrimoriaHttpAgent({
     url: agentRuntimeUrl,
@@ -269,6 +275,7 @@ export const POST = async (req: NextRequest) => {
     learnerProfile,
     learnerFacts,
     materialContext,
+    contentLanguage: preferences.contentLanguage,
     headers: {
       "x-request-id": requestId,
       "x-primoria-agent-token": getAgentInternalToken(),

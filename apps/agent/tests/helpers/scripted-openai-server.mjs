@@ -165,6 +165,20 @@ export async function startScriptedOpenAIServer() {
     const text = messageText(body);
     const system = messageContent(body, "system");
 
+    if (system.includes("Assess whether a course goal has enough background")) {
+      jsonResponse(response, body, { backgroundEvidence: null, purposeEvidence: null, targetEvidence: null, questions: [
+        { id: "background", question: "What Python experience do you have?", options: ["None", "Some basics", "Another programming language"] },
+        { id: "purpose", question: "What will you use Python for?", options: ["University", "Work", "Personal projects"] },
+        { id: "target", question: "What do you want to achieve first?", options: ["Learn the basics", "Process CSV files", "Recommend a starting goal"] },
+      ] });
+      return;
+    }
+
+    if (messageContent(body, "user").includes("COURSE_INTAKE_MARKER")) {
+      jsonResponse(response, { ...body, tools: (body.tools ?? []).filter((entry) => entry.function?.name === "request_course_intake") }, { query: "I want to learn Python" });
+      return;
+    }
+
     if (system.includes("Lesson Planner")) {
       jsonResponse(response, body, lessonPlan(body));
       return;

@@ -71,7 +71,17 @@ export const positionLearningGoalTool = tool(
   {
     name: "position_learning_goal",
     description:
-      "Surface a learning goal so the UI can locate it in the knowledge graph and build a course. MUST be the first and only tool used for any 课程 / 教程 / 微课 / 系统学习 / 教我 / 学习 / lesson / course / curriculum / teach me / learn about request. Pass the learner's goal verbatim as `query`. The UI card performs the knowledge-graph positioning and course generation; you must not attempt to build a course any other way.",
+      "Legacy course preparation entry. Web checks background readiness before any positioning/build. Prefer request_course_intake for new learning goals. Pass the learner's complete stated goal verbatim as query; never assume background or mastery.",
+    schema: PositionLearningGoalArgsSchema,
+    returnDirect: true,
+  },
+);
+
+export const requestCourseIntakeTool = tool(
+  async ({ query, graph_id }) => JSON.stringify({ type: "course_intake", query, graphId: graph_id }),
+  {
+    name: "request_course_intake",
+    description: "Start course preparation for a new learning goal. Pass the learner's full stated goal, including explicit experience/purpose/constraints, as query. Web checks saved relevant background and presents exactly three tailored option questions when it is insufficient, then waits for the learner to submit before building. Never claim the course is already being generated. Never fabricate answers or infer mastery. Use this entry for both broad and detailed course requests; Web decides readiness.",
     schema: PositionLearningGoalArgsSchema,
     returnDirect: true,
   },

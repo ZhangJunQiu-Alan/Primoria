@@ -12,6 +12,7 @@ import { getMaterialGraph, type MaterialGraphRecord } from "../materials/materia
 import { loadLessonSourceExcerpts } from "../materials/grounding";
 import { isMaterialGraphId } from "../materials/types";
 import { resolveCourseTopicGraph } from "./course-graph";
+import { courseIntakeTeachingContext } from "./course-intake-store";
 
 const MAX_PLANNER_FACTS = 8;
 const MAX_INTEREST_FACTS = 2;
@@ -189,6 +190,7 @@ export async function loadLessonGenerationContext(input: {
     ...(sourceExcerpts.length ? { sourceExcerpts } : {}),
   };
 
+  if (course.scopeKey?.includes(":prep:")) kg.preparationContext = await courseIntakeTeachingContext(ownerId, courseId);
   return { course, lesson, kg };
 }
 
@@ -257,5 +259,6 @@ async function loadFreeformContext(
     facts,
   };
 
+  if (course.scopeKey?.includes(":prep:")) kg.preparationContext = await courseIntakeTeachingContext(ownerId, course.id);
   return { course, lesson, kg };
 }

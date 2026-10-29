@@ -18,7 +18,7 @@ const run = {
     runId: "shutdown-run",
     threadId: "shutdown-run",
     messages: [{ id: "user-1", role: "user", content: "wait" }],
-    state: { primoria_tutor_style: "euclid" },
+    state: { primoria_tutor_style: "euclid", primoria_content_language: "en" },
     forwardedProps: {},
   },
 };
@@ -64,6 +64,8 @@ await started;
 await worker.stop(5);
 assert.equal(streamedState.primoria_tutor_style, "euclid", "tutor style stays in graph state for subagents");
 assert.equal(streamedConfig.context.primoria_tutor_style, "euclid", "tutor style reaches the runtime context");
+assert.equal(streamedState.primoria_content_language, "en", "resolved language stays in graph state");
+assert.equal(streamedConfig.context.primoria_content_language, "en", "resolved language reaches subagent runtime context");
 
 assert.equal(failCalls, 0, "shutdown must leave the lease for stale-run recovery");
 assert.equal(finishCalls, 0);

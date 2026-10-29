@@ -1,6 +1,7 @@
 import { createMiddleware } from "langchain";
 import { z } from "zod";
 import { formatTutorStylePrompt } from "@primoria/contracts/tutor-style-prompt";
+import { formatTutorLanguagePrompt, resolveTutorLanguage } from "@primoria/contracts/tutor-language";
 import { trimAgentHistory } from "./context-trim.mjs";
 import { formatCourseDetailSystemPrompt } from "./prompts.mjs";
 
@@ -12,6 +13,7 @@ export const PrimoriaContextSchema = z.object({
   primoria_owner_id: z.string().optional(),
   user_id: z.string().optional(),
   primoria_tutor_style: z.string().nullish(),
+  primoria_content_language: z.enum(["zh", "en"]).optional(),
   copilotkit: z.any().optional(),
 });
 
@@ -69,9 +71,11 @@ export const primoriaTutorStyleMiddleware = createMiddleware({
   wrapModelCall: async (request, handler) => {
     const requestAny = /** @type {any} */ (request);
     const style = requestAny?.runtime?.context?.primoria_tutor_style ?? requestAny?.state?.primoria_tutor_style;
+    const language = requestAny?.runtime?.context?.primoria_content_language ?? requestAny?.state?.primoria_content_language
+      ?? resolveTutorLanguage("auto", request.messages.map((message) => ({ role: message.type === "human" ? "user" : message.type, content: message.content })));
     return handler({
       ...request,
-      systemMessage: request.systemMessage.concat(`\n\n${formatTutorStylePrompt(style)}`),
+      systemMessage: request.systemMessage.concat(`\n\n${formatTutorStylePrompt(style)}\n\n${formatTutorLanguagePrompt(language)}`),
     });
   },
 });

@@ -189,7 +189,7 @@ const PrimoriaAssistantMessage = Object.assign(
         {hasText || showThinking ? (
           <div className="primoria-copilot-assistant-row">
             <div className="primoria-copilot-avatar" aria-hidden="true">
-              <span />
+              <Image src="/brand/primoria-mark.svg" width={32} height={35} alt="" unoptimized />
             </div>
             <div className="primoria-copilot-bubble primoria-copilot-assistant-bubble">
               {hasText ? (
