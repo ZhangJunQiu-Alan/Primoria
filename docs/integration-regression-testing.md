@@ -39,6 +39,17 @@ Scope owner: Primoria project owner
 
 ## Implementation status
 
+### 2026-10-29 magnetic trajectory feedback
+
+The magnetic-motion widget keeps a common physical display scale while field,
+speed, particle and angle change. Fit trajectory and Reset scale change only
+the local viewport; an explicit scale bar and overflow hint explain the view.
+The helix retains a compressed depth projection. Config schemas, stored
+payloads and physical calculations are unchanged.
+`visualization-magnetic-feedback.spec.ts` mounts the actual interactive wrapper
+with all three showcase configurations, checks visible size ratios when field
+or speed changes, manual fitting, parallel motion and particle movement.
+
 ### 2026-10-29 PDF upload worker resolution
 
 `document-text.spec.ts` exercises the installed PDF parser and worker against a
