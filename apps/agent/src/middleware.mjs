@@ -1,5 +1,6 @@
 import { createMiddleware } from "langchain";
 import { z } from "zod";
+import { HumanMessage } from "@langchain/core/messages";
 import { formatTutorStylePrompt } from "@primoria/contracts/tutor-style-prompt";
 import { formatTutorLanguagePrompt, resolveTutorLanguage } from "@primoria/contracts/tutor-language";
 import { trimAgentHistory } from "./context-trim.mjs";
@@ -73,8 +74,21 @@ export const primoriaTutorStyleMiddleware = createMiddleware({
     const style = requestAny?.runtime?.context?.primoria_tutor_style ?? requestAny?.state?.primoria_tutor_style;
     const language = requestAny?.runtime?.context?.primoria_content_language ?? requestAny?.state?.primoria_content_language
       ?? resolveTutorLanguage("auto", request.messages.map((message) => ({ role: message.type === "human" ? "user" : message.type, content: message.content })));
+    const reverseHumanIndex = [...request.messages].reverse().findIndex((message) => message.type === "human");
+    const lastHuman = reverseHumanIndex < 0 ? -1 : request.messages.length - 1 - reverseHumanIndex;
+    const messages = request.messages.map((message, index) => {
+      if (index !== lastHuman) return message;
+      const reminder = language === "zh"
+        ? "Primoria response language: 简体中文。请使用中文回复，包括标题。上方问题的语言不覆盖已确认的内容语言。"
+        : "Primoria response language: English. Answer entirely in English, including headings. The language of the question above does not override this confirmed content-language setting.";
+      const content = typeof message.content === "string"
+        ? `${message.content}\n\n[${reminder}]`
+        : [...message.content, { type: "text", text: `[${reminder}]` }];
+      return new HumanMessage({ ...message, content });
+    });
     return handler({
       ...request,
+      messages,
       systemMessage: request.systemMessage.concat(`\n\n${formatTutorStylePrompt(style)}\n\n${formatTutorLanguagePrompt(language)}`),
     });
   },

@@ -86,7 +86,11 @@ async function run(style, threadId, mode = "single") {
   }
   const main = captured.filter((body) => !systemText(body).includes("Primoria's Concept agent"));
   const concept = captured.filter((body) => systemText(body).includes("Primoria's Concept agent"));
-  for (const body of [...main, ...concept]) assert(systemText(body).includes("REPLY LANGUAGE: English"), "the resolved language overrides Chinese input on both main and concept agents");
+  for (const body of [...main, ...concept]) {
+    assert(systemText(body).includes("REPLY LANGUAGE: English"), "the resolved language overrides Chinese input on both main and concept agents");
+    const latestUser = body.messages.findLast((message) => message.role === "user");
+    assert(JSON.stringify(latestUser?.content).includes("Primoria response language: English"), "the language reminder follows the latest actual question without changing persisted state");
+  }
   return { main, concept };
 }
 

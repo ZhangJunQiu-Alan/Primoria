@@ -42,7 +42,12 @@ explicit request in the current user message, fixed content preference, actual
 user text in auto mode, previous meaningful user text for numeric replies, then
 English fallback. Hidden profile blocks and assistant/tool messages do not select
 language. Web overwrites run state server-side; Agent appends the resolved rule
-after teaching-style examples, including for concept subagents.
+after teaching-style examples, including for concept subagents. Each model
+request also receives a language reminder after its latest learner question;
+this does not mutate persisted chat messages. Live verification found that the
+Feynman model could follow Chinese question wording despite the system rule,
+so language regression also covers ordinary explanations with a fixed English
+preference, rather than course greetings alone.
 
 ## Validation and release
 
