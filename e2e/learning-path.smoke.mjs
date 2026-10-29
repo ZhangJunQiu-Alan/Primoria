@@ -165,14 +165,14 @@ try {
   await page.locator(".course-quiz-score").filter({ hasText: "3 / 3" }).waitFor();
 
   await verifyPersistence();
-  await page.locator(".learning-progress-popup-card").waitFor({ timeout: 30_000 });
+  await page.locator(".lesson-dialog").waitFor({ timeout: 30_000 });
   const [confirmation] = await Promise.all([
     page.waitForResponse(
       (candidate) => candidate.url().includes(`/api/courses/${COURSE_ID}/learning-progress/`)
         && candidate.request().method() === "POST",
       { timeout: 60_000 },
     ),
-    page.locator(".learning-progress-popup-card button").click(),
+    page.locator(".lesson-dialog .lesson-button.primary").click(),
   ]);
   assert(confirmation.ok(), `course completion confirmation should succeed (got ${confirmation.status()})`);
   await page.waitForURL((url) => url.pathname === "/", { waitUntil: "domcontentloaded", timeout: 60_000 });
