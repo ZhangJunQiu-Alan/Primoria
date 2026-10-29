@@ -67,9 +67,13 @@ async function safeErrorDetail(res: Response): Promise<string> {
 /** Calls Gemini and returns the raw generated image. No caching/persistence here
  * — that's media-assets. Throws on transport failure or a response with no image. */
 export async function generateGeminiImage(brief: ImageBrief, opts: GeminiImageOptions = {}): Promise<GeneratedImage> {
+  return generateGeminiImageFromPrompt(buildImagePrompt(brief), opts);
+}
+
+/** Same call for a fully written prompt (course covers bring their own style). */
+export async function generateGeminiImageFromPrompt(prompt: string, opts: GeminiImageOptions = {}): Promise<GeneratedImage> {
   const { apiKey, model } = resolveGeminiConfig(opts);
   const fetchImpl = opts.fetchImpl ?? fetch;
-  const prompt = buildImagePrompt(brief);
 
   const res = await fetchImpl(endpoint(model), {
     method: "POST",

@@ -1,6 +1,7 @@
 import { and, desc, eq, inArray, isNull, notInArray } from "drizzle-orm";
 import type { CodeBlock, Course, CourseBlock, CourseSummary, Lesson, LessonProgress, LessonRole, LessonStatus } from "./types";
 import { summarizeCourse } from "./types";
+import { findCourseCoverUrls } from "./course-cover-lookup";
 import { getCurrentUser } from "../auth/session";
 import { getDb, hasDatabaseUrl, type DbOrTx } from "../db/client";
 import { courses as coursesTable, lessons as lessonsTable } from "../db/schema";
@@ -424,7 +425,13 @@ async function listCourseSummariesFromDb(ownerId: string, options: { includeArch
     list.push(lesson);
     lessonsByCourse.set(lesson.courseId, list);
   }
-  return rows.map((row) => summarizeCourse(rowToCourse(row, lessonsByCourse.get(row.id) ?? [])));
+  const courses = rows.map((row) => rowToCourse(row, lessonsByCourse.get(row.id) ?? []));
+  const coverUrls = await findCourseCoverUrls(courses);
+  return courses.map((course) => {
+    const summary = summarizeCourse(course);
+    const coverUrl = coverUrls.get(course.id);
+    return coverUrl ? { ...summary, coverUrl } : summary;
+  });
 }
 
 export function courseToRow(course: Course, ownerId: string) {

@@ -336,6 +336,8 @@ GEMINI_IMAGE_MODEL=gemini-3.1-flash-lite-image
 
 If `GEMINI_IMAGE_MODEL` is unset, Primoria uses `gemini-3.1-flash-lite-image` by default. Override it only when you want a different quality/cost tradeoff; output capability limits should be checked against Google's current model documentation.
 
+The same key draws a line-art cover for each new course, once per learning scope (courses on the same scope share it; material courses keep the built-in line-art cover). Set `PRIMORIA_DISABLE_COURSE_COVERS=1` to skip the call.
+
 The authenticated internal visualization report aggregates catalog misses and
 per-component render reliability at `/internal/visualization-analytics`. It is
 open to authenticated users in development. Production fails closed unless both

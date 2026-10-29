@@ -295,6 +295,8 @@ export type CourseSummary = {
   /** Built from the learner's uploaded materials (owner-private mat_* graph):
    * the UI labels its source and offers no share link. */
   fromMaterials?: boolean;
+  /** Generated cover image, once one exists for the course's scope. */
+  coverUrl?: string | null;
   estimatedMinutes: number;
   outline: CourseOutlineItem[];
   lessons: CourseSummaryLesson[];

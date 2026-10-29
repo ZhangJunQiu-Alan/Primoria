@@ -3,6 +3,7 @@ import { after } from "next/server";
 import { z } from "zod";
 import { enrichCourseOutlineDescriptions } from "@/lib/ai/course-generation/outline-enrichment";
 import { getCourseByScopeKey, saveCourse } from "@/lib/courses/store";
+import { scheduleCourseCover } from "@/lib/courses/course-cover-store";
 import { isUniqueViolation } from "@/lib/db/errors";
 import { getTopicGraph, type TopicGraph } from "@/lib/knowledge-graph/topic-graph";
 import { buildConceptFrontierOutline, type ConceptBundle } from "@/lib/knowledge-graph/concept-frontier";
@@ -290,7 +291,10 @@ export async function initializeCourseOutline(
       isNewCourse: false,
     };
   }
-  if (isNewCourse) scheduleOutlineEnrichment(course.id, ownerId);
+  if (isNewCourse) {
+    scheduleOutlineEnrichment(course.id, ownerId);
+    scheduleCourseCover(course, ownerId);
+  }
   return { course, firstLesson, summary: summarizeCourse(course), isNewCourse };
 }
 
