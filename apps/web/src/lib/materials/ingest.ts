@@ -83,7 +83,7 @@ export async function prepareMaterial(
     extracted = await extract(format, buffer);
   } catch (error) {
     console.warn("[materials] text extraction failed:", error instanceof Error ? error.message : error);
-    throw new MaterialInputError("parse_failed", "The file could not be read. It may be damaged or password-protected.");
+    throw new MaterialInputError("parse_failed", "The file could not be processed. Please retry or upload another copy.");
   }
 
   const chunks = chunkMaterial(extracted.segments);

@@ -39,6 +39,17 @@ Scope owner: Primoria project owner
 
 ## Implementation status
 
+### 2026-10-29 PDF upload worker resolution
+
+`document-text.spec.ts` exercises the installed PDF parser and worker against a
+synthetic unlocked two-page PDF, including page provenance, material ingestion,
+and a CommonJS child process that reproduces the old `import.meta.resolve`
+failure. `material-routes.spec.ts` uploads a real PDF with mocked persistence
+and checks corrupt PDF rejection without leaking parser details or diagnosing
+password protection. The Next server config externalizes `pdf-parse` and its
+native canvas dependency; the shared parser uses the package's worker helper.
+These tests do not establish production deployment or a live authenticated upload.
+
 ### 2026-10-29 onboarding enqueue and worker publication lock ordering
 
 GitHub browser CI exposed a PostgreSQL deadlock when onboarding re-enqueued

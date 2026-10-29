@@ -25,6 +25,8 @@ const nextConfig: NextConfig = {
   distDir: process.env.NEXT_DIST_DIR,
   devIndicators: false,
   serverExternalPackages: [
+    "pdf-parse",
+    "@napi-rs/canvas",
     "shiki",
     "echarts",
     "mathjs",

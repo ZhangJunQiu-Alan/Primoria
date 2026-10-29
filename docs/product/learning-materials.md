@@ -79,7 +79,10 @@ material_topic_graphs     由资料派生的私有课程图谱
 
 1. 校验登录、类型（PDF/DOCX/TXT/MD）、大小（≤ 8 MiB；`proxy.ts` 只缓冲 10 MB 请求体）。
 2. 同步抽取文本（PDF 按页，`apps/web/src/lib/ai/document-text.ts` 与聊天附件共用解析器），
-   无可抽取文本（扫描件）时返回 422。
+   无可抽取文本（扫描件）时返回 422。PDF worker 使用 `pdf-parse/worker` 的 `getPath()`
+   定位，Next 将 `pdf-parse` 与 `@napi-rs/canvas` 保留为服务端外部依赖；不在应用代码中
+   使用 `import.meta.resolve()` 推导 worker 路径。解析失败统一返回安全的处理失败提示，
+   不把所有异常推断为文件损坏或密码保护。
 3. 按段落/标题分块（目标 ~1200 字符，单块 ≤ 1800），记录标题与页码区间。PDF 页文本只有
    视觉换行、几乎没有空行，因此按行重建段落：标题行独立成段，硬换行合并（中文不加空格、
    英文去连字符），句末标点且明显短于整行的行视为段落结束。

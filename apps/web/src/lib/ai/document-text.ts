@@ -9,13 +9,10 @@ export type PdfText = {
   pages: { num: number; text: string }[];
 };
 
-function pdfWorkerUrl() {
-  return new URL("./pdf.worker.mjs", import.meta.resolve("pdf-parse")).toString();
-}
-
 export async function extractPdfText(buffer: Buffer): Promise<PdfText> {
+  const { getPath } = await import("pdf-parse/worker");
   const { PDFParse } = await import("pdf-parse");
-  PDFParse.setWorker(pdfWorkerUrl());
+  PDFParse.setWorker(getPath());
   const parser = new PDFParse({ data: buffer });
   try {
     const parsed = await parser.getText();

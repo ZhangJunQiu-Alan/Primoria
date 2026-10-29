@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { pdfWithText } from "./helpers/pdf";
 
 const state = vi.hoisted(() => ({
   requireConfiguredAuthUser: vi.fn(),
@@ -139,6 +140,30 @@ describe("material routes", () => {
 
     const duplicate = await POST(upload(new File([longText], "notes.txt", { type: "text/plain" })));
     expect(duplicate.status).toBe(200);
+  });
+
+  it("stores an unlocked PDF through the real parser and preserves its pages", async () => {
+    state.insertMaterial.mockResolvedValue({ material: { id: "lm_pdf" }, duplicate: false });
+    const { POST } = await import("../src/app/api/materials/route");
+    const file = new File([new Uint8Array(pdfWithText([longText, longText]))], "lecture.pdf", { type: "application/pdf" });
+    const response = await POST(upload(file));
+    expect(response.status).toBe(201);
+    expect(state.insertMaterial).toHaveBeenCalledWith("u1", expect.objectContaining({
+      format: "pdf",
+      pageCount: 2,
+      chunks: expect.arrayContaining([expect.objectContaining({ pageStart: 1 })]),
+    }), { folderId: "mf_inbox", role: "lecture" });
+  });
+
+  it("returns a safe error for a corrupt PDF without claiming it is password-protected", async () => {
+    const { POST } = await import("../src/app/api/materials/route");
+    const response = await POST(upload(new File(["%PDF-invalid"], "broken.pdf", { type: "application/pdf" })));
+    expect(response.status).toBe(422);
+    expect(await response.json()).toEqual({
+      code: "parse_failed",
+      error: "The file could not be processed. Please retry or upload another copy.",
+    });
+    expect(state.insertMaterial).not.toHaveBeenCalled();
   });
 
   it("files an upload into the learner's own folder with the chosen role", async () => {
