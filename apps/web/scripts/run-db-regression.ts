@@ -20,6 +20,7 @@ async function run(args: string[], env: NodeJS.ProcessEnv = process.env) {
 
 async function main() {
   await run(["test:db"]);
+  await run(["--filter", "@primoria/web", "exec", "vitest", "run", "tests/extractor-reconciliation.db.spec.ts"], { ...process.env, RUN_EXTRACTOR_DB: "1" });
   await run(["--filter", "@primoria/web", "exec", "vitest", "run", "tests/course-intake.db.spec.ts"], { ...process.env, RUN_COURSE_INTAKE_DB: "1" });
   await run(["--filter", "@primoria/agent", "test:runtime:db"]);
 }

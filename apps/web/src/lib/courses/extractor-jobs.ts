@@ -150,6 +150,11 @@ export async function reconcileMissingExtractorJobs(limit = 100): Promise<number
       event.graph_id,
       'queued', 0, ${MAX_WORKER_ATTEMPTS}, now(), now()
     from learning_events as event
+    inner join courses as course
+      on course.id = event.course_id and course.owner_id = event.owner_id
+    inner join lessons as lesson
+      on lesson.id = event.lesson_id
+      and lesson.course_id = course.id and lesson.owner_id = event.owner_id
     where event.type = 'lesson.completed'
       and event.course_id is not null
       and event.lesson_id is not null

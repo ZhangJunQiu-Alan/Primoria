@@ -152,6 +152,10 @@ workers consume Postgres queues:
   onboarding/Settings, also processes per-lecture `material_kg_jobs`, and consumes
   lesson `extractor_jobs`.
 
+Extractor startup reconciliation only queues completion events whose course and
+lesson still exist and belong to the event owner; stale events are retained and
+filtered before the batch limit so they cannot block valid work.
+
 The Agent owns only its isolated `agent_runtime` schema plus the existing
 bounded owner-scoped course-card read. Web remains the owner of product writes.
 
