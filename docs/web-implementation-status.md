@@ -236,6 +236,20 @@ clarification before course creation.
 
 ## Remaining hardening
 
+### Deferred AI endpoint limits — 2026-10-29
+
+User decision: defer review item 4 (AI endpoint rate limits) while the project
+has no real users and is preparing for the presentation. This is a deferred
+task, not a completed protection. Revisit before opening access to real users.
+The remaining scope covers per-owner request and concurrent paid-work limits
+for Tutor, course preparation, lesson generation/prewarm, model-backed block
+edits, and material-course creation. Preserve cached/idempotent reuse and status
+polling; return HTTP 429 with `Retry-After` when an applicable limit is reached.
+Existing auth and interactive-component limits remain in place; quotas for the
+other AI endpoints have not been decided or implemented.
+
+### Course preparation and product hardening
+
 Tutor-triggered course preparation shares browser deadlines in
 `apps/web/src/lib/courses/course-build-timeouts.ts`: positioning waits up to
 120 seconds, outline preparation up to 180 seconds, and a pending course card

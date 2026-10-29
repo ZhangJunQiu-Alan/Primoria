@@ -427,6 +427,15 @@ function buildOutlineCourse(
   const startTopic = input.kgContext?.startTopic ?? null;
   const subject = input.generatedGraph?.subject ?? subjectFor(graphId, input.topic);
   const graph = input.generatedGraph ?? tryGetTopicGraph(graphId);
+  const targets = input.kgContext?.targetConceptIds?.length
+    ? input.kgContext.targetConceptIds
+    : input.kgContext?.targetConceptId ? [input.kgContext.targetConceptId] : [];
+  const target = targets.length === 1
+    ? graph?.topics.flatMap((topic) => topic.conceptIds).find((concept) => concept.conceptId === targets[0])
+    : undefined;
+  const focusedTitle = target
+    ? input.language?.startsWith("zh") ? target.nameZh || target.name : target.name
+    : null;
   const lessons = graph
     ? conceptFrontierLessons(
         graph,
@@ -452,11 +461,13 @@ function buildOutlineCourse(
         ];
   return {
     id: input.courseId ?? randomId("crs"),
-    title: subject,
+    title: focusedTitle ?? subject,
     topic: input.kgContext?.learningGoal ?? subject,
     summary: input.summary ?? (input.kgContext?.learningGoal
       ? `${subject}：围绕「${input.kgContext.learningGoal}」的定制学习路径`
-      : graphId
+      : focusedTitle
+        ? input.language?.startsWith("zh") ? `${subject}：聚焦「${focusedTitle}」及其必要前置概念` : `${subject}: focused study of ${focusedTitle} and its prerequisites`
+        : graphId
         ? `${subject}的个性化学习路径`
         : input.topic),
     estimatedMinutes: 0,

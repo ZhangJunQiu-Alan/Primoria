@@ -72,7 +72,7 @@ function visualPayloadFor(j: { engine?: string }): Record<string, unknown> {
     : engine === "echarts" ? { echartsOption: { series: [{ type: "bar", data: [1, 2] }] } }
     : engine === "physics" ? { physicsScene: { render: { width: 300, height: 200 }, bodies: [{ id: "b1", shape: "circle", x: 10, y: 10, radius: 5 }] } }
     : engine === "algorithm" ? { algorithmViz: { algorithm: "x", steps: [{ description: "s", kind: "array", array: { values: [1, 2] } }] } }
-    : engine === "math_explorer" ? { mathExplorer: { parameters: [{ name: "a", min: 0, max: 1, default: 0.5 }] } }
+    : engine === "math_explorer" ? { mathExplorer: { functions: [{ expr: "a*x" }], parameters: [{ name: "a", min: 0, max: 1, default: 0.5 }], xRange: [-1, 1], yRange: [-1, 1] } }
     : { mermaidDefinition: "flowchart LR\nA-->B" };
   return { description: "d", engine, ...payload };
 }

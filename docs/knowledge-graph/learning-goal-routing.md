@@ -22,6 +22,11 @@ highest-precedence source of truth.
 | KG infrastructure failure | Safe API error | Never masquerade as a coverage miss |
 
 Application context is not permission to teach the whole source curriculum.
+New courses with exactly one terminal concept use that concept's localized
+name as the course title and identify the source subject and prerequisite scope
+in the summary. Full-graph courses retain the subject title. This presentation
+does not expand the selected scope or rename already persisted courses.
+
 For example, `面向深度学习的线性代数` is anchored in the curated linear-algebra
 graph but selects only the useful terminal concepts. Approved cross-subject
 prerequisite edges seed deterministic targets; one-hop soft relations may add a

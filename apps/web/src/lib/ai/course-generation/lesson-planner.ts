@@ -56,7 +56,7 @@ function fmtVisualConcepts(topic: CourseContextTopic): string {
 
 function fmtCatalogCandidates(kg: CourseContext): string {
   return searchInteractiveComponents({
-    query: [kg.learningGoal, kg.startTopic.name, ...kg.startTopic.concepts.map((concept) => `${concept.name} ${concept.visualHint ?? ""}`)].filter(Boolean).join(" "),
+    query: kg.startTopic.concepts.map((concept) => concept.name).join(" "),
     limit: 4,
   }).map((candidate) => `  - ${candidate.componentId}: ${candidate.description}\n    Supports: ${candidate.supports.join("; ")}\n    Excludes: ${candidate.exclusions.join("; ")}`).join("\n");
 }

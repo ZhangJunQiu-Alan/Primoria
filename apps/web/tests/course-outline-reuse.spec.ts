@@ -16,6 +16,8 @@ vi.mock("@/lib/ai/course-generation/outline-enrichment", () => ({
   enrichCourseOutlineDescriptions: mockState.enrichCourseOutlineDescriptions,
 }));
 
+vi.mock("@/lib/mastery/owner-store", () => ({ listConceptMasteryByOwner: vi.fn(async () => []) }));
+
 vi.mock("next/server", () => ({
   after: (callback: () => unknown) => {
     mockState.afterCallbacks.push(callback);
@@ -149,5 +151,26 @@ describe("initializeCourseOutline reuse persistence", () => {
     expect(canonical).toBe("graph:linear_algebra:full");
     expect(tailored).toBe(reordered);
     expect(tailored).not.toBe(canonical);
+  });
+
+  it.each([["en", "Shannon Entropy"], ["zh", "香农熵"]])("names a single-concept %s course after its actual scope", async (language, title) => {
+    const { initializeCourseOutline } = await import("../src/lib/ai/deepagent/course-generator");
+    const result = await initializeCourseOutline({ ownerId: "u1", topic: "the intuition behind information entropy", language, kgContext: {
+      learningPathType: "linear", graphId: "information_theory", startTopic: { topicId: "t_infotheory_basics", name: "Entropy and Information Measures", concepts: [] },
+      targetConceptId: "c_infotheory_entropy", targetConceptIds: ["c_infotheory_entropy"], nextTopic: null,
+    } });
+    expect(result.course.title).toBe(title);
+    expect(result.course.lessons).toHaveLength(1);
+    expect(result.course.summary).toContain(title);
+  });
+
+  it("preserves the full subject title and five lessons for a complete information-theory course", async () => {
+    const { initializeCourseOutline } = await import("../src/lib/ai/deepagent/course-generator");
+    const result = await initializeCourseOutline({ ownerId: "u1", topic: "Information Theory and Entropy", language: "en", kgContext: {
+      learningPathType: "linear", graphId: "information_theory", startTopic: { topicId: "t_infotheory_basics", name: "Entropy and Information Measures", concepts: [] },
+      targetConceptId: null, nextTopic: null,
+    } });
+    expect(result.course.title).toBe("Information Theory and Entropy");
+    expect(result.course.lessons).toHaveLength(5);
   });
 });

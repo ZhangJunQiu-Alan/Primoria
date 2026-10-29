@@ -379,6 +379,7 @@ const MAX_LABELLED_STEPS = 10;
 const TUTOR_PANEL_OPEN_QUERY = "(min-width: 1280px)";
 
 function stepLabel(block: CourseBlock, t: ReturnType<typeof useT>["course"]) {
+  if (block.type === "image" || block.type === "visual") return t.stepTypes[block.type];
   const role = block.pedagogicalRole;
   return role ? t.stepRoles[role] : t.stepTypes[block.type] ?? block.type;
 }

@@ -47,6 +47,15 @@ function resolveVisualEngine(kg: CourseContext, conceptIds: string[]): VisualEng
   return "html";
 }
 
+export function courseInteractiveCandidates(kg: CourseContext, block: Pick<DecodedBlockPlan, "goal" | "conceptIds">): string[] {
+  const concepts = block.conceptIds.flatMap((id) => kg.startTopic.concepts?.filter((concept) => concept.conceptId === id) ?? []);
+  const anchored = searchInteractiveComponents({ query: concepts.map((concept) => concept.name).join(" "), limit: 10 });
+  if (!anchored.length) return [];
+  const eligible = new Set(anchored.map((entry) => entry.componentId));
+  const ranked = searchInteractiveComponents({ query: [block.goal, ...concepts.map((concept) => concept.name)].join(" "), limit: 10 });
+  return ranked.filter((entry) => eligible.has(entry.componentId)).slice(0, 4).map((entry) => entry.componentId);
+}
+
 export type BlockGenerationJob = {
   /** Stable across retries so regeneration cannot duplicate a block (doc §11.3). */
   jobId: string;
@@ -165,10 +174,7 @@ export function compileLessonPlanIr(
     },
     ...(block.type === "visual" ? {
       engine: resolveVisualEngine(kg, block.conceptIds),
-      interactiveCandidates: searchInteractiveComponents({
-        query: [block.goal, block.writerInstruction, ...block.conceptIds.map((id) => kg.startTopic.concepts?.find((concept) => concept.conceptId === id)?.name ?? "")].join(" "),
-        limit: 4,
-      }).map((entry) => entry.componentId),
+      interactiveCandidates: courseInteractiveCandidates(kg, block),
     } : {}),
   }));
 

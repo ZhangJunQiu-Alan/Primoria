@@ -115,7 +115,7 @@ function lessonPlan(body) {
 function visualContent(engine, order) {
   const base = { title: `Interactive concept check ${order}`, description: "Adjust the representation and observe the relationship." };
   if (engine === "math_explorer") {
-    return { ...base, mathExplorer: { mode: "cartesian", functions: [{ expr: "a*x" }], parameters: [{ name: "a", min: -2, max: 2, default: 1 }] } };
+    return { ...base, mathExplorer: { mode: "cartesian", functions: [{ expr: "a*x" }], parameters: [{ name: "a", min: -2, max: 2, default: 1 }], xRange: [-2, 2], yRange: [-4, 4] } };
   }
   if (engine === "physics") {
     return { ...base, physicsScene: { render: { width: 600, height: 400 }, bodies: [{ shape: "circle", x: 300, y: 80, r: 20 }] } };

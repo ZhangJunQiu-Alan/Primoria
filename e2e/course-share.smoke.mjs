@@ -49,7 +49,7 @@ async function waitForWeb(server) {
 async function signIn(page, email, next) {
   await page.goto(`${BASE_URL}/auth/sign-in?next=${encodeURIComponent(next)}`, { waitUntil: "domcontentloaded" });
   const passwordInput = page.locator('input[type="password"]');
-  const visibilityButton = page.locator(".auth-password-control button");
+  const visibilityButton = page.getByRole("button", { name: /^(Show password|显示密码)$/ });
   const deadline = Date.now() + 30_000;
   let hydrated = false;
   while (Date.now() < deadline) {

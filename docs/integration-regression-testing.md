@@ -24,6 +24,35 @@ Scope owner: Primoria project owner
 
 ## Implementation status
 
+### 2026-10-29 course visualization semantic regression
+
+`tests/course-visual-semantics.spec.ts` reproduces the entropy lesson's unused
+probability slider, parameter-only payload with a missing plot domain and
+unrelated catalog candidates. It covers rejection plus the Writer repair loop,
+valid Cartesian/parametric payloads, and explicit HTML sandbox selection when
+the KG's specialized renderer cannot express the planned interaction.
+Valid constant functions remain supported; syntax alone cannot establish that
+a horizontal line fulfills the intended teaching interaction.
+Classic inline sandbox scripts are syntax-checked without execution, including
+the compact-line-comment failure found during browser QA. Scope-title tests
+cover English and Chinese single-concept courses; the reader labels image and
+visual steps by content type so they can be found before opening the card.
+Checkpoint prompt/compiler versions are advanced so unfinished jobs cannot
+reuse the prior invalid outputs. Existing generated lessons require an explicit
+repair or regeneration; these checks do not establish real-model teaching quality.
+
+Local verification on October 29: Web suite 1,214 passed / 21 intentionally
+skipped; 1,726 learning-goal fixtures, 49-component catalog, Agent checks,
+production build/bundle budgets and isolated DB regression passed. The browser
+layer initially stopped at obsolete auth/onboarding CSS selectors; those tests
+now use the password button's accessible name and current onboarding field and
+step markers, preserving their persistence assertions. Its rerun passed learning
+path, onboarding with the real lesson worker, Tutor, sharing, widgets, and the
+49-component baseline replay at three viewports. Temporary isolated databases were
+removed. This was local verification, with no deployment or production-course
+rewrite. The final focused visualization suite has 16 passing cases, including
+preservation of legitimate constant functions.
+
 ### 2026-10-22 DeepSeek model selection
 
 Tutor has an independent `AI_MODEL_TUTOR` override (provider-default fallback),
