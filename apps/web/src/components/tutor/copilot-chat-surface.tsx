@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
   CopilotChat,
@@ -26,8 +27,9 @@ import {
 } from "@copilotkit/react-core/v2";
 import { CourseMarkdown } from "@/components/course/course-markdown";
 import { sanitizeCopilotAssistantText } from "@/hooks/use-primoria-copilot";
+import { formatMessage } from "@/lib/i18n/format";
 import { useI18n, useT } from "@/lib/i18n/client";
-import { HomeSummarySection } from "./home-summary";
+import { HomeSummarySection, useHomeSummary } from "./home-summary";
 import { completedInteractiveToolIds, interactiveHistoryMetadata, restoreInteractiveHistory } from "@/lib/interactive/chat-history";
 import {
   ensureThreadSummary,
@@ -400,6 +402,19 @@ const PrimoriaMainSuggestionView = Object.assign(
   CopilotChatSuggestionView,
 );
 
+function greetingFor(hour: number, greetings: { morning: string; afternoon: string; evening: string }) {
+  return hour < 12 ? greetings.morning : hour < 18 ? greetings.afternoon : greetings.evening;
+}
+
+/** Puts an example goal into the CopilotKit composer (a controlled textarea). */
+function fillComposer(root: HTMLElement | null, text: string) {
+  const textarea = root?.querySelector<HTMLTextAreaElement>('[data-testid="copilot-chat-textarea"]');
+  if (!textarea) return;
+  Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, "value")?.set?.call(textarea, text);
+  textarea.dispatchEvent(new Event("input", { bubbles: true }));
+  textarea.focus();
+}
+
 function PrimoriaMainWelcomeScreen({
   input,
   suggestionView,
@@ -409,16 +424,30 @@ function PrimoriaMainWelcomeScreen({
 }) {
   const t = useT();
   const { language } = useI18n();
-  const today = new Date().toLocaleDateString(language === "zh" ? "zh-CN" : "en-US", { month: "long", day: "numeric", weekday: "long" });
+  const summary = useHomeSummary();
+  const composerRef = useRef<HTMLDivElement>(null);
+  const now = new Date();
+  const date = now.toLocaleDateString(language === "zh" ? "zh-CN" : "en-US", { month: "long", day: "numeric", weekday: "long" });
+  const greeting = greetingFor(now.getHours(), t.tutor.home.greetings);
+  const greetingLine = summary?.learnerName
+    ? formatMessage(t.tutor.home.greetingLineNamed, { date, greeting, name: summary.learnerName })
+    : formatMessage(t.tutor.home.greetingLine, { date, greeting });
   return (
     <div data-testid="copilot-welcome-screen" className="primoria-main-welcome">
       <div className="primoria-main-welcome-card">
-        <span className="primoria-main-date">{today}</span>
-        <h1>{t.tutor.heroTitle}</h1>
-        <p>{t.tutor.heroSubtitle}</p>
-        <div className="primoria-main-input">{input}</div>
+        <section className="home-hero">
+          <div>
+            <span className="primoria-main-date">{greetingLine}</span>
+            <h1>{t.tutor.heroTitle}</h1>
+            <p>{t.tutor.heroSubtitle}</p>
+          </div>
+          <figure className="home-hero-figure">
+            <Image src="/home/desk.svg" alt="" fill sizes="360px" priority unoptimized />
+          </figure>
+        </section>
+        <div className="primoria-main-input" ref={composerRef}>{input}</div>
         <div className="primoria-main-suggestions">{suggestionView}</div>
-        <HomeSummarySection />
+        <HomeSummarySection onPickGoal={(goal) => fillComposer(composerRef.current, goal)} />
       </div>
     </div>
   );
