@@ -23,3 +23,14 @@ experiment → a concise Primoria end frame. It is an art-directed product
 demonstration, not a live product recording, and must not claim newly added
 product features. No Kimi footage, logo, soundtrack, or generated output is
 incorporated into the Primoria video.
+
+## Accepted expansion — v03
+
+On 2026-10-29 the user accepted the visual direction, reported flicker, and
+authorized expansion. The next deliverable is a 90-second picture cut in the
+same paper/pine/product-motion language, with short English labels and an
+original instrumental score. Added sequences cover a source-derived learning
+path, physically consistent lens imaging, all three Tutor styles, subject-folder
+materials and citations, and rule-consistent practice/mastery. Screens and
+conversation content remain illustrated demonstrations. The full encoded film
+must receive a decoded continuous-frame scan in addition to still-frame review.

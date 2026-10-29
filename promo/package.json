@@ -17,7 +17,11 @@
     "render:animatic": "pnpm check && tsx scripts/render.ts --animatic",
     "direction:prepare": "node scripts/export-hero-graph.mjs && python3 scripts/score-study.py",
     "render:direction": "pnpm typecheck && pnpm direction:prepare && remotion render src/index.ts DirectionStudy out/primoria-direction-v02-1080p.mp4 --scale=1 --concurrency=2 --codec=h264 --crf=16 --audio-codec=aac",
-    "stills": "tsx scripts/stills.ts"
+    "stills": "tsx scripts/stills.ts",
+    "launch:prepare": "node scripts/export-hero-graph.mjs && node scripts/export-film-subjects.mjs && python3 scripts/score-launch.py",
+    "launch:stills": "tsx scripts/launch-stills.ts",
+    "render:launch": "pnpm typecheck && pnpm check:claims && remotion render src/index.ts LaunchFilm out/primoria-launch-v03-1080p.mp4 --scale=1 --concurrency=1 --disable-shared-memory-capture --codec=h264 --crf=16 --audio-codec=aac",
+    "verify:launch": "python3 scripts/verify-launch.py out/primoria-launch-v03-1080p.mp4"
   },
   "dependencies": {
     "@remotion/bundler": "4.0.539",

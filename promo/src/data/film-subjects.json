@@ -1,0 +1,126 @@
+[
+  {
+    "id": "a_level_biology",
+    "name": "A Level Biology"
+  },
+  {
+    "id": "a_level_chemistry",
+    "name": "A Level Chemistry"
+  },
+  {
+    "id": "a_level_mathematics",
+    "name": "A Level Mathematics"
+  },
+  {
+    "id": "a_level_physics",
+    "name": "A Level Physics"
+  },
+  {
+    "id": "artificial_intelligence",
+    "name": "Introduction to Artificial Intelligence"
+  },
+  {
+    "id": "computer_architecture",
+    "name": "Great Ideas in Computer Architecture"
+  },
+  {
+    "id": "computer_network",
+    "name": "Computer Networking"
+  },
+  {
+    "id": "computer_systems",
+    "name": "Computer Systems"
+  },
+  {
+    "id": "data_structures_and_algorithms",
+    "name": "Data Structures and Algorithms"
+  },
+  {
+    "id": "deep_learning",
+    "name": "Introduction to Deep Learning"
+  },
+  {
+    "id": "discrete_math_and_probability",
+    "name": "Discrete Math and Probability Theory"
+  },
+  {
+    "id": "information_theory",
+    "name": "Information Theory and Entropy"
+  },
+  {
+    "id": "introduction_to_computer_science",
+    "name": "Introduction to Computer Science"
+  },
+  {
+    "id": "linear_algebra",
+    "name": "Linear Algebra"
+  },
+  {
+    "id": "machine_learning",
+    "name": "Machine Learning"
+  },
+  {
+    "id": "mit_calculus",
+    "name": "Calculus"
+  },
+  {
+    "id": "numerical_analysis",
+    "name": "Introduction to Numerical Analysis"
+  },
+  {
+    "id": "python_fundamentals",
+    "name": "Python Fundamentals"
+  },
+  {
+    "id": "senior_secondary_biology",
+    "name": "Senior Secondary Biology"
+  },
+  {
+    "id": "senior_secondary_chemistry",
+    "name": "Senior Secondary Chemistry"
+  },
+  {
+    "id": "senior_secondary_mathematics",
+    "name": "Senior Secondary Mathematics"
+  },
+  {
+    "id": "senior_secondary_physics",
+    "name": "Senior Secondary Physics"
+  },
+  {
+    "id": "sicp_cs61a",
+    "name": "Structure and Interpretation of Computer Programs (CS61A)"
+  },
+  {
+    "id": "singapore_h2_biology",
+    "name": "Singapore H2 Biology"
+  },
+  {
+    "id": "singapore_h2_chemistry",
+    "name": "Singapore H2 Chemistry"
+  },
+  {
+    "id": "singapore_h2_mathematics",
+    "name": "Singapore H2 Mathematics"
+  },
+  {
+    "id": "singapore_h2_physics",
+    "name": "Singapore H2 Physics"
+  },
+  {
+    "id": "singapore_lower_secondary_science",
+    "name": "Singapore Lower Secondary Science"
+  },
+  {
+    "id": "singapore_secondary_mathematics",
+    "name": "Singapore Secondary Mathematics"
+  },
+  {
+    "id": "software_construction",
+    "name": "Software Construction"
+  },
+  {
+    "id": "web_applications",
+    "name": "Web Applications"
+  }
+]

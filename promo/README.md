@@ -1,26 +1,66 @@
-# Primoria — A Drop of Ink
+# Primoria — From a question to understanding
 
-Standalone Remotion 4 film project. **Current direction: DirectionStudy v02**,
-an 18-second visual proof based on the user's reference
-[Meet Kimi K3](https://www.youtube.com/watch?v=bn0atstgavo). The earlier phase-0
-animatic was rejected aesthetically and is retained as a superseded draft.
-The new proof uses finished-direction product illustrations instead of shot
-description slides. It is not the complete 90-second film or a live recording.
+**Current review: `LaunchFilm` v03, 90 seconds, 1920 × 1080, 30 fps.**
+The user accepted the v02 visual direction and authorized expansion on
+2026-10-29. The complete picture cut covers a question, source-derived
+knowledge network and prerequisite path, wave superposition, thin-lens imaging,
+three Tutor styles, material-grounded Q&A, practice and mastery, subject
+coverage, and the Primoria ending.
 
 ```sh
-pnpm render:direction
+pnpm launch:prepare   # source data + original 90-second score
+pnpm launch:stills
+pnpm render:launch
+pnpm verify:launch
 ```
 
-The `DirectionStudy` composition shows a physical learning-material collage,
-question composer, dimensional knowledge network, wave experiment, course and
-Tutor close-up, and brand ending. Its graph exports real concept names and
-prerequisite edges from two source graphs: 62 concepts, with an 11-concept
-Transformer closure. Layout is an artistic visualization, not a product UI claim.
-The wave example implements equal-frequency superposition with a changing phase
-offset. The accompanying 120 BPM synth score is composed procedurally without
-third-party samples or paid services. Details: [creative direction v02](CREATIVE-DIRECTION-V2.md).
+Product screens are art-directed illustrations. Lecture names, excerpts,
+citation page numbers, practice history and Tutor replies are scripted examples,
+not a captured user session. The graph exports real names and prerequisite
+edges: 62 concepts, including an 11-concept Transformer prerequisite closure.
+No lesson grouping count is promised. Mastery appears after three correct first
+attempts, consistent with the minimum-three / 80% rule. The catalog contains 49
+components; runtime registration of 31 graphs is separate from source approval.
 
-The commands below also preserve the original animatic workflow for reference.
+The film uses short English labels and an original 120 BPM stereo score,
+normalized to -18 LUFS / -1.5 dBTP. It has no spoken narration. No reference
+footage, reference audio, paid API, or third-party music sample is used.
+
+## Flicker repair
+
+The v02 encoded MP4 contains intermittent repeated tiles, confirmed in decoded
+consecutive frames (for example frames 27–29 and 40–42). These are corrupted
+raster frames, not intended film grain. Single-frame spot checks had missed
+them. A 70-frame software ANGLE probe at the same scene eliminated the tile
+repetition. A second 70-frame 1080p probe passed with ANGLE and GPU rasterization
+disabled, but the full 90-second render still contained damaged frames. The
+installed renderer enables shared-memory capture by default; this bypasses the
+PNG screenshot setting. The final capture path disables shared-memory capture
+and uses ordinary PNG screenshots. GPU rasterization remains disabled in the
+Mac wrapper. Other platforms default to software ANGLE. The wrapper changes
+only this render process. The launch command uses one worker: a parallel PNG
+capture probe stalled, while the single-worker 270-frame sequence passed its
+continuous-frame scan. A short probe is insufficient to accept a full export.
+
+`verify:launch` decodes all 2,700 video frames and checks resolution, codec,
+frame rate, duration, audio sample rate and temporal discontinuities. It writes
+a report next to the MP4. This scan catches the large transient corruptions
+seen in v02; it is separate from visual review and does not establish artistic
+acceptance. Keep old v02 MP4s only as superseded evidence.
+
+Final v03 verification on 2026-10-29: all 2,700 frames decoded; zero temporal
+outliers above the threshold; 1920 × 1080 / 30 fps / H.264 / AAC 48 kHz / 90.005s.
+Ten scene samples were extracted from the encoded MP4 and visually reviewed.
+Encoded audio measures -17.7 LUFS integrated, with -4.2 dBFS true peak.
+Reports, the final contact sheet and rejected-capture diagnostics are local in
+`out/`. These checks establish export integrity, not user approval of the edit.
+
+## Earlier drafts
+
+`DirectionStudy` preserves the 18-second accepted visual proof with the
+render/label repairs. The original `PromoFilm` composition is the rejected
+phase-0 animatic and remains for reference. The original animatic workflow
+below does not describe the current launch film.
 
 ## Setup and preview
 

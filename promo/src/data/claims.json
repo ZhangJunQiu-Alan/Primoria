@@ -8,6 +8,7 @@
   ],
   "masteryMinimumAnswers": 3,
   "masteryAccuracy": 0.8,
-  "stage": "animatic",
-  "heroClosureVerified": false
+  "stage": "launch_review",
+  "heroClosureVerified": true,
+  "heroClosureConcepts": 11
 }
