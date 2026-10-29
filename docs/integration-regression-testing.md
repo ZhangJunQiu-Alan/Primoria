@@ -24,6 +24,17 @@ Scope owner: Primoria project owner
 
 ## Implementation status
 
+### 2026-10-29 onboarding enqueue and worker publication lock ordering
+
+GitHub browser CI exposed a PostgreSQL deadlock when onboarding re-enqueued
+a running lesson while the worker published partial blocks. Enqueue held the
+lesson row and waited for the job row; publication held the job row and waited
+for the lesson. Enqueue now reads existing active jobs without locking them;
+the lesson lock continues to serialize enqueue and manual retry callers, and
+worker writes retain their lease fence. The database regression holds a worker
+job lock and verifies queued/running reuse finishes before that lock is released,
+with exactly one job remaining. It runs in `test:lesson-jobs:db`.
+
 ### 2026-10-29 course visualization semantic regression
 
 `tests/course-visual-semantics.spec.ts` reproduces the entropy lesson's unused

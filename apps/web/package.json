@@ -51,7 +51,7 @@
     "worker:learning-progress": "tsx src/workers/learning-progress-worker.ts",
     "worker:extractor": "tsx src/workers/extractor-worker.ts",
     "test:lesson-jobs": "tsx tests/lesson-generation-jobs.unit.ts && tsx tests/lesson-generation-processor.unit.ts && tsx tests/lesson-generation-labels.unit.ts",
-    "test:lesson-jobs:db": "tsx tests/lesson-generation-store.db.ts && tsx tests/lesson-generation-worker.db.ts",
+    "test:lesson-jobs:db": "tsx tests/lesson-generation-store.db.ts && tsx tests/lesson-generation-worker.db.ts && RUN_LESSON_ENQUEUE_LOCK_DB=1 vitest run tests/lesson-generation-enqueue-lock.db.spec.ts",
     "test:onboarding-goal:db": "tsx tests/learner-profile-goal-race.db.ts && tsx tests/learner-profile-stale-recovery.db.ts",
     "test:course-description:db": "tsx tests/course-description-race.db.ts",
     "test:progress": "tsx tests/mastery-rules.unit.ts && tsx tests/learning-progress-decider.unit.ts && tsx tests/learning-progress-labels.unit.ts",
