@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <rect width="400" height="300" fill="#F8F3E9"/>
+  <path d="M20 0V300M40 0V300M60 0V300M80 0V300M100 0V300M120 0V300M140 0V300M160 0V300M180 0V300M200 0V300M220 0V300M240 0V300M260 0V300M280 0V300M300 0V300M320 0V300M340 0V300M360 0V300M380 0V300M0 20H400M0 40H400M0 60H400M0 80H400M0 100H400M0 120H400M0 140H400M0 160H400M0 180H400M0 200H400M0 220H400M0 240H400M0 260H400M0 280H400" stroke="#E8E3D9" stroke-width=".8"/>
+  <!-- the path a first course will take: dotted arc landing on the shelf -->
+  <path d="M142 104C150 46 206 34 212 126" stroke="#9E9E77" stroke-width="2" stroke-dasharray="1.5 7"/>
+  <path d="M204 118l8 9 6 -11" stroke="#9E9E77" stroke-width="2"/>
+  <!-- shelf -->
+  <path d="M58 206H342" stroke="#1E1B16" stroke-width="2.4"/>
+  <path d="M58 214H342" stroke="#1E1B16" stroke-width="1.4"/>
+  <path d="M86 214V246L106 214M314 214V246L294 214" stroke="#1E1B16" stroke-width="1.6"/>
+  <!-- one book, leaning on the bookend -->
+  <g transform="rotate(-14 136 206)">
+    <rect x="120" y="120" width="26" height="86" rx="2" fill="#5E7F96" fill-opacity=".55" stroke="#1E1B16" stroke-width="1.8"/>
+    <path d="M126 138H140M126 146H136" stroke="#1E1B16" stroke-width="1.4"/>
+  </g>
+  <path d="M100 206V150H112V206" fill="#FFFDF8" stroke="#1E1B16" stroke-width="1.8"/>
+  <!-- empty slots, drawn as dashed outlines -->
+  <rect x="168" y="126" width="24" height="80" rx="2" stroke="#B7A693" stroke-width="1.6" stroke-dasharray="5 5"/>
+  <rect x="200" y="140" width="30" height="66" rx="2" stroke="#B7A693" stroke-width="1.6" stroke-dasharray="5 5"/>
+  <rect x="238" y="118" width="22" height="88" rx="2" stroke="#B7A693" stroke-width="1.6" stroke-dasharray="5 5"/>
+  <!-- plant -->
+  <path d="M280 206L276 178H308L304 206Z" fill="#FFFDF8" stroke="#1E1B16" stroke-width="1.8"/>
+  <path d="M292 178V150M292 162C284 154 280 144 282 136C290 142 293 150 292 162ZM292 156C300 146 306 142 312 142C310 150 302 156 292 156Z" fill="#9E9E77" fill-opacity=".7" stroke="#1E1B16" stroke-width="1.6"/>
+  <!-- amber marker: where the next course goes -->
+  <path d="M262 62L280 92H244Z" fill="#D29C38" stroke="#1E1B16" stroke-width="1.6"/>
+</svg>

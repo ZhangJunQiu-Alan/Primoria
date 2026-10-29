@@ -235,7 +235,7 @@ try {
   assert(await page.locator("section.workspace").isVisible(), "completed learner should enter the workspace");
   await verifyPersistence(courseId, lessonId);
   await page.goto(`${BASE_URL}/course/${courseId}`, { waitUntil: "domcontentloaded" });
-  await page.locator(".course-reader:not(.course-route-loading)").waitFor({ timeout: 30_000 });
+  await page.locator(".lesson-reader:not(.lesson-loading)").waitFor({ timeout: 30_000 });
   assert(await page.locator(".course-block-wrapper").count() >= 1, "generated first lesson should render readable content");
   assert(pageErrors.length === 0, `unexpected page errors: ${pageErrors.join(" | ")}`);
   process.stdout.write("[onboarding.smoke] ALL CHECKS PASSED\n");

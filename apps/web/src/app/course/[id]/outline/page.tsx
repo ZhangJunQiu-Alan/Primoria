@@ -4,6 +4,7 @@ import { TutorNavRail } from "@/components/tutor/nav-rail";
 import { getCurrentUserForRsc, isAuthEnabled } from "@/lib/auth/session";
 import { getCourse } from "@/lib/courses/store";
 import { listLessonGenerationJobsByCourse } from "@/lib/courses/lesson-generation-jobs";
+import { findCourseCoverUrls } from "@/lib/courses/course-cover-lookup";
 
 export const dynamic = "force-dynamic";
 
@@ -16,12 +17,13 @@ export default async function CourseOutlinePage({ params }: { params: Promise<{ 
     listLessonGenerationJobsByCourse(id, user?.id ?? null),
   ]);
   if (!course) notFound();
+  const coverUrl = (await findCourseCoverUrls([course])).get(course.id) ?? null;
 
   return (
     <main className="app-shell">
       <TutorNavRail initialAuthState={{ authEnabled, user }} />
-      <section className="workspace course-outline-workspace">
-        <CourseOutlineView course={course} initialJobs={jobs} />
+      <section className="workspace course-path-workspace">
+        <CourseOutlineView course={course} coverUrl={coverUrl} initialJobs={jobs} />
       </section>
     </main>
   );

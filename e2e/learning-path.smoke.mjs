@@ -159,7 +159,7 @@ try {
       (candidate) => candidate.url().endsWith(`/api/courses/${COURSE_ID}/quiz`) && candidate.request().method() === "POST",
       { timeout: 60_000 },
     ),
-    page.locator(".course-reader-primary").click(),
+    page.locator(".lesson-next").click(),
   ]);
   assert(response.ok(), `quiz API should succeed (got ${response.status()})`);
   await page.locator(".course-quiz-score").filter({ hasText: "3 / 3" }).waitFor();

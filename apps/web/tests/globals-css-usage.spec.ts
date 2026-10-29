@@ -20,7 +20,6 @@ const ALIVE_PREFIXES = [
   "copilotKit", // CopilotKit UI DOM
   "cpk", // CopilotKit Tailwind prefix (`cpk:*`)
   "katex", // KaTeX math rendering DOM
-  "concept-", // course-lesson-aside.tsx: `concept-${concept.status}`
 ];
 
 const SOURCE_DIRS = ["apps/web/src", "apps/agent/src", "packages"];

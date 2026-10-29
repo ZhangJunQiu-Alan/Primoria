@@ -184,7 +184,7 @@ async function main() {
                 for (let index = 0; index < lesson.blocks.length; index += 1) {
                   await activePage.locator(`[data-block-id="${lesson.blocks[index].id}"]`).waitFor({ state: "visible", timeout: 30_000 });
                   if (lesson.blocks[index].id === block.id) break;
-                  await activePage.locator(".course-reader-controls .course-reader-arrow").last().click();
+                  await activePage.locator(`.lesson-steps button:nth-child(${index + 2})`).click();
                 }
                 await activePage.locator(`[data-component-id="${attempt.payload.componentId}"] svg, [data-component-id="${attempt.payload.componentId}"] section`).first().waitFor({ state: "visible", timeout: 60_000 });
                 attempt.assertions.push("Actual course generation persisted a directly rendered trusted Visualization Block");

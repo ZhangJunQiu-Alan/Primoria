@@ -220,8 +220,9 @@ describe("Library empty recovery states", () => {
       createElement(CourseLibraryGrid, { initialCourses: [], onboardingIncomplete: false }),
     );
 
-    expect(view.container.textContent).toContain("还没有课程");
-    expect(view.container.textContent).toContain("从 Tutor 创建第一门课程");
+    expect(view.container.textContent).toContain("书架还空着");
+    expect(view.container.textContent).toContain("去找导师");
+    expect(view.container.querySelector("a")?.getAttribute("href")).toBe("/");
     expect(view.container.textContent).not.toContain("继续入门设置");
   });
 

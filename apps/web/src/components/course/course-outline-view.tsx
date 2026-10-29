@@ -1,19 +1,26 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
+import type { CSSProperties, ReactNode } from "react";
+import { ArrowIcon } from "@/components/arrow-icon";
+import { CourseCover } from "@/components/library/course-cover";
 import { useLessonGenerationJobs } from "@/hooks/use-lesson-generation-jobs";
 import { useDialogFocus } from "@/hooks/use-dialog-focus";
 import type { LessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
 import { isLessonGenerationActive, lessonGenerationStageLabel } from "@/lib/courses/lesson-generation-labels";
 import type { Course, Lesson } from "@/lib/courses/types";
+import { isMaterialGraphId } from "@/lib/materials/types";
 import { useT, msg } from "@/lib/i18n/client";
 import type { I18nDictionary } from "@/lib/i18n/dictionaries";
-import { formatMessage } from "@/lib/i18n/format";
+
+type OutlineCopy = I18nDictionary["outline"];
 
 type CourseOutlineViewProps = {
   course: Course;
+  coverUrl?: string | null;
   initialJobs?: LessonGenerationJobSummary[];
   variant?: "page" | "embedded";
   visibleLessons?: "all" | "upcoming";
@@ -21,8 +28,13 @@ type CourseOutlineViewProps = {
   onCourseUpdated?: (course: Course) => void;
 };
 
+/** done / the current lesson / ready but not current / being written /
+ * failed to write / not written yet. */
+type StepState = "done" | "now" | "ready" | "writing" | "failed" | "locked";
+
 export function CourseOutlineView({
   course,
+  coverUrl = null,
   initialJobs = [],
   variant = "page",
   visibleLessons = "all",
@@ -49,19 +61,22 @@ export function CourseOutlineView({
     () => selectVisibleLessons(lessons, visibleLessons, currentLessonId),
     [lessons, visibleLessons, currentLessonId],
   );
-  const generatedCount = lessons.filter((lesson) => lesson.status === "generated").length;
-  const lockedCount = lessons.filter((lesson) => lesson.status === "planned").length;
-  const buildingCount = lessons.filter((lesson) => {
-    const job = jobsByLessonId.get(lesson.id);
-    return lesson.status === "generating" || (job ? isLessonGenerationActive(job) : false);
-  }).length;
-  const readyPercent = lessons.length > 0 ? Math.round((generatedCount / lessons.length) * 100) : 0;
-  const completedCount = lessons.filter((lesson) => lesson.progress === "completed").length;
   const currentLesson = lessons.find((lesson) => lesson.status === "generated" && lesson.progress !== "completed") ?? null;
-  const currentLessonNumber = currentLesson ? lessons.indexOf(currentLesson) + 1 : 0;
+  const stateOf = (lesson: Lesson): StepState => stepState(lesson, jobsByLessonId.get(lesson.id), enqueueError[lesson.id] ?? null, lesson.id === currentLesson?.id);
+  const states = new Map(lessons.map((lesson) => [lesson.id, stateOf(lesson)]));
+  // Fresh course: nothing is open yet, but the first unfinished lesson is being written.
+  const firstOpen = lessons.find((lesson) => lesson.progress !== "completed") ?? null;
+  const featured = currentLesson ?? (firstOpen && states.get(firstOpen.id) === "writing" ? firstOpen : null);
+  const featuredJob = featured ? jobsByLessonId.get(featured.id) : undefined;
+  const completedCount = lessons.filter((lesson) => lesson.progress === "completed").length;
+  const readyCount = lessons.filter((lesson) => lesson.status === "generated").length;
+  const writingCount = [...states.values()].filter((state) => state === "writing").length;
+  const todoCount = [...states.values()].filter((state) => state === "locked" || state === "failed").length;
   const remainingMinutes = lessons
     .filter((lesson) => lesson.progress !== "completed")
     .reduce((total, lesson) => total + (lesson.estimatedMinutes ?? 0), 0);
+  const allDone = lessons.length > 0 && completedCount === lessons.length;
+  const nextToPrepare = !featured && firstOpen && states.get(firstOpen.id) === "locked" ? firstOpen : null;
 
   useEffect(() => {
     const justCompleted = [...jobsByLessonId.values()].filter(
@@ -156,105 +171,177 @@ export function CourseOutlineView({
 
   if (visibleLessons === "upcoming" && renderedLessons.length === 0) return null;
 
+  const lessonHref = (lesson: Lesson) => `/course/${displayCourse.id}?lessonId=${encodeURIComponent(lesson.id)}`;
+  const numberOf = (lesson: Lesson) => lessons.findIndex((candidate) => candidate.id === lesson.id) + 1;
+  const topic = isMaterialGraphId(displayCourse.graphId)
+    ? null
+    : displayCourse.topic && displayCourse.topic !== displayCourse.title ? displayCourse.topic : null;
+  const legend = (["done", "now", "ready", "writing", "failed", "locked"] as const).filter((state) =>
+    [...states.values()].includes(state),
+  );
+
   return (
-    <div className={`course-outline-view course-outline-view-${variant}`}>
+    <div className={variant === "page" ? "course-path course-path-page" : "course-path"}>
       {variant === "page" ? (
-        <header className="course-outline-summary">
-          <Link href="/library" className="course-outline-back">
-            <ArrowLeftIcon />
-            <span>{t.backLibrary}</span>
+        <aside className="course-path-summary">
+          <Link href="/library" className="course-path-back">
+            <ChevronLeftIcon />
+            {t.backLibrary}
           </Link>
-          <div className="course-outline-summary-head">
-            <span className="course-outline-eyebrow">
-              {displayCourse.topic && displayCourse.topic !== displayCourse.title ? displayCourse.topic : t.courseSummary}
-            </span>
-            <h1>{displayCourse.title}</h1>
-            {displayCourse.summary ? <p className="course-outline-summary-copy">{displayCourse.summary}</p> : null}
-          </div>
-          <dl className="course-outline-stats">
-            <div>
-              <dt>{t.completedLabel}</dt>
-              <dd>{completedCount}<small> / {lessons.length}</small></dd>
-            </div>
-            <div>
-              <dt>{remainingMinutes > 0 ? t.remainingLabel : t.remainingLessonsLabel}</dt>
-              <dd>
-                {remainingMinutes > 0 ? remainingMinutes : lessons.length - completedCount}
-                <small> {remainingMinutes > 0 ? t.minutesUnit : t.lessonsUnit}</small>
-              </dd>
-            </div>
-          </dl>
-          <div className="course-outline-readiness">
-            <div className="course-outline-readiness-head">
-              <span>{t.readiness}</span>
-              <span className="course-outline-ready-count">{formatMessage(t.readyCount, { count: `${generatedCount}/${lessons.length}` })}</span>
+          <figure className="course-path-cover">
+            <CourseCover
+              title={displayCourse.title}
+              topic={displayCourse.topic}
+              fromMaterials={isMaterialGraphId(displayCourse.graphId)}
+              coverUrl={coverUrl}
+              sizes="(max-width: 900px) 100vw, 340px"
+            />
+          </figure>
+          <span className="course-path-kicker">
+            {[topic, msg(t.lessonsCount, { count: lessons.length })].filter(Boolean).join(" · ")}
+          </span>
+          <h1>{displayCourse.title}</h1>
+          {displayCourse.summary ? <p className="course-path-blurb">{displayCourse.summary}</p> : null}
+
+          <div className="course-path-ledger">
+            <div className="course-path-figures">
+              <b>
+                {completedCount}
+                <small> / {lessons.length}</small>
+                <em>{t.completeLabel}</em>
+              </b>
+              <span>
+                {allDone
+                  ? t.courseFinished
+                  : remainingMinutes > 0
+                    ? msg(t.minutesLeft, { count: remainingMinutes })
+                    : msg(t.lessonsLeft, { count: lessons.length - completedCount })}
+              </span>
             </div>
             <div
-              className="course-outline-progress"
+              className="course-path-track"
               role="progressbar"
-              aria-label={t.readiness}
+              aria-label={t.ariaProgress}
               aria-valuemin={0}
-              aria-valuemax={100}
-              aria-valuenow={readyPercent}
+              aria-valuemax={lessons.length}
+              aria-valuenow={completedCount}
+              style={{ "--course-path-count": Math.max(lessons.length, 1) } as CSSProperties}
             >
-              {lessons.map((lesson) => {
-                const job = jobsByLessonId.get(lesson.id);
-                const building = lesson.status === "generating" || (job ? isLessonGenerationActive(job) : false);
-                return <span key={lesson.id} className={lesson.status === "generated" ? "ready" : building ? "building" : undefined} />;
-              })}
+              {lessons.map((lesson) => (
+                <i key={lesson.id} data-state={states.get(lesson.id)} />
+              ))}
             </div>
-            <div className="course-outline-summary-meta" aria-label={t.ariaSummary}>
-              <span className="ready"><ReadyIcon />{formatMessage(t.readyCount, { count: generatedCount })}</span>
-              {buildingCount > 0 ? <span className="building"><BuildIcon />{formatMessage(t.buildingCount, { count: buildingCount })}</span> : null}
-              <span className="locked"><LockIcon />{formatMessage(t.lockedCount, { count: lockedCount })}</span>
-            </div>
+            {legend.length > 0 ? (
+              <div className="course-path-legend">
+                {legend.map((state) => (
+                  <span key={state} data-state={state}>
+                    <i aria-hidden="true" />
+                    {t.legend[state]}
+                  </span>
+                ))}
+              </div>
+            ) : null}
           </div>
+
           {currentLesson ? (
-            <Link
-              href={`/course/${displayCourse.id}?lessonId=${encodeURIComponent(currentLesson.id)}`}
-              className="course-outline-continue"
-            >
-              {formatMessage(currentLesson.progress === "in_progress" ? t.continueLesson : t.startLesson, { number: currentLessonNumber })}
-              <ArrowRightIcon />
+            <Link href={lessonHref(currentLesson)} className="course-path-cta">
+              <span>
+                <strong>
+                  {msg(currentLesson.progress === "in_progress" ? t.continueLesson : t.startLesson, { number: numberOf(currentLesson) })}
+                </strong>
+                <small>{currentLesson.title}</small>
+              </span>
+              <ArrowIcon size={16} />
             </Link>
+          ) : featured ? (
+            <div className="course-path-status" role="status">
+              <strong>{msg(t.writingLesson, { number: numberOf(featured) })}</strong>
+              <span>{t.writingLessonCopy}</span>
+              <JobBar job={featuredJob} />
+            </div>
+          ) : allDone ? (
+            <Link href={lessonHref(lessons[0])} className="course-path-cta quiet">
+              <span>
+                <strong>{t.reviewCourse}</strong>
+                <small>{t.reviewCourseCopy}</small>
+              </span>
+              <ArrowIcon size={16} />
+            </Link>
+          ) : nextToPrepare ? (
+            <button type="button" className="course-path-cta" onClick={() => void generate(nextToPrepare)}>
+              <span>
+                <strong>{msg(t.prepareLesson, { number: numberOf(nextToPrepare) })}</strong>
+                <small>{t.prepareLessonCopy}</small>
+              </span>
+              <ArrowIcon size={16} />
+            </button>
           ) : null}
-        </header>
+        </aside>
       ) : null}
 
-      <section className="course-outline-timeline" aria-label={visibleLessons === "upcoming" ? t.timelineUpcoming : t.timelineAll}>
+      <section className="course-path-lessons" aria-label={visibleLessons === "upcoming" ? t.timelineUpcoming : t.timelineAll}>
+        {variant === "page" ? (
+          <div className="course-path-head">
+            <h2>{t.lessonsHeading}</h2>
+            <span>
+              {[
+                readyCount ? msg(t.pathCounts.ready, { count: readyCount }) : null,
+                writingCount ? msg(t.pathCounts.writing, { count: writingCount }) : null,
+                todoCount ? msg(t.pathCounts.todo, { count: todoCount }) : null,
+              ].filter(Boolean).join(" · ")}
+            </span>
+          </div>
+        ) : null}
         {renderedLessons.length > 0 ? (
-          <ol className="course-outline-list">
-            {renderedLessons.map((lesson, index) => (
-              <LessonOutlineRow
-                key={lesson.id}
-                courseId={displayCourse.id}
-                lesson={lesson}
-                index={lessons.findIndex((candidate) => candidate.id === lesson.id) + 1}
-                visibleIndex={index + 1}
-                job={jobsByLessonId.get(lesson.id)}
-                enqueueError={enqueueError[lesson.id] ?? null}
-                isLast={index === renderedLessons.length - 1}
-                isCurrent={lesson.id === currentLesson?.id}
-                onGenerate={() => void generate(lesson)}
-                onJumpAhead={() => {
-                  setJumpError(null);
-                  setJumpTarget(lesson);
-                }}
-                summary={lessonSummary(lesson, displayCourse.language)}
-                t={t}
-              />
-            ))}
+          <ol className="course-path-list">
+            {renderedLessons.map((lesson, index) => {
+              const showLater = featured && lesson.id !== featured.id && numberOf(lesson) === numberOf(featured) + 1 && index > 0;
+              return (
+                <LessonStep
+                  key={lesson.id}
+                  lesson={lesson}
+                  number={numberOf(lesson) || index + 1}
+                  state={states.get(lesson.id) ?? "locked"}
+                  featured={lesson.id === featured?.id}
+                  laterLabel={showLater ? t.later : null}
+                  job={jobsByLessonId.get(lesson.id)}
+                  error={enqueueError[lesson.id] ?? null}
+                  href={lessonHref(lesson)}
+                  summary={lessonSummary(lesson, displayCourse.language)}
+                  onRetry={() => void generate(lesson)}
+                  onJumpAhead={() => {
+                    setJumpError(null);
+                    setJumpTarget(lesson);
+                  }}
+                  t={t}
+                />
+              );
+            })}
           </ol>
         ) : (
-          <div className="course-outline-empty">
-            <p>{t.empty}</p>
-          </div>
+          <p className="course-path-empty">{t.empty}</p>
         )}
+
+        {variant === "page" && allDone ? (
+          <div className="course-path-finish">
+            <figure>
+              <Image src="/course/finish-path.svg" alt="" fill sizes="200px" unoptimized />
+            </figure>
+            <div>
+              <h3>{t.finishTitle}</h3>
+              <p>{msg(t.finishBody, { count: lessons.length })}</p>
+              <Link href="/">
+                {t.finishCta}
+                <ArrowIcon size={15} />
+              </Link>
+            </div>
+          </div>
+        ) : null}
       </section>
 
       {jumpTarget ? (
         <div
-          className="course-outline-jump-backdrop"
+          className="course-path-backdrop"
           role="presentation"
           onMouseDown={(event) => {
             if (event.target === event.currentTarget) closeJumpDialog();
@@ -263,36 +350,47 @@ export function CourseOutlineView({
           <section
             ref={jumpDialogRef}
             tabIndex={-1}
-            className="course-outline-jump-dialog"
+            className="course-path-dialog"
             role="dialog"
             aria-modal="true"
-            aria-labelledby="course-outline-jump-title"
+            aria-labelledby="course-path-jump-title"
             onMouseDown={(event) => event.stopPropagation()}
           >
-            <button
-              type="button"
-              className="course-outline-jump-close"
-              aria-label={t.closeJump}
-              onClick={closeJumpDialog}
-            >
-              ×
+            <button type="button" className="course-path-dialog-close" aria-label={t.closeJump} onClick={closeJumpDialog}>
+              <CloseIcon />
             </button>
-            <div className="course-outline-jump-kicker">{t.jumpKicker}</div>
-            <h2 id="course-outline-jump-title">{jumpTarget.title}</h2>
+            <span className="course-path-dialog-kicker">
+              {t.jumpKicker} · {msg(t.lessonNumber, { number: numberOf(jumpTarget) })}
+            </span>
+            <h2 id="course-path-jump-title">{jumpTarget.title}</h2>
             <p>{lessonSummary(jumpTarget, displayCourse.language)}</p>
-            <div className="course-outline-jump-note">
+            <div className="course-path-skip">
+              <span aria-hidden="true">
+                {lessons.slice(0, numberOf(jumpTarget)).map((lesson) => (
+                  <i
+                    key={lesson.id}
+                    data-state={lesson.id === jumpTarget.id ? "target" : lesson.progress === "completed" ? "done" : "skipped"}
+                  />
+                ))}
+              </span>
               {t.jumpNote}
             </div>
-            {jumpError ? <p className="course-outline-jump-error">{jumpError}</p> : null}
-            <button
-              type="button"
-              ref={jumpPrimaryRef}
-              className="course-outline-jump-primary"
-              disabled={jumpingLessonId === jumpTarget.id}
-              onClick={() => void confirmJumpAhead()}
-            >
-              {jumpingLessonId === jumpTarget.id ? t.generating : t.generateAndJump}
-            </button>
+            {jumpError ? <p className="course-path-dialog-error" role="alert">{jumpError}</p> : null}
+            <div className="course-path-dialog-actions">
+              <button type="button" className="course-path-button plain" onClick={closeJumpDialog}>
+                {t.jumpCancel}
+              </button>
+              <button
+                type="button"
+                ref={jumpPrimaryRef}
+                className="course-path-button primary"
+                disabled={jumpingLessonId === jumpTarget.id}
+                onClick={() => void confirmJumpAhead()}
+              >
+                {jumpingLessonId === jumpTarget.id ? t.generating : t.generateAndJump}
+                <ArrowIcon size={15} />
+              </button>
+            </div>
           </section>
         </div>
       ) : null}
@@ -313,158 +411,165 @@ function selectVisibleLessons(lessons: Lesson[], visibleLessons: "all" | "upcomi
   return nextLesson ? [nextLesson] : [];
 }
 
-function LessonOutlineRow({
-  courseId,
+function stepState(lesson: Lesson, job: LessonGenerationJobSummary | undefined, enqueueError: string | null, isCurrent: boolean): StepState {
+  if (lesson.progress === "completed") return "done";
+  if ((job && isLessonGenerationActive(job)) || lesson.status === "generating") return "writing";
+  if (lesson.status === "generated") return isCurrent ? "now" : "ready";
+  if (enqueueError || job?.status === "failed") return "failed";
+  return "locked";
+}
+
+function LessonStep({
   lesson,
-  index,
-  visibleIndex,
+  number,
+  state,
+  featured,
+  laterLabel,
   job,
-  enqueueError,
-  isLast,
-  isCurrent,
-  onGenerate,
-  onJumpAhead,
+  error,
+  href,
   summary,
+  onRetry,
+  onJumpAhead,
   t,
 }: {
-  courseId: string;
   lesson: Lesson;
-  index: number;
-  visibleIndex: number;
+  number: number;
+  state: StepState;
+  featured: boolean;
+  laterLabel: string | null;
   job?: LessonGenerationJobSummary;
-  enqueueError: string | null;
-  isLast: boolean;
-  isCurrent: boolean;
-  onGenerate: () => void;
-  onJumpAhead: () => void;
+  error: string | null;
+  href: string;
   summary: string;
-  t: I18nDictionary["outline"];
+  onRetry: () => void;
+  onJumpAhead: () => void;
+  t: OutlineCopy;
 }) {
-  const state = lessonState(lesson, job, index, enqueueError, t);
-  const completed = lesson.progress === "completed";
-  const isRemediation = lesson.role === "remediation";
-  const canGenerate = state.canGenerate;
-  const actionHandler = state.actionKind === "jump" ? onJumpAhead : onGenerate;
-  const estimatedTime = lesson.estimatedMinutes ? `~${lesson.estimatedMinutes} min` : state.tone === "locked" ? null : t.timePending;
-  const actionHintId = state.actionHint ? `lesson-action-hint-${lesson.id}` : undefined;
+  const label = String(number).padStart(2, "0");
+  const repair = lesson.role === "remediation" ? <span className="course-path-tag">{t.repairLesson}</span> : null;
+  const later = laterLabel ? <li className="course-path-later" aria-hidden="true">{laterLabel}</li> : null;
+  const node = (
+    <div className="course-path-node" aria-hidden="true">
+      <i>{state === "done" ? <CheckIcon /> : <b>{label}</b>}</i>
+    </div>
+  );
+
+  if (state === "done") {
+    return (
+      <>
+        {later}
+        <li className="course-path-step" data-state="done">
+          {node}
+          <div className="course-path-body">
+            <span className="course-path-num">{label}</span>
+            <h3>{lesson.title}</h3>
+            {repair}
+          </div>
+          <div className="course-path-action">
+            <Link href={href} className="course-path-link quiet" aria-label={msg(t.openLesson, { title: lesson.title })}>
+              {t.review}
+            </Link>
+          </div>
+        </li>
+      </>
+    );
+  }
+
+  const stateLabel = state === "now"
+    ? lesson.progress === "in_progress" ? t.stateInProgress : t.stateNow
+    : t.states[state];
+  const meta = (
+    <div className="course-path-meta">
+      <span>{msg(t.lessonNumber, { number })}</span>
+      {lesson.estimatedMinutes ? <span>{msg(t.minutes, { count: lesson.estimatedMinutes })}</span> : null}
+      <span className="course-path-state">{stateLabel}</span>
+      {repair}
+    </div>
+  );
+  const failure = error ?? (job?.status === "failed" ? job.lastError ?? t.generationFailed : null);
+  const note = state === "writing" ? (
+    <span className="course-path-note">
+      <JobBar job={job} />
+      {job && isLessonGenerationActive(job) ? lessonGenerationStageLabel(job) : t.generatingDetail}
+    </span>
+  ) : state === "failed" && failure ? (
+    <span className="course-path-note danger">{failure}</span>
+  ) : null;
+
+  if (featured) {
+    return (
+      <>
+        {later}
+        <li className="course-path-step" data-state={state} data-featured="true">
+          {node}
+          <div className="course-path-body">
+            {meta}
+            <h3>{state === "now" ? <Link href={href}>{lesson.title}</Link> : lesson.title}</h3>
+            <p>{summary}</p>
+            {state === "now" ? (
+              <span className="course-path-open">
+                {lesson.progress === "in_progress" ? t.continueThisLesson : t.startThisLesson}
+                <ArrowIcon size={15} />
+              </span>
+            ) : note}
+          </div>
+        </li>
+      </>
+    );
+  }
+
+  const hintId = `course-path-hint-${lesson.id}`;
+  let action: ReactNode = null;
+  if (state === "ready") {
+    action = (
+      <Link href={href} className="course-path-link" aria-label={msg(t.openLesson, { title: lesson.title })}>
+        {t.open}
+      </Link>
+    );
+  } else if (state === "failed") {
+    action = (
+      <button type="button" className="course-path-link danger" onClick={onRetry} aria-label={`${t.retry}: ${lesson.title}`}>
+        <RetryIcon />
+        {t.retry}
+      </button>
+    );
+  } else if (state === "locked") {
+    action = (
+      <span className="course-path-tip">
+        <button type="button" className="course-path-link quiet" onClick={onJumpAhead} aria-label={`${t.jumpAhead}: ${lesson.title}`} aria-describedby={hintId}>
+          <SkipIcon />
+          {t.jumpAhead}
+        </button>
+        <span id={hintId} role="tooltip">{t.lockedDetail}</span>
+      </span>
+    );
+  }
 
   return (
-    <li className={`course-outline-row course-outline-${state.tone}${completed ? " completed" : ""}${isCurrent ? " current" : ""}${isRemediation ? " course-outline-remediation" : ""}${isLast ? " last" : ""}`}>
-      <div className="course-outline-node-wrap" aria-hidden="true">
-        <div className="course-outline-node">
-          {completed ? <CheckIcon /> : state.tone === "locked" ? <LockIcon /> : String(index || visibleIndex).padStart(2, "0")}
+    <>
+      {later}
+      <li className="course-path-step" data-state={state}>
+        {node}
+        <div className="course-path-body">
+          {meta}
+          <h3>{lesson.title}</h3>
+          <p>{summary}</p>
+          {note}
         </div>
-      </div>
-      <div className="course-outline-main">
-        <span className="course-outline-row-kicker">
-          {formatMessage(t.lessonNumber, { number: index || visibleIndex })}
-          <span>{completed ? t.stateDone : isCurrent ? t.stateCurrent : state.stateLabel}</span>
-        </span>
-        <h3>{lesson.title}</h3>
-        <p className="course-outline-description">{summary}</p>
-        {state.detail ? <p className="course-outline-state-note">{state.detail}</p> : null}
-        {isRemediation ? <span className="course-outline-insert-marker">{t.insertedRemediation}</span> : null}
-        {estimatedTime ? (
-          <div className="course-outline-meta" aria-label={lesson.title}>
-            <span><ClockIcon />{estimatedTime}</span>
-          </div>
-        ) : null}
-      </div>
-      <div className="course-outline-row-action">
-        {lesson.status === "generated" ? (
-          <Link href={`/course/${courseId}?lessonId=${encodeURIComponent(lesson.id)}`} aria-label={msg(t.openLesson, { title: lesson.title })}>{completed ? t.review : isCurrent ? t.continue : t.open}</Link>
-        ) : (
-          <span className="course-outline-action-wrap">
-            <button
-              type="button"
-              disabled={!canGenerate}
-              onClick={canGenerate ? actionHandler : undefined}
-              aria-label={`${state.actionLabel}: ${lesson.title}`}
-              aria-describedby={actionHintId}
-            >
-              {state.actionLabel}
-            </button>
-            {state.actionHint ? (
-              <span id={actionHintId} className="course-outline-action-tooltip" role="tooltip">
-                {state.actionHint}
-              </span>
-            ) : null}
-          </span>
-        )}
-      </div>
-    </li>
+        <div className="course-path-action">{action}</div>
+      </li>
+    </>
   );
 }
 
-function lessonState(
-  lesson: Lesson,
-  job: LessonGenerationJobSummary | undefined,
-  index: number,
-  enqueueError: string | null,
-  t: I18nDictionary["outline"],
-): {
-  tone: "ready" | "locked" | "building" | "failed";
-  actionLabel: string;
-  stateLabel: string;
-  actionKind: "open" | "generate" | "jump";
-  detail: string | null;
-  actionHint: string | null;
-  canGenerate: boolean;
-} {
-  if (job && isLessonGenerationActive(job)) {
-    return {
-      tone: "building",
-      actionLabel: t.building,
-      stateLabel: t.stateBuilding,
-      actionKind: "generate",
-      detail: lessonGenerationStageLabel(job),
-      actionHint: null,
-      canGenerate: false,
-    };
-  }
-  if (lesson.status === "generating") {
-    return {
-      tone: "building",
-      actionLabel: t.building,
-      stateLabel: t.stateBuilding,
-      actionKind: "generate",
-      detail: t.generatingDetail,
-      actionHint: null,
-      canGenerate: false,
-    };
-  }
-  if (lesson.status === "generated") {
-    return {
-      tone: "ready",
-      actionLabel: t.open,
-      stateLabel: t.stateReady,
-      actionKind: "open",
-      detail: null,
-      actionHint: null,
-      canGenerate: false,
-    };
-  }
-  const failure = enqueueError ?? (job?.status === "failed" ? job.lastError ?? t.generationFailed : null);
-  if (failure) {
-    return {
-      tone: "failed",
-      actionLabel: t.retry,
-      stateLabel: t.stateFailed,
-      actionKind: "generate",
-      detail: failure,
-      actionHint: null,
-      canGenerate: true,
-    };
-  }
-  return {
-    tone: "locked",
-    actionLabel: t.jumpAhead,
-    stateLabel: t.stateLocked,
-    actionKind: "jump",
-    detail: null,
-    actionHint: t.lockedDetail,
-    canGenerate: true,
-  };
+function JobBar({ job }: { job?: LessonGenerationJobSummary }) {
+  const fraction = job && job.progressTotal > 0 ? Math.min(1, job.progressCompleted / job.progressTotal) : 0;
+  return (
+    <span className="course-path-bar" aria-hidden="true">
+      <i style={{ width: `${Math.max(8, Math.round(fraction * 100))}%` }} />
+    </span>
+  );
 }
 
 function lessonSummary(lesson: Lesson, language?: string | null): string {
@@ -517,78 +622,30 @@ function upsertJob(jobs: LessonGenerationJobSummary[], job: LessonGenerationJobS
   return next;
 }
 
-function ArrowRightIcon() {
+function Icon({ size = 15, strokeWidth = 1.8, children }: { size?: number; strokeWidth?: number; children: ReactNode }) {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M5 12h14M13 6l6 6-6 6" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {children}
     </svg>
   );
 }
 
 function CheckIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M5 12l5 5 9-10" />
-    </svg>
-  );
+  return <Icon size={12} strokeWidth={2.6}><path d="M5 12.5l4.5 4.5L19 7.5" /></Icon>;
 }
 
-function ArrowLeftIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="m15 18-6-6 6-6" />
-    </svg>
-  );
+function ChevronLeftIcon() {
+  return <Icon strokeWidth={1.9}><path d="m15 18-6-6 6-6" /></Icon>;
 }
 
-function LessonsIcon() {
-  return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M8 4h9a2 2 0 0 1 2 2v13H8a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Z" />
-      <path d="M8 4v15" />
-      <path d="M11 8h5" />
-    </svg>
-  );
+function RetryIcon() {
+  return <Icon strokeWidth={1.7}><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M18 3v4h-4M6 21v-4h4" /></Icon>;
 }
 
-function ReadyIcon() {
-  return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M12 3 5 6v5c0 4.4 2.9 8.4 7 10 4.1-1.6 7-5.6 7-10V6l-7-3Z" />
-      <path d="m8.8 12 2.1 2.1 4.3-4.5" />
-    </svg>
-  );
+function SkipIcon() {
+  return <Icon size={14} strokeWidth={1.7}><path d="M5 6l7 6-7 6M13 6l7 6-7 6" /></Icon>;
 }
 
-function LockIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <rect x="5" y="11" width="14" height="9" rx="2" />
-      <path d="M8 11V8a4 4 0 0 1 8 0v3" />
-    </svg>
-  );
-}
-
-function BuildIcon() {
-  return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M12 2v4" />
-      <path d="M12 18v4" />
-      <path d="m4.9 4.9 2.8 2.8" />
-      <path d="m16.3 16.3 2.8 2.8" />
-      <path d="M2 12h4" />
-      <path d="M18 12h4" />
-      <path d="m4.9 19.1 2.8-2.8" />
-      <path d="m16.3 7.7 2.8-2.8" />
-    </svg>
-  );
-}
-
-function ClockIcon() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <circle cx="12" cy="12" r="8" />
-      <path d="M12 8v5l3 2" />
-    </svg>
-  );
+function CloseIcon() {
+  return <Icon size={16} strokeWidth={1.7}><path d="M6 6l12 12M18 6L6 18" /></Icon>;
 }

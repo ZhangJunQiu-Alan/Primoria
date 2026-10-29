@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 150" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <rect width="240" height="150" fill="#F8F3E9"/>
+  <path d="M20 0V150M40 0V150M60 0V150M80 0V150M100 0V150M120 0V150M140 0V150M160 0V150M180 0V150M200 0V150M220 0V150M0 20H240M0 40H240M0 60H240M0 80H240M0 100H240M0 120H240M0 140H240" stroke="#E8E3D9" stroke-width=".8"/>
+  <!-- a hill climbed: the trail of finished lessons ends at the flag on top -->
+  <path d="M44 128C86 126 112 74 160 70C192 68 204 112 212 128Z" fill="#B7A693" fill-opacity=".28"/>
+  <path d="M24 128H220" stroke="#1E1B16" stroke-width="1.6"/>
+  <path d="M44 128C86 126 112 74 160 70C192 68 204 112 212 128" stroke="#1E1B16" stroke-width="1.6"/>
+  <path d="M36 122C70 120 96 96 118 86C134 79 146 74 156 72" stroke="#9E9E77" stroke-width="2" stroke-dasharray="1.5 7"/>
+  <circle cx="36" cy="122" r="4" fill="#1E4D40"/>
+  <circle cx="78" cy="113" r="3.2" fill="#1E4D40"/>
+  <circle cx="118" cy="86" r="3.2" fill="#1E4D40"/>
+  <path d="M160 70V30" stroke="#1E1B16" stroke-width="1.8"/>
+  <path d="M160 31L188 40L160 49Z" fill="#D29C38" stroke="#1E1B16" stroke-width="1.6"/>
+  <circle cx="58" cy="44" r="8" fill="#5E7F96" fill-opacity=".5" stroke="#1E1B16" stroke-width="1.4"/>
+  <path d="M196 26a22 22 0 0 1 16 20" stroke="#9E9E77" stroke-width="1.6" stroke-dasharray="1.5 5"/>
+</svg>

@@ -1,11 +1,14 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { ArrowIcon } from "@/components/arrow-icon";
+import { CourseCover } from "@/components/library/course-cover";
 import { BlockRenderer } from "./block-renderer";
-import { CourseLessonAside, type LessonPlayerSummary } from "./course-lesson-aside";
 import type { LessonConceptView } from "@/lib/courses/lesson-concepts";
 import type { CourseAISelectedTextContext } from "./course-ai-assistant-panel";
 import { useLessonGenerationJobs } from "@/hooks/use-lesson-generation-jobs";
@@ -16,7 +19,9 @@ import type { LessonGenerationJobSummary } from "@/lib/courses/lesson-generation
 import { lessonGenerationStageLabel, isLessonGenerationActive } from "@/lib/courses/lesson-generation-labels";
 import { useLearningProgressRecommendation } from "@/hooks/use-learning-progress-recommendation";
 import { learningDecisionAcceptLabel, learningDecisionHeadline } from "@/lib/courses/learning-progress-labels";
+import { formatMessage } from "@/lib/i18n/format";
 import { useT, msg } from "@/lib/i18n/client";
+import { isMaterialGraphId } from "@/lib/materials/types";
 
 const MIN_SIDEBAR_WIDTH = 320;
 const MAX_SIDEBAR_WIDTH = 620;
@@ -74,72 +79,42 @@ function isPracticeBlock(block: CourseBlock) {
 }
 
 function CourseLessonPendingState({
+  course,
   lesson,
   job,
 }: {
+  course: Course;
   lesson: Lesson | null;
   job?: LessonGenerationJobSummary;
 }) {
   const t = useT().course;
-  if (!lesson) {
-    return (
-      <div className="course-lesson-pending-card">
-        <span>{t.preparingLesson}</span>
-        <h2>{t.notReadyTitle}</h2>
-        <p>{t.notReadyCopy}</p>
-      </div>
-    );
-  }
   const detail = job ? lessonGenerationStageLabel(job) : t.preparingThisLesson;
   return (
-    <div className="course-lesson-pending-card">
-      <span>{lesson.status === "generating" ? t.generatingLesson : t.plannedLesson}</span>
-      <h2>{lesson.title}</h2>
-      <p>{lesson.description || t.preparingLessonCopy}</p>
-      <div className="course-lesson-pending-progress" aria-label={detail}>
-        <i />
-      </div>
-      <small>{detail}</small>
+    <div className="lesson-pending">
+      <figure className="lesson-pending-art" aria-hidden="true">
+        <CourseCover title={course.title} topic={course.topic} fromMaterials={isMaterialGraphId(course.graphId)} sizes="560px" />
+      </figure>
+      <span className="lesson-pending-kicker">
+        {!lesson ? t.preparingLesson : lesson.status === "generating" ? t.generatingLesson : t.plannedLesson}
+      </span>
+      <h2>{lesson ? lesson.title : t.notReadyTitle}</h2>
+      <p>{lesson ? lesson.description || t.preparingLessonCopy : t.notReadyCopy}</p>
+      {lesson ? (
+        <>
+          <div className="lesson-pending-progress" aria-label={detail}>
+            <i />
+          </div>
+          <small>{detail}</small>
+        </>
+      ) : (
+        <Link href={`/course/${course.id}/outline`} className="lesson-pending-link">
+          {t.viewOutlineLink}
+          <ArrowIcon size={14} />
+        </Link>
+      )}
     </div>
   );
 }
-
-const POPUP_OVERLAY_STYLE: React.CSSProperties = {
-  position: "fixed",
-  inset: 0,
-  zIndex: 60,
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  background: "rgba(28, 22, 14, 0.32)",
-  padding: 16,
-};
-const POPUP_CARD_STYLE: React.CSSProperties = {
-  width: "min(440px, 100%)",
-  background: "#fffefb",
-  borderRadius: 16,
-  border: "1px solid rgba(200, 136, 26, 0.22)",
-  boxShadow: "0 18px 48px rgba(57, 42, 25, 0.22)",
-  padding: 24,
-};
-const POPUP_SECONDARY_BTN: React.CSSProperties = {
-  padding: "8px 16px",
-  borderRadius: 999,
-  border: "1px solid rgba(90, 71, 39, 0.2)",
-  background: "transparent",
-  color: "#5a4727",
-  fontWeight: 700,
-  cursor: "pointer",
-};
-const POPUP_PRIMARY_BTN: React.CSSProperties = {
-  padding: "8px 18px",
-  borderRadius: 999,
-  border: "none",
-  background: "#c8881a",
-  color: "#fffaf2",
-  fontWeight: 800,
-  cursor: "pointer",
-};
 
 // Post-lesson recommendation popup (docs/product/feature_specification.md §28–30). After a
 // lesson is completed, the learning-progress worker records a next-step decision.
@@ -245,15 +220,20 @@ function LearningProgressPopup({ courseId, onResolved }: { courseId: string; onR
       <div
         ref={popupDialogRef}
         tabIndex={-1}
-        className="learning-progress-popup-overlay"
+        className="lesson-dialog-backdrop"
         role="dialog"
         aria-modal="true"
         aria-label={t.generatingRemediation}
-        style={POPUP_OVERLAY_STYLE}
       >
-        <div className="learning-progress-popup-card" style={POPUP_CARD_STYLE}>
-          <strong style={{ display: "block", fontSize: 17, color: "#3a2a14", marginBottom: 8 }}>{t.generatingRemediation}</strong>
-          <p style={{ margin: 0, color: "#5a4727", fontSize: 14, lineHeight: 1.6 }}>{t.generatingRemediationCopy}</p>
+        <div className="lesson-dialog">
+          <div className="lesson-dialog-body">
+            <span className="lesson-dialog-kicker">{t.learningRecommendation}</span>
+            <h2>{t.generatingRemediation}</h2>
+            <p>{t.generatingRemediationCopy}</p>
+            <div className="lesson-pending-progress" aria-hidden="true">
+              <i />
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -275,41 +255,42 @@ function LearningProgressPopup({ courseId, onResolved }: { courseId: string; onR
     <div
       ref={popupDialogRef}
       tabIndex={-1}
-      className="learning-progress-popup-overlay"
+      className="lesson-dialog-backdrop"
       role="dialog"
       aria-modal="true"
       aria-label={t.learningRecommendation}
-      style={POPUP_OVERLAY_STYLE}
       onClick={(e) => {
         if (e.target === e.currentTarget) void closePopup();
       }}
     >
-      <div className="learning-progress-popup-card" style={POPUP_CARD_STYLE}>
-        <strong style={{ display: "block", fontSize: 17, color: "#3a2a14", marginBottom: 8 }}>
-          {learningDecisionHeadline(decision, t)}
-        </strong>
-        <p style={{ margin: 0, color: "#5a4727", fontSize: 14, lineHeight: 1.6 }}>{decision.reason}</p>
-        {resolveError ? <p role="alert" style={{ margin: "12px 0 0", color: "#9d3d2d", fontSize: 13 }}>{t.recommendationFailed}</p> : null}
-        <div style={{ display: "flex", gap: 10, justifyContent: "flex-end", marginTop: 22 }}>
-          {secondaryLabel && (
+      <div className="lesson-dialog">
+        {isRemediation ? null : (
+          <figure className="lesson-dialog-art" aria-hidden="true">
+            <Image src="/course/finish-path.svg" alt="" fill sizes="460px" unoptimized />
+          </figure>
+        )}
+        <div className="lesson-dialog-body">
+          <span className="lesson-dialog-kicker">{t.learningRecommendation}</span>
+          <h2>{learningDecisionHeadline(decision, t)}</h2>
+          <p>{decision.reason}</p>
+          {resolveError ? <p role="alert" className="lesson-dialog-error">{t.recommendationFailed}</p> : null}
+          <div className="lesson-dialog-actions">
+            {secondaryLabel && (
+              <button type="button" className="lesson-button plain" onClick={() => void declineSecondary()} disabled={resolving}>
+                {secondaryLabel}
+              </button>
+            )}
             <button
               type="button"
-              onClick={() => void declineSecondary()}
+              ref={popupPrimaryRef}
+              className="lesson-button primary"
+              onClick={() => void acceptPrimary()}
               disabled={resolving}
-              style={{ ...POPUP_SECONDARY_BTN, cursor: resolving ? "default" : "pointer" }}
             >
-              {secondaryLabel}
+              {resolving ? t.processing : isRemediation ? t.yes : learningDecisionAcceptLabel(decision, t)}
+              <ArrowIcon size={15} />
             </button>
-          )}
-          <button
-            type="button"
-            ref={popupPrimaryRef}
-            onClick={() => void acceptPrimary()}
-            disabled={resolving}
-            style={{ ...POPUP_PRIMARY_BTN, cursor: resolving ? "default" : "pointer" }}
-          >
-            {resolving ? t.processing : isRemediation ? t.yes : learningDecisionAcceptLabel(decision, t)}
-          </button>
+          </div>
         </div>
       </div>
     </div>
@@ -339,44 +320,99 @@ function CourseAIPanelLoading() {
   );
 }
 
-function CourseAICollapsedRail({
-  onOpen,
-  onPreload,
-}: {
-  onOpen: () => void;
-  onPreload: () => void;
-}) {
-  const t = useT().course;
-  return (
-    <aside
-      className="course-ai-sidebar collapsed"
-      aria-label={t.tutorAria}
-      onClick={onOpen}
-      onMouseEnter={onPreload}
-    >
-      <div className="course-ai-sidebar-header">
-        <button
-          type="button"
-          className="course-ai-collapse"
-          onClick={(event) => {
-            event.stopPropagation();
-            onOpen();
-          }}
-          onFocus={onPreload}
-          aria-label={t.expandSidebar}
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M4 5h16v11H9l-5 4z" />
-          </svg>
-          <span>{t.tutorTitle}</span>
-        </button>
-      </div>
-    </aside>
-  );
+const TUTOR_PANEL_OPEN_QUERY = "(min-width: 1280px)";
+
+function isTypingTarget(target: EventTarget | null) {
+  if (!(target instanceof HTMLElement)) return false;
+  if (target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName)) return true;
+  return Boolean(target.closest("[role='slider'], [data-course-interactive='true'], [role='dialog'], .course-ai-sidebar"));
 }
 
-const MAX_LABELLED_STEPS = 10;
-const TUTOR_PANEL_OPEN_QUERY = "(min-width: 1280px)";
+function LessonConceptsMenu({ course, concepts }: { course: Course; concepts: LessonConceptView[] }) {
+  const t = useT().course;
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const completed = course.lessons.filter((lesson) => lesson.progress === "completed").length;
+  const total = course.lessons.length;
+
+  useEffect(() => {
+    if (!open) return;
+    function closeOutside(event: MouseEvent) {
+      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
+    }
+    function closeOnEscape(event: KeyboardEvent) {
+      if (event.key === "Escape") setOpen(false);
+    }
+    document.addEventListener("mousedown", closeOutside);
+    document.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.removeEventListener("mousedown", closeOutside);
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [open]);
+
+  return (
+    <div className="lesson-concepts" ref={rootRef}>
+      <button
+        type="button"
+        className="lesson-tool"
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        onClick={() => setOpen((value) => !value)}
+      >
+        {concepts.length > 0 ? (
+          <span className="lesson-concept-dots" aria-hidden="true">
+            {concepts.slice(0, 5).map((concept) => (
+              <i key={concept.conceptId} data-status={concept.status} />
+            ))}
+          </span>
+        ) : null}
+        <span className="lesson-tool-label">{t.conceptsButton}</span>
+      </button>
+      {open ? (
+        <div className="lesson-concepts-pop" role="dialog" aria-label={t.lessonConcepts}>
+          {concepts.length > 0 ? (
+            <>
+              <span className="lesson-pop-label">{t.lessonConcepts}</span>
+              <ol>
+                {concepts.map((concept) => (
+                  <li key={concept.conceptId} data-status={concept.status}>
+                    <i aria-hidden="true" />
+                    <span>
+                      <strong>{concept.name}</strong>
+                      {concept.sources?.map((source) => (
+                        <small key={source.materialId}>
+                          {formatMessage(t.conceptSource, {
+                            title: source.title,
+                            locator: source.locator ? ` · ${source.locator}` : "",
+                          })}
+                        </small>
+                      ))}
+                    </span>
+                    <em>{t.conceptStatus[concept.status]}</em>
+                  </li>
+                ))}
+              </ol>
+            </>
+          ) : null}
+          <div className="lesson-pop-course">
+            <div>
+              <span>{course.title}</span>
+              <span>{msg(t.courseProgress, { done: completed, total })}</span>
+            </div>
+            <span className="lesson-pop-bar" aria-hidden="true">
+              <i style={{ width: `${total > 0 ? Math.round((completed / total) * 100) : 0}%` }} />
+            </span>
+            <Link href={`/course/${course.id}/outline`}>
+              {t.viewOutlineLink}
+              <ArrowIcon size={14} />
+            </Link>
+          </div>
+        </div>
+      ) : null}
+    </div>
+  );
+}
 
 function stepLabel(block: CourseBlock, t: ReturnType<typeof useT>["course"]) {
   if (block.type === "image" || block.type === "visual") return t.stepTypes[block.type];
@@ -390,14 +426,12 @@ export function CourseDetailClient({
   initialLessonJobs = [],
   copilotEnabled,
   lessonConcepts = {},
-  player = null,
 }: {
   initialCourse: Course;
   initialLessonId?: string | null;
   initialLessonJobs?: LessonGenerationJobSummary[];
   copilotEnabled: boolean;
   lessonConcepts?: Record<string, LessonConceptView[]>;
-  player?: LessonPlayerSummary | null;
 }) {
   const t = useT().course;
   const router = useRouter();
@@ -413,6 +447,7 @@ export function CourseDetailClient({
   const [aiPanelLoaded, setAiPanelLoaded] = useState(false);
   const [sidebarWidth, setSidebarWidth] = useState(DEFAULT_SIDEBAR_WIDTH);
   const activeBlockRef = useRef<HTMLDivElement | null>(null);
+  const stageRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     // The tutor panel is part of the desktop lesson layout; narrow screens keep
@@ -442,21 +477,14 @@ export function CourseDetailClient({
   useEffect(() => {
     const workspace = document.querySelector<HTMLElement>(".course-workspace");
     if (!workspace) return;
-    if (sidebarCollapsed) {
-      workspace.style.removeProperty("--course-sidebar-width");
-      workspace.style.setProperty("--course-content-margin-end", "auto");
-      return;
-    }
-    workspace.style.setProperty("--course-sidebar-width", `${sidebarWidth}px`);
-    workspace.style.setProperty("--course-content-margin-end", "var(--course-content-gutter)");
+    if (sidebarCollapsed) workspace.style.removeProperty("--course-sidebar-width");
+    else workspace.style.setProperty("--course-sidebar-width", `${sidebarWidth}px`);
   }, [sidebarCollapsed, sidebarWidth]);
 
   const maxStepIndex = Math.max(blocks.length - 1, 0);
   const currentStepIndex = readerStep.lessonId === currentLessonId ? Math.min(readerStep.index, maxStepIndex) : 0;
   const currentBlock = blocks[currentStepIndex] ?? null;
   const totalSteps = blocks.length;
-  const currentStep = currentBlock ? currentStepIndex + 1 : 0;
-  const readerProgress = totalSteps > 0 ? (currentStep / totalSteps) * 100 : 0;
 
   // Preload only the immediately-next outline lesson while this lesson is open
   // (docs/product/feature_specification.md §28). Preloading must not make the next lesson's
@@ -626,6 +654,29 @@ export function CourseDetailClient({
     setSelectedTextContext(null);
   }
 
+  // Each step starts at its top.
+  const currentBlockId = currentBlock?.id ?? null;
+  useEffect(() => {
+    stageRef.current?.scrollTo({ top: 0 });
+  }, [currentBlockId]);
+
+  // ← / → step through the lesson unless the learner is typing or working an interactive.
+  useEffect(() => {
+    function stepWithArrows(event: KeyboardEvent) {
+      if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return;
+      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+      if (isTypingTarget(event.target) || isTypingTarget(document.activeElement)) return;
+      event.preventDefault();
+      setReaderStep((current) => {
+        const index = current.lessonId === currentLessonId ? current.index : 0;
+        const next = Math.min(Math.max(index + (event.key === "ArrowRight" ? 1 : -1), 0), Math.max(totalSteps - 1, 0));
+        return { lessonId: currentLessonId, index: next };
+      });
+    }
+    window.addEventListener("keydown", stepWithArrows);
+    return () => window.removeEventListener("keydown", stepWithArrows);
+  }, [currentLessonId, totalSteps]);
+
   function runPracticeCheck() {
     const root = activeBlockRef.current;
     if (!root) return;
@@ -666,6 +717,7 @@ export function CourseDetailClient({
   const currentLessonNumber = currentLesson
     ? [...course.lessons].sort((a, b) => a.sortKey - b.sortKey).findIndex((lesson) => lesson.id === currentLesson.id) + 1
     : 0;
+  const tutorOpen = !sidebarCollapsed;
 
   function openAIPanel() {
     preloadCourseAIPanel();
@@ -683,47 +735,68 @@ export function CourseDetailClient({
       className={`course-detail-layout${sidebarCollapsed ? " sidebar-collapsed" : ""}`}
       style={sidebarCollapsed ? undefined : { ["--course-sidebar-width" as string]: `${sidebarWidth}px` }}
     >
-      <CourseLessonAside course={course} concepts={currentLessonId ? lessonConcepts[currentLessonId] ?? [] : []} player={player} />
       <div className="course-detail-main">
-        <div className="course-reader">
-          <header className="course-reader-topbar">
-            <Link href={`/course/${course.id}/outline`} className="course-reader-close" aria-label={t.readerClose}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
-                <path d="M5 5l14 14" />
-                <path d="M19 5L5 19" />
+        <div className="lesson-reader">
+          <header className="lesson-topbar">
+            <Link href={`/course/${course.id}/outline`} className="lesson-icon-button" aria-label={t.readerClose} title={t.readerClose}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+                <path d="M6 6l12 12M18 6L6 18" />
               </svg>
             </Link>
-            <div className="course-reader-heading">
-              {currentLessonNumber > 0 ? <span>{msg(t.lessonNumber, { number: currentLessonNumber })}</span> : null}
+            <div className="lesson-crumbs">
+              <Link href={`/course/${course.id}/outline`}>{course.title}</Link>
+              <span aria-hidden="true">/</span>
+              {currentLessonNumber > 0 ? (
+                <span className="lesson-crumbs-number">{msg(t.lessonOf, { number: currentLessonNumber, total: course.lessons.length })}</span>
+              ) : null}
               <h1>{lessonTitle}</h1>
-            </div>
-            <div className="course-reader-progress" aria-label={t.lessonStatus}>
-              <strong>{currentStep}/{totalSteps}</strong>
               {currentLessonJobActive && totalSteps > 0 ? (
-                <em className="course-reader-streaming" aria-live="polite">{t.generatingLesson}</em>
+                <em className="lesson-streaming" aria-live="polite">{t.generatingLesson}</em>
               ) : null}
             </div>
-            {totalSteps > 0 ? (
-              <ol className="course-reader-steps" aria-hidden="true">
-                {blocks.map((block, index) => (
-                  <li key={block.id} className={index < currentStep ? "done" : undefined}>
-                    <i />
-                    {totalSteps <= MAX_LABELLED_STEPS ? (
-                      <span className={index === currentStepIndex ? "current" : undefined}>{stepLabel(block, t)}</span>
-                    ) : null}
-                  </li>
-                ))}
-              </ol>
-            ) : null}
+            <div className="lesson-tools">
+              <LessonConceptsMenu course={course} concepts={currentLessonId ? lessonConcepts[currentLessonId] ?? [] : []} />
+              <button
+                type="button"
+                className="lesson-tool"
+                aria-pressed={tutorOpen}
+                onClick={() => (tutorOpen ? setSidebarCollapsed(true) : openAIPanel())}
+                onMouseEnter={preloadCourseAIPanel}
+                onFocus={preloadCourseAIPanel}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M4 5h16v11H9l-5 4z" />
+                </svg>
+                <span className="lesson-tool-label">{t.tutorButton}</span>
+              </button>
+            </div>
           </header>
 
-          <main className="course-reader-stage" aria-live="polite">
-            {currentBlock ? (
-              <div className={`course-reader-card${currentBlock.type === "quiz" ? " course-reader-card-quiz" : ""}`} key={currentBlock.id}>
+          {totalSteps > 0 ? (
+            <nav className="lesson-steps" aria-label={t.lessonStatus} style={{ "--lesson-steps": totalSteps } as CSSProperties}>
+              {blocks.map((block, index) => (
+                <button
+                  key={block.id}
+                  type="button"
+                  data-state={index < currentStepIndex ? "done" : index === currentStepIndex ? "now" : undefined}
+                  aria-current={index === currentStepIndex ? "step" : undefined}
+                  aria-label={`${stepLabel(block, t)} · ${index + 1}/${totalSteps}`}
+                  title={stepLabel(block, t)}
+                  onClick={() => goToStep(index)}
+                >
+                  <i />
+                </button>
+              ))}
+            </nav>
+          ) : null}
+
+          <main className="lesson-stage" ref={stageRef} aria-live="polite">
+            <div className="lesson-page" key={currentBlockId ?? "pending"}>
+              {currentBlock ? (
                 <div
                   ref={activeBlockRef}
                   data-block-id={currentBlock.id}
-                  className={`course-block-wrapper course-reader-block-wrapper${selectedBlockId === currentBlock.id ? " selected" : ""}`}
+                  className={`course-block-wrapper lesson-block${selectedBlockId === currentBlock.id ? " selected" : ""}`}
                   onClick={(event) => {
                     if (isCourseBlockInteractiveTarget(event.target, event.currentTarget)) return;
                     if (selectionTextInside(event.currentTarget)) return;
@@ -741,29 +814,31 @@ export function CourseDetailClient({
                     onBlockUpdated={updateBlockInCourse}
                   />
                 </div>
-              </div>
-            ) : (
-              <div className="course-reader-card pending">
-                <CourseLessonPendingState lesson={currentLesson} job={currentLessonJob} />
-              </div>
-            )}
+              ) : (
+                <CourseLessonPendingState course={course} lesson={currentLesson} job={currentLessonJob} />
+              )}
+            </div>
           </main>
 
           {currentBlock ? (
-            <footer className="course-reader-controls" aria-label={t.lessonStatus}>
-              <button type="button" className="course-reader-arrow" onClick={() => goToStep(currentStepIndex - 1)} disabled={currentStepIndex === 0} aria-label={t.readerPrevious}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M15 18 9 12l6-6" />
-                </svg>
-              </button>
-              <button type="button" className="course-reader-primary" onClick={runPrimaryAction}>
-                {primaryActionLabel}
-              </button>
-              <button type="button" className="course-reader-arrow" onClick={() => goToStep(currentStepIndex + 1)} disabled={currentStepIndex >= totalSteps - 1} aria-label={t.readerNext}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="m9 18 6-6-6-6" />
-                </svg>
-              </button>
+            <footer className="lesson-controls" aria-label={t.lessonStatus}>
+              <div className="lesson-controls-inner">
+                <button type="button" className="lesson-back" onClick={() => goToStep(currentStepIndex - 1)} disabled={currentStepIndex === 0} aria-label={t.readerPrevious}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M15 18 9 12l6-6" />
+                  </svg>
+                  <span>{t.readerBack}</span>
+                </button>
+                <span className="lesson-keys" aria-hidden="true">
+                  <kbd>←</kbd>
+                  <kbd>→</kbd>
+                  {t.readerKeys}
+                </span>
+                <button type="button" className="lesson-next" onClick={runPrimaryAction}>
+                  {primaryActionLabel}
+                  <ArrowIcon size={16} />
+                </button>
+              </div>
             </footer>
           ) : null}
         </div>
@@ -793,9 +868,7 @@ export function CourseDetailClient({
             }
           }}
         />
-      ) : (
-        <CourseAICollapsedRail onOpen={openAIPanel} onPreload={preloadCourseAIPanel} />
-      )}
+      ) : null}
     </div>
   );
 }
