@@ -582,7 +582,7 @@ async function generateImageBlock(input: GenerateBlockInput, settings: TutorProv
   const imageOwnerId = materialCourse ? input.ownerId ?? null : null;
   // A concept that already has a cached image always resolves to it, so the
   // model only titles that picture instead of briefing one nobody would see.
-  const existing = await findReusableImage(conceptIds, { ownerId: imageOwnerId, language: input.course.language });
+  const existing = await findReusableImage(conceptIds, { ownerId: imageOwnerId, language: input.course.language }).catch(() => null);
 
   const model = createTutorModel(settings);
   const systemPrompt = existing

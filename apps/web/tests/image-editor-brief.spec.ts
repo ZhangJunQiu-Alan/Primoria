@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { Course, CourseBlock } from "../src/lib/courses/types";
 
 const invoke = vi.hoisted(() => vi.fn());
+const findReusableImage = vi.hoisted(() => vi.fn());
 vi.mock("../src/lib/ai/deepagent/model", async (importOriginal) => ({
   ...(await importOriginal<typeof import("../src/lib/ai/deepagent/model")>()),
   createTutorModel: () => ({ withStructuredOutput: () => ({ invoke }) }),
@@ -9,6 +10,7 @@ vi.mock("../src/lib/ai/deepagent/model", async (importOriginal) => ({
 // Imaging is covered elsewhere; here the editor's brief is what matters.
 vi.mock("../src/lib/ai/media/image-builder", async (importOriginal) => ({
   ...(await importOriginal<typeof import("../src/lib/ai/media/image-builder")>()),
+  findReusableImage,
   finalizeImageBlocks: async (blocks: CourseBlock[]) => blocks,
 }));
 import { generateBlock } from "../src/lib/ai/deepagent/course-generator";
@@ -25,7 +27,23 @@ const brief = {
 const addImage = () => generateBlock({ course, targetType: "image", instruction: "add a chloroplast picture" });
 
 describe("editor image brief", () => {
-  beforeEach(() => invoke.mockReset());
+  beforeEach(() => {
+    invoke.mockReset();
+    findReusableImage.mockReset().mockResolvedValue(null);
+  });
+
+  it("writes a fresh brief when the optional reusable-image lookup fails", async () => {
+    findReusableImage.mockRejectedValueOnce(new Error("media cache unavailable"));
+    invoke.mockResolvedValueOnce(brief);
+    await expect(generateBlock({
+      course,
+      targetType: "image",
+      instruction: "add a chloroplast picture",
+      sourceBlock: { id: "source", type: "text", markdown: "Chloroplasts", conceptIds: ["chloroplast"] },
+    })).resolves.toMatchObject({ type: "image", title: brief.title, caption: brief.caption });
+    expect(findReusableImage).toHaveBeenCalledWith(["chloroplast"], { ownerId: null, language: "en" });
+    expect(invoke).toHaveBeenCalledTimes(1);
+  });
 
   it("asks once more when alt and caption are unusable", async () => {
     invoke.mockResolvedValueOnce({ ...brief, caption: brief.alt }).mockResolvedValueOnce(brief);
