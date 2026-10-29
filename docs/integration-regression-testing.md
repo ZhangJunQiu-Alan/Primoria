@@ -39,6 +39,28 @@ Scope owner: Primoria project owner
 
 ## Implementation status
 
+### 2026-10-29 visualization control feedback
+
+- Wave superposition uses a fixed −4 to 4 amplitude scale and retains elapsed
+  phase across pause/resume. Photoelectric current plots use a fixed 0–1800 nA
+  axis, so increasing photon flux visibly raises the curve without moving the
+  stopping potential.
+- Sentence analysis now renders dependency, phrase, original-text order and
+  dependency-root grouping views. Root groups are explicitly labelled as
+  supplied annotations, not automatic clause detection. Narrative models show
+  five-part/three-act reading guides or discrete episodic tension bars; authored
+  events and tensions are preserved rather than inferred again.
+- Policy criteria expose normalized weight percentages and meters, while narrow
+  containers stack the criteria and stakeholders vertically. The component
+  continues to avoid automatically declaring a winning policy.
+- `visualization-control-feedback.spec.ts` exercises the production interactive
+  wrapper, visible amplitude/current changes, pause continuity, stable axes and
+  thresholds, all sentence/narrative views, cyclic annotation handling and
+  relative weight updates. The replay browser regression also checks policy
+  content width inside its clipping container and live weight-meter updates at
+  all three viewport sizes. Rendered desktop/mobile checks and release results
+  are recorded separately; this source entry alone is not deployment proof.
+
 ### 2026-10-29 magnetic trajectory feedback
 
 The magnetic-motion widget keeps a common physical display scale while field,

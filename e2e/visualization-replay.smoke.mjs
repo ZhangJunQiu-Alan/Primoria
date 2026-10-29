@@ -61,6 +61,15 @@ try {
       assert.equal(await page.locator('[role="alert"]').count(), 0, `${entry.payload.componentId} failed to render`);
       const dimensions = await page.evaluate(() => ({ inner: innerWidth, scroll: document.documentElement.scrollWidth }));
       assert.ok(dimensions.scroll <= dimensions.inner + 1, `${entry.payload.componentId} overflows at ${width}px`);
+      if (entry.payload.componentId === "social.policy-tradeoff") {
+        const policy = page.getByRole("region", { name: "政策权衡 · 多视角比较", exact: true });
+        const content = await policy.evaluate((element) => ({ width: element.clientWidth, scroll: element.scrollWidth }));
+        assert.ok(content.scroll <= content.width + 1, `policy content is clipped inside its container at ${width}px`);
+        const weight = policy.getByRole("meter").first();
+        const before = await weight.getAttribute("aria-valuenow");
+        await policy.getByRole("slider").first().press("Home");
+        assert.notEqual(await weight.getAttribute("aria-valuenow"), before, "policy controls update relative weight feedback");
+      }
       renders.push({ componentId: entry.payload.componentId, readyMs: Math.round(performance.now() - started) });
     }
     const calculus = data.gallery.find((entry) => entry.payload.componentId === "math.calculus-lab");
@@ -78,7 +87,7 @@ try {
   }
   assert.equal(report.errors.length, 0, report.errors.join(" | "));
   assert.equal(report.apiRequests.length, 0, "static playback must not request authenticated APIs or models");
-  report.checks.push("all registered widgets render at three widths", "local controls and reset respond", "no new prompt input", "no API requests", "no browser runtime errors");
+  report.checks.push("all registered widgets render at three widths", "policy content fits its container and relative weights respond", "local controls and reset respond", "no new prompt input", "no API requests", "no browser runtime errors");
   report.status = "passed";
   console.log(`[visualization-replay.smoke] PASS ${data.gallery.length} components × 3 viewports; evidence=${out}`);
 } catch (error) {

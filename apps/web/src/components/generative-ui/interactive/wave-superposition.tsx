@@ -1,41 +1,40 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useInteractiveT } from "./i18n";
 import { describeSuperposition, sampleWave, type WaveSuperpositionConfig } from "@/lib/interactive/components/wave-superposition";
 import { WIDGET_COLORS } from "./palette";
 import { Readout, SliderRow } from "./primitives/controls";
 import { WidgetShell } from "./primitives/widget-shell";
+import { useSceneLocale } from "./primitives/scene-frame";
 
 const W = 680;
 const H = 270;
-// Pixels per unit amplitude, scaled so the largest possible resultant
-// (amplitude1 + amplitude2) always stays inside the viewBox.
-function amplitudeScale(config: WaveSuperpositionConfig) {
-  return (H / 2 - 14) / Math.max(2, config.amplitude1 + config.amplitude2);
-}
+const AMPLITUDE_SCALE = (H / 2 - 14) / 4;
 function wavePath(config: WaveSuperpositionConfig, time: number, key: "wave1" | "wave2" | "resultant") {
-  const scale = amplitudeScale(config);
   const points: string[] = [];
   for (let index = 0; index <= 120; index += 1) {
     const xWorld = index / 120 * 2;
     const value = sampleWave(config, xWorld, time)[key];
-    points.push(`${index === 0 ? "M" : "L"}${(index / 120 * W).toFixed(1)},${(H / 2 - value * scale).toFixed(1)}`);
+    points.push(`${index === 0 ? "M" : "L"}${(index / 120 * W).toFixed(1)},${(H / 2 - value * AMPLITUDE_SCALE).toFixed(1)}`);
   }
   return points.join(" ");
 }
 
 export function WaveSuperpositionWidget({ config, onChange }: { config: WaveSuperpositionConfig; onChange: (next: WaveSuperpositionConfig) => void }) {
   const t = useInteractiveT().widgets;
+  const localize = useSceneLocale();
   const [playing, setPlaying] = useState(false);
   const [time, setTime] = useState(0);
+  const elapsed = useRef(0);
   useEffect(() => {
     if (!playing) return;
     let frame = 0;
-    let start = 0;
+    let previous: number | null = null;
     const tick = (now: number) => {
-      if (!start) start = now;
-      setTime((now - start) / 1800);
+      if (previous !== null) elapsed.current += (now - previous) / 1800;
+      previous = now;
+      setTime(elapsed.current);
       frame = requestAnimationFrame(tick);
     };
     frame = requestAnimationFrame(tick);
@@ -46,10 +45,12 @@ export function WaveSuperpositionWidget({ config, onChange }: { config: WaveSupe
   return (
     <WidgetShell componentId="physics.wave-superposition" title={t.waveTitle}>
       <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={t.waveAria} style={{ display: "block", width: "100%" }}>
+        {[-4, -2, 2, 4].map((value) => <g key={value}><line x1="0" x2={W} y1={H / 2 - value * AMPLITUDE_SCALE} y2={H / 2 - value * AMPLITUDE_SCALE} stroke={WIDGET_COLORS.line} strokeDasharray="3 5" /><text x="6" y={H / 2 - value * AMPLITUDE_SCALE + (value === -4 ? -4 : 12)} fill={WIDGET_COLORS.muted} fontSize={11}>{value}</text></g>)}
         <line x1="0" y1={H / 2} x2={W} y2={H / 2} stroke={WIDGET_COLORS.line} />
         {config.showComponents ? <><path d={wavePath(config, time, "wave1")} fill="none" stroke={WIDGET_COLORS.series1} strokeWidth="1.6" opacity="0.75" /><path d={wavePath(config, time, "wave2")} fill="none" stroke={WIDGET_COLORS.series3} strokeWidth="1.6" opacity="0.75" /></> : null}
         <path d={wavePath(config, time, "resultant")} fill="none" stroke={WIDGET_COLORS.series2} strokeWidth="3" />
       </svg>
+      <p style={{ margin: "0 14px 8px", color: WIDGET_COLORS.muted, fontSize: 12 }}>{localize("纵轴固定为 −4～4（相对振幅），调整振幅不会自动缩放。", "Fixed vertical scale: −4 to 4 in relative amplitude units; amplitude changes do not rescale the plot.")}</p>
       <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 8, padding: "9px 14px 3px" }}>
         <button type="button" onClick={() => setPlaying((value) => !value)} style={{ border: 0, borderRadius: 7, padding: "6px 12px", background: WIDGET_COLORS.accent, color: WIDGET_COLORS.surface, cursor: "pointer" }}>{playing ? t.pause : t.play}</button>
         <Readout label={t.superposition} value={summary.relation === "constructive" ? t.constructive : summary.relation === "destructive" ? t.destructive : t.mixed} tone={summary.relation !== "mixed" ? "accent" : "default"} />
