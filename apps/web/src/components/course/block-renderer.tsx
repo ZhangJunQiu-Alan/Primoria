@@ -721,7 +721,7 @@ function QuestionView({
           </span>
         )}
       </div>
-      <p className="course-quiz-q-text">{question.question}</p>
+      <p className="course-quiz-q-text"><CourseInlineMarkdown markdown={question.question} /></p>
 
       {question.kind === "single" && (
         <SingleChoiceView
@@ -751,7 +751,7 @@ function QuestionView({
       )}
 
       {submitted && question.explanation && (
-        <div className="course-quiz-explanation">{question.explanation}</div>
+        <CourseMarkdown className="course-quiz-explanation" markdown={question.explanation} />
       )}
     </div>
   );
@@ -781,7 +781,7 @@ function SingleChoiceView({
             className={`course-quiz-choice ${isSelected ? "selected" : ""} ${isCorrectChoice ? "correct" : ""} ${isWrongSelection ? "wrong" : ""}`}
             onClick={() => onSelect(c.id)}
           >
-            {c.text}
+            <CourseInlineMarkdown markdown={c.text} />
           </button>
         );
       })}
@@ -819,7 +819,7 @@ function MultiChoiceView({
             onClick={() => toggle(c.id)}
           >
             <span className="course-quiz-choice-check">{isSelected ? "☑" : "☐"}</span>
-            {c.text}
+            <CourseInlineMarkdown markdown={c.text} />
           </button>
         );
       })}

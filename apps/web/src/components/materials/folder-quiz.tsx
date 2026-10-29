@@ -1,5 +1,7 @@
 "use client";
 
+import { CourseInlineMarkdown, CourseMarkdown } from "@/components/course/course-markdown";
+
 import { useRef, useState } from "react";
 import { msg, useI18n } from "@/lib/i18n/client";
 import type { FolderQuizOutcome, FolderQuizStart } from "@/lib/materials/folder-quiz";
@@ -121,7 +123,7 @@ export function FolderQuiz({ folderId, ready, onFinished }: { folderId: string; 
                       </span>
                     ) : null}
                   </div>
-                  <p className="course-quiz-q-text">{question.question}</p>
+                  <p className="course-quiz-q-text"><CourseInlineMarkdown markdown={question.question} /></p>
                   <div className="course-quiz-choices" role="radiogroup" aria-label={question.question}>
                     {question.choices.map((choice) => {
                       const isSelected = selected === choice.id;
@@ -137,14 +139,14 @@ export function FolderQuiz({ folderId, ready, onFinished }: { folderId: string; 
                           className={`course-quiz-choice ${isSelected ? "selected" : ""} ${isCorrectChoice ? "correct" : ""} ${isWrongSelection ? "wrong" : ""}`}
                           onClick={() => setSelections((current) => ({ ...current, [question.questionId]: choice.id }))}
                         >
-                          {choice.text}
+                          <CourseInlineMarkdown markdown={choice.text} />
                         </button>
                       );
                     })}
                   </div>
                   {result ? (
                     <div className="course-quiz-explanation">
-                      {result.explanation ? <p>{result.explanation}</p> : null}
+                      {result.explanation ? <CourseMarkdown markdown={result.explanation} /> : null}
                       {result.sources.length ? (
                         <small>
                           {t.source}: {result.sources.map((source) => [source.title, source.locator].filter(Boolean).join(" · ")).join("；")}

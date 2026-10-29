@@ -1,5 +1,12 @@
 # Integration Regression Testing
 
+Quiz math rendering: `quiz-math-rendering.spec.ts` mounts the actual course
+quiz with matrix-valued questions/choices, verifies KaTeX output without parse
+errors, selects answers and checks single/multiple/true-false grading plus
+formula explanations after submission. Course, chat and material-folder quizzes
+use shared `CourseInlineMarkdown` for questions/choices and `CourseMarkdown`
+for explanations; stored quiz content and server grading are unchanged.
+
 Tutor preparation coverage: `course-intake.spec.ts`, `course-intake-form.spec.ts`,
 `course-route-freeform.spec.ts`, isolated `course-intake.db.spec.ts`, and
 `e2e/tutor-runtime.smoke.mjs`. Gates cover exactly three options-based questions,

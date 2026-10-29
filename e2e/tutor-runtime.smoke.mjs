@@ -78,6 +78,7 @@ async function fillPasswordAfterHydration(page, value) {
 }
 
 async function sendMessage(page, message) {
+  await page.locator('[data-copilot-running="false"]').waitFor({ state: "attached", timeout: 30_000 });
   const input = page.locator('[data-testid="copilot-chat-textarea"]');
   await input.waitFor({ state: "visible", timeout: 30_000 });
   await input.fill(message);
@@ -186,13 +187,14 @@ try {
     const built = page.waitForResponse((response) => response.url().endsWith("/api/learning/course") && response.request().method() === "POST");
     await intake.getByRole("button", { name: "Build my course", exact: true }).click();
     assert((await built).status() === 202, "confirmed answers must allow course creation");
-    await page.getByRole("link", { name: "Open course", exact: true }).waitFor({ timeout: 30_000 });
-    assert(await page.getByRole("link", { name: "View library", exact: true }).isVisible(), "course actions must follow English interface language");
+    const courseMessages = page.getByTestId("copilot-message-list");
+    await courseMessages.getByRole("link", { name: "Open course", exact: true }).waitFor({ timeout: 30_000 });
+    assert(await courseMessages.getByRole("link", { name: "View library", exact: true }).isVisible(), "course actions must follow English interface language");
     assert(await countCourses() === 1, "one submission creates one course");
     const language = (await sql`select language from courses where owner_id = ${USER_ID}`)[0].language;
     assert(language === "en", "English auto-detect must carry into the persisted course");
     await page.reload({ waitUntil: "domcontentloaded" });
-    await page.getByRole("link", { name: "Open course", exact: true }).waitFor({ timeout: 30_000 });
+    await courseMessages.getByRole("link", { name: "Open course", exact: true }).waitFor({ timeout: 30_000 });
     assert(await countCourses() === 1, "restoring submitted preparation must reuse its course");
   } finally { await sql.end({ timeout: 5 }); }
   assert(modelServer.requests.some((body) => JSON.stringify(body.messages).includes("REPLY LANGUAGE: English")), "server-resolved English must reach the model prompt");

@@ -52,6 +52,7 @@ import { msg, useT } from "@/lib/i18n/client";
 import { getTutorToolDisplay, getTutorToolIndicatorClass } from "@/lib/ai/tutor-tool-display";
 import { learningGoalProgressCopy } from "@/lib/ai/learning-goal-progress";
 import { CourseIntakeForm } from "@/components/tutor/course-intake-form";
+import { CourseInlineMarkdown, CourseMarkdown } from "@/components/course/course-markdown";
 import type { CourseIntakeView } from "@/lib/courses/course-intake";
 
 const WriteTodosParams = z.object({
@@ -223,7 +224,7 @@ function ChatQuizQuestionView({
           </span>
         ) : null}
       </div>
-      <p className="course-quiz-q-text">{question.question}</p>
+      <p className="course-quiz-q-text"><CourseInlineMarkdown markdown={question.question} /></p>
       {question.kind === "single" ? (
         <div className="course-quiz-choices">
           {question.choices.map((choice) => {
@@ -238,7 +239,7 @@ function ChatQuizQuestionView({
                 className={`course-quiz-choice ${isSelected ? "selected" : ""} ${isCorrectChoice ? "correct" : ""} ${isWrongSelection ? "wrong" : ""}`}
                 onClick={() => onSelect(question.id, choice.id)}
               >
-                {choice.text}
+                <CourseInlineMarkdown markdown={choice.text} />
               </button>
             );
           })}
@@ -261,7 +262,7 @@ function ChatQuizQuestionView({
                 onClick={() => onSelect(question.id, next)}
               >
                 <span className="course-quiz-choice-check">{isSelected ? "☑" : "☐"}</span>
-                {choice.text}
+                <CourseInlineMarkdown markdown={choice.text} />
               </button>
             );
           })}
@@ -288,7 +289,7 @@ function ChatQuizQuestionView({
         </div>
       ) : null}
       {submitted && question.explanation ? (
-        <div className="course-quiz-explanation">{question.explanation}</div>
+        <CourseMarkdown className="course-quiz-explanation" markdown={question.explanation} />
       ) : null}
     </div>
   );
