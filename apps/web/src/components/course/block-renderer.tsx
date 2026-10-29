@@ -340,7 +340,11 @@ function ImageBlockView({ block }: { block: ImageBlock }) {
             decoding="async"
           />
         )}
-        {block.caption ? <figcaption className="course-image-caption">{block.caption}</figcaption> : null}
+        {block.caption ? (
+          <figcaption className="course-image-caption">
+            <CourseInlineMarkdown markdown={block.caption} />
+          </figcaption>
+        ) : null}
       </figure>
     </BlockShell>
   );

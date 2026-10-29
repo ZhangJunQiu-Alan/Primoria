@@ -7746,14 +7746,29 @@ cpk-web-inspector {
   background: var(--amber-tint);
 }
 
+/* An image step is the picture plus its explanation: generated images carry
+   their own heading, so the step title stays out of the way (a failed image
+   keeps it) and the caption reads as body text. */
+.lesson-block .course-block:has(> .course-block-body > .course-image-block > img) > .course-block-meta {
+  display: none;
+}
+
 .lesson-block .course-image {
+  max-height: min(62vh, 560px);
+  border: 1px solid var(--line);
   border-radius: 14px;
-  box-shadow: inset 0 0 0 1px var(--line);
 }
 
 .lesson-block .course-image-caption {
-  color: var(--ink-muted);
-  font-size: 14px;
+  margin-top: 24px;
+  color: var(--ink-2);
+  font-size: 17px;
+  line-height: 1.78;
+}
+
+:lang(zh) .lesson-block .course-image-caption {
+  font-size: 16.5px;
+  line-height: 1.9;
 }
 
 .lesson-block .course-quiz .course-quiz-question {
@@ -8557,6 +8572,11 @@ cpk-web-inspector {
   font-size: 13px;
   line-height: 1.5;
   color: var(--ink-muted);
+}
+.course-image-caption .course-markdown {
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
 }
 .course-image-error {
   display: flex;
