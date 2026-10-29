@@ -77,9 +77,9 @@ and a covered subject constrained by an application purpose uses a minimal
 outside library coverage while infrastructure is healthy, Primoria may create
 or reuse a generated/hybrid graph. Partial coverage never silently becomes a
 full course merely because one subject keyword matched. The stage question
-shows a compact curriculum badge. Stage plus region may prefill it only when
-one candidate remains; multiple candidates require an inline learner choice.
-IP/region never becomes a fact, and Continue confirms the structured fields.
+shows all valid curricula for the selected stage, without region, IP, or language
+detection. Only a stage with one valid curriculum prefills it; multiple candidates
+require an inline learner choice. Continue confirms the structured fields.
 Submitting optional introduction text only queues durable work and moves the
 learner directly to the unchanged Tutor Style page; it never waits for a model
 response or shows a fact-review step. First-course preparation begins only after goal

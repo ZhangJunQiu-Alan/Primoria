@@ -6,9 +6,10 @@ Status: implemented product contract, July 2026.
 
 Onboarding step two requires a learning stage and curriculum and keeps the
 2–2000 character self-introduction optional. The curriculum is an inline badge
-beside the stage question, not a separate detection card. Stage plus region may
-display a curriculum only when one candidate remains; multiple candidates stay
-unselected and open a compact choice list. Region/IP is not saved, and Continue
+beside the stage question, not a separate detection card. Every valid curriculum
+for the selected stage is shown, without region, IP, or language detection.
+Only a stage with one valid curriculum prefills it; multiple candidates stay
+unselected until the learner chooses. Continue
 is the only confirmation boundary. The page then moves directly to the existing
 Tutor Style step. Settings provides the same direct-write text intake and
 refreshes the editable Facts list when the job finishes.

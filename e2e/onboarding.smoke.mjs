@@ -174,7 +174,9 @@ let page;
 try {
   await waitForServer(server);
   browser = await browserType.launch({ headless: true });
-  page = await browser.newPage();
+  page = await browser.newPage({
+    extraHTTPHeaders: { "cf-ipcountry": "CN", "accept-language": "zh-CN,zh;q=0.9" },
+  });
   const pageErrors = [];
   page.on("pageerror", (error) => pageErrors.push(error.stack || error.message));
   page.on("console", (message) => {
@@ -205,6 +207,25 @@ try {
   await page.reload({ waitUntil: "domcontentloaded" });
   await page.locator('.onboarding-meter-bars i:nth-child(2)[data-state="now"]').waitFor();
   assert(await page.locator('[role="radiogroup"][aria-labelledby="onboarding-stage-label"]').isVisible(), "facts step should render after reload");
+
+  const curriculumGroup = page.locator('[role="radiogroup"][aria-labelledby="onboarding-curriculum-label"]');
+  const continueButton = page.locator(".onboarding-primary");
+  await page.getByRole("radio", { name: /^(High school|高中)$/ }).click();
+  assert(await curriculumGroup.getByRole("radio").count() === 4, "Chinese geo/language headers must not hide high-school curricula");
+  assert(await continueButton.isDisabled(), "school curriculum requires an explicit choice");
+  await curriculumGroup.getByRole("radio", { name: "A Level", exact: true }).click();
+  assert(await curriculumGroup.getByRole("radio", { name: "A Level", exact: true }).getAttribute("aria-checked") === "true", "A Level should be selectable");
+  assert(await continueButton.isEnabled(), "choosing A Level enables Continue");
+  await page.getByRole("radio", { name: /^(Middle school|初中)$/ }).click();
+  assert(await curriculumGroup.getByRole("radio").count() === 4, "middle-school curricula remain available across regions");
+  assert(await continueButton.isDisabled(), "changing stage clears the previous curriculum");
+  await page.getByRole("radio", { name: /^(Other|其他)$/ }).click();
+  assert(await curriculumGroup.getByRole("radio").count() === 2, "Other offers self-directed and course-specific curricula");
+  await page.getByRole("radio", { name: /^(High school|高中)$/ }).click();
+  await curriculumGroup.getByRole("radio", { name: "A Level", exact: true }).click();
+  if (process.env.ONBOARDING_CURRICULUM_SCREENSHOT) {
+    await page.screenshot({ path: process.env.ONBOARDING_CURRICULUM_SCREENSHOT, fullPage: true });
+  }
 
   const facts = await postJson(page, "/api/onboarding/facts", {
     educationStage: "undergraduate",

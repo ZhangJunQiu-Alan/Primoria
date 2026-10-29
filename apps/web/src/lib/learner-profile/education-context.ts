@@ -6,8 +6,6 @@ import type {
   LearnerProfile,
 } from "./types";
 
-export type SuggestedCurriculumRegion = "mainland_china" | "singapore" | "international";
-
 export const EDUCATION_STAGE_LABELS: Record<EducationStage, string> = {
   middle_school: "Middle school",
   high_school: "High school",
@@ -51,34 +49,16 @@ export function isCurriculumValidForStage(stage: EducationStage, curriculum: Edu
   return VALID_CURRICULA_BY_STAGE[stage].includes(curriculum);
 }
 
-const SINGLE_CURRICULUM_STAGES: Partial<Record<EducationStage, readonly EducationCurriculum[]>> = {
-  undergraduate: ["course_specific"],
-  graduate: ["course_specific"],
-  professional: ["course_specific"],
-};
-
 export function curriculumOptionsForStage(
   stage: EducationStage,
-  region: SuggestedCurriculumRegion,
 ): readonly EducationCurriculum[] {
-  const single = SINGLE_CURRICULUM_STAGES[stage];
-  if (single) return single;
-  if (stage === "other") return VALID_CURRICULA_BY_STAGE.other;
-  if (stage === "middle_school") {
-    if (region === "mainland_china") return ["mainland_china_junior_secondary"];
-    if (region === "singapore") return ["singapore_lower_secondary", "singapore_secondary_g2_g3"];
-    return VALID_CURRICULA_BY_STAGE.middle_school;
-  }
-  if (region === "mainland_china") return ["mainland_china_senior_high"];
-  if (region === "singapore") return ["singapore_h2", "cambridge_international_a_level"];
-  return VALID_CURRICULA_BY_STAGE.high_school;
+  return VALID_CURRICULA_BY_STAGE[stage];
 }
 
 export function suggestEducationCurriculum(
   stage: EducationStage,
-  region: SuggestedCurriculumRegion,
 ): EducationCurriculum | null {
-  const options = curriculumOptionsForStage(stage, region);
+  const options = curriculumOptionsForStage(stage);
   return options.length === 1 ? options[0] : null;
 }
 

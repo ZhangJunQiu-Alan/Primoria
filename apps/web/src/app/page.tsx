@@ -1,6 +1,5 @@
 import { getCurrentUserForRsc, isAuthEnabled } from "@/lib/auth/session";
 import { LandingPage } from "@/components/landing/landing-page";
-import { getSuggestedCurriculumRegion } from "@/lib/learner-profile/curriculum-suggestion";
 import { getLearnerOnboardingState } from "@/lib/learner-profile/store";
 import { buildHomeFeaturedCourse } from "@/lib/courses/home-track";
 import { listCourses } from "@/lib/courses/store";
@@ -69,10 +68,9 @@ export default async function HomePage() {
     const onboarding = await getLearnerOnboardingState(user.id);
     if (!onboarding.complete) {
       const { OnboardingClient } = await import("@/components/onboarding/onboarding-client");
-      const curriculumRegion = await getSuggestedCurriculumRegion();
       return (
         <main className="app-shell onboarding-app-shell">
-          <OnboardingClient initialState={onboarding} suggestedRegion={curriculumRegion} />
+          <OnboardingClient initialState={onboarding} />
         </main>
       );
     }

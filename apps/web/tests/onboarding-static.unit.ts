@@ -86,7 +86,7 @@ function main() {
 
   const page = src("app/page.tsx");
   assert(page.includes("getLearnerOnboardingState"), "homepage loads onboarding state");
-  assert(page.includes("<OnboardingClient initialState={onboarding} suggestedRegion={curriculumRegion} />"), "homepage gates into onboarding client with an ephemeral curriculum suggestion");
+  assert(page.includes("<OnboardingClient initialState={onboarding} />"), "homepage gates into onboarding client without region filtering");
 
   const devOnboardingPage = src("app/dev/onboarding/page.tsx");
   assert(devOnboardingPage.includes("debugMode"), "dev onboarding route renders client in debug mode");

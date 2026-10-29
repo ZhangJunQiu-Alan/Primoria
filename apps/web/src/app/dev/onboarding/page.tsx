@@ -50,7 +50,7 @@ export default function DevOnboardingPage() {
 
   return (
     <main className="app-shell onboarding-app-shell">
-      <OnboardingClient initialState={DEBUG_ONBOARDING_STATE} suggestedRegion="singapore" debugMode />
+      <OnboardingClient initialState={DEBUG_ONBOARDING_STATE} debugMode />
     </main>
   );
 }

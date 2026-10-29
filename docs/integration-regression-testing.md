@@ -50,6 +50,17 @@ password protection. The Next server config externalizes `pdf-parse` and its
 native canvas dependency; the shared parser uses the package's worker helper.
 These tests do not establish production deployment or a live authenticated upload.
 
+### 2026-10-29 onboarding curriculum choice
+
+Onboarding no longer detects region from IP or language headers. Each stage
+shows all its valid curricula; stages with multiple choices require an explicit
+selection. `education-context.spec.ts` covers the stage options and single-choice
+prefill. `onboarding-curriculum-choice.spec.ts` mounts the actual UI, checks stage
+changes clear an incompatible selection, and verifies Continue submits the chosen
+A Level curriculum with `user_selected` provenance. The onboarding browser smoke
+also exercises High school → A Level → Middle school → Other with Chinese
+geo/language headers, then continues the existing persistence journey.
+
 ### 2026-10-29 onboarding enqueue and worker publication lock ordering
 
 GitHub browser CI exposed a PostgreSQL deadlock when onboarding re-enqueued

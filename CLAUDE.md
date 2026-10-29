@@ -191,9 +191,9 @@ Positioning distinguishes canonical full-graph, topic/concept closure, `goal_sco
 For overlapping school subjects, curriculum system is a hard route constraint.
 Priority is: an explicit system in the current goal or subject chip, then a
 confirmed structured onboarding curriculum, then an explicit active
-`profile_context`/`prior_knowledge` fact, then clarification. Region/IP may only
-narrow uncommitted onboarding suggestions; it is never persisted as curriculum
-evidence. Auto-display a curriculum only when stage plus region leaves one
+`profile_context`/`prior_knowledge` fact, then clarification. Onboarding displays
+all valid curricula for the selected stage without region/IP/language detection.
+Auto-display a curriculum only when the selected stage has one valid
 candidate; multiple candidates require an inline learner choice. Continue is
 the confirmation boundary. Re-position a previously clarifying goal behind the
 current-goal write fence before building the first course.

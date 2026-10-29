@@ -56,8 +56,9 @@ name is the same. The route priority is:
 4. clarification before recall, Stage 2, or course creation.
 
 UI language, timezone, IP location, and semantic similarity are not curriculum
-evidence. Region may only narrow uncommitted onboarding candidates; a single
-candidate can be displayed, but Continue is still the confirmation boundary.
+evidence. Onboarding displays all valid curricula for the selected stage without
+region detection. Only a stage with one valid curriculum prefills it; multiple
+candidates require a learner choice. Continue is the confirmation boundary.
 A Mainland China confirmed profile can therefore constrain generic
 `高中数学` to `senior_secondary_mathematics`; a generic Singapore fact still
 requires a choice between H2 and G2/G3 mathematics when the stage is unknown.

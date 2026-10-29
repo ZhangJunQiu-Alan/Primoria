@@ -24,7 +24,6 @@ import {
 import {
   curriculumOptionsForStage,
   suggestEducationCurriculum,
-  type SuggestedCurriculumRegion,
 } from "@/lib/learner-profile/education-context";
 import { msg, useT } from "@/lib/i18n/client";
 
@@ -49,7 +48,6 @@ type OnboardingApiResponse = LearnerOnboardingState & {
 
 type OnboardingClientProps = {
   initialState: LearnerOnboardingState;
-  suggestedRegion?: SuggestedCurriculumRegion;
   debugMode?: boolean;
 };
 
@@ -199,7 +197,7 @@ function debugOnboardingResponse(
   };
 }
 
-export function OnboardingClient({ initialState, suggestedRegion = "international", debugMode = false }: OnboardingClientProps) {
+export function OnboardingClient({ initialState, debugMode = false }: OnboardingClientProps) {
   const t = useT();
   const [state, setState] = useState<LearnerOnboardingState>(initialState);
   const [learningGoal, setLearningGoal] = useState(initialState.profile?.learningGoal ?? "");
@@ -225,7 +223,7 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
   const step = state.nextStep;
   const index = stepIndex(step);
   const curriculumOptions = educationStage
-    ? curriculumOptionsForStage(educationStage, suggestedRegion)
+    ? curriculumOptionsForStage(educationStage)
     : [];
   const savedLearningGoal = state.profile?.learningGoal ?? learningGoal;
   const goalSkipped = step !== "goal" && Boolean(state.profile?.goalSkippedAt);
@@ -381,7 +379,7 @@ export function OnboardingClient({ initialState, suggestedRegion = "internationa
   }
 
   function chooseEducationStage(nextStage: EducationStage) {
-    const suggestion = suggestEducationCurriculum(nextStage, suggestedRegion);
+    const suggestion = suggestEducationCurriculum(nextStage);
     setEducationStage(nextStage);
     setCurriculumSystem(suggestion);
     setEducationContextSource(suggestion ? "confirmed_suggestion" : null);
