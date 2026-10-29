@@ -57,7 +57,9 @@ export function buildImagePrompt(brief: ImageBrief): string {
  * later lesson reuses it with that asset's own kind/alt/caption. Language stays
  * in the key because the reused alt/caption are written in it. Analogy
  * illustrations draw the lesson's own analogy, so they stay keyed by kind and
- * learning goal. conceptIds are sorted so ordering never forks the cache. */
+ * learning goal, and an image with no concept (an editor-added block) is keyed
+ * by its own brief so unrelated pictures never share one slot. conceptIds are
+ * sorted so ordering never forks the cache. */
 /** Primary language subtag for the cache key: "zh-CN", "zh_Hans" and "zh" share
  * one Chinese asset, and unset means the default language. */
 export function imageLanguage(language: string | null | undefined): string {
@@ -66,14 +68,17 @@ export function imageLanguage(language: string | null | undefined): string {
 }
 
 export function imageCacheKey(brief: ImageBrief): string {
+  const conceptIds = [...brief.conceptIds].map((id) => id.trim()).sort();
+  const unanchored = conceptIds.length === 0;
   const canonical = {
-    conceptIds: [...brief.conceptIds].map((id) => id.trim()).sort(),
+    conceptIds,
     styleVersion: brief.styleVersion ?? STYLE_VERSION,
     aspectRatio: "16:9",
     language: imageLanguage(brief.language),
-    ...(brief.imageKind === "analogy_illustration"
+    ...(brief.imageKind === "analogy_illustration" || unanchored
       ? { imageKind: brief.imageKind, learningGoal: brief.learningGoal.trim() }
       : {}),
+    ...(unanchored ? { prompt: brief.prompt.trim() } : {}),
   };
   return createHash("sha256").update(JSON.stringify(canonical)).digest("hex");
 }

@@ -18,7 +18,7 @@ export default function AppError({
 
   return (
     <main className="app-shell auth-shell" style={{ placeItems: "center", padding: 24 }}>
-      <div className="auth-card" role="alert">
+      <div className="auth-error" role="alert">
         <div className="auth-heading">
           <h1>Service temporarily unavailable</h1>
           <p>

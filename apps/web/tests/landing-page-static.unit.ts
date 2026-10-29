@@ -18,6 +18,7 @@ async function main() {
   const authRoutes = read("src/lib/auth/routes.ts");
   const proxy = read("src/proxy.ts");
   const landingPage = read("src/components/landing/landing-page.tsx");
+  const landingWalkthrough = read("src/components/landing/landing-walkthrough.tsx");
   const rootLayout = read("src/app/layout.tsx");
   const styles = read("src/app/globals.css");
 
@@ -49,7 +50,9 @@ async function main() {
   assert(enLanding.includes("Lesson-by-lesson") && zhLanding.includes("逐节"), "landing explains lesson-by-lesson generation");
   assert(!zhLanding.includes("KG") && !zhLanding.includes("Lazy") && !zhLanding.includes("DAG"), "zh landing copy avoids internal jargon");
   assert(!/\p{Extended_Pictographic}/u.test(zhLanding + enLanding), "landing copy does not use emoji icons");
-  assert(landingPage.includes("landing-map-stage"), "landing hero uses one dominant learning-map visual anchor");
+  assert(landingWalkthrough.includes("landing-map-stage"), "landing hero uses one dominant learning-map visual anchor");
+  assert(landingWalkthrough.includes("prefers-reduced-motion"), "landing walkthrough stops autoplay for reduced-motion visitors");
+  assert(!landingPage.includes("LanguageSwitcher"), "landing uses the two-option language toggle instead of the dropdown menu");
   assert(landingPage.includes("landing-capability-list"), "landing product section uses a restrained capability list");
   assert(landingPage.includes("landing-workflow-line"), "landing workflow uses a linear path instead of card grid clutter");
   assert(landingPage.includes('href="/auth/sign-up?next=/"'), "primary CTA points to sign-up with tutor return");

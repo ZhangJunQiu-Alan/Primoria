@@ -72,6 +72,9 @@ services:
 
   web:
     <<: *runtime-hardening
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+      - /app/apps/web/.next/cache:size=128m,uid=1000,gid=1000,mode=0700
     build:
       context: .
       dockerfile: docker/app.Dockerfile
@@ -116,6 +119,16 @@ services:
       EMAIL_PROVIDER: ${EMAIL_PROVIDER:-}
       TENCENT_SES_SECRET_ID: ${TENCENT_SES_SECRET_ID:-}
       TENCENT_SES_SECRET_KEY: ${TENCENT_SES_SECRET_KEY:-}
+      TENCENT_SES_REGION: ${TENCENT_SES_REGION:-ap-guangzhou}
+      TENCENT_SES_ENDPOINT: ${TENCENT_SES_ENDPOINT:-ses.tencentcloudapi.com}
+      TENCENT_SES_FROM_EMAIL: ${TENCENT_SES_FROM_EMAIL:-}
+      TENCENT_SES_PASSWORD_RESET_TEMPLATE_ID: ${TENCENT_SES_PASSWORD_RESET_TEMPLATE_ID:-}
+      TENCENT_SES_PASSWORD_RESET_SUBJECT: ${TENCENT_SES_PASSWORD_RESET_SUBJECT:-Reset your Primoria password}
+      PASSWORD_RESET_EXPIRES_MINUTES: ${PASSWORD_RESET_EXPIRES_MINUTES:-30}
+      AUTH_RATE_LIMIT_CLIENT_IP_HEADER: ${AUTH_RATE_LIMIT_CLIENT_IP_HEADER:-x-forwarded-for}
+      AUTH_RATE_LIMIT_WINDOW_SECONDS: ${AUTH_RATE_LIMIT_WINDOW_SECONDS:-60}
+      AUTH_RATE_LIMIT_IP_MAX: ${AUTH_RATE_LIMIT_IP_MAX:-5}
+      AUTH_RATE_LIMIT_ACCOUNT_MAX: ${AUTH_RATE_LIMIT_ACCOUNT_MAX:-5}
       PRIMORIA_HEALTH_WORKER_STALE_SECONDS: ${PRIMORIA_HEALTH_WORKER_STALE_SECONDS:-30}
     expose:
       - "3000"
@@ -256,6 +269,8 @@ services:
       OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
       OPENAI_MODEL: ${OPENAI_MODEL:-}
+      AI_MODEL_FAST: ${AI_MODEL_FAST:-}
+      AI_MODEL_CONTENT: ${AI_MODEL_CONTENT:-}
     command: ["pnpm", "--filter", "@primoria/web", "worker:extractor"]
     healthcheck: *worker-healthcheck
     depends_on:
@@ -277,7 +292,7 @@ services:
       - primoria-caddy-data:/data
       - primoria-caddy-config:/config
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--spider", "http://127.0.0.1/api/health/live"]
+      test: ["CMD", "wget", "--quiet", "--output-document=/dev/null", "http://127.0.0.1:2019/config/"]
       interval: 10s
       timeout: 5s
       retries: 6

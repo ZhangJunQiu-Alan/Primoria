@@ -45,6 +45,7 @@ import {
   type PendingCourseBuildErrorCode,
 } from "@/lib/courses/course-build-session";
 import { fetchWithTimeout, RequestTimeoutError } from "@/lib/http/fetch-with-timeout";
+import { COURSE_BUILD_TIMEOUT_MS, LEARNING_GOAL_POSITION_TIMEOUT_MS } from "@/lib/courses/course-build-timeouts";
 import { detectKgLanguage } from "@/lib/knowledge-graph/display-name";
 import { useLessonGenerationJobs } from "@/hooks/use-lesson-generation-jobs";
 import { msg, useT } from "@/lib/i18n/client";
@@ -78,8 +79,7 @@ const GenerateCourseParams = z.object({
 });
 
 const COURSE_CARD_PREFIX = "PRIMORIA_COURSE_CARD:";
-export const LEARNING_GOAL_POSITION_TIMEOUT_MS = 45_000;
-export const COURSE_BUILD_TIMEOUT_MS = 100_000;
+export { COURSE_BUILD_TIMEOUT_MS, LEARNING_GOAL_POSITION_TIMEOUT_MS };
 
 function WriteTodosSink({ todos }: { todos: z.infer<typeof WriteTodosParams>["todos"] }) {
   useEffect(() => {

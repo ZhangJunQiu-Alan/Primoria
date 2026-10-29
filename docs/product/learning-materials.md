@@ -1,7 +1,9 @@
 # 用户上传学习资料 → 基于资料建课
 
-Status: v1 design + first implementation slice, October 2026. Runtime
-contracts, schemas, and tests remain the final source of truth.
+Status: current implementation, code checked 2026-10-25. Uploads, material
+courses, course-rail RAG Q&A, subject-folder KGs, quizzes, and course sync are
+implemented. Runtime contracts, schemas, and tests remain the final source of
+truth; implementation status does not refresh dated acceptance evidence below.
 
 ## 1. 目标
 
@@ -16,7 +18,7 @@ contracts, schemas, and tests remain the final source of truth.
 | 课程结构来源 | 由资料自建 owner 私有的 `mat_*` 图谱；不映射到库内 KG（预留以后对齐） |
 | 入口 | 资料库页面（`/materials`）上的按钮；v1 不加 Tutor 工具、不自动转存聊天附件 |
 | 图片与分享 | 资料课程的课时图片走 owner 私有媒体通道；资料课程默认不能生成分享链接 |
-| 产出范围 | 课程（含测验块）→ Tutor 基于资料问答（RAG）→ 资料题库/练习，按此顺序分阶段交付 |
+| 产出范围 | 已实现资料课程（含测验块）、课程侧栏 Tutor 资料问答（RAG）、科目文件夹图谱、基于资料的单选题库与测验、文件夹课程同步；阶段记录见 §7 |
 | 问答入口 | 只在资料课程的侧栏 Tutor 里基于资料回答；不做资料页"问 Tutor"，主 Tutor 不自动检索资料 |
 | 回答策略 | 资料优先并注明出处；资料没覆盖的部分可用通用知识补充，但必须放在"资料外补充"段落里 |
 

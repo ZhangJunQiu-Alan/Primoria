@@ -129,7 +129,9 @@ export async function enqueueLessonGenerationJob(
       throw new CourseResourceNotFoundError("lesson");
     }
 
-    const existingRows = await tx.select().from(lessonGenerationJobs).where(eq(lessonGenerationJobs.lessonId, lessonId)).for("update");
+    // The lesson lock serializes enqueue/retry callers. Active jobs are read-only
+    // here; locking them would invert the worker's job → lesson publish order.
+    const existingRows = await tx.select().from(lessonGenerationJobs).where(eq(lessonGenerationJobs.lessonId, lessonId));
     const existing = existingRows[0] ? rowToJob(existingRows[0]) : null;
 
     if (lesson.status === "generated") {

@@ -5,7 +5,8 @@ import { useSearchParams } from "next/navigation";
 import type { FormEvent } from "react";
 import { useState } from "react";
 
-import { AuthHero } from "@/components/auth/auth-form";
+import { AuthAlert, AuthBackLink, AuthHeading, AuthLayout, MIN_PASSWORD_LENGTH, PasswordInput, PasswordLengthHint } from "@/components/auth/auth-layout";
+import { ArrowIcon } from "@/components/arrow-icon";
 import { useT } from "@/lib/i18n/client";
 
 export function ResetPasswordForm() {
@@ -17,18 +18,21 @@ export function ResetPasswordForm() {
   const [pending, setPending] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(token ? null : t.auth.passwordResetMissingToken);
+  const [mismatch, setMismatch] = useState(false);
   const locked = pending || !token || Boolean(status);
 
   async function submit(event: FormEvent) {
     event.preventDefault();
     setError(null);
     setStatus(null);
+    setMismatch(false);
     if (!token) {
       setError(t.auth.passwordResetMissingToken);
       return;
     }
     if (password !== confirmPassword) {
       setError(t.auth.passwordResetMismatch);
+      setMismatch(true);
       return;
     }
     setPending(true);
@@ -51,62 +55,53 @@ export function ResetPasswordForm() {
   }
 
   return (
-    <div className="auth-panel">
-      <AuthHero title={t.auth.signInHeroTitle} copy={t.auth.signInHeroCopy} />
-      <form className="auth-card" onSubmit={submit}>
-        <div className="auth-heading">
-          <div>
-            <h1>{t.auth.resetPasswordTitle}</h1>
-            <p>{t.auth.resetPasswordCopy}</p>
-          </div>
+    <AuthLayout plate="sign-in">
+      <AuthBackLink />
+      <AuthHeading title={t.auth.resetPasswordTitle} subtitle={t.auth.resetPasswordCopy} />
+
+      <form className="auth-form" onSubmit={submit}>
+        <div className="auth-field">
+          <label htmlFor="auth-new-password">{t.auth.newPassword}</label>
+          <PasswordInput
+            id="auth-new-password"
+            value={password}
+            onChange={setPassword}
+            placeholder={t.auth.passwordSignupPlaceholder}
+            minLength={MIN_PASSWORD_LENGTH}
+            autoComplete="new-password"
+            disabled={locked}
+            describedBy="auth-new-password-hint"
+          />
+          <PasswordLengthHint id="auth-new-password-hint" length={password.length} />
+        </div>
+        <div className="auth-field">
+          <label htmlFor="auth-confirm-password">{t.auth.confirmNewPassword}</label>
+          <PasswordInput
+            id="auth-confirm-password"
+            value={confirmPassword}
+            onChange={setConfirmPassword}
+            minLength={MIN_PASSWORD_LENGTH}
+            autoComplete="new-password"
+            disabled={locked}
+            invalid={mismatch}
+          />
         </div>
 
-        <div className="auth-fields">
-          <label className="auth-field">
-            <span>{t.auth.newPassword}</span>
-            <input
-              type="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              minLength={8}
-              autoComplete="new-password"
-              required
-              disabled={locked}
-            />
-          </label>
-          <label className="auth-field">
-            <span>{t.auth.confirmNewPassword}</span>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(event) => setConfirmPassword(event.target.value)}
-              minLength={8}
-              autoComplete="new-password"
-              required
-              disabled={locked}
-            />
-          </label>
-        </div>
-
-        {error ? <p className="auth-message error" role="alert">{error}</p> : null}
-        {status ? <p className="auth-message success" role="status">{status}</p> : null}
+        {error ? <AuthAlert>{error}</AuthAlert> : null}
+        {status ? <p className="auth-status" role="status">{status}</p> : null}
 
         {status ? (
-          <Link className="auth-submit" href="/login">{t.auth.backToLogin}</Link>
+          <Link className="auth-submit" href="/login">
+            {t.auth.backToLogin}
+            <ArrowIcon />
+          </Link>
         ) : (
-          <button className="auth-submit" type="submit" disabled={locked}>
+          <button className="auth-submit" type="submit" disabled={locked} aria-busy={pending || undefined}>
             {pending ? t.auth.passwordResetting : t.auth.resetPassword}
+            <ArrowIcon />
           </button>
         )}
-
-        {status ? null : (
-          <div className="auth-footer">
-            <p className="auth-switch">
-              <Link href="/login">{t.auth.backToLogin}</Link>
-            </p>
-          </div>
-        )}
       </form>
-    </div>
+    </AuthLayout>
   );
 }

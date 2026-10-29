@@ -1,5 +1,19 @@
 # Integration Regression Testing
 
+Image metadata regression (`tests/image-text-quality.spec.ts`) covers fresh writer
+brief rejection and the media persistence boundary before generation/upload/insert.
+Empty text, duplicate alt/caption, generic template alt, and a function word or
+verb glued onto a number (`of3seats`, `to2x`) or any word glued onto a fraction
+(`integral1/2`) fail; identifiers such as `area1`, `score2`, `IPv4` and `CO2`,
+other notation, and Chinese descriptions remain valid. Fresh briefs are checked
+by the course language, and a failure returns a readable fix to the writer's
+repair round; the course editor gets one repair round and then reports an
+editor error (`tests/image-editor-brief.spec.ts`).
+Short alt and title repetition require review rather than automatic rejection.
+`pnpm --filter @primoria/web validate:image-metadata` checks local prewarm records
+with the same rules. It does not establish image-content accuracy or human approval.
+Existing valid cache hits remain reusable.
+
 Status: local deterministic implementation verified; external release gates pending
 
 Decision ID: `IRT-2026-08-27-01`
@@ -9,6 +23,46 @@ Approved: 2026-08-27
 Scope owner: Primoria project owner
 
 ## Implementation status
+
+### 2026-10-29 onboarding enqueue and worker publication lock ordering
+
+GitHub browser CI exposed a PostgreSQL deadlock when onboarding re-enqueued
+a running lesson while the worker published partial blocks. Enqueue held the
+lesson row and waited for the job row; publication held the job row and waited
+for the lesson. Enqueue now reads existing active jobs without locking them;
+the lesson lock continues to serialize enqueue and manual retry callers, and
+worker writes retain their lease fence. The database regression holds a worker
+job lock and verifies queued/running reuse finishes before that lock is released,
+with exactly one job remaining. It runs in `test:lesson-jobs:db`.
+
+### 2026-10-29 course visualization semantic regression
+
+`tests/course-visual-semantics.spec.ts` reproduces the entropy lesson's unused
+probability slider, parameter-only payload with a missing plot domain and
+unrelated catalog candidates. It covers rejection plus the Writer repair loop,
+valid Cartesian/parametric payloads, and explicit HTML sandbox selection when
+the KG's specialized renderer cannot express the planned interaction.
+Valid constant functions remain supported; syntax alone cannot establish that
+a horizontal line fulfills the intended teaching interaction.
+Classic inline sandbox scripts are syntax-checked without execution, including
+the compact-line-comment failure found during browser QA. Scope-title tests
+cover English and Chinese single-concept courses; the reader labels image and
+visual steps by content type so they can be found before opening the card.
+Checkpoint prompt/compiler versions are advanced so unfinished jobs cannot
+reuse the prior invalid outputs. Existing generated lessons require an explicit
+repair or regeneration; these checks do not establish real-model teaching quality.
+
+Local verification on October 29: Web suite 1,214 passed / 21 intentionally
+skipped; 1,726 learning-goal fixtures, 49-component catalog, Agent checks,
+production build/bundle budgets and isolated DB regression passed. The browser
+layer initially stopped at obsolete auth/onboarding CSS selectors; those tests
+now use the password button's accessible name and current onboarding field and
+step markers, preserving their persistence assertions. Its rerun passed learning
+path, onboarding with the real lesson worker, Tutor, sharing, widgets, and the
+49-component baseline replay at three viewports. Temporary isolated databases were
+removed. This was local verification, with no deployment or production-course
+rewrite. The final focused visualization suite has 16 passing cases, including
+preservation of legitimate constant functions.
 
 ### 2026-10-22 DeepSeek model selection
 
@@ -615,3 +669,57 @@ a running app (`visualization:eval:attach`) refuses a non-test database unless
   a Turbopack virtual Google-font-module resolution failure during its separate
   dev-server startup, returning 500 before the fixture became ready. The smoke
   keeps all widget assertions and the production prohibition on QA pages.
+
+### 2026-10-29 current-work production release
+
+- All four deterministic regression layers exited 0: `pnpm
+  test:regression:fast`, `pnpm test:regression:build`, `pnpm
+  test:regression:db`, and `REGRESSION_WEB_MODE=production pnpm
+  test:regression:browser`. Web reported 165 files / 1,186 tests passed, with
+  six files / 21 tests intentionally skipped; the separate isolated DB layer
+  passed. Agent unit/integration, 1,726 routing cases, 31 KG validations,
+  migration drift, bundle budgets and all browser journeys passed. Visualization
+  replay covered 49 components at three widths as a platform baseline.
+- Frozen dependency installation and the production dependency audit passed
+  under the existing dated audit-exception policy. The Docker daemon could not
+  start on the operator's Mac; all three production image targets were instead
+  built successfully on the Linux VPS. The resulting Node 22 worker image
+  passed the 23 image reuse/editor/text-quality tests before activation.
+- Release `20261029-current-work` passed live container hardening and health
+  checks, both migration jobs, public TLS/redirect/auth/origin checks, a real
+  Tutor stream, and SHA-256 image sampling across all 31 graphs. A real lesson
+  produced 19 blocks, including three hash-verified prewarmed images. All three
+  quiz blocks passed server grading and replay deduplication; lesson-generation,
+  learning-progress and extractor jobs completed without failures.
+- The fresh pre-deploy dump was actually restored into an isolated local DB
+  and checked for all 58 tables, 1,470 media rows and Agent checkpoint/event
+  tables. Synthetic live account/course/session data was then removed without
+  deleting global images or Agent audit records. Evidence is retained privately
+  under `.private/deployment/20261029/`; source publication used an uncommitted
+  working-tree snapshot and did not imply a commit, push, or remote CI result.
+- SES password-reset delivery remains unconfigured and unaccepted. Automated
+  release evidence does not imply human teaching-quality acceptance or release
+  of any separately guarded product feature.
+
+### 2026-10-29 course-preparation timeout alignment
+
+- Tutor-triggered positioning and course preparation now share a browser
+  timeout policy with pending course-card recovery: 120 seconds for positioning,
+  180 seconds for preparation, and 330 seconds before a pending entry is stale.
+  The pending window includes both requests because freeform builds begin
+  tracking before positioning and do not reset that clock at the build stage.
+- Fake-clock regressions cover successful positioning at 100 seconds and
+  preparation at 150 seconds, cancellation at each actual deadline, pending
+  state across both request budgets, abandoned-entry recovery, and an eventual
+  server success replacing a stale timeout. These checks preserve finite
+  deadlines and do not change model limits, retry behavior or worker execution.
+- This is a browser wait/state fix, not faster routing or durable polling for
+  the initial preparation request. Tutor Web-to-Agent streaming deadlines and
+  the deferred STEM iframe sandbox change are outside this change. Validation
+  evidence is recorded separately from the earlier production release; this
+  change has not been deployed by writing this entry.
+- Validation passed: 11 focused timeout/session tests; all four deterministic
+  regression layers; 1,193 Web tests with 21 intentional skips; 1,726 routing
+  cases; isolated Web/Agent database tests; build/bundle budgets; all browser
+  journeys; and 49-component replay at three widths. Logs and source hashes are
+  retained under `.private/timeout-alignment-20261029/`.

@@ -1,0 +1,42 @@
+{
+  "name": "primoria-promo",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "studio": "remotion studio src/index.ts --port 3100",
+    "typecheck": "tsc --noEmit",
+    "vo:scratch": "tsx scripts/scratch-vo.ts",
+    "vo:measure": "tsx scripts/measure-vo.ts",
+    "audio:beat": "tsx scripts/preview-beat.ts",
+    "check:claims": "node scripts/check-claims.mjs",
+    "verify:frames": "tsx scripts/verify-frames.ts",
+    "verify:render": "tsx scripts/check-render.ts",
+    "check": "pnpm typecheck && pnpm check:claims && tsx scripts/check-timeline.ts",
+    "render": "pnpm check && tsx scripts/render.ts",
+    "render:animatic": "pnpm check && tsx scripts/render.ts --animatic",
+    "direction:prepare": "node scripts/export-hero-graph.mjs && python3 scripts/score-study.py",
+    "render:direction": "pnpm typecheck && pnpm direction:prepare && remotion render src/index.ts DirectionStudy out/primoria-direction-v02-1080p.mp4 --scale=1 --concurrency=2 --codec=h264 --crf=16 --audio-codec=aac",
+    "stills": "tsx scripts/stills.ts"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.539",
+    "@remotion/cli": "4.0.539",
+    "@remotion/fonts": "4.0.539",
+    "@remotion/google-fonts": "4.0.539",
+    "@remotion/paths": "4.0.539",
+    "@remotion/renderer": "4.0.539",
+    "@remotion/transitions": "4.0.539",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "remotion": "4.0.539",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "22.18.12",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "tsx": "4.22.3",
+    "typescript": "5.9.3"
+  }
+}

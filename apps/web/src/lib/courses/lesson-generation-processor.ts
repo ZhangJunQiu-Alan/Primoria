@@ -12,7 +12,7 @@ import {
   type CompiledBatchBlock,
 } from "../ai/course-generation/block-writer";
 import { validateLessonBlocks } from "../ai/course-generation/lesson-validator";
-import { finalizeImageBlocks, isPendingImageBlock, type FinalizeImageOptions, type ImageGenerate } from "../ai/media/image-builder";
+import { finalizeImageBlocks, findReusableImage, isPendingImageBlock, type FinalizeImageOptions, type ImageGenerate } from "../ai/media/image-builder";
 import { isMaterialGraphId } from "../materials/types";
 import type { MediaAssetStore } from "../ai/media/media-assets";
 import { IR_VERSION } from "../ai/course-generation/lesson-plan-ir";
@@ -94,7 +94,7 @@ const rawBatchConcurrency = Number(process.env.LESSON_BATCH_CONCURRENCY ?? "");
 const BATCH_CONCURRENCY =
   Number.isInteger(rawBatchConcurrency) && rawBatchConcurrency >= 1 && rawBatchConcurrency <= 8
     ? rawBatchConcurrency
-    : 6;
+    : 8;
 
 function assertFenced(ok: boolean): void {
   if (!ok) throw new LeaseLostError();
@@ -167,12 +167,8 @@ export async function processLessonGenerationJob(
   // ── Planning ──────────────────────────────────────────────────────────────
   assertFenced(await store.updateStage(fence, { stage: "planning", progressCompleted: 0, progressTotal: 0 }));
 
-  const plan = await loadOrCreatePlan(fence, ctx, store, settings, options.plannerInvoke);
-  await recordMethodArms({ ownerId, courseId, lessonId }, plan);
-  const batches = batchBlockJobs(plan.jobs);
-  // progress_total = number of batches + validation + saving (doc §9.2).
-  const progressTotal = batches.length + 2;
-  assertFenced(await store.updateStage(fence, { progressTotal }));
+  const planned = await loadOrCreatePlan(fence, ctx, store, settings, options.plannerInvoke);
+  await recordMethodArms({ ownerId, courseId, lessonId }, planned);
 
   // Lesson images are GLOBAL (ownerId null): the media cache is keyed globally by
   // brief semantics and shared across users, so the asset must be globally
@@ -188,6 +184,11 @@ export async function processLessonGenerationJob(
     generate: options.imageGenerate,
     store: options.mediaStore,
   };
+  const plan = await withReusableImages(planned, imaging);
+  const batches = batchBlockJobs(plan.jobs);
+  // progress_total = number of batches + validation + saving (doc §9.2).
+  const progressTotal = batches.length + 2;
+  assertFenced(await store.updateStage(fence, { progressTotal }));
 
   // ── Writing (+ inline imaging) ──────────────────────────────────────────────
   // Each batch resolves its own pending image blocks right after it is written, so
@@ -325,19 +326,60 @@ async function writeMissingBatches(
   // Surface any batches restored from checkpoints before generating the rest.
   schedulePartialPublish();
 
+  // A writer slot frees as soon as its batch text is checkpointed; the batch's
+  // images then resolve alongside the remaining writes, so image latency never
+  // queues later batches. Imaging failures are caught at once (no unhandled
+  // rejection while writers run) and rethrown after every task settles.
   const missing = planned.filter(({ key }) => !results.has(key));
-  await mapLimit(missing, BATCH_CONCURRENCY, async ({ batch, key }) => {
-    const compiled = await generateBlockBatch({ batch, plan, kg: ctx.kg, lessonId: ctx.lesson.id, settings, invoke: writerInvoke });
-    // Checkpoint the pre-image compiled batch (text is the expensive part to
-    // recover); imaging happens after and re-derives on resume from the cache.
-    assertFenced(await store.upsertCheckpoint(fence, { checkpointKey: key, kind: "batch", payload: compiled, versions: CURRENT_CHECKPOINT_VERSIONS }));
-    results.set(key, await finalizeBatchImages(compiled, imaging));
-    assertFenced(await store.incrementProgress(fence));
-    schedulePartialPublish();
-  });
+  const imagingTasks: Promise<void>[] = [];
+  const imagingErrors: unknown[] = [];
+  try {
+    await mapLimit(missing, BATCH_CONCURRENCY, async ({ batch, key }) => {
+      const compiled = await generateBlockBatch({ batch, plan, kg: ctx.kg, lessonId: ctx.lesson.id, settings, invoke: writerInvoke });
+      // Checkpoint the pre-image compiled batch (text is the expensive part to
+      // recover); imaging happens after and re-derives on resume from the cache.
+      assertFenced(await store.upsertCheckpoint(fence, { checkpointKey: key, kind: "batch", payload: compiled, versions: CURRENT_CHECKPOINT_VERSIONS }));
+      imagingTasks.push(
+        (async () => {
+          results.set(key, await finalizeBatchImages(compiled, imaging));
+          assertFenced(await store.incrementProgress(fence));
+          schedulePartialPublish();
+        })().catch((error: unknown) => {
+          imagingErrors.push(error);
+        }),
+      );
+    });
+  } finally {
+    await Promise.all(imagingTasks);
+  }
+  if (imagingErrors.length > 0) throw imagingErrors[0];
 
   await partialChain;
   return results;
+}
+
+// A concept image is cached globally, so an image block for a concept that
+// already has one will show that picture whatever the writer briefs. Attach it
+// to the job so the writer titles it and keeps neighbouring blocks consistent
+// with it. A failed lookup only loses the hint; imaging still resolves normally.
+async function withReusableImages(plan: CompiledLessonPlan, imaging: FinalizeImageOptions): Promise<CompiledLessonPlan> {
+  const jobs = await Promise.all(
+    plan.jobs.map(async (job) => {
+      if (job.type !== "image") return job;
+      try {
+        const existingImage = await findReusableImage(job.conceptIds, {
+          ownerId: imaging.ownerId,
+          language: imaging.language,
+          store: imaging.store,
+        });
+        return existingImage ? { ...job, existingImage } : job;
+      } catch (error) {
+        console.warn(`[lesson-generation] cached image lookup failed for block ${job.order}:`, error instanceof Error ? error.message : error);
+        return job;
+      }
+    }),
+  );
+  return { ...plan, jobs };
 }
 
 // Finalize a single batch's pending image blocks in place, preserving order.

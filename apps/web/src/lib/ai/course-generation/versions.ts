@@ -14,8 +14,8 @@ import { INTERACTIVE_CATALOG_HASH } from "@primoria/contracts/artifacts/interact
 
 export { IR_VERSION };
 // Catalog capabilities are part of both planning and writing context.
-export const PROMPT_VERSION = `2026-10-22-catalog-structured-writer:${INTERACTIVE_CATALOG_HASH}`;
-export const COMPILER_VERSION = "4";
+export const PROMPT_VERSION = `2026-10-29-visual-capability-check:${INTERACTIVE_CATALOG_HASH}`;
+export const COMPILER_VERSION = "5";
 
 export type CheckpointVersions = {
   irVersion: number;

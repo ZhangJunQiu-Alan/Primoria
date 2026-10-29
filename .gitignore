@@ -45,3 +45,9 @@ test-results/
 
 # Local Supabase CLI connection cache
 supabase/.temp/
+
+# Standalone promotional film renders and local audio
+promo/out/
+promo/public/music/
+promo/public/sfx/
+promo/public/vo/

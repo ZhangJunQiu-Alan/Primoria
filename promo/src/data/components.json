@@ -1,0 +1,296 @@
+[
+  {
+    "name": {
+      "en": "Lens imaging",
+      "zh-CN": "透镜成像"
+    }
+  },
+  {
+    "name": {
+      "en": "Strong acid-base titration",
+      "zh-CN": "强酸强碱滴定"
+    }
+  },
+  {
+    "name": {
+      "en": "Wave superposition",
+      "zh-CN": "波的叠加"
+    }
+  },
+  {
+    "name": {
+      "en": "Sorting steps",
+      "zh-CN": "排序分步"
+    }
+  },
+  {
+    "name": {
+      "en": "Function transformation",
+      "zh-CN": "函数变换探索"
+    }
+  },
+  {
+    "name": {
+      "en": "Angle measurement",
+      "zh-CN": "角度测量"
+    }
+  },
+  {
+    "name": {
+      "en": "Causal timeline",
+      "zh-CN": "因果时间线"
+    }
+  },
+  {
+    "name": {
+      "en": "Process sequence",
+      "zh-CN": "过程序列"
+    }
+  },
+  {
+    "name": {
+      "en": "Source comparison",
+      "zh-CN": "材料来源比较"
+    }
+  },
+  {
+    "name": {
+      "en": "Argument map",
+      "zh-CN": "论证结构图"
+    }
+  },
+  {
+    "name": {
+      "en": "Narrative arc",
+      "zh-CN": "叙事弧线"
+    }
+  },
+  {
+    "name": {
+      "en": "Character relationships",
+      "zh-CN": "人物关系演变"
+    }
+  },
+  {
+    "name": {
+      "en": "Close reading",
+      "zh-CN": "文本细读"
+    }
+  },
+  {
+    "name": {
+      "en": "Sentence structure",
+      "zh-CN": "句子结构分析"
+    }
+  },
+  {
+    "name": {
+      "en": "Policy trade-off",
+      "zh-CN": "公共政策权衡"
+    }
+  },
+  {
+    "name": {
+      "en": "Climate profile comparison",
+      "zh-CN": "气候特征比较"
+    }
+  },
+  {
+    "name": {
+      "en": "Color harmony",
+      "zh-CN": "色彩和声"
+    }
+  },
+  {
+    "name": {
+      "en": "Rhythm pattern",
+      "zh-CN": "节奏型探索"
+    }
+  },
+  {
+    "name": {
+      "en": "Experiment design",
+      "zh-CN": "实验设计"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "导数与积分实验室",
+      "en": "Calculus laboratory"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "折射与全反射实验室",
+      "en": "Refraction laboratory"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "平抛与斜抛实验室",
+      "en": "Projectile laboratory"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "串并联电路实验室",
+      "en": "Resistor circuit laboratory"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "月相变化与日地月位置",
+      "en": "Moon phases"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "孟德尔遗传与棋盘格",
+      "en": "Mendelian genetics"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "分数与等值分割",
+      "en": "Equivalent fractions"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "鸡兔同笼与假设法",
+      "en": "Chickens and rabbits"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "四季与昼夜长短",
+      "en": "Seasons and daylight"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "理想气体状态与分子运动",
+      "en": "Ideal gases"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "反应级数与温度效应",
+      "en": "Reaction kinetics"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "弹簧与单摆振动",
+      "en": "Springs and pendulums"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "三角函数与单位圆",
+      "en": "Trigonometry and the unit circle"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "可逆反应动态平衡",
+      "en": "Dynamic chemical equilibrium"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "分子空间构型",
+      "en": "Molecular geometry"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "杠杆力矩平衡",
+      "en": "Lever moment balance"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "阿基米德浮力与浮沉",
+      "en": "Buoyancy laboratory"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "双点电荷场与电势",
+      "en": "Electric field and potential"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "二项分布与独立试验",
+      "en": "Binomial distribution"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "有丝分裂与减数分裂",
+      "en": "Mitosis and meiosis"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "渗透作用与浓度变化",
+      "en": "Osmosis laboratory"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "带电粒子磁场运动",
+      "en": "Charged particle in a magnetic field"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "光电效应与截止电压",
+      "en": "Photoelectric effect"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "二元一次方程组与消元",
+      "en": "Linear equations and elimination"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "二次方程的根与顶点",
+      "en": "Quadratic roots and vertex"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "弱酸解离与缓冲响应",
+      "en": "Weak acid and buffer response"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "抛物线求交与拱桥水位",
+      "en": "Parabola-line intersections"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "导线电阻与电阻定律",
+      "en": "Wire resistance and resistivity"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "闭合电路与电源内阻",
+      "en": "Closed circuit and internal resistance"
+    }
+  },
+  {
+    "name": {
+      "zh-CN": "诗词意象与文本证据",
+      "en": "Poetry imagery and textual evidence"
+    }
+  }
+]

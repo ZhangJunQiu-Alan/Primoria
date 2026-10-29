@@ -13,6 +13,8 @@ function read(path: string) {
 
 async function main() {
   const authForm = read("src/components/auth/auth-form.tsx");
+  const authLayout = read("src/components/auth/auth-layout.tsx");
+  const authPlate = read("src/components/auth/auth-plate.tsx");
   const forgotForm = read("src/components/auth/forgot-form.tsx");
   const resetPasswordForm = read("src/components/auth/reset-password-form.tsx");
   const signInPage = read("src/app/auth/sign-in/page.tsx");
@@ -27,32 +29,36 @@ async function main() {
   assert(!authForm.includes('isSupabaseActive ? "/signup" : "/auth/sign-in"'), "create-account link no longer loops to sign-in");
   assert(!authForm.includes('isSupabaseActive ? "/login" : "/auth/sign-up"'), "sign-in link no longer loops to sign-up");
 
-  assert(authForm.includes("showPassword"), "password visibility state is available");
-  assert(authForm.includes("PasswordVisibilityIcon"), "password visibility uses an icon component");
-  assert(!authForm.includes('{showPassword ? "Hide" : "Show"}'), "password visibility control does not render the old text pill");
-  assert(authForm.includes("aria-describedby=\"auth-password-hint\""), "password input is described by guidance text");
-  assert(authForm.includes("role=\"alert\""), "error message is announced");
-  assert(authForm.includes("role=\"status\""), "success message is announced");
+  assert(authForm.includes("<PasswordInput"), "auth form uses the shared password input");
+  assert(authLayout.includes("t.auth.showPassword") && authLayout.includes("aria-pressed={visible}"), "password visibility toggle is labelled and exposes its state");
+  assert(authForm.includes('describedBy={isSignUp ? "auth-password-hint" : undefined}'), "sign-up password input is described by the length hint");
+  assert(authLayout.includes("aria-describedby={describedBy}"), "password input forwards its description");
+  assert(authLayout.includes('role="alert"'), "error message is announced");
+  assert(authForm.includes('role="status"'), "success message is announced");
   assert(authForm.includes("accountCreatedRedirecting"), "successful registration announces destination navigation");
   assert(authForm.includes("signedInRedirecting"), "successful sign-in announces destination navigation");
   assert(authForm.includes("router.refresh()"), "successful auth refreshes RSC state after setting the session cookie");
   assert(!authForm.includes("finally {\n      setPending(false)"), "successful auth keeps the form pending until navigation commits");
   assert(!authForm.includes("auth-mode-note"), "auth mode note copy is removed from the visible form");
   assert(!authForm.includes("course-block-tag"), "form eyebrow copy is removed from login/signup");
+  assert(!authForm.includes("auth-mode-switch"), "the duplicate sign-in/create-account segmented switch is gone");
   assert(authForm.includes('href="/forgot"'), "sign-in form exposes the password recovery route");
   assert(authForm.includes("forgotPassword"), "sign-in form renders password recovery copy");
-  assert(authForm.includes("auth-hero-copy"), "hero content is wrapped in a stable layout block");
-  assert(authForm.includes("className=\"auth-fields\""), "auth fields are grouped for sign-in/sign-up size parity");
-  assert(authForm.includes("auth-field-spacer"), "sign-in reserves the display-name slot for seamless switching");
-  assert(authForm.includes("autoComplete=\"email\""), "email input supports browser autofill");
-  assert(authForm.includes("autoComplete={isSignUp ? \"new-password\" : \"current-password\"}"), "password autofill mode matches flow");
+  assert(authForm.includes('autoComplete="email"'), "email input supports browser autofill");
+  assert(authForm.includes('autoComplete={isSignUp ? "new-password" : "current-password"}'), "password autofill mode matches flow");
+  assert(authForm.includes("<AuthLayout plate={normalizedMode}>"), "sign-in and sign-up pick their own plate");
+  for (const source of [authForm, authLayout]) {
+    assert(!source.includes("LanguageToggle") && !source.includes("LanguageSwitcher"), "auth pages leave language switching to the landing page");
+  }
+  assert(authPlate.includes('aria-hidden="true"'), "the illustrative plate is hidden from assistive technology");
+  assert(authPlate.includes("usePrefersReducedMotion"), "the sign-up preview stops autoplay under reduced motion");
 
   assert(signInPage.includes('className="app-shell auth-shell"'), "sign-in page uses the focused auth shell");
   assert(!signInPage.includes("TutorNavRail"), "sign-in page does not render the disabled nav rail");
   assert(signUpPage.includes('className="app-shell auth-shell"'), "sign-up page uses the focused auth shell");
   assert(!signUpPage.includes("TutorNavRail"), "sign-up page does not render the disabled nav rail");
-  assert(loginPage.includes('className="app-shell auth-shell"'), "login alias uses the same centered auth shell");
-  assert(signupPage.includes('className="app-shell auth-shell"'), "signup alias uses the same centered auth shell");
+  assert(loginPage.includes('className="app-shell auth-shell"'), "login alias uses the same auth shell");
+  assert(signupPage.includes('className="app-shell auth-shell"'), "signup alias uses the same auth shell");
 
   for (const [name, source] of [
     ["forgot password", forgotForm],
@@ -62,25 +68,20 @@ async function main() {
     assert(source.includes("fetch("), `${name} page calls a reset API`);
     assert(!source.includes("createClient"), `${name} page does not use the removed Supabase client`);
     assert(!source.includes("passwordRecoveryUnavailableTitle"), `${name} page no longer shows an unavailable state`);
-    assert(source.includes('href="/login"'), `${name} page offers a working return-to-login action`);
+    assert(source.includes("<AuthBackLink />"), `${name} page offers a return-to-login action`);
   }
+  assert(authLayout.includes('href="/login"'), "the return-to-login action points at the login route");
   assert(forgotForm.includes("/api/auth/password-reset/request"), "forgot password page requests a reset email");
   assert(resetPasswordForm.includes("/api/auth/password-reset/confirm"), "reset password page confirms the new password");
 
-  assert(styles.includes(".auth-fields"), "auth field group has dedicated layout styling");
   assert(styles.includes(".app-shell.auth-shell"), "auth pages have a nav-free app shell");
-  assert(styles.includes("align-content: center;"), "auth card centers the form group vertically");
-  assert(styles.includes(".auth-field-spacer {\n  display: none;"), "sign-in does not reserve an empty display-name row");
-  assert(styles.includes("place-items: center"), "auth workspace centers the fixed auth panel");
-  assert(styles.includes(".auth-panel {\n  min-height: 100%;"), "auth panel fills the viewport as a full-bleed split");
-  assert(styles.includes("grid-template-columns: minmax(0, 1fr) minmax(0, 1fr)"), "auth panel splits brand and form evenly on desktop");
-  assert(styles.includes(".auth-hero-copy"), "hero content has dedicated stable layout styling");
-  assert(styles.includes(".auth-password-control"), "password control has dedicated styling");
-  assert(styles.includes(".auth-password-control button svg"), "password visibility icon has dedicated styling");
-  assert(styles.includes(".auth-message.success"), "success state has dedicated styling");
-  assert(styles.includes(".auth-message.error"), "error state has dedicated styling");
-  assert(styles.includes(":focus-visible"), "auth controls expose visible keyboard focus");
-  assert(styles.includes("@media (max-width: 680px)"), "auth layout has mobile behavior");
+  assert(styles.includes(".auth-page {\n  min-height: 100%;"), "auth page fills the scroll container");
+  assert(styles.includes("grid-template-columns: minmax(440px, 520px) minmax(0, 1fr);"), "desktop splits a form column from the plate");
+  assert(styles.includes(".auth-password button"), "password visibility toggle has dedicated styling");
+  assert(styles.includes(".auth-alert {"), "error state has dedicated styling");
+  assert(styles.includes(".auth-status {"), "success state has dedicated styling");
+  assert(styles.includes(".auth-workspace :is(a, button, input):focus-visible"), "auth controls expose visible keyboard focus");
+  assert(styles.includes("@media (max-width: 1180px) {\n  .auth-page {"), "narrow screens drop the plate and keep the form");
 
   process.stdout.write("[auth-ui-static.unit] ALL CHECKS PASSED\n");
 }

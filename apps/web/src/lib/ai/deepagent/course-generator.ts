@@ -15,7 +15,8 @@ import { createTutorModel } from "./model";
 import { buildKgContextPrompt, type CourseContext, type CourseContextTopic } from "./course-kg-context";
 import { PhysicsSceneZodSchema } from "@/lib/ai/visual-schemas";
 import type { ImageBrief } from "@/lib/ai/media/image-brief";
-import { finalizeImageBlocks, makePendingImageBlock } from "@/lib/ai/media/image-builder";
+import { finalizeImageBlocks, findReusableImage, makePendingImageBlock } from "@/lib/ai/media/image-builder";
+import { describeImageTextIssues, imageTextIssues } from "@/lib/ai/media/image-text-quality";
 import { InteractiveComponentPayloadSchema } from "@primoria/contracts/artifacts/schemas";
 import { parseInteractivePayload } from "@/lib/interactive/payload";
 import { getImplementedComponent } from "@/lib/interactive/components/registry";
@@ -426,6 +427,15 @@ function buildOutlineCourse(
   const startTopic = input.kgContext?.startTopic ?? null;
   const subject = input.generatedGraph?.subject ?? subjectFor(graphId, input.topic);
   const graph = input.generatedGraph ?? tryGetTopicGraph(graphId);
+  const targets = input.kgContext?.targetConceptIds?.length
+    ? input.kgContext.targetConceptIds
+    : input.kgContext?.targetConceptId ? [input.kgContext.targetConceptId] : [];
+  const target = targets.length === 1
+    ? graph?.topics.flatMap((topic) => topic.conceptIds).find((concept) => concept.conceptId === targets[0])
+    : undefined;
+  const focusedTitle = target
+    ? input.language?.startsWith("zh") ? target.nameZh || target.name : target.name
+    : null;
   const lessons = graph
     ? conceptFrontierLessons(
         graph,
@@ -451,11 +461,13 @@ function buildOutlineCourse(
         ];
   return {
     id: input.courseId ?? randomId("crs"),
-    title: subject,
+    title: focusedTitle ?? subject,
     topic: input.kgContext?.learningGoal ?? subject,
     summary: input.summary ?? (input.kgContext?.learningGoal
       ? `${subject}：围绕「${input.kgContext.learningGoal}」的定制学习路径`
-      : graphId
+      : focusedTitle
+        ? input.language?.startsWith("zh") ? `${subject}：聚焦「${focusedTitle}」及其必要前置概念` : `${subject}: focused study of ${focusedTitle} and its prerequisites`
+        : graphId
         ? `${subject}的个性化学习路径`
         : input.topic),
     estimatedMinutes: 0,
@@ -509,6 +521,8 @@ const ImageBriefContentSchema = z.object({
   negativePrompt: z.string().optional(),
 });
 
+const ImageTitleSchema = z.object({ title: z.string().trim().min(1) });
+
 export type GenerateBlockInput = {
   course: Course;
   targetType: GeneratableBlockType;
@@ -554,18 +568,35 @@ You are now generating EXACTLY ONE block of type "${input.targetType}" for an ex
 }
 
 // Image blocks don't go through schema→final-block: the LLM writes a brief and
-// the imaging step generates/caches a global asset. A generation failure yields
-// an inline error block, never a thrown editor error.
+// the imaging step generates/caches a global asset. An image generation failure
+// yields an inline error block; an unusable brief is an editor error, like any
+// other block the model cannot write.
 async function generateImageBlock(input: GenerateBlockInput, settings: TutorProviderSettings): Promise<CourseBlock> {
-  const model = createTutorModel(settings);
-  const systemPrompt = `${COURSE_SYSTEM_PROMPT}
-
-You are now writing a BRIEF for ONE static teaching IMAGE block for an existing course. An image is a static cognitive anchor — a concrete object, structure, scene, or analogy picture — NOT an interactive diagram. The picture must contain NO text, labels, numbers, axes, formulas, or chemical notation (use a visual block for those). Return only the brief JSON for this single image block.`;
-  const userPrompt = buildSingleBlockPrompt(input);
-  const raw = await invokeSingleBlock(model, ImageBriefContentSchema, systemPrompt, userPrompt, "image");
-  const parsed = ImageBriefContentSchema.parse(raw);
-
   const conceptIds = input.sourceBlock?.conceptIds ?? [];
+  // Global asset (ownerId null): the brief-keyed cache is shared across users, so
+  // the asset must be globally readable or reuse would 404 — except material
+  // courses, which stay owner-private. See the imaging stage note in
+  // lesson-generation-processor.ts.
+  const materialCourse = isMaterialGraphId(input.course.graphId);
+  if (materialCourse && !input.ownerId) throw new Error("Material course images require an owner.");
+  const imageOwnerId = materialCourse ? input.ownerId ?? null : null;
+  // A concept that already has a cached image always resolves to it, so the
+  // model only titles that picture instead of briefing one nobody would see.
+  const existing = await findReusableImage(conceptIds, { ownerId: imageOwnerId, language: input.course.language }).catch(() => null);
+
+  const model = createTutorModel(settings);
+  const systemPrompt = existing
+    ? `${COURSE_SYSTEM_PROMPT}
+
+You are now titling ONE static teaching IMAGE block for an existing course. This concept already has an approved image that is shown exactly as-is. The picture shows: "${existing.alt}". Caption under it: "${existing.caption}". Return only {"title"}: a short title naming what THIS picture shows.`
+    : `${COURSE_SYSTEM_PROMPT}
+
+You are now writing a BRIEF for ONE static teaching IMAGE block for an existing course. An image is a static cognitive anchor — a concrete object, structure, scene, or analogy picture — NOT an interactive diagram. Describe the scene/object/structure and the relationships that explain the concept; include exact label text, arrows, numbers, formulas, or chemical notation in the course language when they help, prioritizing factual accuracy and legibility over decoration. "alt" describes what is pictured; "caption" is a DIFFERENT short explanation of what to notice and why. Keep a space between prose words and numbers. Return only the brief JSON for this single image block.`;
+  const userPrompt = buildSingleBlockPrompt(input);
+  const parsed = existing
+    ? { ...existing, ...ImageTitleSchema.parse(await invokeSingleBlock(model, ImageTitleSchema, systemPrompt, userPrompt, "image")) }
+    : await writeImageBrief(model, systemPrompt, userPrompt, input.course.language);
+
   const brief: ImageBrief = {
     conceptIds,
     learningGoal: parsed.learningGoal,
@@ -583,15 +614,26 @@ You are now writing a BRIEF for ONE static teaching IMAGE block for an existing 
     pedagogicalRole: input.sourceBlock?.pedagogicalRole,
     brief,
   });
-  // Global asset (ownerId null): the brief-keyed cache is shared across users, so
-  // the asset must be globally readable or reuse would 404 — except material
-  // courses, which stay owner-private. See the imaging stage note in
-  // lesson-generation-processor.ts.
-  const materialCourse = isMaterialGraphId(input.course.graphId);
-  if (materialCourse && !input.ownerId) throw new Error("Material course images require an owner.");
-  const imageOwnerId = materialCourse ? input.ownerId ?? null : null;
   const [finalized] = await finalizeImageBlocks([pending], { ownerId: imageOwnerId, model: IMAGE_MODEL, language: input.course.language ?? null });
   return finalized;
+}
+
+// A fresh brief gets one repair round for unusable alt/caption text, matching
+// the lesson writer's targeted repair.
+async function writeImageBrief(
+  model: ReturnType<typeof createTutorModel>,
+  systemPrompt: string,
+  userPrompt: string,
+  language: string | null | undefined,
+): Promise<z.infer<typeof ImageBriefContentSchema>> {
+  let repairHint = "";
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    const brief = ImageBriefContentSchema.parse(await invokeSingleBlock(model, ImageBriefContentSchema, systemPrompt, `${userPrompt}${repairHint}`, "image"));
+    const problems = imageTextIssues({ alt: brief.alt, caption: brief.caption, language: language ?? undefined }).filter((issue) => issue.severity === "error");
+    if (problems.length === 0) return brief;
+    repairHint = `\n\nYour previous brief was unusable: ${describeImageTextIssues(problems)}. Write it again.`;
+  }
+  throw new Error('Could not generate a usable "image" block.');
 }
 
 function buildSingleBlockPrompt(input: GenerateBlockInput): string {

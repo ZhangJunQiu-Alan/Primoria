@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { BrandLogo } from "@/components/brand-logo";
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { BlockRenderer } from "@/components/course/block-renderer";
@@ -49,7 +50,7 @@ export function SharedCourseView({ token, course, signedIn }: { token: string; c
     <main className="share-shell">
       <header className="share-topbar">
         <Link className="share-brand" href="/welcome">
-          {t.common.brand}
+          <BrandLogo />
         </Link>
         {signedIn ? (
           <button type="button" className="share-import" onClick={importCourse} disabled={importState.phase === "importing"}>

@@ -3,21 +3,13 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
+import { AuthAlert, AuthHeading, AuthLayout, MIN_PASSWORD_LENGTH, PasswordInput, PasswordLengthHint } from "@/components/auth/auth-layout";
+import { ArrowIcon } from "@/components/arrow-icon";
 import { normalizeAuthRedirect } from "@/lib/auth/redirect";
-import { msg, useT } from "@/lib/i18n/client";
+import { useT } from "@/lib/i18n/client";
 
 const SIGN_IN_HREF = "/auth/sign-in";
 const SIGN_UP_HREF = "/auth/sign-up";
-
-function PasswordVisibilityIcon({ visible }: { visible: boolean }) {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M2.8 12s3.3-5.6 9.2-5.6S21.2 12 21.2 12s-3.3 5.6-9.2 5.6S2.8 12 2.8 12Z" />
-      <circle cx="12" cy="12" r="2.8" />
-      {visible ? <path className="auth-eye-slash" d="M4.8 4.8 19.2 19.2" /> : null}
-    </svg>
-  );
-}
 
 export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "sign-up" }) {
   const t = useT();
@@ -37,22 +29,7 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
   const [error, setError] = useState<string | null>(
     searchParams.get("error") ? t.auth.callbackFailed : null
   );
-  const [showPassword, setShowPassword] = useState(false);
 
-  const passwordReady = password.length >= 8;
-  const passwordHint = isSignUp
-    ? password.length === 0
-      ? t.auth.passwordEmptyHint
-      : passwordReady
-        ? t.auth.passwordGoodHint
-        : msg(t.auth.passwordMoreHint, { count: 8 - password.length })
-    : t.auth.passwordWorkspaceHint;
-  const nextCopy = useMemo(() => {
-    if (isSignUp && next === "/") return t.auth.onboardingDestination;
-    if (!next || next === "/library") return t.common.library;
-    if (next === "/") return t.nav.tutor;
-    return next.replace(/^\//, "");
-  }, [isSignUp, next, t.auth.onboardingDestination, t.common.library, t.nav.tutor]);
   const switchHref = useMemo(() => {
     const destination = isSignUp ? SIGN_IN_HREF : SIGN_UP_HREF;
     return `${destination}?${new URLSearchParams({ next }).toString()}`;
@@ -80,148 +57,78 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
     }
   }
 
-  const title = isSignUp ? t.auth.signUpTitle : t.auth.signInTitle;
-  const cta = isSignUp ? t.auth.createAccount : t.auth.signIn;
-  const subtitle = isSignUp ? t.auth.signUpSubtitle : t.auth.signInSubtitle;
-  const heroTitle = isSignUp ? t.auth.signUpHeroTitle : t.auth.signInHeroTitle;
-  const heroCopy = isSignUp ? t.auth.signUpHeroCopy : t.auth.signInHeroCopy;
-
   return (
-    <div className="auth-panel">
-      <AuthHero title={heroTitle} copy={heroCopy} />
+    <AuthLayout plate={normalizedMode}>
+      <AuthHeading
+        title={isSignUp ? t.auth.signUpTitle : t.auth.signInTitle}
+        subtitle={isSignUp ? t.auth.signUpSubtitle : t.auth.signInSubtitle}
+      />
 
-      <form className="auth-card" onSubmit={submitAppDb}>
-        <nav className="auth-mode-switch" aria-label={`${t.auth.signIn} / ${t.auth.createAccount}`}>
-          <Link href={isSignUp ? switchHref : "#"} aria-current={isSignUp ? undefined : "page"}>{t.auth.signIn}</Link>
-          <Link href={isSignUp ? "#" : switchHref} aria-current={isSignUp ? "page" : undefined}>{t.auth.createAccount}</Link>
-        </nav>
-        <div className="auth-heading">
-          <div>
-            <h1>{title}</h1>
-            <p>{subtitle}</p>
-          </div>
-        </div>
-
-        <div className="auth-fields">
-          {isSignUp ? (
-            <label className="auth-field">
-              <span>{t.auth.displayName}</span>
-              <input
-                value={displayName}
-                onChange={(event) => setDisplayName(event.target.value)}
-                placeholder="Ada"
-                autoComplete="name"
-                disabled={pending}
-              />
-            </label>
-          ) : (
-            <div className="auth-field auth-field-spacer" aria-hidden="true" />
-          )}
-
-          <label className="auth-field">
-            <span>{t.auth.email}</span>
-            <input
-              type="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              placeholder="you@example.com"
-              autoComplete="email"
-              inputMode="email"
-              required
-              disabled={pending}
-              aria-invalid={Boolean(error)}
-            />
-          </label>
-
+      <form className="auth-form" onSubmit={submitAppDb}>
+        {isSignUp ? (
           <div className="auth-field">
-            <div className="auth-label-row">
-              <label htmlFor="auth-password">{t.auth.password}</label>
-              {!isSignUp ? <Link href="/forgot">{t.auth.forgotPassword}</Link> : null}
-            </div>
-            <div className="auth-password-control">
-              <input
-                id="auth-password"
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                placeholder={isSignUp ? t.auth.passwordSignupPlaceholder : t.auth.passwordSigninPlaceholder}
-                minLength={isSignUp ? 8 : undefined}
-                autoComplete={isSignUp ? "new-password" : "current-password"}
-                required
-                disabled={pending}
-                aria-describedby="auth-password-hint"
-                aria-invalid={isSignUp && password.length > 0 && !passwordReady}
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword((current) => !current)}
-                disabled={pending || password.length === 0}
-                aria-label={showPassword ? t.auth.hidePassword : t.auth.showPassword}
-              >
-                <PasswordVisibilityIcon visible={showPassword} />
-              </button>
-            </div>
-            <p id="auth-password-hint" className={isSignUp && password.length > 0 && !passwordReady ? "auth-field-hint warning" : "auth-field-hint"}>
-              {passwordHint}
-            </p>
+            <label htmlFor="auth-name">
+              {t.auth.displayName} <span className="auth-optional">{t.auth.optional}</span>
+            </label>
+            <input
+              id="auth-name"
+              value={displayName}
+              onChange={(event) => setDisplayName(event.target.value)}
+              placeholder="Ada"
+              autoComplete="name"
+              disabled={pending}
+            />
           </div>
+        ) : null}
+
+        <div className="auth-field">
+          <label htmlFor="auth-email">{t.auth.email}</label>
+          <input
+            id="auth-email"
+            type="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            placeholder="you@example.com"
+            autoComplete="email"
+            inputMode="email"
+            required
+            disabled={pending}
+            aria-invalid={Boolean(error) || undefined}
+          />
         </div>
 
-        {error ? <p className="auth-message error" role="alert">{error}</p> : null}
-        {status ? <p className="auth-message success" role="status">{status}</p> : null}
+        <div className="auth-field">
+          <div className="auth-label-row">
+            <label htmlFor="auth-password">{t.auth.password}</label>
+            {!isSignUp ? <Link href="/forgot">{t.auth.forgotPassword}</Link> : null}
+          </div>
+          <PasswordInput
+            id="auth-password"
+            value={password}
+            onChange={setPassword}
+            placeholder={isSignUp ? t.auth.passwordSignupPlaceholder : t.auth.passwordSigninPlaceholder}
+            minLength={isSignUp ? MIN_PASSWORD_LENGTH : undefined}
+            autoComplete={isSignUp ? "new-password" : "current-password"}
+            disabled={pending}
+            describedBy={isSignUp ? "auth-password-hint" : undefined}
+            invalid={Boolean(error)}
+          />
+          {isSignUp ? <PasswordLengthHint id="auth-password-hint" length={password.length} /> : null}
+        </div>
 
-        <button className="auth-submit" type="submit" disabled={pending}>
-          {pending ? (isSignUp ? t.auth.creating : t.auth.signingIn) : cta}
+        {error ? <AuthAlert>{error}</AuthAlert> : null}
+        {status ? <p className="auth-status" role="status">{status}</p> : null}
+
+        <button className="auth-submit" type="submit" disabled={pending} aria-busy={pending || undefined}>
+          {pending ? (isSignUp ? t.auth.creating : t.auth.signingIn) : isSignUp ? t.auth.createAccount : t.auth.signIn}
+          <ArrowIcon />
         </button>
-
-        <div className="auth-footer">
-          <p>{t.auth.afterSuccess} <strong>{nextCopy}</strong>.</p>
-          <p className="auth-switch">
-            {isSignUp ? t.auth.alreadyHave : t.auth.newToPrimoria}{" "}
-            <Link href={switchHref}>
-              {isSignUp ? t.auth.signIn : t.auth.createAccount}
-            </Link>
-          </p>
-        </div>
       </form>
-    </div>
-  );
-}
 
-export function AuthHero({ title, copy }: { title: string; copy: string }) {
-  const t = useT();
-  return (
-    <div className="auth-hero" aria-hidden="true">
-      <svg className="auth-hero-map" viewBox="0 0 640 900" preserveAspectRatio="xMidYMid slice">
-        <path d="M0 150H640M0 300H640M0 450H640M0 600H640M0 750H640M128 0V900M256 0V900M384 0V900M512 0V900" stroke="#f6f3ec" strokeOpacity="0.06" />
-        <g transform="translate(60 150)">
-          <path d="M90 700C170 640 230 560 320 520" stroke="#c8881a" strokeWidth="5" fill="none" strokeLinecap="round" />
-          <path d="M320 520C410 480 470 400 560 380" stroke="#d9603f" strokeWidth="5" fill="none" strokeLinecap="round" />
-          <path d="M320 520C360 600 440 640 540 660M320 520C300 440 320 380 380 330" stroke="#f6f3ec" strokeOpacity="0.18" strokeWidth="2" strokeDasharray="6 8" fill="none" />
-          <circle cx="90" cy="700" r="16" fill="#c8881a" />
-          <circle cx="320" cy="520" r="44" fill="#d9603f" opacity="0.18" />
-          <circle cx="320" cy="520" r="26" fill="#f6f3ec" />
-          <circle cx="560" cy="380" r="18" fill="none" stroke="#d9603f" strokeWidth="4" />
-        </g>
-      </svg>
-      <span className="auth-hero-brand">{t.common.brand}</span>
-      <div className="auth-hero-copy">
-        <strong>{title}</strong>
-        <p>{copy}</p>
-        <ul className="auth-hero-list">
-          {t.auth.benefits.map((item) => (
-            <li key={item}>
-              <span>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12l5 5 9-10" />
-                </svg>
-              </span>
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
-      <small>{t.auth.privacyNote}</small>
-    </div>
+      <p className="auth-switch">
+        {isSignUp ? t.auth.alreadyHave : t.auth.newToPrimoria}
+        <Link href={switchHref}>{isSignUp ? t.auth.signIn : t.auth.createAccountLink}</Link>
+      </p>
+    </AuthLayout>
   );
 }

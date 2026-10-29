@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { Script } from "node:vm";
 import { InteractiveComponentPayloadSchema } from "@primoria/contracts/artifacts/schemas";
 import { parseInteractivePayload } from "@/lib/interactive/payload";
 import {
@@ -10,10 +11,12 @@ import {
 } from "@/lib/ai/visual-schemas";
 import type { CourseBlock } from "@/lib/courses/types";
 import type { ImageBrief } from "@/lib/ai/media/image-brief";
+import { describeImageTextIssues, imageTextIssues } from "@/lib/ai/media/image-text-quality";
 import { makePendingImageBlock } from "@/lib/ai/media/image-builder";
 import { BlockCompileError } from "./generation-errors";
 import type { GeneratableBlockType } from "./lesson-plan-ir";
 import type { BlockGenerationJob } from "./lesson-plan-compiler";
+import { mathExplorerIssues } from "./math-explorer-validation";
 
 // Deterministic block content compiler. Strictly parses one writer's core
 // content for a single block, merges in the planner's metadata (conceptIds,
@@ -58,6 +61,9 @@ const ImageContentSchema = z.object({
   negativePrompt: z.string().optional(),
 });
 
+// A job with an existing image only titles it; the picture keeps its own brief.
+const ExistingImageContentSchema = z.object({ title: nonEmpty });
+
 const AlgorithmVizPayloadSchema = z
   .object({
     algorithm: nonEmpty,
@@ -77,6 +83,8 @@ const MathExplorerPayloadSchema = z.object({
   tRange: z.tuple([z.coerce.number(), z.coerce.number()]).optional(),
   xLabel: z.string().optional(),
   yLabel: z.string().optional(),
+}).superRefine((payload, ctx) => {
+  for (const message of mathExplorerIssues(payload)) ctx.addIssue({ code: "custom", message });
 });
 
 // Decision 4: the visual writer emits a complete engine payload directly.
@@ -326,17 +334,19 @@ function visualFailureDiagnostic(rawContent: unknown, normalized: unknown): stri
 }
 
 /** Parse one block's writer content and compile it into a final CourseBlock.
- * Throws BlockCompileError if a required semantic field is missing. */
-export function compileBlockContent(job: BlockGenerationJob, rawContent: unknown, lessonId: string): CourseBlock {
-  const schema = CONTENT_SCHEMAS[job.type];
-  // Engine is pinned deterministically by the compiler (from the KG affordance).
-  // Inject it and ignore whatever the writer emitted, so the model can NEVER
-  // produce an unknown/invented engine — it only supplies the payload.
+ * Throws BlockCompileError if a required semantic field is missing. `language`
+ * is the course language, so image text is checked by that language's rules. */
+export function compileBlockContent(job: BlockGenerationJob, rawContent: unknown, lessonId: string, language?: string | null): CourseBlock {
+  const schema = job.type === "image" && job.existingImage ? ExistingImageContentSchema : CONTENT_SCHEMAS[job.type];
+  // Catalog configs and explicit sandbox payloads can supersede the KG hint.
+  // Other writer engine names never override the compiler's supported engine.
   let visualRaw = rawContent;
   if (job.type === "visual" && job.engine && rawContent && typeof rawContent === "object" && !Array.isArray(rawContent)) {
     const content = rawContent as Record<string, unknown>;
     const usesCatalog = content.engine === "interactive" || content.interactive !== undefined;
-    visualRaw = { ...content, engine: usesCatalog ? "interactive" : job.engine };
+    const usesSandbox = typeof content.html === "string" && content.html.trim().length > 0
+      && !["mathExplorer", "echartsOption", "mermaidDefinition", "physicsScene", "algorithmViz"].some((key) => content[key] !== undefined);
+    visualRaw = { ...content, engine: usesCatalog ? "interactive" : usesSandbox ? "html" : job.engine };
   }
   const parseInput = job.type === "visual" ? normalizeVisualContent(visualRaw) : rawContent;
   const parsed = schema.safeParse(parseInput);
@@ -350,6 +360,17 @@ export function compileBlockContent(job: BlockGenerationJob, rawContent: unknown
 
   if (job.type === "visual") {
     const content = parsed.data as z.infer<typeof VisualContentSchema>;
+    if (content.engine === "html" || !content.engine) {
+      for (const match of (content.html ?? "").matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\s*>/gi)) {
+        const scriptType = match[1].match(/\btype\s*=\s*["']?([^\s"'>]+)/i)?.[1];
+        if (/\bsrc\s*=/i.test(match[1]) || (scriptType && !/^(?:text|application)\/(?:java|ecma)script$/i.test(scriptType))) continue;
+        try {
+          new Script(match[2]);
+        } catch (error) {
+          throw new BlockCompileError(`block ${job.order} HTML script syntax invalid: ${(error as Error).message}. Return valid JavaScript; preserve newlines after // comments or use /* block comments */.`, { jobId: job.jobId });
+        }
+      }
+    }
     if (content.engine === "interactive") {
       try {
         const interactive = parseInteractivePayload(content.interactive);
@@ -369,14 +390,21 @@ export function compileBlockContent(job: BlockGenerationJob, rawContent: unknown
 
   if (job.type === "image") {
     const content = parsed.data as z.infer<typeof ImageContentSchema>;
+    if (!job.existingImage) {
+      const problems = imageTextIssues({ alt: content.alt, caption: content.caption, language: language ?? undefined }).filter((issue) => issue.severity === "error");
+      if (problems.length) {
+        throw new BlockCompileError(`block ${job.order} (image) content invalid: ${describeImageTextIssues(problems)}`, { jobId: job.jobId });
+      }
+    }
+    const source = job.existingImage ?? content;
     const brief: ImageBrief = {
       conceptIds: job.conceptIds,
-      learningGoal: content.learningGoal,
-      imageKind: content.imageKind,
-      prompt: content.prompt,
-      alt: content.alt,
-      caption: content.caption,
-      negativePrompt: content.negativePrompt,
+      learningGoal: source.learningGoal,
+      imageKind: source.imageKind,
+      prompt: source.prompt,
+      alt: source.alt,
+      caption: source.caption,
+      negativePrompt: source.negativePrompt,
     };
     // Pending — the imaging stage resolves the asset and finalizes this block.
     return makePendingImageBlock({

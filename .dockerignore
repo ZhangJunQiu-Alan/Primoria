@@ -1,4 +1,5 @@
 .git
+.private
 node_modules
 **/node_modules
 **/.next*
@@ -15,3 +16,4 @@ temple
 e2e
 docker-compose.yml
 docker-compose.prod.yml
+promo

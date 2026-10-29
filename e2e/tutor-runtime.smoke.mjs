@@ -66,7 +66,7 @@ async function waitForWeb(server) {
 
 async function fillPasswordAfterHydration(page, value) {
   const input = page.locator('input[type="password"]');
-  const button = page.locator(".auth-password-control button");
+  const button = page.getByRole("button", { name: /^(Show password|显示密码)$/ });
   const deadline = Date.now() + 30_000;
   while (Date.now() < deadline) {
     await input.fill("");

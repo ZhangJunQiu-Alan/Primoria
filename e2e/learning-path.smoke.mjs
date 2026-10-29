@@ -52,7 +52,7 @@ async function waitForServer(server) {
 
 async function fillPasswordAfterHydration(page, value) {
   const input = page.locator('input[type="password"]');
-  const visibilityButton = page.locator(".auth-password-control button");
+  const visibilityButton = page.getByRole("button", { name: /^(Show password|显示密码)$/ });
   const deadline = Date.now() + 30_000;
 
   while (Date.now() < deadline) {
@@ -176,7 +176,7 @@ try {
   ]);
   assert(confirmation.ok(), `course completion confirmation should succeed (got ${confirmation.status()})`);
   await page.waitForURL((url) => url.pathname === "/", { waitUntil: "domcontentloaded", timeout: 60_000 });
-  await page.locator(".onboarding-goal-input").waitFor({ state: "visible", timeout: 30_000 });
+  await page.locator("#onboarding-goal").waitFor({ state: "visible", timeout: 30_000 });
   await verifyRecommendationResolved();
   assert(pageErrors.length === 0, `unexpected page errors: ${pageErrors.join(" | ")}`);
   process.stdout.write("[learning-path.smoke] ALL CHECKS PASSED\n");

@@ -3,6 +3,7 @@ import { getDb } from "@/lib/db/client";
 import { mediaAssets, type MediaAssetRow } from "@/lib/db/schema";
 import { imageCacheKey, type ImageBrief, type ImageKind } from "./image-brief";
 import { getMediaObjectStore, mediaObjectPath, type MediaObjectStore } from "./media-storage";
+import { assertImageTextQuality } from "./image-text-quality";
 
 /** Public URL a block references. Bytes are served by the media API, never
  * embedded in the block JSONB or React props. */
@@ -137,6 +138,7 @@ export async function resolveImageAsset(
     };
   }
 
+  assertImageTextQuality(input.brief);
   const generated = await input.generate();
   const bytes = new Uint8Array(Buffer.from(generated.dataBase64, "base64"));
   const id = randomAssetId();

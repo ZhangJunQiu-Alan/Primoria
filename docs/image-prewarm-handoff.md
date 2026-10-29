@@ -5,13 +5,13 @@
 
 ## 0. 目标和边界
 
-**目标**：给 31 个库内知识图谱的全部 **1,456 个概念**，各生成一张中文标准配图，上传到 Supabase Storage，并在 `media_assets` 登记。之后任何课程用到这些概念时，直接命中缓存，不再现场出图。
+**目标**：给 31 个库内知识图谱的全部 **1,456 个概念**，各生成一张英文标准配图，上传到 Supabase Storage，并在 `media_assets` 登记。之后任何课程用到这些概念时，直接命中缓存，不再现场出图。
 
 **这次不做**：
 
 - `gen_*` 生成图谱（不在库内，概念不固定）。
 - 类比插图（`analogy_illustration`），它画的是每节课自己的比喻，不能预生成。
-- 英文版（列为可选的第二轮，见第 9 节）。
+- 中文版（列为后续可选轮次，见第 12 节）；当前用户要求先完成全部英文图，再统一导入 Supabase。
 - 改运行时出图模型：没命中缓存的图，课程生成时仍由 Gemini 现场生成。
 
 **必须遵守的仓库规则**（来自 `CLAUDE.md`）：
@@ -23,7 +23,73 @@
 
 **用户已确认的出图方式（2026-10-24）**：由 Codex 使用内置 `image_gen` 工具生成，不配置或调用 OpenAI 图片 API，不要求 `PREWARM_OPENAI_API_KEY`。一次调用对应一个概念的候选图，试点审核通过后再分批推进。工具额度、用时和费用以实际显示为准，不套用图片 API 单价，也不承诺免费。其他付费模型调用仍须先说明用途并获准。
 
+**当前授权与参考图（2026-10-24）**：用户已明确要求生成全部英文图片，完成后导入 Supabase；选定的是第一张带中文标注、膜横贯画面的质膜图（本地 `candidates/cn_sh_bio_plasma_membrane_functions.v2.png`）作为风格参考。该授权覆盖本批必要的私有 Storage 上传和图片元数据写入，无需重复索要同一授权；不覆盖无关数据清理、commit、push 或部署。先全部生成和审查，再统一导入；不得把局部完成报告为全部完成。
+
 **教学质量优先**：是否准确、清楚地解释知识点是主要验收标准，不再要求图内无字。允许有教学价值的标签、箭头、数字、公式、化学式和简短说明；文字须准确、清晰、与图中对象对应。`caption` 是图下说明，`alt` 是替代文字，两者都不能补救错误的图像内容。
+
+## 本地执行入口与当前进度（2026-10-27）
+
+**英文预热已全部完成并导入**：31 个图谱的 **1,456/1,456** 个概念均已在
+Supabase 私有 `lesson-media` bucket 中。2026-10-27 最后一批新增 231 张：
+中国高中物理 73、中国高中数学 70、新加坡初中数学 53、A-Level 物理 35；
+原有 1,225 张未覆盖。新增图片逐张读回并通过 SHA-256、大小与运行时缓存查询校验；
+最终只读审计确认全部 1,456 个缓存键及 Storage 对象路径、大小匹配。
+Storage 实际共 1,468 个对象、223,197,787 字节（包含此前 12 张非本清单素材），
+全部图片行已使用 Storage，无 Base64 字节副本。本次未验证登录后的图片 HTTP 路由
+或真实课程生成全流程。Codex 复核不代表用户逐张确认。
+
+当前云端覆盖以 `.private/image-prewarm/en/cloud-import-state.json` 和
+`import-runs/imported-assets-current.jsonl` 为准；最终报告为
+`.private/image-prewarm/en/SUPABASE-IMPORT-2026-10-27.md`，证据保存在
+`import-runs/reviewed-final-20261027/`。下方 2026-10-25 导入数字是历史记录。
+
+2026-10-28 图片描述修复已写入同一生产库：24 个图谱共 996 条 `alt`、98 条
+`caption` 修订，`media_assets` 独立列与 `brief` 内的副本同步。本地 `records/`、
+受影响的活动 manifest 和预览同步；历史导入快照、原始批次、被拒版本及原始提示词保留。
+1,456 张标准配图中，alt/caption 相同、模板化 alt 和已知正文数字粘连校验均为 0；
+少于 50 字符的 alt 也为 0，但长度本身不是内容质量判据。所有本地图像哈希复核，
+线上每个图谱抽一张（31 张）的 Storage 字节哈希复核通过；这不是新一轮逐图人工验收。
+
+用户授权丢弃既有课程后，事务删除了 3 门课程及 32 个课时；1,470 条图片资产、
+2 个用户、18 条掌握度记录和 5 条学习者事实保留。已先做完整数据库备份及回滚演练，
+再提交同一份带原值校验的事务并逐条回读。详细清单、备份、哈希、回读结果保存在
+`.private/audits/image-metadata-20261028/`，其中 `changes.json` 是逐条前后对照。
+新增文本质量规则和写手提示词在本地代码中；此次数据修复没有发布应用代码。
+
+已实现的辅助脚本：
+
+```bash
+# 仅首次导出；已有生产记录时不要覆盖 concepts.en.jsonl / run.json
+pnpm --filter @primoria/web exec tsx scripts/image-prewarm/export-concepts.ts
+
+# 只读检查数据库列、图片存量及 Storage bucket
+node scripts/with-database-env.mjs runtime pnpm --filter @primoria/web exec tsx scripts/image-prewarm/preflight.ts
+
+# 保留原图，生成 WebP、校验缓存键并更新本地预览与进度
+pnpm --filter @primoria/web exec tsx scripts/image-prewarm/finalize-local.ts
+```
+
+所有生产记录位于忽略的 `.private/image-prewarm/en/`：`records/` 保存当前候选，
+`replacements/` 和 `rejected/` 保留修订证据，`images/` 保存原图，`assets/` 保存 WebP。
+`progress.json` 与 `review.html` 由本地整理脚本生成；`NEXT-RUN.md` 保存续跑顺序。
+密钥仅保存在忽略的 `.env.supabase`，不进入 Git；图片文件也不进入 Git。
+
+2026-10-25 用户后续明确要求“先把目前的素材全部导入 Supabase”，因此本次按已复核
+素材先行导入，取代此前等待全部 1,456 张完成后统一导入的顺序。实际新增 **1,027 张**，
+覆盖 26 个图谱；其中 25 个图谱概念齐全，A-Level 数学导入已复核的 16 张。其余 429 个
+概念不在本次导入清单内；Codex 复核不代表用户逐张审图，待审核及被拒版本不上传。
+
+本次使用忽略目录中的 `.private/image-prewarm/en/import-current.ts` 固定素材快照，
+经现有 `resolveImageAsset()` 上传 WebP 并登记全局公共池。两个批次分别为
+`import-runs/reviewed-20261025-2035/`（1,023 张）和
+`import-runs/reviewed-20261025-2349/`（4 张补充）。全部逐张读回核对 SHA256，
+改变图片类型、描述和语言写法为 `en-US` 后，1,027/1,027 个缓存键仍命中。
+
+实际导入、assetId、Storage 路径和容量证据以
+`.private/image-prewarm/en/SUPABASE-IMPORT-2026-10-25.md` 及对应批次日志为准。
+`records/`、各学科交付文档和生成进度中的旧 `imported` 字段是制作阶段快照，未为此次
+导入改写其他 Agent 的文件。后续导入须查线上缓存及导入日志，不得用旧字段判断云端缺图。
+此次没有执行迁移、部署、commit、push 或数据清理；自动续跑授权也不包含这些操作。
 
 ## 1. 先读懂：预热的图怎样被命中
 
@@ -43,9 +109,9 @@ imageCacheKey(brief) = sha256({
 由此得出预热时的硬性要求：
 
 1. `conceptIds` 只放一个概念 id。
-2. `language` 写 `"zh"`。
+2. `language` 写 `"en"`，图内标注、`alt` 和 `caption` 都用英文。
 3. **不要设置** `styleVersion`，让它用默认的 `STYLE_VERSION`；改了就永远对不上。
-4. `imageKind` 只能是 `educational_illustration`、`structure_diagram` 或 `realistic_scene`。它不进缓存键，命中后课程会沿用预热图的 kind、`alt`、`caption`。
+4. `imageKind` 只能是 `educational_illustration`、`structure_diagram` 或 `realistic_scene`。它不进缓存键，命中后课程会沿用预热图的 kind、`alt`、`caption`。课程生成在写作前会先查到这张图，把它的 `alt`、`caption` 交给写手：写手只为这张现成的图起标题，同批讲解按图中内容和记号来写，不会再自拟新图或改用类比图。因此 `alt` 要如实描述画面内容，它直接决定写手起的标题。
 5. 图片模型名不进缓存键，所以内置工具生成、按相同 brief 导入的图也能被运行时命中；模型来源必须如实记录。
 
 字节存放：`media_assets.storage_path` 指向私有 bucket（默认 `lesson-media`，环境变量 `PRIMORIA_MEDIA_BUCKET`），路径为 `lesson-images/{assetId}.{按实际 MIME 确定的扩展名}`。读写封装在 `apps/web/src/lib/ai/media/media-storage.ts`，只在服务端用 `SUPABASE_URL` + `SUPABASE_SECRET_KEY`。浏览器通过 `/api/media/assets/{assetId}` 读图。
@@ -73,8 +139,8 @@ imageCacheKey(brief) = sha256({
 
 - 用 `listTopicGraphIds()` + `getTopicGraph()`（`src/lib/knowledge-graph/topic-graph.ts`）遍历所有概念。
 - 每行输出 JSON：`conceptId, graphId, graphTitle, topicId, topicName, name, nameZh, visual, visualHint, cacheKey`。
-- `cacheKey` 用 `imageCacheKey({ conceptIds: [conceptId], language: "zh", imageKind: "educational_illustration", learningGoal: "", prompt: "", alt: "", caption: "" })` 计算。
-- 写到 `.private/image-prewarm/concepts.zh.jsonl`。
+- `cacheKey` 用 `imageCacheKey({ conceptIds: [conceptId], language: "en", imageKind: "educational_illustration", learningGoal: "", prompt: "", alt: "", caption: "" })` 计算。
+- 写到 `.private/image-prewarm/concepts.en.jsonl`。
 
 另写一个只读查询：统计这些 `cacheKey` 在 `media_assets` 里已经存在多少（已存在的后面直接跳过）。
 
@@ -86,7 +152,7 @@ imageCacheKey(brief) = sha256({
 ## 4. 第 2 步：确定教学表达和出图记录
 
 - 明确这张图要解释的一个知识点，以及必须正确呈现的结构、关系或过程。
-- 逐项列出必要标签、公式、数字及短说明的准确文字；中文试点优先使用中文，通用符号按学科规范保留。不需要文字的画面不强加标签。
+- 逐项列出必要标签、公式、数字及短说明的准确文字；英文试点使用英文，通用符号按学科规范保留。不需要文字的画面不强加标签。
 - 优先横向 16:9、适合课程栏宽的构图；实际尺寸、格式以工具输出为准，不伪装成 WebP，也不裁掉教学内容。
 - 使用内置 `image_gen`；保存完整提示词、原始图片、实际尺寸、MIME 类型、字节数和审核状态。工具未报告模型、用量或费用时明确记为未报告，不填写猜测值。
 
@@ -96,17 +162,17 @@ imageCacheKey(brief) = sha256({
 
 新建 `apps/web/scripts/image-prewarm/write-briefs.ts`：
 
-- 读 `concepts.zh.jsonl`。每次调用处理 20 个概念，用 `invokeJson()`（`src/lib/ai/course-generation/model-json.ts`）调用：参数 `settings: fastTierSettings()`、`utility: true`（不思考），并传 zod schema。
+- 读 `concepts.en.jsonl`。每次调用处理 20 个概念，用 `invokeJson()`（`src/lib/ai/course-generation/model-json.ts`）调用：参数 `settings: fastTierSettings()`、`utility: true`（不思考），并传 zod schema。
 - 每个概念产出：
 
 ```ts
 {
   conceptId: string,
   imageKind: "educational_illustration" | "structure_diagram" | "realistic_scene",
-  learningGoal: string,   // 中文，一句话：这张图帮学习者认出什么
+  learningGoal: string,   // 英文，一句话：这张图帮学习者认出什么
   prompt: string,         // 英文，描述要画的场景/物体/结构
-  alt: string,            // 中文，替代文字
-  caption: string,        // 中文，告诉学习者该注意看什么
+  alt: string,            // 英文，替代文字
+  caption: string,        // 英文，告诉学习者该注意看什么
   negativePrompt?: string
 }
 ```
@@ -117,22 +183,24 @@ imageCacheKey(brief) = sha256({
   - `structure_diagram` 用于结构、组成、流程；`realistic_scene` 用于真实场景、实验装置、自然现象；其余用 `educational_illustration`。
   - 抽象概念（比如复杂度、证明方法）选一个最直观的具体比方来画，但 `imageKind` 不能用 analogy。
   - 根据图谱判断学段（初高中、A-Level、大学），措辞和难度要匹配。
-- 输出 `.private/image-prewarm/briefs.zh.jsonl`，支持断点续跑（已有的 `conceptId` 跳过）。
+- 输出 `.private/image-prewarm/briefs.en.jsonl`，支持断点续跑（已有的 `conceptId` 跳过）。
 
 **验收**：
 
 - 1,456 条全部通过 schema 校验。
 - 随机抽 20 条打印出来给用户看。
-- `caption` 和 `alt` 都是中文且与实际画面一致；`prompt` 明确教学目标、关键结构关系和必要图中文字，不能含糊要求模型自行编造标注。
+- `caption` 和 `alt` 都是英文且与实际画面一致；`prompt` 明确教学目标、关键结构关系和必要图中文字，不能含糊要求模型自行编造标注。
+- `alt` 描述实际对象、对比、箭头、代码值或图形关系；`caption` 解释应注意什么及原因，不能复制 `alt`，不能只把图内标题或通用概念名当作替代文字。正文与数字、公式间保留空格，正常的 `2x`、`CO2`、`IPv4` 等记号不拆开。
+- 运行 `pnpm --filter @primoria/web validate:image-metadata`（可加 `--graph=<graphId>`）。共用规则拒绝空值、重复、模板化替代文字，以及虚词或动词直接粘连数字（如 `of3seats`、`to2x`）和单词粘连分数（如 `integral1/2`），`area1`、`score2` 这类标识符不受影响；少于 50 字符和标题重复仅列为人工复核项，不设统一最小长度。校验不替代逐图内容审查。导入仍须经过 `resolveImageAsset()` 的新增资产校验，缓存命中沿用已有资产描述。
 
 ## 6. 第 4 步：试点出图（75 张，分小批审查）
 
 新建 `apps/web/scripts/image-prewarm/generate-images.ts`，只准备本地出图任务和记录，不调用外部图片 API：
 
 - 参数：`--graph <graphId>`（可重复）、`--only <file>`（只重做列出的 conceptId）、`--max-images <n>`（任务数量硬上限，默认 80）。
-- 对每条 brief 拼出 `{ conceptIds: [conceptId], language: "zh", ...brief }`，用 `buildImagePrompt(brief)`（`image-brief.ts`）生成最终提示词；包含画风、教学目标、文字准确性和可读性要求。
+- 对每条 brief 拼出 `{ conceptIds: [conceptId], language: "en", ...brief }`，用 `buildImagePrompt(brief)`（`image-brief.ts`）生成最终提示词；包含画风、教学目标、文字准确性和可读性要求。
 - Codex 对每个任务调用一次内置 `image_gen`，把输出复制到 `.private/image-prewarm/images/{conceptId}.v{attempt}.{真实扩展名}`，保留原始输出，不覆盖前一版。
-- 往 `status.zh.jsonl` 追加 `{conceptId, file, mimeType, bytes, width, height, generationMethod, model, usage, ms, attempt, reviewStatus}`；`generationMethod` 为 `built-in image_gen`，工具未报告的字段记为 `null`。
+- 往 `status.en.jsonl` 追加 `{conceptId, file, mimeType, bytes, width, height, generationMethod, model, usage, ms, attempt, reviewStatus}`；`generationMethod` 为 `built-in image_gen`，工具未报告的字段记为 `null`。
 - 已审核通过的任务跳过；被拒绝的候选按新版本重做，保证断点续跑和审核记录可追溯。超过 `--max-images` 停止，不自动切换出图渠道。
 - 先对 `senior_secondary_biology` 生成少量候选，核对教学准确性和文字可读性，再推进其余试点。
 
@@ -169,7 +237,7 @@ imageCacheKey(brief) = sha256({
 
 ```ts
 await resolveImageAsset({
-  brief,                       // { conceptIds:[id], language:"zh", imageKind, learningGoal, prompt, alt, caption, negativePrompt? }
+  brief,                       // { conceptIds:[id], language:"en", imageKind, learningGoal, prompt, alt, caption, negativePrompt? }
   model: recordedModel ?? "image_gen:unreported", // 不猜测工具未报告的模型
   provider: "codex-imagegen",
   ownerId: null,               // 全局公共池
@@ -190,7 +258,7 @@ await resolveImageAsset({
 
 新建 `apps/web/scripts/image-prewarm/verify-hits.ts`，只读：
 
-1. 对试点的每个概念，用一个故意不同的 brief 算缓存键：`imageKind` 改成 `structure_diagram`，`learningGoal`、`prompt`、`caption` 随便写，`language: "zh-CN"`。然后用 `dbMediaAssetStore.findByCacheKey()` 查。应 **100% 命中**。
+1. 对试点的每个概念，用一个故意不同的 brief 算缓存键：`imageKind` 改成 `structure_diagram`，`learningGoal`、`prompt`、`caption` 随便写，`language: "en-US"`。然后用 `dbMediaAssetStore.findByCacheKey()` 查。应 **100% 命中**。
 2. 可选（约 $0.03/节）：参照 `tests/lesson-generation-processor.unit.ts` 的内存 store，对试点图谱跑 1 节真实课程生成。`imageGenerate` 要传一个"被调用就计数"的函数，`mediaStore` 用只读包装：`findByCacheKey`、`getById` 走真实库，`insert` 直接抛错。预期该课的非类比图片全部命中，计数为 0。
 3. 如果本地能起 Web，访问一张图的 `/api/media/assets/{assetId}`，应返回 200，Content-Type 与本地图片实际 MIME 一致。
 
@@ -222,15 +290,15 @@ await resolveImageAsset({
   - **【需用户确认】** 删除前把清单发给用户。
 - **已经有课程用了**：不要删除。如果整体画风要换，修改 `@primoria/contracts/visual-style` 里的 `LEARNING_OBJECT_STYLE_VERSION`，让所有图片按新风格重新生成。旧图留着，旧课程照常显示。
 
-## 12. 可选第二轮：英文版
+## 12. 可选第二轮：中文版
 
-英文课程的 `language` 是 `en`，缓存键不同，需要另做一套：`alt`、`caption`、`learningGoal` 用英文写，`language: "en"`。
+中文课程的 `language` 是 `zh`，缓存键不同，需要另做一套：`alt`、`caption`、`learningGoal` 用中文写，`language: "zh"`。
 
-无图内文字或仅有通用符号的图片，经审核后可以复用原文件，并改写 `alt`、`caption` 和 `learningGoal`。带中文标签或说明的图片需要生成或编辑英文版，并重新审图，不能仅改元数据后当作英文图导入。这一轮先问用户要不要做。
+无图内文字或仅有通用符号的图片，经审核后可以复用原文件，并改写 `alt`、`caption` 和 `learningGoal`。带英文标签或说明的图片需要生成或编辑中文版，并重新审图，不能仅改元数据后当作中文图导入。这一轮先问用户要不要做。
 
 ## 13. 交付物清单
 
 - `apps/web/scripts/image-prewarm/{export-concepts,write-briefs,generate-images,contact-sheet,import-images,verify-hits}.ts`
 - `apps/web/tests/image-prewarm.spec.ts`：覆盖纯函数部分，包括 brief schema 校验、断点续跑的跳过逻辑、预算上限、缓存键与运行时一致。
-- `.private/image-prewarm/`：`README.md`（参数核实记录）、`concepts.zh.jsonl`、`briefs.zh.jsonl`、`status.zh.jsonl`、`images/`、`review.html`、`rejects*.txt`。都不进 Git。
+- `.private/image-prewarm/`：`README.md`（参数核实记录）、`concepts.en.jsonl`、`briefs.en.jsonl`、`status.en.jsonl`、`images/`、`review.html`、`rejects*.txt`。都不进 Git。
 - 结束时：`pnpm --filter @primoria/web typecheck`、`pnpm lint`、`pnpm --filter @primoria/web test` 全绿。另外更新 `docs/supabase-deployment.md` 的 Lesson image Storage 小节，写上预热脚本的用法。

@@ -1,24 +1,23 @@
 "use client";
 
-import Link from "next/link";
 import type { FormEvent } from "react";
 import { useState } from "react";
 
-import { AuthHero } from "@/components/auth/auth-form";
+import { AuthAlert, AuthBackLink, AuthHeading, AuthLayout } from "@/components/auth/auth-layout";
+import { ArrowIcon } from "@/components/arrow-icon";
 import { useT } from "@/lib/i18n/client";
 
 export function ForgotForm() {
   const t = useT();
   const [email, setEmail] = useState("");
   const [pending, setPending] = useState(false);
-  const [status, setStatus] = useState<string | null>(null);
+  const [sentTo, setSentTo] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   async function submit(event: FormEvent) {
     event.preventDefault();
     setPending(true);
     setError(null);
-    setStatus(null);
     try {
       const response = await fetch("/api/auth/password-reset/request", {
         method: "POST",
@@ -27,7 +26,7 @@ export function ForgotForm() {
       });
       const data = (await response.json()) as { error?: string; message?: string };
       if (!response.ok) throw new Error(data.error ?? t.auth.passwordResetRequestFailed);
-      setStatus(t.auth.passwordResetRequestSuccess);
+      setSentTo(email);
     } catch (err) {
       setError(err instanceof Error ? err.message : t.auth.passwordResetRequestFailed);
     } finally {
@@ -35,21 +34,26 @@ export function ForgotForm() {
     }
   }
 
-  return (
-    <div className="auth-panel">
-      <AuthHero title={t.auth.signInHeroTitle} copy={t.auth.signInHeroCopy} />
-      <form className="auth-card" onSubmit={submit}>
-        <div className="auth-heading">
-          <div>
-            <h1>{t.auth.forgotPasswordTitle}</h1>
-            <p>{t.auth.forgotPasswordCopy}</p>
-          </div>
-        </div>
+  const [sentBefore, sentAfter] = t.auth.resetEmailSentBody.split("{email}");
 
-        <div className="auth-fields">
-          <label className="auth-field">
-            <span>{t.auth.email}</span>
+  return (
+    <AuthLayout plate="sign-in">
+      <AuthBackLink />
+      <AuthHeading title={t.auth.forgotPasswordTitle} subtitle={t.auth.forgotPasswordCopy} />
+
+      {sentTo ? (
+        <div className="auth-sent" role="status">
+          <span className="auth-kicker">{t.auth.resetEmailSentKicker}</span>
+          <strong>{t.auth.resetEmailSentTitle}</strong>
+          <p>{sentBefore}<b>{sentTo}</b>{sentAfter}</p>
+          <button type="button" onClick={() => setSentTo(null)}>{t.auth.resetEmailRetry}</button>
+        </div>
+      ) : (
+        <form className="auth-form" onSubmit={submit}>
+          <div className="auth-field">
+            <label htmlFor="auth-email">{t.auth.email}</label>
             <input
+              id="auth-email"
               type="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
@@ -59,22 +63,16 @@ export function ForgotForm() {
               required
               disabled={pending}
             />
-          </label>
-        </div>
+          </div>
 
-        {error ? <p className="auth-message error" role="alert">{error}</p> : null}
-        {status ? <p className="auth-message success" role="status">{status}</p> : null}
+          {error ? <AuthAlert>{error}</AuthAlert> : null}
 
-        <button className="auth-submit" type="submit" disabled={pending}>
-          {pending ? t.auth.passwordResetSending : t.auth.sendPasswordResetEmail}
-        </button>
-
-        <div className="auth-footer">
-          <p className="auth-switch">
-            <Link href="/login">{t.auth.backToLogin}</Link>
-          </p>
-        </div>
-      </form>
-    </div>
+          <button className="auth-submit" type="submit" disabled={pending} aria-busy={pending || undefined}>
+            {pending ? t.auth.passwordResetSending : t.auth.sendPasswordResetEmail}
+            <ArrowIcon />
+          </button>
+        </form>
+      )}
+    </AuthLayout>
   );
 }

@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
+import { BrandLogo } from "@/components/brand-logo";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { PUBLIC_LANDING_PATH } from "@/lib/auth/routes";
 import type { AuthUser } from "@/lib/auth/types";
 import {
@@ -16,6 +18,7 @@ import {
 } from "@/lib/copilot-thread-history";
 import { clearPendingCourseBuilds } from "@/lib/courses/course-build-session";
 import { useT } from "@/lib/i18n/client";
+import { NAV_COLLAPSE_EVENT, NAV_COLLAPSED_STORAGE_KEY } from "@/lib/nav-collapse";
 
 type NavTab = {
   id: string;
@@ -94,6 +97,38 @@ const TABS: NavTab[] = [
   },
 ];
 
+function subscribeNavCollapse(onChange: () => void) {
+  window.addEventListener(NAV_COLLAPSE_EVENT, onChange);
+  return () => window.removeEventListener(NAV_COLLAPSE_EVENT, onChange);
+}
+
+/** Mirrors <html data-nav-collapsed>, which the pre-paint script in the root layout seeds. */
+function useNavCollapsed() {
+  const collapsed = useSyncExternalStore(
+    subscribeNavCollapse,
+    () => document.documentElement.dataset.navCollapsed === "true",
+    () => false,
+  );
+  function toggle() {
+    const next = !collapsed;
+    document.documentElement.dataset.navCollapsed = String(next);
+    try {
+      window.localStorage.setItem(NAV_COLLAPSED_STORAGE_KEY, next ? "1" : "0");
+    } catch {
+      // Private browsing may block storage; the choice still holds for this page.
+    }
+    window.dispatchEvent(new Event(NAV_COLLAPSE_EVENT));
+  }
+  return [collapsed, toggle] as const;
+}
+
+const PANEL_ICON = (
+  <svg {...ICON_PROPS} aria-hidden="true">
+    <rect x="3.5" y="4.5" width="17" height="15" rx="2.5" />
+    <path d="M9.5 4.5v15" />
+  </svg>
+);
+
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
   if (href === "/library") {
@@ -124,6 +159,7 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
   const user = localAuthState ? localAuthState.user : initialAuthState?.user ?? null;
   const [accountOpen, setAccountOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [collapsed, toggleCollapsed] = useNavCollapsed();
   const [currentThreadId, setCurrentThread] = useState("");
   const [sessions, setSessions] = useState<CopilotThreadSummary[]>([]);
   const [signingOut, setSigningOut] = useState(false);
@@ -243,7 +279,20 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
   return (
     <aside className="nav-rail" aria-label={t.nav.aria}>
       <div className="nav-rail-head">
-        <Link href="/" className="nav-brand" onClick={() => setSidebarOpen(false)}>Primoria</Link>
+        <Link href="/" className="nav-brand" onClick={() => setSidebarOpen(false)}><BrandLogo /></Link>
+        <button
+          type="button"
+          className="nav-collapse-toggle"
+          aria-label={collapsed ? t.nav.expandSidebar : t.nav.collapseSidebar}
+          aria-expanded={!collapsed}
+          data-tip={collapsed ? t.nav.expandSidebar : undefined}
+          onClick={toggleCollapsed}
+        >
+          <span className="nav-collapse-mark" aria-hidden="true">
+            <Image src="/brand/primoria-mark.svg" width={80} height={88} alt="" unoptimized />
+          </span>
+          <span className="nav-collapse-icon">{PANEL_ICON}</span>
+        </button>
         <button
           type="button"
           className="nav-menu-toggle"
@@ -260,11 +309,12 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
       </div>
 
       <div id="primary-sidebar" className={`nav-panel${sidebarOpen ? " open" : ""}`} ref={sidebarRef}>
-        <button type="button" className="nav-new-chat" onClick={startNewChat}>
-          <svg {...ICON_PROPS} strokeWidth={2} aria-hidden="true">
-            <path d="M12 5v14M5 12h14" />
+        <button type="button" className="nav-new-chat" onClick={startNewChat} data-tip={t.nav.newChat}>
+          <svg {...ICON_PROPS} aria-hidden="true">
+            <path d="M12 4H6.5A2.5 2.5 0 0 0 4 6.5v11A2.5 2.5 0 0 0 6.5 20h11a2.5 2.5 0 0 0 2.5-2.5V12" />
+            <path d="M17.6 3.6a1.9 1.9 0 0 1 2.8 2.8L12.5 14.3 9 15l.7-3.5z" />
           </svg>
-          <span>{t.nav.newChat}</span>
+          <span className="nav-tab-label">{t.nav.newChat}</span>
         </button>
 
         <nav className="nav-tabs" aria-label={t.nav.aria}>
@@ -276,13 +326,14 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
                 href={tab.href}
                 className={`nav-tab${active ? " active" : ""}`}
                 aria-current={active ? "page" : undefined}
+                data-tip={tabCopy[tab.id] ?? tab.label}
                 onClick={() => {
                   setAccountOpen(false);
                   setSidebarOpen(false);
                 }}
               >
                 <span className="nav-tab-icon" aria-hidden="true">{tab.icon}</span>
-                <span>{tabCopy[tab.id] ?? tab.label}</span>
+                <span className="nav-tab-label">{tabCopy[tab.id] ?? tab.label}</span>
               </Link>
             );
           })}
@@ -328,7 +379,7 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
                 aria-controls="nav-account-menu"
                 onClick={() => setAccountOpen((current) => !current)}
               >
-                <span className="nav-account-avatar" aria-hidden="true">{accountInitial}</span>
+                <span className="nav-account-avatar" aria-hidden="true" data-tip={accountName}>{accountInitial}</span>
                 <span className="nav-account-name">{accountName}</span>
                 <svg {...ICON_PROPS} width={14} height={14} aria-hidden="true">
                   <path d="M7 15l5-5 5 5" />

@@ -1,11 +1,13 @@
 # Primoria Product Architecture
 
-Status: current implementation architecture, July 2026.
+Status: current implementation architecture, code checked 2026-10-25.
 
 Primoria is a Postgres-first personal adaptive-learning product deployed as a
 modular monolith plus. This document describes implemented runtime boundaries.
 Unapproved classroom, marketplace, Goal Space, and cross-user learning ideas
 live under `docs/vision/` and are not current capabilities.
+For user-facing entry points and code evidence, see
+[`product/feature-inventory.md`](product/feature-inventory.md).
 
 ## 1. System boundary
 
@@ -101,6 +103,10 @@ Governance evidence under `data/knowledge-graphs/{governance,curricula,pedagogy}
 stays separate from the runtime artifact registry, and current build/import
 code does not automatically enforce a review-status publication gate. See
 `docs/knowledge-graph/catalog.md` for the exact inventory and status split.
+Cold-start anchoring is restricted to approved graphs by default
+(`PRIMORIA_REQUIRE_APPROVED_KG=0` opts out): approved graphs are selected when
+available, while direct lookups/existing courses remain resolvable. The helper preserves the full
+registry if filtering would otherwise leave no candidates.
 
 Lesson titles and descriptions start as deterministic templates. One
 best-effort background enrichment call may rewrite them behind an equality
@@ -115,6 +121,13 @@ generation, the lesson reader, and the learning-progress and Extractor workers.
 The course-rail Tutor in a material course receives Web-retrieved material
 excerpts (BM25 + pgvector + current-lesson prior, fused) as hidden context; the
 Agent itself never reads material rows. See `docs/product/learning-materials.md`.
+
+Subject folders add a durable per-lecture KG queue to the Extractor worker.
+Lecture subgraphs are merged in lecture order into the folder's owner-private
+graph; one folder course can sync newly added concepts, and graph rebuilds
+reconcile its remaining planned lessons. Grounded folder quizzes use a reusable
+question bank and rolling first-attempt mastery. These folder operations and
+course-rail retrieval remain Web-owned.
 
 ## 4. Learner state boundaries
 
@@ -161,15 +174,20 @@ anchor only if the same goal is still current.
 Visualization is catalog-first:
 
 ```text
-reviewed Catalog component
+implemented Catalog component
 → specialized structured renderer
 → plan_visualization + widgetRenderer sandbox fallback
 ```
 
-For one of the 19 reviewed components, the model calls
+For one of the 49 implemented catalog components, the model calls
 `open_interactive_component`. The browser then calls the authenticated Web API,
 which generates and validates a full config or minimal adjustment patch. Config
 state remains browser/Web-owned; the Agent only emits the stateless signal.
+Above 40 entries, the Agent uses a discipline directory and bounded read-only
+`search_interactive_components` retrieval before selecting a component. Instances
+persist per owner with revision checks; course VisualBlocks use the same
+versioned components. Catalog implementation is separate from reference-site
+coverage and human acceptance.
 
 Sandbox widgets execute in an iframe with dependency allowlisting, theme and SVG
 helpers, resize/prompt bridges, and deferred script execution. External library
@@ -181,13 +199,16 @@ Three Web worker processes consume Postgres queues:
 
 - `worker:lesson-generation` materializes planned lessons;
 - `worker:learning-progress` projects mastery and next-step recommendations;
-- `worker:extractor` prioritizes profile Facts Intake, then consumes lesson
-  extractor jobs.
+- `worker:extractor` prioritizes profile Facts Intake, then per-lecture material
+  KG jobs, then lesson extractor jobs.
 
 Jobs use leases, heartbeats, fencing, idempotent completion, bounded retry, and
 stale recovery. `/api/health` reports DB/KG/embedding state plus queue counts,
 oldest-job age, expired leases, and worker heartbeat state. A queue past the
 configured stall threshold degrades readiness.
+`/api/health` and `/api/health/ready` additionally require Agent readiness and
+return 503 unless KG/DB health, queues/workers, and Agent are all healthy.
+`/api/health/live` is the separate liveness route.
 
 ## 8. Persistence and deployment
 
@@ -198,6 +219,9 @@ three owners idempotently; KG content and embeddings are imported separately.
 The selected database is managed Supabase PostgreSQL; use
 `docker-compose.supabase.yml` and [the managed deployment runbook](supabase-deployment.md).
 Application services remain server-hosted and authentication remains Web-owned.
+Lesson image bytes use the private Supabase Storage `lesson-media` bucket when
+configured, served through Web's media API; unconfigured local/isolated setups
+can keep bytes in PostgreSQL. Browser clients never receive the Storage secret.
 The following self-hosted topology is an alternative.
 
 Production is a single-server Docker Compose stack containing PostgreSQL,

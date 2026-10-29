@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="30 40 340 510" fill="none">
+  <rect width="400" height="600" fill="#F8F3E9"/>
+  <path d="M44 48V552M96 48V552M148 48V552M200 48V552M252 48V552M304 48V552M356 48V552M44 48H356M44 104H356M44 160H356M44 216H356M44 272H356M44 328H356M44 384H356M44 440H356M44 496H356M44 552H356" stroke="#E8E3D9" stroke-width="1"/>
+  <g transform="translate(0 50)">
+  <path d="M62 196A118 118 0 0 1 150 74" stroke="#1E1B16" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="0 7" fill="none"/>
+  <path d="M296 70H342M296 84H342M296 98H342" stroke="#B7A693" stroke-width="2.4" stroke-linecap="round"/>
+  <circle cx="62" cy="300" r="6" fill="#D29C38"/><circle cx="62" cy="322" r="6" fill="#9E9E77"/><circle cx="62" cy="344" r="6" fill="#5E7F96"/>
+  <path d="M52 446L64 425L76 446Z" stroke="#B7A693" stroke-width="2" stroke-linejoin="round" fill="none"/>
+  <g stroke="#1E1B16" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="80" y="372" width="248" height="46" rx="5" fill="#FCF9F2"/>
+    <rect x="118" y="326" width="210" height="46" rx="5" fill="#9E9E77"/>
+    <rect x="166" y="280" width="162" height="46" rx="5" fill="#F1E7D4"/>
+    <rect x="216" y="234" width="112" height="46" rx="5" fill="#FCF9F2"/>
+    <g stroke-width="2.2">
+      <path d="M98 372V418M106 372V418"/><path d="M136 326V372M144 326V372" stroke="#FCF9F2"/>
+      <path d="M184 280V326M192 280V326"/><path d="M234 234V280M242 234V280"/>
+    </g>
+    <g stroke="#B7A693" stroke-width="1.6">
+      <path d="M290 386H318M290 395H318M290 404H318"/><path d="M290 340H318M290 349H318M290 358H318" stroke="#FCF9F2"/>
+      <path d="M290 294H318M290 303H318M290 312H318"/><path d="M290 248H318M290 257H318M290 266H318"/>
+    </g>
+    <path d="M140 326V258"/>
+    <path d="M140 260L170 270L140 280Z" fill="#D29C38" stroke-width="2.6"/>
+    <path d="M272 230C276 214 284 200 296 188" stroke-width="2.2" stroke-dasharray="1 8"/>
+    <circle cx="304" cy="176" r="13" fill="#FCF9F2" stroke="#5E7F96" stroke-width="2.8"/>
+    <circle cx="304" cy="176" r="4.5" fill="#5E7F96" stroke="none"/>
+  </g>
+  </g>
+</svg>

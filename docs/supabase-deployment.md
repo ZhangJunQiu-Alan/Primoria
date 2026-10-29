@@ -119,10 +119,9 @@ long-running services. The original docker-compose.prod.yml remains the
 explicit self-hosted database alternative.
 
 The existing scripts/pg-backup.sh targets the self-hosted container and is not
-a managed-database backup. Before public launch, configure and verify Supabase
-backup coverage or a remote pg_dump/restore workflow, application hosting,
-DNS/TLS, mail and monitoring. Free capacity does not guarantee backups or
-production availability.
+a managed-database backup. The selected server now runs the managed-database
+backup workflow recorded below. Mail delivery remains a separate launch gate.
+Free capacity does not guarantee backups or production availability.
 
 ## September 29 test reset and cloud verification
 
@@ -148,6 +147,108 @@ media_assets` succeeded, leaving 104 kB including indexes. New imports verify
 complete byte equality before clearing their in-row copy. Operator backups
 remain local and are not committed.
 
-The local runtime URL uses Transaction pooling on 6543. There is no application
-server or domain yet; configuring and verifying a production runtime URL stays
-a future deployment step, explicitly deferred by the owner.
+At this maintenance checkpoint the local runtime URL used Transaction pooling
+on 6543; application hosting was deferred until the October 27 deployment.
+
+## 2026-10-27 application deployment
+
+The owner authorized deployment to Hostinger VPS 2099113 (KVM 2, Kuala Lumpur,
+Ubuntu 24.04), using `https://srv2099113.hstgr.cloud`. Caddy terminates public
+HTTPS; Web, Agent and all three workers remain on the internal Docker network.
+Runtime database traffic uses the Transaction pooler on 6543; migration and
+backup jobs use the Session pooler on 5432 with verified TLS. Credentials live
+in mode-0600 files under `/srv/primoria/shared`; `/srv/primoria/current` selects
+the active source release (`20261027-025639-node22`). All five application
+containers run Node 22.23.4; Caddy and both migration jobs passed their startup
+checks. Source snapshots include authorized uncommitted
+changes; deployment does not imply a Git commit or push.
+
+Web keeps a bounded, UID-1000 tmpfs for Next's image cache while its root
+filesystem remains read-only. Caddy's healthcheck uses its loopback-only admin
+endpoint; port 2019 is not published. The extractor receives both fast and
+content model tiers, and Web receives the forwarded-client-IP auth settings
+and optional SES configuration.
+
+Verified live: HTTPS, signup/signin/signout, secure HttpOnly sessions, an
+unauthenticated course denial, one SHA-256-verified image from each of the 31
+graphs, real course generation, a completed Tutor run, quiz replay deduplication,
+and completed learning-progress and fact-extractor jobs. These checks used a
+synthetic deployment account. Password-reset email delivery is not configured
+or accepted; SES sender/template credentials still need operator setup.
+
+`primoria-backup.timer` runs daily at 20:30 UTC (04:30 Singapore time, with up
+to five minutes of jitter). Its private helper takes a PostgreSQL 17 custom
+dump of application, migration and Agent schemas, verifies its TOC and hash,
+and maintains incremental private Storage byte backups with a SHA-256 manifest
+under `/var/backups/primoria`. Dumps have 30-day retention; cached Storage
+objects are preserved. The first complete Storage backup contains 1,470
+objects (224,120,388 bytes), including all 1,456 prewarmed concept images.
+The pre-deploy dump was actually restored into an isolated local database:
+58 tables, 1,468 media rows and Agent checkpoint/event data were verified,
+then only that temporary database was dropped. A pre-deploy copy and canonical
+image bytes also remain on the operator's Mac. The VPS backup is independent
+of Supabase, but is not a separately hosted off-site VPS backup service.
+
+Private operational evidence and credentials are excluded from source and
+container build contexts. The deployment record is under
+`.private/deployment/20261027/`; do not commit it.
+
+## 2026-10-28 custom domain
+
+The owner purchased `primoria.app` at Dynadot for one year; the account lists
+expiration on 2027-10-27. Dynadot DNS replaces parking with a root A record
+`187.52.122.102` and a `www` CNAME to `primoria.app`, TTL 300 seconds.
+The public origin is `https://primoria.app`; Caddy redirects
+`https://www.primoria.app` permanently to the apex while preserving path and
+query. The original Hostinger hostname remains available.
+
+Both domain certificates have been issued and verified against the VPS with
+normal TLS hostname validation. The Web image is rebuilt with
+`NEXT_PUBLIC_APP_URL=https://primoria.app`; runtime `APP_BASE_URL` and
+`PRIMORIA_DOMAIN` use the same origin/domain. Public DNS, the welcome page,
+HTTP-to-HTTPS and www-to-apex redirects, API origin checks and hash-matched
+image responses across all 31 graphs passed. The replacement Web container
+passed its healthcheck. Detailed checks are recorded privately under
+`.private/deployment/20261028/`.
+
+The custom Caddy file is an operator overlay at
+`/srv/primoria/current/docker/caddy/Caddyfile`, with a retained copy under
+`/srv/primoria/shared/Caddyfile-domain-candidate`. Preserve this overlay when
+creating a fresh release. Recreate Caddy after changing the current-release
+symlink: reloading alone can keep the bind mount on the previous release's
+inode. Prior Caddy/environment files are retained in
+`/srv/primoria/shared/domain-cutover-20261028/`; the environment backup is secret.
+The previous Web image is tagged `primoria-web:pre-domain-20261028`.
+
+## 2026-10-29 current-work release
+
+The current working tree, including uncommitted image-reuse/text-quality fixes,
+the shared brand logo/favicon, deployment configuration and documentation, was
+published as source snapshot `20261029-current-work` from branch
+`perf/lesson-gen-image-slots` at base commit `7b0d39f7`. This deployment did not
+create a Git commit or push. `/srv/primoria/current` now selects
+`/srv/primoria/releases/20261029-current-work`; the existing custom-domain Caddy
+overlay was preserved. Web, Agent and all three workers run Node 22.23.4 as UID
+1000 with read-only root filesystems and no published application ports. Caddy
+and all five application services passed healthchecks, and both migration jobs
+exited successfully.
+
+The fast, production-build/bundle, isolated database and browser regression
+layers passed, including 1,186 Web tests, 1,726 learning-goal routing cases and
+49-component replay at three viewport widths. The actual Linux worker image
+also passed all 23 image reuse/editor/text-quality tests. A fresh pre-deploy
+custom dump passed SHA-256 verification and an actual isolated local restore:
+58 tables, 1,470 media rows, 62 Drizzle migration records and Agent
+checkpoint/event tables. The incremental Storage backup covers 1,470 objects;
+the old release and its exact image IDs remain available for rollback.
+
+Verified against `https://primoria.app`: brand asset hashes, HTTPS/www
+redirects, signup/signin/signout, secure HttpOnly sessions, unauthorized and
+cross-origin denials, a completed real Tutor stream, image hashes across all
+31 graphs, and a real 19-block lesson with three hash-verified reused images.
+All three quiz blocks passed submission/replay checks, and lesson-generation,
+learning-progress and extractor jobs completed without failures. The synthetic
+account and its courses/sessions were removed; all 1,470 global media rows and
+the Agent audit trail were preserved. Password-reset email remains unconfigured
+pending SES sender/template credentials. Private release manifests, validation,
+restore and smoke evidence are under `.private/deployment/20261029/`.

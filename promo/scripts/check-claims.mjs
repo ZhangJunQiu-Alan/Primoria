@@ -1,0 +1,20 @@
+import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const promo = fileURLToPath(new URL('..', import.meta.url));
+const root = resolve(promo, '..');
+const read = (path) => JSON.parse(readFileSync(resolve(root, path), 'utf8'));
+const graphDirectory = resolve(root, 'data/knowledge-graphs/source');
+const graphs = readdirSync(graphDirectory).filter((file) => file.endsWith('.json')).map((file) => read(`data/knowledge-graphs/source/${file}`)).filter((graph) => Array.isArray(graph.nodes));
+const catalog = read('data/visualization-components/catalog.v1.json');
+const rules = readFileSync(resolve(root, 'apps/web/src/lib/mastery/rules.ts'), 'utf8');
+const styleSource = readFileSync(resolve(root, 'packages/contracts/src/tutor-style.mjs'), 'utf8');
+const minimumAnswers = Number(rules.match(/MASTERED_MIN_QUESTIONS\s*=\s*(\d+)/)?.[1]);
+const accuracy = Number(rules.match(/MASTERED_RATIO\s*=\s*([\d.]+)/)?.[1]);
+const styles = ['socratic', 'feynman', 'euclid'];
+const claims = { knowledgeGraphs: graphs.length, interactiveComponents: catalog.components.length, tutorStyles: styles, masteryMinimumAnswers: minimumAnswers, masteryAccuracy: accuracy, stage: 'animatic', heroClosureVerified: false };
+if (claims.knowledgeGraphs !== 31 || claims.interactiveComponents !== 49 || minimumAnswers !== 3 || accuracy !== 0.8 || styles.some((style) => !styleSource.includes(`'${style}'`) && !styleSource.includes(`"${style}"`))) throw new Error(`Promo claims have drifted: ${JSON.stringify(claims)}`);
+writeFileSync(resolve(promo, 'src/data/claims.json'), JSON.stringify(claims, null, 2) + '\n');
+writeFileSync(resolve(promo, 'src/data/components.json'), JSON.stringify(catalog.components.map(({ id, name }) => ({ id, name })), null, 2) + '\n');
+console.log('Claims verified from source:', claims);

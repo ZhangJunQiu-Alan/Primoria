@@ -83,13 +83,13 @@ const FIELD_HINTS: Record<GeneratableBlockType, string> = {
   analogy: `"title","source" (familiar thing),"target" (concept),"mapping"`,
   transfer: `"title","fromDomain","toDomain","explanation","example"`,
   visual: `"title","description","engine" plus the payload for that engine (see the engine directive on this block)`,
-  image: `"title","learningGoal","imageKind":"educational_illustration|structure_diagram|realistic_scene|analogy_illustration","prompt" (describe the scene/object/structure and the relationships that explain the concept; include exact label text, arrows, numbers, formulas, chemical notation, or short explanations in the teaching language when useful; prioritize factual accuracy and legibility, avoid decorative text and crowded labels),"alt" (describe the actual teaching content accessibly),"caption" (a short explanation BELOW the image, telling the learner what to notice and why; do not rely on it to repair an unclear or inaccurate image),"negativePrompt"?. You write a BRIEF; the image is generated later.`,
+  image: `"title","learningGoal","imageKind":"educational_illustration|structure_diagram|realistic_scene|analogy_illustration","prompt" (describe the scene/object/structure and the relationships that explain the concept; include exact label text, arrows, numbers, formulas, chemical notation, or short explanations in the teaching language when useful; prioritize factual accuracy and legibility, avoid decorative text and crowded labels),"alt" (describe the pictured objects, comparisons, arrows, code values or graph relationships accessibly; never only a title or generic topic label),"caption" (a DIFFERENT short explanation BELOW the image, telling the learner what to notice and why; do not copy alt, preserve spaces between prose and numbers/formulas, and do not rely on it to repair an unclear or inaccurate image),"negativePrompt"?. You write a BRIEF; the image is generated later.`,
   code: `"title","language","code","explanation"`,
   quiz: `"title","questions":[{"kind":"single","id","question","choices":[{"id","text"}] (2-4 options),"correctId","explanation"}] (1-3 focused questions). Use "kind":"single" (single correct choice) by default; do NOT attribute concepts — the system assigns conceptId automatically.`,
 };
 
-// Per-engine payload directive for a visual block. The engine is chosen by the
-// KG concept's `visual` affordance, not by the writer — interactive engines
+// Per-engine payload directive for a visual block. The preferred engine follows
+// the KG concept's `visual` affordance — interactive engines
 // (math_explorer/algorithm/physics/html) are the product's differentiator; static
 // chart/diagram engines are only for genuinely data- or structure-shaped concepts.
 // Keyed by the pinned engine (not the KG affordance). The writer supplies only
@@ -99,7 +99,7 @@ const VISUAL_ENGINE_HINTS: Record<VisualEngine, string> = {
   html: `"html": a self-contained iframe fragment (no <html>/<head>/<body>, no 100vh) with at least one interactive control (slider/drag/button) that updates the visual live. Example: {"title":"...","description":"...","html":"<div>...<input type=\\"range\\">...<script>...</script></div>"}`,
   physics: `"physicsScene": a Matter.js scene { render:{width,height}, bodies:[...], constraints?:[...], gravity?, walls? }. Example: {"title":"...","description":"...","physicsScene":{"render":{"width":600,"height":400},"bodies":[{"shape":"circle","x":300,"y":50,"r":20}],"gravity":{"x":0,"y":1}}}`,
   algorithm: `"algorithmViz": { "algorithm": name, "steps": [ { "description", "kind":"array|tree|graph|table" — choose ONE kind that fits this algorithm and use the SAME kind on EVERY step, and a state object whose KEY NAME EQUALS the kind (kind "array" -> "array":{...}); the matching state object is REQUIRED on EVERY step or the visualization fails. Shapes: "array":{ "values":[number|string,...] (required), optional "highlights":[{"index","role"}], "pointers":[{"index","label"}], "sortedIndices":[number] }. "tree":{ "nodes":[{ "id"(string), "value"(string/number), "parentId"(string or null for root), "left"(string or null), "right"(string or null) },...] }. "graph":{ "nodes":[{ "id","label","x","y" }], "edges":[{ "from","to" }] }. "table":{ "data":[[number|string|null,...],...] (required), optional "rowLabels":[string], "colLabels":[string] }. Valid "role" values: comparing|swapping|pivot|sorted|current|visited|queued|stacked|path|dependency|result|muted. } ] }. Example: {"title":"...","description":"...","algorithmViz":{"algorithm":"Bubble Sort","steps":[{"description":"compare 5 and 3","kind":"array","array":{"values":[5,3,8],"highlights":[{"index":0,"role":"comparing"},{"index":1,"role":"comparing"}]}}]}}`,
-  math_explorer: `"mathExplorer": { "mode":"cartesian|parametric", "functions":[{"expr"}] or "curves":[{"xExpr","yExpr"}], "parameters":[{"name","min","max","default"}] (sliders), optional ranges/labels }. Example: {"title":"...","description":"...","mathExplorer":{"mode":"cartesian","functions":[{"expr":"a*x^2"}],"parameters":[{"name":"a","min":-2,"max":2,"default":1}]}}`,
+  math_explorer: `"mathExplorer": { "mode":"cartesian|parametric", "functions":[{"expr"}] or "curves":[{"xExpr","yExpr"}], "parameters":[{"name","min","max","default"}] (sliders), "xRange":[min,max], "yRange":[min,max], "tRange":[min,max] for parametric mode, optional axis labels }. Example: {"title":"...","description":"...","mathExplorer":{"mode":"cartesian","functions":[{"expr":"a*x^2"}],"parameters":[{"name":"a","min":-2,"max":2,"default":1}],"xRange":[-2,2],"yRange":[-8,8]}}`,
   echarts: `"echartsOption": a complete ECharts option object. Example: {"title":"...","description":"...","echartsOption":{"xAxis":{"type":"category","data":["A","B"]},"yAxis":{"type":"value"},"series":[{"type":"bar","data":[5,8]}]}}`,
   mermaid: `"mermaidDefinition": a Mermaid diagram string. Example: {"title":"...","description":"...","mermaidDefinition":"flowchart LR\\nA-->B"}`,
 };
@@ -121,10 +121,11 @@ function describeJob(job: BlockGenerationJob, kg: CourseContext): string {
   let fields = FIELD_HINTS[job.type];
   if (job.type === "visual" && job.engine) {
     const concept = kg.startTopic.concepts?.find((c) => c.conceptId === job.conceptIds[0]);
-    // The engine is FIXED by the system (from the KG affordance); the writer must
-    // not output, rename, or invent an "engine" — only the payload for this engine.
-    fields = `"title","description",${VISUAL_ENGINE_HINTS[job.engine]}. The engine is FIXED to "${job.engine}" by the system — do NOT output an "engine" field and do NOT invent another; provide only the payload key shown above as a sibling of title/description`;
-    if (concept?.visualHint) fields += `. Visualize specifically: ${concept.visualHint}`;
+    // Supply the specialized payload or a complete sandbox when it cannot fit.
+    fields = `"title","description",${VISUAL_ENGINE_HINTS[job.engine]}. The preferred specialized engine is "${job.engine}" — do NOT invent an engine name; provide its payload key as a sibling of title/description.
+CAPABILITY CHECK: Match the actual interaction in the writer instruction, not merely the concept's KG hint. If this engine cannot express the requested simulation, movable probe, multiple coordinated views, bars or computed readouts, emit ONLY "title","description","html" instead, using this sandbox contract: ${VISUAL_ENGINE_HINTS.html}. Every control must update the actual model and visible output. Describe only features you implement; do not promise absent bars, counters or controls. Use /* block comments */ inside compact scripts; a // comment can swallow the remaining script when whitespace is compacted. Give every control a visible associated label or aria-label. Handle boundary values explicitly; probabilities must remain normalized even when all raw weights are zero. Compute the actual mathematical quantity or algorithm you name, never a convenient proxy. Verify uniform, zero and extreme cases against known theory before returning the code.
+MATH EXPLORER: Explicitly supply relevant increasing xRange and yRange (and tRange for parametric mode). Cartesian curves are evaluated over x; parametric curves over t. Constant functions are valid horizontal lines when that is the intended model. Every slider must occur in a plotted expression and affect its mathematical model. Never add an unrelated parameter to the formula just to satisfy a slider. To select p along a fixed H(x) curve, use HTML with a moving point and H(p) readout. A parameter-only expression is a horizontal line, not a curve of that parameter.`;
+    if (concept?.visualHint) fields += `. KG reference hint (use only when it fits THIS block's goal): ${concept.visualHint}`;
     const candidates = (job.interactiveCandidates ?? []).flatMap((id) => {
       const component = getImplementedComponent(id);
       const metadata = INTERACTIVE_COMPONENT_CATALOG.find((entry) => entry.componentId === id);
@@ -133,6 +134,9 @@ function describeJob(job: BlockGenerationJob, kg: CourseContext): string {
     if (candidates.length) {
       fields += `\nCATALOG FIRST: When a candidate below fully supports the teaching goal, prefer it to the fallback engine above. Emit "title","description","interactive":{"componentId":"...","configVersion":1,"config":{...}}. Do not emit fallback payloads or an engine field in that case. Match the supplied configVersion and schema; use concrete teaching content. If no candidate fits, emit only the fallback payload described above.\n${candidates.join("\n\n")}`;
     }
+  }
+  if (job.type === "image" && job.existingImage) {
+    fields = `"title" ONLY. This concept already has an approved image that is shown exactly as-is, so do NOT design a new image and do NOT output any brief fields. The picture shows: "${job.existingImage.alt}". Caption under it: "${job.existingImage.caption}". Title ONLY what THIS picture actually shows, never objects from the superseded writer instruction; this picture replaces that image idea`;
   }
   if (job.type === "quiz") {
     // KG-authored per-concept assessment hints: what a good check looks like.
@@ -172,7 +176,11 @@ Lesson: "${plan.title}" on topic "${kg.startTopic.name}".
 ${languageDirective(kg.language)}
 ${knowledgeBackgroundDirective(kg.knowledgeBackground)}${buildWriterSourceRules(kg)}${quizContract}`;
   const batchConceptIds = [...new Set(batch.jobs.flatMap((job) => job.conceptIds))];
-  const user = `Blocks to write:\n${batch.jobs.map((job) => describeJob(job, kg)).join("\n")}${buildWriterSourceSection(kg, batchConceptIds)}`;
+  const shownImages = batch.jobs.filter((job) => job.type === "image" && job.existingImage).map((job) => job.order);
+  const imageRule = shownImages.length
+    ? `\n\nFIXED IMAGES: block ${shownImages.join(", ")} shows the existing picture described above. Keep every other block consistent with it: never say it shows something it does not, and when a block works through the same idea, use the picture's notation and conventions.`
+    : "";
+  const user = `Blocks to write:\n${batch.jobs.map((job) => describeJob(job, kg)).join("\n")}${imageRule}${buildWriterSourceSection(kg, batchConceptIds)}`;
   return { system, user };
 }
 
@@ -266,7 +274,7 @@ async function generateBatch(
         continue;
       }
       try {
-        const block = compileBlockContent(job, content, lessonId);
+        const block = compileBlockContent(job, content, lessonId, kg.language);
         try {
           await assertPersistableCourseBlock(block);
         } catch (error) {

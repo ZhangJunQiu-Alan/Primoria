@@ -1,10 +1,15 @@
 # Primoria Web Implementation Status
 
-Status: current implementation inventory, July 2026.
+Status: current implementation inventory, code checked 2026-10-25.
 
 `apps/web` is the active product surface and product-data owner. It is a
 Next.js/React/TypeScript application backed by PostgreSQL and the self-hosted
-AG-UI Agent runtime; it is not a static mock and has no Supabase runtime path.
+AG-UI Agent runtime. The selected shared deployment uses managed Supabase
+PostgreSQL/pgvector and private Supabase Storage for lesson images, accessed
+server-side. Authentication and product writes remain Web-owned; there is no
+browser Supabase SDK/Auth path. Local PostgreSQL remains an isolated/offline
+option. See the [Chinese feature inventory](product/feature-inventory.md) for
+page/API evidence and explicit implementation-versus-verification boundaries.
 
 ## Implemented product loop
 
@@ -25,12 +30,22 @@ AG-UI Agent runtime; it is not a static mock and has no Supabase runtime path.
   explicit infrastructure-failure handling. All 31 source graphs are approved;
   the 10 China/Singapore graphs, with their curricula and pedagogy records,
   were approved by the project owner on 2026-10-25.
+- A cold-start routing gate (on by default; `PRIMORIA_REQUIRE_APPROVED_KG=0`
+  opts out) selects approved graph anchors when available, without unregistering
+  graphs or disabling existing-course resolution; it retains the full candidate
+  library if no approved graphs exist.
 - Concept-frontier course outline initialization (mastery-aware 2–3 concept
   lesson bundles), background title/description enrichment, lazy lesson
   generation, job recovery, and Jump ahead generation.
 - One-block-at-a-time lesson reader plus course-aware Tutor rail.
 - Text, analogy, image, visual, quiz, code, transfer, mind-map, slide, and
   worksheet block renderers.
+- Natural-language course block rewrite, add, transform, remove, and move via
+  owner-scoped Web APIs; selected text can narrow a rewrite. Code and mind-map
+  edits persist. Python/JavaScript run in a browser Web Worker with an execution
+  timeout; Python loads Pyodide separately from that execution budget.
+- Course library search, status filters, sorting, pagination, generation status,
+  course deletion, and share management.
 - Recoverable idempotent course quiz submissions (stable retry id across
   response loss/reload), learning events, concept mastery, and exact
   persisted-next-lesson diagnosis/recommendations. Recommendation acceptance is
@@ -57,7 +72,22 @@ AG-UI Agent runtime; it is not a static mock and has no Supabase runtime path.
   (`docs/product/learning-materials.md`).
 - Global user-agnostic generated-image cache (owner-scoped only for material
   courses).
+- Material-course Tutor retrieval over owner-scoped source chunks using BM25,
+  optional pgvector similarity, and current-lesson sources, with citation and
+  labelled-supplement prompt rules. This is course-rail-only; the main Tutor
+  does not search personal materials.
+- `/stats` numeric daily/lifetime summaries and a 30-day activity heatmap;
+  `/weekly-report` event-based weekly totals, daily activity, best day, and
+  courses worked on. Planned learning minutes are course estimates, not measured
+  time spent. Neither page is an automated email report.
 - Chinese/English interface dictionaries and separate content-language handling.
+
+Temporary chat quizzes do not write course mastery. Folder quizzes write
+rolling-window mastery without question XP; their mastery transitions can count
+toward quests/achievements. Uploads store extracted text, not original bytes,
+and accept PDF/DOCX/Markdown/TXT up to 8 MiB per material; scanned-image OCR is
+not implemented. Material courses and their images stay owner-private and
+cannot be shared.
 
 ## Tutor and visualization
 
@@ -119,11 +149,22 @@ workers consume Postgres queues:
 - `worker:lesson-generation`;
 - `worker:learning-progress`;
 - `worker:extractor`, which prioritizes `profile_fact_intake_jobs` from
-  onboarding/Settings and consumes lesson `extractor_jobs` when no intake is
-  waiting.
+  onboarding/Settings, also processes per-lecture `material_kg_jobs`, and consumes
+  lesson `extractor_jobs`.
 
 The Agent owns only its isolated `agent_runtime` schema plus the existing
 bounded owner-scoped course-card read. Web remains the owner of product writes.
+
+The active lesson image store uses a private `lesson-media` bucket when
+`SUPABASE_URL` and `SUPABASE_SECRET_KEY` are configured; without Storage config,
+the media code supports PostgreSQL byte storage for local/isolated environments.
+`/api/health` and `/api/health/ready` check DB/KG/embeddings, queues, worker
+heartbeats, and Agent readiness; `/api/health/live` is the separate liveness probe.
+
+The optional `packages/memory`/Mem0 call sites belong to the retained standalone
+`/api/courses/[id]/chat` API, not the active CopilotKit course rail. Teaching-form
+experiments exist behind `PRIMORIA_METHOD_ARMS=1` and are off by default; see
+[`teaching-method-experiment.md`](teaching-method-experiment.md).
 
 ## Runtime configuration
 
@@ -179,13 +220,14 @@ pnpm --filter @primoria/agent test:integration
 pnpm build
 ```
 
-DB-backed and browser suites remain separate CI gates. The latest local
-catalog-routing run passed all 28 real-model cases; this result is evidence, not
-a permanent guarantee, so rerun the evaluator after catalog or prompt changes.
+DB-backed and browser suites remain separate CI gates. The routing fixture has
+28 cases; validate-only checks and real-model evaluation are distinct. Older
+successful real-model runs remain dated evidence, not a current guarantee;
+rerun the evaluator after catalog or prompt changes.
 Learning-goal routing has a permanent 1,718-case bilingual corpus with a
 1,718-case minimum, gold-policy invariants, deterministic course-scope checks,
-and a CI gate. The two reported production regressions also pass configured
-real-model evaluation. See `docs/knowledge-graph/learning-goal-routing.md`.
+and a CI gate. Historical real-model results for the two reported production
+regressions are recorded in `docs/knowledge-graph/learning-goal-routing.md`.
 
 The fixture covers all 31 runtime graphs, including bilingual labels and manual
 boundary coverage for the 10 China/Singapore graphs. The curriculum gate keeps
@@ -193,6 +235,29 @@ shared school subjects behind explicit goal context, explicit learner facts, or
 clarification before course creation.
 
 ## Remaining hardening
+
+### Deferred AI endpoint limits — 2026-10-29
+
+User decision: defer review item 4 (AI endpoint rate limits) while the project
+has no real users and is preparing for the presentation. This is a deferred
+task, not a completed protection. Revisit before opening access to real users.
+The remaining scope covers per-owner request and concurrent paid-work limits
+for Tutor, course preparation, lesson generation/prewarm, model-backed block
+edits, and material-course creation. Preserve cached/idempotent reuse and status
+polling; return HTTP 429 with `Retry-After` when an applicable limit is reached.
+Existing auth and interactive-component limits remain in place; quotas for the
+other AI endpoints have not been decided or implemented.
+
+### Course preparation and product hardening
+
+Tutor-triggered course preparation shares browser deadlines in
+`apps/web/src/lib/courses/course-build-timeouts.ts`: positioning waits up to
+120 seconds, outline preparation up to 180 seconds, and a pending course card
+becomes stale after their combined budget plus 30 seconds (330 seconds). These
+are maximum waits, not added delays. First-lesson generation remains an
+independent durable worker job. Server model deadlines, Tutor streaming and
+onboarding preparation retain their separate lifecycles; durable polling for
+the initial preparation request remains future work.
 
 1. Review the high root-concept counts reported by `validate:kg` for all 10 new
    graphs; add justified prerequisite coverage or explicitly approve the entry
@@ -206,5 +271,5 @@ clarification before course creation.
    launch economy; do not add competitive or social progression implicitly.
 7. Keep browser QA representative across text, visual, code, quiz, worksheet,
    course sharing, onboarding, and Tutor patch flows.
-9. Reduce Stage-2 learning-goal routing latency while preserving the fail-closed
+8. Reduce Stage-2 learning-goal routing latency while preserving the fail-closed
    KG coverage policy.

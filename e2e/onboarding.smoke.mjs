@@ -54,7 +54,7 @@ async function waitForServer(server) {
 
 async function fillPasswordAfterHydration(page, value) {
   const input = page.locator('input[type="password"]');
-  const visibilityButton = page.locator(".auth-password-control button");
+  const visibilityButton = page.getByRole("button", { name: /^(Show password|显示密码)$/ });
   const deadline = Date.now() + 30_000;
   while (Date.now() < deadline) {
     await input.fill("");
@@ -191,8 +191,8 @@ try {
   ]);
   assert(signInResponse.ok(), "sign-in API should succeed");
   await page.waitForURL((url) => url.pathname === "/", { timeout: 20_000 });
-  await page.locator('.onboarding-progress[aria-label="Step 1 of 3"]').waitFor();
-  assert(await page.locator(".onboarding-goal-input").isVisible(), "goal step should render");
+  await page.locator('.onboarding-meter-bars i:nth-child(1)[data-state="now"]').waitFor();
+  assert(await page.locator("#onboarding-goal").isVisible(), "goal step should render");
 
   const goal = await postJson(page, "/api/onboarding/goal", {
     learningGoal: "Understand derivatives from first principles",
@@ -203,8 +203,8 @@ try {
   assert(goal.body.nextStep === "facts", "goal completion should advance to facts");
 
   await page.reload({ waitUntil: "domcontentloaded" });
-  await page.locator('.onboarding-progress[aria-label="Step 2 of 3"]').waitFor();
-  assert(await page.locator("#education-stage-question").isVisible(), "facts step should render after reload");
+  await page.locator('.onboarding-meter-bars i:nth-child(2)[data-state="now"]').waitFor();
+  assert(await page.locator('[role="radiogroup"][aria-labelledby="onboarding-stage-label"]').isVisible(), "facts step should render after reload");
 
   const facts = await postJson(page, "/api/onboarding/facts", {
     educationStage: "undergraduate",
@@ -217,8 +217,8 @@ try {
   assert(courseId && lessonId, "facts completion should create a course outline and first lesson");
 
   await page.reload({ waitUntil: "domcontentloaded" });
-  await page.locator('.onboarding-progress[aria-label="Step 3 of 3"]').waitFor();
-  assert(await page.locator(".tutor-style-list").isVisible(), "style step should render after reload");
+  await page.locator('.onboarding-meter-bars i:nth-child(3)[data-state="now"]').waitFor();
+  assert(await page.locator('.onboarding-styles[role="radiogroup"]').isVisible(), "style step should render after reload");
 
   const style = await postJson(page, "/api/onboarding/style", { tutorStyle: "feynman" });
   assert(style.status === 200, `style API should succeed (got ${style.status})`);
