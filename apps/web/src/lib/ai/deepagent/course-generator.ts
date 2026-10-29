@@ -6,6 +6,7 @@ import { getCourseByScopeKey, saveCourse } from "@/lib/courses/store";
 import { scheduleCourseCover } from "@/lib/courses/course-cover-store";
 import { isUniqueViolation } from "@/lib/db/errors";
 import { getTopicGraph, type TopicGraph } from "@/lib/knowledge-graph/topic-graph";
+import { isZhLanguage } from "@/lib/knowledge-graph/display-name";
 import { buildConceptFrontierOutline, type ConceptBundle } from "@/lib/knowledge-graph/concept-frontier";
 import { listConceptMasteryByOwner } from "@/lib/mastery/owner-store";
 import type { BlockType, Course, CourseBlock, Lesson } from "@/lib/courses/types";
@@ -434,6 +435,7 @@ function buildOutlineCourse(
   const now = Date.now();
   const startTopic = input.kgContext?.startTopic ?? null;
   const subject = input.generatedGraph?.subject ?? subjectFor(graphId, input.topic);
+  const isChinese = isZhLanguage(input.language);
   const graph = input.generatedGraph ?? tryGetTopicGraph(graphId);
   const targets = input.kgContext?.targetConceptIds?.length
     ? input.kgContext.targetConceptIds
@@ -442,7 +444,7 @@ function buildOutlineCourse(
     ? graph?.topics.flatMap((topic) => topic.conceptIds).find((concept) => concept.conceptId === targets[0])
     : undefined;
   const focusedTitle = target
-    ? input.language?.startsWith("zh") ? target.nameZh || target.name : target.name
+    ? isChinese ? target.nameZh || target.name : target.name
     : null;
   const lessons = graph
     ? conceptFrontierLessons(
@@ -472,11 +474,11 @@ function buildOutlineCourse(
     title: focusedTitle ?? subject,
     topic: input.kgContext?.learningGoal ?? subject,
     summary: input.summary ?? (input.kgContext?.learningGoal
-      ? `${subject}：围绕「${input.kgContext.learningGoal}」的定制学习路径`
+      ? isChinese ? `${subject}：围绕「${input.kgContext.learningGoal}」的定制学习路径` : `${subject}: a learning path focused on "${input.kgContext.learningGoal}".`
       : focusedTitle
-        ? input.language?.startsWith("zh") ? `${subject}：聚焦「${focusedTitle}」及其必要前置概念` : `${subject}: focused study of ${focusedTitle} and its prerequisites`
+        ? isChinese ? `${subject}：聚焦「${focusedTitle}」及其必要前置概念` : `${subject}: focused study of ${focusedTitle} and its prerequisites`
         : graphId
-        ? `${subject}的个性化学习路径`
+        ? isChinese ? `${subject}的个性化学习路径` : `A personalized learning path for ${subject}.`
         : input.topic),
     estimatedMinutes: 0,
     anchorConceptId: input.kgContext?.targetConceptIds?.[0] ?? input.kgContext?.targetConceptId ?? null,

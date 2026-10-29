@@ -49,6 +49,10 @@ Feynman model could follow Chinese question wording despite the system rule,
 so language regression also covers ordinary explanations with a fixed English
 preference, rather than course greetings alone.
 
+Default course summaries and post-lesson recommendation reasons/remediation
+titles follow the saved course language, independently of Interface Language.
+Explicit summaries and already-persisted course/decision text are preserved.
+
 ## Validation and release
 
 `course-intake.spec.ts`, `course-intake-form.spec.ts`, and

@@ -738,3 +738,25 @@ a running app (`visualization:eval:attach`) refuses a non-test database unless
   cases; isolated Web/Agent database tests; build/bundle budgets; all browser
   journeys; and 49-component replay at three widths. Logs and source hashes are
   retained under `.private/timeout-alignment-20261029/`.
+
+### 2026-10-29 image steps, extractor reconciliation and course language
+
+- Image captions use the existing safe inline Markdown/math renderer. Regression
+  coverage checks caption formulas and the retained heading for generation
+  failures; successful images keep the redesigned image-only heading treatment.
+- Extractor reconciliation joins existing courses/lessons with matching owners
+  before applying its batch limit. An isolated DB regression mixes deleted and
+  mismatched references with a valid completion, verifies recovery with a batch
+  size of one, preserves the original events, and verifies idempotency.
+- Default canonical/goal-scoped summaries, recommendation reasons and remediation
+  titles follow the course content language. Tests cover English and Chinese,
+  all four decision branches, stable decision targets, explicit summaries and
+  English text persisted by the learning-progress worker. Existing saved text
+  is preserved; no schema migration or production content rewrite is required.
+- All four deterministic layers passed: fast regression (1,253 Web tests passed,
+  27 intentionally skipped), production build/bundle budgets, isolated Web/Agent
+  database suites, and all six browser layers including 49 components at three
+  widths. The DB layer separately executes the gated new reconciliation test.
+  Frozen installation and the production audit passed under the existing audit
+  exception policy. Private evidence: `.private/deployment/20261029-image-progress/`.
+  These local results do not imply a real-model or authenticated production E2E.

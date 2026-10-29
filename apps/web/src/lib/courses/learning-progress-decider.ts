@@ -1,5 +1,6 @@
 import { getTopicGraph, type TopicGraph, type TopicNode } from "../knowledge-graph/topic-graph";
 import type { MasteryStatus } from "../mastery/store";
+import { isZhLanguage, resolveKgDisplayName } from "../knowledge-graph/display-name";
 
 // Pure post-lesson decision engine (docs/product/feature_specification.md §28–30). Given
 // updated concept mastery, decide what the learner should do next: insert a
@@ -30,6 +31,7 @@ export type LearningDecision = {
 
 export type DecideNextStepInput = {
   graphId: string;
+  language?: string | null;
   currentTopicId: string;
   currentConceptIds: string[];
   currentLessonSortKey: number;
@@ -51,6 +53,7 @@ export function decideNextStep(input: DecideNextStepInput): LearningDecision {
   const { currentTopicId, masteryByConcept, nextLesson } = input;
   const graph = input.graph ?? getTopicGraph(input.graphId);
   const nextLessonTitle = nextLesson?.title ?? null;
+  const isChinese = isZhLanguage(input.language);
 
   const isWeak = (conceptId: string) => masteryByConcept.get(conceptId) === "weak";
 
@@ -61,15 +64,19 @@ export function decideNextStep(input: DecideNextStepInput): LearningDecision {
     .map((conceptId) => {
       const ownerTopic = topicByConcept(graph, conceptId);
       const concept = ownerTopic?.conceptIds.find((candidate) => candidate.conceptId === conceptId);
-      return { conceptId, name: concept?.name ?? conceptId, topicId: ownerTopic?.topicId ?? currentTopicId };
+      return { conceptId, name: concept ? resolveKgDisplayName(concept, input.language) : conceptId, topicId: ownerTopic?.topicId ?? currentTopicId };
     });
   if (weakHere.length > 0) {
-    const rootCause = findPrereqRootCause(graph, weakHere[0].topicId, masteryByConcept);
+    const rootCause = findPrereqRootCause(graph, weakHere[0].topicId, masteryByConcept, input.language);
     const target = rootCause ?? { conceptId: weakHere[0].conceptId, name: weakHere[0].name };
     const remediationSortKey = midpointSortKey(input.currentLessonSortKey, nextLesson?.sortKey ?? null);
-    const reason = rootCause
-      ? `「${weakHere[0].name}」掌握较弱，可能源于先修概念「${rootCause.name}」。建议先补一节「${rootCause.name}」。`
-      : `「${target.name}」掌握较弱，建议先补一节巩固后再继续。`;
+    const reason = isChinese
+      ? rootCause
+        ? `「${weakHere[0].name}」掌握较弱，可能源于先修概念「${rootCause.name}」。建议先补一节「${rootCause.name}」。`
+        : `「${target.name}」掌握较弱，建议先补一节巩固后再继续。`
+      : rootCause
+        ? `Your understanding of "${weakHere[0].name}" needs work, possibly because of the prerequisite "${rootCause.name}". Review "${rootCause.name}" first.`
+        : `Your understanding of "${target.name}" needs work. Review it before continuing.`;
     return {
       kind: "remediation",
       reason,
@@ -77,7 +84,7 @@ export function decideNextStep(input: DecideNextStepInput): LearningDecision {
       targetTopicId: topicByConcept(graph, target.conceptId)?.topicId ?? currentTopicId,
       targetConceptId: target.conceptId,
       proposedSortKey: remediationSortKey,
-      proposedTitle: `补救：${target.name}`,
+      proposedTitle: isChinese ? `补救：${target.name}` : `Review: ${target.name}`,
       nextLessonTitle,
     };
   }
@@ -86,7 +93,7 @@ export function decideNextStep(input: DecideNextStepInput): LearningDecision {
   if (!nextLesson) {
     return {
       kind: "course_complete",
-      reason: "你已完成本课程的全部内容，做得很好！",
+      reason: isChinese ? "你已完成本课程的全部内容，做得很好！" : "You have completed every lesson in this course. Well done!",
       targetLessonId: null,
       targetTopicId: currentTopicId,
       targetConceptId: null,
@@ -99,7 +106,9 @@ export function decideNextStep(input: DecideNextStepInput): LearningDecision {
   // 3) Otherwise advance to the exact next persisted outline lesson.
   return {
     kind: "next",
-    reason: `你已完成本节内容，准备好进入下一节「${nextLesson.title}」。`,
+    reason: isChinese
+      ? `你已完成本节内容，准备好进入下一节「${nextLesson.title}」。`
+      : `You have completed this lesson and are ready for "${nextLesson.title}".`,
     targetLessonId: nextLesson.id,
     targetTopicId: nextLesson.topicId,
     targetConceptId: null,
@@ -115,12 +124,13 @@ function findPrereqRootCause(
   graph: TopicGraph,
   currentTopicId: string,
   masteryByConcept: Map<string, MasteryStatus>,
+  language?: string | null,
 ): { conceptId: string; name: string } | null {
   const topic = graph.topics.find((t) => t.topicId === currentTopicId);
   for (const prereqId of topic?.prereqTopics ?? []) {
     const prereq = graph.topics.find((t) => t.topicId === prereqId);
     const weak = prereq?.conceptIds.find((c) => masteryByConcept.get(c.conceptId) === "weak");
-    if (weak) return { conceptId: weak.conceptId, name: weak.name };
+    if (weak) return { conceptId: weak.conceptId, name: resolveKgDisplayName(weak, language) };
   }
   return null;
 }

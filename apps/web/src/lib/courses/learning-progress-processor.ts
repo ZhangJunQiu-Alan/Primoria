@@ -106,6 +106,7 @@ export async function processLearningProgressJob(claim: LearningProgressClaim): 
 
   const decision = decideNextStep({
     graphId,
+    language: course.language,
     graph,
     currentTopicId: topicId,
     currentConceptIds,

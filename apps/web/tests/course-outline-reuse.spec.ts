@@ -172,5 +172,20 @@ describe("initializeCourseOutline reuse persistence", () => {
     } });
     expect(result.course.title).toBe("Information Theory and Entropy");
     expect(result.course.lessons).toHaveLength(5);
+    expect(result.course.summary).toBe("A personalized learning path for Information Theory and Entropy.");
+  });
+
+  it.each(["en", "zh-CN"])("localizes canonical and goal-scoped summaries for %s and preserves explicit summaries", async (language) => {
+    const { initializeCourseOutline } = await import("../src/lib/ai/deepagent/course-generator");
+    const chinese = language.startsWith("zh");
+    const input = { ownerId: "u1", topic: "Information Theory and Entropy", language, kgContext: {
+      learningPathType: "linear" as const, graphId: "information_theory", startTopic: { topicId: "t_infotheory_basics", name: "Entropy and Information Measures", concepts: [] }, targetConceptId: null, nextTopic: null,
+    } };
+    const canonical = await initializeCourseOutline(input);
+    expect(canonical.course.summary).toBe(chinese ? "Information Theory and Entropy的个性化学习路径" : "A personalized learning path for Information Theory and Entropy.");
+    const scoped = await initializeCourseOutline({ ...input, kgContext: { ...input.kgContext, learningGoal: chinese ? "理解信息熵" : "understand entropy", scope: "goal" } });
+    expect(scoped.course.summary).toBe(chinese ? "Information Theory and Entropy：围绕「理解信息熵」的定制学习路径" : 'Information Theory and Entropy: a learning path focused on "understand entropy".');
+    const explicit = await initializeCourseOutline({ ...input, summary: "An author-provided summary." });
+    expect(explicit.course.summary).toBe("An author-provided summary.");
   });
 });

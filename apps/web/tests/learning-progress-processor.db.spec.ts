@@ -32,6 +32,7 @@ async function seedCourse(input: { lessonCount: 1 | 2 }) {
     summary: "Progress contract",
     estimatedMinutes: input.lessonCount * 20,
     graphId: DEFAULT_TOPIC_GRAPH_ID,
+    language: "en",
     version: 1,
     createdAt: now,
     updatedAt: now,
@@ -122,6 +123,7 @@ suite("learning-progress processor database contract", () => {
       targetLessonId: seeded.lessonIds[1],
       targetTopicId: topic.topicId,
       nextLessonTitle: "Bundle 2",
+      reason: 'You have completed this lesson and are ready for "Bundle 2".',
     });
     const completions = await getDb().select().from(learningEvents);
     expect(completions.filter((event) => event.type === "course.completed")).toHaveLength(0);
@@ -138,6 +140,8 @@ suite("learning-progress processor database contract", () => {
 
     const job = await runProgress(seeded.ownerId, seeded.courseId, seeded.lessonIds[0]);
     expect(job?.decision?.kind).toBe("remediation");
+    expect(job?.decision?.proposedTitle).toBe(`Review: ${topic.conceptIds[0].name}`);
+    expect(job?.decision?.reason).not.toMatch(/[\u3400-\u9fff]/u);
     const events = await getDb().select().from(learningEvents);
     const unlocks = await getDb().select().from(achievementUnlocks);
     expect(events.filter((event) => event.type === "course.completed")).toHaveLength(0);
@@ -155,6 +159,7 @@ suite("learning-progress processor database contract", () => {
 
     const job = await runProgress(seeded.ownerId, seeded.courseId, seeded.lessonIds[0]);
     expect(job?.decision?.kind).toBe("course_complete");
+    expect(job?.decision?.reason).toBe("You have completed every lesson in this course. Well done!");
     const events = await getDb().select().from(learningEvents);
     const unlocks = await getDb().select().from(achievementUnlocks);
     expect(events.filter((event) => event.type === "course.completed")).toHaveLength(1);
