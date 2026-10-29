@@ -1,0 +1,13 @@
+{
+  "knowledgeGraphs": 31,
+  "interactiveComponents": 49,
+  "tutorStyles": [
+    "socratic",
+    "feynman",
+    "euclid"
+  ],
+  "masteryMinimumAnswers": 3,
+  "masteryAccuracy": 0.8,
+  "stage": "animatic",
+  "heroClosureVerified": false
+}

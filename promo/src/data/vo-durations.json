@@ -1,0 +1,54 @@
+{
+  "VO01": {
+    "seconds": 1.9025,
+    "frames": 58
+  },
+  "VO02": {
+    "seconds": 2.591208,
+    "frames": 78
+  },
+  "VO03": {
+    "seconds": 2.227167,
+    "frames": 67
+  },
+  "VO04": {
+    "seconds": 4.664042,
+    "frames": 140
+  },
+  "VO05": {
+    "seconds": 1.639417,
+    "frames": 50
+  },
+  "VO06": {
+    "seconds": 2.428667,
+    "frames": 73
+  },
+  "VO07": {
+    "seconds": 4.717604,
+    "frames": 142
+  },
+  "VO08": {
+    "seconds": 2.6435,
+    "frames": 80
+  },
+  "VO09": {
+    "seconds": 1.896479,
+    "frames": 57
+  },
+  "VO10": {
+    "seconds": 1.919792,
+    "frames": 58
+  },
+  "VO11": {
+    "seconds": 3.220646,
+    "frames": 97
+  },
+  "VO12": {
+    "seconds": 2.968813,
+    "frames": 90
+  },
+  "VO13": {
+    "seconds": 2.668354,
+    "frames": 81
+  }
+}

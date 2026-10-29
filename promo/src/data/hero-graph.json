@@ -1,0 +1,655 @@
+{
+  "source": [
+    "deep_learning.json",
+    "linear_algebra.json",
+    "cross_subject_edges.json"
+  ],
+  "nodes": [
+    {
+      "id": "dl_perceptron",
+      "name": "Perceptron",
+      "order": 1,
+      "inPath": true
+    },
+    {
+      "id": "dl_mlp",
+      "name": "Multilayer Perceptron",
+      "order": 2,
+      "inPath": true
+    },
+    {
+      "id": "dl_activation",
+      "name": "Activation Functions",
+      "order": 3,
+      "inPath": false
+    },
+    {
+      "id": "dl_forward",
+      "name": "Forward Propagation",
+      "order": 1,
+      "inPath": false
+    },
+    {
+      "id": "dl_computational_graph",
+      "name": "Computational Graphs",
+      "order": 2,
+      "inPath": false
+    },
+    {
+      "id": "dl_backprop",
+      "name": "Backpropagation",
+      "order": 3,
+      "inPath": false
+    },
+    {
+      "id": "dl_loss",
+      "name": "Loss Functions",
+      "order": 1,
+      "inPath": false
+    },
+    {
+      "id": "dl_optimization",
+      "name": "Stochastic Gradient Descent",
+      "order": 2,
+      "inPath": false
+    },
+    {
+      "id": "dl_momentum",
+      "name": "Momentum",
+      "order": 3,
+      "inPath": false
+    },
+    {
+      "id": "dl_optimizers",
+      "name": "Adaptive Optimizers",
+      "order": 1,
+      "inPath": false
+    },
+    {
+      "id": "dl_lr_schedule",
+      "name": "Learning Rate Schedules",
+      "order": 2,
+      "inPath": false
+    },
+    {
+      "id": "dl_vanishing_grad",
+      "name": "Vanishing/Exploding Gradients",
+      "order": 1,
+      "inPath": false
+    },
+    {
+      "id": "dl_weight_init",
+      "name": "Weight Initialization",
+      "order": 2,
+      "inPath": false
+    },
+    {
+      "id": "dl_batchnorm",
+      "name": "Batch Normalization",
+      "order": 1,
+      "inPath": false
+    },
+    {
+      "id": "dl_regularization",
+      "name": "Regularization",
+      "order": 2,
+      "inPath": false
+    },
+    {
+      "id": "dl_dropout",
+      "name": "Dropout",
+      "order": 3,
+      "inPath": false
+    },
+    {
+      "id": "dl_convolution",
+      "name": "Convolution",
+      "order": 1,
+      "inPath": false
+    },
+    {
+      "id": "dl_padding_stride",
+      "name": "Padding and Stride",
+      "order": 2,
+      "inPath": false
+    },
+    {
+      "id": "dl_pooling",
+      "name": "Pooling",
+      "order": 3,
+      "inPath": false
+    },
+    {
+      "id": "dl_cnn_arch",
+      "name": "CNN Architectures",
+      "order": 1,
+      "inPath": false
+    },
+    {
+      "id": "dl_resnet",
+      "name": "Residual Networks",
+      "order": 2,
+      "inPath": false
+    },
+    {
+      "id": "dl_transfer_learning",
+      "name": "Transfer Learning",
+      "order": 1,
+      "inPath": false
+    },
+    {
+      "id": "dl_rnn",
+      "name": "Recurrent Neural Networks",
+      "order": 2,
+      "inPath": true
+    },
+    {
+      "id": "dl_bptt",
+      "name": "Backpropagation Through Time",
+      "order": 1,
+      "inPath": false
+    },
+    {
+      "id": "dl_seq_vanishing",
+      "name": "Long-Range Dependencies",
+      "order": 2,
+      "inPath": false
+    },
+    {
+      "id": "dl_lstm",
+      "name": "LSTM",
+      "order": 1,
+      "inPath": false
+    },
+    {
+      "id": "dl_gru",
+      "name": "GRU",
+      "order": 2,
+      "inPath": false
+    },
+    {
+      "id": "dl_attention",
+      "name": "Attention Mechanism",
+      "order": 1,
+      "inPath": true
+    },
+    {
+      "id": "dl_self_attention",
+      "name": "Self-Attention",
+      "order": 2,
+      "inPath": true
+    },
+    {
+      "id": "dl_multihead",
+      "name": "Multi-Head Attention",
+      "order": 3,
+      "inPath": true
+    },
+    {
+      "id": "dl_positional",
+      "name": "Positional Encoding",
+      "order": 1,
+      "inPath": true
+    },
+    {
+      "id": "dl_transformer",
+      "name": "Transformer Architecture",
+      "order": 2,
+      "inPath": true
+    },
+    {
+      "id": "dl_pretraining",
+      "name": "Pretraining & Fine-tuning",
+      "order": 3,
+      "inPath": false
+    },
+    {
+      "id": "dl_autoencoder",
+      "name": "Autoencoders",
+      "order": 1,
+      "inPath": false
+    },
+    {
+      "id": "dl_vae",
+      "name": "Variational Autoencoders",
+      "order": 2,
+      "inPath": false
+    },
+    {
+      "id": "dl_gan",
+      "name": "Generative Adversarial Networks",
+      "order": 3,
+      "inPath": false
+    },
+    {
+      "id": "dl_gan_training",
+      "name": "GAN Training Dynamics",
+      "order": 1,
+      "inPath": false
+    },
+    {
+      "id": "dl_diffusion",
+      "name": "Diffusion Models",
+      "order": 2,
+      "inPath": false
+    },
+    {
+      "id": "dl_flow",
+      "name": "Normalizing Flows",
+      "order": 3,
+      "inPath": false
+    },
+    {
+      "id": "c_mit1806_vectors",
+      "name": "Vectors and Linear Combinations",
+      "order": 1,
+      "inPath": true
+    },
+    {
+      "id": "c_mit1806_elimination",
+      "name": "Elimination with Matrices",
+      "order": 2,
+      "inPath": true
+    },
+    {
+      "id": "c_mit1806_matrix_ops",
+      "name": "Matrix Operations and Inverses",
+      "order": 1,
+      "inPath": true
+    },
+    {
+      "id": "c_mit1806_lu_decomp",
+      "name": "LU Factorization",
+      "order": 2,
+      "inPath": false
+    },
+    {
+      "id": "c_mit1806_spaces_subspaces",
+      "name": "Vector Spaces and Subspaces",
+      "order": 1,
+      "inPath": false
+    },
+    {
+      "id": "c_mit1806_null_column_space",
+      "name": "Null Space and Column Space",
+      "order": 2,
+      "inPath": false
+    },
+    {
+      "id": "c_mit1806_independence_basis",
+      "name": "Linear Independence, Basis, and Dimension",
+      "order": 1,
+      "inPath": false
+    },
+    {
+      "id": "c_mit1806_four_subspaces",
+      "name": "The Four Fundamental Subspaces",
+      "order": 2,
+      "inPath": false
+    },
+    {
+      "id": "c_mit1806_orthogonality",
+      "name": "Orthogonal Vectors and Subspaces",
+      "order": 1,
+      "inPath": false
+    },
+    {
+      "id": "c_mit1806_projections",
+      "name": "Projections onto Subspaces",
+      "order": 2,
+      "inPath": false
+    },
+    {
+      "id": "c_mit1806_least_squares",
+      "name": "Least Squares Approximations",
+      "order": 1,
+      "inPath": false
+    },
+    {
+      "id": "c_mit1806_gram_schmidt",
+      "name": "Orthogonal Bases and Gram-Schmidt",
+      "order": 2,
+      "inPath": false
+    },
+    {
+      "id": "c_mit1806_det_properties",
+      "name": "Properties of Determinants",
+      "order": 1,
+      "inPath": false
+    },
+    {
+      "id": "c_mit1806_det_formulas",
+      "name": "Formulas and Cofactors",
+      "order": 2,
+      "inPath": false
+    },
+    {
+      "id": "c_mit1806_cramers_rule",
+      "name": "Cramer's Rule and Volumes",
+      "order": 1,
+      "inPath": false
+    },
+    {
+      "id": "c_mit1806_eigen",
+      "name": "Eigenvalues and Eigenvectors",
+      "order": 2,
+      "inPath": false
+    },
+    {
+      "id": "c_mit1806_diagonalization",
+      "name": "Diagonalization",
+      "order": 1,
+      "inPath": false
+    },
+    {
+      "id": "c_mit1806_diff_eq",
+      "name": "Systems of Differential Equations",
+      "order": 2,
+      "inPath": false
+    },
+    {
+      "id": "c_mit1806_symmetric_matrices",
+      "name": "Symmetric Matrices",
+      "order": 1,
+      "inPath": false
+    },
+    {
+      "id": "c_mit1806_positive_definite",
+      "name": "Positive Definite Matrices",
+      "order": 2,
+      "inPath": false
+    },
+    {
+      "id": "c_mit1806_svd",
+      "name": "Singular Value Decomposition (SVD)",
+      "order": 1,
+      "inPath": false
+    },
+    {
+      "id": "c_mit1806_linear_transformations",
+      "name": "Linear Transformations",
+      "order": 2,
+      "inPath": false
+    },
+    {
+      "id": "c_mit1806_matrix_transform",
+      "name": "The Matrix of a Linear Transformation",
+      "order": 3,
+      "inPath": false
+    }
+  ],
+  "edges": [
+    {
+      "from": "dl_perceptron",
+      "to": "dl_mlp"
+    },
+    {
+      "from": "dl_mlp",
+      "to": "dl_activation"
+    },
+    {
+      "from": "dl_activation",
+      "to": "dl_forward"
+    },
+    {
+      "from": "dl_forward",
+      "to": "dl_computational_graph"
+    },
+    {
+      "from": "dl_computational_graph",
+      "to": "dl_backprop"
+    },
+    {
+      "from": "dl_loss",
+      "to": "dl_optimization"
+    },
+    {
+      "from": "dl_optimization",
+      "to": "dl_momentum"
+    },
+    {
+      "from": "dl_momentum",
+      "to": "dl_optimizers"
+    },
+    {
+      "from": "dl_optimizers",
+      "to": "dl_lr_schedule"
+    },
+    {
+      "from": "dl_vanishing_grad",
+      "to": "dl_weight_init"
+    },
+    {
+      "from": "dl_weight_init",
+      "to": "dl_batchnorm"
+    },
+    {
+      "from": "dl_batchnorm",
+      "to": "dl_regularization"
+    },
+    {
+      "from": "dl_regularization",
+      "to": "dl_dropout"
+    },
+    {
+      "from": "dl_convolution",
+      "to": "dl_padding_stride"
+    },
+    {
+      "from": "dl_padding_stride",
+      "to": "dl_pooling"
+    },
+    {
+      "from": "dl_pooling",
+      "to": "dl_cnn_arch"
+    },
+    {
+      "from": "dl_cnn_arch",
+      "to": "dl_resnet"
+    },
+    {
+      "from": "dl_resnet",
+      "to": "dl_transfer_learning"
+    },
+    {
+      "from": "dl_rnn",
+      "to": "dl_bptt"
+    },
+    {
+      "from": "dl_bptt",
+      "to": "dl_seq_vanishing"
+    },
+    {
+      "from": "dl_seq_vanishing",
+      "to": "dl_lstm"
+    },
+    {
+      "from": "dl_lstm",
+      "to": "dl_gru"
+    },
+    {
+      "from": "dl_attention",
+      "to": "dl_self_attention"
+    },
+    {
+      "from": "dl_self_attention",
+      "to": "dl_multihead"
+    },
+    {
+      "from": "dl_multihead",
+      "to": "dl_positional"
+    },
+    {
+      "from": "dl_positional",
+      "to": "dl_transformer"
+    },
+    {
+      "from": "dl_transformer",
+      "to": "dl_pretraining"
+    },
+    {
+      "from": "dl_autoencoder",
+      "to": "dl_vae"
+    },
+    {
+      "from": "dl_vae",
+      "to": "dl_gan"
+    },
+    {
+      "from": "dl_gan",
+      "to": "dl_gan_training"
+    },
+    {
+      "from": "dl_gan_training",
+      "to": "dl_diffusion"
+    },
+    {
+      "from": "dl_diffusion",
+      "to": "dl_flow"
+    },
+    {
+      "from": "dl_forward",
+      "to": "dl_backprop"
+    },
+    {
+      "from": "dl_backprop",
+      "to": "dl_loss"
+    },
+    {
+      "from": "dl_backprop",
+      "to": "dl_vanishing_grad"
+    },
+    {
+      "from": "dl_vanishing_grad",
+      "to": "dl_batchnorm"
+    },
+    {
+      "from": "dl_optimization",
+      "to": "dl_regularization"
+    },
+    {
+      "from": "dl_mlp",
+      "to": "dl_convolution"
+    },
+    {
+      "from": "dl_vanishing_grad",
+      "to": "dl_resnet"
+    },
+    {
+      "from": "dl_mlp",
+      "to": "dl_rnn"
+    },
+    {
+      "from": "dl_rnn",
+      "to": "dl_attention"
+    },
+    {
+      "from": "dl_multihead",
+      "to": "dl_transformer"
+    },
+    {
+      "from": "dl_mlp",
+      "to": "dl_autoencoder"
+    },
+    {
+      "from": "dl_mlp",
+      "to": "dl_gan"
+    },
+    {
+      "from": "dl_vae",
+      "to": "dl_diffusion"
+    },
+    {
+      "from": "c_mit1806_vectors",
+      "to": "c_mit1806_elimination"
+    },
+    {
+      "from": "c_mit1806_elimination",
+      "to": "c_mit1806_matrix_ops"
+    },
+    {
+      "from": "c_mit1806_matrix_ops",
+      "to": "c_mit1806_lu_decomp"
+    },
+    {
+      "from": "c_mit1806_matrix_ops",
+      "to": "c_mit1806_spaces_subspaces"
+    },
+    {
+      "from": "c_mit1806_spaces_subspaces",
+      "to": "c_mit1806_null_column_space"
+    },
+    {
+      "from": "c_mit1806_null_column_space",
+      "to": "c_mit1806_independence_basis"
+    },
+    {
+      "from": "c_mit1806_independence_basis",
+      "to": "c_mit1806_four_subspaces"
+    },
+    {
+      "from": "c_mit1806_four_subspaces",
+      "to": "c_mit1806_orthogonality"
+    },
+    {
+      "from": "c_mit1806_orthogonality",
+      "to": "c_mit1806_projections"
+    },
+    {
+      "from": "c_mit1806_projections",
+      "to": "c_mit1806_least_squares"
+    },
+    {
+      "from": "c_mit1806_least_squares",
+      "to": "c_mit1806_gram_schmidt"
+    },
+    {
+      "from": "c_mit1806_elimination",
+      "to": "c_mit1806_det_properties"
+    },
+    {
+      "from": "c_mit1806_det_properties",
+      "to": "c_mit1806_det_formulas"
+    },
+    {
+      "from": "c_mit1806_det_formulas",
+      "to": "c_mit1806_cramers_rule"
+    },
+    {
+      "from": "c_mit1806_det_properties",
+      "to": "c_mit1806_eigen"
+    },
+    {
+      "from": "c_mit1806_eigen",
+      "to": "c_mit1806_diagonalization"
+    },
+    {
+      "from": "c_mit1806_diagonalization",
+      "to": "c_mit1806_diff_eq"
+    },
+    {
+      "from": "c_mit1806_eigen",
+      "to": "c_mit1806_symmetric_matrices"
+    },
+    {
+      "from": "c_mit1806_symmetric_matrices",
+      "to": "c_mit1806_positive_definite"
+    },
+    {
+      "from": "c_mit1806_positive_definite",
+      "to": "c_mit1806_svd"
+    },
+    {
+      "from": "c_mit1806_matrix_ops",
+      "to": "c_mit1806_linear_transformations"
+    },
+    {
+      "from": "c_mit1806_linear_transformations",
+      "to": "c_mit1806_matrix_transform"
+    },
+    {
+      "from": "c_mit1806_matrix_ops",
+      "to": "dl_mlp"
+    }
+  ]
+}
