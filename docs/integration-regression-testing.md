@@ -760,3 +760,9 @@ a running app (`visualization:eval:attach`) refuses a non-test database unless
   Frozen installation and the production audit passed under the existing audit
   exception policy. Private evidence: `.private/deployment/20261029-image-progress/`.
   These local results do not imply a real-model or authenticated production E2E.
+- CI runs the four learner-journey smokes against a production Web build, matching
+  local production regression. Dev-mode onboarding exposed Turbopack's generated
+  Google-font module resolution error before the login page became ready. Widget
+  QA remains an explicit Webpack dev-server smoke because QA routes are disabled
+  in production. CI also explicitly executes the stale-event reconciliation DB
+  regression, which is gated out of the fast unit stage.

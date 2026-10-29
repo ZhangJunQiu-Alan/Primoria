@@ -133,6 +133,9 @@ jobs:
       - name: Database tests
         run: pnpm test:db
 
+      - name: Extractor reconciliation with stale completion events
+        run: RUN_EXTRACTOR_DB=1 pnpm --filter @primoria/web exec vitest run tests/extractor-reconciliation.db.spec.ts
+
       - name: Agent runtime database and HTTP tests
         run: pnpm --filter @primoria/agent test:runtime:db
 
@@ -161,6 +164,7 @@ jobs:
       CI_TUTOR_RUNTIME_SMOKE: "1"
       CI_SHARE_SMOKE: "1"
       PRIMORIA_DISABLE_OUTLINE_ENRICHMENT: "1"
+      REGRESSION_WEB_MODE: production
     steps:
       - uses: actions/checkout@v4
 
@@ -182,6 +186,9 @@ jobs:
 
       - name: Seed all knowledge graphs
         run: pnpm --filter @primoria/web db:seed:kg-all
+
+      - name: Build production Web for learner journeys
+        run: pnpm build
 
       - name: Seed deterministic learning path
         run: pnpm --filter @primoria/web exec tsx scripts/seed-ci-learning-smoke.ts
